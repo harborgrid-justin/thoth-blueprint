@@ -166,6 +166,12 @@ function TableNode({
     width: 288,
   };
 
+  const compositePkColumns = useMemo(
+    () => data.columns.filter((c) => c.pk),
+    [data.columns]
+  );
+  const isCompositePk = compositePkColumns.length >= 2;
+
   const handleStyle = {
     opacity: isSelected ? 1 : 0,
     transition: "opacity 0.15s ease-in-out",
@@ -199,6 +205,17 @@ function TableNode({
             <CardTitle className="text-sm text-center font-semibold p-2">
               {data.label}
             </CardTitle>
+            {isCompositePk && (
+              <div className="flex justify-center pb-1">
+                <Badge
+                  variant="outline"
+                  className="text-[10px] px-1.5 py-0 h-4 font-normal text-yellow-500 border-yellow-500/40"
+                >
+                  <Key className="h-2.5 w-2.5 mr-0.5" />
+                  Composite PK ({compositePkColumns.length})
+                </Badge>
+              </div>
+            )}
             <PopoverWithArrow open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
               <PopoverWithArrowTrigger asChild>
                 <Button
