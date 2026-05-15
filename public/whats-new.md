@@ -1,3 +1,41 @@
+# What's New in ThothBlueprint v0.0.11
+
+This release introduces experimental AI-powered schema assistance and powerful composite primary key support for complex database designs.
+
+## Highlights
+
+- **Composite Primary Key Support:** Define and manage multi-column primary keys directly in the schema editor. Easily toggle multiple columns as part of a composite key without the need for workarounds or comments.
+- **AI Schema Assistant (Experimental):** Introducing an AI-powered companion powered by Google Gemini that helps you refactor schemas, implement many-to-many relationships, add nested comment structures, and resolve design issues in real-time.
+
+## New & Improved
+
+- **Composite PK Management:**
+  - Click the new **Manage PK** button in any table to open a multi-select dialog and define composite primary keys.
+  - Per-column PK toggle no longer enforces single-key constraints—select multiple columns to create composites.
+  - Visual badges show `Composite PK (N)` in both the accordion editor and canvas table nodes.
+  - Full export support: DBML, SQL (MySQL/PostgreSQL), and JSON all correctly reflect composite keys.
+  - Composite PKs are automatically recognized on import from SQL dumps and DBML files.
+
+- **Experimental AI Schema Assistant:**
+  - Ask the Schema Assistant to help with schema refactoring, design suggestions, and relationship setup.
+  - Currently powered by **Google Gemini** API (unlock with your own API key).
+  - Future releases will support additional AI providers.
+  - Chat history is saved locally per diagram and is not synced to any server.
+  - Use with caution: AI suggestions should be reviewed before applying to production schemas.
+
+## Performance & Stability
+
+- Schema assistant runs fully client-side with no persistent server interaction (diagrams remain offline-first).
+- Composite PK state persists in IndexedDB alongside existing diagram data—no schema migration required.
+
+## Notes
+
+- The AI Schema Assistant is an **experimental feature**. API usage policies and rate limits apply per your Gemini API plan.
+- Ensure your API key has appropriate permissions and is kept secure.
+- All AI suggestions should be reviewed for correctness before committing to your schema.
+
+---
+
 # What’s New in ThothBlueprint v0.0.10
 
 This release focuses on a more compact home page experience, improved checkpoint defaults, and a new DBML editing workflow.

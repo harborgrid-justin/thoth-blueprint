@@ -34,6 +34,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { ColorPicker } from "./ColorPicker";
+import { CompositePKDialog } from "./CompositePKDialog";
 import {
   Accordion,
   AccordionContent,
@@ -396,6 +397,7 @@ export default function TableAccordionContent({
   const [indices, setIndices] = useState<Index[]>([]);
   const [tableComment, setTableComment] = useState("");
   const [openAccordionItems, setOpenAccordionItems] = useState<string[]>([]);
+  const [isPKDialogOpen, setIsPKDialogOpen] = useState(false);
 
   // Create a Map for O(1) column lookups
   const columnsMap = useMemo(() => {
@@ -476,12 +478,6 @@ export default function TableAccordionContent({
   ) => {
     const newColumns = [...columns];
 
-    if (field === "pk" && value === true) {
-      newColumns.forEach((c, i) => {
-        if (i !== index) c.pk = false;
-      });
-    }
-
     newColumns[index] = {
       ...newColumns[index],
       [field]: value,
@@ -502,6 +498,11 @@ export default function TableAccordionContent({
         return newColumns;
       });
     }
+  };
+
+  const handleSavePK = (updatedColumns: Column[]) => {
+    setColumns(updatedColumns);
+    onNodeUpdate({ ...node, data: { ...node.data, columns: updatedColumns } });
   };
 
   const handleAddIndex = () => {
@@ -552,7 +553,15 @@ export default function TableAccordionContent({
   return (
     <div className="space-y-4 px-1">
       <div>
-        <h4 className="font-semibold mb-2">Columns</h4>
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="font-semibold">Columns</h4>
+          {columns.filter((c) => c.pk).length >= 2 && (
+            <Badge variant="outline" className="text-xs font-normal text-yellow-500 border-yellow-500/40">
+              <Key className="h-3 w-3 mr-1" />
+              Composite PK ({columns.filter((c) => c.pk).length})
+            </Badge>
+          )}
+        </div>
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
@@ -595,7 +604,21 @@ export default function TableAccordionContent({
           >
             <Plus className="h-4 w-4 mr-2" /> Add Index
           </Button>
+          <Button
+            variant="outline"
+            onClick={() => setIsPKDialogOpen(true)}
+            disabled={isLocked}
+            title="Manage Primary Key"
+          >
+            <Key className="h-4 w-4" />
+          </Button>
         </div>
+        <CompositePKDialog
+          open={isPKDialogOpen}
+          onOpenChange={setIsPKDialogOpen}
+          columns={columns}
+          onSave={handleSavePK}
+        />
       </div>
       <Separator />
       <Accordion
