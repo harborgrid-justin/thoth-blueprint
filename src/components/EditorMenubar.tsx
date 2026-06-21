@@ -1,6 +1,9 @@
 import { CheckpointHistoryDialog } from "@/components/CheckpointHistoryDialog";
 import { CheckpointSettingsDialog } from "@/components/CheckpointSettingsDialog";
 import { ManualCheckpointDialog } from "@/components/ManualCheckpointDialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -368,6 +371,36 @@ export default function EditorMenubar({
           <MenubarItem onClick={() => setIsCheckpointSettingsOpen(true)}>
             Checkpoint Settings
           </MenubarItem>
+          <MenubarSub>
+            <MenubarSubTrigger>Sidebar Scale</MenubarSubTrigger>
+            <MenubarSubContent className="p-3 min-w-[220px]">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Label>Sidebar Scale</Label>
+                  <span className="text-xs text-muted-foreground">{Math.round(settings.sidebarScale * 100)}%</span>
+                </div>
+                <Slider
+                  min={0.75}
+                  max={1.5}
+                  step={0.05}
+                  value={[settings.sidebarScale]}
+                  onValueChange={(value) => updateSettings({ sidebarScale: value[0] ?? 1 })}
+                />
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>Compact</span>
+                  <span>Larger</span>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => updateSettings({ sidebarScale: 1 })}
+                  className="w-full"
+                >
+                  Reset to 100%
+                </Button>
+              </div>
+            </MenubarSubContent>
+          </MenubarSub>
           {!isCheckpointMigrationEnabled && (
             <MenubarItem
               onClick={handleEnableCheckpointMigrationNow}

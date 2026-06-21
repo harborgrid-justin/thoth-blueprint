@@ -102,4 +102,130 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  /* ===== Sidebar Scale ===== */
+  .sidebar-scaled {
+    --sb: var(--sb-scale, 1);
+    --radius: calc(0.5rem * var(--sb));
+  }
+
+  /* Font sizes */
+  .sidebar-scaled .text-xs { font-size: calc(0.75rem * var(--sb)); }
+  .sidebar-scaled .text-sm { font-size: calc(0.875rem * var(--sb)); }
+  .sidebar-scaled .text-base { font-size: calc(1rem * var(--sb)); }
+  .sidebar-scaled .text-lg { font-size: calc(1.125rem * var(--sb)); }
+  .sidebar-scaled .text-\[11px\] { font-size: calc(11px * var(--sb)); }
+
+  /* Responsive font sizes */
+  @media (min-width: 640px) {
+    .sidebar-scaled .sm\:text-lg { font-size: calc(1.125rem * var(--sb)); }
+    .sidebar-scaled .sm\:text-xs { font-size: calc(0.75rem * var(--sb)); }
+  }
+  @media (min-width: 768px) {
+    .sidebar-scaled .md\:text-sm { font-size: calc(0.875rem * var(--sb)); }
+  }
+
+  /* Padding */
+  .sidebar-scaled .p-1 { padding: calc(0.25rem * var(--sb)); }
+  .sidebar-scaled .p-2 { padding: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .p-3 { padding: calc(0.75rem * var(--sb)); }
+  .sidebar-scaled .p-4 { padding: calc(1rem * var(--sb)); }
+  .sidebar-scaled .p-\[1px\] { padding: calc(1px * var(--sb)); }
+  .sidebar-scaled .px-1 { padding-left: calc(0.25rem * var(--sb)); padding-right: calc(0.25rem * var(--sb)); }
+  .sidebar-scaled .px-2 { padding-left: calc(0.5rem * var(--sb)); padding-right: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .px-2\.5 { padding-left: calc(0.625rem * var(--sb)); padding-right: calc(0.625rem * var(--sb)); }
+  .sidebar-scaled .px-3 { padding-left: calc(0.75rem * var(--sb)); padding-right: calc(0.75rem * var(--sb)); }
+  .sidebar-scaled .px-4 { padding-left: calc(1rem * var(--sb)); padding-right: calc(1rem * var(--sb)); }
+  .sidebar-scaled .px-8 { padding-left: calc(2rem * var(--sb)); padding-right: calc(2rem * var(--sb)); }
+  .sidebar-scaled .py-0\.5 { padding-top: calc(0.125rem * var(--sb)); padding-bottom: calc(0.125rem * var(--sb)); }
+  .sidebar-scaled .py-1 { padding-top: calc(0.25rem * var(--sb)); padding-bottom: calc(0.25rem * var(--sb)); }
+  .sidebar-scaled .py-1\.5 { padding-top: calc(0.375rem * var(--sb)); padding-bottom: calc(0.375rem * var(--sb)); }
+  .sidebar-scaled .py-2 { padding-top: calc(0.5rem * var(--sb)); padding-bottom: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .py-3 { padding-top: calc(0.75rem * var(--sb)); padding-bottom: calc(0.75rem * var(--sb)); }
+  .sidebar-scaled .py-4 { padding-top: calc(1rem * var(--sb)); padding-bottom: calc(1rem * var(--sb)); }
+  .sidebar-scaled .py-10 { padding-top: calc(2.5rem * var(--sb)); padding-bottom: calc(2.5rem * var(--sb)); }
+  .sidebar-scaled .pl-2 { padding-left: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .pl-4 { padding-left: calc(1rem * var(--sb)); }
+  .sidebar-scaled .pl-8 { padding-left: calc(2rem * var(--sb)); }
+  .sidebar-scaled .pr-2 { padding-right: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .pr-4 { padding-right: calc(1rem * var(--sb)); }
+  .sidebar-scaled .pr-8 { padding-right: calc(2rem * var(--sb)); }
+  .sidebar-scaled .pt-2 { padding-top: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .pb-2 { padding-bottom: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .pb-4 { padding-bottom: calc(1rem * var(--sb)); }
+  @media (min-width: 1024px) {
+    .sidebar-scaled .lg\:px-3 { padding-left: calc(0.75rem * var(--sb)); padding-right: calc(0.75rem * var(--sb)); }
+  }
+
+  /* Margin */
+  .sidebar-scaled .my-1 { margin-top: calc(0.25rem * var(--sb)); margin-bottom: calc(0.25rem * var(--sb)); }
+  .sidebar-scaled .my-4 { margin-top: calc(1rem * var(--sb)); margin-bottom: calc(1rem * var(--sb)); }
+  .sidebar-scaled .-mx-1 { margin-left: calc(-0.25rem * var(--sb)); margin-right: calc(-0.25rem * var(--sb)); }
+  .sidebar-scaled .-ml-1 { margin-left: calc(-0.25rem * var(--sb)); }
+  .sidebar-scaled .ml-2 { margin-left: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .mr-1 { margin-right: calc(0.25rem * var(--sb)); }
+  .sidebar-scaled .mr-2 { margin-right: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .mt-1 { margin-top: calc(0.25rem * var(--sb)); }
+  .sidebar-scaled .mt-2 { margin-top: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .mt-4 { margin-top: calc(1rem * var(--sb)); }
+  .sidebar-scaled .mt-6 { margin-top: calc(1.5rem * var(--sb)); }
+  .sidebar-scaled .mb-2 { margin-bottom: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .mb-4 { margin-bottom: calc(1rem * var(--sb)); }
+
+  /* Gap */
+  .sidebar-scaled .gap-1 { gap: calc(0.25rem * var(--sb)); }
+  .sidebar-scaled .gap-2 { gap: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .gap-3 { gap: calc(0.75rem * var(--sb)); }
+  .sidebar-scaled .gap-4 { gap: calc(1rem * var(--sb)); }
+  .sidebar-scaled .gap-x-4 { column-gap: calc(1rem * var(--sb)); }
+  .sidebar-scaled .gap-y-1 { row-gap: calc(0.25rem * var(--sb)); }
+
+  /* Space (margin on children) */
+  .sidebar-scaled .space-x-1 > :not([hidden]) ~ :not([hidden]) { margin-left: calc(0.25rem * var(--sb)); }
+  .sidebar-scaled .space-x-2 > :not([hidden]) ~ :not([hidden]) { margin-left: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .space-y-1 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(0.25rem * var(--sb)); }
+  .sidebar-scaled .space-y-1\.5 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(0.375rem * var(--sb)); }
+  .sidebar-scaled .space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(0.75rem * var(--sb)); }
+  .sidebar-scaled .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(1rem * var(--sb)); }
+
+  /* Heights */
+  .sidebar-scaled .h-2 { height: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .h-2\.5 { height: calc(0.625rem * var(--sb)); }
+  .sidebar-scaled .h-3 { height: calc(0.75rem * var(--sb)); }
+  .sidebar-scaled .h-3\.5 { height: calc(0.875rem * var(--sb)); }
+  .sidebar-scaled .h-4 { height: calc(1rem * var(--sb)); }
+  .sidebar-scaled .h-5 { height: calc(1.25rem * var(--sb)); }
+  .sidebar-scaled .h-6 { height: calc(1.5rem * var(--sb)); }
+  .sidebar-scaled .h-8 { height: calc(2rem * var(--sb)); }
+  .sidebar-scaled .h-9 { height: calc(2.25rem * var(--sb)); }
+  .sidebar-scaled .h-10 { height: calc(2.5rem * var(--sb)); }
+  .sidebar-scaled .h-11 { height: calc(2.75rem * var(--sb)); }
+  @media (min-width: 640px) {
+    .sidebar-scaled .sm\:h-5 { height: calc(1.25rem * var(--sb)); }
+  }
+
+  /* Widths */
+  .sidebar-scaled .w-2 { width: calc(0.5rem * var(--sb)); }
+  .sidebar-scaled .w-2\.5 { width: calc(0.625rem * var(--sb)); }
+  .sidebar-scaled .w-3 { width: calc(0.75rem * var(--sb)); }
+  .sidebar-scaled .w-3\.5 { width: calc(0.875rem * var(--sb)); }
+  .sidebar-scaled .w-4 { width: calc(1rem * var(--sb)); }
+  .sidebar-scaled .w-5 { width: calc(1.25rem * var(--sb)); }
+  .sidebar-scaled .w-6 { width: calc(1.5rem * var(--sb)); }
+  .sidebar-scaled .w-8 { width: calc(2rem * var(--sb)); }
+  .sidebar-scaled .w-10 { width: calc(2.5rem * var(--sb)); }
+  .sidebar-scaled .w-16 { width: calc(4rem * var(--sb)); }
+
+  /* Min/max sizes */
+  .sidebar-scaled .min-h-10 { min-height: calc(2.5rem * var(--sb)); }
+  .sidebar-scaled .min-h-\[80px\] { min-height: calc(80px * var(--sb)); }
+  .sidebar-scaled .max-h-36 { max-height: calc(9rem * var(--sb)); }
+  .sidebar-scaled .max-w-\[16rem\] { max-width: calc(16rem * var(--sb)); }
+
+  /* Border radius (rounded without suffix) */
+  .sidebar-scaled .rounded { border-radius: calc(0.25rem * var(--sb)); }
+
+  /* CodeMirror editor font-size */
+  .sidebar-scaled .cm-editor { font-size: calc(0.875rem * var(--sb)); }
 }

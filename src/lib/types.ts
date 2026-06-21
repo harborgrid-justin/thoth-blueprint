@@ -171,6 +171,7 @@ export interface Settings {
   allowTableOverlapDuringCreation: boolean;
   enableFreePanning: boolean;
   exportForeignKeyConstraint: boolean;
+  sidebarScale: number;
   checkpoints: CheckpointSettings;
 }
 

@@ -58,6 +58,7 @@ export const DEFAULT_SETTINGS: Settings = {
   allowTableOverlapDuringCreation: true,
   enableFreePanning: true,
   exportForeignKeyConstraint: true,
+  sidebarScale: 1,
   checkpoints: {
     enabled: true,
     intervalMinutes: 5,

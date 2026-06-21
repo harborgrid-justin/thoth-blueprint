@@ -253,140 +253,147 @@ export default function EditorSidebar({
   const useLongTabLabels = sidebarWidth >= 420;
   const showTabCounts = sidebarWidth >= 520;
 
+  const sidebarScale = useStore((state) => state.settings.sidebarScale);
+
   if (!diagram) return null;
 
   return (
-    <div ref={sidebarContainerRef} className="h-full w-full flex flex-col bg-card" onContextMenu={(e) => e.preventDefault()}>
+    <div
+      ref={sidebarContainerRef}
+      className="sidebar-scaled h-full w-full flex flex-col bg-card"
+      style={{ '--sb-scale': sidebarScale } as React.CSSProperties}
+      onContextMenu={(e) => e.preventDefault()}
+    >
       {/* Header */}
       <div className="flex items-center border-b pl-2 flex-shrink-0">
-        <img
-          src="/ThothBlueprint-icon.svg"
-          alt="ThothBlueprint Logo"
-          className="h-5 w-5 mr-2 flex-shrink-0"
-        />
-        <EditorMenubar
-          onAddTable={onAddTable}
-          onAddNote={onAddNote}
-          onAddZone={onAddZone}
-          onSetSidebarState={onSetSidebarState}
-          onExport={onExport}
-          onCheckForUpdate={onCheckForUpdate}
-          onInstallAppRequest={onInstallAppRequest}
-          onViewShortcuts={onViewShortcuts}
-          onViewAbout={onViewAbout}
-          onViewWhatsNew={onViewWhatsNew}
-          onViewHelpCenter={onViewHelpCenter}
-        />
-      </div>
-
-      {/* Diagram Info */}
-      <div className="p-2 flex-shrink-0 border-b">
-        <div className={cn("px-2 flex gap-2", showRowHeaderMeta ? "flex-row items-center gap-3" : "flex-col")}>
-          <div className="flex items-center gap-2">
-            <DatabaseTypeIcon dbType={diagram.dbType} className="h-4 sm:h-5 w-auto" />
-            <div className="leading-tight">
-              <h3 className={cn("text-base sm:text-lg font-semibold tracking-tight truncate", showRowHeaderMeta && "max-w-[16rem]")}>
-                {diagram.name}
-              </h3>
-              <p className="text-[11px] sm:text-xs text-muted-foreground">{dbTypeDisplay[diagram.dbType]}</p>
-            </div>
-          </div>
-          {!showRowHeaderMeta && (
-            <div className="px-2 text-[11px] text-muted-foreground">
-              Updated {formatDistanceToNow(new Date(diagram.updatedAt), { addSuffix: true })}
-            </div>
-          )}
-        </div>
-        <div className="mt-2 px-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] sm:text-xs text-muted-foreground">
-          <span className="flex items-center whitespace-nowrap"><Table className="h-3 w-3 mr-1" /> {nodes.length} tables</span>
-          <span className="flex items-center whitespace-nowrap"><GitCommitHorizontal className="h-3 w-3 mr-1" /> {edges.length} relationships</span>
-          <button
-            type="button"
-            onClick={openCheckpointBrowser}
-            data-tour="editor-checkpoint-history"
-            className="flex items-center whitespace-nowrap hover:text-foreground transition-colors"
-          >
-            <History className="h-3 w-3 mr-1" /> {checkpoints.length} checkpoints
-          </button>
-          {showRowHeaderMeta && (
-            <span className="whitespace-nowrap">Updated {formatDistanceToNow(new Date(diagram.updatedAt), { addSuffix: true })}</span>
-          )}
-        </div>
-      </div>
-
-      {/* Tab Navigation */}
-      <div className="flex-shrink-0 px-4 my-4">
-        <div className="flex min-w-0 items-center gap-2">
-          <div className="min-w-0 flex-1 overflow-x-auto no-scrollbar">
-            <div className="inline-flex h-10 min-w-max items-center rounded-md bg-muted p-1 text-muted-foreground">
-              {tabItems.map((tab) => (
-                <Button
-                  key={tab.key}
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleTabChange(tab.key)}
-                  className={cn(
-                    "relative h-8 shrink-0 whitespace-nowrap rounded-sm px-2 lg:px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-                    currentTab === tab.key
-                      ? "bg-background text-foreground shadow-sm hover:bg-background"
-                      : "hover:bg-muted-foreground/10"
-                  )}
-                >
-                  <span className="mr-2">{tab.icon}</span>
-                  <span>{useLongTabLabels ? tab.label : (tab.shortLabel ?? tab.label)}</span>
-                  {showTabCounts && typeof tab.count === "number" && <span>&nbsp;({tab.count})</span>}
-                  {tab.key === "dbml" && isDbmlDirty && (
-                    <span className="ml-2 h-2 w-2 rounded-full bg-amber-500" aria-label="DBML has unsaved changes" />
-                  )}
-                </Button>
-              ))}
-            </div>
-          </div>
-          <Button
-            variant="outline"
-            size="icon"
-            className="shrink-0"
-            onClick={onAddElement}
-            disabled={isLocked}
-            data-tour="editor-add-element"
-          >
-            <Plus className="h-4 w-4" />
-            <span className="sr-only">Add Element</span>
-          </Button>
-        </div>
-      </div>
-
-      {/* Tab Content - Only render active tab */}
-      <div className="flex-1 min-h-0 overflow-hidden">
-        <div className={cn("h-full", currentTab !== "tables" && "hidden")}>
-          <TablesTab
-            nodes={nodes}
-            isLocked={isLocked}
-          />
-        </div>
-        <div className={cn("h-full", currentTab !== "relationships" && "hidden")}>
-          <RelationshipsTab
-            nodes={nodes}
-            edges={edges}
-          />
-        </div>
-        <div className={cn("h-full", currentTab !== "dbml" && "hidden")}>
-          {hasOpenedDbmlTab && (
-            <DbmlTab
-              diagram={diagram}
-              isLocked={isLocked}
-              onDirtyChange={setIsDbmlDirty}
-            />
-          )}
-        </div>
-      </div>
-      <CheckpointHistoryDialog
-        isOpen={isCheckpointHistoryOpen}
-        onOpenChange={setIsCheckpointHistoryOpen}
-        checkpoints={checkpoints}
-        onRestore={handleRestoreCheckpoint}
-        onCreateCheckpoint={handleCreateCheckpointFromHistory}
+      <img
+        src="/ThothBlueprint-icon.svg"
+        alt="ThothBlueprint Logo"
+        className="h-5 w-5 mr-2 flex-shrink-0"
+      />
+      <EditorMenubar
+        onAddTable={onAddTable}
+        onAddNote={onAddNote}
+        onAddZone={onAddZone}
+        onSetSidebarState={onSetSidebarState}
+        onExport={onExport}
+        onCheckForUpdate={onCheckForUpdate}
+        onInstallAppRequest={onInstallAppRequest}
+        onViewShortcuts={onViewShortcuts}
+        onViewAbout={onViewAbout}
+        onViewWhatsNew={onViewWhatsNew}
+        onViewHelpCenter={onViewHelpCenter}
       />
     </div>
+
+    {/* Diagram Info */}
+    <div className="p-2 flex-shrink-0 border-b">
+      <div className={cn("px-2 flex gap-2", showRowHeaderMeta ? "flex-row items-center gap-3" : "flex-col")}>
+        <div className="flex items-center gap-2">
+          <DatabaseTypeIcon dbType={diagram.dbType} className="h-4 sm:h-5 w-auto" />
+          <div className="leading-tight">
+            <h3 className={cn("text-base sm:text-lg font-semibold tracking-tight truncate", showRowHeaderMeta && "max-w-[16rem]")}>
+              {diagram.name}
+            </h3>
+            <p className="text-[11px] sm:text-xs text-muted-foreground">{dbTypeDisplay[diagram.dbType]}</p>
+          </div>
+        </div>
+        {!showRowHeaderMeta && (
+          <div className="px-2 text-[11px] text-muted-foreground">
+            Updated {formatDistanceToNow(new Date(diagram.updatedAt), { addSuffix: true })}
+          </div>
+        )}
+      </div>
+      <div className="mt-2 px-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] sm:text-xs text-muted-foreground">
+        <span className="flex items-center whitespace-nowrap"><Table className="h-3 w-3 mr-1" /> {nodes.length} tables</span>
+        <span className="flex items-center whitespace-nowrap"><GitCommitHorizontal className="h-3 w-3 mr-1" /> {edges.length} relationships</span>
+        <button
+          type="button"
+          onClick={openCheckpointBrowser}
+          data-tour="editor-checkpoint-history"
+          className="flex items-center whitespace-nowrap hover:text-foreground transition-colors"
+        >
+          <History className="h-3 w-3 mr-1" /> {checkpoints.length} checkpoints
+        </button>
+        {showRowHeaderMeta && (
+          <span className="whitespace-nowrap">Updated {formatDistanceToNow(new Date(diagram.updatedAt), { addSuffix: true })}</span>
+        )}
+      </div>
+    </div>
+
+    {/* Tab Navigation */}
+    <div className="flex-shrink-0 px-4 my-4">
+      <div className="flex min-w-0 items-center gap-2">
+        <div className="min-w-0 flex-1 overflow-x-auto no-scrollbar">
+          <div className="inline-flex h-10 min-w-max items-center rounded-md bg-muted p-1 text-muted-foreground">
+            {tabItems.map((tab) => (
+              <Button
+                key={tab.key}
+                variant="ghost"
+                size="sm"
+                onClick={() => handleTabChange(tab.key)}
+                className={cn(
+                  "relative h-8 shrink-0 whitespace-nowrap rounded-sm px-2 lg:px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+                  currentTab === tab.key
+                    ? "bg-background text-foreground shadow-sm hover:bg-background"
+                    : "hover:bg-muted-foreground/10"
+                )}
+              >
+                <span className="mr-2">{tab.icon}</span>
+                <span>{useLongTabLabels ? tab.label : (tab.shortLabel ?? tab.label)}</span>
+                {showTabCounts && typeof tab.count === "number" && <span>&nbsp;({tab.count})</span>}
+                {tab.key === "dbml" && isDbmlDirty && (
+                  <span className="ml-2 h-2 w-2 rounded-full bg-amber-500" aria-label="DBML has unsaved changes" />
+                )}
+              </Button>
+            ))}
+          </div>
+        </div>
+        <Button
+          variant="outline"
+          size="icon"
+          className="shrink-0"
+          onClick={onAddElement}
+          disabled={isLocked}
+          data-tour="editor-add-element"
+        >
+          <Plus className="h-4 w-4" />
+          <span className="sr-only">Add Element</span>
+        </Button>
+      </div>
+    </div>
+
+    {/* Tab Content - Only render active tab */}
+    <div className="flex-1 min-h-0 overflow-hidden">
+      <div className={cn("h-full", currentTab !== "tables" && "hidden")}>
+        <TablesTab
+          nodes={nodes}
+          isLocked={isLocked}
+        />
+      </div>
+      <div className={cn("h-full", currentTab !== "relationships" && "hidden")}>
+        <RelationshipsTab
+          nodes={nodes}
+          edges={edges}
+        />
+      </div>
+      <div className={cn("h-full", currentTab !== "dbml" && "hidden")}>
+        {hasOpenedDbmlTab && (
+          <DbmlTab
+            diagram={diagram}
+            isLocked={isLocked}
+            onDirtyChange={setIsDbmlDirty}
+          />
+        )}
+      </div>
+    </div>
+    <CheckpointHistoryDialog
+      isOpen={isCheckpointHistoryOpen}
+      onOpenChange={setIsCheckpointHistoryOpen}
+      checkpoints={checkpoints}
+      onRestore={handleRestoreCheckpoint}
+      onCreateCheckpoint={handleCreateCheckpointFromHistory}
+    />
+  </div>
   );
 }
