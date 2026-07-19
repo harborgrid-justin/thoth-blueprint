@@ -1,0 +1,13 @@
+{
+  "name": "@thoth/service-auth",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Identity and access for Thoth Blueprint — users, organizations/teams, roles, and permissions.",
+  "type": "module",
+  "scripts": {
+    "dev": "echo \"[scaffold] auth service not implemented yet\" && exit 0",
+    "type-check": "echo \"[scaffold] no tsconfig yet\" && exit 0",
+    "test": "echo \"[scaffold] no tests yet\" && exit 0"
+  },
+  "license": "GPL-3.0-or-later"
+}

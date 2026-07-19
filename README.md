@@ -1,149 +1,130 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/AHS12/thoth-blueprint/refs/heads/main/public/ThothBlueprint-icon.svg" alt="ThothBlueprint Logo" width="64" height="64">
+  <img src="https://raw.githubusercontent.com/AHS12/thoth-blueprint/refs/heads/main/artifact/public/ThothBlueprint-icon.svg" alt="Thoth Blueprint Logo" width="64" height="64">
   <h1>Thoth Blueprint</h1>
+  <p><strong>Cloud-based site &amp; community planning — a collaborative CAD alternative for the built environment.</strong></p>
 </div>
 
 <p align="center">
   <a href="https://github.com/AHS12/thoth-blueprint/stargazers">
     <img src="https://img.shields.io/github/stars/AHS12/thoth-blueprint?style=flat-square" alt="Stars">
   </a>
-  <a href="https://github.com/AHS12/thoth-blueprint/releases">
-    <img src="https://img.shields.io/github/v/release/AHS12/thoth-blueprint?style=flat-square" alt="Latest Release">
-  </a>
   <a href="https://github.com/AHS12/thoth-blueprint/actions/workflows/build_test.yml">
     <img src="https://github.com/AHS12/thoth-blueprint/actions/workflows/build_test.yml/badge.svg" alt="Build Status">
   </a>
+  <a href="LICENSE.md">
+    <img src="https://img.shields.io/badge/license-GPLv3-blue?style=flat-square" alt="License">
+  </a>
 </p>
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/AHS12/thoth-blueprint/refs/heads/main/image1.png" alt="Screenshot 1" width="45%">
-  <img src="https://raw.githubusercontent.com/AHS12/thoth-blueprint/refs/heads/main/image2.png" alt="Screenshot 2" width="45%">
-</p>
+> **We are building a new product.** Thoth Blueprint is evolving from an
+> offline database-design tool into a **cloud-based platform for site planning and
+> community planning** — think of a purpose-built, collaborative alternative to
+> traditional CAD, focused on land, sites, and neighborhoods rather than
+> mechanical parts.
+>
+> The original database-design app has been **archived** (not deleted) under
+> [`artifact/`](artifact/), with its history intact. The repository root is now the
+> home of the new platform. See [`docs/MIGRATION.md`](docs/MIGRATION.md) for the
+> full story.
 
-Thoth Blueprint is a free, powerful database design tool that allows you to visualize your database schema with an intuitive drag-and-drop editor. Create, edit, and export your database designs to various formats, including SQL, DBML, JSON, and SVG. Generate migration files for popular frameworks/ORM like Laravel, TypeORM, and Django.
+---
 
-## Features
+## What Thoth Blueprint is becoming
 
-- 🎨 **Visual Database Design** - Intuitive drag-and-drop interface for creating database schemas
-- 🧩 **Complete DBML Workflow** - Import DBML, edit/write DBML in a dedicated editor with diagram sync, and export back to DBML
-- 🔄 **Multiple Export Formats** - Export to SQL, DBML, JSON, SVG
-- 🚀 **Framework Migration Generation** - Generate migration files for Laravel, TypeORM, and Django
-- 🔧 **Offline First** - Work on your diagrams anytime, anywhere, with or without an internet connection
-- ⚡ **No Limits** - Create and manage as many diagrams as you need, with no restrictions
-- 🔐 **Your Data is Yours** - All your data is stored locally on your computer, ensuring complete privacy
-- 📱 **Progressive Web App** - Install as an app on your device for a native-like experience
-- 📝 **Notes & Zones** - Add notes and organize tables in zones for better diagram management
-- 💾 **Checkpoint** - Save and restore diagram snapshots so you can safely experiment and roll back changes
-- 🔒 **Zone Lock/Unlock** - Lock zones to prevent accidental modifications
-- 📋 **Copy/Paste** - Easily duplicate tables and elements
-- ⌨️ **Keyboard Shortcuts** - Speed up your workflow with keyboard shortcuts
+Site and community planning today is trapped between two bad options: heavyweight
+desktop CAD/GIS suites that are expensive, single-player, and hard to learn — and
+lightweight drawing tools that don't understand parcels, zoning, or land use.
+Thoth Blueprint aims for the middle: **the ease and real-time collaboration of a
+modern web app, with a domain model that actually understands the built
+environment.**
 
-## Quick Start
+Plan a subdivision, lay out a mixed-use district, sketch a park or campus, model
+setbacks and zoning envelopes, allocate land uses, and share a live link with your
+team and community stakeholders — all in the browser, all in the cloud.
 
-### Prerequisites
+### Who it's for
 
-- Node.js 20+
-- pnpm (recommended) or npm
+- **Site planners & civil designers** laying out parcels, lots, roads, and utilities.
+- **Urban & community planners** shaping neighborhoods, zoning, and land-use mixes.
+- **Municipalities & review boards** collaborating on and reviewing proposals.
+- **Developers & architects** producing early-stage site concepts fast.
+- **Community stakeholders** who need to see and comment on plans without CAD.
 
-### Development Setup
+## Vision at a glance
 
-1. **Clone the repository**
+- ☁️ **Cloud-native & collaborative** — projects live in the cloud; multiple people
+  edit the same plan in real time, with roles, comments, and review workflows.
+- 🗺️ **Spatially aware** — first-class coordinate systems, units, scale, and layers.
+  Parcels, zones, and land uses are real domain objects, not anonymous shapes.
+- 🏘️ **Planning-native primitives** — sites, parcels, lots, zones, land-use
+  allocations, setbacks, rights-of-way, and infrastructure networks.
+- 📐 **CAD-grade editing on the web** — precise drawing, snapping, measurement, and
+  constraints in a fast canvas — no desktop install.
+- 🔁 **Interoperable** — import/export the formats planners already use (GeoJSON,
+  KML, DXF/DWG, Shapefile, PDF exhibits) so Thoth fits existing workflows.
+- 📊 **Analysis & metrics** — density, coverage, land-use breakdowns, and
+  program/zoning compliance surfaced as you plan.
+- 🔐 **Governed & auditable** — versioning, checkpoints, and an audit trail suitable
+  for public review processes.
 
-   ```bash
-   git clone https://github.com/AHS12/thoth-blueprint.git
-   cd thoth-blueprint
-   ```
+> Not all of this exists yet. This repository currently contains the **product
+> vision, architecture, and an initial scaffold**. See
+> [`docs/ROADMAP.md`](docs/ROADMAP.md) for what is built, in progress, and planned.
 
-2. **Install dependencies**
+## Repository layout
 
-   ```bash
-   pnpm install
-   ```
+This is a monorepo. New product work happens at the root; the archived app is
+self-contained under `artifact/`.
 
-3. **Start development server**
+```
+thoth-blueprint/
+├── apps/
+│   └── web/            # Cloud planning workspace (client) — scaffold
+├── services/           # Cloud backend services — scaffolds
+│   ├── auth/           #   identity & access
+│   ├── projects/       #   projects, versions, checkpoints
+│   ├── geospatial/     #   coordinate systems, layers, spatial ops
+│   └── collaboration/  #   real-time multi-user editing & presence
+├── packages/
+│   └── domain/         # Framework-agnostic planning domain model — scaffold
+├── docs/               # Vision, architecture, roadmap, glossary, migration
+├── artifact/           # ARCHIVED original DB-design app (see artifact/README.md)
+├── CLAUDE.md           # Guidance for AI agents working in this repo
+└── .claude/            # Project agents & skills for the planning platform
+```
 
-   ```bash
-   pnpm dev
-   ```
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how these fit together.
 
-### Production Build
+## Getting started
 
-1. **Build for production**
+The new platform is at the scaffold stage — the packages under `apps/`,
+`services/`, and `packages/` define structure and intent, and are being filled in.
+Start with the docs to understand the direction:
 
-   ```bash
-   pnpm build
-   ```
+1. [`docs/VISION.md`](docs/VISION.md) — the problem, the product, and principles.
+2. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system design and boundaries.
+3. [`docs/ROADMAP.md`](docs/ROADMAP.md) — phased plan and current status.
+4. [`docs/GLOSSARY.md`](docs/GLOSSARY.md) — shared planning vocabulary.
 
-2. **Preview production build**
+### Running the archived app
 
-   ```bash
-   pnpm preview
-   ```
+The original database-design tool still runs, from inside its folder:
 
-### Docker Deployment
+```bash
+cd artifact
+pnpm install
+pnpm dev
+```
 
-Alternatively, you can run ThothBlueprint using Docker for easy deployment:
-
-1. **Build and run with Docker**
-
-   ```bash
-   docker build -t thothblueprint .
-   docker run -d -p 8080:80 --name thothblueprint thothblueprint
-   ```
-
-2. **Or use Docker Compose**
-
-   ```bash
-   docker-compose up -d
-   ```
-
-ThothBlueprint will be available at `http://localhost:8080`
-
-## Usage
-
-1. **Create a new diagram** - Click the "New Diagram" button to start a new database design
-2. **Add tables** - Drag table components from the sidebar or right-click to add new tables
-3. **Define columns** - Click on tables to add and configure columns with appropriate data types
-4. **Create relationships** - Drag from one table to another to create relationships
-5. **Organize with zones** - Create zones to group related tables and lock them to prevent changes
-6. **Add notes** - Add notes to document your database design decisions
-7. **Export your design** - Use the export functionality to generate SQL, DBML, JSON, SVG, or framework migrations
-
-## Advanced Features
-
-### Notes & Zones
-
-ThothBlueprint allows you to organize your database diagrams using zones and notes:
-
-- **Add Notes** - Document your design decisions by adding notes to your diagram
-- **Create Zones** - Group related tables together in zones for better organization
-- **Lock/Unlock Zones** - Lock zones to prevent accidental modifications to tables within them
-- **Add Elements to Zones** - Right-click within a zone to add new tables or notes directly to that zone
-
-### Copy/Paste Functionality
-
-Speed up your workflow by copying and pasting elements:
-
-- **Copy Tables/Notes** - Select one or more tables or notes and copy them (Ctrl+C/Cmd+C)
-- **Paste Elements** - Paste copied elements at your cursor position (Ctrl+V/Cmd+V)
-- **Duplicate Elements** - Quickly duplicate tables with all their column definitions
-
-### Keyboard Shortcuts
-
-ThothBlueprint includes several keyboard shortcuts to speed up your workflow:
-
-- `Ctrl+A` / `Cmd+A` - Add Table
-- `Ctrl+B` / `Cmd+B` - Toggle Sidebar
-- `Ctrl+Z` / `Cmd+Z` - Undo Delete Table
-- `Ctrl+C` / `Cmd+C` - Copy Selection
-- `Ctrl+V` / `Cmd+V` - Paste Selection
-- `Ctrl+Click` / `Cmd+Click` - Select Multiple Nodes
-- `Delete` - Delete Elements
+See [`artifact/README.md`](artifact/README.md) for details.
 
 ## Contributing
 
-Please see our [Contributing Guide](CONTRIBUTING.md) for details on how to contribute to this project.
+We'd love help building this. Please read the [Contributing Guide](CONTRIBUTING.md)
+and the [Code of Conduct](CODE_OF_CONDUCT.md). Good first areas: shaping the
+domain model in `packages/domain`, importer/exporter formats, and the canvas
+workspace in `apps/web`.
 
 ## License
 
-This project is open source and available under the GNU General Public License v3.0. Please see [License File](LICENSE.md) for more information.
+Open source under the **GNU General Public License v3.0**. See [LICENSE.md](LICENSE.md).

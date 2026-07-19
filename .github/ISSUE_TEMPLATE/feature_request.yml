@@ -1,12 +1,12 @@
 name: Feature Request
-description: Suggest an idea or improvement for ThothBlueprint
+description: Suggest an idea or improvement for Thoth Blueprint
 title: "[Feature]: "
 labels: ["feature"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping improve ThothBlueprint! Please provide as much detail as possible to help us understand your idea.
+        Thank you for helping improve Thoth Blueprint — the cloud site & community planning platform! Please provide as much detail as possible to help us understand your idea, including the planning use case (who needs it and why).
   - type: textarea
     id: problem
     attributes:
