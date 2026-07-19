@@ -14,7 +14,14 @@
  *   plan's square unit and acres.
  */
 
-import { area as polygonArea, distance, perimeter as polygonPerimeter, type Point, type Polygon } from "./geometry";
+import {
+  area as polygonArea,
+  distance,
+  perimeter as polygonPerimeter,
+  signedArea,
+  type Point,
+  type Polygon,
+} from "./geometry";
 import type { SpatialContext, Unit } from "./spatial";
 import { areaToSquareMeters, squareMetersTo, unitLabel } from "./spatial";
 
@@ -196,6 +203,103 @@ export function traverseClosure(courses: SurveyCourse[]): TraverseClosure {
   return { perimeter, latitudeError, departureError, linearMisclosure, precision, precisionText };
 }
 
+/**
+ * Interior angle (in decimal degrees) at each vertex of a simple polygon,
+ * index-aligned with `polygon`. Handles convex and reflex (concave) corners:
+ * the returned angles sum to exactly (n − 2) × 180° for any simple ring,
+ * independent of winding order. This is the angular record a plat carries at
+ * each monument.
+ */
+export function interiorAngles(polygon: Polygon): number[] {
+  const n = polygon.length;
+  if (n < 3) return polygon.map(() => 0);
+  const ccw = signedArea(polygon) > 0;
+  const angles: number[] = [];
+  for (let i = 0; i < n; i++) {
+    const prev = polygon[(i - 1 + n) % n];
+    const curr = polygon[i];
+    const next = polygon[(i + 1) % n];
+    const d1x = curr.x - prev.x;
+    const d1y = curr.y - prev.y;
+    const d2x = next.x - curr.x;
+    const d2y = next.y - curr.y;
+    // Signed deflection (turn) from the incoming to the outgoing course.
+    const turn = Math.atan2(d1x * d2y - d1y * d2x, d1x * d2x + d1y * d2y) * DEG;
+    const interior = (((ccw ? 180 - turn : 180 + turn) % 360) + 360) % 360;
+    angles.push(interior);
+  }
+  return angles;
+}
+
+/**
+ * Azimuth (degrees clockwise from north) reconstructed from a quadrant bearing.
+ * The exact inverse of {@link azimuthToBearing}, used to close a traverse from
+ * the *recorded* (rounded) bearings actually printed on the plat.
+ */
+export function bearingToAzimuth(b: QuadrantBearing): number {
+  if (b.cardinal) return { N: 0, E: 90, S: 180, W: 270 }[b.cardinal];
+  const angle = b.degrees + b.minutes / 60 + b.seconds / 3600;
+  if (b.ns === "N" && b.ew === "E") return angle;
+  if (b.ns === "S" && b.ew === "E") return 180 - angle;
+  if (b.ns === "S" && b.ew === "W") return 180 + angle;
+  return 360 - angle; // N…W
+}
+
+/** Options controlling how the recorded plat values are rounded before closing. */
+export interface RecordClosureOptions {
+  /** Decimal places the recorded distances are rounded to (default 2). */
+  distancePrecision?: number;
+}
+
+/**
+ * Traverse closure computed from the **recorded** bearings and distances — i.e.
+ * the rounded values actually written on the plat (bearings to the whole
+ * second, distances to `distancePrecision`). Unlike {@link traverseClosure}
+ * (which closes a coordinate-derived traverse and is therefore always exact),
+ * this reveals the real misclosure a field crew would find if they staked the
+ * plat exactly as drawn. This is the precision figure a plat should report.
+ */
+export function recordClosure(
+  courses: SurveyCourse[],
+  options: RecordClosureOptions = {},
+): TraverseClosure {
+  const factor = Math.pow(10, options.distancePrecision ?? 2);
+  let latitudeError = 0;
+  let departureError = 0;
+  let perimeter = 0;
+  for (const c of courses) {
+    const dist = Math.round(c.distance * factor) / factor;
+    const rad = bearingToAzimuth(c.bearing) / DEG;
+    perimeter += dist;
+    latitudeError += Math.cos(rad) * dist;
+    departureError += Math.sin(rad) * dist;
+  }
+  const linearMisclosure = Math.hypot(latitudeError, departureError);
+  const precision = linearMisclosure < 1e-9 ? Infinity : perimeter / linearMisclosure;
+  const precisionText =
+    precision === Infinity || precision > 1e6
+      ? "Exact (closed)"
+      : `1:${Math.round(precision).toLocaleString()}`;
+  return { perimeter, latitudeError, departureError, linearMisclosure, precision, precisionText };
+}
+
+/**
+ * Area of a boundary by the **Double Meridian Distance** method, computed from
+ * the courses' latitudes and departures. This is mathematically independent of
+ * the shoelace formula used by {@link surveyArea}, so agreement between the two
+ * is a rigorous cross-check that the coordinate geometry is self-consistent.
+ * Returned in plan units².
+ */
+export function dmdArea(courses: SurveyCourse[]): number {
+  let dmd = 0;
+  let doubleArea = 0;
+  for (let i = 0; i < courses.length; i++) {
+    dmd = i === 0 ? courses[i].departure : dmd + courses[i - 1].departure + courses[i].departure;
+    doubleArea += dmd * courses[i].latitude;
+  }
+  return Math.abs(doubleArea / 2);
+}
+
 /** A boundary corner as survey coordinates (northing/easting). */
 export interface CornerCoordinate {
   index: number;
@@ -250,12 +354,31 @@ export function surveyArea(polygon: Polygon, spatial: SpatialContext): SurveyAre
   };
 }
 
+/** The interior angle at a boundary corner, for the plat's angular record. */
+export interface CornerAngle {
+  index: number;
+  label: string;
+  /** Interior angle in decimal degrees. */
+  interior: number;
+  /** Interior angle as whole degrees/minutes/seconds. */
+  dms: { degrees: number; minutes: number; seconds: number };
+}
+
 /** A complete survey/plat report for one boundary. */
 export interface SurveyReport {
   courses: SurveyCourse[];
+  /** Coordinate (geometric) closure — exact for a coordinate-derived traverse. */
   closure: TraverseClosure;
+  /** Closure of the traverse as **recorded** (rounded bearings/distances). */
+  record: TraverseClosure;
   coordinates: CornerCoordinate[];
+  /** Interior angle at each corner; `anglesSum` should equal `anglesExpected`. */
+  angles: CornerAngle[];
+  anglesSum: number;
+  anglesExpected: number;
   area: SurveyArea;
+  /** Area by the Double Meridian Distance method (independent cross-check). */
+  areaByDmd: number;
   perimeter: number;
   perimeterMeters: number;
   units: Unit;
@@ -265,11 +388,23 @@ export interface SurveyReport {
 export function surveyReport(polygon: Polygon, spatial: SpatialContext): SurveyReport {
   const courses = polygonCourses(polygon, spatial);
   const perimeter = polygonPerimeter(polygon);
+  const angleDegrees = interiorAngles(polygon);
+  const angles: CornerAngle[] = angleDegrees.map((interior, i) => ({
+    index: i,
+    label: cornerLabel(i),
+    interior,
+    dms: toDms(interior),
+  }));
   return {
     courses,
     closure: traverseClosure(courses),
+    record: recordClosure(courses, { distancePrecision: 2 }),
     coordinates: boundaryCoordinates(polygon),
+    angles,
+    anglesSum: angleDegrees.reduce((s, a) => s + a, 0),
+    anglesExpected: (polygon.length - 2) * 180,
     area: surveyArea(polygon, spatial),
+    areaByDmd: dmdArea(courses),
     perimeter,
     perimeterMeters: perimeter * (spatial.units === "feet" ? 0.3048 : 1),
     units: spatial.units,

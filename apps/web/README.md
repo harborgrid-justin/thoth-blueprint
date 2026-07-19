@@ -42,12 +42,17 @@ npm run build        # type-check + production build
   unit system (metric/imperial), area unit, bearing format (DMS/decimal),
   coordinate readout (plan/survey), and a **high-contrast** accessibility mode.
   Presentation-only: the plan's stored geometry and CRS never change.
-- **Plat & survey report** (`src/features/survey`) — for each tract, the full
-  surveyor's record: a metes-and-bounds **line table** (quadrant bearings +
-  distances), **corner coordinates** (northing/easting), **traverse closure /
-  precision**, area (units² + acres), a generated **legal description**, and a
-  courses **CSV export**. Open it per-element from the inspector or for the whole
-  plat from the top bar.
+- **Plat & survey report** (`src/features/survey`) — for each tract, an
+  engineering-grade **plat of survey**: a drawn SVG exhibit (labelled
+  metes-and-bounds courses, corner monuments with a Point of Beginning, interior
+  angles, setback envelope, area callout, north arrow, graphic scale, and title
+  block, exportable as vector SVG), plus the full surveyor's record — a
+  **line table** with latitudes/departures, **interior angles** (summing to
+  (n−2)×180°), **corner coordinates**, both **coordinate closure** and
+  **as-recorded closure/precision**, an **area cross-checked by the Double
+  Meridian Distance method**, a generated **legal description**, and a courses
+  **CSV export**. Open it per-element from the inspector or for the whole plat
+  from the top bar.
 - **Terrain & grading** (`src/features/terrain`) — spot elevations build a ground
   surface; the canvas draws **contour lines** and **slope shading**, and the
   Terrain tab reports slope analysis and live **cut/fill earthwork** for grading

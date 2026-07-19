@@ -1,14 +1,19 @@
 import { describe, expect, it } from "vitest";
 import { defaultSpatialContext } from "./spatial";
 import type { Polygon } from "./geometry";
+import { area as polygonArea } from "./geometry";
 import {
   azimuth,
   azimuthToBearing,
   bearingText,
+  bearingToAzimuth,
   boundaryCoordinates,
+  dmdArea,
   formatBearing,
+  interiorAngles,
   legalDescription,
   polygonCourses,
+  recordClosure,
   surveyReport,
   toDms,
   traverseClosure,
@@ -67,6 +72,74 @@ describe("courses & closure", () => {
     expect(closure.linearMisclosure).toBeLessThan(1e-6);
     expect(closure.precisionText).toBe("Exact (closed)");
     expect(closure.perimeter).toBeCloseTo(400);
+  });
+
+  it("closes the recorded (rounded) traverse", () => {
+    const record = recordClosure(polygonCourses(square, spatial));
+    expect(record.precisionText).toBe("Exact (closed)");
+    // A tract with non-round geometry still closes tightly from rounded record.
+    const tri: Polygon = [
+      { x: 0, y: 0 },
+      { x: 100, y: 0 },
+      { x: 40, y: 70 },
+    ];
+    const rec = recordClosure(polygonCourses(tri, spatial));
+    expect(rec.linearMisclosure).toBeLessThan(0.05);
+    expect(rec.perimeter).toBeGreaterThan(0);
+  });
+});
+
+// An L-shaped tract exercises a reflex (concave) corner.
+const ell: Polygon = [
+  { x: 0, y: 0 },
+  { x: 60, y: 0 },
+  { x: 60, y: 40 },
+  { x: 30, y: 40 },
+  { x: 30, y: 80 },
+  { x: 0, y: 80 },
+];
+
+describe("interior angles", () => {
+  it("gives 90° at every corner of a square", () => {
+    const angles = interiorAngles(square);
+    angles.forEach((a) => expect(a).toBeCloseTo(90, 6));
+    expect(angles.reduce((s, a) => s + a, 0)).toBeCloseTo(360, 6);
+  });
+
+  it("sums to (n−2)·180° and finds the reflex corner on a concave tract", () => {
+    const angles = interiorAngles(ell);
+    expect(angles.reduce((s, a) => s + a, 0)).toBeCloseTo((ell.length - 2) * 180, 6);
+    const reflex = angles.filter((a) => a > 180);
+    expect(reflex).toHaveLength(1);
+    expect(reflex[0]).toBeCloseTo(270, 6);
+  });
+});
+
+describe("bearing ↔ azimuth round-trip", () => {
+  it("recovers the azimuth from a quadrant bearing", () => {
+    for (const az of [15.5, 100.25, 210.9, 355.1, 44.999]) {
+      expect(bearingToAzimuth(azimuthToBearing(az))).toBeCloseTo(az, 3);
+    }
+  });
+});
+
+describe("DMD area cross-check", () => {
+  it("agrees with the shoelace area independently", () => {
+    for (const poly of [square, ell]) {
+      const dmd = dmdArea(polygonCourses(poly, spatial));
+      expect(dmd).toBeCloseTo(polygonArea(poly), 6);
+    }
+  });
+});
+
+describe("full report", () => {
+  it("carries angles, record closure, and a verified DMD area", () => {
+    const report = surveyReport(ell, spatial);
+    expect(report.anglesSum).toBeCloseTo(report.anglesExpected, 6);
+    expect(report.anglesExpected).toBe(720);
+    expect(report.areaByDmd).toBeCloseTo(report.area.squareUnits, 4);
+    expect(report.areaByDmd).toBeCloseTo(3600, 4);
+    expect(report.record.linearMisclosure).toBeGreaterThanOrEqual(0);
   });
 });
 
