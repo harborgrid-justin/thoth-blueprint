@@ -105,6 +105,8 @@ Start with the docs to understand the direction:
 2. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system design and boundaries.
 3. [`docs/ROADMAP.md`](docs/ROADMAP.md) — phased plan and current status.
 4. [`docs/GLOSSARY.md`](docs/GLOSSARY.md) — shared planning vocabulary.
+5. [`docs/requirements/`](docs/requirements/README.md) — the full requirements
+   suite (frontend, backend, domain, interop) and traceability matrix.
 
 ### Running the archived app
 
