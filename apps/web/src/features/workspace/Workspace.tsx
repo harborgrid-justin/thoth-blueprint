@@ -5,6 +5,10 @@ import { api, type Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
 import { useInteropStore } from "@/store/interopStore";
+import { useUiStore } from "@/store/uiStore";
+import { useFindStore } from "@/store/findStore";
+import { usePrefsStore } from "@/store/prefsStore";
+import { TOOLS, type ToolId } from "@/lib/tools";
 import { PlanningCanvas } from "@/features/canvas/PlanningCanvas";
 import { Scene3D } from "@/features/canvas3d/Scene3D";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,6 +22,14 @@ import { MetricsPanel } from "./MetricsPanel";
 import { CheckpointsDialog } from "./CheckpointsDialog";
 import { PlatReportDialog } from "@/features/survey/PlatReportDialog";
 import { TerrainPanel } from "@/features/terrain/TerrainPanel";
+import { CommandPalette } from "@/features/command/CommandPalette";
+import { ShortcutsDialog } from "@/features/command/ShortcutsDialog";
+import { PreferencesDialog } from "@/features/preferences/PreferencesDialog";
+import { FindPanel } from "@/features/find/FindPanel";
+import type { CommandActions } from "@/features/command/commands";
+
+/** Tool single-letter shortcuts (e.g. "v" → select), for keyboard-first drawing. */
+const TOOL_BY_KEY = new Map<string, ToolId>(TOOLS.map((t) => [t.shortcut.toLowerCase(), t.id]));
 
 const AUTOSAVE_MS = 1500;
 
@@ -86,29 +98,120 @@ export function Workspace() {
     prevSelLen.current = selection.length;
   }, [selection]);
 
-  // Global undo/redo & delete shortcuts.
+  // Unified keyboard shortcuts: command palette, editing, navigation, and
+  // single-letter tool selection (FE-CMD-001/002/003, FE-EDIT-001/002).
   React.useEffect(() => {
     function onKey(e: KeyboardEvent) {
       const target = e.target as HTMLElement;
-      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return;
+      const typing =
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable;
       const mod = e.metaKey || e.ctrlKey;
-      if (mod && e.key.toLowerCase() === "z") {
+      const ws = useWorkspaceStore.getState();
+
+      // The command palette toggles even while typing in a field.
+      if (mod && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        if (e.shiftKey) useWorkspaceStore.getState().redo();
-        else useWorkspaceStore.getState().undo();
-      } else if (mod && e.key.toLowerCase() === "s") {
-        e.preventDefault();
-        void save();
-      } else if (e.key === "Delete" || e.key === "Backspace") {
-        if (useWorkspaceStore.getState().selection.length > 0) {
-          e.preventDefault();
-          useWorkspaceStore.getState().deleteSelection();
+        useUiStore.getState().toggleCommand();
+        return;
+      }
+      if (typing) return;
+
+      if (mod) {
+        switch (e.key.toLowerCase()) {
+          case "z":
+            e.preventDefault();
+            e.shiftKey ? ws.redo() : ws.undo();
+            return;
+          case "s":
+            e.preventDefault();
+            void save();
+            return;
+          case "c":
+            e.preventDefault();
+            ws.copySelection();
+            return;
+          case "x":
+            e.preventDefault();
+            ws.cutSelection();
+            return;
+          case "v":
+            e.preventDefault();
+            ws.paste();
+            return;
+          case "d":
+            e.preventDefault();
+            ws.duplicateSelection();
+            return;
+          case "a":
+            e.preventDefault();
+            ws.selectAll();
+            return;
+          case "f":
+            e.preventDefault();
+            useFindStore.getState().openFind();
+            return;
         }
+        return;
+      }
+
+      if (e.key === "Delete" || e.key === "Backspace") {
+        if (ws.selection.length > 0) {
+          e.preventDefault();
+          ws.deleteSelection();
+        }
+        return;
+      }
+      if (e.key === "?") {
+        useUiStore.getState().setShortcutsOpen(true);
+        return;
+      }
+      if (e.key === "1") {
+        useCanvasStore.getState().requestFit();
+        return;
+      }
+      if (e.key === "2") {
+        useCanvasStore.getState().requestFitSelection();
+        return;
+      }
+      const toolId = TOOL_BY_KEY.get(e.key.toLowerCase());
+      if (toolId) {
+        e.preventDefault();
+        ws.setTool(toolId);
       }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [save]);
+
+  // Warn before leaving with unsynced edits (FE-STATE-006).
+  React.useEffect(() => {
+    function onBeforeUnload(e: BeforeUnloadEvent) {
+      if (useWorkspaceStore.getState().dirty) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    }
+    window.addEventListener("beforeunload", onBeforeUnload);
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  }, []);
+
+  // Apply the high-contrast display preference to the document (FE-PREFS-005).
+  const highContrast = usePrefsStore((s) => s.highContrast);
+  React.useEffect(() => {
+    document.documentElement.classList.toggle("contrast", highContrast);
+    return () => document.documentElement.classList.remove("contrast");
+  }, [highContrast]);
+
+  // Stable command-palette actions (imperative handlers the workspace owns).
+  const commandActions = React.useMemo<CommandActions>(
+    () => ({
+      onSave: () => void save(),
+      onOpenCheckpoints: () => setCheckpointsOpen(true),
+    }),
+    [save],
+  );
 
   if (loading) {
     return <CenterMessage>Loading project…</CenterMessage>;
@@ -130,6 +233,7 @@ export function Workspace() {
           <Toolbar />
           <main className="relative min-w-0 flex-1">
             <CanvasArea />
+            <FindPanel />
           </main>
           <aside className="flex w-[320px] shrink-0 flex-col border-l border-border bg-card">
             <Tabs value={tab} onValueChange={setTab} className="flex min-h-0 flex-1 flex-col">
@@ -166,6 +270,9 @@ export function Workspace() {
         </div>
         <CheckpointsDialog open={checkpointsOpen} onOpenChange={setCheckpointsOpen} />
         <PlatReportDialog />
+        <CommandPalette actions={commandActions} />
+        <ShortcutsDialog />
+        <PreferencesDialog />
       </div>
     </TooltipProvider>
   );

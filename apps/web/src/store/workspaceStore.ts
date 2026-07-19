@@ -1,9 +1,11 @@
 import { create } from "zustand";
 import {
+  bounds,
   createId,
+  isPointElement,
   isSpatialElement,
   networkFromPath,
-  type AreaUnit,
+  unionBounds,
   type ElementKind,
   type Layer,
   type NetworkEdge,
@@ -36,7 +38,6 @@ export interface WorkspaceState {
   activeTool: ToolId;
   activeLayerId: string | null;
   selection: string[];
-  areaUnit: AreaUnit;
   /** Set when the site diverges from the last saved server state. */
   dirty: boolean;
   lastSavedAt: string | null;
@@ -49,9 +50,25 @@ export interface WorkspaceState {
   // --- tool & selection ---
   setTool(tool: ToolId): void;
   setActiveLayer(layerId: string): void;
-  setAreaUnit(unit: AreaUnit): void;
   select(id: string | null, additive?: boolean): void;
   selectMany(ids: string[]): void;
+  selectAll(): void;
+
+  // --- clipboard & structural editing ---
+  copySelection(): void;
+  cutSelection(): void;
+  /** Paste the clipboard, offset from the originals, selecting the new copies. */
+  paste(): void;
+  /** Duplicate the current selection in place with an offset. */
+  duplicateSelection(): void;
+  /** Whether the clipboard currently holds anything to paste. */
+  canPaste(): boolean;
+
+  // --- vertex editing ---
+  /** Insert a vertex into a spatial element's boundary after `afterIndex`. */
+  insertVertex(id: string, afterIndex: number, point: Point): void;
+  /** Delete a vertex from a spatial element's boundary (keeps a triangle minimum). */
+  deleteVertex(id: string, index: number): void;
 
   // --- element mutations (each records history) ---
   addDrawnElement(kind: Exclude<ElementKind, "note" | "tree" | "spot">, boundary: Polygon): string | null;
@@ -83,6 +100,39 @@ function snapshot<T>(value: T): T {
     : (JSON.parse(JSON.stringify(value)) as T);
 }
 
+/**
+ * Session clipboard. Module-scoped so copy/paste survives project switches,
+ * satisfying "paste across projects and scenarios" (`FE-EDIT-001`).
+ */
+let clipboard: PlanElement[] = [];
+
+/** A "nice" paste offset derived from the copied elements' own extent. */
+function pasteOffset(elements: PlanElement[]): Point {
+  const boxes = elements.filter(isSpatialElement).map((e) => bounds(e.boundary));
+  const b = boxes.length ? unionBounds(boxes) : null;
+  if (b) {
+    const step = Math.max(1, Math.max(b.maxX - b.minX, b.maxY - b.minY) * 0.05);
+    return { x: step, y: step };
+  }
+  return { x: 5, y: 5 };
+}
+
+/** Clone an element with a fresh id, shifted by (dx, dy), reparented if needed. */
+function offsetElement(
+  el: PlanElement,
+  dx: number,
+  dy: number,
+  layerExists: (id: string) => boolean,
+  fallbackLayer: string,
+): PlanElement {
+  const layerId = layerExists(el.layerId) ? el.layerId : fallbackLayer;
+  const id = createId(el.kind);
+  if (isPointElement(el)) {
+    return { ...el, id, layerId, position: { x: el.position.x + dx, y: el.position.y + dy } };
+  }
+  return { ...el, id, layerId, boundary: el.boundary.map((p) => ({ x: p.x + dx, y: p.y + dy })) };
+}
+
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
   /** Apply a pure change to the site, recording the previous state for undo. */
   function mutate(recipe: (site: Site) => Site) {
@@ -101,7 +151,6 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     activeTool: "select",
     activeLayerId: null,
     selection: [],
-    areaUnit: "acres",
     dirty: false,
     lastSavedAt: null,
 
@@ -145,10 +194,6 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       set({ activeLayerId: layerId });
     },
 
-    setAreaUnit(unit) {
-      set({ areaUnit: unit });
-    },
-
     select(id, additive = false) {
       if (id === null) {
         set({ selection: [] });
@@ -168,6 +213,80 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     selectMany(ids) {
       set({ selection: ids });
+    },
+
+    selectAll() {
+      const { site } = get();
+      if (!site) return;
+      set({ selection: site.elements.map((e) => e.id) });
+    },
+
+    copySelection() {
+      const { site, selection } = get();
+      if (!site || selection.length === 0) return;
+      const ids = new Set(selection);
+      clipboard = site.elements.filter((e) => ids.has(e.id)).map((e) => snapshot(e));
+    },
+
+    cutSelection() {
+      if (get().selection.length === 0) return;
+      get().copySelection();
+      get().deleteSelection();
+    },
+
+    paste() {
+      const { site, activeLayerId } = get();
+      if (!site || clipboard.length === 0) return;
+      const fallback = activeLayerId ?? site.layers[0]?.id ?? "";
+      const layerExists = (id: string) => site.layers.some((l) => l.id === id);
+      const off = pasteOffset(clipboard);
+      const copies = clipboard.map((e) =>
+        offsetElement(snapshot(e), off.x, off.y, layerExists, fallback),
+      );
+      mutate((s) => ({ ...s, elements: [...s.elements, ...copies] }));
+      set({ selection: copies.map((c) => c.id) });
+    },
+
+    duplicateSelection() {
+      const { site, selection, activeLayerId } = get();
+      if (!site || selection.length === 0) return;
+      const ids = new Set(selection);
+      const originals = site.elements.filter((e) => ids.has(e.id));
+      if (originals.length === 0) return;
+      const fallback = activeLayerId ?? site.layers[0]?.id ?? "";
+      const layerExists = (id: string) => site.layers.some((l) => l.id === id);
+      const off = pasteOffset(originals);
+      const copies = originals.map((e) =>
+        offsetElement(snapshot(e), off.x, off.y, layerExists, fallback),
+      );
+      mutate((s) => ({ ...s, elements: [...s.elements, ...copies] }));
+      set({ selection: copies.map((c) => c.id) });
+    },
+
+    canPaste() {
+      return clipboard.length > 0;
+    },
+
+    insertVertex(id, afterIndex, point) {
+      mutate((s) => ({
+        ...s,
+        elements: s.elements.map((e) => {
+          if (e.id !== id || !isSpatialElement(e)) return e;
+          const boundary = e.boundary.slice();
+          boundary.splice(afterIndex + 1, 0, point);
+          return { ...e, boundary };
+        }),
+      }));
+    },
+
+    deleteVertex(id, index) {
+      mutate((s) => ({
+        ...s,
+        elements: s.elements.map((e) => {
+          if (e.id !== id || !isSpatialElement(e) || e.boundary.length <= 3) return e;
+          return { ...e, boundary: e.boundary.filter((_, i) => i !== index) };
+        }),
+      }));
     },
 
     addDrawnElement(kind, boundary) {

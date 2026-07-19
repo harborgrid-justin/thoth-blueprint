@@ -4,6 +4,7 @@ import {
   Box,
   Check,
   Cloud,
+  Command,
   Compass,
   Grid3x3,
   History,
@@ -14,6 +15,8 @@ import {
   Moon,
   Plus,
   ScrollText,
+  Search,
+  Settings2,
   Square,
   Sun,
   Tag,
@@ -22,6 +25,7 @@ import type { Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
 import { useUiStore } from "@/store/uiStore";
+import { useFindStore } from "@/store/findStore";
 import { useTheme } from "@/theme/theme-provider";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -56,6 +60,9 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
     setViewMode,
   } = useCanvasStore();
   const openPlat = useUiStore((s) => s.openPlat);
+  const toggleCommand = useUiStore((s) => s.toggleCommand);
+  const setPrefsOpen = useUiStore((s) => s.setPrefsOpen);
+  const openFind = useFindStore((s) => s.openFind);
 
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border bg-card px-3">
@@ -143,6 +150,31 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         </Button>
 
         {project && <PresenceBar members={project.members} />}
+
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size="icon-sm" onClick={openFind} aria-label="Find and filter">
+              <Search className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">Find &amp; filter ⌘F</TooltipContent>
+        </Tooltip>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size="icon-sm" onClick={toggleCommand} aria-label="Command palette">
+              <Command className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">Commands ⌘K</TooltipContent>
+        </Tooltip>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size="icon-sm" onClick={() => setPrefsOpen(true)} aria-label="Display preferences">
+              <Settings2 className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">Display preferences</TooltipContent>
+        </Tooltip>
 
         <Tooltip delayDuration={300}>
           <TooltipTrigger asChild>

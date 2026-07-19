@@ -24,10 +24,24 @@ npm run build        # type-check + production build
 ## What's here
 
 - **Planning canvas** (`src/features/canvas`) — an SVG canvas with pan/zoom, a
-  scale-aware grid, snapping (to grid and to existing vertices), polygon drawing
-  for every planning primitive, vertex editing, selection/move, and a 2-point
-  measurement ruler. Lots render their buildable **setback** envelope, and the
-  selected boundary is annotated with **bearing + distance** on every edge.
+  scale-aware grid, snapping (to grid and to existing vertices, with a live
+  snap indicator), polygon drawing for every planning primitive, and full vertex
+  editing: drag to move, **double-click an edge to insert**, **Alt-click to
+  delete**. A **multi-point measurement ruler** reports cumulative distance and
+  bearing. On-canvas overlays add a cartographic **scale bar**, a **north arrow**,
+  and a **land-use legend**. Lots render their buildable **setback** envelope, and
+  the selected boundary is annotated with **bearing + distance** on every edge.
+- **Command palette & keyboard-first control** (`src/features/command`) — press
+  **⌘K** for a searchable palette of every command, single-letter **tool
+  shortcuts** (V/P/Z/…), and clipboard/edit shortcuts (**⌘C/X/V/D**, ⌘A). A
+  discoverable **shortcuts reference** opens with `?`.
+- **Find & filter** (`src/features/find`) — **⌘F** searches elements by name,
+  type, land use, or attribute; select all matches, zoom to a result, or isolate
+  matches on the canvas.
+- **Display preferences** (`src/features/preferences`) — persisted choices for
+  unit system (metric/imperial), area unit, bearing format (DMS/decimal),
+  coordinate readout (plan/survey), and a **high-contrast** accessibility mode.
+  Presentation-only: the plan's stored geometry and CRS never change.
 - **Plat & survey report** (`src/features/survey`) — for each tract, the full
   surveyor's record: a metes-and-bounds **line table** (quadrant bearings +
   distances), **corner coordinates** (northing/easting), **traverse closure /
@@ -56,14 +70,16 @@ npm run build        # type-check + production build
   Imported meshes/clouds/underlays are session reference data (not persisted);
   baking a cloud into spot elevations promotes it into the saved plan.
 - **Toolbar** — select, pan, and drawing tools for parcel, zone, land use, lot,
-  building, right-of-way, open space, and notes, plus undo/redo.
+  building, right-of-way, open space, and notes, plus undo/redo. Selections can be
+  **copied, cut, pasted (across projects), and duplicated** with an offset.
 - **Inspector** (`PropertiesPanel`) — edit the planning attributes of the selected
   element (zone designation/coverage/FAR, building storeys/units, land-use
   category, lot setback, …) with live area/perimeter readouts.
 - **Layers** (`LayerPanel`) — visibility, lock, order, rename, and the active layer.
 - **Metrics** (`MetricsPanel`) — live coverage, FAR, density, dwelling units,
   impervious/open-space ratios, a land-use allocation breakdown, and compliance
-  findings — all computed by `@thoth/domain`.
+  findings — all computed by `@thoth/domain`. Metrics also scope to the current
+  **selection**, and each compliance finding is **click-to-locate** on the canvas.
 - **Checkpoints** — named, restorable snapshots of a project's site.
 - **Dashboard** — project listing, creation from starter templates, and presence.
 

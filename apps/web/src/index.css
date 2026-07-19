@@ -54,6 +54,23 @@
     --canvas-grid-major: 217 19% 26%;
   }
 
+  /* High-contrast display mode (FE-PREFS-005 / NFR-A11Y-001): stronger borders
+     and text in both light and dark themes. Toggled by a `.contrast` class. */
+  .contrast {
+    --foreground: 222 50% 6%;
+    --muted-foreground: 222 34% 26%;
+    --border: 222 40% 32%;
+    --input: 222 40% 32%;
+    --ring: 199 90% 36%;
+  }
+  .dark.contrast {
+    --foreground: 0 0% 100%;
+    --muted-foreground: 210 28% 86%;
+    --border: 210 32% 68%;
+    --input: 210 32% 68%;
+    --ring: 199 92% 64%;
+  }
+
   * {
     border-color: hsl(var(--border));
   }
