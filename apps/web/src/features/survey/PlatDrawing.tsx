@@ -1,9 +1,11 @@
 import * as React from "react";
 import { Download } from "lucide-react";
 import {
+  boundaryEdges,
   buildableEnvelope,
   centroid,
   bounds as boundsOf,
+  densifyBoundary,
   unitLabel,
   type Point,
   type SpatialElement,
@@ -60,7 +62,11 @@ export function PlatDrawing({
   const boundary = element.boundary;
   const u = unitLabel(spatial.units);
 
-  const view = React.useMemo(() => buildView(boundary), [boundary]);
+  // Fit to the densified outline so arcs that bulge past the vertices stay on-sheet.
+  const view = React.useMemo(
+    () => buildView(densifyBoundary(boundary, element.arcs, 4)),
+    [boundary, element.arcs],
+  );
   if (!view) {
     return (
       <div className="rounded-md border border-border bg-background/60 p-6 text-center text-sm text-muted-foreground">
@@ -71,7 +77,6 @@ export function PlatDrawing({
   const { project, scalePx } = view;
   const c = centroid(boundary);
   const cScreen = project(c);
-  const n = boundary.length;
 
   // Setback / buildable envelope for a lot, drawn as an interior offset line.
   const envelope =
@@ -139,9 +144,9 @@ export function PlatDrawing({
             />
           )}
 
-          {/* Boundary */}
+          {/* Boundary (arcs tessellated so curves render smoothly). */}
           <polygon
-            points={boundary.map((p) => screenPair(project(p))).join(" ")}
+            points={densifyBoundary(boundary, element.arcs, 1).map((p) => screenPair(project(p))).join(" ")}
             fill={INK}
             fillOpacity={0.04}
             stroke={INK}
@@ -149,15 +154,41 @@ export function PlatDrawing({
             strokeLinejoin="round"
           />
 
-          {/* Course labels: bearing + distance, offset outward, along each edge. */}
-          {boundary.map((a, i) => {
-            const b = boundary[(i + 1) % n];
+          {/* Course labels: bearing + distance for lines, curve data for arcs. */}
+          {boundaryEdges(boundary, element.arcs).map((edge, i) => {
+            const a = edge.from;
+            const b = edge.to;
             const course = report.courses[i];
-            const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+            const midWorld = edge.arc ? edge.arc.mid : { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
             const out = outwardNormal(a, b, c);
-            const pos = offset(project(mid), out, 15);
+            const pos = offset(project(midWorld), out, 16);
             let angle = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
             if (angle > 90 || angle < -90) angle += 180;
+            if (edge.arc && course.curve) {
+              const cv = course.curve;
+              return (
+                <g key={`c${i}`}>
+                  {/* Radius tick from the arc midpoint toward the center. */}
+                  <line
+                    x1={project(edge.arc.mid).x}
+                    y1={project(edge.arc.mid).y}
+                    x2={project(edge.arc.center).x}
+                    y2={project(edge.arc.center).y}
+                    stroke={INK_MUTED}
+                    strokeWidth={0.6}
+                    strokeDasharray="3 3"
+                  />
+                  <text x={pos.x} y={pos.y} textAnchor="middle" fill={INK} fontSize={9.5}>
+                    <tspan x={pos.x} dy={-2} fontWeight={700}>
+                      {cv.label}
+                    </tspan>
+                    <tspan x={pos.x} dy={10} fill={INK_MUTED}>
+                      {`R=${fmt(cv.radius)} L=${fmt(cv.arcLength)}`}
+                    </tspan>
+                  </text>
+                </g>
+              );
+            }
             return (
               <text
                 key={`c${i}`}

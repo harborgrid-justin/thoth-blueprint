@@ -69,6 +69,10 @@ export interface WorkspaceState {
   insertVertex(id: string, afterIndex: number, point: Point): void;
   /** Delete a vertex from a spatial element's boundary (keeps a triangle minimum). */
   deleteVertex(id: string, index: number): void;
+  /** Set (or clear, when ~0) the circular-arc bulge of an element's edge. */
+  setEdgeBulge(id: string, edgeIndex: number, bulge: number): void;
+  /** Straighten every curved edge of an element. */
+  clearArcs(id: string): void;
 
   // --- element mutations (each records history) ---
   addDrawnElement(kind: Exclude<ElementKind, "note" | "tree" | "spot">, boundary: Polygon): string | null;
@@ -115,6 +119,44 @@ function pasteOffset(elements: PlanElement[]): Point {
     return { x: step, y: step };
   }
   return { x: 5, y: 5 };
+}
+
+/**
+ * Re-key edge bulges after inserting a vertex following `afterIndex`. The split
+ * edge's arc is dropped (a curve can't be split without recomputation); edges
+ * after the insertion shift up by one.
+ */
+function reindexArcsAfterInsert(
+  arcs: Record<string, number>,
+  afterIndex: number,
+): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const [k, v] of Object.entries(arcs)) {
+    const i = Number(k);
+    if (i === afterIndex) continue;
+    out[String(i > afterIndex ? i + 1 : i)] = v;
+  }
+  return out;
+}
+
+/**
+ * Re-key edge bulges after deleting vertex `index`. The two edges incident to
+ * the removed vertex merge into one straight edge (their arcs are dropped);
+ * later edges shift down by one.
+ */
+function reindexArcsAfterDelete(
+  arcs: Record<string, number>,
+  index: number,
+  n: number,
+): Record<string, number> {
+  const removedPrev = (index - 1 + n) % n;
+  const out: Record<string, number> = {};
+  for (const [k, v] of Object.entries(arcs)) {
+    const i = Number(k);
+    if (i === index || i === removedPrev) continue;
+    out[String(i > index ? i - 1 : i)] = v;
+  }
+  return out;
 }
 
 /** Clone an element with a fresh id, shifted by (dx, dy), reparented if needed. */
@@ -274,7 +316,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
           if (e.id !== id || !isSpatialElement(e)) return e;
           const boundary = e.boundary.slice();
           boundary.splice(afterIndex + 1, 0, point);
-          return { ...e, boundary };
+          const arcs = e.arcs ? reindexArcsAfterInsert(e.arcs, afterIndex) : undefined;
+          return { ...e, boundary, arcs };
         }),
       }));
     },
@@ -284,8 +327,31 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         ...s,
         elements: s.elements.map((e) => {
           if (e.id !== id || !isSpatialElement(e) || e.boundary.length <= 3) return e;
-          return { ...e, boundary: e.boundary.filter((_, i) => i !== index) };
+          const arcs = e.arcs ? reindexArcsAfterDelete(e.arcs, index, e.boundary.length) : undefined;
+          return { ...e, boundary: e.boundary.filter((_, i) => i !== index), arcs };
         }),
+      }));
+    },
+
+    setEdgeBulge(id, edgeIndex, bulge) {
+      mutate((s) => ({
+        ...s,
+        elements: s.elements.map((e) => {
+          if (e.id !== id || !isSpatialElement(e)) return e;
+          const arcs: Record<string, number> = { ...(e.arcs ?? {}) };
+          if (Math.abs(bulge) < 1e-4) delete arcs[String(edgeIndex)];
+          else arcs[String(edgeIndex)] = bulge;
+          return { ...e, arcs };
+        }),
+      }));
+    },
+
+    clearArcs(id) {
+      mutate((s) => ({
+        ...s,
+        elements: s.elements.map((e) =>
+          e.id === id && isSpatialElement(e) ? { ...e, arcs: {} } : e,
+        ),
       }));
     },
 

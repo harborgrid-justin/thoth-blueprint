@@ -2,9 +2,13 @@ import * as React from "react";
 import {
   bounds,
   buildableEnvelope,
+  bulgeToArc,
   centroid,
   contourLevels,
   DEFAULT_ROAD_WIDTH,
+  densifyArc,
+  densifyBoundary,
+  edgeBulge,
   elevationAt,
   isPointElement,
   isSpatialElement,
@@ -46,7 +50,30 @@ type Interaction =
   | { type: "idle" }
   | { type: "panning"; lastScreen: Point }
   | { type: "moving"; startWorld: Point; delta: Point }
-  | { type: "vertex"; elementId: string; index: number; boundary: Polygon };
+  | { type: "vertex"; elementId: string; index: number; boundary: Polygon }
+  | { type: "edgeBulge"; elementId: string; index: number; from: Point; to: Point; bulge: number };
+
+/** Midpoint of an edge, honoring an existing bulge (the arc's midpoint). */
+function edgeMidpoint(a: Point, b: Point, bulge: number): Point {
+  if (bulge) {
+    const arc = bulgeToArc(a, b, bulge);
+    if (arc) return arc.mid;
+  }
+  return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+}
+
+/** The bulge that makes edge a→b pass through the cursor at its midpoint. */
+function bulgeThroughCursor(a: Point, b: Point, cursor: Point): number {
+  const cx = b.x - a.x;
+  const cy = b.y - a.y;
+  const len = Math.hypot(cx, cy);
+  if (len < 1e-6) return 0;
+  const nx = -cy / len;
+  const ny = cx / len;
+  const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  const off = (cursor.x - mid.x) * nx + (cursor.y - mid.y) * ny;
+  return (2 * off) / len;
+}
 
 /** Elements paired with their layer, ordered back-to-front, hidden layers dropped. */
 function orderedVisibleElements(
@@ -77,6 +104,7 @@ export function PlanningCanvas() {
   const addNetworkPath = useWorkspaceStore((s) => s.addNetworkPath);
   const insertVertex = useWorkspaceStore((s) => s.insertVertex);
   const deleteVertex = useWorkspaceStore((s) => s.deleteVertex);
+  const setEdgeBulge = useWorkspaceStore((s) => s.setEdgeBulge);
   const setTool = useWorkspaceStore((s) => s.setTool);
 
   // Find & filter: dim non-matching elements when canvas filtering is on.
@@ -204,7 +232,10 @@ export function PlanningCanvas() {
         const { element, layer } = ordered[i];
         if (layer?.locked) continue;
         if (isSpatialElement(element)) {
-          if (pointInPolygon(world, element.boundary)) return element.id;
+          const ring = element.arcs
+            ? densifyBoundary(element.boundary, element.arcs, 4)
+            : element.boundary;
+          if (pointInPolygon(world, ring)) return element.id;
         } else {
           const s = worldToScreen(element.position, viewport);
           const c = worldToScreen(world, viewport);
@@ -331,6 +362,20 @@ export function PlanningCanvas() {
         };
         return;
       }
+
+      // Edge midpoint handles: drag to curve an edge (set its arc bulge).
+      const ring = selectedElement.boundary;
+      for (let ei = 0; ei < ring.length; ei++) {
+        const a = ring[ei];
+        const b = ring[(ei + 1) % ring.length];
+        const bulge = edgeBulge(selectedElement.arcs, ei);
+        const ms = worldToScreen(edgeMidpoint(a, b, bulge), viewport);
+        if (Math.hypot(ms.x - sc.x, ms.y - sc.y) < 8) {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          interactionRef.current = { type: "edgeBulge", elementId: selectedElement.id, index: ei, from: a, to: b, bulge };
+          return;
+        }
+      }
     }
 
     const hitId = hitTest(world);
@@ -372,6 +417,12 @@ export function PlanningCanvas() {
       forceRender();
       return;
     }
+
+    if (interaction.type === "edgeBulge") {
+      interaction.bulge = bulgeThroughCursor(interaction.from, interaction.to, snapped);
+      forceRender();
+      return;
+    }
   }
 
   function onPointerUp(e: React.PointerEvent) {
@@ -380,6 +431,8 @@ export function PlanningCanvas() {
       if (interaction.delta.x !== 0 || interaction.delta.y !== 0) moveSelection(interaction.delta);
     } else if (interaction.type === "vertex") {
       updateBoundary(interaction.elementId, interaction.boundary);
+    } else if (interaction.type === "edgeBulge") {
+      setEdgeBulge(interaction.elementId, interaction.index, interaction.bulge);
     }
     interactionRef.current = { type: "idle" };
     try {
@@ -428,6 +481,7 @@ export function PlanningCanvas() {
   const moveDelta = interaction.type === "moving" ? interaction.delta : { x: 0, y: 0 };
   const vertexPreview =
     interaction.type === "vertex" ? { id: interaction.elementId, boundary: interaction.boundary } : null;
+  const bulgePreview = interaction.type === "edgeBulge" ? interaction : null;
   const selectionSet = new Set(selection);
 
   const cursorClass =
@@ -517,6 +571,26 @@ export function PlanningCanvas() {
           viewport={viewport}
           preview={vertexPreview}
         />
+
+        {/* Edge midpoint handles: drag to curve an edge. */}
+        <EdgeHandles site={site} selection={selection} viewport={viewport} />
+
+        {/* Live preview of the arc while dragging an edge handle. */}
+        {bulgePreview && (
+          <polyline
+            points={[bulgePreview.from, ...densifyArc(bulgePreview.from, bulgePreview.to, bulgePreview.bulge), bulgePreview.to]
+              .map((p) => {
+                const s = worldToScreen(p, viewport);
+                return `${s.x},${s.y}`;
+              })
+              .join(" ")}
+            fill="none"
+            stroke="hsl(var(--primary))"
+            strokeWidth={2}
+            strokeDasharray="4 3"
+            className="pointer-events-none"
+          />
+        )}
 
         {/* In-progress polygon/polyline draft. */}
         {draft.length > 0 && (
@@ -688,9 +762,11 @@ function ElementShape({
     x: p.x + shift.x,
     y: p.y + shift.y,
   }));
+  const hasArc = !!element.arcs && Object.keys(element.arcs).length > 0;
+  const displayRing = hasArc ? densifyBoundary(boundary, element.arcs, 2) : boundary;
   const category = element.kind === "landuse" ? element.category : undefined;
   const color = elementColor(element.kind, category);
-  const path = toPath(boundary, viewport);
+  const path = toPath(displayRing, viewport);
   const isLine = element.kind === "row";
   const fillOpacity =
     element.kind === "building"
@@ -716,7 +792,9 @@ function ElementShape({
   const label = showLabels && viewport.zoom > 1.4 ? element.name : null;
   const center = label ? worldToScreen(centroid(boundary), viewport) : null;
   const areaLabel =
-    label && viewport.zoom > 3.5 ? formatArea(measuredArea(boundary, spatialUnits, "sqm"), "sqm") : null;
+    label && viewport.zoom > 3.5
+      ? formatArea(measuredArea(displayRing, spatialUnits, "sqm"), "sqm")
+      : null;
 
   // Setback / buildable envelope for a lot.
   let envelopePath: string | null = null;
@@ -801,6 +879,44 @@ function VertexHandles({
             fill="hsl(var(--background))"
             stroke="hsl(var(--primary))"
             strokeWidth={1.5}
+          />
+        );
+      })}
+    </g>
+  );
+}
+
+function EdgeHandles({
+  site,
+  selection,
+  viewport,
+}: {
+  site: NonNullable<ReturnType<typeof useWorkspaceStore.getState>["site"]>;
+  selection: string[];
+  viewport: Viewport;
+}) {
+  if (selection.length !== 1) return null;
+  const element = site.elements.find((e) => e.id === selection[0]);
+  if (!element || !isSpatialElement(element)) return null;
+  const ring = element.boundary;
+  return (
+    <g>
+      {ring.map((a, i) => {
+        const b = ring[(i + 1) % ring.length];
+        const bulge = edgeBulge(element.arcs, i);
+        const s = worldToScreen(edgeMidpoint(a, b, bulge), viewport);
+        return (
+          <rect
+            key={i}
+            x={s.x - 3.5}
+            y={s.y - 3.5}
+            width={7}
+            height={7}
+            transform={`rotate(45 ${s.x} ${s.y})`}
+            fill={bulge ? "hsl(var(--primary))" : "hsl(var(--background))"}
+            stroke="hsl(var(--primary))"
+            strokeWidth={1.2}
+            opacity={0.85}
           />
         );
       })}

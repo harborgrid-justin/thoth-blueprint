@@ -157,6 +157,37 @@ describe("coordinates & report", () => {
   });
 });
 
+describe("curved tract", () => {
+  // The 100×100 square's edge 0 becomes a semicircle bulging outward (−y).
+  const arcs = { "0": -1 };
+  const SEMI = (Math.PI * 50 * 50) / 2; // radius-50 semicircle
+
+  it("reports the curve table and arc-aware area/perimeter", () => {
+    const report = surveyReport(square, spatial, arcs);
+    expect(report.hasCurves).toBe(true);
+    expect(report.curves).toHaveLength(1);
+    const c = report.curves[0];
+    expect(c.label).toBe("C1");
+    expect(c.radius).toBeCloseTo(50, 6);
+    expect(c.delta).toBeCloseTo(180, 6);
+    expect(c.arcLength).toBeCloseTo(Math.PI * 50, 6);
+
+    // Area includes the semicircle; perimeter uses the arc length, not the chord.
+    expect(report.area.squareUnits).toBeCloseTo(10000 + SEMI, 3);
+    expect(report.perimeter).toBeCloseTo(300 + Math.PI * 50, 6);
+
+    // The chord-traverse DMD area omits the segment; the gap is the segment area.
+    expect(report.area.squareUnits - report.areaByDmd).toBeCloseTo(SEMI, 3);
+  });
+
+  it("describes the curve in the legal description", () => {
+    const text = legalDescription(square, spatial, { tractName: "Lot 7" }, arcs);
+    expect(text).toContain("along a curve to the");
+    expect(text).toContain("radius of");
+    expect(text).toContain("arc length of");
+  });
+});
+
 describe("legal description", () => {
   it("reads as a metes-and-bounds description", () => {
     const text = legalDescription(square, spatial, { tractName: "Lot 1", context: "Test Subdivision" });

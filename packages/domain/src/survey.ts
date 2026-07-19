@@ -14,14 +14,14 @@
  *   plan's square unit and acres.
  */
 
+import { distance, signedArea, type Point, type Polygon } from "./geometry";
 import {
-  area as polygonArea,
-  distance,
-  perimeter as polygonPerimeter,
-  signedArea,
-  type Point,
-  type Polygon,
-} from "./geometry";
+  boundaryArea,
+  boundaryEdges,
+  boundaryPerimeter,
+  type Arc,
+  type EdgeArcs,
+} from "./curve";
 import type { SpatialContext, Unit } from "./spatial";
 import { areaToSquareMeters, squareMetersTo, unitLabel } from "./spatial";
 
@@ -115,19 +115,45 @@ export function bearingText(a: Point, b: Point): string {
   return formatBearing(azimuthToBearing(azimuth(a, b)));
 }
 
+/** The curve data a plat tabulates for an arc course. */
+export interface CurveRecord {
+  /** 1-based course number this curve belongs to. */
+  courseIndex: number;
+  /** Curve label on the plat, e.g. "C1". */
+  label: string;
+  /** Radius, plan units. */
+  radius: number;
+  /** Arc length, plan units. */
+  arcLength: number;
+  /** Central (delta) angle in decimal degrees, and as DMS. */
+  delta: number;
+  deltaDms: { degrees: number; minutes: number; seconds: number };
+  /** Tangent distance (PC/PT to PI), plan units. */
+  tangent: number;
+  /** Long chord length, plan units. */
+  chordLength: number;
+  chordBearing: QuadrantBearing;
+  chordBearingText: string;
+  /** Direction the curve turns along the direction of travel. */
+  direction: "left" | "right";
+}
+
 /** A single course (leg) of a metes-and-bounds traverse. */
 export interface SurveyCourse {
   /** 1-based course number. */
   index: number;
+  /** Straight line, or a circular arc (with {@link SurveyCourse.curve}). */
+  type: "line" | "curve";
   from: Point;
   to: Point;
   /** Label of the corner the course leaves (e.g. "P1"). */
   fromLabel: string;
   toLabel: string;
+  /** Azimuth of the course; for a curve this is the long-chord azimuth. */
   azimuth: number;
   bearing: QuadrantBearing;
   bearingText: string;
-  /** Length in plan units. */
+  /** Length in plan units; for a curve this is the chord (traverse) distance. */
   distance: number;
   /** Length in meters (spatially honest). */
   distanceMeters: number;
@@ -135,6 +161,31 @@ export interface SurveyCourse {
   latitude: number;
   /** Departure (easting component) of the course, plan units. */
   departure: number;
+  /** Curve record when {@link SurveyCourse.type} is "curve". */
+  curve?: CurveRecord;
+}
+
+/** Build the tabulated curve record for an arc course. */
+function curveRecord(courseIndex: number, curveNo: number, from: Point, to: Point, arc: Arc): CurveRecord {
+  const chordAz = azimuth(from, to);
+  const delta = arc.delta * DEG;
+  const mid = { x: (from.x + to.x) / 2, y: (from.y + to.y) / 2 };
+  const u = { x: (to.x - from.x) / arc.chordLength, y: (to.y - from.y) / arc.chordLength };
+  const r = { x: arc.center.x - mid.x, y: arc.center.y - mid.y };
+  const direction: "left" | "right" = u.x * r.y - u.y * r.x > 0 ? "right" : "left";
+  return {
+    courseIndex,
+    label: `C${curveNo}`,
+    radius: arc.radius,
+    arcLength: arc.arcLength,
+    delta,
+    deltaDms: toDms(delta),
+    tangent: arc.tangent,
+    chordLength: arc.chordLength,
+    chordBearing: azimuthToBearing(chordAz),
+    chordBearingText: formatBearing(azimuthToBearing(chordAz)),
+    direction,
+  };
 }
 
 /** Corner label for a 0-based vertex index (P1, P2, …). */
@@ -144,20 +195,33 @@ export function cornerLabel(index: number): string {
 
 /**
  * The metes-and-bounds courses of a closed boundary: one course per edge,
- * traversed in order, each with bearing, distance, latitude, and departure.
+ * traversed in order. Straight edges carry a bearing and distance; curved edges
+ * (per-edge `arcs` bulges) additionally carry a {@link CurveRecord}, and their
+ * bearing/distance/latitude/departure describe the **long chord** — the value a
+ * traverse closes on, exactly as a plat reports.
  */
-export function polygonCourses(polygon: Polygon, spatial: SpatialContext): SurveyCourse[] {
+export function polygonCourses(
+  polygon: Polygon,
+  spatial: SpatialContext,
+  arcs?: EdgeArcs,
+): SurveyCourse[] {
   const n = polygon.length;
   const courses: SurveyCourse[] = [];
-  for (let i = 0; i < n; i++) {
-    const from = polygon[i];
-    const to = polygon[(i + 1) % n];
+  let curveNo = 0;
+  for (const edge of boundaryEdges(polygon, arcs)) {
+    const { from, to, index: i } = edge;
     const az = azimuth(from, to);
     const dist = distance(from, to);
     const bearing = azimuthToBearing(az);
     const rad = az / DEG;
+    let curve: CurveRecord | undefined;
+    if (edge.arc) {
+      curveNo += 1;
+      curve = curveRecord(i + 1, curveNo, from, to, edge.arc);
+    }
     courses.push({
       index: i + 1,
+      type: edge.arc ? "curve" : "line",
       from,
       to,
       fromLabel: cornerLabel(i),
@@ -169,6 +233,7 @@ export function polygonCourses(polygon: Polygon, spatial: SpatialContext): Surve
       distanceMeters: dist * (spatial.units === "feet" ? 0.3048 : 1),
       latitude: Math.cos(rad) * dist,
       departure: Math.sin(rad) * dist,
+      curve,
     });
   }
   return courses;
@@ -342,8 +407,8 @@ export interface SurveyArea {
   squareMeters: number;
 }
 
-export function surveyArea(polygon: Polygon, spatial: SpatialContext): SurveyArea {
-  const sqm = areaToSquareMeters(polygonArea(polygon), spatial);
+export function surveyArea(polygon: Polygon, spatial: SpatialContext, arcs?: EdgeArcs): SurveyArea {
+  const sqm = areaToSquareMeters(boundaryArea(polygon, arcs), spatial);
   const factor = spatial.units === "feet" ? 0.09290304 : 1;
   return {
     squareUnits: sqm / factor,
@@ -367,6 +432,10 @@ export interface CornerAngle {
 /** A complete survey/plat report for one boundary. */
 export interface SurveyReport {
   courses: SurveyCourse[];
+  /** The curve table — one record per arc course, empty for straight tracts. */
+  curves: CurveRecord[];
+  /** Whether the boundary contains any circular-arc courses. */
+  hasCurves: boolean;
   /** Coordinate (geometric) closure — exact for a coordinate-derived traverse. */
   closure: TraverseClosure;
   /** Closure of the traverse as **recorded** (rounded bearings/distances). */
@@ -377,17 +446,26 @@ export interface SurveyReport {
   anglesSum: number;
   anglesExpected: number;
   area: SurveyArea;
-  /** Area by the Double Meridian Distance method (independent cross-check). */
+  /**
+   * Area of the **chord traverse** by the Double Meridian Distance method — an
+   * independent cross-check of the coordinate geometry. It equals `area` for a
+   * straight tract; for a curved tract it omits the circular-segment areas
+   * captured by `area`, and their difference is the net segment area.
+   */
   areaByDmd: number;
   perimeter: number;
   perimeterMeters: number;
   units: Unit;
 }
 
-/** Compute the full survey report for a boundary. */
-export function surveyReport(polygon: Polygon, spatial: SpatialContext): SurveyReport {
-  const courses = polygonCourses(polygon, spatial);
-  const perimeter = polygonPerimeter(polygon);
+/** Compute the full survey report for a boundary, honoring any curved edges. */
+export function surveyReport(
+  polygon: Polygon,
+  spatial: SpatialContext,
+  arcs?: EdgeArcs,
+): SurveyReport {
+  const courses = polygonCourses(polygon, spatial, arcs);
+  const perimeter = boundaryPerimeter(polygon, arcs);
   const angleDegrees = interiorAngles(polygon);
   const angles: CornerAngle[] = angleDegrees.map((interior, i) => ({
     index: i,
@@ -395,15 +473,18 @@ export function surveyReport(polygon: Polygon, spatial: SpatialContext): SurveyR
     interior,
     dms: toDms(interior),
   }));
+  const curves = courses.filter((c) => c.curve).map((c) => c.curve!);
   return {
     courses,
+    curves,
+    hasCurves: curves.length > 0,
     closure: traverseClosure(courses),
     record: recordClosure(courses, { distancePrecision: 2 }),
     coordinates: boundaryCoordinates(polygon),
     angles,
     anglesSum: angleDegrees.reduce((s, a) => s + a, 0),
     anglesExpected: (polygon.length - 2) * 180,
-    area: surveyArea(polygon, spatial),
+    area: surveyArea(polygon, spatial, arcs),
     areaByDmd: dmdArea(courses),
     perimeter,
     perimeterMeters: perimeter * (spatial.units === "feet" ? 0.3048 : 1),
@@ -426,8 +507,9 @@ export function legalDescription(
   polygon: Polygon,
   spatial: SpatialContext,
   options: LegalDescriptionOptions = {},
+  arcs?: EdgeArcs,
 ): string {
-  const report = surveyReport(polygon, spatial);
+  const report = surveyReport(polygon, spatial, arcs);
   const u = unitLabel(spatial.units);
   const pob = report.coordinates[0];
   const lines: string[] = [];
@@ -444,11 +526,17 @@ export function legalDescription(
   );
   for (const c of report.courses) {
     const last = c.index === report.courses.length;
-    lines.push(
-      `thence ${c.bearingText}, a distance of ${fmt(c.distance)} ${u} to ${
-        last ? "the POINT OF BEGINNING" : `corner ${c.toLabel}`
-      };`,
-    );
+    const to = last ? "the POINT OF BEGINNING" : `corner ${c.toLabel}`;
+    if (c.curve) {
+      const cv = c.curve;
+      lines.push(
+        `thence along a curve to the ${cv.direction} having a radius of ${fmt(cv.radius)} ${u}, ` +
+          `an arc length of ${fmt(cv.arcLength)} ${u}, a central angle of ${formatDms(cv.deltaDms)}, ` +
+          `and a long chord bearing ${cv.chordBearingText} for ${fmt(cv.chordLength)} ${u} to ${to};`,
+      );
+    } else {
+      lines.push(`thence ${c.bearingText}, a distance of ${fmt(c.distance)} ${u} to ${to};`);
+    }
   }
   lines.push("");
   lines.push(
@@ -460,6 +548,14 @@ export function legalDescription(
 
 function fmt(v: number): string {
   return v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+/** Format a degrees/minutes/seconds triple as e.g. 90°00′00″. */
+export function formatDms(a: { degrees: number; minutes: number; seconds: number }): string {
+  const d = String(Math.abs(a.degrees));
+  const m = String(a.minutes).padStart(2, "0");
+  const s = String(a.seconds).padStart(2, "0");
+  return `${d}°${m}′${s}″`;
 }
 
 function approx(a: number, b: number, eps = 1e-6): boolean {

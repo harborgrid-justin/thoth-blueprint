@@ -224,6 +224,8 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
         onChange={(layerId) => set({ layerId })}
       />
 
+      {isSpatialElement(element) && <CurveControl element={element} />}
+
       {isSpatialElement(element) && (
         <Button variant="outline" size="sm" onClick={() => openPlat(element.id)} className="w-full">
           <Ruler className="h-4 w-4" /> Survey / plat report
@@ -233,6 +235,32 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
       <Button variant="destructive" size="sm" onClick={deleteSelection} className="mt-1 w-full">
         <Trash2 className="h-4 w-4" /> Delete
       </Button>
+    </div>
+  );
+}
+
+/** Curve editing affordance for a spatial element (see canvas ◇ edge handles). */
+function CurveControl({ element }: { element: PlanElement }) {
+  const clearArcs = useWorkspaceStore((s) => s.clearArcs);
+  if (!isSpatialElement(element)) return null;
+  const curveCount = element.arcs
+    ? Object.values(element.arcs).filter((b) => typeof b === "number" && Math.abs(b) > 1e-4).length
+    : 0;
+  return (
+    <div className="flex flex-col gap-1.5 rounded-md border border-border px-3 py-2">
+      <div className="flex items-center justify-between">
+        <Label className="text-sm text-foreground">Curved edges</Label>
+        <span className="text-xs tabular-nums text-muted-foreground">{curveCount}</span>
+      </div>
+      <p className="text-xs leading-snug text-muted-foreground/80">
+        Drag an edge&apos;s ◇ midpoint handle on the canvas to turn it into a
+        circular arc.
+      </p>
+      {curveCount > 0 && (
+        <Button variant="outline" size="sm" onClick={() => clearArcs(element.id)} className="w-full">
+          Straighten {curveCount} curve{curveCount === 1 ? "" : "s"}
+        </Button>
+      )}
     </div>
   );
 }

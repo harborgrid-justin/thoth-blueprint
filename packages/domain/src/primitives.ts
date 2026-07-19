@@ -8,6 +8,7 @@
  */
 
 import type { Point, Polygon, Polyline } from "./geometry";
+import { boundaryArea, boundaryPerimeter, type EdgeArcs } from "./curve";
 import type { SpatialContext } from "./spatial";
 import type { LandUseCategory } from "./landuse";
 import type { InfrastructureNetwork } from "./network";
@@ -51,8 +52,14 @@ export interface ElementBase {
   kind: ElementKind;
   name: string;
   layerId: string;
-  /** Closed boundary ring in plan coordinates. */
+  /** Closed boundary ring in plan coordinates (arc endpoints when curved). */
   boundary: Polygon;
+  /**
+   * Optional per-edge circular-arc bulges (DXF convention; edge i runs vertex
+   * i → i+1). Absent or empty means every edge is a straight line. See
+   * {@link EdgeArcs} and `./curve`.
+   */
+  arcs?: EdgeArcs;
 }
 
 /**
@@ -239,6 +246,16 @@ export function isSpatialElement(element: PlanElement): element is SpatialElemen
 /** Type guard: is this a point-anchored element? */
 export function isPointElement(element: PlanElement): element is PointElement {
   return POINT_ELEMENT_KINDS.has(element.kind);
+}
+
+/** Exact plan-unit area of a spatial element, honoring any curved edges. */
+export function regionArea(element: SpatialElement): number {
+  return boundaryArea(element.boundary, element.arcs);
+}
+
+/** Exact plan-unit perimeter of a spatial element, honoring any curved edges. */
+export function regionPerimeter(element: SpatialElement): number {
+  return boundaryPerimeter(element.boundary, element.arcs);
 }
 
 /** The anchor position of any element (centroid for spatial, position for points). */

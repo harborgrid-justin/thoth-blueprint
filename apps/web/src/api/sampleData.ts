@@ -127,7 +127,7 @@ export function subdivisionSite(name: string): Site {
   };
   elements.push(row);
 
-  // A neighborhood park.
+  // A neighborhood park with a curved (arc) frontage — a cul-de-sac-style edge.
   const park: LandUse = {
     id: createId("landuse"),
     kind: "landuse",
@@ -135,6 +135,8 @@ export function subdivisionSite(name: string): Site {
     layerId: "layer-landuse",
     boundary: rect(230, 130, 50, 60),
     category: "park",
+    // Edge 2 (the south boundary) bows outward as a circular arc.
+    arcs: { "2": -0.4 },
   };
   elements.push(park);
 

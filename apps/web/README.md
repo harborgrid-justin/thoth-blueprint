@@ -42,17 +42,24 @@ npm run build        # type-check + production build
   unit system (metric/imperial), area unit, bearing format (DMS/decimal),
   coordinate readout (plan/survey), and a **high-contrast** accessibility mode.
   Presentation-only: the plan's stored geometry and CRS never change.
+- **Curved boundaries** — any boundary edge can be a **circular arc**, encoded
+  per edge as a DXF-style **bulge** (`bulge = tan(Δ/4)`) with exact analytic
+  geometry (`@thoth/domain/curve`). Arc-aware area and perimeter flow through the
+  metrics and the plat. Drag an edge's ◇ midpoint handle on the canvas to curve
+  it (or straighten it from the inspector).
 - **Plat & survey report** (`src/features/survey`) — for each tract, an
   engineering-grade **plat of survey**: a drawn SVG exhibit (labelled
-  metes-and-bounds courses, corner monuments with a Point of Beginning, interior
-  angles, setback envelope, area callout, north arrow, graphic scale, and title
-  block, exportable as vector SVG), plus the full surveyor's record — a
-  **line table** with latitudes/departures, **interior angles** (summing to
+  metes-and-bounds courses, **curved courses** with radius/arc-length and a
+  radius tick, corner monuments with a Point of Beginning, interior angles,
+  setback envelope, area callout, north arrow, graphic scale, and title block,
+  exportable as vector SVG), plus the full surveyor's record — a **line table**
+  with latitudes/departures, a **curve table** (radius, arc length, delta,
+  tangent, chord bearing/length, direction), **interior angles** (summing to
   (n−2)×180°), **corner coordinates**, both **coordinate closure** and
   **as-recorded closure/precision**, an **area cross-checked by the Double
-  Meridian Distance method**, a generated **legal description**, and a courses
-  **CSV export**. Open it per-element from the inspector or for the whole plat
-  from the top bar.
+  Meridian Distance method**, a generated **legal description** (with
+  curve-to-the-left/right language), and a courses **CSV export**. Open it
+  per-element from the inspector or for the whole plat from the top bar.
 - **Terrain & grading** (`src/features/terrain`) — spot elevations build a ground
   surface; the canvas draws **contour lines** and **slope shading**, and the
   Terrain tab reports slope analysis and live **cut/fill earthwork** for grading

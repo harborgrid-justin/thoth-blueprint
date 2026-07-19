@@ -148,9 +148,18 @@ function TractReport({
   spatial: SpatialContext;
   siteName: string;
 }) {
-  const report = React.useMemo(() => surveyReport(element.boundary, spatial), [element, spatial]);
+  const report = React.useMemo(
+    () => surveyReport(element.boundary, spatial, element.arcs),
+    [element, spatial],
+  );
   const legal = React.useMemo(
-    () => legalDescription(element.boundary, spatial, { tractName: element.name, context: siteName }),
+    () =>
+      legalDescription(
+        element.boundary,
+        spatial,
+        { tractName: element.name, context: siteName },
+        element.arcs,
+      ),
     [element, spatial, siteName],
   );
   const u = unitLabel(spatial.units);
@@ -210,9 +219,9 @@ function TractReport({
             {report.courses.map((c) => (
               <tr key={c.index} className="border-b border-border/50">
                 <Td>
-                  L{c.index} · {c.fromLabel}–{c.toLabel}
+                  {c.curve ? c.curve.label : `L${c.index}`} · {c.fromLabel}–{c.toLabel}
                 </Td>
-                <Td>{c.bearingText}</Td>
+                <Td>{c.curve ? `⌒ chord ${c.bearingText}` : c.bearingText}</Td>
                 <Td className="text-right tabular-nums">{c.distance.toFixed(2)}</Td>
                 <Td className="text-right tabular-nums">{signed(c.latitude)}</Td>
                 <Td className="text-right tabular-nums">{signed(c.departure)}</Td>
@@ -271,6 +280,48 @@ function TractReport({
           corners — a geometric check on the traverse.
         </p>
       </Section>
+
+      {report.hasCurves && (
+        <Section title="Curve Table">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px] text-xs">
+              <thead>
+                <tr className="border-b border-border text-left text-muted-foreground">
+                  <Th>Curve</Th>
+                  <Th className="text-right">Radius ({u})</Th>
+                  <Th className="text-right">Length ({u})</Th>
+                  <Th className="text-right">Delta</Th>
+                  <Th className="text-right">Tangent ({u})</Th>
+                  <Th>Chord bearing</Th>
+                  <Th className="text-right">Chord ({u})</Th>
+                  <Th>Dir</Th>
+                </tr>
+              </thead>
+              <tbody className="font-mono">
+                {report.curves.map((cv) => (
+                  <tr key={cv.label} className="border-b border-border/50">
+                    <Td>{cv.label}</Td>
+                    <Td className="text-right tabular-nums">{cv.radius.toFixed(2)}</Td>
+                    <Td className="text-right tabular-nums">{cv.arcLength.toFixed(2)}</Td>
+                    <Td className="text-right tabular-nums">{dmsText(cv.deltaDms)}</Td>
+                    <Td className="text-right tabular-nums">
+                      {Number.isFinite(cv.tangent) ? cv.tangent.toFixed(2) : "∞"}
+                    </Td>
+                    <Td>{cv.chordBearingText}</Td>
+                    <Td className="text-right tabular-nums">{cv.chordLength.toFixed(2)}</Td>
+                    <Td className="uppercase">{cv.direction[0]}</Td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">
+            Circular curves: R = radius, L = arc length, Δ = central angle, T =
+            tangent, Dir = curves left/right along travel. Tract area includes the
+            circular segments; the traverse closes on the long chords.
+          </p>
+        </Section>
+      )}
 
       <Section title="Corner Coordinates (assumed local datum)">
         <table className="w-full text-xs">

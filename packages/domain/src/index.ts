@@ -7,6 +7,7 @@
  */
 
 export * from "./geometry";
+export * from "./curve";
 export * from "./spatial";
 export * from "./landuse";
 export * from "./primitives";
