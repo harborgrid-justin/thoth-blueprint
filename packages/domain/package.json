@@ -1,0 +1,21 @@
+{
+  "name": "@thoth/domain",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Framework-agnostic planning domain model for Thoth Blueprint (sites, parcels, zones, land use, and the rules over them).",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "type-check": "echo \"[scaffold] no tsconfig yet — add one when implementation begins\" && exit 0",
+    "test": "echo \"[scaffold] no tests yet\" && exit 0"
+  },
+  "keywords": [
+    "planning",
+    "site-planning",
+    "urban-planning",
+    "geospatial",
+    "domain-model"
+  ],
+  "license": "GPL-3.0-or-later"
+}

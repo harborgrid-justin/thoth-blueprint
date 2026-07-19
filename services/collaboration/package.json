@@ -1,0 +1,13 @@
+{
+  "name": "@thoth/service-collaboration",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Real-time collaboration for Thoth Blueprint — multi-user editing, presence, and comment/review threads.",
+  "type": "module",
+  "scripts": {
+    "dev": "echo \"[scaffold] collaboration service not implemented yet\" && exit 0",
+    "type-check": "echo \"[scaffold] no tsconfig yet\" && exit 0",
+    "test": "echo \"[scaffold] no tests yet\" && exit 0"
+  },
+  "license": "GPL-3.0-or-later"
+}

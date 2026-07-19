@@ -4,6 +4,12 @@ Brief summary of changes and motivation.
 
 Fixes # (issue)
 
+## Area
+
+- [ ] New planning platform (repository root)
+- [ ] Archived DB-design app (`artifact/`)
+- [ ] Docs / tooling
+
 ## Type of Change
 
 - [ ] Bug fix

@@ -1,0 +1,13 @@
+{
+  "name": "@thoth/web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Thoth Blueprint cloud planning workspace — the browser canvas for site & community planning.",
+  "type": "module",
+  "scripts": {
+    "dev": "echo \"[scaffold] app not implemented yet — see README.md and docs/ROADMAP.md\" && exit 0",
+    "build": "echo \"[scaffold] no build yet\" && exit 0",
+    "type-check": "echo \"[scaffold] no tsconfig yet\" && exit 0"
+  },
+  "license": "GPL-3.0-or-later"
+}

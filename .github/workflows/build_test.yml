@@ -5,8 +5,14 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  build-and-test:
+  # The original Thoth Blueprint DB-design app now lives under artifact/.
+  # It is archived but still built in CI to guard against regressions.
+  artifact-build:
+    name: Build archived app (artifact/)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: artifact
 
     steps:
       - name: Checkout code

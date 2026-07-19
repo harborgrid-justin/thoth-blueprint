@@ -28,3 +28,21 @@ dev-dist
 .qwen
 samples
 dev
+
+# Environment / secrets (cloud platform)
+.env
+.env.*
+!.env.example
+
+# Monorepo build outputs & caches
+build
+out
+coverage
+.turbo
+.next
+*.tsbuildinfo
+
+# Infrastructure / local state
+.terraform
+*.tfstate
+*.tfstate.*

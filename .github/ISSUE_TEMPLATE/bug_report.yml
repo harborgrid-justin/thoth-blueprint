@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report an Issue or Bug with ThothBlueprint
+description: Report an issue or bug with Thoth Blueprint
 title: "[Bug]: "
 labels: ["bug"]
 body:
@@ -7,6 +7,17 @@ body:
     attributes:
       value: |
         We're sorry to hear you have a problem. Can you help us solve it by providing the following details.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part of the project?
+      description: Thoth Blueprint is now a cloud planning platform; the original DB-design app is archived under `artifact/`.
+      options:
+        - New planning platform (repository root)
+        - Archived DB-design app (artifact/)
+        - Not sure
+    validations:
+      required: true
   - type: textarea
     id: what-happened
     attributes:
@@ -26,11 +37,11 @@ body:
   - type: input
     id: app-version
     attributes:
-      label: App Version
-      description: What version are you running? You can find this in the app settings.
-      placeholder: 0.0.3
+      label: Version / commit
+      description: For the archived app, the version is in app settings. For the new platform, the commit SHA or branch is fine.
+      placeholder: e.g. 0.0.11, or commit abc1234
     validations:
-      required: true
+      required: false
   - type: dropdown
     id: browsers
     attributes:

@@ -1,46 +1,54 @@
 # Project Guidelines
 
+Thoth Blueprint is a **cloud-based site & community planning platform** — a
+collaborative CAD alternative focused on site planning and community/urban
+planning. The repository is a monorepo. The original offline-first database-design
+app has been archived under `artifact/` and is not where new product work happens.
+
+## Repository Layout
+
+- `apps/` — client applications (the `web` planning workspace).
+- `services/` — cloud backend services (auth, projects, geospatial, collaboration).
+- `packages/` — shared libraries; `packages/domain` holds the planning domain model.
+- `docs/` — product vision, architecture, roadmap, glossary, migration notes.
+- `artifact/` — **archived** original DB-design app. Do not extend it for new
+  features; treat it as read-only reference. It has its own `package.json`,
+  tooling, and build — run its commands from inside `artifact/`.
+
 ## Code Style
 
 - Use TypeScript with strict typing; avoid `any` unless there is a clear constraint.
-- Use the `@/` import alias for source imports.
-- Keep app routes centralized in `src/App.tsx`.
-- Prefer existing shadcn and Radix-based UI components; do not edit generated UI primitives directly.
+- Prefer small, composable modules with explicit domain types over ad-hoc shapes.
+- Keep the planning domain model (`packages/domain`) framework-agnostic: no React,
+  no server, no database imports there.
+- Reuse patterns proven in `artifact/` (canvas editing, state orchestration,
+  import/export) but re-implement them cloud-first rather than copying wholesale.
 
-## Architecture
+## Architecture Principles
 
-- This is a browser-based, offline-first React + Vite app (not a Next.js app).
-- Persist user/project data in IndexedDB via Dexie (`src/lib/db.ts`); avoid server assumptions for core editor flows.
-- Keep source under `src/` with existing boundaries:
-  - `src/components`: UI/editor components.
-  - `src/store`: Zustand state orchestration.
-  - `src/lib`: data logic (Dexie, import/export, parsing, utilities).
-  - `src/pages`: route views.
-- Maintain PWA/offline behavior when changing build/runtime config; see `vite.config.ts` and PWA components.
+- **Cloud-first, not offline-first.** Projects are server-backed and multi-user;
+  design for real-time collaboration, authorization, and persistence in a
+  service — not IndexedDB. (The archived app was offline-first; that constraint no
+  longer applies.)
+- **Geospatial-aware.** Site and community plans are spatial. Keep coordinate
+  systems, units, and layers explicit in the domain model.
+- **Separation of concerns.** Domain logic in `packages/domain`; transport/storage
+  in `services/`; rendering/interaction in `apps/`.
 
 ## Build And Verification
 
-- Install: `pnpm install`
-- Dev server: `pnpm dev`
-- Lint: `pnpm lint`
-- Type-check: `pnpm type-check`
-- Production build (runs type-check + lint first): `pnpm build`
-- Preview build: `pnpm preview`
-- There is currently no configured test runner command in `package.json`; do not assume `pnpm test` is available.
-
-## Conventions
-
-- Offline-first is a product requirement: keep critical flows functional without network access.
-- When adding persisted diagram fields, add a Dexie schema migration in `src/lib/db.ts`.
-- Keep new visible UI integrated into the main page flow (see `src/pages/Index.tsx`).
-- Follow existing patterns before introducing new abstractions; use representative files as references:
-  - `src/store/store.ts`
-  - `src/components/DiagramEditor.tsx`
-  - `src/lib/importer/mysql-ddl-parser.ts`
+- Each workspace owns its own scripts. Check the nearest `package.json` before
+  assuming a command exists.
+- The archived app builds from `artifact/` (`cd artifact && pnpm install && pnpm build`).
+- New scaffold packages are placeholders; wire up real build/test tooling as they
+  are implemented, and add CI jobs alongside `artifact-build`.
 
 ## Documentation Links
 
-- Product/dev setup: `README.md`
+- Product vision: `docs/VISION.md`
+- Architecture: `docs/ARCHITECTURE.md`
+- Roadmap: `docs/ROADMAP.md`
+- Domain glossary: `docs/GLOSSARY.md`
+- Why the old app was archived: `docs/MIGRATION.md`
 - Contribution workflow: `CONTRIBUTING.md`
-- Stack/layout rules: `AI_RULES.md`
-- Versioning process: `docs/VERSIONING.md`
+- Agent/automation guidance: `CLAUDE.md`

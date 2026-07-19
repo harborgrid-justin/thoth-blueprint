@@ -1,0 +1,13 @@
+{
+  "name": "@thoth/service-geospatial",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Geospatial & interoperability for Thoth Blueprint — CRS transforms, layers, spatial ops, and import/export (GeoJSON, KML, Shapefile, DXF, PDF).",
+  "type": "module",
+  "scripts": {
+    "dev": "echo \"[scaffold] geospatial service not implemented yet\" && exit 0",
+    "type-check": "echo \"[scaffold] no tsconfig yet\" && exit 0",
+    "test": "echo \"[scaffold] no tests yet\" && exit 0"
+  },
+  "license": "GPL-3.0-or-later"
+}
