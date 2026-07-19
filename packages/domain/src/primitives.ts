@@ -9,6 +9,7 @@
 
 import type { Point, Polygon, Polyline } from "./geometry";
 import { boundaryArea, boundaryPerimeter, type EdgeArcs } from "./curve";
+import type { HorizontalAlignment } from "./alignment";
 import type { SpatialContext } from "./spatial";
 import type { LandUseCategory } from "./landuse";
 import type { InfrastructureNetwork } from "./network";
@@ -236,6 +237,8 @@ export interface Site {
   elements: PlanElement[];
   /** Road and utility networks serving the site. */
   networks?: InfrastructureNetwork[];
+  /** Stationed horizontal alignments (roadway/civil baselines). */
+  alignments?: HorizontalAlignment[];
 }
 
 /** Type guard: does this element carry a spatial boundary? */

@@ -21,6 +21,7 @@ import { PropertiesPanel } from "./PropertiesPanel";
 import { MetricsPanel } from "./MetricsPanel";
 import { CheckpointsDialog } from "./CheckpointsDialog";
 import { PlatReportDialog } from "@/features/survey/PlatReportDialog";
+import { AlignmentReportDialog } from "@/features/survey/AlignmentReportDialog";
 import { TerrainPanel } from "@/features/terrain/TerrainPanel";
 import { CommandPalette } from "@/features/command/CommandPalette";
 import { ShortcutsDialog } from "@/features/command/ShortcutsDialog";
@@ -270,6 +271,7 @@ export function Workspace() {
         </div>
         <CheckpointsDialog open={checkpointsOpen} onOpenChange={setCheckpointsOpen} />
         <PlatReportDialog />
+        <AlignmentReportDialog />
         <CommandPalette actions={commandActions} />
         <ShortcutsDialog />
         <PreferencesDialog />

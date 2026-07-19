@@ -12,6 +12,7 @@ import {
   Route,
   Ruler,
   Shapes,
+  Spline,
   Sprout,
   Square,
   TreePine,
@@ -41,6 +42,7 @@ export type ToolId =
   | "spot"
   | "road"
   | "utility"
+  | "alignment"
   | "note";
 
 export interface ToolDef {
@@ -72,6 +74,7 @@ export const TOOLS: ToolDef[] = [
 
   { id: "road", label: "Road", icon: Route, shortcut: "R", network: { kind: "road", roadClass: "local" }, mode: "polyline", group: "infra" },
   { id: "utility", label: "Utility main", icon: Zap, shortcut: "Y", network: { kind: "water" }, mode: "polyline", group: "infra" },
+  { id: "alignment", label: "Alignment (stationed)", icon: Spline, shortcut: "I", mode: "polyline", group: "infra" },
 
   { id: "water", label: "Water", icon: Waves, shortcut: "W", kind: "water", mode: "polygon", group: "landscape" },
   { id: "planting", label: "Planting", icon: Sprout, shortcut: "A", kind: "planting", mode: "polygon", group: "landscape" },

@@ -14,6 +14,7 @@ export * from "./primitives";
 export * from "./metrics";
 export * from "./rules";
 export * from "./survey";
+export * from "./alignment";
 export * from "./network";
 export * from "./terrain";
 export * from "./pointcloud";

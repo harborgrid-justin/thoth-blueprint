@@ -11,9 +11,12 @@ interface UiState {
   shortcutsOpen: boolean;
   /** Whether the display-preferences dialog is open. */
   prefsOpen: boolean;
+  /** Whether the alignment / stationing report is open. */
+  alignmentOpen: boolean;
 
   openPlat(targetId?: string | null): void;
   closePlat(): void;
+  setAlignmentOpen(open: boolean): void;
   setCommandOpen(open: boolean): void;
   toggleCommand(): void;
   setShortcutsOpen(open: boolean): void;
@@ -26,12 +29,16 @@ export const useUiStore = create<UiState>((set) => ({
   commandOpen: false,
   shortcutsOpen: false,
   prefsOpen: false,
+  alignmentOpen: false,
 
   openPlat(targetId = null) {
     set({ platOpen: true, platTargetId: targetId });
   },
   closePlat() {
     set({ platOpen: false });
+  },
+  setAlignmentOpen(alignmentOpen) {
+    set({ alignmentOpen });
   },
   setCommandOpen(commandOpen) {
     set({ commandOpen });

@@ -205,6 +205,18 @@ export function subdivisionSite(name: string): Site {
     { roadClass: "local", width: 15 },
   );
 
+  // A stationed survey baseline down Maple Street, with a horizontal curve.
+  const baseline = {
+    id: createId("algn"),
+    name: "R/L MAPLE ST",
+    startStation: 1000, // 10+00
+    pis: [
+      { point: { x: 30, y: 110 } },
+      { point: { x: 200, y: 110 }, radius: 30 },
+      { point: { x: 268, y: 150 } },
+    ],
+  };
+
   return {
     id: createId("site"),
     name,
@@ -212,6 +224,7 @@ export function subdivisionSite(name: string): Site {
     layers: baseLayers(),
     elements,
     networks: [roads],
+    alignments: [baseline],
   };
 }
 

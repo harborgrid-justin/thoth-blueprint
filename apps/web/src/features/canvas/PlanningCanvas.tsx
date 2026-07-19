@@ -39,6 +39,7 @@ import { buildTerrainModel } from "@/features/terrain/terrainModel";
 import { fitBounds, niceGridStep, worldToScreen, zoomAt, type Viewport } from "./viewport";
 import { eventToWorld, snapPoint } from "./snapping";
 import { ScaleBar, NorthArrow, Legend } from "./CanvasOverlays";
+import { AlignmentLayer } from "./AlignmentLayer";
 import { formatArea } from "@/lib/format";
 
 interface Size {
@@ -102,6 +103,7 @@ export function PlanningCanvas() {
   const addDrawnElement = useWorkspaceStore((s) => s.addDrawnElement);
   const addPointElement = useWorkspaceStore((s) => s.addPointElement);
   const addNetworkPath = useWorkspaceStore((s) => s.addNetworkPath);
+  const addAlignment = useWorkspaceStore((s) => s.addAlignment);
   const insertVertex = useWorkspaceStore((s) => s.insertVertex);
   const deleteVertex = useWorkspaceStore((s) => s.deleteVertex);
   const setEdgeBulge = useWorkspaceStore((s) => s.setEdgeBulge);
@@ -264,8 +266,17 @@ export function PlanningCanvas() {
       });
       setDraft([]);
       setTool("select");
+    } else if (tool.id === "alignment" && draft.length >= 2) {
+      // Default curve radius scaled to the drawn tangents so curves fit.
+      let minSeg = Infinity;
+      for (let i = 1; i < draft.length; i++) {
+        minSeg = Math.min(minSeg, Math.hypot(draft[i].x - draft[i - 1].x, draft[i].y - draft[i - 1].y));
+      }
+      addAlignment(draft, draft.length > 2 && Number.isFinite(minSeg) ? minSeg * 0.35 : 0);
+      setDraft([]);
+      setTool("select");
     }
-  }, [tool, draft, addDrawnElement, addNetworkPath, setTool]);
+  }, [tool, draft, addDrawnElement, addNetworkPath, addAlignment, setTool]);
 
   const cancelDraft = React.useCallback(() => {
     setDraft([]);
@@ -532,6 +543,9 @@ export function PlanningCanvas() {
           (site.networks ?? []).map((network) => (
             <NetworkShape key={network.id} network={network} viewport={viewport} />
           ))}
+
+        {/* Stationed horizontal alignments (civil baselines). */}
+        <AlignmentLayer site={site} viewport={viewport} />
 
         {ordered.map(({ element }) => {
           const shifted =

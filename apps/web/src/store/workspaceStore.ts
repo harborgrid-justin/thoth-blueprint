@@ -78,6 +78,8 @@ export interface WorkspaceState {
   addDrawnElement(kind: Exclude<ElementKind, "note" | "tree" | "spot">, boundary: Polygon): string | null;
   addPointElement(kind: "note" | "tree" | "spot", position: Point): string | null;
   addNetworkPath(kind: NetworkKind, path: Polyline, edge?: Partial<NetworkEdge>): string | null;
+  /** Add a stationed horizontal alignment from a chain of PI points. */
+  addAlignment(pis: Point[], radius?: number): string | null;
   addElements(elements: PlanElement[]): void;
   updateElement(id: string, patch: Partial<PlanElement>): void;
   updateBoundary(id: string, boundary: Polygon): void;
@@ -383,6 +385,25 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       const network = networkFromPath(createId("net"), name, kind, path, () => createId("nn"), edge);
       mutate((s) => ({ ...s, networks: [...(s.networks ?? []), network] }));
       return network.id;
+    },
+
+    addAlignment(pis, radius = 0) {
+      const { site } = get();
+      if (!site || pis.length < 2) return null;
+      const count = (site.alignments ?? []).length;
+      const id = createId("algn");
+      const alignment = {
+        id,
+        name: `Baseline ${count + 1}`,
+        startStation: 0,
+        pis: pis.map((point, i) => ({
+          point,
+          // Interior PIs get a default curve radius; endpoints stay sharp.
+          radius: radius > 0 && i > 0 && i < pis.length - 1 ? radius : undefined,
+        })),
+      };
+      mutate((s) => ({ ...s, alignments: [...(s.alignments ?? []), alignment] }));
+      return id;
     },
 
     addElements(elements) {

@@ -42,6 +42,15 @@ npm run build        # type-check + production build
   unit system (metric/imperial), area unit, bearing format (DMS/decimal),
   coordinate readout (plan/survey), and a **high-contrast** accessibility mode.
   Presentation-only: the plan's stored geometry and CRS never change.
+- **Roadway alignments & stationing** (`@thoth/domain/alignment`,
+  `src/features/canvas/AlignmentLayer`) — horizontal baselines defined by the
+  **PI method** (tangents + fitted circular curves), the math behind a DOT plan
+  sheet. The canvas draws the chain-dash centerline with **full-station ticks
+  and labels** (`10+00.00`), **PC/PT** curve points, and POB/POE; the
+  **Alignment & Stationing report** tabulates each tangent and the **curve data**
+  (PC/PI/PT stations, R, L, T, Δ, degree of curve, external, middle ordinate,
+  direction). Draw one with the Alignment tool (I). `stationOffsetOfPoint` and
+  `pointAtStation` convert between coordinates and station/offset.
 - **Curved boundaries** — any boundary edge can be a **circular arc**, encoded
   per edge as a DXF-style **bulge** (`bulge = tan(Δ/4)`) with exact analytic
   geometry (`@thoth/domain/curve`). Arc-aware area and perimeter flow through the
