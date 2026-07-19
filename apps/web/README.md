@@ -45,6 +45,16 @@ npm run build        # type-check + production build
 - **3D view** (`src/features/canvas3d`) — a three.js scene of the plan: the terrain
   as a shaded mesh, extruded buildings, draped land uses/water, and trees, with
   orbit controls. Toggle 2D/3D in the top bar.
+- **Interop** (`src/features/interop`, the top-bar **File** menu):
+  - **Import meshes** — `.obj`, `.dae`, `.fbx`, `.stl`, `.gltf`/`.glb` via three.js
+    loaders, placed in the 3D scene.
+  - **Import/export colored point clouds** — `.xyz`, `.pts`, `.ply`, `.las`, `.xyz`,
+    `.dxf`. Imported clouds render in 2D and 3D, or bake into terrain spot
+    elevations; terrain spots export back out to any format.
+  - **Import blueprints** as `.png`/`.jpg` raster underlays; **export** the plan as a
+    `.png` image or a COLLADA `.dae` 3D model.
+  Imported meshes/clouds/underlays are session reference data (not persisted);
+  baking a cloud into spot elevations promotes it into the saved plan.
 - **Toolbar** — select, pan, and drawing tools for parcel, zone, land use, lot,
   building, right-of-way, open space, and notes, plus undo/redo.
 - **Inspector** (`PropertiesPanel`) — edit the planning attributes of the selected

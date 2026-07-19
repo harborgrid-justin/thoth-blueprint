@@ -28,6 +28,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { PresenceBar } from "./PresenceBar";
+import { ImportExportMenu } from "@/features/interop/ImportExportMenu";
 
 interface TopBarProps {
   project: Project | null;
@@ -129,6 +130,7 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
 
         <Separator orientation="vertical" className="mx-1 h-6" />
 
+        <ImportExportMenu />
         <Button variant="ghost" size="sm" onClick={() => openPlat(null)}>
           <ScrollText className="h-4 w-4" /> <span className="hidden md:inline">Plat</span>
         </Button>

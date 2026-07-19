@@ -15,4 +15,6 @@ export * from "./rules";
 export * from "./survey";
 export * from "./network";
 export * from "./terrain";
+export * from "./pointcloud";
+export * from "./collada";
 export * from "./id";

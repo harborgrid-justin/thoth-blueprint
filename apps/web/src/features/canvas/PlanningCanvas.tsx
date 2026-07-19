@@ -25,6 +25,7 @@ import {
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
+import { useInteropStore } from "@/store/interopStore";
 import { elementColor } from "@/lib/elementMeta";
 import { toolDef } from "@/lib/tools";
 import { buildTerrainModel } from "@/features/terrain/terrainModel";
@@ -90,6 +91,9 @@ export function PlanningCanvas() {
 
   const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
   const terrainSurface = showProposed ? terrain?.proposed : terrain?.existing;
+
+  const underlay = useInteropStore((s) => s.underlay);
+  const clouds = useInteropStore((s) => s.clouds);
 
   const [draft, setDraft] = React.useState<Point[]>([]);
   const [cursor, setCursor] = React.useState<Point | null>(null);
@@ -382,7 +386,18 @@ export function PlanningCanvas() {
       onContextMenu={(e) => e.preventDefault()}
     >
       <svg width={size.width} height={size.height} className="absolute inset-0 select-none">
+        {/* Imported raster blueprint underlay, beneath everything. */}
+        {underlay?.visible && (
+          <UnderlayImage underlay={underlay} viewport={viewport} />
+        )}
+
         {showGrid && <Grid viewport={viewport} size={size} step={gridStep} />}
+
+        {/* Imported reference point clouds. */}
+        {clouds.map(
+          (c) =>
+            c.visible && <CloudDots key={c.id} points={c.cloud.points} viewport={viewport} />,
+        )}
 
         {/* Terrain: slope shading and contour lines, beneath the plan. */}
         {terrainSurface && (showSlope || showContours) && (
@@ -705,6 +720,50 @@ function VertexHandles({
       })}
     </g>
   );
+}
+
+function UnderlayImage({
+  underlay,
+  viewport,
+}: {
+  underlay: import("@/store/interopStore").Underlay;
+  viewport: Viewport;
+}) {
+  const tl = worldToScreen({ x: underlay.bounds.minX, y: underlay.bounds.minY }, viewport);
+  const br = worldToScreen({ x: underlay.bounds.maxX, y: underlay.bounds.maxY }, viewport);
+  return (
+    <image
+      href={underlay.url}
+      x={Math.min(tl.x, br.x)}
+      y={Math.min(tl.y, br.y)}
+      width={Math.abs(br.x - tl.x)}
+      height={Math.abs(br.y - tl.y)}
+      opacity={underlay.opacity}
+      preserveAspectRatio="none"
+      className="pointer-events-none"
+    />
+  );
+}
+
+function CloudDots({
+  points,
+  viewport,
+}: {
+  points: Array<{ x: number; y: number; r?: number; g?: number; b?: number }>;
+  viewport: Viewport;
+}) {
+  // Cap rendered points for performance on dense scans.
+  const MAX = 6000;
+  const stride = Math.max(1, Math.ceil(points.length / MAX));
+  const dots: React.ReactNode[] = [];
+  for (let i = 0; i < points.length; i += stride) {
+    const p = points[i];
+    const s = worldToScreen(p, viewport);
+    const color =
+      p.r != null ? `rgb(${p.r},${p.g ?? p.r},${p.b ?? p.r})` : "#38bdf8";
+    dots.push(<circle key={i} cx={s.x} cy={s.y} r={1.4} fill={color} />);
+  }
+  return <g className="pointer-events-none">{dots}</g>;
 }
 
 function TerrainOverlay({

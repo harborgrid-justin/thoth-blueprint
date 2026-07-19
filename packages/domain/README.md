@@ -51,6 +51,11 @@ Presentation belongs in `apps/`, transport/storage in `services/`.
   elevations, bilinear sampling, contour generation (marching squares), slope and
   aspect, buildable-slope analysis, pad grading, and cut/fill volumes between an
   existing and a proposed surface.
+- **Point-cloud interchange** (`pointcloud.ts`) — colored point-cloud parse and
+  serialize for XYZ, PTS, PLY (ascii + binary), LAS (ASPRS binary), and DXF, plus
+  downsampling and conversion to/from spot elevations.
+- **COLLADA export** (`collada.ts`) — a minimal, valid `.dae` writer for triangle
+  meshes, used to export a plan as a 3D model.
 
 See [`docs/GLOSSARY.md`](../../docs/GLOSSARY.md) for definitions; types here mirror
 that vocabulary exactly.

@@ -2,6 +2,7 @@ import * as React from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { useWorkspaceStore } from "@/store/workspaceStore";
+import { useInteropStore } from "@/store/interopStore";
 import { buildScene, type SceneResult } from "./buildScene";
 
 /**
@@ -12,12 +13,15 @@ import { buildScene, type SceneResult } from "./buildScene";
 export function Scene3D() {
   const mountRef = React.useRef<HTMLDivElement>(null);
   const site = useWorkspaceStore((s) => s.site);
+  const clouds = useInteropStore((s) => s.clouds);
+  const meshes = useInteropStore((s) => s.meshes);
 
   const rendererRef = React.useRef<THREE.WebGLRenderer | null>(null);
   const sceneRef = React.useRef<THREE.Scene | null>(null);
   const cameraRef = React.useRef<THREE.PerspectiveCamera | null>(null);
   const controlsRef = React.useRef<OrbitControls | null>(null);
   const contentRef = React.useRef<SceneResult | null>(null);
+  const cloudDisposeRef = React.useRef<Array<{ dispose: () => void }>>([]);
   const framedRef = React.useRef(false);
 
   // --- one-time setup ------------------------------------------------------
@@ -108,9 +112,27 @@ export function Scene3D() {
       contentRef.current.dispose();
       contentRef.current = null;
     }
+    cloudDisposeRef.current.forEach((d) => d.dispose());
+    cloudDisposeRef.current = [];
 
     const result = buildScene(site);
     if (!result) return;
+
+    // Imported point clouds, in scene space (plan-centered, y-up, exaggerated).
+    for (const c of clouds) {
+      if (!c.visible) continue;
+      const pts = cloudPoints(c.cloud.points, result.center, result.exaggeration);
+      result.group.add(pts.object);
+      cloudDisposeRef.current.push(pts.geometry, pts.material);
+    }
+
+    // Imported meshes, seated on the terrain at the plan center.
+    for (const m of meshes) {
+      if (!m.visible) continue;
+      m.object.position.set(0, result.baseElevation, 0);
+      result.group.add(m.object);
+    }
+
     scene.add(result.group);
     contentRef.current = result;
 
@@ -122,7 +144,30 @@ export function Scene3D() {
       controls.target.set(0, result.baseElevation, 0);
       controls.update();
     }
-  }, [site]);
+  }, [site, clouds, meshes]);
 
   return <div ref={mountRef} className="h-full w-full" />;
+}
+
+/** Build a THREE.Points cloud from colored points, mapped into scene space. */
+function cloudPoints(
+  points: Array<{ x: number; y: number; z: number; r?: number; g?: number; b?: number }>,
+  center: { x: number; y: number },
+  exag: number,
+) {
+  const positions = new Float32Array(points.length * 3);
+  const colors = new Float32Array(points.length * 3);
+  points.forEach((p, i) => {
+    positions[i * 3] = p.x - center.x;
+    positions[i * 3 + 1] = p.z * exag;
+    positions[i * 3 + 2] = p.y - center.y;
+    colors[i * 3] = (p.r ?? 180) / 255;
+    colors[i * 3 + 1] = (p.g ?? 180) / 255;
+    colors[i * 3 + 2] = (p.b ?? 180) / 255;
+  });
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  const material = new THREE.PointsMaterial({ size: 2, vertexColors: true, sizeAttenuation: true });
+  return { object: new THREE.Points(geometry, material), geometry, material };
 }

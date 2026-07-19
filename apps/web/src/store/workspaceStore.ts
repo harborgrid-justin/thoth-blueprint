@@ -57,6 +57,7 @@ export interface WorkspaceState {
   addDrawnElement(kind: Exclude<ElementKind, "note" | "tree" | "spot">, boundary: Polygon): string | null;
   addPointElement(kind: "note" | "tree" | "spot", position: Point): string | null;
   addNetworkPath(kind: NetworkKind, path: Polyline, edge?: Partial<NetworkEdge>): string | null;
+  addElements(elements: PlanElement[]): void;
   updateElement(id: string, patch: Partial<PlanElement>): void;
   updateBoundary(id: string, boundary: Polygon): void;
   moveSelection(delta: Point): void;
@@ -197,6 +198,11 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       const network = networkFromPath(createId("net"), name, kind, path, () => createId("nn"), edge);
       mutate((s) => ({ ...s, networks: [...(s.networks ?? []), network] }));
       return network.id;
+    },
+
+    addElements(elements) {
+      if (elements.length === 0) return;
+      mutate((s) => ({ ...s, elements: [...s.elements, ...elements] }));
     },
 
     updateElement(id, patch) {

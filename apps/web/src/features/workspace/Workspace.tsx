@@ -4,6 +4,7 @@ import { Layers, Mountain, Ruler, SlidersHorizontal } from "lucide-react";
 import { api, type Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
+import { useInteropStore } from "@/store/interopStore";
 import { PlanningCanvas } from "@/features/canvas/PlanningCanvas";
 import { Scene3D } from "@/features/canvas3d/Scene3D";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -54,6 +55,7 @@ export function Workspace() {
     return () => {
       cancelled = true;
       reset();
+      useInteropStore.getState().clearAll();
     };
   }, [projectId, loadProject, reset]);
 
