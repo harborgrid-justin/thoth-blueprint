@@ -4,9 +4,18 @@ The **framework-agnostic planning domain model** for Thoth Blueprint — the sha
 language of the built environment used by the client (`apps/`), the backend
 (`services/`), and tooling.
 
-> **Status: scaffold.** This package currently defines the intended shape of the
-> model with documented placeholder types. It is the [roadmap](../../docs/ROADMAP.md)'s
-> Phase 1 and the gating dependency for most other work. Fill it in first.
+> **Status: implemented (Phase 1).** The spatial foundation, planning primitives,
+> and core rules/metrics are real and unit-tested. See the
+> [roadmap](../../docs/ROADMAP.md); this package is the gating dependency for the
+> workspace in [`apps/web`](../../apps/web), which consumes it directly.
+
+## Scripts
+
+```bash
+npm install
+npm run type-check   # tsc, strict
+npm test             # vitest (geometry + metrics)
+```
 
 ## Hard boundaries
 
@@ -21,12 +30,16 @@ Presentation belongs in `apps/`, transport/storage in `services/`.
 
 ## What lives here
 
-- **Spatial foundation** — coordinate reference systems, units, scale, geometry,
-  layers.
-- **Planning primitives** — `Site`, `Parcel`, `Lot`, `Zone`, `LandUse`,
-  `RightOfWay`, `Setback`, `ZoningEnvelope`, `InfrastructureNetwork`.
-- **Rules & metrics** — subdivision, setback/envelope computation, coverage,
-  density, land-use allocation, compliance checks.
+- **Spatial foundation** (`geometry.ts`, `spatial.ts`) — coordinate reference
+  systems, units, scale, geometry (area, perimeter, centroid, bounds,
+  point-in-polygon, polygon offset for setbacks, bearing), and measured (unit-aware)
+  area/length helpers.
+- **Planning primitives** (`primitives.ts`, `landuse.ts`) — `Site`, `Parcel`,
+  `Block`, `Lot`, `Zone`, `LandUse`, `Building`, `RightOfWay`, `Easement`,
+  `OpenSpace`, `Layer`, and the land-use category registry.
+- **Rules & metrics** (`rules.ts`, `metrics.ts`) — buildable envelope from
+  setbacks, grid subdivision, compliance checks, and coverage / FAR / density /
+  land-use allocation / impervious & open-space ratios.
 
 See [`docs/GLOSSARY.md`](../../docs/GLOSSARY.md) for definitions; types here mirror
 that vocabulary exactly.
