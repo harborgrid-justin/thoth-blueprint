@@ -19,6 +19,8 @@ interface CanvasState {
   contourInterval: number;
   /** Show the proposed (graded) surface instead of existing ground. */
   showProposed: boolean;
+  /** 2D plan canvas or 3D scene. */
+  viewMode: "2d" | "3d";
   /** Incremented to ask the canvas to fit the plan into view. */
   fitRequestId: number;
 
@@ -34,6 +36,7 @@ interface CanvasState {
   toggleSlope(): void;
   toggleProposed(): void;
   setContourInterval(interval: number): void;
+  setViewMode(mode: "2d" | "3d"): void;
   requestFit(): void;
 }
 
@@ -49,6 +52,7 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   showSlope: false,
   contourInterval: 2,
   showProposed: false,
+  viewMode: "2d",
   fitRequestId: 0,
 
   setViewport(viewport) {
@@ -87,6 +91,9 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   },
   setContourInterval(interval) {
     set({ contourInterval: Math.max(0.1, interval) });
+  },
+  setViewMode(mode) {
+    set({ viewMode: mode });
   },
   requestFit() {
     set((s) => ({ fitRequestId: s.fitRequestId + 1 }));

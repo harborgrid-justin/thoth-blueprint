@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 import { Layers, Mountain, Ruler, SlidersHorizontal } from "lucide-react";
 import { api, type Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
+import { useCanvasStore } from "@/store/canvasStore";
 import { PlanningCanvas } from "@/features/canvas/PlanningCanvas";
+import { Scene3D } from "@/features/canvas3d/Scene3D";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -125,7 +127,7 @@ export function Workspace() {
         <div className="flex min-h-0 flex-1">
           <Toolbar />
           <main className="relative min-w-0 flex-1">
-            <PlanningCanvas />
+            <CanvasArea />
           </main>
           <aside className="flex w-[320px] shrink-0 flex-col border-l border-border bg-card">
             <Tabs value={tab} onValueChange={setTab} className="flex min-h-0 flex-1 flex-col">
@@ -165,6 +167,11 @@ export function Workspace() {
       </div>
     </TooltipProvider>
   );
+}
+
+function CanvasArea() {
+  const viewMode = useCanvasStore((s) => s.viewMode);
+  return viewMode === "3d" ? <Scene3D /> : <PlanningCanvas />;
 }
 
 function CenterMessage({ children }: { children: React.ReactNode }) {

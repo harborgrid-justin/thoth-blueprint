@@ -34,6 +34,17 @@ npm run build        # type-check + production build
   precision**, area (units² + acres), a generated **legal description**, and a
   courses **CSV export**. Open it per-element from the inspector or for the whole
   plat from the top bar.
+- **Terrain & grading** (`src/features/terrain`) — spot elevations build a ground
+  surface; the canvas draws **contour lines** and **slope shading**, and the
+  Terrain tab reports slope analysis and live **cut/fill earthwork** for grading
+  regions. All computed by `@thoth/domain`.
+- **Community & infrastructure** — roads and utility mains drawn as connected
+  networks (length, connectivity, service), plus community metrics (population,
+  density, park/open-space level of service). A `Region` tier and km²/mi² units
+  support territory-scale plans (the estate template).
+- **3D view** (`src/features/canvas3d`) — a three.js scene of the plan: the terrain
+  as a shaded mesh, extruded buildings, draped land uses/water, and trees, with
+  orbit controls. Toggle 2D/3D in the top bar.
 - **Toolbar** — select, pan, and drawing tools for parcel, zone, land use, lot,
   building, right-of-way, open space, and notes, plus undo/redo.
 - **Inspector** (`PropertiesPanel`) — edit the planning attributes of the selected

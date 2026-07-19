@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import {
+  Box,
   Check,
   Cloud,
   Compass,
@@ -13,6 +14,7 @@ import {
   Moon,
   Plus,
   ScrollText,
+  Square,
   Sun,
   Tag,
 } from "lucide-react";
@@ -49,6 +51,8 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
     toggleSnapToGrid,
     showSurveyLabels,
     toggleSurveyLabels,
+    viewMode,
+    setViewMode,
   } = useCanvasStore();
   const openPlat = useUiStore((s) => s.openPlat);
 
@@ -70,6 +74,32 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
       </div>
 
       <div className="ml-auto flex items-center gap-1">
+        {/* 2D / 3D view switch */}
+        <div className="mr-1 flex items-center rounded-md border border-border p-0.5">
+          <button
+            type="button"
+            onClick={() => setViewMode("2d")}
+            aria-pressed={viewMode === "2d"}
+            className={cn(
+              "flex h-7 items-center gap-1 rounded px-2 text-xs font-medium transition-colors",
+              viewMode === "2d" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            <Square className="h-3.5 w-3.5" /> 2D
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewMode("3d")}
+            aria-pressed={viewMode === "3d"}
+            className={cn(
+              "flex h-7 items-center gap-1 rounded px-2 text-xs font-medium transition-colors",
+              viewMode === "3d" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            <Box className="h-3.5 w-3.5" /> 3D
+          </button>
+        </div>
+
         {/* Zoom controls */}
         <div className="mr-1 flex items-center rounded-md border border-border">
           <IconBtn label="Zoom out" onClick={() => zoomBy(1 / 1.2)}>
