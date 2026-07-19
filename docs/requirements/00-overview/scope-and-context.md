@@ -35,7 +35,22 @@ written for these:
   replace it.
 - Detailed construction documentation / engineering deliverables (structural,
   stormwater design, utility engineering calcs).
+- **Grading and earthwork engineering** (cut/fill optimization, TIN/terrain
+  surface design, machine-guidance output).
+- **Corridor / alignment design** (horizontal/vertical road alignments, profiles,
+  corridor models).
+- **Procedural 3D city generation** and detailed 3D building/facade modeling.
+- **Financial pro forma / cost estimating.** Feasibility here is spatial
+  (yield/FAR/coverage/density), not financial.
+- **Predictive simulation** (travel-demand, environmental, or market simulation).
+- **Multi-sheet construction plan sets.** A single to-scale PDF *exhibit* is in
+  scope (`IOP-PDF-001`); a construction/permit sheet series is not.
 - Native mobile or desktop-installed applications (the client is web-first).
+
+> These exclusions are also reflected in the
+> [competitive analysis](competitive-analysis.md#deliberate-exclusions); the
+> platform **interoperates** with tools that do this work rather than reproducing
+> it.
 
 ## System context
 
@@ -67,7 +82,7 @@ written for these:
 
 | Actor | Description | Primary needs |
 | --- | --- | --- |
-| **Site planner / civil designer** | Lays out parcels, lots, roads, grading concepts. | Precision drawing, subdivision, metrics, DXF/GeoJSON interop. |
+| **Site planner / civil designer** | Lays out parcels, lots, and roads (planning layout, not grading/earthwork engineering — see non-goals). | Precision drawing, subdivision, metrics, DXF/GeoJSON interop. |
 | **Urban / community planner** | Neighborhoods, zoning, land-use mixes, corridors. | Zones, land-use allocation, density/coverage, scenarios. |
 | **Municipality / review board** | Reviews and governs plans. | Collaborative review, versioning, audit trail, public sharing. |
 | **Developer / architect** | Early feasibility and site concepts. | Fast massing/envelopes, quick metrics, export exhibits. |
@@ -100,6 +115,20 @@ exist because of them.
 | `CON-008` | The archived app under `artifact/` is **read-only reference**; new features shall not import from or extend it. | [MIGRATION](../../MIGRATION.md) |
 | `CON-009` | Implementation is **TypeScript, strict**; `any` is avoided in favor of explicit domain types. | [CLAUDE.md](../../../CLAUDE.md) |
 | `CON-010` | Delivery is **phased, domain-model first** (Phase 1 gates most later work). | [ROADMAP](../../ROADMAP.md) |
+
+## Dependencies & assumptions
+
+External systems and platform capabilities the product leans on. Each is a risk
+the whole system depends on; requirements that assume one trace to it (`DEP-…`),
+and each names the degraded behavior if the dependency is unavailable — important
+for self-hosting substitution.
+
+| ID | Dependency / assumption | Degraded behavior if absent | Traced by |
+| --- | --- | --- | --- |
+| `DEP-001` | An external **OIDC/OAuth2 identity provider** for sign-in. | Public read-only/comment share links remain viewable; authenticated editing is unavailable. | `BE-AUTH-001` |
+| `DEP-002` | An **EPSG registry / coordinate-transformation library** for CRS definitions and datum transforms. | CRS assignment/reprojection and area/distance-correct metrics are unavailable. | `BE-GEO-001`, `DOM-CRS-002` |
+| `DEP-003` | A **basemap / tile provider** for contextual imagery _(planned)_. | The plan renders without a contextual basemap; all planning geometry still works. | `BE-GEO-005`, `FE-NAV-003` |
+| `DEP-004` | A modern **evergreen browser** providing Canvas/WebGL rendering, WebSocket (presence), and the File API (import). | The workspace is unsupported below the browser matrix (`NFR-COMPAT-005`); no silent degradation. | `apps/web`, `FE-*` |
 
 ## Relationship to other documents
 

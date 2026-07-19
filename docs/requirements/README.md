@@ -19,10 +19,10 @@ and collaborative web canvases) and structured to align with **ISO/IEC/IEEE
 
 | | |
 | --- | --- |
-| **Requirements** | 245 total — 175 functional, 42 non-functional, 11 business, 7 stakeholder, 10 constraints |
-| **Frontend** | 58 requirements (`apps/web`) |
-| **Backend & shared** | 117 requirements (`services/*`, `packages/domain`, interop) |
-| **Traceability** | BR → STK → {FE, BE, DOM, IOP} → phase · module · verification |
+| **Requirements** | 419 total — 319 functional, 68 non-functional, 11 business, 7 stakeholder, 10 constraints, 4 dependencies |
+| **Frontend** | 108 requirements (`apps/web`) |
+| **Backend & shared** | 211 requirements (backend services 75 · `packages/domain` 101 · interop 35) |
+| **Traceability** | BR → STK → {FE, BE, DOM, IOP} → phase · module · verification (RTM generated from source) |
 | **Status** | Draft · specified, not yet built (repo is Phase-0 scaffold) |
 
 ## How to navigate
@@ -32,9 +32,10 @@ docs/requirements/
 ├── README.md                     ← you are here (portal)
 ├── 00-overview/
 │   ├── SRS.md                    Master Software Requirements Specification
-│   ├── scope-and-context.md      Scope, actors, external interfaces, constraints
-│   ├── standards-and-conventions.md   ID scheme, quality rules, traceability model
-│   └── competitive-analysis.md   Research grounding vs comparable tools
+│   ├── scope-and-context.md      Scope, actors, constraints, dependencies (DEP)
+│   ├── standards-and-conventions.md   ID scheme, quality rules, tolerances, traceability
+│   ├── competitive-analysis.md   Research grounding vs comparable tools
+│   └── glossary-additions.md     Technical/UI terms (domain terms live in ../GLOSSARY.md)
 ├── 01-business/
 │   ├── business-requirements.md  BR — why the product exists
 │   └── stakeholders.md           STK — personas & their needs
@@ -46,10 +47,17 @@ docs/requirements/
 ├── 03-nonfunctional/
 │   └── nonfunctional-requirements.md   NFR — performance, security, a11y, …
 ├── 04-traceability/
-│   ├── traceability-matrix.md    RTM — the full cross-reference
+│   ├── traceability-matrix.md    RTM — the full cross-reference (generated)
 │   └── coverage-report.md        Validation against coverage rules R1–R5
 └── _meta/                        Raw research captures (provenance)
+    └── scripts/                  gen_rtm.py (regenerates the RTM), validate.py (R1–R5)
 ```
+
+> The RTM is **generated** from the requirement source files by
+> [`_meta/scripts/gen_rtm.py`](_meta/scripts/gen_rtm.py); the source `Trace`
+> columns are authoritative. [`_meta/scripts/validate.py`](_meta/scripts/validate.py)
+> checks coverage rules R1–R5 and ID hygiene. Re-run both after editing any
+> requirement.
 
 ## Reading paths
 
@@ -93,6 +101,7 @@ orphan and no stakeholder is a dead end.
 | `STK` | Stakeholder | `IOP` | Interoperability (backend/shared) |
 | `FE` | Frontend functional | `NFR` | Non-functional |
 | `BE` | Backend functional | `CON` | Constraint / assumption |
+| | | `DEP` | External dependency / assumption |
 
 Full scheme and area codes:
 [standards & conventions](00-overview/standards-and-conventions.md#identifier-scheme).

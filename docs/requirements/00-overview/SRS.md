@@ -24,8 +24,9 @@ GeoJSON/KML/Shapefile/DXF/GeoPackage/CSV/PDF. Out of scope: mechanical CAD, a fu
 GIS suite, and construction-documentation deliverables.
 
 ### 1.3 Definitions
-All defined terms use the project [glossary](../../GLOSSARY.md). Requirements
-conventions (ID scheme, priority, verification) are in
+Planning terms use the project [glossary](../../GLOSSARY.md); technical/UI terms
+introduced by this suite are in [glossary-additions](glossary-additions.md).
+Requirements conventions (ID scheme, priority, verification, tolerances) are in
 [standards & conventions](standards-and-conventions.md).
 
 ### 1.4 References
@@ -49,11 +50,12 @@ which is read-only reference only.
 Seven actors from site planner to community stakeholder to integrator —
 see [stakeholders](../01-business/stakeholders.md).
 
-### 2.3 Constraints & assumptions
-Ten binding constraints (`CON-001`–`CON-010`) —
+### 2.3 Constraints, assumptions & dependencies
+Ten binding constraints (`CON-001`–`CON-010`) and four external dependencies
+(`DEP-001`–`DEP-004`, each with its degraded-mode behavior) —
 see [scope & context](scope-and-context.md#constraints--assumptions). Chief among
-them: web-first, cloud-first, domain-native, spatially explicit, framework-agnostic
-domain model, GPLv3.
+the constraints: web-first, cloud-first, domain-native, spatially explicit,
+framework-agnostic domain model, GPLv3.
 
 ### 2.4 Design & competitive grounding
 Requirement areas are justified against established tools (AutoCAD/Civil 3D,
@@ -68,11 +70,11 @@ The detailed catalog, by layer:
 | --- | --- | :--: |
 | Business | [business-requirements.md](../01-business/business-requirements.md) | 11 |
 | Stakeholder | [stakeholders.md](../01-business/stakeholders.md) | 7 |
-| Functional — Frontend | [frontend-requirements.md](../02-functional/frontend-requirements.md) | 58 |
-| Functional — Backend | [backend-requirements.md](../02-functional/backend-requirements.md) | 41 |
-| Functional — Domain model | [domain-requirements.md](../02-functional/domain-requirements.md) | 55 |
-| Functional — Interoperability | [interoperability-requirements.md](../02-functional/interoperability-requirements.md) | 21 |
-| Non-functional | [nonfunctional-requirements.md](../03-nonfunctional/nonfunctional-requirements.md) | 42 |
+| Functional — Frontend | [frontend-requirements.md](../02-functional/frontend-requirements.md) | 108 |
+| Functional — Backend | [backend-requirements.md](../02-functional/backend-requirements.md) | 75 |
+| Functional — Domain model | [domain-requirements.md](../02-functional/domain-requirements.md) | 101 |
+| Functional — Interoperability | [interoperability-requirements.md](../02-functional/interoperability-requirements.md) | 35 |
+| Non-functional | [nonfunctional-requirements.md](../03-nonfunctional/nonfunctional-requirements.md) | 68 |
 
 ## 4. Verification & traceability
 

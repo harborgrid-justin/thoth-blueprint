@@ -16,7 +16,7 @@ need …") and then decomposed into the functional areas that satisfy it.
 > land by planning rules, and read accurate areas, frontages, and metrics, so I
 > can produce a credible site plan and exchange it with my CAD/GIS tools.
 
-- **Satisfies:** `BR-002`, `BR-004`, `BR-006`, `BR-008`, `BR-005`
+- **Satisfies:** `BR-002`, `BR-004`, `BR-006`, `BR-008`, `BR-005`, `BR-009`
 - **Needs:** precise drawing & snapping; parcels/lots as objects; subdivision;
   measurement; live metrics; DXF/GeoJSON/Shapefile interop.
 - **Traces to:** `FE-CANVAS`, `FE-PRECISION`, `FE-MEASURE`, `DOM-PARCEL`,
@@ -28,11 +28,11 @@ need …") and then decomposed into the functional areas that satisfy it.
 > site, and see density, coverage, and land-use breakdowns update live, so I can
 > compose and defend a community plan.
 
-- **Satisfies:** `BR-002`, `BR-004`, `BR-008`, `BR-001`
+- **Satisfies:** `BR-002`, `BR-004`, `BR-008`, `BR-001`, `BR-009`
 - **Needs:** zones & zoning rules; land-use allocation & styling; live planning
   metrics; scenario-friendly editing.
 - **Traces to:** `DOM-ZONE`, `DOM-LANDUSE`, `DOM-METRIC`, `DOM-COMPLY`,
-  `FE-STYLE`, `FE-METRIC`, `FE-LAYER`
+  `DOM-SCENARIO`, `FE-STYLE`, `FE-METRIC`, `FE-LAYER`, `FE-SCENARIO`
 
 ## STK-003 — Municipality / review board
 
@@ -52,11 +52,11 @@ need …") and then decomposed into the functional areas that satisfy it.
 > boundary, apply setbacks, and read yield, FAR, and coverage — and export an
 > exhibit, so I can make an early go/no-go decision.
 
-- **Satisfies:** `BR-006`, `BR-008`, `BR-005`
-- **Needs:** fast boundary drawing; setbacks & buildable envelope; yield/FAR/
-  coverage metrics; PDF/DXF export.
-- **Traces to:** `FE-CANVAS`, `DOM-SETBACK`, `DOM-ENVELOPE`, `DOM-METRIC`,
-  `FE-METRIC`, `IOP-PDF`, `IOP-DXF`
+- **Satisfies:** `BR-006`, `BR-008`, `BR-005`, `BR-009`
+- **Needs:** fast boundary drawing; setbacks & buildable envelope; buildings;
+  yield/FAR/coverage metrics; PDF/DXF export.
+- **Traces to:** `FE-CANVAS`, `DOM-SETBACK`, `DOM-ENVELOPE`, `DOM-BUILDING`,
+  `DOM-METRIC`, `FE-METRIC`, `IOP-PDF`, `IOP-DXF`
 
 ## STK-005 — Community stakeholder (public)
 
@@ -85,10 +85,10 @@ need …") and then decomposed into the functional areas that satisfy it.
 > As an **integrator**, I need a documented API and the ability to self-host, so I
 > can automate imports/exports and run the platform in my own environment.
 
-- **Satisfies:** `BR-005`, `BR-010`
+- **Satisfies:** `BR-005`, `BR-010`, `BR-009`
 - **Needs:** public API; import/export automation; self-hosting; open license.
-- **Traces to:** `BE-API`, `BE-IMPORT`, `BE-EXPORT`, `IOP-*`, `NFR-PORT`,
-  `NFR-LEGAL`
+- **Traces to:** `BE-API`, `BE-IMPORT`, `BE-EXPORT`, `BE-JOB`, `BE-WEBHOOK`,
+  `IOP-*`, `NFR-PORT`, `NFR-LEGAL`
 
 ## Coverage note
 

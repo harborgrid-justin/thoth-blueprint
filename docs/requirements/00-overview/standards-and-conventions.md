@@ -41,6 +41,7 @@ above (why it exists) and **down** to the layer below (how it is satisfied).
 | Functional — Interoperability | `IOP` | What must import/export do? | [`02-functional/interoperability-requirements.md`](../02-functional/interoperability-requirements.md) |
 | Non-functional | `NFR` | How well must it behave? | [`03-nonfunctional/nonfunctional-requirements.md`](../03-nonfunctional/nonfunctional-requirements.md) |
 | Constraint / assumption | `CON` | What bounds the solution? | [`00-overview/scope-and-context.md`](scope-and-context.md) |
+| Dependency / assumption | `DEP` | What external system does it lean on? | [`00-overview/scope-and-context.md`](scope-and-context.md) |
 
 ## Identifier scheme
 
@@ -52,7 +53,8 @@ Identifiers are stable and never reused. Format:
 
 - **PREFIX** — one of the layer prefixes above.
 - **AREA** — a short uppercase area code (see catalogs below). Business,
-  stakeholder, and constraint IDs omit the AREA segment (e.g. `BR-007`).
+  stakeholder, constraint, and dependency IDs omit the AREA segment (e.g.
+  `BR-007`, `DEP-001`).
 - **NNN** — zero-padded 3-digit sequence, unique within its `PREFIX-AREA`.
 
 Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
@@ -81,6 +83,15 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `PRESENCE` | Multi-user cursors, presence, live sync (client) |
 | `IO` | Import/export UI & wizards (client) |
 | `ACCOUNT` | Sign-in, org/team, sharing UI |
+| `EDIT` | Clipboard & structural editing (copy/paste, group, align) |
+| `FIND` | Search, select-by-query, canvas filtering |
+| `CMD` | Keyboard shortcuts & command palette |
+| `NOTIFY` | In-app notifications & activity feed (client) |
+| `HELP` | Onboarding, empty states, in-context help |
+| `STATE` | Save status, loading/error states, disconnect resilience |
+| `PREFS` | Display, unit, and theme preferences |
+| `PRINT` | Print & exhibit-sheet output |
+| `SCENARIO` | Scenario/variant comparison (client) |
 
 **Backend (`BE-…`)** — the cloud services (`services/*`):
 
@@ -97,6 +108,11 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `COMMENT` | Comment/review thread storage | `services/collaboration` |
 | `AUDIT` | Audit trail & governance events | `services/projects` |
 | `API` | Public API surface & contracts | all |
+| `JOB` | Asynchronous import/export/exhibit jobs | `services/geospatial` |
+| `STORAGE` | Binary asset storage | `services/projects` |
+| `NOTIFY` | Notification delivery (in-app, email) | `services/collaboration` |
+| `SEARCH` | Project listing, filtering, search | `services/projects` |
+| `WEBHOOK` | Integrator event webhooks | all |
 
 **Domain model (`DOM-…`)** — `packages/domain`:
 
@@ -118,10 +134,22 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `SUBDIV` | Subdivision operations |
 | `METRIC` | Coverage, density, allocation metrics |
 | `COMPLY` | Compliance checks & validation |
+| `SURVEY` | Metes-and-bounds / COGO |
+| `IDENT` | Element identity & referential integrity |
+| `BLOCK` | Blocks (ROW-bounded lot groups) |
+| `EASEMENT` | Easements |
+| `DEDICATION` | Public-use dedications |
+| `BUILDING` | Buildings / footprints |
+| `OPENSPACE` | Open space / common area |
+| `PARKING` | Parking supply & requirement |
+| `SCENARIO` | Scenarios & phasing |
+| `SERIAL` | Plan serialization & portability |
+| `COMPUTE` | Computation determinism |
+| `SNAPSHOT` | Immutable snapshots & diff |
 
 **Interoperability (`IOP-…`)** — importers/exporters:
 
-| Area | Format |
+| Area | Format / concern |
 | --- | --- |
 | `GEOJSON` | GeoJSON (RFC 7946) |
 | `KML` | KML / KMZ |
@@ -130,6 +158,15 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `GPKG` | GeoPackage |
 | `PDF` | PDF exhibits |
 | `CSV` | Tabular CSV |
+| `RASTER` | Georeferenced raster / image underlay |
+| `FIELD` | Attribute / field mapping |
+| `ENC` | Character encoding |
+| `BUNDLE` | ZIP / KMZ archive import |
+| `STREAM` | Streaming large-file import |
+| `IDENT` | Round-trip element identity |
+| `SCHEMA` | Documented format↔domain schema mapping |
+| `GEOMX` | Unsupported-geometry handling |
+| `PREC` | Coordinate precision on export |
 | `CRSX` | Cross-format CRS handling |
 
 **Non-functional (`NFR-…`)** — categories from ISO/IEC 25010:
@@ -148,6 +185,10 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `OBS` | Observability & operability |
 | `PORT` | Portability & self-hosting |
 | `LEGAL` | Licensing & compliance |
+| `AVAIL` | Availability, backup & disaster recovery |
+| `I18N` | Internationalization & localization |
+| `MOD` | Content safety & moderation |
+| `BENCH` | Benchmarks & performance validation |
 
 ## Requirement attributes
 
@@ -196,6 +237,20 @@ reserved for non-binding guidance and are avoided in requirement statements
 
 Verification evidence (test-case IDs `TC-…`, once a test suite exists) is
 tracked in the RTM, keeping this catalog focused on *what* is required.
+
+## Tolerances
+
+Requirements that say "within tolerance" refer to these named tolerances. Values
+are **initial targets**, pinned here so the requirements are verifiable and so a
+single change updates every referencing requirement. They are confirmed the same
+way performance targets are — see [`NFR-BENCH`](../03-nonfunctional/nonfunctional-requirements.md#benchmarks--validation--nfr-bench).
+
+| Tolerance | Meaning | Initial target | Referenced by |
+| --- | --- | --- | --- |
+| **Coordinate tolerance** | Distance within which two vertices are treated as coincident (snapping, gap/overlap). | 1 mm in the plan's projected units | `DOM-GEOM-009`, `DOM-PARCEL-004` |
+| **Conversion tolerance** | Max error permitted when converting between units. | ≤ 1 part in 10⁶ | `DOM-UNIT-003` |
+| **Metric tolerance** | Max deviation of an area/distance metric from an authoritative GIS for the same input. | ≤ 0.1% relative | `NFR-COMPAT-002`, `DOM-METRIC-*` |
+| **Interoperability tolerance** | Max positional shift permitted on a format round-trip. | ≤ coordinate tolerance for projected CRS; ≤ 1 mm equivalent for geographic | `NFR-COMPAT-001`, `IOP-*` |
 
 ## Traceability model
 
