@@ -21,23 +21,28 @@ Reframe the repository and set the foundation for the new product.
 
 Make the planning vocabulary real and testable before any UI is built on it.
 
-- ⬜ Spatial foundation: coordinate reference systems, units, scale, geometry types.
-- ⬜ Layers and layer ordering.
-- ⬜ Core primitives: `Site`, `Parcel`, `Lot`, `Zone`, `LandUse`.
-- ⬜ Basic rules: area/perimeter, setbacks, simple subdivision.
-- ⬜ Metrics: coverage, density, land-use breakdown.
-- ⬜ Property-based and unit tests for the model.
+- ✅ Spatial foundation: coordinate reference systems, units, scale, geometry types.
+- ✅ Layers and layer ordering.
+- ✅ Core primitives: `Site`, `Parcel`, `Lot`, `Zone`, `LandUse` (plus `Block`,
+  `Building`, `RightOfWay`, `Easement`, `OpenSpace`).
+- ✅ Basic rules: area/perimeter, setbacks (buildable envelope), simple subdivision.
+- ✅ Metrics: coverage, density, FAR, land-use breakdown, impervious/open-space ratios.
+- ✅ Unit tests for the model (geometry + metrics).
 
 ## Phase 2 — Single-player cloud workspace
 
 A usable, server-backed planning canvas for one user.
 
-- ⬜ `apps/web` canvas: draw/edit parcels and zones with snapping and measurement.
-- ⬜ Layer panel and land-use styling.
+- ✅ `apps/web` canvas: draw/edit parcels, zones, lots, land uses, buildings, and
+  ROW with snapping, vertex editing, and measurement.
+- ✅ Layer panel and land-use styling.
+- ✅ Live metrics panel driven by the domain model.
+- ✅ Checkpoints: named snapshots with restore (carried forward from the archive).
+- 🟡 Server persistence via a swappable `ApiClient` — the workspace targets a
+  cloud API interface, currently backed by a local (browser) implementation
+  pending the real services below.
 - ⬜ `services/auth`: sign-in, organizations, basic roles.
 - ⬜ `services/projects`: create/open/save projects; server persistence.
-- ⬜ Checkpoints: named snapshots with restore (carried forward from the archive).
-- ⬜ Live metrics panel driven by the domain model.
 
 ## Phase 3 — Interoperability
 
@@ -61,9 +66,12 @@ Turn it into a true multi-player, review-ready platform.
 
 Deepen the planning intelligence.
 
-- ⬜ Zoning envelopes and compliance checks.
-- ⬜ Land-use allocation tools and program tracking.
-- ⬜ Infrastructure networks (roads, utilities) as connected primitives.
+- ✅ Zoning envelopes and compliance checks.
+- 🟡 Land-use allocation tools and program tracking (allocation metrics done).
+- ✅ Infrastructure networks (roads, utilities) as connected primitives.
+- ✅ Terrain, contours, slope analysis, and cut/fill grading (`packages/domain/terrain.ts`).
+- ✅ Landscape elements (water, planting, trees) and large-scale `Region` tier.
+- ✅ Community metrics (population, density, service/park levels of service).
 - ⬜ Scenario comparison (alternatives side by side).
 - ⬜ Community engagement views (simplified, comment-first).
 

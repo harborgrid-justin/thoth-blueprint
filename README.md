@@ -67,8 +67,11 @@ team and community stakeholders — all in the browser, all in the cloud.
 - 🔐 **Governed & auditable** — versioning, checkpoints, and an audit trail suitable
   for public review processes.
 
-> Not all of this exists yet. This repository currently contains the **product
-> vision, architecture, and an initial scaffold**. See
+> Not all of this exists yet, but a lot does: the **planning workspace runs today**
+> (`npm run dev`) on an **implemented, tested domain model** — drawing, layers,
+> metrics, survey/plat reports, terrain & grading, a 3D view, and mesh/point-cloud/
+> blueprint interop. The cloud services (`services/`) are still scaffolds; the app
+> persists to your browser via a swappable API client. See
 > [`docs/ROADMAP.md`](docs/ROADMAP.md) for what is built, in progress, and planned.
 
 ## Repository layout
@@ -79,14 +82,14 @@ self-contained under `artifact/`.
 ```
 thoth-blueprint/
 ├── apps/
-│   └── web/            # Cloud planning workspace (client) — scaffold
+│   └── web/            # Cloud planning workspace (client) — React app, runnable
 ├── services/           # Cloud backend services — scaffolds
 │   ├── auth/           #   identity & access
 │   ├── projects/       #   projects, versions, checkpoints
 │   ├── geospatial/     #   coordinate systems, layers, spatial ops
 │   └── collaboration/  #   real-time multi-user editing & presence
 ├── packages/
-│   └── domain/         # Framework-agnostic planning domain model — scaffold
+│   └── domain/         # Framework-agnostic planning domain model — implemented + tested
 ├── docs/               # Vision, architecture, roadmap, glossary, migration
 ├── artifact/           # ARCHIVED original DB-design app (see artifact/README.md)
 ├── CLAUDE.md           # Guidance for AI agents working in this repo
@@ -97,9 +100,54 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how these fit together.
 
 ## Getting started
 
-The new platform is at the scaffold stage — the packages under `apps/`,
-`services/`, and `packages/` define structure and intent, and are being filled in.
-Start with the docs to understand the direction:
+**Requirements:** [Node.js](https://nodejs.org) 20+ and npm 10+ (`node -v`).
+
+The repo is an npm-workspaces monorepo, so a single install at the root wires up
+the planning workspace (`apps/web`) and the domain model (`packages/domain`).
+
+```bash
+# 1. clone and enter
+git clone https://github.com/harborgrid-justin/thoth-blueprint.git
+cd thoth-blueprint
+
+# 2. install everything (one command, from the root)
+npm install
+
+# 3. run the planning workspace
+npm run dev
+```
+
+Then open the printed URL (**http://localhost:5173**). No backend or accounts to
+set up — the app runs entirely in your browser and persists projects to local
+storage, and it opens with sample plans (a subdivision, a mixed-use district, and
+a landscape-scale estate) you can edit immediately.
+
+### Root scripts
+
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server for `apps/web` (hot reload). |
+| `npm run build` | Type-check the domain model and build the web app to `apps/web/dist`. |
+| `npm run preview` | Serve the production build locally. |
+| `npm test` | Run the domain model's unit tests (geometry, metrics, survey, terrain, networks, interop). |
+| `npm run type-check` | Strict TypeScript check across the domain model and web app. |
+
+> Prefer `npx`? From `apps/web` you can also run `npx vite` (dev) or
+> `npx vite build`, and from `packages/domain` `npx vitest`.
+
+### Starting from scratch
+
+Sample projects are seeded into your browser on first run. From the dashboard
+header, the **⚙ settings menu** lets you:
+
+- **Start from scratch (clear all)** — remove every local project for a blank slate.
+- **Reset to sample projects** — restore the seeded demos.
+
+Create a new plan with **New project**, choosing a **Blank site** template (or a
+subdivision / district / estate starter). Everything is stored in your browser, so
+clearing site data in your browser also resets the workspace.
+
+### Learn the direction
 
 1. [`docs/VISION.md`](docs/VISION.md) — the problem, the product, and principles.
 2. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system design and boundaries.

@@ -47,3 +47,65 @@ jobs:
             exit 1
           fi
           echo "✅ Build successful"
+
+  # The framework-agnostic planning domain model.
+  domain-test:
+    name: Test domain model (packages/domain)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/domain
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type-check
+        run: npm run type-check
+
+      - name: Run tests
+        run: npm test
+
+  # The cloud planning workspace (browser client).
+  web-build:
+    name: Build planning workspace (apps/web)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install domain dependencies
+        run: npm install
+        working-directory: packages/domain
+
+      - name: Install web dependencies
+        run: npm install
+
+      - name: Type-check
+        run: npm run type-check
+
+      - name: Build
+        run: npm run build
+
+      - name: Check if build was successful
+        run: |
+          if [ ! -d dist ]; then
+            echo "❌ Build directory not found!"
+            exit 1
+          fi
+          echo "✅ Build successful"
