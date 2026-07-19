@@ -218,7 +218,8 @@ export function subdivisionSite(name: string): Site {
     { roadClass: "local", width: 15 },
   );
 
-  // A stationed survey baseline down Maple Street, with a horizontal curve.
+  // A stationed survey baseline down Maple Street, with a horizontal curve
+  // and parallel offset lines (edge of pavement + right-of-way).
   const baseline = {
     id: createId("algn"),
     name: "R/L MAPLE ST",
@@ -227,6 +228,12 @@ export function subdivisionSite(name: string): Site {
       { point: { x: 30, y: 110 } },
       { point: { x: 200, y: 110 }, radius: 30 },
       { point: { x: 268, y: 150 } },
+    ],
+    offsets: [
+      { distance: 7.5, kind: "pavement" as const, label: "EP" },
+      { distance: -7.5, kind: "pavement" as const, label: "EP" },
+      { distance: 10, kind: "row" as const, label: "R/W" },
+      { distance: -10, kind: "row" as const, label: "R/W" },
     ],
   };
 
@@ -264,6 +271,15 @@ export function subdivisionSite(name: string): Site {
       { id: createId("ctl"), type: "silt-fence", label: "Silt Fence", path: [{ x: 22, y: 202 }, { x: 278, y: 202 }] },
       { id: createId("ctl"), type: "tree-line", label: "Tree Line", path: [{ x: 22, y: 18 }, { x: 278, y: 18 }] },
       { id: createId("ctl"), type: "flow", path: [{ x: 40, y: 60 }, { x: 120, y: 112 }, { x: 210, y: 150 }] },
+    ],
+    civilSymbols: [
+      { id: createId("sym"), type: "inlet-protection", position: { x: 62, y: 118 }, subtype: "A" },
+      { id: createId("sym"), type: "inlet-protection", position: { x: 150, y: 118 }, subtype: "B" },
+      { id: createId("sym"), type: "inlet-protection", position: { x: 236, y: 118 }, subtype: "C" },
+      { id: createId("sym"), type: "ditch-check", position: { x: 120, y: 112 }, rotation: 30 },
+      { id: createId("sym"), type: "culvert", position: { x: 210, y: 150 } },
+      { id: createId("sym"), type: "erosion-bale", position: { x: 40, y: 198 } },
+      { id: createId("sym"), type: "riprap", position: { x: 268, y: 152 } },
     ],
     jurisdictionId: "us-plss-default",
     plss: {

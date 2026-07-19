@@ -26,6 +26,14 @@ export interface AlignmentPI {
   radius?: number;
 }
 
+/** A parallel offset line carried alongside an alignment (pavement edge, R/W…). */
+export interface AlignmentOffset {
+  /** Signed offset, plan units; + is right of travel, − is left. */
+  distance: number;
+  kind: "pavement" | "shoulder" | "row" | "ditch";
+  label?: string;
+}
+
 /** A horizontal alignment definition (the PI chain + its start station). */
 export interface HorizontalAlignment {
   id: string;
@@ -33,6 +41,8 @@ export interface HorizontalAlignment {
   pis: AlignmentPI[];
   /** Station at the Point of Beginning (start), plan units (e.g. feet). */
   startStation: number;
+  /** Parallel offset lines to generate (edge of pavement, right-of-way, …). */
+  offsets?: AlignmentOffset[];
 }
 
 /** Resolved circular curve at a PI, with the values a plan sheet lists. */
@@ -344,6 +354,30 @@ export function stationOffsetOfPoint(
     }
   }
   return best;
+}
+
+/**
+ * A parallel offset line of the alignment centerline (edge of pavement, R/W,
+ * ditch, …): the centerline sampled and displaced by `offset` along the right
+ * normal (+ right of travel, − left). Concentric through curves.
+ */
+export function offsetAlignmentPath(
+  resolved: ResolvedAlignment,
+  offset: number,
+  samples = 120,
+): Point[] {
+  const out: Point[] = [];
+  const total = resolved.length;
+  if (total <= 0) return out;
+  for (let i = 0; i <= samples; i++) {
+    const at = pointAtStation(resolved, resolved.startStation + (total * i) / samples);
+    if (!at) continue;
+    const rad = (at.bearing * Math.PI) / 180;
+    const dir = { x: Math.sin(rad), y: -Math.cos(rad) }; // travel direction
+    const nrm = { x: -dir.y, y: dir.x }; // right of travel
+    out.push({ x: at.point.x + nrm.x * offset, y: at.point.y + nrm.y * offset });
+  }
+  return out;
 }
 
 /** Full-station values at multiples of `interval` within the alignment range. */

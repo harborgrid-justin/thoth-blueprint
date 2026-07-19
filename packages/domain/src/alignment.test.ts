@@ -3,6 +3,7 @@ import {
   alignmentLength,
   formatStation,
   fullStations,
+  offsetAlignmentPath,
   pointAtStation,
   resolveAlignment,
   stationOffsetOfPoint,
@@ -113,6 +114,26 @@ describe("stationOffsetOfPoint", () => {
     expect(so.side).toBe("right");
     const left = stationOffsetOfPoint(r, { x: -15, y: -250 });
     expect(left.side).toBe("left");
+  });
+});
+
+describe("offsetAlignmentPath", () => {
+  it("offsets a north-running tangent to the right (east)", () => {
+    const straight: HorizontalAlignment = {
+      id: "s",
+      name: "S",
+      startStation: 0,
+      pis: [
+        { point: { x: 0, y: 0 } },
+        { point: { x: 0, y: -100 } },
+      ],
+    };
+    const r = resolveAlignment(straight)!;
+    const right = offsetAlignmentPath(r, 10, 20);
+    // Travelling north (−Y), the right side is +X = 10.
+    right.forEach((p) => expect(p.x).toBeCloseTo(10, 6));
+    const left = offsetAlignmentPath(r, -10, 20);
+    left.forEach((p) => expect(p.x).toBeCloseTo(-10, 6));
   });
 });
 

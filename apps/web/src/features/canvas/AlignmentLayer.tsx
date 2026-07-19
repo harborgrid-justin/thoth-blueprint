@@ -1,8 +1,10 @@
 import {
   formatStation,
   fullStations,
+  offsetAlignmentPath,
   pointAtStation,
   resolveAlignment,
+  type AlignmentOffset,
   type Point,
   type ResolvedAlignment,
   type Site,
@@ -61,6 +63,22 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
 
         return (
           <g key={a.id}>
+            {/* Parallel offset lines (edge of pavement, right-of-way, …). */}
+            {(a.offsets ?? []).map((off, oi) => {
+              const path = offsetAlignmentPath(r, off.distance).map((p) => worldToScreen(p, viewport));
+              const style = offsetStyle(off);
+              return (
+                <polyline
+                  key={oi}
+                  points={path.map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ")}
+                  fill="none"
+                  stroke={style.stroke}
+                  strokeWidth={style.width}
+                  strokeDasharray={style.dash}
+                  vectorEffect="non-scaling-stroke"
+                />
+              );
+            })}
             <polyline
               points={poly}
               fill="none"
@@ -152,6 +170,20 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
       })}
     </g>
   );
+}
+
+/** Drafting style for an alignment offset line by kind. */
+function offsetStyle(off: AlignmentOffset): { stroke: string; width: number; dash?: string } {
+  switch (off.kind) {
+    case "pavement":
+      return { stroke: "#334155", width: 1.2 };
+    case "shoulder":
+      return { stroke: "#64748b", width: 1, dash: "6 3" };
+    case "row":
+      return { stroke: "#7c3aed", width: 1.1, dash: "12 3 3 3" };
+    case "ditch":
+      return { stroke: "#92400e", width: 1, dash: "4 3" };
+  }
 }
 
 function ControlDot({ p, label, zoom }: { p: Point; label: string; zoom: number }) {

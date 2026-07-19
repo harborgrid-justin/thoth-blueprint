@@ -12,6 +12,7 @@ import {
   landLotSide,
   measuredArea,
   METERS_PER_UNIT,
+  offsetAlignmentPath,
   resolveAlignment,
   resolveCapabilities,
   sectionFrame,
@@ -31,6 +32,7 @@ import { Badge } from "@/components/ui/badge";
 import { MonumentSymbol } from "@/features/canvas/MonumentLayer";
 import { CanvasPatterns, patternFor } from "@/features/canvas/patterns";
 import { ControlLineShape } from "@/features/canvas/CivilLayer";
+import { CivilSymbolGlyph } from "@/features/canvas/CivilSymbolLayer";
 import {
   Dialog,
   DialogContent,
@@ -242,6 +244,25 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
             );
           })}
 
+        {/* Alignment offset bands (edge of pavement, R/W). */}
+        {(site.alignments ?? []).map((a) => {
+          const r = resolveAlignment(a);
+          if (!r) return null;
+          return (a.offsets ?? []).map((off, oi) => {
+            const path = offsetAlignmentPath(r, off.distance).map(project);
+            return (
+              <polyline
+                key={`${a.id}-off${oi}`}
+                points={path.map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ")}
+                fill="none"
+                stroke={off.kind === "row" ? "#7c3aed" : "#334155"}
+                strokeWidth={0.7}
+                strokeDasharray={off.kind === "row" ? "8 2 2 2" : undefined}
+              />
+            );
+          });
+        })}
+
         {/* Alignment centerlines. */}
         {(site.alignments ?? []).map((a) => {
           const r = resolveAlignment(a);
@@ -272,6 +293,16 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
           return (
             <g key={m.id} transform={`translate(${s.x} ${s.y}) scale(0.8)`}>
               <MonumentSymbol type={m.type} filled={m.status === "set"} />
+            </g>
+          );
+        })}
+
+        {/* Civil / erosion-control point symbols. */}
+        {(site.civilSymbols ?? []).map((sym) => {
+          const s = project(sym.position);
+          return (
+            <g key={sym.id} transform={`translate(${s.x} ${s.y}) rotate(${sym.rotation ?? 0}) scale(0.85)`}>
+              <CivilSymbolGlyph type={sym.type} subtype={sym.subtype} />
             </g>
           );
         })}

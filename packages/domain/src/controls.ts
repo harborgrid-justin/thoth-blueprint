@@ -5,7 +5,7 @@
  * drawn with a distinctive drafting symbol rather than a plain stroke.
  */
 
-import type { Polyline } from "./geometry";
+import type { Point, Polyline } from "./geometry";
 
 export type ControlLineType =
   | "silt-fence"
@@ -39,4 +39,49 @@ const BY_TYPE = new Map(CONTROL_LINE_DEFINITIONS.map((d) => [d.type, d]));
 
 export function controlLineDefinition(type: ControlLineType): ControlLineDefinition {
   return BY_TYPE.get(type) ?? { type, label: type };
+}
+
+// --- point symbols ---------------------------------------------------------
+
+/** Civil/erosion-control point symbols placed on a plan sheet. */
+export type CivilSymbolType =
+  | "inlet-protection"
+  | "ditch-check"
+  | "culvert"
+  | "erosion-bale"
+  | "riprap"
+  | "sign"
+  | "flow-arrow";
+
+/** A placed civil symbol (box-X inlet protection, ditch check, culvert, …). */
+export interface CivilSymbol {
+  id: string;
+  type: CivilSymbolType;
+  position: Point;
+  /** Rotation in degrees, for directional symbols (arrows, ditch checks). */
+  rotation?: number;
+  /** Inlet-protection type letter (A/B/C) or other qualifier. */
+  subtype?: string;
+  label?: string;
+}
+
+export interface CivilSymbolDefinition {
+  type: CivilSymbolType;
+  label: string;
+}
+
+export const CIVIL_SYMBOL_DEFINITIONS: CivilSymbolDefinition[] = [
+  { type: "inlet-protection", label: "Inlet protection (A/B/C)" },
+  { type: "ditch-check", label: "Ditch check" },
+  { type: "culvert", label: "Culvert pipe" },
+  { type: "erosion-bale", label: "Erosion bale / barrier" },
+  { type: "riprap", label: "Rip-rap / stone" },
+  { type: "sign", label: "Sign" },
+  { type: "flow-arrow", label: "Surface-water flow" },
+];
+
+const SYMBOL_BY_TYPE = new Map(CIVIL_SYMBOL_DEFINITIONS.map((d) => [d.type, d]));
+
+export function civilSymbolDefinition(type: CivilSymbolType): CivilSymbolDefinition {
+  return SYMBOL_BY_TYPE.get(type) ?? { type, label: type };
 }

@@ -10,7 +10,7 @@
 import type { Point, Polygon, Polyline } from "./geometry";
 import { boundaryArea, boundaryPerimeter, type EdgeArcs } from "./curve";
 import type { HorizontalAlignment } from "./alignment";
-import type { ControlLine } from "./controls";
+import type { CivilSymbol, ControlLine } from "./controls";
 import type { LandLotRef } from "./landlot";
 import type { SurveyMonument } from "./monument";
 import type { TownshipRange } from "./plss";
@@ -247,6 +247,8 @@ export interface Site {
   monuments?: SurveyMonument[];
   /** Civil / erosion-control line features (silt fence, tree line, flow, …). */
   controlLines?: ControlLine[];
+  /** Civil / erosion-control point symbols (inlet protection, ditch check, …). */
+  civilSymbols?: CivilSymbol[];
   /**
    * Public Land Survey System framework this plat is tied to (Township/Range),
    * with the controlling section and its northwest corner in plan coordinates.

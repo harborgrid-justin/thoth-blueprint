@@ -42,6 +42,7 @@ import { ScaleBar, NorthArrow, Legend } from "./CanvasOverlays";
 import { AlignmentLayer } from "./AlignmentLayer";
 import { CanvasPatterns, patternFor } from "./patterns";
 import { CivilLayer } from "./CivilLayer";
+import { CivilSymbolLayer } from "./CivilSymbolLayer";
 import { MonumentLayer } from "./MonumentLayer";
 import { FrameworkLayer } from "./FrameworkLayer";
 import { SurveyLegend } from "./SurveyLegend";
@@ -559,6 +560,9 @@ export function PlanningCanvas() {
 
         {/* Civil / erosion-control line features (silt fence, tree line, flow). */}
         <CivilLayer site={site} viewport={viewport} />
+
+        {/* Civil / erosion-control point symbols (inlet protection, ditch check). */}
+        <CivilSymbolLayer site={site} viewport={viewport} />
 
         {/* Survey monuments with standard symbology. */}
         <MonumentLayer site={site} viewport={viewport} />
