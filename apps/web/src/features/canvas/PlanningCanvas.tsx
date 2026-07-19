@@ -41,7 +41,7 @@ import { eventToWorld, snapPoint } from "./snapping";
 import { ScaleBar, NorthArrow, Legend } from "./CanvasOverlays";
 import { AlignmentLayer } from "./AlignmentLayer";
 import { MonumentLayer } from "./MonumentLayer";
-import { PlssLayer } from "./PlssLayer";
+import { FrameworkLayer } from "./FrameworkLayer";
 import { SurveyLegend } from "./SurveyLegend";
 import { formatArea } from "@/lib/format";
 
@@ -524,8 +524,8 @@ export function PlanningCanvas() {
 
         {showGrid && <Grid viewport={viewport} size={size} step={gridStep} />}
 
-        {/* PLSS section framework, beneath the plan. */}
-        <PlssLayer site={site} viewport={viewport} />
+        {/* Survey framework (PLSS section or GA land lot), beneath the plan. */}
+        <FrameworkLayer site={site} viewport={viewport} />
 
         {/* Imported reference point clouds. */}
         {clouds.map(
@@ -801,7 +801,7 @@ function ElementShape({
           ? 0.32
           : element.kind === "grade"
             ? 0.2
-            : element.kind === "region"
+            : element.kind === "region" || element.kind === "easement"
               ? 0.06
               : 0.14;
   const dash =
@@ -811,7 +811,9 @@ function ElementShape({
         ? "10 6"
         : element.kind === "grade"
           ? "4 3"
-          : undefined;
+          : element.kind === "easement"
+            ? "7 3 2 3"
+            : undefined;
 
   const label = showLabels && viewport.zoom > 1.4 ? element.name : null;
   const center = label ? worldToScreen(centroid(boundary), viewport) : null;

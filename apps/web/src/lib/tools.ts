@@ -15,6 +15,7 @@ import {
   Spline,
   Sprout,
   Square,
+  SquareDashed,
   TreePine,
   Trees,
   Waves,
@@ -35,6 +36,7 @@ export type ToolId =
   | "building"
   | "row"
   | "openspace"
+  | "easement"
   | "water"
   | "planting"
   | "grade"
@@ -71,6 +73,7 @@ export const TOOLS: ToolDef[] = [
   { id: "lot", label: "Lot", icon: Building2, shortcut: "L", kind: "lot", mode: "polygon", group: "plan" },
   { id: "building", label: "Building", icon: Building2, shortcut: "B", kind: "building", mode: "polygon", group: "plan" },
   { id: "openspace", label: "Open Space", icon: Trees, shortcut: "O", kind: "openspace", mode: "polygon", group: "plan" },
+  { id: "easement", label: "Easement", icon: SquareDashed, shortcut: "X", kind: "easement", mode: "polygon", group: "plan" },
 
   { id: "road", label: "Road", icon: Route, shortcut: "R", network: { kind: "road", roadClass: "local" }, mode: "polyline", group: "infra" },
   { id: "utility", label: "Utility main", icon: Zap, shortcut: "Y", network: { kind: "water" }, mode: "polyline", group: "infra" },

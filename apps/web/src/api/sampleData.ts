@@ -4,6 +4,7 @@ import {
   networkFromPath,
   subdivideGrid,
   type Building,
+  type Easement,
   type InfrastructureNetwork,
   type LandUse,
   type Layer,
@@ -141,6 +142,17 @@ export function subdivisionSite(name: string): Site {
   };
   elements.push(park);
 
+  // A platted utility easement strip behind the north lots.
+  const easement: Easement = {
+    id: createId("esmt"),
+    kind: "easement",
+    name: "20' Utility Easement",
+    layerId: "layer-base",
+    boundary: rect(30, 86, 240, 8),
+    purpose: "utility",
+  };
+  elements.push(easement);
+
   // Subdivide the north band into lots.
   const northLots = subdivideGrid(rect(30, 30, 240, 60), {
     columns: 6,
@@ -248,6 +260,7 @@ export function subdivisionSite(name: string): Site {
     networks: [roads],
     alignments: [baseline],
     monuments,
+    jurisdictionId: "us-plss-default",
     plss: {
       townshipRange: { township: 3, townshipDir: "South" as const, range: 16, rangeDir: "East" as const },
       section: 8,

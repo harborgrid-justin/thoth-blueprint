@@ -42,6 +42,23 @@ npm run build        # type-check + production build
   unit system (metric/imperial), area unit, bearing format (DMS/decimal),
   coordinate readout (plan/survey), and a **high-contrast** accessibility mode.
   Presentation-only: the plan's stored geometry and CRS never change.
+- **Regional plug-ins (jurisdictions)** (`@thoth/domain/regions`) — the platform
+  ships **100% of the plat/civil capabilities enabled**, and a region plug-in
+  *adjusts* them for a place: the survey framework (PLSS vs. the **Georgia Land
+  Lot System** vs. metes-and-bounds), default units/CRS, recognized monuments,
+  the sheet's title-block fields and **required certificates**, curve-table
+  columns, and local subdivision standards. Ships **Newton County, Georgia**
+  (202.5-acre land lots, Georgia West State Plane, Georgia plat certificates) and
+  a generic US-PLSS default; pick one in Preferences. New jurisdictions are pure
+  data — nothing is hard-coded to a place.
+- **Plat sheet composer** (`src/features/survey/PlatSheetDialog`) — a
+  jurisdiction-driven plan sheet: title block, the site plan (parcels/lots/
+  easements, monuments, survey framework, alignment centerlines), a
+  **consolidated curve-data table** (every boundary arc and alignment curve,
+  C1…Cn), a legend, north arrow, and graphic scale, plus the jurisdiction's
+  **certificate blocks** — exportable as vector SVG.
+- **Easements** — drawn as typed planning elements (utility/access/drainage) with
+  a dashed offset style and label, carried onto the plat sheet.
 - **PLSS framework & survey monuments** (`@thoth/domain/plss`, `/monument`) —
   the rectangular-survey basis of a U.S. plat: Township/Range/Section with
   aliquot-part geometry and nominal acreage (640 → 160 → 40 …), section &

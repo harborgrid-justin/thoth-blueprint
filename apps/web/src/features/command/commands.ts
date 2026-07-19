@@ -93,6 +93,7 @@ export function buildCommands(actions: CommandActions): Command[] {
     { id: "project.checkpoints", title: "Open checkpoints", group: "Project", icon: History, run: actions.onOpenCheckpoints },
     { id: "project.plat", title: "Open survey / plat report", group: "Project", icon: ScrollText, run: () => useUiStore.getState().openPlat(null) },
     { id: "project.alignment", title: "Alignment & stationing report", group: "Project", keywords: "station curve baseline pc pt civil", icon: ScrollText, run: () => useUiStore.getState().setAlignmentOpen(true) },
+    { id: "project.sheet", title: "Plat sheet composer", group: "Project", keywords: "sheet plat title block certificate curve table jurisdiction plugin", icon: ScrollText, run: () => useUiStore.getState().setSheetOpen(true) },
     { id: "project.prefs", title: "Display preferences", group: "Project", keywords: "units theme contrast angle", icon: Settings2, run: () => useUiStore.getState().setPrefsOpen(true) },
   ];
 

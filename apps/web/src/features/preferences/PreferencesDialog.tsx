@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
-import { areaUnitLabel, type AreaUnit } from "@thoth/domain";
+import { areaUnitLabel, listRegionPlugins, type AreaUnit } from "@thoth/domain";
 import { usePrefsStore } from "@/store/prefsStore";
 import { useUiStore } from "@/store/uiStore";
+import { useWorkspaceStore } from "@/store/workspaceStore";
 import type { AngleFormat, CoordFormat, LengthUnitPref } from "@/lib/units";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -40,6 +41,9 @@ export function PreferencesDialog() {
   const open = useUiStore((s) => s.prefsOpen);
   const setOpen = useUiStore((s) => s.setPrefsOpen);
   const prefs = usePrefsStore();
+  const jurisdictionId = useWorkspaceStore((s) => s.site?.jurisdictionId ?? "");
+  const setJurisdiction = useWorkspaceStore((s) => s.setJurisdiction);
+  const plugins = listRegionPlugins();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -53,6 +57,17 @@ export function PreferencesDialog() {
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
+          <Row label="Jurisdiction (region plug-in)">
+            <PrefSelect
+              value={jurisdictionId || "none"}
+              options={[
+                { value: "none", label: "None (base capabilities)" },
+                ...plugins.map((p) => ({ value: p.id, label: p.name })),
+              ]}
+              onChange={(v) => setJurisdiction(v === "none" ? null : v)}
+            />
+          </Row>
+
           <Row label="Length units">
             <PrefSelect
               value={prefs.lengthUnit}

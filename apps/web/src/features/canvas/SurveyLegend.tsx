@@ -1,5 +1,7 @@
 import {
+  formatLandLot,
   formatPLSS,
+  getRegionPlugin,
   monumentDefinition,
   type MonumentType,
   type Site,
@@ -7,25 +9,32 @@ import {
 import { MonumentSymbol } from "./MonumentLayer";
 
 /**
- * A plat-style survey legend: the Township/Range reference and the monument
- * symbology actually present in the plan (set = filled, found = open).
+ * A plat-style survey legend: the active jurisdiction's framework reference
+ * (PLSS section or Georgia land lot) and the monument symbology present in the
+ * plan (set = filled, open = found).
  */
 export function SurveyLegend({ site }: { site: Site }) {
   const monuments = site.monuments ?? [];
-  const plss = site.plss;
-  if (monuments.length === 0 && !plss) return null;
+  const plugin = getRegionPlugin(site.jurisdictionId);
+  const usingLandLot = plugin?.surveyFramework === "georgia-land-lot" && !!site.landLot;
+  const frameworkRef = usingLandLot
+    ? formatLandLot(site.landLot!.ref)
+    : site.plss
+      ? formatPLSS(site.plss.townshipRange, site.plss.section)
+      : null;
+  if (monuments.length === 0 && !frameworkRef && !plugin) return null;
 
   const types: MonumentType[] = [];
   for (const m of monuments) if (!types.includes(m.type)) types.push(m.type);
 
   return (
     <div className="absolute left-3 top-3 max-w-[15rem] rounded-md border border-border bg-card/90 px-2.5 py-2 shadow-md backdrop-blur">
-      {plss && (
+      {(frameworkRef || plugin) && (
         <div className="mb-1.5 border-b border-border pb-1.5">
           <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Survey framework
+            {plugin ? plugin.name : "Survey framework"}
           </div>
-          <div className="text-xs text-foreground">{formatPLSS(plss.townshipRange, plss.section)}</div>
+          {frameworkRef && <div className="text-xs text-foreground">{frameworkRef}</div>}
         </div>
       )}
       {types.length > 0 && (

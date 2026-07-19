@@ -2,6 +2,7 @@ import { create } from "zustand";
 import {
   bounds,
   createId,
+  getRegionPlugin,
   isPointElement,
   isSpatialElement,
   networkFromPath,
@@ -86,6 +87,9 @@ export interface WorkspaceState {
   moveSelection(delta: Point): void;
   deleteSelection(): void;
   replaceElements(next: PlanElement[]): void;
+
+  /** Enable a region plug-in (jurisdiction); anchors its survey framework. */
+  setJurisdiction(id: string | null): void;
 
   // --- layers ---
   addLayer(name: string): void;
@@ -453,6 +457,24 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     replaceElements(next) {
       mutate((s) => ({ ...s, elements: next }));
+    },
+
+    setJurisdiction(id) {
+      mutate((s) => {
+        const plugin = getRegionPlugin(id);
+        const next: Site = { ...s, jurisdictionId: id ?? undefined };
+        // Anchor the Georgia Land Lot framework if the jurisdiction needs it.
+        if (plugin?.surveyFramework === "georgia-land-lot" && !s.landLot) {
+          const boxes = s.elements.filter(isSpatialElement).map((e) => bounds(e.boundary));
+          const b = boxes.length ? unionBounds(boxes) : null;
+          const nwCorner = b ? { x: b.minX - 20, y: b.minY - 20 } : { x: 0, y: 0 };
+          next.landLot = {
+            ref: { district: 9, landLot: 12, acres: plugin.standards?.landLotAcres ?? 202.5 },
+            nwCorner,
+          };
+        }
+        return next;
+      });
     },
 
     addLayer(name) {

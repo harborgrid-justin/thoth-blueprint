@@ -10,6 +10,7 @@
 import type { Point, Polygon, Polyline } from "./geometry";
 import { boundaryArea, boundaryPerimeter, type EdgeArcs } from "./curve";
 import type { HorizontalAlignment } from "./alignment";
+import type { LandLotRef } from "./landlot";
 import type { SurveyMonument } from "./monument";
 import type { TownshipRange } from "./plss";
 import type { SpatialContext } from "./spatial";
@@ -254,6 +255,14 @@ export interface Site {
     sectionNwCorner?: Point;
     sectionSide?: number;
   };
+  /** Georgia Land Lot System framework (used when the jurisdiction requires it). */
+  landLot?: {
+    ref: LandLotRef;
+    /** Plan-coordinate NW corner of the controlling land lot. */
+    nwCorner?: Point;
+  };
+  /** Active region plug-in (jurisdiction) id — see `./regions`. */
+  jurisdictionId?: string;
 }
 
 /** Type guard: does this element carry a spatial boundary? */

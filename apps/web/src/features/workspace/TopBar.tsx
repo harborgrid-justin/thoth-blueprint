@@ -8,6 +8,7 @@ import {
   Compass,
   Grid3x3,
   History,
+  LayoutTemplate,
   Loader2,
   Magnet,
   Maximize,
@@ -62,6 +63,7 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
   } = useCanvasStore();
   const openPlat = useUiStore((s) => s.openPlat);
   const setAlignmentOpen = useUiStore((s) => s.setAlignmentOpen);
+  const setSheetOpen = useUiStore((s) => s.setSheetOpen);
   const toggleCommand = useUiStore((s) => s.toggleCommand);
   const setPrefsOpen = useUiStore((s) => s.setPrefsOpen);
   const openFind = useFindStore((s) => s.openFind);
@@ -145,6 +147,9 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         </Button>
         <Button variant="ghost" size="sm" onClick={() => setAlignmentOpen(true)}>
           <Spline className="h-4 w-4" /> <span className="hidden lg:inline">Stationing</span>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => setSheetOpen(true)}>
+          <LayoutTemplate className="h-4 w-4" /> <span className="hidden lg:inline">Sheet</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={onOpenCheckpoints}>
           <History className="h-4 w-4" /> <span className="hidden md:inline">Checkpoints</span>

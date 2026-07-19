@@ -13,10 +13,13 @@ interface UiState {
   prefsOpen: boolean;
   /** Whether the alignment / stationing report is open. */
   alignmentOpen: boolean;
+  /** Whether the plat-sheet composer is open. */
+  sheetOpen: boolean;
 
   openPlat(targetId?: string | null): void;
   closePlat(): void;
   setAlignmentOpen(open: boolean): void;
+  setSheetOpen(open: boolean): void;
   setCommandOpen(open: boolean): void;
   toggleCommand(): void;
   setShortcutsOpen(open: boolean): void;
@@ -30,6 +33,7 @@ export const useUiStore = create<UiState>((set) => ({
   shortcutsOpen: false,
   prefsOpen: false,
   alignmentOpen: false,
+  sheetOpen: false,
 
   openPlat(targetId = null) {
     set({ platOpen: true, platTargetId: targetId });
@@ -39,6 +43,9 @@ export const useUiStore = create<UiState>((set) => ({
   },
   setAlignmentOpen(alignmentOpen) {
     set({ alignmentOpen });
+  },
+  setSheetOpen(sheetOpen) {
+    set({ sheetOpen });
   },
   setCommandOpen(commandOpen) {
     set({ commandOpen });
