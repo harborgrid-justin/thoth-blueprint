@@ -26,7 +26,14 @@ npm run build        # type-check + production build
 - **Planning canvas** (`src/features/canvas`) — an SVG canvas with pan/zoom, a
   scale-aware grid, snapping (to grid and to existing vertices), polygon drawing
   for every planning primitive, vertex editing, selection/move, and a 2-point
-  measurement ruler. Lots render their buildable **setback** envelope.
+  measurement ruler. Lots render their buildable **setback** envelope, and the
+  selected boundary is annotated with **bearing + distance** on every edge.
+- **Plat & survey report** (`src/features/survey`) — for each tract, the full
+  surveyor's record: a metes-and-bounds **line table** (quadrant bearings +
+  distances), **corner coordinates** (northing/easting), **traverse closure /
+  precision**, area (units² + acres), a generated **legal description**, and a
+  courses **CSV export**. Open it per-element from the inspector or for the whole
+  plat from the top bar.
 - **Toolbar** — select, pan, and drawing tools for parcel, zone, land use, lot,
   building, right-of-way, open space, and notes, plus undo/redo.
 - **Inspector** (`PropertiesPanel`) — edit the planning attributes of the selected

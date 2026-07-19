@@ -7,6 +7,8 @@ interface CanvasState {
   snapToGrid: boolean;
   snapToVertices: boolean;
   showLabels: boolean;
+  /** Show surveyor bearing/distance labels on the selected boundary's edges. */
+  showSurveyLabels: boolean;
   /** Incremented to ask the canvas to fit the plan into view. */
   fitRequestId: number;
 
@@ -16,6 +18,7 @@ interface CanvasState {
   toggleSnapToGrid(): void;
   toggleSnapToVertices(): void;
   toggleLabels(): void;
+  toggleSurveyLabels(): void;
   requestFit(): void;
 }
 
@@ -25,6 +28,7 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   snapToGrid: true,
   snapToVertices: true,
   showLabels: true,
+  showSurveyLabels: true,
   fitRequestId: 0,
 
   setViewport(viewport) {
@@ -45,6 +49,9 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   },
   toggleLabels() {
     set((s) => ({ showLabels: !s.showLabels }));
+  },
+  toggleSurveyLabels() {
+    set((s) => ({ showSurveyLabels: !s.showSurveyLabels }));
   },
   requestFit() {
     set((s) => ({ fitRequestId: s.fitRequestId + 1 }));

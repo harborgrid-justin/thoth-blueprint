@@ -40,6 +40,10 @@ Presentation belongs in `apps/`, transport/storage in `services/`.
 - **Rules & metrics** (`rules.ts`, `metrics.ts`) — buildable envelope from
   setbacks, grid subdivision, compliance checks, and coverage / FAR / density /
   land-use allocation / impervious & open-space ratios.
+- **Survey** (`survey.ts`) — the plat/surveyor functions: metes-and-bounds
+  courses, quadrant bearings (DMS) & azimuths, traverse closure and precision,
+  corner coordinates (northing/easting), area in survey units, and generated
+  metes-and-bounds legal descriptions.
 
 See [`docs/GLOSSARY.md`](../../docs/GLOSSARY.md) for definitions; types here mirror
 that vocabulary exactly.

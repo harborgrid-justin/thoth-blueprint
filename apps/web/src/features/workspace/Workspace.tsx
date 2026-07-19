@@ -13,6 +13,7 @@ import { LayerPanel } from "./LayerPanel";
 import { PropertiesPanel } from "./PropertiesPanel";
 import { MetricsPanel } from "./MetricsPanel";
 import { CheckpointsDialog } from "./CheckpointsDialog";
+import { PlatReportDialog } from "@/features/survey/PlatReportDialog";
 
 const AUTOSAVE_MS = 1500;
 
@@ -153,6 +154,7 @@ export function Workspace() {
           </aside>
         </div>
         <CheckpointsDialog open={checkpointsOpen} onOpenChange={setCheckpointsOpen} />
+        <PlatReportDialog />
       </div>
     </TooltipProvider>
   );

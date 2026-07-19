@@ -12,4 +12,5 @@ export * from "./landuse";
 export * from "./primitives";
 export * from "./metrics";
 export * from "./rules";
+export * from "./survey";
 export * from "./id";

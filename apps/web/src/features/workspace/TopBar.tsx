@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Check,
   Cloud,
+  Compass,
   Grid3x3,
   History,
   Loader2,
@@ -11,12 +12,14 @@ import {
   Minus,
   Moon,
   Plus,
+  ScrollText,
   Sun,
   Tag,
 } from "lucide-react";
 import type { Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
+import { useUiStore } from "@/store/uiStore";
 import { useTheme } from "@/theme/theme-provider";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -36,8 +39,18 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
   const dirty = useWorkspaceStore((s) => s.dirty);
   const { theme, toggleTheme } = useTheme();
 
-  const { viewport, zoomBy, requestFit, showGrid, toggleGrid, snapToGrid, toggleSnapToGrid } =
-    useCanvasStore();
+  const {
+    viewport,
+    zoomBy,
+    requestFit,
+    showGrid,
+    toggleGrid,
+    snapToGrid,
+    toggleSnapToGrid,
+    showSurveyLabels,
+    toggleSurveyLabels,
+  } = useCanvasStore();
+  const openPlat = useUiStore((s) => s.openPlat);
 
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border bg-card px-3">
@@ -80,9 +93,15 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         <Toggle label="Snap to grid" active={snapToGrid} onClick={toggleSnapToGrid}>
           <Magnet className="h-4 w-4" />
         </Toggle>
+        <Toggle label="Bearing & distance labels" active={showSurveyLabels} onClick={toggleSurveyLabels}>
+          <Compass className="h-4 w-4" />
+        </Toggle>
 
         <Separator orientation="vertical" className="mx-1 h-6" />
 
+        <Button variant="ghost" size="sm" onClick={() => openPlat(null)}>
+          <ScrollText className="h-4 w-4" /> <span className="hidden md:inline">Plat</span>
+        </Button>
         <Button variant="ghost" size="sm" onClick={onOpenCheckpoints}>
           <History className="h-4 w-4" /> <span className="hidden md:inline">Checkpoints</span>
         </Button>

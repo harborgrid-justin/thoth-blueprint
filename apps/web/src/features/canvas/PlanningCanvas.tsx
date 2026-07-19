@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  bearingText,
   bounds,
   buildableEnvelope,
   centroid,
@@ -7,6 +8,7 @@ import {
   measuredArea,
   pointInPolygon,
   unionBounds,
+  unitLabel,
   type Bounds,
   type PlanElement,
   type Point,
@@ -65,6 +67,7 @@ export function PlanningCanvas() {
     setViewport,
     showGrid,
     showLabels,
+    showSurveyLabels,
     snapToGrid,
     snapToVertices,
     fitRequestId,
@@ -367,6 +370,16 @@ export function PlanningCanvas() {
           );
         })}
 
+        {/* Surveyor bearing/distance labels on the selected boundary's edges. */}
+        {showSurveyLabels && (
+          <SurveyEdgeLabels
+            site={site}
+            selection={selection}
+            viewport={viewport}
+            preview={vertexPreview}
+          />
+        )}
+
         {/* Vertex handles for a single selected spatial element. */}
         <VertexHandles
           site={site}
@@ -579,6 +592,59 @@ function VertexHandles({
             stroke="hsl(var(--primary))"
             strokeWidth={1.5}
           />
+        );
+      })}
+    </g>
+  );
+}
+
+function SurveyEdgeLabels({
+  site,
+  selection,
+  viewport,
+  preview,
+}: {
+  site: NonNullable<ReturnType<typeof useWorkspaceStore.getState>["site"]>;
+  selection: string[];
+  viewport: Viewport;
+  preview: { id: string; boundary: Polygon } | null;
+}) {
+  if (selection.length !== 1) return null;
+  const element = site.elements.find((e) => e.id === selection[0]);
+  if (!element || !isSpatialElement(element)) return null;
+  // Only worth showing when the boundary is large enough to read.
+  if (viewport.zoom < 1) return null;
+
+  const boundary = preview?.id === element.id ? preview.boundary : element.boundary;
+  const n = boundary.length;
+  const factor = site.spatial.units === "feet" ? 0.3048 : 1;
+  const u = unitLabel(site.spatial.units);
+
+  return (
+    <g className="pointer-events-none">
+      {boundary.map((a, i) => {
+        const b = boundary[(i + 1) % n];
+        const sa = worldToScreen(a, viewport);
+        const sb = worldToScreen(b, viewport);
+        const distM = Math.hypot(b.x - a.x, b.y - a.y) * factor;
+        if (Math.hypot(sb.x - sa.x, sb.y - sa.y) < 34) return null;
+        const mid = { x: (sa.x + sb.x) / 2, y: (sa.y + sb.y) / 2 };
+        let angle = (Math.atan2(sb.y - sa.y, sb.x - sa.x) * 180) / Math.PI;
+        if (angle > 90 || angle < -90) angle += 180; // keep text upright
+        const label = `${bearingText(a, b)}  ${distM.toFixed(1)} ${u}`;
+        return (
+          <text
+            key={i}
+            x={mid.x}
+            y={mid.y}
+            transform={`rotate(${angle} ${mid.x} ${mid.y}) translate(0 -4)`}
+            fontSize={10}
+            textAnchor="middle"
+            fill="hsl(var(--foreground))"
+            style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: 3 }}
+          >
+            {label}
+          </text>
         );
       })}
     </g>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Trash2 } from "lucide-react";
+import { Ruler, Trash2 } from "lucide-react";
 import {
   isSpatialElement,
   LAND_USE_DEFINITIONS,
@@ -9,6 +9,7 @@ import {
   type PlanElement,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
+import { useUiStore } from "@/store/uiStore";
 import { elementMeta } from "@/lib/elementMeta";
 import { formatArea, formatNumber } from "@/lib/format";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,7 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
   const site = useWorkspaceStore((s) => s.site)!;
   const updateElement = useWorkspaceStore((s) => s.updateElement);
   const deleteSelection = useWorkspaceStore((s) => s.deleteSelection);
+  const openPlat = useUiStore((s) => s.openPlat);
   const meta = elementMeta(element.kind);
 
   const set = (patch: Partial<PlanElement>) => updateElement(element.id, patch);
@@ -152,6 +154,12 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
         options={site.layers}
         onChange={(layerId) => set({ layerId })}
       />
+
+      {isSpatialElement(element) && (
+        <Button variant="outline" size="sm" onClick={() => openPlat(element.id)} className="w-full">
+          <Ruler className="h-4 w-4" /> Survey / plat report
+        </Button>
+      )}
 
       <Button variant="destructive" size="sm" onClick={deleteSelection} className="mt-1 w-full">
         <Trash2 className="h-4 w-4" /> Delete
