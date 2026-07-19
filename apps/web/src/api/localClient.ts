@@ -252,6 +252,12 @@ export class LocalApiClient implements ApiClient {
     return delay(undefined);
   }
 
+  resetWorkspace(mode: "samples" | "empty"): Promise<void> {
+    this.store = mode === "samples" ? seed() : { projects: [], checkpoints: [], threads: [] };
+    this.commit();
+    return delay(undefined);
+  }
+
   listThreads(projectId: string): Promise<ReviewThread[]> {
     return delay(clone(this.store.threads.filter((t) => t.projectId === projectId)));
   }

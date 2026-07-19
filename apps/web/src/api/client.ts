@@ -27,6 +27,12 @@ export interface ApiClient {
   restoreCheckpoint(projectId: string, checkpointId: string): Promise<Project>;
   deleteCheckpoint(projectId: string, checkpointId: string): Promise<void>;
 
+  /**
+   * Reset local workspace data — `samples` restores the demo projects, `empty`
+   * clears everything so you can start from scratch.
+   */
+  resetWorkspace(mode: "samples" | "empty"): Promise<void>;
+
   listThreads(projectId: string): Promise<ReviewThread[]>;
   addComment(
     projectId: string,

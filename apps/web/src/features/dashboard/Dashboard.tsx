@@ -1,6 +1,17 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Loader2, MapPinned, Moon, MoreVertical, Plus, Sun, Trash2 } from "lucide-react";
+import {
+  Eraser,
+  Loader2,
+  MapPinned,
+  Moon,
+  MoreVertical,
+  Plus,
+  RotateCcw,
+  Settings,
+  Sun,
+  Trash2,
+} from "lucide-react";
 import { api, type ProjectSummary } from "@/api";
 import { useTheme } from "@/theme/theme-provider";
 import { formatNumber, formatRelativeTime } from "@/lib/format";
@@ -12,6 +23,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { PresenceBar } from "@/features/workspace/PresenceBar";
@@ -41,6 +54,16 @@ export function Dashboard() {
     void refresh();
   }
 
+  async function handleReset(mode: "samples" | "empty") {
+    const message =
+      mode === "empty"
+        ? "Clear ALL local projects and start from scratch? This cannot be undone."
+        : "Reset to the sample projects? Your local changes will be replaced.";
+    if (!window.confirm(message)) return;
+    await api.resetWorkspace(mode);
+    void refresh();
+  }
+
   return (
     <TooltipProvider>
       <div className="min-h-screen bg-background">
@@ -56,6 +79,26 @@ export function Dashboard() {
             <Button variant="ghost" size="icon-sm" onClick={toggleTheme} aria-label="Toggle theme">
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon-sm" aria-label="Workspace settings">
+                  <Settings className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>Local workspace</DropdownMenuLabel>
+                <DropdownMenuItem onClick={() => handleReset("empty")}>
+                  <Eraser /> Start from scratch (clear all)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleReset("samples")}>
+                  <RotateCcw /> Reset to sample projects
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-[10px] font-normal text-muted-foreground">
+                  Projects are stored in your browser.
+                </DropdownMenuLabel>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button onClick={() => setCreateOpen(true)}>
               <Plus className="h-4 w-4" /> New project
             </Button>
