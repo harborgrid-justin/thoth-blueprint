@@ -1,11 +1,13 @@
 import * as THREE from "three";
 import {
   boundsCenter,
+  densifyBoundary,
   elevationAt,
   isPointElement,
   isSpatialElement,
   type Bounds,
   type ElevationGrid,
+  type LandUseCategory,
   type Point,
   type Polygon,
   type Site,
@@ -55,20 +57,38 @@ export function buildScene(site: Site): SceneResult | null {
   if (surface) {
     const mesh = terrainMesh(surface, center, exag, disposables);
     group.add(mesh);
-  } else {
-    const geo = new THREE.PlaneGeometry(
-      extent.maxX - extent.minX,
-      extent.maxY - extent.minY,
-    );
+  }
+
+  // A broad ground plane beneath everything, so the site sits in a landscape
+  // (and the base when there is no terrain surface).
+  {
+    let minElev = 0;
+    if (surface) {
+      minElev = Infinity;
+      for (const h of surface.heights) if (h < minElev) minElev = h;
+    }
+    const span = Math.max(extent.maxX - extent.minX, extent.maxY - extent.minY);
+    const geo = new THREE.PlaneGeometry(span * 12, span * 12);
     geo.rotateX(-Math.PI / 2);
-    const mat = new THREE.MeshStandardMaterial({ color: 0x2f4a2f, roughness: 1 });
+    const mat = new THREE.MeshStandardMaterial({ color: 0x47593c, roughness: 1 });
     disposables.push(geo, mat);
-    group.add(new THREE.Mesh(geo, mat));
+    const plane = new THREE.Mesh(geo, mat);
+    plane.position.y = minElev * exag - 0.6;
+    plane.receiveShadow = true;
+    group.add(plane);
   }
 
   // --- Spatial elements ----------------------------------------------------
-  // Draw order by kind so buildings sit on top of draped areas.
-  const draped: Array<{ boundary: Polygon; color: number; opacity: number; lift: number }> = [];
+  // Draw order by kind so buildings and boundary lines sit on the draped areas.
+  const draped: Array<{
+    ring: Polygon;
+    color: number;
+    opacity: number;
+    lift: number;
+    roughness: number;
+    metalness: number;
+  }> = [];
+  const outlines: Array<{ ring: Polygon; color: number; lift: number }> = [];
   const buildings: THREE.Object3D[] = [];
 
   for (const el of site.elements) {
@@ -80,30 +100,42 @@ export function buildScene(site: Site): SceneResult | null {
     }
     if (!isSpatialElement(el)) continue;
 
+    // Tessellate curved edges so arcs render smoothly in 3D.
+    const ring = densifyBoundary(el.boundary, el.arcs, 3);
+
     if (el.kind === "building") {
-      const height = (el.height ?? el.storeys * 3.2) * exag;
-      const base = elevAt(centroidOf(el.boundary)) * exag;
-      buildings.push(
-        extrudedBuilding(el.boundary, center, base, height, disposables),
-      );
+      const storeys = Math.max(1, el.storeys);
+      const height = (el.height ?? storeys * 3.2) * exag;
+      const base = elevAt(centroidOf(ring)) * exag;
+      buildings.push(enterpriseBuilding(ring, center, base, storeys, height, el.use, disposables));
       continue;
     }
 
     const category = el.kind === "landuse" ? el.category : undefined;
     const color = new THREE.Color(elementColor(el.kind, category)).getHex();
     const opacity =
-      el.kind === "water" ? 0.85 : el.kind === "region" ? 0.12 : el.kind === "grade" ? 0.5 : 0.55;
-    const lift = el.kind === "water" ? -0.4 : el.kind === "region" ? 0.1 : DRAPE_OFFSET;
-    draped.push({ boundary: el.boundary, color, opacity, lift });
+      el.kind === "water" ? 0.82 : el.kind === "region" ? 0.1 : el.kind === "grade" ? 0.45 : 0.5;
+    const lift = el.kind === "water" ? -0.3 : el.kind === "region" ? 0.15 : DRAPE_OFFSET;
+    const roughness = el.kind === "water" ? 0.12 : 0.9;
+    const metalness = el.kind === "water" ? 0.0 : 0.02;
+    draped.push({ ring, color, opacity, lift, roughness, metalness });
+
+    if (OUTLINE_KINDS.has(el.kind)) {
+      outlines.push({ ring, color: outlineColor(el.kind), lift: DRAPE_OFFSET + 0.18 });
+    }
   }
 
-  // Draped polygons, ordered so subtle regions render first.
+  // Terrain-conforming land use / zones / water, subtle regions first.
   draped
     .sort((a, b) => b.opacity - a.opacity)
-    .forEach(({ boundary, color, opacity, lift }) => {
-      const y = elevAt(centroidOf(boundary)) * exag + lift;
-      group.add(drapedPolygon(boundary, center, y, color, opacity, disposables));
-    });
+    .forEach((d) =>
+      group.add(
+        conformingDrape(d.ring, center, elevAt, exag, d.lift, d.color, d.opacity, d.roughness, d.metalness, disposables),
+      ),
+    );
+
+  // Parcel / lot / zone boundary lines drawn on the ground.
+  outlines.forEach((o) => group.add(boundaryOutline(o.ring, center, elevAt, exag, o.lift, o.color, disposables)));
 
   buildings.forEach((b) => group.add(b));
 
@@ -199,49 +231,148 @@ function shapeFromBoundary(boundary: Polygon, center: Point): THREE.Shape {
   return shape;
 }
 
-function drapedPolygon(
-  boundary: Polygon,
+/** Kinds whose boundary is drawn as a line on the ground. */
+const OUTLINE_KINDS = new Set(["parcel", "lot", "zone", "block", "openspace"]);
+
+function outlineColor(kind: string): number {
+  switch (kind) {
+    case "lot":
+      return 0x0c4a6e;
+    case "zone":
+      return 0x5b21b6;
+    case "openspace":
+      return 0x115e59;
+    default:
+      return 0x334155;
+  }
+}
+
+/** Facade color for a building, muted by its use. */
+function buildingColor(use?: LandUseCategory): number {
+  switch (use) {
+    case "commercial":
+      return 0x9fb2c4;
+    case "mixed-use":
+      return 0xc2b299;
+    case "industrial":
+      return 0x9aa0a6;
+    case "civic":
+      return 0xcbc7ba;
+    default:
+      return 0xd9ccbb;
+  }
+}
+
+/**
+ * A land-use / zone / water polygon draped onto the terrain: every boundary
+ * vertex is lifted to the ground elevation there, so the fill follows the slope
+ * instead of floating flat.
+ */
+function conformingDrape(
+  ring: Polygon,
   center: Point,
-  y: number,
+  elevAt: (p: Point) => number,
+  exag: number,
+  lift: number,
   color: number,
   opacity: number,
+  roughness: number,
+  metalness: number,
   disposables: Array<{ dispose: () => void }>,
 ): THREE.Mesh {
-  const geo = new THREE.ShapeGeometry(shapeFromBoundary(boundary, center));
+  const geo = new THREE.ShapeGeometry(shapeFromBoundary(ring, center));
+  const pos = geo.attributes.position as THREE.BufferAttribute;
+  for (let i = 0; i < pos.count; i++) {
+    const plan = { x: pos.getX(i) + center.x, y: center.y - pos.getY(i) };
+    pos.setZ(i, elevAt(plan) * exag + lift);
+  }
   geo.rotateX(-Math.PI / 2);
+  geo.computeVertexNormals();
   const mat = new THREE.MeshStandardMaterial({
     color,
-    transparent: true,
+    transparent: opacity < 1,
     opacity,
-    roughness: 0.8,
+    roughness,
+    metalness,
     side: THREE.DoubleSide,
   });
   disposables.push(geo, mat);
   const mesh = new THREE.Mesh(geo, mat);
-  mesh.position.y = y;
+  mesh.receiveShadow = true;
   return mesh;
 }
 
-function extrudedBuilding(
-  boundary: Polygon,
+/** A boundary line drawn on the terrain, following the ground elevation. */
+function boundaryOutline(
+  ring: Polygon,
+  center: Point,
+  elevAt: (p: Point) => number,
+  exag: number,
+  lift: number,
+  color: number,
+  disposables: Array<{ dispose: () => void }>,
+): THREE.Line {
+  const pts = ring.map(
+    (p) => new THREE.Vector3(p.x - center.x, elevAt(p) * exag + lift, p.y - center.y),
+  );
+  if (pts.length) pts.push(pts[0].clone());
+  const geo = new THREE.BufferGeometry().setFromPoints(pts);
+  const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.85 });
+  disposables.push(geo, mat);
+  return new THREE.Line(geo, mat);
+}
+
+/**
+ * An articulated building: an extruded footprint with a muted facade, crisp
+ * corner edges, and per-storey floor banding — reading as a real structure
+ * rather than a solid block.
+ */
+function enterpriseBuilding(
+  ring: Polygon,
   center: Point,
   baseY: number,
+  storeys: number,
   height: number,
+  use: LandUseCategory | undefined,
   disposables: Array<{ dispose: () => void }>,
 ): THREE.Group {
-  const shape = shapeFromBoundary(boundary, center);
+  const shape = shapeFromBoundary(ring, center);
   const geo = new THREE.ExtrudeGeometry(shape, { depth: height, bevelEnabled: false });
   geo.rotateX(-Math.PI / 2);
-  const mat = new THREE.MeshStandardMaterial({ color: 0xd8935a, roughness: 0.7, metalness: 0.05 });
-  const edgeGeo = new THREE.EdgesGeometry(geo);
-  const edgeMat = new THREE.LineBasicMaterial({ color: 0x7a4a22 });
+  const mat = new THREE.MeshStandardMaterial({
+    color: buildingColor(use),
+    roughness: 0.62,
+    metalness: 0.12,
+  });
+  const edgeGeo = new THREE.EdgesGeometry(geo, 20);
+  const edgeMat = new THREE.LineBasicMaterial({ color: 0x1f2937, transparent: true, opacity: 0.55 });
   disposables.push(geo, mat, edgeGeo, edgeMat);
 
   const g = new THREE.Group();
   const mesh = new THREE.Mesh(geo, mat);
   mesh.castShadow = true;
+  mesh.receiveShadow = true;
   g.add(mesh);
   g.add(new THREE.LineSegments(edgeGeo, edgeMat));
+
+  // Per-storey floor lines around the footprint.
+  if (storeys > 1) {
+    const local = ring.map((p) => new THREE.Vector2(p.x - center.x, p.y - center.y));
+    const bandPts: THREE.Vector3[] = [];
+    for (let k = 1; k < storeys; k++) {
+      const y = (k / storeys) * height;
+      for (let i = 0; i < local.length; i++) {
+        const a = local[i];
+        const b = local[(i + 1) % local.length];
+        bandPts.push(new THREE.Vector3(a.x, y, a.y), new THREE.Vector3(b.x, y, b.y));
+      }
+    }
+    const bandGeo = new THREE.BufferGeometry().setFromPoints(bandPts);
+    const bandMat = new THREE.LineBasicMaterial({ color: 0x0f172a, transparent: true, opacity: 0.28 });
+    disposables.push(bandGeo, bandMat);
+    g.add(new THREE.LineSegments(bandGeo, bandMat));
+  }
+
   g.position.y = baseY;
   return g;
 }
@@ -269,7 +400,17 @@ function treeObject(
   canopy.castShadow = true;
   g.add(trunk, canopy);
   g.position.set(tx(position), baseY, tz(position));
+  // Deterministic per-tree variation so a stand of trees doesn't look cloned.
+  const seed = pseudoRandom(position.x, position.y);
+  g.rotation.y = seed * Math.PI * 2;
+  g.scale.setScalar(0.82 + seed * 0.42);
   return g;
+}
+
+/** Deterministic 0–1 hash from a plan position (stable across rebuilds). */
+function pseudoRandom(x: number, y: number): number {
+  const v = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+  return v - Math.floor(v);
 }
 
 function networkEdge(
