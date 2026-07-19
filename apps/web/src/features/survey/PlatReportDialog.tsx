@@ -1,10 +1,12 @@
 import * as React from "react";
 import { Check, Copy, Download, Ruler } from "lucide-react";
 import {
+  formatPLSS,
   isSpatialElement,
   legalDescription,
   surveyReport,
   unitLabel,
+  type Site,
   type SpatialContext,
   type SpatialElement,
 } from "@thoth/domain";
@@ -77,7 +79,12 @@ export function PlatReportDialog() {
           />
           <ScrollArea className="max-h-[60vh] min-w-0 pr-3">
             {selected ? (
-              <TractReport element={selected} spatial={site.spatial} siteName={site.name} />
+              <TractReport
+                element={selected}
+                spatial={site.spatial}
+                siteName={site.name}
+                plss={site.plss}
+              />
             ) : (
               <div className="py-16 text-center text-sm text-muted-foreground">
                 No surveyable tracts yet. Draw a parcel or lot to generate a plat.
@@ -143,24 +150,24 @@ function TractReport({
   element,
   spatial,
   siteName,
+  plss,
 }: {
   element: SpatialElement;
   spatial: SpatialContext;
   siteName: string;
+  plss?: Site["plss"];
 }) {
   const report = React.useMemo(
     () => surveyReport(element.boundary, spatial, element.arcs),
     [element, spatial],
   );
+  const context = plss
+    ? `${siteName}, lying in ${formatPLSS(plss.townshipRange, plss.section)}`
+    : siteName;
   const legal = React.useMemo(
     () =>
-      legalDescription(
-        element.boundary,
-        spatial,
-        { tractName: element.name, context: siteName },
-        element.arcs,
-      ),
-    [element, spatial, siteName],
+      legalDescription(element.boundary, spatial, { tractName: element.name, context }, element.arcs),
+    [element, spatial, context],
   );
   const u = unitLabel(spatial.units);
 

@@ -40,6 +40,9 @@ import { fitBounds, niceGridStep, worldToScreen, zoomAt, type Viewport } from ".
 import { eventToWorld, snapPoint } from "./snapping";
 import { ScaleBar, NorthArrow, Legend } from "./CanvasOverlays";
 import { AlignmentLayer } from "./AlignmentLayer";
+import { MonumentLayer } from "./MonumentLayer";
+import { PlssLayer } from "./PlssLayer";
+import { SurveyLegend } from "./SurveyLegend";
 import { formatArea } from "@/lib/format";
 
 interface Size {
@@ -521,6 +524,9 @@ export function PlanningCanvas() {
 
         {showGrid && <Grid viewport={viewport} size={size} step={gridStep} />}
 
+        {/* PLSS section framework, beneath the plan. */}
+        <PlssLayer site={site} viewport={viewport} />
+
         {/* Imported reference point clouds. */}
         {clouds.map(
           (c) =>
@@ -546,6 +552,9 @@ export function PlanningCanvas() {
 
         {/* Stationed horizontal alignments (civil baselines). */}
         <AlignmentLayer site={site} viewport={viewport} />
+
+        {/* Survey monuments with standard symbology. */}
+        <MonumentLayer site={site} viewport={viewport} />
 
         {ordered.map(({ element }) => {
           const shifted =
@@ -634,6 +643,7 @@ export function PlanningCanvas() {
       <NorthArrow />
       <ScaleBar />
       <Legend />
+      <SurveyLegend site={site} />
     </div>
   );
 }

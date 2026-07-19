@@ -16,6 +16,7 @@ import {
   type RightOfWay,
   type Site,
   type SpotElevationPoint,
+  type SurveyMonument,
   type Tree,
   type WaterBody,
   type Zone,
@@ -217,6 +218,27 @@ export function subdivisionSite(name: string): Site {
     ],
   };
 
+  // Survey monuments and the PLSS framework the plat is tied to.
+  const mon = (
+    type: Parameters<typeof monumentOf>[0],
+    status: "found" | "set",
+    x: number,
+    y: number,
+    label?: string,
+  ) => monumentOf(type, status, x, y, label);
+  const monuments = [
+    mon("section-corner", "found", 10, 10, "SEC 8 COR"),
+    mon("quarter-corner", "found", 160, 10),
+    mon("quarter-corner", "found", 10, 160),
+    mon("prm", "set", 20, 20, "PRM LB6685"),
+    mon("prm", "set", 280, 20, "PRM LB6685"),
+    mon("prm", "set", 280, 200, "PRM LB6685"),
+    mon("prm", "set", 20, 200, "PRM LB6685"),
+    mon("pcp", "set", 150, 110, "PCP"),
+    mon("iron-rod", "found", 30, 92, "IR FND"),
+    mon("concrete", "found", 270, 190, "CM FND"),
+  ];
+
   return {
     id: createId("site"),
     name,
@@ -225,7 +247,31 @@ export function subdivisionSite(name: string): Site {
     elements,
     networks: [roads],
     alignments: [baseline],
+    monuments,
+    plss: {
+      townshipRange: { township: 3, townshipDir: "South" as const, range: 16, rangeDir: "East" as const },
+      section: 8,
+      sectionNwCorner: { x: 10, y: 10 },
+      sectionSide: 300,
+    },
   };
+}
+
+/** Build a survey monument for the sample data. */
+function monumentOf(
+  type:
+    | "prm"
+    | "pcp"
+    | "section-corner"
+    | "quarter-corner"
+    | "iron-rod"
+    | "concrete",
+  status: "found" | "set",
+  x: number,
+  y: number,
+  label?: string,
+): SurveyMonument {
+  return { id: createId("mon"), type, status, position: { x, y }, label };
 }
 
 /** A mixed-use district: zones and land-use allocation with a few anchor buildings. */

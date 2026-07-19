@@ -42,6 +42,15 @@ npm run build        # type-check + production build
   unit system (metric/imperial), area unit, bearing format (DMS/decimal),
   coordinate readout (plan/survey), and a **high-contrast** accessibility mode.
   Presentation-only: the plan's stored geometry and CRS never change.
+- **PLSS framework & survey monuments** (`@thoth/domain/plss`, `/monument`) —
+  the rectangular-survey basis of a U.S. plat: Township/Range/Section with
+  aliquot-part geometry and nominal acreage (640 → 160 → 40 …), section &
+  quarter corners, and PLSS legal nomenclature. The canvas draws the controlling
+  **section framework** (boundary, quarter-section cross, corners, `T3S, R16E`
+  label) and **survey monuments** with standard symbology (PRM, PCP, section/
+  quarter corner, iron rod/pipe, concrete, nail & disc — filled = set, open =
+  found) plus a plat **legend**; the plat's legal description is tied to the
+  section (“lying in Section 8, Township 3 South, Range 16 East”).
 - **Roadway alignments & stationing** (`@thoth/domain/alignment`,
   `src/features/canvas/AlignmentLayer`) — horizontal baselines defined by the
   **PI method** (tangents + fitted circular curves), the math behind a DOT plan

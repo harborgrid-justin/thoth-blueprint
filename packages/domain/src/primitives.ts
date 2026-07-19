@@ -10,6 +10,8 @@
 import type { Point, Polygon, Polyline } from "./geometry";
 import { boundaryArea, boundaryPerimeter, type EdgeArcs } from "./curve";
 import type { HorizontalAlignment } from "./alignment";
+import type { SurveyMonument } from "./monument";
+import type { TownshipRange } from "./plss";
 import type { SpatialContext } from "./spatial";
 import type { LandUseCategory } from "./landuse";
 import type { InfrastructureNetwork } from "./network";
@@ -239,6 +241,19 @@ export interface Site {
   networks?: InfrastructureNetwork[];
   /** Stationed horizontal alignments (roadway/civil baselines). */
   alignments?: HorizontalAlignment[];
+  /** Survey monuments (control) depicted on the plat. */
+  monuments?: SurveyMonument[];
+  /**
+   * Public Land Survey System framework this plat is tied to (Township/Range),
+   * with the controlling section and its northwest corner in plan coordinates.
+   */
+  plss?: {
+    townshipRange: TownshipRange;
+    section: number;
+    /** Plan-coordinate NW corner and side length of the controlling section. */
+    sectionNwCorner?: Point;
+    sectionSide?: number;
+  };
 }
 
 /** Type guard: does this element carry a spatial boundary? */
