@@ -42,6 +42,13 @@ npm run build        # type-check + production build
   unit system (metric/imperial), area unit, bearing format (DMS/decimal),
   coordinate readout (plan/survey), and a **high-contrast** accessibility mode.
   Presentation-only: the plan's stored geometry and CRS never change.
+- **Survey / civil symbology** (`src/features/canvas/patterns`, `CivilLayer`,
+  `@thoth/domain/controls`) — the drafting density of a real plan sheet: hatch
+  fill patterns (water, wetland marsh, woods, agricultural rows, earthwork
+  crosshatch, rip-rap stipple, concrete, open space), special line-types (silt
+  fence with posts + fabric triangles, scalloped tree line, slope-intercept
+  hachures, arrowed surface-water flow), and **dense metes-and-bounds** —
+  bearing + distance on every parcel/lot line. All carried onto the plat sheet.
 - **Regional plug-ins (jurisdictions)** (`@thoth/domain/regions`) — the platform
   ships **100% of the plat/civil capabilities enabled**, and a region plug-in
   *adjusts* them for a place: the survey framework (PLSS vs. the **Georgia Land

@@ -9,6 +9,8 @@ interface CanvasState {
   showLabels: boolean;
   /** Show surveyor bearing/distance labels on the selected boundary's edges. */
   showSurveyLabels: boolean;
+  /** Show bearing/distance on every parcel/lot boundary (dense plat annotation). */
+  showDimensions: boolean;
   /** Show road/utility networks. */
   showNetworks: boolean;
   /** Show terrain contour lines. */
@@ -35,6 +37,7 @@ interface CanvasState {
   toggleSnapToVertices(): void;
   toggleLabels(): void;
   toggleSurveyLabels(): void;
+  toggleDimensions(): void;
   toggleNetworks(): void;
   toggleContours(): void;
   toggleSlope(): void;
@@ -53,6 +56,7 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   snapToVertices: true,
   showLabels: true,
   showSurveyLabels: true,
+  showDimensions: true,
   showNetworks: true,
   showContours: true,
   showSlope: false,
@@ -84,6 +88,9 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   },
   toggleSurveyLabels() {
     set((s) => ({ showSurveyLabels: !s.showSurveyLabels }));
+  },
+  toggleDimensions() {
+    set((s) => ({ showDimensions: !s.showDimensions }));
   },
   toggleNetworks() {
     set((s) => ({ showNetworks: !s.showNetworks }));

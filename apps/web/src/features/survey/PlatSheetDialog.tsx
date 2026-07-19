@@ -29,6 +29,8 @@ import { elementColor } from "@/lib/elementMeta";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MonumentSymbol } from "@/features/canvas/MonumentLayer";
+import { CanvasPatterns, patternFor } from "@/features/canvas/patterns";
+import { ControlLineShape } from "@/features/canvas/CivilLayer";
 import {
   Dialog,
   DialogContent,
@@ -110,6 +112,7 @@ export function PlatSheetDialog() {
               style={{ display: "block", background: SHEET }}
               fontFamily="ui-monospace, Menlo, Consolas, monospace"
             >
+              <CanvasPatterns />
               <rect x={8} y={8} width={W - 16} height={H - 16} fill="none" stroke={INK} strokeWidth={1.6} />
               <rect x={13} y={13} width={W - 26} height={H - 26} fill="none" stroke={INK} strokeWidth={0.6} />
               <PlanWindow site={site} plugin={plugin} />
@@ -198,19 +201,27 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
           const cat = el.kind === "landuse" ? el.category : undefined;
           const color = elementColor(el.kind, cat);
           const isEsmt = el.kind === "easement";
+          const pattern = isEsmt ? null : patternFor(el);
           return (
-            <polygon
-              key={el.id}
-              points={pts}
-              fill={color}
-              fillOpacity={isEsmt ? 0.05 : el.kind === "building" ? 0.6 : 0.14}
-              stroke={isEsmt ? MUTED : INK}
-              strokeWidth={el.kind === "parcel" ? 1.4 : 0.9}
-              strokeDasharray={isEsmt ? "6 3 2 3" : el.kind === "zone" ? "5 3" : undefined}
-              vectorEffect="non-scaling-stroke"
-            />
+            <g key={el.id}>
+              <polygon
+                points={pts}
+                fill={color}
+                fillOpacity={isEsmt ? 0.05 : el.kind === "building" ? 0.6 : 0.14}
+                stroke={isEsmt ? MUTED : INK}
+                strokeWidth={el.kind === "parcel" ? 1.4 : 0.9}
+                strokeDasharray={isEsmt ? "6 3 2 3" : el.kind === "zone" ? "5 3" : undefined}
+                vectorEffect="non-scaling-stroke"
+              />
+              {pattern && <polygon points={pts} fill={`url(#${pattern})`} stroke="none" />}
+            </g>
           );
         })}
+
+        {/* Civil / erosion-control lines. */}
+        {(site.controlLines ?? []).map((line) => (
+          <ControlLineShape key={line.id} line={line} project={project} />
+        ))}
 
         {/* Lot / parcel labels with area. */}
         {site.elements

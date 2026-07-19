@@ -40,6 +40,8 @@ import { fitBounds, niceGridStep, worldToScreen, zoomAt, type Viewport } from ".
 import { eventToWorld, snapPoint } from "./snapping";
 import { ScaleBar, NorthArrow, Legend } from "./CanvasOverlays";
 import { AlignmentLayer } from "./AlignmentLayer";
+import { CanvasPatterns, patternFor } from "./patterns";
+import { CivilLayer } from "./CivilLayer";
 import { MonumentLayer } from "./MonumentLayer";
 import { FrameworkLayer } from "./FrameworkLayer";
 import { SurveyLegend } from "./SurveyLegend";
@@ -124,6 +126,7 @@ export function PlanningCanvas() {
     showGrid,
     showLabels,
     showSurveyLabels,
+    showDimensions,
     showNetworks,
     showContours,
     showSlope,
@@ -517,6 +520,7 @@ export function PlanningCanvas() {
       onContextMenu={(e) => e.preventDefault()}
     >
       <svg width={size.width} height={size.height} className="absolute inset-0 select-none">
+        <CanvasPatterns />
         {/* Imported raster blueprint underlay, beneath everything. */}
         {underlay?.visible && (
           <UnderlayImage underlay={underlay} viewport={viewport} />
@@ -553,6 +557,9 @@ export function PlanningCanvas() {
         {/* Stationed horizontal alignments (civil baselines). */}
         <AlignmentLayer site={site} viewport={viewport} />
 
+        {/* Civil / erosion-control line features (silt fence, tree line, flow). */}
+        <CivilLayer site={site} viewport={viewport} />
+
         {/* Survey monuments with standard symbology. */}
         <MonumentLayer site={site} viewport={viewport} />
 
@@ -576,6 +583,9 @@ export function PlanningCanvas() {
             </g>
           );
         })}
+
+        {/* Dense metes-and-bounds on every parcel/lot boundary (plat style). */}
+        {showDimensions && <BoundaryDimensions site={site} viewport={viewport} />}
 
         {/* Surveyor bearing/distance labels on the selected boundary's edges. */}
         {showSurveyLabels && (
@@ -830,6 +840,8 @@ function ElementShape({
     if (env) envelopePath = toPath(env, viewport);
   }
 
+  const patternId = isLine ? null : patternFor(element);
+
   return (
     <g>
       <path
@@ -842,6 +854,7 @@ function ElementShape({
         vectorEffect="non-scaling-stroke"
         strokeLinejoin="round"
       />
+      {patternId && <path d={path} fill={`url(#${patternId})`} stroke="none" className="pointer-events-none" />}
       {envelopePath && (
         <path
           d={envelopePath}
@@ -1136,6 +1149,61 @@ function NetworkShape({
       {network.nodes.map((n) => {
         const s = worldToScreen(n.point, viewport);
         return <circle key={n.id} cx={s.x} cy={s.y} r={2.5} fill={color} />;
+      })}
+    </g>
+  );
+}
+
+const DIMENSION_KINDS = new Set(["parcel", "lot", "openspace", "easement", "row", "zone"]);
+
+/** Dense bearing/distance labels on every parcel/lot boundary edge — the packed
+ *  metes-and-bounds annotation a recorded plat carries. */
+function BoundaryDimensions({
+  site,
+  viewport,
+}: {
+  site: NonNullable<ReturnType<typeof useWorkspaceStore.getState>["site"]>;
+  viewport: Viewport;
+}) {
+  const lengthPref = usePrefsStore((s) => s.lengthUnit);
+  const angleFormat = usePrefsStore((s) => s.angleFormat);
+  if (viewport.zoom < 2) return null;
+
+  const items = site.elements.filter((e) => isSpatialElement(e) && DIMENSION_KINDS.has(e.kind));
+  return (
+    <g className="pointer-events-none">
+      {items.flatMap((el) => {
+        if (!isSpatialElement(el)) return [];
+        const boundary = el.boundary;
+        const n = boundary.length;
+        return boundary.map((a, i) => {
+          const b = boundary[(i + 1) % n];
+          const sa = worldToScreen(a, viewport);
+          const sb = worldToScreen(b, viewport);
+          const lenPx = Math.hypot(sb.x - sa.x, sb.y - sa.y);
+          if (lenPx < 42) return null;
+          const bulge = el.arcs ? el.arcs[String(i)] : 0;
+          const mid = { x: (sa.x + sb.x) / 2, y: (sa.y + sb.y) / 2 };
+          let angle = (Math.atan2(sb.y - sa.y, sb.x - sa.x) * 180) / Math.PI;
+          if (angle > 90 || angle < -90) angle += 180;
+          const planLen = Math.hypot(b.x - a.x, b.y - a.y);
+          const dist = formatLength(planLen, site.spatial, lengthPref);
+          const label = bulge ? `⌒ ${dist}` : `${formatDirection(a, b, angleFormat)}  ${dist}`;
+          return (
+            <text
+              key={`${el.id}-${i}`}
+              x={mid.x}
+              y={mid.y}
+              transform={`rotate(${angle} ${mid.x} ${mid.y}) translate(0 -3)`}
+              fontSize={8.5}
+              textAnchor="middle"
+              fill="hsl(var(--foreground))"
+              style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: 2.5 }}
+            >
+              {label}
+            </text>
+          );
+        });
       })}
     </g>
   );

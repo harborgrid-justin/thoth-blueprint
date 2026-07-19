@@ -18,6 +18,7 @@ export * from "./plss";
 export * from "./landlot";
 export * from "./regions";
 export * from "./monument";
+export * from "./controls";
 export * from "./alignment";
 export * from "./platset";
 export * from "./network";

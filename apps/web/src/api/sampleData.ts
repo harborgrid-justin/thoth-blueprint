@@ -260,6 +260,11 @@ export function subdivisionSite(name: string): Site {
     networks: [roads],
     alignments: [baseline],
     monuments,
+    controlLines: [
+      { id: createId("ctl"), type: "silt-fence", label: "Silt Fence", path: [{ x: 22, y: 202 }, { x: 278, y: 202 }] },
+      { id: createId("ctl"), type: "tree-line", label: "Tree Line", path: [{ x: 22, y: 18 }, { x: 278, y: 18 }] },
+      { id: createId("ctl"), type: "flow", path: [{ x: 40, y: 60 }, { x: 120, y: 112 }, { x: 210, y: 150 }] },
+    ],
     jurisdictionId: "us-plss-default",
     plss: {
       townshipRange: { township: 3, townshipDir: "South" as const, range: 16, rangeDir: "East" as const },
