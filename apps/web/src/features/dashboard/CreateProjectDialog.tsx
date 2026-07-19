@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Building2, Map, Square } from "lucide-react";
+import { Building2, Globe, Map, Square } from "lucide-react";
 import { api, type CreateProjectInput } from "@/api";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -31,6 +31,12 @@ const TEMPLATES: { id: Template; label: string; description: string; icon: typeo
     label: "Mixed-use district",
     description: "Zones and land-use allocation with anchor buildings.",
     icon: Map,
+  },
+  {
+    id: "estate",
+    label: "Estate / homestead",
+    description: "A single-household territory at landscape scale, with terrain.",
+    icon: Globe,
   },
 ];
 
@@ -103,7 +109,7 @@ export function CreateProjectDialog({
 
         <div className="flex flex-col gap-1.5">
           <Label>Starter template</Label>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {TEMPLATES.map((t) => {
               const Icon = t.icon;
               const active = t.id === template;

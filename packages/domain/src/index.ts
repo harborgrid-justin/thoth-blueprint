@@ -13,4 +13,6 @@ export * from "./primitives";
 export * from "./metrics";
 export * from "./rules";
 export * from "./survey";
+export * from "./network";
+export * from "./terrain";
 export * from "./id";

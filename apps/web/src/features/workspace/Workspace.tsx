@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { Layers, Ruler, SlidersHorizontal } from "lucide-react";
+import { Layers, Mountain, Ruler, SlidersHorizontal } from "lucide-react";
 import { api, type Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { PlanningCanvas } from "@/features/canvas/PlanningCanvas";
@@ -14,6 +14,7 @@ import { PropertiesPanel } from "./PropertiesPanel";
 import { MetricsPanel } from "./MetricsPanel";
 import { CheckpointsDialog } from "./CheckpointsDialog";
 import { PlatReportDialog } from "@/features/survey/PlatReportDialog";
+import { TerrainPanel } from "@/features/terrain/TerrainPanel";
 
 const AUTOSAVE_MS = 1500;
 
@@ -128,12 +129,15 @@ export function Workspace() {
           </main>
           <aside className="flex w-[320px] shrink-0 flex-col border-l border-border bg-card">
             <Tabs value={tab} onValueChange={setTab} className="flex min-h-0 flex-1 flex-col">
-              <TabsList className="m-2 grid grid-cols-3">
+              <TabsList className="m-2 grid grid-cols-4">
                 <TabsTrigger value="inspect">
                   <SlidersHorizontal /> Inspect
                 </TabsTrigger>
                 <TabsTrigger value="layers">
                   <Layers /> Layers
+                </TabsTrigger>
+                <TabsTrigger value="terrain">
+                  <Mountain /> Terrain
                 </TabsTrigger>
                 <TabsTrigger value="metrics">
                   <Ruler /> Metrics
@@ -145,6 +149,9 @@ export function Workspace() {
                 </TabsContent>
                 <TabsContent value="layers" className="mt-0 py-2">
                   <LayerPanel />
+                </TabsContent>
+                <TabsContent value="terrain" className="mt-0">
+                  <TerrainPanel />
                 </TabsContent>
                 <TabsContent value="metrics" className="mt-0">
                   <MetricsPanel />

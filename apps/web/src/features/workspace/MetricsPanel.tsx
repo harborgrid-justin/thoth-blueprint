@@ -2,7 +2,9 @@ import * as React from "react";
 import {
   areaUnitLabel,
   checkCompliance,
+  computeCommunityMetrics,
   computeSiteMetrics,
+  networkStats,
   type AreaUnit,
 } from "@thoth/domain";
 import { AlertTriangle, CheckCircle2, Info } from "lucide-react";
@@ -10,7 +12,7 @@ import { useWorkspaceStore } from "@/store/workspaceStore";
 import { formatArea, formatNumber, formatPercent, formatRatio } from "@/lib/format";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const AREA_UNITS: AreaUnit[] = ["sqm", "sqft", "acres", "hectares"];
+const AREA_UNITS: AreaUnit[] = ["sqm", "sqft", "acres", "hectares", "sqkm", "sqmi"];
 
 /** The live metrics panel: headline figures, land-use allocation, compliance. */
 export function MetricsPanel() {
@@ -19,9 +21,17 @@ export function MetricsPanel() {
   const setAreaUnit = useWorkspaceStore((s) => s.setAreaUnit);
 
   const metrics = React.useMemo(() => (site ? computeSiteMetrics(site, areaUnit) : null), [site, areaUnit]);
+  const community = React.useMemo(() => (site ? computeCommunityMetrics(site) : null), [site]);
+  const networks = React.useMemo(() => {
+    if (!site) return [];
+    return (site.networks ?? []).map((n) => networkStats(n, site.spatial));
+  }, [site]);
   const findings = React.useMemo(() => (site ? checkCompliance(site) : []), [site]);
 
-  if (!site || !metrics) return null;
+  if (!site || !metrics || !community) return null;
+
+  const roadMeters = networks.filter((n) => n.kind === "road").reduce((s, n) => s + n.lengthMeters, 0);
+  const utilityMeters = networks.filter((n) => n.kind !== "road").reduce((s, n) => s + n.lengthMeters, 0);
 
   return (
     <div className="flex flex-col gap-4 p-3">
@@ -82,6 +92,36 @@ export function MetricsPanel() {
           </>
         )}
       </div>
+
+      <div>
+        <h4 className="mb-2 text-xs font-medium text-muted-foreground">Community</h4>
+        <div className="grid grid-cols-2 gap-2">
+          <Stat label="Population" value={formatNumber(Math.round(community.population))} />
+          <Stat label="Persons / km²" value={formatNumber(community.populationPerSquareKm, 0)} />
+          <Stat label="Open space / capita" value={`${formatNumber(community.openSpacePerCapitaSqM, 1)} m²`} />
+          <Stat label="Park / 1,000" value={`${formatNumber(community.parkAcresPerThousand, 1)} ac`} />
+        </div>
+      </div>
+
+      {networks.length > 0 && (
+        <div>
+          <h4 className="mb-2 text-xs font-medium text-muted-foreground">Infrastructure</h4>
+          <div className="grid grid-cols-2 gap-2">
+            <Stat label="Roads" value={`${formatNumber(roadMeters, 0)} m`} />
+            <Stat label="Utility mains" value={`${formatNumber(utilityMeters, 0)} m`} />
+            <Stat label="Networks" value={formatNumber(networks.length)} />
+            <Stat
+              label="Intersections"
+              value={formatNumber(networks.reduce((s, n) => s + n.intersections, 0))}
+            />
+          </div>
+          {networks.some((n) => !n.connected) && (
+            <p className="mt-1.5 text-[11px] text-amber-500">
+              Some networks are disconnected — check for gaps between segments.
+            </p>
+          )}
+        </div>
+      )}
 
       <div>
         <h4 className="mb-2 text-xs font-medium text-muted-foreground">Compliance</h4>

@@ -1,16 +1,21 @@
 import { create } from "zustand";
 import {
+  createId,
   isSpatialElement,
+  networkFromPath,
   type AreaUnit,
   type ElementKind,
   type Layer,
+  type NetworkEdge,
+  type NetworkKind,
   type PlanElement,
   type Point,
   type Polygon,
+  type Polyline,
   type Site,
 } from "@thoth/domain";
 import type { Project } from "@/api";
-import { createNote, createSpatialElement } from "@/lib/elementFactory";
+import { createPointElement, createSpatialElement } from "@/lib/elementFactory";
 import { elementMeta } from "@/lib/elementMeta";
 import type { ToolId } from "@/lib/tools";
 
@@ -49,8 +54,9 @@ export interface WorkspaceState {
   selectMany(ids: string[]): void;
 
   // --- element mutations (each records history) ---
-  addDrawnElement(kind: Exclude<ElementKind, "note">, boundary: Polygon): string | null;
-  addNote(position: Point): string | null;
+  addDrawnElement(kind: Exclude<ElementKind, "note" | "tree" | "spot">, boundary: Polygon): string | null;
+  addPointElement(kind: "note" | "tree" | "spot", position: Point): string | null;
+  addNetworkPath(kind: NetworkKind, path: Polyline, edge?: Partial<NetworkEdge>): string | null;
   updateElement(id: string, patch: Partial<PlanElement>): void;
   updateBoundary(id: string, boundary: Polygon): void;
   moveSelection(delta: Point): void;
@@ -173,14 +179,24 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       return element.id;
     },
 
-    addNote(position) {
+    addPointElement(kind, position) {
       const { site, activeLayerId } = get();
       if (!site) return null;
-      const layerId = activeLayerId ?? "layer-base";
-      const note = createNote(site, position, layerId);
-      mutate((s) => ({ ...s, elements: [...s.elements, note] }));
-      set({ selection: [note.id] });
-      return note.id;
+      const layerId = activeLayerId ?? elementMeta(kind).defaultLayerId;
+      const element = createPointElement(site, kind, position, layerId);
+      mutate((s) => ({ ...s, elements: [...s.elements, element] }));
+      set({ selection: [element.id] });
+      return element.id;
+    },
+
+    addNetworkPath(kind, path, edge) {
+      const { site } = get();
+      if (!site || path.length < 2) return null;
+      const count = (site.networks ?? []).filter((n) => n.kind === kind).length;
+      const name = `${kind === "road" ? "Road" : "Main"} ${count + 1}`;
+      const network = networkFromPath(createId("net"), name, kind, path, () => createId("nn"), edge);
+      mutate((s) => ({ ...s, networks: [...(s.networks ?? []), network] }));
+      return network.id;
     },
 
     updateElement(id, patch) {

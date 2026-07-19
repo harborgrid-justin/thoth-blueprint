@@ -66,9 +66,12 @@ Turn it into a true multi-player, review-ready platform.
 
 Deepen the planning intelligence.
 
-- ⬜ Zoning envelopes and compliance checks.
-- ⬜ Land-use allocation tools and program tracking.
-- ⬜ Infrastructure networks (roads, utilities) as connected primitives.
+- ✅ Zoning envelopes and compliance checks.
+- 🟡 Land-use allocation tools and program tracking (allocation metrics done).
+- ✅ Infrastructure networks (roads, utilities) as connected primitives.
+- ✅ Terrain, contours, slope analysis, and cut/fill grading (`packages/domain/terrain.ts`).
+- ✅ Landscape elements (water, planting, trees) and large-scale `Region` tier.
+- ✅ Community metrics (population, density, service/park levels of service).
 - ⬜ Scenario comparison (alternatives side by side).
 - ⬜ Community engagement views (simplified, comment-first).
 

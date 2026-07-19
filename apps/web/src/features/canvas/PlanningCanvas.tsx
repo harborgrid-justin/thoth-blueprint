@@ -4,12 +4,20 @@ import {
   bounds,
   buildableEnvelope,
   centroid,
+  contourLevels,
+  DEFAULT_ROAD_WIDTH,
+  elevationAt,
+  isPointElement,
   isSpatialElement,
   measuredArea,
   pointInPolygon,
+  slopeAtNode,
+  stitchContours,
   unionBounds,
   unitLabel,
   type Bounds,
+  type ElevationGrid,
+  type InfrastructureNetwork,
   type PlanElement,
   type Point,
   type Polygon,
@@ -19,6 +27,7 @@ import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
 import { elementColor } from "@/lib/elementMeta";
 import { toolDef } from "@/lib/tools";
+import { buildTerrainModel } from "@/features/terrain/terrainModel";
 import { fitBounds, niceGridStep, worldToScreen, zoomAt, type Viewport } from "./viewport";
 import { eventToWorld, snapPoint } from "./snapping";
 import { formatArea } from "@/lib/format";
@@ -59,7 +68,8 @@ export function PlanningCanvas() {
   const moveSelection = useWorkspaceStore((s) => s.moveSelection);
   const updateBoundary = useWorkspaceStore((s) => s.updateBoundary);
   const addDrawnElement = useWorkspaceStore((s) => s.addDrawnElement);
-  const addNote = useWorkspaceStore((s) => s.addNote);
+  const addPointElement = useWorkspaceStore((s) => s.addPointElement);
+  const addNetworkPath = useWorkspaceStore((s) => s.addNetworkPath);
   const setTool = useWorkspaceStore((s) => s.setTool);
 
   const {
@@ -68,10 +78,18 @@ export function PlanningCanvas() {
     showGrid,
     showLabels,
     showSurveyLabels,
+    showNetworks,
+    showContours,
+    showSlope,
+    showProposed,
+    contourInterval,
     snapToGrid,
     snapToVertices,
     fitRequestId,
   } = useCanvasStore();
+
+  const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
+  const terrainSurface = showProposed ? terrain?.proposed : terrain?.existing;
 
   const [draft, setDraft] = React.useState<Point[]>([]);
   const [cursor, setCursor] = React.useState<Point | null>(null);
@@ -161,13 +179,23 @@ export function PlanningCanvas() {
 
   // --- draft completion ----------------------------------------------------
   const completeDraft = React.useCallback(() => {
-    if (!tool.kind || tool.mode !== "polygon") return;
-    if (draft.length >= 3) {
-      addDrawnElement(tool.kind as Exclude<typeof tool.kind, "note">, draft);
+    if (tool.mode === "polygon" && tool.kind && draft.length >= 3) {
+      addDrawnElement(
+        tool.kind as Exclude<typeof tool.kind, "note" | "tree" | "spot">,
+        draft,
+      );
+      setDraft([]);
+      setTool("select");
+    } else if (tool.mode === "polyline" && tool.network && draft.length >= 2) {
+      const cfg = tool.network;
+      addNetworkPath(cfg.kind, draft, {
+        roadClass: cfg.roadClass,
+        width: cfg.roadClass ? DEFAULT_ROAD_WIDTH[cfg.roadClass] : undefined,
+      });
+      setDraft([]);
+      setTool("select");
     }
-    setDraft([]);
-    setTool("select");
-  }, [tool, draft, addDrawnElement, setTool]);
+  }, [tool, draft, addDrawnElement, addNetworkPath, setTool]);
 
   const cancelDraft = React.useCallback(() => {
     setDraft([]);
@@ -180,7 +208,7 @@ export function PlanningCanvas() {
       const target = e.target as HTMLElement;
       if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return;
       if (e.key === "Escape") cancelDraft();
-      if (e.key === "Enter" && draft.length >= 3) completeDraft();
+      if (e.key === "Enter" && draft.length >= 2) completeDraft();
       if (e.key === "Backspace" && draft.length > 0) {
         e.preventDefault();
         setDraft((d) => d.slice(0, -1));
@@ -220,8 +248,13 @@ export function PlanningCanvas() {
       return;
     }
 
-    if (tool.mode === "point") {
-      addNote(snapped);
+    if (tool.mode === "polyline") {
+      setDraft((d) => [...d, snapped]);
+      return;
+    }
+
+    if (tool.mode === "point" && tool.kind) {
+      addPointElement(tool.kind as "note" | "tree" | "spot", snapped);
       setTool("select");
       return;
     }
@@ -318,7 +351,7 @@ export function PlanningCanvas() {
   }
 
   function onDoubleClick() {
-    if (tool.mode === "polygon" && draft.length >= 3) completeDraft();
+    if ((tool.mode === "polygon" || tool.mode === "polyline") && draft.length >= 2) completeDraft();
   }
 
   if (!site) return null;
@@ -333,9 +366,9 @@ export function PlanningCanvas() {
   const cursorClass =
     tool.mode === "pan"
       ? "cursor-grab"
-      : tool.mode === "polygon" || tool.mode === "point" || tool.mode === "ruler"
-        ? "cursor-crosshair"
-        : "cursor-default";
+      : tool.mode === "select"
+        ? "cursor-default"
+        : "cursor-crosshair";
 
   return (
     <div
@@ -350,6 +383,23 @@ export function PlanningCanvas() {
     >
       <svg width={size.width} height={size.height} className="absolute inset-0 select-none">
         {showGrid && <Grid viewport={viewport} size={size} step={gridStep} />}
+
+        {/* Terrain: slope shading and contour lines, beneath the plan. */}
+        {terrainSurface && (showSlope || showContours) && (
+          <TerrainOverlay
+            surface={terrainSurface}
+            viewport={viewport}
+            showSlope={showSlope}
+            showContours={showContours}
+            interval={contourInterval}
+          />
+        )}
+
+        {/* Road and utility networks. */}
+        {showNetworks &&
+          (site.networks ?? []).map((network) => (
+            <NetworkShape key={network.id} network={network} viewport={viewport} />
+          ))}
 
         {ordered.map(({ element }) => {
           const shifted =
@@ -388,9 +438,15 @@ export function PlanningCanvas() {
           preview={vertexPreview}
         />
 
-        {/* In-progress polygon draft. */}
+        {/* In-progress polygon/polyline draft. */}
         {draft.length > 0 && (
-          <DraftOverlay draft={draft} cursor={cursor} viewport={viewport} kind={tool.kind} />
+          <DraftOverlay
+            draft={draft}
+            cursor={cursor}
+            viewport={viewport}
+            kind={tool.kind ?? tool.label}
+            polyline={tool.mode === "polyline"}
+          />
         )}
 
         {/* Measurement ruler. */}
@@ -399,7 +455,13 @@ export function PlanningCanvas() {
         )}
       </svg>
 
-      <CanvasHud tool={tool.label} cursor={cursor} draft={draft.length} />
+      <CanvasHud
+        tool={tool.label}
+        cursor={cursor}
+        draft={draft.length}
+        elevation={terrainSurface && cursor ? elevationAt(terrainSurface, cursor) : null}
+        units={unitLabel(site.spatial.units)}
+      />
     </div>
   );
 }
@@ -477,8 +539,36 @@ function ElementShape({
   moveDelta?: Point;
   overrideBoundary?: Polygon;
 }) {
-  if (!isSpatialElement(element)) {
-    const s = worldToScreen(element.position, viewport);
+  if (isPointElement(element)) {
+    const shift = moveDelta ?? { x: 0, y: 0 };
+    const s = worldToScreen({ x: element.position.x + shift.x, y: element.position.y + shift.y }, viewport);
+
+    if (element.kind === "tree") {
+      const r = Math.max(4, element.canopyRadius * viewport.zoom);
+      return (
+        <g>
+          <circle cx={s.x} cy={s.y} r={r} fill="#22c55e" fillOpacity={0.28} stroke="#16a34a" strokeWidth={1} vectorEffect="non-scaling-stroke" />
+          <circle cx={s.x} cy={s.y} r={3} fill="#15803d" />
+          {selected && <circle cx={s.x} cy={s.y} r={r + 3} fill="none" stroke="hsl(var(--primary))" strokeWidth={1.5} />}
+        </g>
+      );
+    }
+
+    if (element.kind === "spot") {
+      return (
+        <g>
+          <path d={`M${s.x} ${s.y - 5} L${s.x + 5} ${s.y} L${s.x} ${s.y + 5} L${s.x - 5} ${s.y} Z`} fill="#d97706" stroke="#fff" strokeWidth={1} />
+          {showLabels && (
+            <text x={s.x + 8} y={s.y + 4} fontSize={11} fill="hsl(var(--foreground))" style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: 3 }}>
+              {element.z.toFixed(1)}
+            </text>
+          )}
+          {selected && <circle cx={s.x} cy={s.y} r={9} fill="none" stroke="hsl(var(--primary))" strokeWidth={1.5} />}
+        </g>
+      );
+    }
+
+    // Note.
     return (
       <g>
         <circle cx={s.x} cy={s.y} r={5} fill="#eab308" stroke="#fff" strokeWidth={1.5} />
@@ -501,7 +591,26 @@ function ElementShape({
   const color = elementColor(element.kind, category);
   const path = toPath(boundary, viewport);
   const isLine = element.kind === "row";
-  const fillOpacity = element.kind === "building" ? 0.65 : element.kind === "landuse" ? 0.32 : 0.14;
+  const fillOpacity =
+    element.kind === "building"
+      ? 0.65
+      : element.kind === "water"
+        ? 0.5
+        : element.kind === "landuse" || element.kind === "planting"
+          ? 0.32
+          : element.kind === "grade"
+            ? 0.2
+            : element.kind === "region"
+              ? 0.06
+              : 0.14;
+  const dash =
+    element.kind === "zone"
+      ? "6 4"
+      : element.kind === "region"
+        ? "10 6"
+        : element.kind === "grade"
+          ? "4 3"
+          : undefined;
 
   const label = showLabels && viewport.zoom > 1.4 ? element.name : null;
   const center = label ? worldToScreen(centroid(boundary), viewport) : null;
@@ -524,7 +633,7 @@ function ElementShape({
         fillOpacity={isLine ? 0.25 : fillOpacity}
         stroke={selected ? "hsl(var(--primary))" : color}
         strokeWidth={selected ? 2.5 : element.kind === "building" ? 1.5 : 1.75}
-        strokeDasharray={element.kind === "zone" ? "6 4" : undefined}
+        strokeDasharray={dash}
         vectorEffect="non-scaling-stroke"
         strokeLinejoin="round"
       />
@@ -598,6 +707,153 @@ function VertexHandles({
   );
 }
 
+function TerrainOverlay({
+  surface,
+  viewport,
+  showSlope,
+  showContours,
+  interval,
+}: {
+  surface: ElevationGrid;
+  viewport: Viewport;
+  showSlope: boolean;
+  showContours: boolean;
+  interval: number;
+}) {
+  const cellPx = surface.cellSize * viewport.zoom;
+
+  // Slope shading: one rect per cell, tinted from green (flat) to red (steep).
+  const slopeCells: React.ReactNode[] = [];
+  if (showSlope && cellPx >= 2) {
+    for (let r = 0; r < surface.rows - 1; r++) {
+      for (let c = 0; c < surface.cols - 1; c++) {
+        const pct =
+          (slopeAtNode(surface, c, r).percent +
+            slopeAtNode(surface, c + 1, r).percent +
+            slopeAtNode(surface, c, r + 1).percent +
+            slopeAtNode(surface, c + 1, r + 1).percent) /
+          4;
+        const s = worldToScreen(
+          { x: surface.origin.x + c * surface.cellSize, y: surface.origin.y + r * surface.cellSize },
+          viewport,
+        );
+        slopeCells.push(
+          <rect
+            key={`${c}-${r}`}
+            x={s.x}
+            y={s.y}
+            width={cellPx + 0.5}
+            height={cellPx + 0.5}
+            fill={slopeColor(pct)}
+            fillOpacity={0.5}
+          />,
+        );
+      }
+    }
+  }
+
+  // Contours: stitched polylines per level; every 5th line is an index contour.
+  const contourEls: React.ReactNode[] = [];
+  if (showContours && interval > 0) {
+    const levels = contourLevels(surface, interval);
+    for (const { level, segments } of levels) {
+      const lines = stitchContours(segments);
+      const index = Math.round(level / interval) % 5 === 0;
+      for (let i = 0; i < lines.length; i++) {
+        const d = lines[i]
+          .map((p, j) => {
+            const s = worldToScreen(p, viewport);
+            return `${j === 0 ? "M" : "L"}${s.x.toFixed(1)},${s.y.toFixed(1)}`;
+          })
+          .join(" ");
+        contourEls.push(
+          <path
+            key={`${level}-${i}`}
+            d={d}
+            fill="none"
+            stroke="#a16207"
+            strokeOpacity={index ? 0.85 : 0.45}
+            strokeWidth={index ? 1.4 : 0.8}
+            vectorEffect="non-scaling-stroke"
+          />,
+        );
+      }
+    }
+  }
+
+  return (
+    <g className="pointer-events-none">
+      {slopeCells}
+      {contourEls}
+    </g>
+  );
+}
+
+function slopeColor(percent: number): string {
+  // 0% → green, 15% → amber, 30%+ → red.
+  const t = Math.min(1, percent / 30);
+  const hue = 120 - t * 120;
+  return `hsl(${hue}, 70%, 50%)`;
+}
+
+function NetworkShape({
+  network,
+  viewport,
+}: {
+  network: InfrastructureNetwork;
+  viewport: Viewport;
+}) {
+  const nodes = new Map(network.nodes.map((n) => [n.id, n]));
+  const isRoad = network.kind === "road";
+  const color =
+    network.kind === "road"
+      ? "#334155"
+      : network.kind === "water"
+        ? "#0ea5e9"
+        : network.kind === "sewer"
+          ? "#84cc16"
+          : network.kind === "storm"
+            ? "#06b6d4"
+            : network.kind === "power"
+              ? "#eab308"
+              : "#64748b";
+
+  return (
+    <g className="pointer-events-none">
+      {network.edges.map((e) => {
+        const a = nodes.get(e.from);
+        const b = nodes.get(e.to);
+        if (!a || !b) return null;
+        const sa = worldToScreen(a.point, viewport);
+        const sb = worldToScreen(b.point, viewport);
+        const widthPx = isRoad ? Math.max(2, (e.width ?? 15) * viewport.zoom) : 2;
+        return (
+          <g key={e.id}>
+            {isRoad && (
+              <line x1={sa.x} y1={sa.y} x2={sb.x} y2={sb.y} stroke={color} strokeOpacity={0.35} strokeWidth={widthPx} strokeLinecap="round" />
+            )}
+            <line
+              x1={sa.x}
+              y1={sa.y}
+              x2={sb.x}
+              y2={sb.y}
+              stroke={color}
+              strokeWidth={isRoad ? 1.5 : 2}
+              strokeDasharray={isRoad ? undefined : "6 4"}
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+            />
+          </g>
+        );
+      })}
+      {network.nodes.map((n) => {
+        const s = worldToScreen(n.point, viewport);
+        return <circle key={n.id} cx={s.x} cy={s.y} r={2.5} fill={color} />;
+      })}
+    </g>
+  );
+}
+
 function SurveyEdgeLabels({
   site,
   selection,
@@ -656,11 +912,13 @@ function DraftOverlay({
   cursor,
   viewport,
   kind,
+  polyline,
 }: {
   draft: Point[];
   cursor: Point | null;
   viewport: Viewport;
   kind?: string;
+  polyline?: boolean;
 }) {
   const pts = cursor ? [...draft, cursor] : draft;
   const screenPts = pts.map((p) => worldToScreen(p, viewport));
@@ -668,11 +926,18 @@ function DraftOverlay({
   const first = worldToScreen(draft[0], viewport);
   return (
     <g>
-      <polyline points={poly} fill="hsl(var(--primary))" fillOpacity={0.08} stroke="hsl(var(--primary))" strokeWidth={1.75} strokeDasharray="5 3" />
+      <polyline
+        points={poly}
+        fill={polyline ? "none" : "hsl(var(--primary))"}
+        fillOpacity={polyline ? 0 : 0.08}
+        stroke="hsl(var(--primary))"
+        strokeWidth={1.75}
+        strokeDasharray="5 3"
+      />
       {screenPts.map((s, i) => (
         <circle key={i} cx={s.x} cy={s.y} r={i === 0 ? 5 : 3.5} fill="hsl(var(--background))" stroke="hsl(var(--primary))" strokeWidth={1.5} />
       ))}
-      {draft.length >= 3 && (
+      {!polyline && draft.length >= 3 && (
         <circle cx={first.x} cy={first.y} r={8} fill="none" stroke="hsl(var(--primary))" strokeWidth={1} strokeDasharray="2 2" />
       )}
       {kind && cursor && (
@@ -724,13 +989,30 @@ function MeasureOverlay({
   );
 }
 
-function CanvasHud({ tool, cursor, draft }: { tool: string; cursor: Point | null; draft: number }) {
+function CanvasHud({
+  tool,
+  cursor,
+  draft,
+  elevation,
+  units,
+}: {
+  tool: string;
+  cursor: Point | null;
+  draft: number;
+  elevation: number | null;
+  units: string;
+}) {
   return (
     <div className="pointer-events-none absolute bottom-3 left-3 flex items-center gap-2 rounded-md border border-border bg-card/80 px-2.5 py-1 text-xs text-muted-foreground backdrop-blur">
       <span className="font-medium text-foreground">{tool}</span>
       {cursor && (
         <span className="tabular-nums">
           x {cursor.x.toFixed(1)} · y {cursor.y.toFixed(1)}
+        </span>
+      )}
+      {elevation != null && (
+        <span className="tabular-nums text-amber-600 dark:text-amber-500">
+          z {elevation.toFixed(1)} {units}
         </span>
       )}
       {draft > 0 && <span className="text-primary">{draft} pts · Enter to finish · Esc to cancel</span>}

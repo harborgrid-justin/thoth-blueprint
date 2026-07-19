@@ -185,6 +185,46 @@ export function computeSiteMetrics(site: Site, unit: AreaUnit = "sqm"): SiteMetr
   };
 }
 
+/** Community-scale metrics derived from the plan and an assumed household size. */
+export interface CommunityMetrics {
+  dwellingUnits: number;
+  /** Estimated resident population = dwelling units × household size. */
+  population: number;
+  /** Residents per square kilometre of site. */
+  populationPerSquareKm: number;
+  /** Open-space + park land per resident, in square metres. */
+  openSpacePerCapitaSqM: number;
+  /** Park land per 1,000 residents, in acres (a common LOS standard). */
+  parkAcresPerThousand: number;
+  householdSize: number;
+}
+
+/** Compute community-scale metrics. `householdSize` defaults to 2.5 persons. */
+export function computeCommunityMetrics(site: Site, householdSize = 2.5): CommunityMetrics {
+  const du = dwellingUnits(site);
+  const population = du * householdSize;
+  const siteSqKm = siteArea(site, "sqkm");
+  const siteSqM = siteArea(site, "sqm");
+
+  const landUses = elementsOfKind(site, "landuse") as LandUse[];
+  const openSqM = landUses
+    .filter((l) => landUseDefinition(l.category).openSpace)
+    .reduce((sum, l) => sum + areaToSquareMeters(polygonArea(l.boundary), site.spatial), 0);
+  const parkSqM = landUses
+    .filter((l) => l.category === "park")
+    .reduce((sum, l) => sum + areaToSquareMeters(polygonArea(l.boundary), site.spatial), 0);
+  void siteSqM;
+
+  return {
+    dwellingUnits: du,
+    population,
+    populationPerSquareKm: siteSqKm > 0 ? population / siteSqKm : 0,
+    openSpacePerCapitaSqM: population > 0 ? openSqM / population : 0,
+    parkAcresPerThousand: population > 0 ? squareMetersTo(parkSqM, "acres") / (population / 1000) : 0,
+    householdSize,
+  };
+}
+
 function clamp01(v: number): number {
   return Math.max(0, Math.min(1, v));
 }

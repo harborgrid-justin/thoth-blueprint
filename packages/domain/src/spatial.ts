@@ -28,7 +28,7 @@ export interface SpatialContext {
 }
 
 /** Units in which an area metric can be reported. */
-export type AreaUnit = "sqm" | "sqft" | "acres" | "hectares";
+export type AreaUnit = "sqm" | "sqft" | "acres" | "hectares" | "sqkm" | "sqmi";
 
 /** Meters per one unit of the given length {@link Unit}. */
 export const METERS_PER_UNIT: Record<Unit, number> = {
@@ -42,6 +42,8 @@ export const SQM_PER_AREA_UNIT: Record<AreaUnit, number> = {
   sqft: 0.09290304,
   acres: 4046.8564224,
   hectares: 10000,
+  sqkm: 1_000_000,
+  sqmi: 2_589_988.110336,
 };
 
 const DEFAULT_CRS: CRS = "EPSG:3857";
@@ -112,5 +114,9 @@ export function areaUnitLabel(unit: AreaUnit): string {
       return "ac";
     case "hectares":
       return "ha";
+    case "sqkm":
+      return "km²";
+    case "sqmi":
+      return "mi²";
   }
 }

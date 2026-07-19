@@ -10,9 +10,11 @@
 import type { Point, Polygon, Polyline } from "./geometry";
 import type { SpatialContext } from "./spatial";
 import type { LandUseCategory } from "./landuse";
+import type { InfrastructureNetwork } from "./network";
 
 /** The kinds of planning elements a plan can contain. */
 export type ElementKind =
+  | "region"
   | "parcel"
   | "block"
   | "lot"
@@ -22,7 +24,15 @@ export type ElementKind =
   | "row"
   | "easement"
   | "openspace"
+  | "water"
+  | "planting"
+  | "grade"
+  | "tree"
+  | "spot"
   | "note";
+
+/** Element kinds represented by a single point rather than a boundary. */
+export const POINT_ELEMENT_KINDS = new Set<ElementKind>(["note", "tree", "spot"]);
 
 /** A named, orderable grouping of elements that can be shown, hidden, or locked. */
 export interface Layer {
@@ -43,6 +53,16 @@ export interface ElementBase {
   layerId: string;
   /** Closed boundary ring in plan coordinates. */
   boundary: Polygon;
+}
+
+/**
+ * A large-scale land division above the parcel — used to organize very large
+ * holdings (an estate, a homestead, a whole planned territory) into management
+ * areas before parcels are drawn.
+ */
+export interface Region extends ElementBase {
+  kind: "region";
+  regionType?: "estate" | "district" | "watershed" | "reserve" | "agricultural" | "settlement";
 }
 
 /** A legally or conceptually distinct piece of land — the fundamental unit. */
@@ -125,6 +145,28 @@ export interface OpenSpace extends ElementBase {
   dedicated?: boolean;
 }
 
+/** A body of water — a landscape and drainage feature. */
+export interface WaterBody extends ElementBase {
+  kind: "water";
+  waterType?: "lake" | "pond" | "river" | "stream" | "wetland" | "reservoir";
+}
+
+/** A landscaped / vegetated area (lawn, forest, garden, crop, meadow). */
+export interface PlantingArea extends ElementBase {
+  kind: "planting";
+  plantingType?: "lawn" | "forest" | "garden" | "orchard" | "crop" | "meadow";
+  /** Estimated canopy/cover fraction (0–1) for landscape metrics. */
+  canopyCover?: number;
+}
+
+/** A grading region: land reshaped to a target elevation (a pad, terrace, or basin). */
+export interface GradeRegion extends ElementBase {
+  kind: "grade";
+  /** Finished-grade elevation in plan units. */
+  targetElevation: number;
+  method?: "flat" | "terrace";
+}
+
 /** A free-form annotation anchored on the canvas. */
 export interface PlanNote {
   id: string;
@@ -134,8 +176,31 @@ export interface PlanNote {
   position: Point;
 }
 
-/** Any spatial planning element (everything except free notes). */
+/** A single tree/shrub as a point, with a canopy radius for coverage math. */
+export interface Tree {
+  id: string;
+  kind: "tree";
+  layerId: string;
+  position: Point;
+  species?: string;
+  /** Canopy radius in plan units. */
+  canopyRadius: number;
+}
+
+/** A surveyed spot elevation / benchmark — a control point for the terrain surface. */
+export interface SpotElevationPoint {
+  id: string;
+  kind: "spot";
+  layerId: string;
+  position: Point;
+  /** Elevation in plan units. */
+  z: number;
+  label?: string;
+}
+
+/** Any spatial planning element (everything carrying a boundary polygon). */
 export type SpatialElement =
+  | Region
   | Parcel
   | Block
   | Lot
@@ -144,10 +209,16 @@ export type SpatialElement =
   | Building
   | RightOfWay
   | Easement
-  | OpenSpace;
+  | OpenSpace
+  | WaterBody
+  | PlantingArea
+  | GradeRegion;
+
+/** Any point-based element (anchored at a position, no boundary). */
+export type PointElement = PlanNote | Tree | SpotElevationPoint;
 
 /** Any element that can appear in a plan. */
-export type PlanElement = SpatialElement | PlanNote;
+export type PlanElement = SpatialElement | PointElement;
 
 /** The overall area being planned; top-level container for spatial content. */
 export interface Site {
@@ -156,11 +227,26 @@ export interface Site {
   spatial: SpatialContext;
   layers: Layer[];
   elements: PlanElement[];
+  /** Road and utility networks serving the site. */
+  networks?: InfrastructureNetwork[];
 }
 
 /** Type guard: does this element carry a spatial boundary? */
 export function isSpatialElement(element: PlanElement): element is SpatialElement {
-  return element.kind !== "note";
+  return !POINT_ELEMENT_KINDS.has(element.kind);
+}
+
+/** Type guard: is this a point-anchored element? */
+export function isPointElement(element: PlanElement): element is PointElement {
+  return POINT_ELEMENT_KINDS.has(element.kind);
+}
+
+/** The anchor position of any element (centroid for spatial, position for points). */
+export function elementPosition(element: PlanElement): Point {
+  if (isPointElement(element)) return element.position;
+  const b = element.boundary;
+  const sum = b.reduce((acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 });
+  return { x: sum.x / b.length, y: sum.y / b.length };
 }
 
 /** Narrow a plan element to a specific kind. */

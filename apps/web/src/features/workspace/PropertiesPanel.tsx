@@ -83,6 +83,10 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
 
       {element.kind === "note" ? (
         <TextField label="Text" value={element.text} onCommit={(text) => set({ text })} />
+      ) : element.kind === "tree" ? (
+        <TextField label="Species" value={element.species ?? ""} onCommit={(species) => set({ species })} />
+      ) : element.kind === "spot" ? (
+        <TextField label="Label" value={element.label ?? ""} onCommit={(label) => set({ label })} />
       ) : (
         <TextField label="Name" value={element.name} onCommit={(name) => set({ name })} />
       )}
@@ -147,6 +151,71 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
           <Label className="text-sm text-foreground">Public dedication</Label>
           <Switch checked={element.dedicated ?? false} onCheckedChange={(dedicated) => set({ dedicated })} />
         </div>
+      )}
+
+      {element.kind === "region" && (
+        <SelectField
+          label="Region type"
+          value={element.regionType ?? "estate"}
+          options={["estate", "district", "watershed", "reserve", "agricultural", "settlement"]}
+          onChange={(regionType) => set({ regionType: regionType as typeof element.regionType })}
+        />
+      )}
+
+      {element.kind === "water" && (
+        <SelectField
+          label="Water type"
+          value={element.waterType ?? "pond"}
+          options={["lake", "pond", "river", "stream", "wetland", "reservoir"]}
+          onChange={(waterType) => set({ waterType: waterType as typeof element.waterType })}
+        />
+      )}
+
+      {element.kind === "planting" && (
+        <>
+          <SelectField
+            label="Planting type"
+            value={element.plantingType ?? "forest"}
+            options={["lawn", "forest", "garden", "orchard", "crop", "meadow"]}
+            onChange={(plantingType) => set({ plantingType: plantingType as typeof element.plantingType })}
+          />
+          <NumberField
+            label="Canopy cover (0–1)"
+            value={element.canopyCover ?? 0}
+            step={0.05}
+            onCommit={(v) => set({ canopyCover: Math.max(0, Math.min(1, v)) })}
+          />
+        </>
+      )}
+
+      {element.kind === "grade" && (
+        <>
+          <NumberField
+            label="Target elevation"
+            value={element.targetElevation}
+            step={0.5}
+            onCommit={(v) => set({ targetElevation: v })}
+          />
+          <SelectField
+            label="Method"
+            value={element.method ?? "flat"}
+            options={["flat", "terrace"]}
+            onChange={(method) => set({ method: method as typeof element.method })}
+          />
+        </>
+      )}
+
+      {element.kind === "tree" && (
+        <NumberField
+          label="Canopy radius"
+          value={element.canopyRadius}
+          step={0.5}
+          onCommit={(v) => set({ canopyRadius: Math.max(0.5, v) })}
+        />
+      )}
+
+      {element.kind === "spot" && (
+        <NumberField label="Elevation (z)" value={element.z} step={0.5} onCommit={(z) => set({ z })} />
       )}
 
       <LayerSelect
@@ -219,6 +288,36 @@ function LayerSelect({
           {options.map((l) => (
             <SelectItem key={l.id} value={l.id}>
               {l.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
+
+function SelectField({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: string[];
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-1">
+      <Label>{label}</Label>
+      <Select value={value} onValueChange={onChange}>
+        <SelectTrigger className="h-8 capitalize">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((o) => (
+            <SelectItem key={o} value={o} className="capitalize">
+              {o}
             </SelectItem>
           ))}
         </SelectContent>

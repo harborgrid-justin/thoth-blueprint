@@ -44,6 +44,13 @@ Presentation belongs in `apps/`, transport/storage in `services/`.
   courses, quadrant bearings (DMS) & azimuths, traverse closure and precision,
   corner coordinates (northing/easting), area in survey units, and generated
   metes-and-bounds legal descriptions.
+- **Infrastructure networks** (`network.ts`) — roads and utilities as connected
+  nodes and edges: length, connectivity/components, intersections & dead-ends,
+  corridor area, and service coverage.
+- **Terrain & earthwork** (`terrain.ts`) — elevation grids interpolated from spot
+  elevations, bilinear sampling, contour generation (marching squares), slope and
+  aspect, buildable-slope analysis, pad grading, and cut/fill volumes between an
+  existing and a proposed surface.
 
 See [`docs/GLOSSARY.md`](../../docs/GLOSSARY.md) for definitions; types here mirror
 that vocabulary exactly.

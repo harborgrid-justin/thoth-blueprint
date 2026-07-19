@@ -16,6 +16,14 @@ export interface ElementKindMeta {
 }
 
 const META: Record<ElementKind, ElementKindMeta> = {
+  region: {
+    kind: "region",
+    label: "Region",
+    defaultLayerId: "layer-base",
+    stroke: "#0d9488",
+    fill: "#0d9488",
+    namePrefix: "Region",
+  },
   parcel: {
     kind: "parcel",
     label: "Parcel",
@@ -87,6 +95,46 @@ const META: Record<ElementKind, ElementKindMeta> = {
     stroke: "#14b8a6",
     fill: "#14b8a6",
     namePrefix: "Open Space",
+  },
+  water: {
+    kind: "water",
+    label: "Water",
+    defaultLayerId: "layer-landscape",
+    stroke: "#0284c7",
+    fill: "#38bdf8",
+    namePrefix: "Water",
+  },
+  planting: {
+    kind: "planting",
+    label: "Planting",
+    defaultLayerId: "layer-landscape",
+    stroke: "#16a34a",
+    fill: "#4ade80",
+    namePrefix: "Planting",
+  },
+  grade: {
+    kind: "grade",
+    label: "Grading",
+    defaultLayerId: "layer-terrain",
+    stroke: "#b45309",
+    fill: "#f59e0b",
+    namePrefix: "Grade",
+  },
+  tree: {
+    kind: "tree",
+    label: "Tree",
+    defaultLayerId: "layer-landscape",
+    stroke: "#15803d",
+    fill: "#22c55e",
+    namePrefix: "Tree",
+  },
+  spot: {
+    kind: "spot",
+    label: "Spot Elevation",
+    defaultLayerId: "layer-terrain",
+    stroke: "#92400e",
+    fill: "#d97706",
+    namePrefix: "Spot",
   },
   note: {
     kind: "note",

@@ -1,16 +1,23 @@
 import {
   createId,
   defaultSpatialContext,
+  networkFromPath,
   subdivideGrid,
   type Building,
+  type InfrastructureNetwork,
   type LandUse,
   type Layer,
   type Lot,
   type Parcel,
   type PlanElement,
+  type PlantingArea,
   type Polygon,
+  type Region,
   type RightOfWay,
   type Site,
+  type SpotElevationPoint,
+  type Tree,
+  type WaterBody,
   type Zone,
 } from "@thoth/domain";
 import type { CreateProjectInput } from "./client";
@@ -32,7 +39,41 @@ function baseLayers(): Layer[] {
     { id: "layer-lots", name: "Lots", order: 3, visible: true, locked: false, color: "#0ea5e9" },
     { id: "layer-buildings", name: "Buildings", order: 4, visible: true, locked: false, color: "#f59e0b" },
     { id: "layer-row", name: "Rights-of-Way", order: 5, visible: true, locked: false, color: "#94a3b8" },
+    { id: "layer-landscape", name: "Landscape", order: 6, visible: true, locked: false, color: "#22c55e" },
+    { id: "layer-terrain", name: "Terrain", order: 7, visible: true, locked: false, color: "#a16207" },
   ];
+}
+
+/** Scatter spot elevations over an extent following a smooth hill function. */
+function hillSpots(
+  x0: number,
+  y0: number,
+  w: number,
+  h: number,
+  cols: number,
+  rows: number,
+  fn: (nx: number, ny: number) => number,
+): SpotElevationPoint[] {
+  const spots: SpotElevationPoint[] = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const nx = cols > 1 ? c / (cols - 1) : 0;
+      const ny = rows > 1 ? r / (rows - 1) : 0;
+      spots.push({
+        id: createId("spot"),
+        kind: "spot",
+        layerId: "layer-terrain",
+        position: { x: x0 + nx * w, y: y0 + ny * h },
+        z: Math.round(fn(nx, ny) * 10) / 10,
+        label: `SP${spots.length + 1}`,
+      });
+    }
+  }
+  return spots;
+}
+
+function tree(x: number, y: number, canopyRadius = 4): Tree {
+  return { id: createId("tree"), kind: "tree", layerId: "layer-landscape", position: { x, y }, species: "Shade tree", canopyRadius };
 }
 
 /** An empty but valid site: spatial context and a set of layers, no geometry. */
@@ -140,12 +181,35 @@ export function subdivisionSite(name: string): Site {
     elements.push(building);
   });
 
+  // Terrain: a gentle rise toward the north-east corner.
+  elements.push(
+    ...hillSpots(20, 20, 260, 180, 7, 5, (nx, ny) => 4 + nx * 8 + (1 - ny) * 5),
+  );
+
+  // Street trees along the park frontage.
+  for (let i = 0; i < 5; i++) elements.push(tree(236 + i * 9, 150));
+
+  // A road network running down Maple Street with a stub into the park.
+  const roads = networkFromPath(
+    createId("net"),
+    "Maple Street",
+    "road",
+    [
+      { x: 20, y: 110 },
+      { x: 150, y: 110 },
+      { x: 255, y: 110 },
+    ],
+    () => createId("nn"),
+    { roadClass: "local", width: 15 },
+  );
+
   return {
     id: createId("site"),
     name,
     spatial: defaultSpatialContext(),
     layers: baseLayers(),
     elements,
+    networks: [roads],
   };
 }
 
@@ -224,6 +288,141 @@ export function districtSite(name: string): Site {
   };
 }
 
+/**
+ * A single-household estate at landscape scale — thousands of hectares organized
+ * into management regions (homestead, agriculture, forest, watershed) with a
+ * private access road, a lake, and varied terrain. This is the "whole territory
+ * for one household" case: very large extents with regions above parcels.
+ */
+export function estateSite(name: string): Site {
+  const elements: PlanElement[] = [];
+
+  // ~6 km × 4 km holding (units are meters).
+  const holding: Region = {
+    id: createId("region"),
+    kind: "region",
+    name: "Estate Boundary",
+    layerId: "layer-base",
+    boundary: rect(0, 0, 6000, 4000),
+    regionType: "estate",
+  };
+  elements.push(holding);
+
+  const regions: Array<[string, Polygon, Region["regionType"]]> = [
+    ["Homestead", rect(400, 300, 1400, 1000), "settlement"],
+    ["Cropland", rect(2200, 300, 3200, 1400), "agricultural"],
+    ["Managed Forest", rect(400, 1600, 2600, 2000), "reserve"],
+    ["Watershed", rect(3400, 2000, 2200, 1700), "watershed"],
+  ];
+  for (const [rName, boundary, regionType] of regions) {
+    elements.push({
+      id: createId("region"),
+      kind: "region",
+      name: rName,
+      layerId: "layer-base",
+      boundary,
+      regionType,
+    } satisfies Region);
+  }
+
+  // The single household compound.
+  const homesteadParcel: Parcel = {
+    id: createId("parcel"),
+    kind: "parcel",
+    name: "Homestead Parcel",
+    layerId: "layer-base",
+    boundary: rect(700, 500, 700, 500),
+  };
+  elements.push(homesteadParcel);
+  elements.push({
+    id: createId("bldg"),
+    kind: "building",
+    name: "Main House",
+    layerId: "layer-buildings",
+    boundary: rect(900, 650, 120, 90),
+    storeys: 2,
+    height: 8,
+    dwellingUnits: 1,
+    use: "residential",
+  } satisfies Building);
+
+  // Land uses at territory scale.
+  const crop: PlantingArea = {
+    id: createId("planting"),
+    kind: "planting",
+    name: "Cropland",
+    layerId: "layer-landscape",
+    boundary: rect(2300, 400, 3000, 1200),
+    plantingType: "crop",
+    canopyCover: 0.2,
+  };
+  const forest: PlantingArea = {
+    id: createId("planting"),
+    kind: "planting",
+    name: "Managed Forest",
+    layerId: "layer-landscape",
+    boundary: rect(500, 1700, 2400, 1800),
+    plantingType: "forest",
+    canopyCover: 0.85,
+  };
+  elements.push(crop, forest);
+
+  const lake: WaterBody = {
+    id: createId("water"),
+    kind: "water",
+    name: "Reservoir",
+    layerId: "layer-landscape",
+    boundary: [
+      { x: 3800, y: 2400 },
+      { x: 4600, y: 2300 },
+      { x: 5200, y: 2700 },
+      { x: 5000, y: 3300 },
+      { x: 4200, y: 3400 },
+      { x: 3700, y: 2900 },
+    ],
+    waterType: "reservoir",
+  };
+  elements.push(lake);
+
+  // Terrain: a broad ridge falling toward the reservoir in the south-east.
+  elements.push(
+    ...hillSpots(0, 0, 6000, 4000, 9, 6, (nx, ny) => {
+      const ridge = Math.sin(nx * Math.PI) * 60;
+      const fallToWater = (1 - nx) * 40 + (1 - ny) * 30;
+      return Math.round(120 + ridge + fallToWater);
+    }),
+  );
+
+  // Orchard trees near the homestead.
+  for (let r = 0; r < 3; r++)
+    for (let c = 0; c < 6; c++) elements.push(tree(760 + c * 90, 1080 + r * 70, 12));
+
+  // Private access road from the entrance to the homestead and on to the fields.
+  const road: InfrastructureNetwork = networkFromPath(
+    createId("net"),
+    "Private Drive",
+    "road",
+    [
+      { x: 0, y: 900 },
+      { x: 1050, y: 900 },
+      { x: 1050, y: 750 },
+      { x: 2200, y: 900 },
+      { x: 3800, y: 1200 },
+    ],
+    () => createId("nn"),
+    { roadClass: "private", width: 8 },
+  );
+
+  return {
+    id: createId("site"),
+    name,
+    spatial: defaultSpatialContext(),
+    layers: baseLayers(),
+    elements,
+    networks: [road],
+  };
+}
+
 /** Build a starter site for a chosen template. */
 export function siteForTemplate(name: string, template: CreateProjectInput["template"]): Site {
   switch (template) {
@@ -231,6 +430,8 @@ export function siteForTemplate(name: string, template: CreateProjectInput["temp
       return subdivisionSite(name);
     case "district":
       return districtSite(name);
+    case "estate":
+      return estateSite(name);
     default:
       return emptySite(name);
   }

@@ -9,6 +9,16 @@ interface CanvasState {
   showLabels: boolean;
   /** Show surveyor bearing/distance labels on the selected boundary's edges. */
   showSurveyLabels: boolean;
+  /** Show road/utility networks. */
+  showNetworks: boolean;
+  /** Show terrain contour lines. */
+  showContours: boolean;
+  /** Shade the canvas by slope steepness. */
+  showSlope: boolean;
+  /** Contour interval in plan units. */
+  contourInterval: number;
+  /** Show the proposed (graded) surface instead of existing ground. */
+  showProposed: boolean;
   /** Incremented to ask the canvas to fit the plan into view. */
   fitRequestId: number;
 
@@ -19,6 +29,11 @@ interface CanvasState {
   toggleSnapToVertices(): void;
   toggleLabels(): void;
   toggleSurveyLabels(): void;
+  toggleNetworks(): void;
+  toggleContours(): void;
+  toggleSlope(): void;
+  toggleProposed(): void;
+  setContourInterval(interval: number): void;
   requestFit(): void;
 }
 
@@ -29,6 +44,11 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   snapToVertices: true,
   showLabels: true,
   showSurveyLabels: true,
+  showNetworks: true,
+  showContours: true,
+  showSlope: false,
+  contourInterval: 2,
+  showProposed: false,
   fitRequestId: 0,
 
   setViewport(viewport) {
@@ -52,6 +72,21 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   },
   toggleSurveyLabels() {
     set((s) => ({ showSurveyLabels: !s.showSurveyLabels }));
+  },
+  toggleNetworks() {
+    set((s) => ({ showNetworks: !s.showNetworks }));
+  },
+  toggleContours() {
+    set((s) => ({ showContours: !s.showContours }));
+  },
+  toggleSlope() {
+    set((s) => ({ showSlope: !s.showSlope }));
+  },
+  toggleProposed() {
+    set((s) => ({ showProposed: !s.showProposed }));
+  },
+  setContourInterval(interval) {
+    set({ contourInterval: Math.max(0.1, interval) });
   },
   requestFit() {
     set((s) => ({ fitRequestId: s.fitRequestId + 1 }));

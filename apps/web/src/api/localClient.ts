@@ -1,7 +1,7 @@
 import { computeSiteMetrics, createId, type Site } from "@thoth/domain";
 import type { ApiClient, CreateProjectInput } from "./client";
 import type { Checkpoint, Member, Project, ProjectSummary, ReviewThread, User } from "./types";
-import { districtSite, siteForTemplate, subdivisionSite } from "./sampleData";
+import { districtSite, estateSite, siteForTemplate, subdivisionSite } from "./sampleData";
 
 /**
  * A local, browser-persisted implementation of {@link ApiClient}. It stands in
@@ -67,6 +67,7 @@ function nowIso(): string {
 function seed(): Store {
   const sub = subdivisionSite("Willow Creek Subdivision");
   const dist = districtSite("Riverside Mixed-Use District");
+  const estate = estateSite("Kestrel Ridge Estate");
   const createdAt = new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString();
   const projects: Project[] = [
     {
@@ -90,6 +91,17 @@ function seed(): Store {
       lotCount: 0,
       members: defaultMembers(),
       site: dist,
+    },
+    {
+      id: createId("proj"),
+      name: "Kestrel Ridge Estate",
+      description: "A single-household estate at landscape scale — regions, terrain, forest, and a reservoir.",
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 100).toISOString(),
+      updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 12).toISOString(),
+      siteAreaAcres: 0,
+      lotCount: 0,
+      members: defaultMembers(),
+      site: estate,
     },
   ];
   return { projects, checkpoints: [], threads: [] };

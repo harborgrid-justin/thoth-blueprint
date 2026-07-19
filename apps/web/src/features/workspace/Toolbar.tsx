@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Redo2, Undo2 } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { TOOLS } from "@/lib/tools";
@@ -15,12 +16,15 @@ export function Toolbar() {
   const canRedo = useWorkspaceStore((s) => s.history.future.length > 0);
 
   return (
-    <div className="flex w-12 flex-col items-center gap-1 border-r border-border bg-card py-2">
-      {TOOLS.map((tool) => {
+    <div className="flex w-12 flex-col items-center gap-1 overflow-y-auto border-r border-border bg-card py-2 no-scrollbar">
+      {TOOLS.map((tool, i) => {
         const Icon = tool.icon;
         const active = tool.id === activeTool;
+        const newGroup = i > 0 && TOOLS[i - 1].group !== tool.group;
         return (
-          <Tooltip key={tool.id} delayDuration={300}>
+          <React.Fragment key={tool.id}>
+            {newGroup && <Separator className="my-0.5 w-6" />}
+          <Tooltip delayDuration={300}>
             <TooltipTrigger asChild>
               <button
                 type="button"
@@ -41,6 +45,7 @@ export function Toolbar() {
               {tool.label} <span className="ml-1 opacity-60">{tool.shortcut}</span>
             </TooltipContent>
           </Tooltip>
+          </React.Fragment>
         );
       })}
 

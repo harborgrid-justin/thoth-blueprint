@@ -21,7 +21,7 @@ function countOfKind(site: Site, kind: ElementKind): number {
  */
 export function createSpatialElement(
   site: Site,
-  kind: Exclude<ElementKind, "note">,
+  kind: Exclude<ElementKind, "note" | "tree" | "spot">,
   boundary: Polygon,
   layerId: string,
 ): PlanElement {
@@ -51,6 +51,14 @@ export function createSpatialElement(
       return { ...base, kind, width: 12 };
     case "openspace":
       return { ...base, kind, dedicated: false };
+    case "region":
+      return { ...base, kind, regionType: "estate" };
+    case "water":
+      return { ...base, kind, waterType: "pond" };
+    case "planting":
+      return { ...base, kind, plantingType: "forest", canopyCover: 0.8 };
+    case "grade":
+      return { ...base, kind, targetElevation: 0, method: "flat" };
     case "parcel":
       return { ...base, kind };
     case "block":
@@ -60,13 +68,26 @@ export function createSpatialElement(
   }
 }
 
-/** Build a free-floating note anchored at a point. */
-export function createNote(site: Site, position: Point, layerId: string): PlanElement {
-  return {
-    id: createId("note"),
-    kind: "note",
-    layerId,
-    text: `Note ${countOfKind(site, "note") + 1}`,
-    position,
-  };
+/** Build a point-anchored element (note, tree, or spot elevation). */
+export function createPointElement(
+  site: Site,
+  kind: "note" | "tree" | "spot",
+  position: Point,
+  layerId: string,
+): PlanElement {
+  switch (kind) {
+    case "tree":
+      return { id: createId("tree"), kind, layerId, position, species: "Shade tree", canopyRadius: 4 };
+    case "spot":
+      return {
+        id: createId("spot"),
+        kind,
+        layerId,
+        position,
+        z: 0,
+        label: `SP${countOfKind(site, "spot") + 1}`,
+      };
+    case "note":
+      return { id: createId("note"), kind, layerId, text: `Note ${countOfKind(site, "note") + 1}`, position };
+  }
 }
