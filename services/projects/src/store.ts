@@ -7,6 +7,7 @@ import {
   districtSite,
   estateSite,
   computeSiteMetrics,
+  type Site,
 } from "@thoth/domain";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -36,7 +37,7 @@ export interface Project {
   siteAreaAcres: number;
   lotCount: number;
   members: Member[];
-  site: any;
+  site: Site;
 }
 
 export interface Checkpoint {
@@ -46,7 +47,7 @@ export interface Checkpoint {
   note?: string;
   createdAt: string;
   authorName: string;
-  site: any;
+  site: Site;
 }
 
 export interface ReviewComment {
@@ -169,6 +170,7 @@ export function loadStore(): Store {
     const content = fs.readFileSync(DB_FILE, "utf-8");
     return JSON.parse(content) as Store;
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error("Failed to parse database file, loading seed store instead.", err);
     return seedStore();
   }

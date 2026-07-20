@@ -283,5 +283,6 @@ app.post("/api/projects/:id/threads/:threadId/resolve", (req, res) => {
 });
 
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`[projects-service] Server running at http://localhost:${PORT}`);
 });
