@@ -201,7 +201,7 @@ export function formatDimText(modelDist: number, style: DimensionStyle, spatial:
         ft += 1;
         inch = 0;
       }
-      if (style.suppressZero && inch === 0) return `${ft}'-0"`;
+      if (style.suppressZero && inch === 0) return `${ft}'`;
       return `${ft}'-${inch}"`;
     }
     case "ft-dec":
