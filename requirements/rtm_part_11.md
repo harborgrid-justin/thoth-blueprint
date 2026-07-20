@@ -21,3 +21,14 @@
 | REQ-11-015 | Alignments > Superelevation Overlap | The system shall detect and resolve overlap between adjacent superelevated curves with automatic or manual resolution options. | Trace-to-Spec-v1 | Not implemented |
 | REQ-11-016 | Alignments > Curve Smoothing | The system shall support applying curve smoothing to superelevation transitions for smoother grade changes. | Trace-to-Spec-v1 | Not implemented |
 | REQ-11-017 | Alignments > Reverse Direction | The system shall support reversing alignment direction while updating station labels accordingly. | Trace-to-Spec-v1 | Not implemented |
+| REQ-11-018 | Alignments > Runoff Formulas | The system shall support AASHTO design speed lookup tables to calculate transition runoff lengths. | Trace-to-Spec-v1 | Not implemented |
+| REQ-11-019 | Alignments > Transition Stations | The system shall compute coordinate limits for normal crown, reverse crown, and full super stations. | Trace-to-Spec-v1 | Not implemented |
+| REQ-11-020 | Alignments > Pivot Options | The system shall support shifting rotation pivot locations to inside lane edge, centerline, or outside lane edge. | Trace-to-Spec-v1 | Not implemented |
+| REQ-11-021 | Alignments > Shoulder Rollover | The system shall validate shoulder rollover limits relative to traveled lane cross slope differences. | Trace-to-Spec-v1 | Not implemented |
+| REQ-11-022 | Alignments > Overlap Audits | The system shall trigger visual warnings when transition segments of adjacent horizontal curves overlap. | Trace-to-Spec-v1 | Not implemented |
+| REQ-11-023 | Alignments > Overrides Grid | The system shall provide a manual spreadsheet grid editor to adjust calculated critical transition stations. | Trace-to-Spec-v1 | Not implemented |
+| REQ-11-024 | Alignments > Slope Adjustments | The system shall support setting cross slope overrides at individual design stations. | Trace-to-Spec-v1 | Not implemented |
+| REQ-11-025 | Alignments > Diagram Layouts | The system shall generate transition slope diagrams automatically on plan sheets viewports. | Trace-to-Spec-v1 | Not implemented |
+| REQ-11-026 | Alignments > Volume Corrections | The system shall adjust pavement composite volume formulas to account for superelevated lane slope transitions. | Trace-to-Spec-v1 | Not implemented |
+| REQ-11-027 | Alignments > Superelevation XML | The system shall support exporting calculated superelevation stations to LandXML formats. | Trace-to-Spec-v1 | Not implemented |
+

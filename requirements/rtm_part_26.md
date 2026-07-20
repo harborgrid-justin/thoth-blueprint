@@ -16,3 +16,19 @@
 | REQ-26-010 | Chapter 5 > LandXML > Layer Keys | The system shall assign imported LandXML objects to target layer keys (TINN for surfaces, PRCL for parcels, COGO for points, TOPO for contours) by default. | Trace-to-Spec-v1 | Layer styles mapping resolved using [descriptionKeys.ts](../packages/domain/src/descriptionKeys.ts#L22) |
 | REQ-26-011 | Chapter 5 > LandXML > Parcels as Spaces | The system shall support importing parcels directly as associative Space objects using a selected space style. | Trace-to-Spec-v1 | Mapped to space instances updates in [workspaceStore.ts](../apps/web/src/store/workspaceStore.ts#L82) |
 | REQ-26-012 | Chapter 5 > IFC Interop > Building Components | The system shall support importing building information components (IFC format) as 3D meshes. | Trace-to-Spec-v1 | Rendered via [meshIo.ts](../apps/web/src/features/interop/meshIo.ts#L5) and [Scene3D.tsx](../apps/web/src/features/canvas3d/Scene3D.tsx) |
+| REQ-26-013 | Chapter 5 > LandXML > Surface Breaklines | The system shall support adding structural ridge lines to constrain TIN surface triangulation paths. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-014 | Chapter 5 > LandXML > Surface Masks | The system shall support defining hide, show, or outer boundaries to limit surface extents. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-015 | Chapter 5 > LandXML > Color Shading | The system shall support generating color-coded slope and elevation analysis maps on surfaces. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-016 | Chapter 5 > LandXML > Contours Labeling | The system shall support customizable text heights and spacing along contour lines. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-017 | Chapter 5 > LandXML > Volume Comparisons | The system shall support computing volume calculations comparing design and existing surfaces. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-018 | Chapter 5 > LandXML > Slope Indicators | The system shall support plotting surface drainage flow direction vectors. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-019 | Chapter 5 > LandXML > Alignment Imports | The system shall support importing alignment baseline coordinates paths and profiles from LandXML. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-020 | Chapter 5 > LandXML > Watershed Delineation | The system shall support calculating runoff catchments boundaries utilizing surface slope values. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-021 | Chapter 5 > LandXML > Contour Smoothing | The system shall support contour path smoothing utilizing Bezier spline curves interpolation. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-022 | Chapter 5 > LandXML > Elevation Verification | The system shall support running validation audits to check spot elevations relative to design surfaces. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-023 | Chapter 5 > LandXML > Grid Models DEM | The system shall support building terrain surfaces directly from digital elevation model files. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-024 | Chapter 5 > LandXML > Point Groups | The system shall support filtering points lists by description keys to generate surface triangulation point lists. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-025 | Chapter 5 > LandXML > Profiles Extraction | The system shall support extracting vertical profile paths directly from alignments intersecting surfaces. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-026 | Chapter 5 > LandXML > LandXML Export | The system shall support exporting surface design data definitions to LandXML format. | Trace-to-Spec-v1 | Not implemented |
+| REQ-26-027 | Chapter 5 > LandXML > Triangulation Overrides | The system shall support manually swapping TIN triangulation edges dynamically on canvas layout. | Trace-to-Spec-v1 | Not implemented |
+

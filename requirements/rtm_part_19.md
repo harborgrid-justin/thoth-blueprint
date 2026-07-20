@@ -33,3 +33,14 @@
 | REQ-19-027 | Roundabouts > Design Standards XML | The system shall store roundabout presets in an XML design standards file that can be edited directly or managed via the Preset-Add dialog. | Trace-to-Spec-v1 | Not implemented |
 | REQ-19-028 | Roundabouts > Delete Roundabout | The system shall support deleting individual approach roads, turn slip lanes, or the entire roundabout via the Delete Roundabout command. | Trace-to-Spec-v1 | Not implemented |
 | REQ-19-029 | Roundabouts > Preset Edit/Delete | The system shall support editing and deleting user-defined presets while protecting factory-shipped presets from deletion. | Trace-to-Spec-v1 | Not implemented |
+| REQ-19-030 | Intersections > Widening Transitions | The system shall compute linear or smooth lane widening transition tapers at street intersections. | Trace-to-Spec-v1 | Not implemented |
+| REQ-19-031 | Intersections > Crown Matching | The system shall support locking side road grade profiles to primary road crown elevations automatically. | Trace-to-Spec-v1 | Not implemented |
+| REQ-19-032 | Intersections > Curb Return Profiles | The system shall support creating vertical profiles alignments along curb returns. | Trace-to-Spec-v1 | Not implemented |
+| REQ-19-033 | Intersections > Grading Balancer | The system shall support infill grading slope balancer solver tools for intersection quadrants. | Trace-to-Spec-v1 | Not implemented |
+| REQ-19-034 | Intersections > Assembly Databases | The system shall support mapping standard assembly templates to intersection pavement lanes. | Trace-to-Spec-v1 | Not implemented |
+| REQ-19-035 | Intersections > Translation Updates | The system shall automatically recompute vertical grades and profiles when primary alignments translate. | Trace-to-Spec-v1 | Not implemented |
+| REQ-19-036 | Intersections > Taper Offsets | The system shall support calculating horizontal taper offsets curves along curb returns. | Trace-to-Spec-v1 | Not implemented |
+| REQ-19-037 | Intersections > Gutter Structure Placement | The system shall automatically place catch basin drainage structures at gutter low point coordinates. | Trace-to-Spec-v1 | Not implemented |
+| REQ-19-038 | Roundabouts > Fastest Path Analysis | The system shall calculate fastest-path vehicle trajectories and speed limits inside roundabouts. | Trace-to-Spec-v1 | Not implemented |
+| REQ-19-039 | Intersections > XML Data Export | The system shall support exporting intersection layout coordinate definitions to LandXML format. | Trace-to-Spec-v1 | Not implemented |
+

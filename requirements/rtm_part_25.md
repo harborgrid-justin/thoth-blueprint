@@ -20,3 +20,19 @@
 | REQ-25-014 | General > Tutorial Drawing Folders | The system shall provide a standard tutorial drawings folder structure with organized sample drawings for all tutorial exercises. | Trace-to-Spec-v1 | `../packages/domain/src` |
 | REQ-25-015 | General > Data Folder | The system shall provide a Data folder containing symbols, multi-view blocks, pay item data, and assembly set files. | Trace-to-Spec-v1 | `../packages/domain/src` |
 | REQ-25-016 | General > Template Folder | The system shall provide drawing template (.dwt) files for plan production, section sheets, and standard layouts. | Trace-to-Spec-v1 | `../packages/domain/src/sheetsize.ts` |
+| REQ-25-017 | Plan Production > Page Setup Templates | The system shall support importing standard page setup layouts templates (e.g. ANSI D, ISO A1). | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-018 | Plan Production > Pen Styles CTB STB | The system shall support color-dependent (CTB) and style-dependent (STB) plot style table configurations. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-019 | Plan Production > Scale Locking | The system shall support locking paper-space viewport scales to prevent accidental modifications. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-020 | Plan Production > Title Block Sync | The system shall compile project metadata (author, client, phase, date) dynamically in title block text fields. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-021 | Plan Production > Batch Publishing | The system shall support batch publishing drawing sheet sets to multi-page PDF or DWF formats. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-022 | Plan Production > Viewport Alignment | The system shall support vertical alignment synchronization between plan and profile viewports. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-023 | Plan Production > Printable Margins | The system shall validate sheet layouts and warn if annotation text exceeds physical paper margins bounds. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-024 | Plan Production > Line Weight Scaling | The system shall scale plotted line weights proportionally to the active viewport plot scale. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-025 | Plan Production > Viewport Shading | The system shall support conceptual, realistic, and wireframe viewport plotting options. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-026 | Plan Production > Print Checklists | The system shall execute standard templates audits to check scale accuracy and reference health before plotting. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-027 | Plan Production > Sheet Indexing | The system shall auto-update sheet numbers sequence when drawing pages are added or deleted. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-028 | Plan Production > Plot Stamps | The system shall support appending dynamic plot stamps (timestamp, filepath, user login) to sheet borders. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-029 | Plan Production > Catalog Profiles | The system shall support exporting page set configurations templates files to sharing directories. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-030 | Plan Production > North Arrow Sync | The system shall automatically rotate sheet north arrows to match active plan viewports rotation angles. | Trace-to-Spec-v1 | Not implemented |
+| REQ-25-031 | Plan Production > Style Search Paths | The system shall maintain paths indices to look up CTB and STB style tables across network locations. | Trace-to-Spec-v1 | Not implemented |
+

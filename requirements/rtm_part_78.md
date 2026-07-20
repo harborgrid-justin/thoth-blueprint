@@ -19,4 +19,20 @@
 | REQ-78-013 | Chapter 27 > Stairs > Down Indicators | The system shall generate downward direction indicators and direction paths on 2D plan sheets. | Trace-to-Spec-v1 | Not implemented |
 | REQ-78-014 | Chapter 27 > Stairs > Balusters Mounting | The system shall generate automatic mounting node coordinates for balusters placed on tread surfaces. | Trace-to-Spec-v1 | Not implemented |
 | REQ-78-015 | Chapter 27 > Stairs > Volume QTO | The system shall calculate concrete volume and timber board-foot quantities for cost estimates takeoffs. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-016 | Chapter 27 > Stairs > Riser Limits | The system shall validate riser heights and tread depths against safety codes limits. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-017 | Chapter 27 > Stairs > Handrail Extensions | The system shall support customizable horizontal safety extensions at the start and end of handrail lines. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-018 | Chapter 27 > Stairs > Landing Guardrails | The system shall validate landing guardrail heights against safety code requirements. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-019 | Chapter 27 > Stairs > Material Schedules | The system shall compile QTO schedules listing stair treads, risers, and stringer components parameters. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-020 | Chapter 27 > Stairs > Step Lighting | The system shall support placing dynamic lighting fixture objects at relative step offsets. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-021 | Chapter 27 > Stairs > Landing Thicknesses | The system shall support independent thickness overrides for intermediate landing slabs. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-022 | Chapter 27 > Stairs > Winders | The system shall calculate geometry points for winder steps turning corners. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-023 | Chapter 27 > Stairs > Handrail Sweeps | The system shall support sweeping custom timber or steel profiles along handrail paths. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-024 | Chapter 27 > Stairs > Connection Brackets | The system shall model steel brackets connecting stringers to structural floor elements. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-025 | Chapter 27 > Stairs > Egress Widths | The system shall validate clear stairs stair widths against total occupant loading parameters. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-026 | Chapter 27 > Stairs > Steel Pans | The system shall support modeling steel tread pans for concrete fill stairs. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-027 | Chapter 27 > Stairs > Style Catalogs | The system shall support importing preconfigured stair styles from external drawing databases. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-028 | Chapter 27 > Stairs > Tactile Warnings | The system shall support rendering tactile safety warning indicators at landing access points. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-029 | Chapter 27 > Stairs > Bracket Intervals | The system shall validate handrail support bracket spacing intervals against load limit standards. | Trace-to-Spec-v1 | Not implemented |
+| REQ-78-030 | Chapter 27 > Stairs > Analytical Export | The system shall support exporting stair structure frames to analytical structural models schemas. | Trace-to-Spec-v1 | Not implemented |
+
 

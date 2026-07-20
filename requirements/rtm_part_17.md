@@ -30,3 +30,14 @@
 | REQ-17-024 | Assemblies > LinkOffsetOnSurface | The system shall provide a LinkOffsetOnSurface subassembly that connects at a horizontal offset on the existing surface. | Trace-to-Spec-v1 | Not implemented |
 | REQ-17-025 | Assemblies > Nested Conditionals | The system shall support nested ConditionalCutOrFill subassemblies with multiple levels of IF/ELSE branching based on distance ranges (e.g. Cut 0-5, Cut 5-10000). | Trace-to-Spec-v1 | Not implemented |
 | REQ-17-026 | Assemblies > Descriptive Naming | The system shall support renaming subassemblies with descriptive naming conventions (side, condition, parent reference) in the Assembly Properties Construction tab. | Trace-to-Spec-v1 | Not implemented |
+| REQ-17-027 | Assemblies > Subassembly Composer | The system shall support importing custom subassembly files created via the external Subassembly Composer scripting tool. | Trace-to-Spec-v1 | Not implemented |
+| REQ-17-028 | Assemblies > Width Transitions | The system shall support linear or smooth transition curves interpolating subassembly widths between corridor stations. | Trace-to-Spec-v1 | Not implemented |
+| REQ-17-029 | Assemblies > Layout Frequencies | The system shall support setting independent corridor assembly insertion frequencies for straight tangents, curve segments, and spirals. | Trace-to-Spec-v1 | Not implemented |
+| REQ-17-030 | Assemblies > Daylight Solver | The system shall project daylight sloped lines dynamically to intersect with the active digital terrain model surface. | Trace-to-Spec-v1 | Not implemented |
+| REQ-17-031 | Assemblies > Shrinkwrap Boundaries | The system shall automatically compute closed outer boundary outlines enclosing corridor daylight endpoints for area calculations. | Trace-to-Spec-v1 | Not implemented |
+| REQ-17-032 | Assemblies > Pavement Volumes QTO | The system shall aggregate QTO volume metrics for multiple subassembly material layers (subbase, base, wear course). | Trace-to-Spec-v1 | Not implemented |
+| REQ-17-033 | Assemblies > Walkthrough Sweeps | The system shall support a 3D animation camera drive-through simulation following alignment baseline paths. | Trace-to-Spec-v1 | Not implemented |
+| REQ-17-034 | Assemblies > Target Loops | The system shall support branching subassembly behavior based on whether horizontal/vertical targets are detected within station limits. | Trace-to-Spec-v1 | Not implemented |
+| REQ-17-035 | Assemblies > Medians | The system shall provide depressed and raised median template subassemblies with inside shoulders slope settings. | Trace-to-Spec-v1 | Not implemented |
+| REQ-17-036 | Assemblies > Surface Rebuilds | The system shall automatically rebuild dependent corridor TIN surfaces when horizontal or vertical profile geometries update. | Trace-to-Spec-v1 | Not implemented |
+

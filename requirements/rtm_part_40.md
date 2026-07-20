@@ -1,6 +1,6 @@
 # Requirements Traceability Matrix - Part 40
 **Subject:** Callouts, Details, and Sheet Indexing (Chapter 48)
-**Coverage:** Detail Callouts, Model Space Viewports, Sheet Hyperlink Association, Sheet Indexing, Title Blocks, Space-Bounded Elevations
+**Coverage:** Detail Callouts, Model Space Viewports, Sheet Hyperlink Association, Sheet Indexing, Title Blocks, Space-Bounded Elevations, Hyperlinks Navigation, Boundary Contours, Numbering Sequence, Scale Fields, Border Graphics, Multi-view Splits, Sync Updates, Leader Shapes, Crop Boundaries, Index Checklist
 
 | Req ID | Tutorial Section / Reference | Requirement Description | Traceability | Code Mapping |
 |---|---|---|---|---|
@@ -10,4 +10,15 @@
 | REQ-40-004 | Chapter 48 > Callouts > Sheet Indexing | The system shall maintain an index of standard layout sheets with automatic numbering sequence synchronization. | Trace-to-Spec-v1 | Dynamic sheet sequencing and numbering calculated in [sheet.ts](../packages/domain/src/sheet.ts#L15) |
 | REQ-40-005 | Chapter 48 > Callouts > Title Blocks | The system shall automatically resolve project fields (Project Name, Phase, Sheet Number) dynamically in Title Blocks. | Trace-to-Spec-v1 | Title block fields compiled in sheet layouts inside [PlatSheetDialog.tsx](../apps/web/src/features/survey/PlatSheetDialog.tsx) |
 | REQ-40-006 | Chapter 48 > Callouts > Space Boundaries | The system shall support selecting Space elements to define boundary limits when placing interior elevations callouts. | Trace-to-Spec-v1 | Workspace spaces geometries bounds queried in [planproduction.ts](../packages/domain/src/planproduction.ts) |
+| REQ-40-007 | Chapter 48 > Callouts > Hyperlinks Navigation | The system shall support double-clicking callout symbols to pan/zoom target sheet layout viewports dynamically. | Trace-to-Spec-v1 | Not implemented |
+| REQ-40-008 | Chapter 48 > Callouts > Boundary Contours | The system shall support customizable dashed boundaries templates (e.g. circle, box, callout shape) enclosing detail views. | Trace-to-Spec-v1 | Not implemented |
+| REQ-40-009 | Chapter 48 > Callouts > Numbering Sequence | The system shall support automated callout sequential numbering databases to manage detail references. | Trace-to-Spec-v1 | Not implemented |
+| REQ-40-010 | Chapter 48 > Callouts > Scale Fields | The system shall compute detail viewport scale fields dynamically based on active paper-space units. | Trace-to-Spec-v1 | Not implemented |
+| REQ-40-011 | Chapter 48 > Callouts > Border Graphics | The system shall support customizable callout boundary borders (e.g. bubble or cloud styles). | Trace-to-Spec-v1 | Not implemented |
+| REQ-40-012 | Chapter 48 > Callouts > Multi-view Splits | The system shall support splitting single detail views across multiple sheets coordinate layouts. | Trace-to-Spec-v1 | Not implemented |
+| REQ-40-013 | Chapter 48 > Callouts > Sync Updates | The system shall automatically synchronize sheet number modifications across nested callout references. | Trace-to-Spec-v1 | Not implemented |
+| REQ-40-014 | Chapter 48 > Callouts > Leader Shapes | The system shall support callout leader pointers with straight, curved, or spline shapes options. | Trace-to-Spec-v1 | Not implemented |
+| REQ-40-015 | Chapter 48 > Callouts > Crop Boundaries | The system shall support dragging callout grip boundaries to dynamically crop detail viewport display regions. | Trace-to-Spec-v1 | Not implemented |
+| REQ-40-016 | Chapter 48 > Callouts > Index Checklist | The system shall support automated compilation of index sheet checklist tables lists for project sheets. | Trace-to-Spec-v1 | Not implemented |
+
 
