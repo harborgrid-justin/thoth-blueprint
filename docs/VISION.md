@@ -34,7 +34,10 @@ It combines:
 
 You can lay out a subdivision, compose a mixed-use district, sketch a park or
 campus, model a zoning envelope, allocate land uses, check density and coverage,
-and hand a live, interactive plan to reviewers and the public.
+and hand a live, interactive plan to reviewers and the public. When it is time to
+issue, the same model composes into standards-based architecture and engineering
+**CAD sheet sets** — title blocks, dimensions, schedules, sections and details —
+exported as multi-page vector PDF.
 
 ## Who it's for
 

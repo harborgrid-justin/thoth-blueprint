@@ -83,6 +83,9 @@ export function buildCommands(actions: CommandActions): Command[] {
     { id: "view.snapVertex", title: "Toggle snap to vertices", group: "View", icon: Magnet, run: () => cv().toggleSnapToVertices() },
     { id: "view.labels", title: "Toggle labels", group: "View", icon: Tag, run: () => cv().toggleLabels() },
     { id: "view.legend", title: "Toggle legend", group: "View", icon: Layers, run: () => cv().toggleLegend() },
+    { id: "view.interiors", title: "Toggle building interiors", group: "View", keywords: "walls doors windows rooms floor plan", icon: Layers, run: () => cv().toggleInteriors() },
+    { id: "view.gridBubbles", title: "Toggle column grid", group: "View", keywords: "grid bubbles structural columns", icon: Grid3x3, run: () => cv().toggleGridBubbles() },
+    { id: "view.annotations", title: "Toggle drafting marks", group: "View", keywords: "section elevation detail revision keynote match line", icon: Tag, run: () => cv().toggleAnnotations() },
     { id: "view.2d", title: "Switch to 2D plan", group: "View", icon: Grid3x3, run: () => cv().setViewMode("2d") },
     { id: "view.3d", title: "Switch to 3D scene", group: "View", icon: Box, run: () => cv().setViewMode("3d") },
     { id: "view.find", title: "Find & filter elements", group: "View", keywords: "search select filter", shortcut: "⌘F", icon: Search, run: () => useFindStore.getState().openFind() },
@@ -94,6 +97,7 @@ export function buildCommands(actions: CommandActions): Command[] {
     { id: "project.plat", title: "Open survey / plat report", group: "Project", icon: ScrollText, run: () => useUiStore.getState().openPlat(null) },
     { id: "project.alignment", title: "Alignment & stationing report", group: "Project", keywords: "station curve baseline pc pt civil", icon: ScrollText, run: () => useUiStore.getState().setAlignmentOpen(true) },
     { id: "project.sheet", title: "Plat sheet composer", group: "Project", keywords: "sheet plat title block certificate curve table jurisdiction plugin", icon: ScrollText, run: () => useUiStore.getState().setSheetOpen(true) },
+    { id: "project.drawings", title: "CAD drawing set composer", group: "Project", keywords: "cad sheet set drawings pdf title block dimension schedule section elevation detail floor plan ncs", icon: ScrollText, run: () => useUiStore.getState().setSheetSetOpen(true) },
     { id: "project.prefs", title: "Display preferences", group: "Project", keywords: "units theme contrast angle", icon: Settings2, run: () => useUiStore.getState().setPrefsOpen(true) },
   ];
 

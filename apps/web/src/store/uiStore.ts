@@ -15,11 +15,14 @@ interface UiState {
   alignmentOpen: boolean;
   /** Whether the plat-sheet composer is open. */
   sheetOpen: boolean;
+  /** Whether the multi-sheet CAD drawing-set composer is open. */
+  sheetSetOpen: boolean;
 
   openPlat(targetId?: string | null): void;
   closePlat(): void;
   setAlignmentOpen(open: boolean): void;
   setSheetOpen(open: boolean): void;
+  setSheetSetOpen(open: boolean): void;
   setCommandOpen(open: boolean): void;
   toggleCommand(): void;
   setShortcutsOpen(open: boolean): void;
@@ -34,6 +37,7 @@ export const useUiStore = create<UiState>((set) => ({
   prefsOpen: false,
   alignmentOpen: false,
   sheetOpen: false,
+  sheetSetOpen: false,
 
   openPlat(targetId = null) {
     set({ platOpen: true, platTargetId: targetId });
@@ -46,6 +50,9 @@ export const useUiStore = create<UiState>((set) => ({
   },
   setSheetOpen(sheetOpen) {
     set({ sheetOpen });
+  },
+  setSheetSetOpen(sheetSetOpen) {
+    set({ sheetSetOpen });
   },
   setCommandOpen(commandOpen) {
     set({ commandOpen });

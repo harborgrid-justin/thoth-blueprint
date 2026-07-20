@@ -17,6 +17,12 @@ import type { TownshipRange } from "./plss";
 import type { SpatialContext } from "./spatial";
 import type { LandUseCategory } from "./landuse";
 import type { InfrastructureNetwork } from "./network";
+import type { CadLayer } from "./drafting";
+import type { DrawingSet } from "./sheet";
+import type { SheetViewport, SectionMark, ElevationMark, DetailMark, MatchLine } from "./sheetview";
+import type { Dimension } from "./dimension";
+import type { GridLine, Keynote, KeynoteTag, Leader, RevisionCloud } from "./annotation";
+import type { BuildingModel } from "./building";
 
 /** The kinds of planning elements a plan can contain. */
 export type ElementKind =
@@ -65,6 +71,14 @@ export interface ElementBase {
    * {@link EdgeArcs} and `./curve`.
    */
   arcs?: EdgeArcs;
+  /** Optional CAD layer name (NCS/AIA) this element plots on. */
+  cadLayerId?: string;
+  /** Optional line-weight override (named tier from ./drafting). */
+  lineWeight?: string;
+  /** Optional line-type override (named type from ./drafting). */
+  lineType?: string;
+  /** Optional hatch pattern id override (from ./hatch). */
+  hatchId?: string;
 }
 
 /**
@@ -268,6 +282,28 @@ export interface Site {
   };
   /** Active region plug-in (jurisdiction) id — see `./regions`. */
   jurisdictionId?: string;
+  /** CAD sheet drawing sets composed from this site (see `./sheet`). */
+  drawingSets?: DrawingSet[];
+  /** Paper-space viewports referenced by sheets (see `./sheetview`). */
+  sheetViewports?: SheetViewport[];
+  /** Dimension entities annotating the plan (see `./dimension`). */
+  dimensions?: Dimension[];
+  /** NCS/AIA CAD layer standard for this site (see `./drafting`). */
+  cadLayers?: CadLayer[];
+  /** Building-interior models (walls/doors/windows/rooms) keyed to buildings. */
+  buildingModels?: BuildingModel[];
+  /** Drafting annotation & reference marks (see `./annotation`, `./sheetview`). */
+  annotations?: {
+    gridLines?: GridLine[];
+    keynotes?: Keynote[];
+    keynoteTags?: KeynoteTag[];
+    revisionClouds?: RevisionCloud[];
+    sectionMarks?: SectionMark[];
+    elevationMarks?: ElevationMark[];
+    detailMarks?: DetailMark[];
+    matchLines?: MatchLine[];
+    leaders?: Leader[];
+  };
 }
 
 /** Type guard: does this element carry a spatial boundary? */

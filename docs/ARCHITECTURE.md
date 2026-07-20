@@ -63,6 +63,13 @@ The archived app under `artifact/` is a strong reference for canvas interaction
 (React Flow), state orchestration (Zustand), and import/export ergonomics — reused
 as patterns, re-implemented cloud-first.
 
+**Sheet generation** (`apps/web/src/features/sheets`) uses a render-agnostic
+intermediate representation: a sheet is built once into a list of `SheetPrimitive`
+values (points), which two renderers consume — an SVG renderer for on-screen
+preview and a `pdf-lib` renderer for multi-page vector PDF export. Because both
+read the same primitive scene, the exported PDF is a true vector match of the
+preview. `pdf-lib` is the only client dependency added for this.
+
 ### `services/` — cloud backend
 
 - **`auth`** — identity, organizations/teams, roles, and access control.

@@ -11,6 +11,8 @@ import {
   type Layer,
   type NetworkEdge,
   type NetworkKind,
+  type BuildingModel,
+  type Dimension,
   type PlanElement,
   type Point,
   type Polygon,
@@ -90,6 +92,13 @@ export interface WorkspaceState {
 
   /** Enable a region plug-in (jurisdiction); anchors its survey framework. */
   setJurisdiction(id: string | null): void;
+
+  // --- CAD sheets & building interiors ---
+  /** Add or replace a building-interior model. */
+  addBuildingModel(model: BuildingModel): void;
+  updateBuildingModel(id: string, patch: Partial<BuildingModel>): void;
+  /** Add a CAD dimension entity to the plan. */
+  addDimension(dim: Dimension): void;
 
   // --- layers ---
   addLayer(name: string): void;
@@ -457,6 +466,21 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     replaceElements(next) {
       mutate((s) => ({ ...s, elements: next }));
+    },
+
+    addBuildingModel(model) {
+      mutate((s) => ({ ...s, buildingModels: [...(s.buildingModels ?? []), model] }));
+    },
+
+    updateBuildingModel(id, patch) {
+      mutate((s) => ({
+        ...s,
+        buildingModels: (s.buildingModels ?? []).map((m) => (m.id === id ? { ...m, ...patch } : m)),
+      }));
+    },
+
+    addDimension(dim) {
+      mutate((s) => ({ ...s, dimensions: [...(s.dimensions ?? []), dim] }));
     },
 
     setJurisdiction(id) {

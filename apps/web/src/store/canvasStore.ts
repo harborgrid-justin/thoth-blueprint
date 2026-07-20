@@ -11,6 +11,12 @@ interface CanvasState {
   showSurveyLabels: boolean;
   /** Show bearing/distance on every parcel/lot boundary (dense plat annotation). */
   showDimensions: boolean;
+  /** Show structural/column grid bubbles. */
+  showGridBubbles: boolean;
+  /** Show drafting reference marks (sections, elevations, details, revisions). */
+  showAnnotations: boolean;
+  /** Show building interiors (walls/doors/windows/rooms). */
+  showInteriors: boolean;
   /** Show road/utility networks. */
   showNetworks: boolean;
   /** Show terrain contour lines. */
@@ -38,6 +44,9 @@ interface CanvasState {
   toggleLabels(): void;
   toggleSurveyLabels(): void;
   toggleDimensions(): void;
+  toggleGridBubbles(): void;
+  toggleAnnotations(): void;
+  toggleInteriors(): void;
   toggleNetworks(): void;
   toggleContours(): void;
   toggleSlope(): void;
@@ -57,6 +66,9 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   showLabels: true,
   showSurveyLabels: true,
   showDimensions: true,
+  showGridBubbles: true,
+  showAnnotations: true,
+  showInteriors: true,
   showNetworks: true,
   showContours: true,
   showSlope: false,
@@ -91,6 +103,15 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   },
   toggleDimensions() {
     set((s) => ({ showDimensions: !s.showDimensions }));
+  },
+  toggleGridBubbles() {
+    set((s) => ({ showGridBubbles: !s.showGridBubbles }));
+  },
+  toggleAnnotations() {
+    set((s) => ({ showAnnotations: !s.showAnnotations }));
+  },
+  toggleInteriors() {
+    set((s) => ({ showInteriors: !s.showInteriors }));
   },
   toggleNetworks() {
     set((s) => ({ showNetworks: !s.showNetworks }));
