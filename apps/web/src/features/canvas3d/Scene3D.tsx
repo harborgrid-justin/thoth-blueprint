@@ -1,9 +1,15 @@
 import * as React from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { Sky } from "three/examples/jsm/objects/Sky.js";
+import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useInteropStore } from "@/store/interopStore";
 import { buildScene, type SceneResult } from "./buildScene";
+
+// Sun placement (degrees) — a mid-morning light that reads well for massing.
+const SUN_ELEVATION = 34;
+const SUN_AZIMUTH = 150;
 
 /**
  * A three.js 3D view of the plan: the terrain surface as a shaded mesh with
@@ -20,6 +26,8 @@ export function Scene3D() {
   const sceneRef = React.useRef<THREE.Scene | null>(null);
   const cameraRef = React.useRef<THREE.PerspectiveCamera | null>(null);
   const controlsRef = React.useRef<OrbitControls | null>(null);
+  const sunRef = React.useRef<THREE.DirectionalLight | null>(null);
+  const sunDirRef = React.useRef<THREE.Vector3 | null>(null);
   const contentRef = React.useRef<SceneResult | null>(null);
   const cloudDisposeRef = React.useRef<Array<{ dispose: () => void }>>([]);
   const framedRef = React.useRef(false);
@@ -29,18 +37,28 @@ export function Scene3D() {
     const mount = mountRef.current;
     if (!mount) return;
 
+    // A fresh camera is created here, so it must be framed again on next content
+    // (StrictMode remounts and HMR recreate this effect while refs persist).
+    framedRef.current = false;
+
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    // Physically-based output: filmic tone mapping + sRGB, like architectural viz.
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.9;
     mount.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0b1220);
-    scene.fog = new THREE.Fog(0x0b1220, 4000, 40000);
     sceneRef.current = scene;
+
+    // Image-based ambient lighting for soft, realistic material response.
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
     const camera = new THREE.PerspectiveCamera(
       50,
@@ -56,20 +74,33 @@ export function Scene3D() {
     controls.maxPolarAngle = Math.PI / 2.05;
     controlsRef.current = controls;
 
-    // Lighting: sky/ground hemisphere + a shadow-casting sun.
-    const hemi = new THREE.HemisphereLight(0xbfd4ff, 0x36402f, 1.05);
+    // Sun direction from elevation/azimuth, shared by the sky and the light.
+    const phi = THREE.MathUtils.degToRad(90 - SUN_ELEVATION);
+    const theta = THREE.MathUtils.degToRad(SUN_AZIMUTH);
+    const sunDir = new THREE.Vector3().setFromSphericalCoords(1, phi, theta);
+    sunDirRef.current = sunDir;
+
+    // Physically-based sky dome.
+    const sky = new Sky();
+    sky.scale.setScalar(450000);
+    scene.add(sky);
+    const skyU = sky.material.uniforms;
+    skyU["turbidity"].value = 8;
+    skyU["rayleigh"].value = 2;
+    skyU["mieCoefficient"].value = 0.005;
+    skyU["mieDirectionalG"].value = 0.8;
+    skyU["sunPosition"].value.copy(sunDir);
+
+    // Sky/ground fill + a shadow-casting sun (positioned once the scene loads).
+    const hemi = new THREE.HemisphereLight(0xbfd4ff, 0x4a5540, 0.35);
     scene.add(hemi);
-    const sun = new THREE.DirectionalLight(0xfff2df, 1.4);
-    sun.position.set(1, 2, 1.5);
+    const sun = new THREE.DirectionalLight(0xfff4e6, 2.0);
     sun.castShadow = true;
     sun.shadow.mapSize.set(2048, 2048);
+    sun.shadow.bias = -0.0004;
     scene.add(sun);
-
-    const grid = new THREE.GridHelper(200000, 400, 0x1e293b, 0x111827);
-    (grid.material as THREE.Material).opacity = 0.35;
-    (grid.material as THREE.Material).transparent = true;
-    grid.position.y = -0.2;
-    scene.add(grid);
+    scene.add(sun.target);
+    sunRef.current = sun;
 
     let raf = 0;
     const animate = () => {
@@ -136,12 +167,32 @@ export function Scene3D() {
     scene.add(result.group);
     contentRef.current = result;
 
-    // Frame the plan the first time content is available.
+    // Position the sun and size its shadow frustum to the scene extent.
+    const sun = sunRef.current;
+    const sunDir = sunDirRef.current;
+    if (sun && sunDir) {
+      const R = Math.max(60, result.radius);
+      sun.position.copy(sunDir).multiplyScalar(R * 3);
+      sun.target.position.set(0, result.baseElevation, 0);
+      sun.target.updateMatrixWorld();
+      const cam = sun.shadow.camera as THREE.OrthographicCamera;
+      cam.left = -R * 1.5;
+      cam.right = R * 1.5;
+      cam.top = R * 1.5;
+      cam.bottom = -R * 1.5;
+      cam.near = 0.5;
+      cam.far = R * 10;
+      cam.updateProjectionMatrix();
+    }
+
+    // Frame the plan the first time content is available (3/4 aerial view).
     if (!framedRef.current) {
       framedRef.current = true;
       const r = Math.max(50, result.radius);
-      camera.position.set(r * 0.9, r * 0.8, r * 1.2);
+      camera.position.set(r * 1.25, r * 1.45, r * 1.6);
       controls.target.set(0, result.baseElevation, 0);
+      controls.minDistance = r * 0.15;
+      controls.maxDistance = r * 12;
       controls.update();
     }
   }, [site, clouds, meshes]);

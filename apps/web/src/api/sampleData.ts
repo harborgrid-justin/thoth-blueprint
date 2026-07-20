@@ -4,6 +4,7 @@ import {
   networkFromPath,
   subdivideGrid,
   type Building,
+  type Easement,
   type InfrastructureNetwork,
   type LandUse,
   type Layer,
@@ -16,6 +17,7 @@ import {
   type RightOfWay,
   type Site,
   type SpotElevationPoint,
+  type SurveyMonument,
   type Tree,
   type WaterBody,
   type Zone,
@@ -127,7 +129,7 @@ export function subdivisionSite(name: string): Site {
   };
   elements.push(row);
 
-  // A neighborhood park.
+  // A neighborhood park with a curved (arc) frontage — a cul-de-sac-style edge.
   const park: LandUse = {
     id: createId("landuse"),
     kind: "landuse",
@@ -135,8 +137,21 @@ export function subdivisionSite(name: string): Site {
     layerId: "layer-landuse",
     boundary: rect(230, 130, 50, 60),
     category: "park",
+    // Edge 2 (the south boundary) bows outward as a circular arc.
+    arcs: { "2": -0.4 },
   };
   elements.push(park);
+
+  // A platted utility easement strip behind the north lots.
+  const easement: Easement = {
+    id: createId("esmt"),
+    kind: "easement",
+    name: "20' Utility Easement",
+    layerId: "layer-base",
+    boundary: rect(30, 86, 240, 8),
+    purpose: "utility",
+  };
+  elements.push(easement);
 
   // Subdivide the north band into lots.
   const northLots = subdivideGrid(rect(30, 30, 240, 60), {
@@ -203,6 +218,46 @@ export function subdivisionSite(name: string): Site {
     { roadClass: "local", width: 15 },
   );
 
+  // A stationed survey baseline down Maple Street, with a horizontal curve
+  // and parallel offset lines (edge of pavement + right-of-way).
+  const baseline = {
+    id: createId("algn"),
+    name: "R/L MAPLE ST",
+    startStation: 1000, // 10+00
+    pis: [
+      { point: { x: 30, y: 110 } },
+      { point: { x: 200, y: 110 }, radius: 30 },
+      { point: { x: 268, y: 150 } },
+    ],
+    offsets: [
+      { distance: 7.5, kind: "pavement" as const, label: "EP" },
+      { distance: -7.5, kind: "pavement" as const, label: "EP" },
+      { distance: 10, kind: "row" as const, label: "R/W" },
+      { distance: -10, kind: "row" as const, label: "R/W" },
+    ],
+  };
+
+  // Survey monuments and the PLSS framework the plat is tied to.
+  const mon = (
+    type: Parameters<typeof monumentOf>[0],
+    status: "found" | "set",
+    x: number,
+    y: number,
+    label?: string,
+  ) => monumentOf(type, status, x, y, label);
+  const monuments = [
+    mon("section-corner", "found", 10, 10, "SEC 8 COR"),
+    mon("quarter-corner", "found", 160, 10),
+    mon("quarter-corner", "found", 10, 160),
+    mon("prm", "set", 20, 20, "PRM LB6685"),
+    mon("prm", "set", 280, 20, "PRM LB6685"),
+    mon("prm", "set", 280, 200, "PRM LB6685"),
+    mon("prm", "set", 20, 200, "PRM LB6685"),
+    mon("pcp", "set", 150, 110, "PCP"),
+    mon("iron-rod", "found", 30, 92, "IR FND"),
+    mon("concrete", "found", 270, 190, "CM FND"),
+  ];
+
   return {
     id: createId("site"),
     name,
@@ -210,7 +265,47 @@ export function subdivisionSite(name: string): Site {
     layers: baseLayers(),
     elements,
     networks: [roads],
+    alignments: [baseline],
+    monuments,
+    controlLines: [
+      { id: createId("ctl"), type: "silt-fence", label: "Silt Fence", path: [{ x: 22, y: 202 }, { x: 278, y: 202 }] },
+      { id: createId("ctl"), type: "tree-line", label: "Tree Line", path: [{ x: 22, y: 18 }, { x: 278, y: 18 }] },
+      { id: createId("ctl"), type: "flow", path: [{ x: 40, y: 60 }, { x: 120, y: 112 }, { x: 210, y: 150 }] },
+    ],
+    civilSymbols: [
+      { id: createId("sym"), type: "inlet-protection", position: { x: 62, y: 118 }, subtype: "A" },
+      { id: createId("sym"), type: "inlet-protection", position: { x: 150, y: 118 }, subtype: "B" },
+      { id: createId("sym"), type: "inlet-protection", position: { x: 236, y: 118 }, subtype: "C" },
+      { id: createId("sym"), type: "ditch-check", position: { x: 120, y: 112 }, rotation: 30 },
+      { id: createId("sym"), type: "culvert", position: { x: 210, y: 150 } },
+      { id: createId("sym"), type: "erosion-bale", position: { x: 40, y: 198 } },
+      { id: createId("sym"), type: "riprap", position: { x: 268, y: 152 } },
+    ],
+    jurisdictionId: "us-plss-default",
+    plss: {
+      townshipRange: { township: 3, townshipDir: "South" as const, range: 16, rangeDir: "East" as const },
+      section: 8,
+      sectionNwCorner: { x: 10, y: 10 },
+      sectionSide: 300,
+    },
   };
+}
+
+/** Build a survey monument for the sample data. */
+function monumentOf(
+  type:
+    | "prm"
+    | "pcp"
+    | "section-corner"
+    | "quarter-corner"
+    | "iron-rod"
+    | "concrete",
+  status: "found" | "set",
+  x: number,
+  y: number,
+  label?: string,
+): SurveyMonument {
+  return { id: createId("mon"), type, status, position: { x, y }, label };
 }
 
 /** A mixed-use district: zones and land-use allocation with a few anchor buildings. */

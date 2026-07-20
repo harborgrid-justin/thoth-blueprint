@@ -8,6 +8,12 @@
  */
 
 import type { Point, Polygon, Polyline } from "./geometry";
+import { boundaryArea, boundaryPerimeter, type EdgeArcs } from "./curve";
+import type { HorizontalAlignment } from "./alignment";
+import type { CivilSymbol, ControlLine } from "./controls";
+import type { LandLotRef } from "./landlot";
+import type { SurveyMonument } from "./monument";
+import type { TownshipRange } from "./plss";
 import type { SpatialContext } from "./spatial";
 import type { LandUseCategory } from "./landuse";
 import type { InfrastructureNetwork } from "./network";
@@ -51,8 +57,14 @@ export interface ElementBase {
   kind: ElementKind;
   name: string;
   layerId: string;
-  /** Closed boundary ring in plan coordinates. */
+  /** Closed boundary ring in plan coordinates (arc endpoints when curved). */
   boundary: Polygon;
+  /**
+   * Optional per-edge circular-arc bulges (DXF convention; edge i runs vertex
+   * i → i+1). Absent or empty means every edge is a straight line. See
+   * {@link EdgeArcs} and `./curve`.
+   */
+  arcs?: EdgeArcs;
 }
 
 /**
@@ -229,6 +241,33 @@ export interface Site {
   elements: PlanElement[];
   /** Road and utility networks serving the site. */
   networks?: InfrastructureNetwork[];
+  /** Stationed horizontal alignments (roadway/civil baselines). */
+  alignments?: HorizontalAlignment[];
+  /** Survey monuments (control) depicted on the plat. */
+  monuments?: SurveyMonument[];
+  /** Civil / erosion-control line features (silt fence, tree line, flow, …). */
+  controlLines?: ControlLine[];
+  /** Civil / erosion-control point symbols (inlet protection, ditch check, …). */
+  civilSymbols?: CivilSymbol[];
+  /**
+   * Public Land Survey System framework this plat is tied to (Township/Range),
+   * with the controlling section and its northwest corner in plan coordinates.
+   */
+  plss?: {
+    townshipRange: TownshipRange;
+    section: number;
+    /** Plan-coordinate NW corner and side length of the controlling section. */
+    sectionNwCorner?: Point;
+    sectionSide?: number;
+  };
+  /** Georgia Land Lot System framework (used when the jurisdiction requires it). */
+  landLot?: {
+    ref: LandLotRef;
+    /** Plan-coordinate NW corner of the controlling land lot. */
+    nwCorner?: Point;
+  };
+  /** Active region plug-in (jurisdiction) id — see `./regions`. */
+  jurisdictionId?: string;
 }
 
 /** Type guard: does this element carry a spatial boundary? */
@@ -239,6 +278,16 @@ export function isSpatialElement(element: PlanElement): element is SpatialElemen
 /** Type guard: is this a point-anchored element? */
 export function isPointElement(element: PlanElement): element is PointElement {
   return POINT_ELEMENT_KINDS.has(element.kind);
+}
+
+/** Exact plan-unit area of a spatial element, honoring any curved edges. */
+export function regionArea(element: SpatialElement): number {
+  return boundaryArea(element.boundary, element.arcs);
+}
+
+/** Exact plan-unit perimeter of a spatial element, honoring any curved edges. */
+export function regionPerimeter(element: SpatialElement): number {
+  return boundaryPerimeter(element.boundary, element.arcs);
 }
 
 /** The anchor position of any element (centroid for spatial, position for points). */

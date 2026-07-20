@@ -5,16 +5,22 @@
  * report identical figures.
  */
 
-import { area as polygonArea } from "./geometry";
+import type { Polygon } from "./geometry";
+import { boundaryArea, type EdgeArcs } from "./curve";
 import type { AreaUnit } from "./spatial";
 import { areaToSquareMeters, squareMetersTo } from "./spatial";
 import type { Building, LandUse, Lot, Parcel, Site } from "./primitives";
 import type { LandUseCategory } from "./landuse";
 import { landUseDefinition } from "./landuse";
 
+/** Exact plan-unit area of one region, honoring any curved edges. */
+function regionArea(el: { boundary: Polygon; arcs?: EdgeArcs }): number {
+  return boundaryArea(el.boundary, el.arcs);
+}
+
 /** Sum of raw plan-unit areas for a set of elements' boundaries. */
-function totalPlanArea(elements: { boundary: { x: number; y: number }[] }[]): number {
-  return elements.reduce((sum, e) => sum + polygonArea(e.boundary), 0);
+function totalPlanArea(elements: { boundary: Polygon; arcs?: EdgeArcs }[]): number {
+  return elements.reduce((sum, e) => sum + regionArea(e), 0);
 }
 
 function elementsOfKind<K extends Site["elements"][number]["kind"]>(
@@ -45,7 +51,7 @@ export function builtArea(site: Site, unit: AreaUnit = "sqm"): number {
 export function grossFloorArea(site: Site, unit: AreaUnit = "sqm"): number {
   const buildings = elementsOfKind(site, "building") as Building[];
   const planArea = buildings.reduce(
-    (sum, b) => sum + polygonArea(b.boundary) * Math.max(1, b.storeys),
+    (sum, b) => sum + regionArea(b) * Math.max(1, b.storeys),
     0,
   );
   return squareMetersTo(areaToSquareMeters(planArea, site.spatial), unit);
@@ -96,7 +102,7 @@ export function imperviousRatio(site: Site): number {
   const landUses = elementsOfKind(site, "landuse") as LandUse[];
   const imperviousLandUse = landUses
     .filter((l) => landUseDefinition(l.category).impervious)
-    .reduce((sum, l) => sum + polygonArea(l.boundary), 0);
+    .reduce((sum, l) => sum + regionArea(l), 0);
   const impSqm =
     areaToSquareMeters(imperviousLandUse, site.spatial) + builtArea(site, "sqm");
   return clamp01(impSqm / site_);
@@ -109,7 +115,7 @@ export function openSpaceRatio(site: Site): number {
   const landUses = elementsOfKind(site, "landuse") as LandUse[];
   const openSqm = landUses
     .filter((l) => landUseDefinition(l.category).openSpace)
-    .reduce((sum, l) => sum + areaToSquareMeters(polygonArea(l.boundary), site.spatial), 0);
+    .reduce((sum, l) => sum + areaToSquareMeters(regionArea(l), site.spatial), 0);
   return clamp01(openSqm / site_);
 }
 
@@ -132,7 +138,7 @@ export function landUseBreakdown(site: Site, unit: AreaUnit = "sqm"): LandUseAll
   const landUses = elementsOfKind(site, "landuse") as LandUse[];
   const byCategory = new Map<LandUseCategory, number>();
   for (const lu of landUses) {
-    const sqm = areaToSquareMeters(polygonArea(lu.boundary), site.spatial);
+    const sqm = areaToSquareMeters(regionArea(lu), site.spatial);
     byCategory.set(lu.category, (byCategory.get(lu.category) ?? 0) + sqm);
   }
   const totalSqm = [...byCategory.values()].reduce((a, b) => a + b, 0);
@@ -209,10 +215,10 @@ export function computeCommunityMetrics(site: Site, householdSize = 2.5): Commun
   const landUses = elementsOfKind(site, "landuse") as LandUse[];
   const openSqM = landUses
     .filter((l) => landUseDefinition(l.category).openSpace)
-    .reduce((sum, l) => sum + areaToSquareMeters(polygonArea(l.boundary), site.spatial), 0);
+    .reduce((sum, l) => sum + areaToSquareMeters(regionArea(l), site.spatial), 0);
   const parkSqM = landUses
     .filter((l) => l.category === "park")
-    .reduce((sum, l) => sum + areaToSquareMeters(polygonArea(l.boundary), site.spatial), 0);
+    .reduce((sum, l) => sum + areaToSquareMeters(regionArea(l), site.spatial), 0);
   void siteSqM;
 
   return {

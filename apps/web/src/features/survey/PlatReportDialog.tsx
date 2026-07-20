@@ -1,10 +1,12 @@
 import * as React from "react";
 import { Check, Copy, Download, Ruler } from "lucide-react";
 import {
+  formatPLSS,
   isSpatialElement,
   legalDescription,
   surveyReport,
   unitLabel,
+  type Site,
   type SpatialContext,
   type SpatialElement,
 } from "@thoth/domain";
@@ -13,6 +15,7 @@ import { useUiStore } from "@/store/uiStore";
 import { elementMeta } from "@/lib/elementMeta";
 import { formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { PlatDrawing } from "./PlatDrawing";
 import {
   Dialog,
   DialogContent,
@@ -57,7 +60,7 @@ export function PlatReportDialog() {
 
   return (
     <Dialog open={platOpen} onOpenChange={(o) => !o && closePlat()}>
-      <DialogContent className="max-w-4xl">
+      <DialogContent className="max-w-5xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Ruler className="h-5 w-5 text-primary" /> Plat &amp; Survey Report
@@ -76,7 +79,12 @@ export function PlatReportDialog() {
           />
           <ScrollArea className="max-h-[60vh] min-w-0 pr-3">
             {selected ? (
-              <TractReport element={selected} spatial={site.spatial} siteName={site.name} />
+              <TractReport
+                element={selected}
+                spatial={site.spatial}
+                siteName={site.name}
+                plss={site.plss}
+              />
             ) : (
               <div className="py-16 text-center text-sm text-muted-foreground">
                 No surveyable tracts yet. Draw a parcel or lot to generate a plat.
@@ -142,15 +150,24 @@ function TractReport({
   element,
   spatial,
   siteName,
+  plss,
 }: {
   element: SpatialElement;
   spatial: SpatialContext;
   siteName: string;
+  plss?: Site["plss"];
 }) {
-  const report = React.useMemo(() => surveyReport(element.boundary, spatial), [element, spatial]);
+  const report = React.useMemo(
+    () => surveyReport(element.boundary, spatial, element.arcs),
+    [element, spatial],
+  );
+  const context = plss
+    ? `${siteName}, lying in ${formatPLSS(plss.townshipRange, plss.section)}`
+    : siteName;
   const legal = React.useMemo(
-    () => legalDescription(element.boundary, spatial, { tractName: element.name, context: siteName }),
-    [element, spatial, siteName],
+    () =>
+      legalDescription(element.boundary, spatial, { tractName: element.name, context }, element.arcs),
+    [element, spatial, context],
   );
   const u = unitLabel(spatial.units);
 
@@ -185,39 +202,133 @@ function TractReport({
         </Button>
       </div>
 
+      <PlatDrawing element={element} spatial={spatial} report={report} siteName={siteName} />
+
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        <Stat label="Area" value={`${formatNumber(report.area.squareUnits, 0)} ${u}²`} />
-        <Stat label="Area" value={`${report.area.acres.toFixed(3)} ac`} />
-        <Stat label="Perimeter" value={`${formatNumber(report.perimeter, 2)} ${u}`} />
-        <Stat label="Closure" value={report.closure.precisionText} />
+        <Stat label={`Area (${u}²)`} value={formatNumber(report.area.squareUnits, 0)} />
+        <Stat label="Area (acres)" value={report.area.acres.toFixed(3)} />
+        <Stat label={`Perimeter (${u})`} value={formatNumber(report.perimeter, 2)} />
+        <Stat label="Record closure" value={report.record.precisionText} />
       </div>
 
-      <Section title="Line Table">
+      <Section title="Line Table (metes & bounds)">
         <table className="w-full text-xs">
           <thead>
             <tr className="border-b border-border text-left text-muted-foreground">
               <Th>Course</Th>
               <Th>Bearing</Th>
               <Th className="text-right">Distance ({u})</Th>
+              <Th className="text-right">Latitude</Th>
+              <Th className="text-right">Departure</Th>
             </tr>
           </thead>
           <tbody className="font-mono">
             {report.courses.map((c) => (
               <tr key={c.index} className="border-b border-border/50">
                 <Td>
-                  L{c.index} · {c.fromLabel}–{c.toLabel}
+                  {c.curve ? c.curve.label : `L${c.index}`} · {c.fromLabel}–{c.toLabel}
                 </Td>
-                <Td>{c.bearingText}</Td>
+                <Td>{c.curve ? `⌒ chord ${c.bearingText}` : c.bearingText}</Td>
                 <Td className="text-right tabular-nums">{c.distance.toFixed(2)}</Td>
+                <Td className="text-right tabular-nums">{signed(c.latitude)}</Td>
+                <Td className="text-right tabular-nums">{signed(c.departure)}</Td>
               </tr>
             ))}
           </tbody>
+          <tfoot>
+            <tr className="border-t border-border text-muted-foreground">
+              <Td className="font-medium">Σ misclosure</Td>
+              <Td />
+              <Td className="text-right tabular-nums">{report.record.perimeter.toFixed(2)}</Td>
+              <Td className="text-right tabular-nums">{signed(report.record.latitudeError, 4)}</Td>
+              <Td className="text-right tabular-nums">{signed(report.record.departureError, 4)}</Td>
+            </tr>
+          </tfoot>
         </table>
-        <p className="mt-1.5 text-[11px] text-muted-foreground">
-          All courses are straight lines (no curves). Boundaries close to{" "}
+        <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">
+          Straight courses only (no curves). Latitudes/departures are from the
+          recorded bearings &amp; distances; linear misclosure{" "}
+          {report.record.linearMisclosure < 1e-6
+            ? "is zero"
+            : `= ${report.record.linearMisclosure.toFixed(4)} ${u}`}
+          , precision {report.record.precisionText}. Coordinate geometry closes{" "}
           {report.closure.precisionText.toLowerCase()}.
         </p>
       </Section>
+
+      <Section title="Interior Angles">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="border-b border-border text-left text-muted-foreground">
+              <Th>Corner</Th>
+              <Th className="text-right">Interior angle</Th>
+              <Th className="text-right">Decimal</Th>
+            </tr>
+          </thead>
+          <tbody className="font-mono">
+            {report.angles.map((a) => (
+              <tr key={a.label} className="border-b border-border/50">
+                <Td>{a.label}</Td>
+                <Td className="text-right tabular-nums">{dmsText(a.dms)}</Td>
+                <Td className="text-right tabular-nums">{a.interior.toFixed(4)}°</Td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr className="border-t border-border text-muted-foreground">
+              <Td className="font-medium">Σ</Td>
+              <Td className="text-right tabular-nums">{report.anglesSum.toFixed(2)}°</Td>
+              <Td className="text-right tabular-nums">= {report.anglesExpected}°</Td>
+            </tr>
+          </tfoot>
+        </table>
+        <p className="mt-1.5 text-[11px] text-muted-foreground">
+          Interior angles sum to (n − 2) × 180° = {report.anglesExpected}° for {report.angles.length}{" "}
+          corners — a geometric check on the traverse.
+        </p>
+      </Section>
+
+      {report.hasCurves && (
+        <Section title="Curve Table">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px] text-xs">
+              <thead>
+                <tr className="border-b border-border text-left text-muted-foreground">
+                  <Th>Curve</Th>
+                  <Th className="text-right">Radius ({u})</Th>
+                  <Th className="text-right">Length ({u})</Th>
+                  <Th className="text-right">Delta</Th>
+                  <Th className="text-right">Tangent ({u})</Th>
+                  <Th>Chord bearing</Th>
+                  <Th className="text-right">Chord ({u})</Th>
+                  <Th>Dir</Th>
+                </tr>
+              </thead>
+              <tbody className="font-mono">
+                {report.curves.map((cv) => (
+                  <tr key={cv.label} className="border-b border-border/50">
+                    <Td>{cv.label}</Td>
+                    <Td className="text-right tabular-nums">{cv.radius.toFixed(2)}</Td>
+                    <Td className="text-right tabular-nums">{cv.arcLength.toFixed(2)}</Td>
+                    <Td className="text-right tabular-nums">{dmsText(cv.deltaDms)}</Td>
+                    <Td className="text-right tabular-nums">
+                      {Number.isFinite(cv.tangent) ? cv.tangent.toFixed(2) : "∞"}
+                    </Td>
+                    <Td>{cv.chordBearingText}</Td>
+                    <Td className="text-right tabular-nums">{cv.chordLength.toFixed(2)}</Td>
+                    <Td className="uppercase">{cv.direction[0]}</Td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">
+            Circular curves: R = radius, L = arc length, Δ = central angle, T =
+            tangent, Dir = curves left/right along travel. Tract area includes the
+            circular segments; the traverse closes on the long chords.
+          </p>
+        </Section>
+      )}
 
       <Section title="Corner Coordinates (assumed local datum)">
         <table className="w-full text-xs">
@@ -307,8 +418,23 @@ function Th({ children, className }: { children: React.ReactNode; className?: st
   return <th className={cn("py-1.5 pr-2 font-medium", className)}>{children}</th>;
 }
 
-function Td({ children, className }: { children: React.ReactNode; className?: string }) {
+function Td({ children, className }: { children?: React.ReactNode; className?: string }) {
   return <td className={cn("py-1 pr-2", className)}>{children}</td>;
+}
+
+/** Format a signed latitude/departure with an explicit +/− and no negative zero. */
+function signed(value: number, digits = 2): string {
+  const rounded = Number(value.toFixed(digits));
+  const s = Math.abs(rounded).toFixed(digits);
+  return rounded < 0 ? `−${s}` : `+${s}`;
+}
+
+/** Format an interior angle DMS record as e.g. 90°00′00″. */
+function dmsText(a: { degrees: number; minutes: number; seconds: number }): string {
+  const d = String(Math.abs(a.degrees));
+  const m = String(a.minutes).padStart(2, "0");
+  const sec = String(a.seconds).padStart(2, "0");
+  return `${d}°${m}′${sec}″`;
 }
 
 function csvCell(value: string): string {

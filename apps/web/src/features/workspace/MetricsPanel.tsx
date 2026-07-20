@@ -9,6 +9,8 @@ import {
 } from "@thoth/domain";
 import { AlertTriangle, CheckCircle2, Info } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspaceStore";
+import { useCanvasStore } from "@/store/canvasStore";
+import { usePrefsStore } from "@/store/prefsStore";
 import { formatArea, formatNumber, formatPercent, formatRatio } from "@/lib/format";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -17,10 +19,22 @@ const AREA_UNITS: AreaUnit[] = ["sqm", "sqft", "acres", "hectares", "sqkm", "sqm
 /** The live metrics panel: headline figures, land-use allocation, compliance. */
 export function MetricsPanel() {
   const site = useWorkspaceStore((s) => s.site);
-  const areaUnit = useWorkspaceStore((s) => s.areaUnit);
-  const setAreaUnit = useWorkspaceStore((s) => s.setAreaUnit);
+  const selection = useWorkspaceStore((s) => s.selection);
+  const select = useWorkspaceStore((s) => s.select);
+  const requestFitSelection = useCanvasStore((s) => s.requestFitSelection);
+  const areaUnit = usePrefsStore((s) => s.areaUnit);
+  const setAreaUnit = usePrefsStore((s) => s.setAreaUnit);
 
   const metrics = React.useMemo(() => (site ? computeSiteMetrics(site, areaUnit) : null), [site, areaUnit]);
+
+  // Metrics scoped to the current selection (FE-METRIC-003).
+  const selectionMetrics = React.useMemo(() => {
+    if (!site || selection.length === 0) return null;
+    const ids = new Set(selection);
+    const subset = site.elements.filter((e) => ids.has(e.id));
+    if (subset.length === 0) return null;
+    return computeSiteMetrics({ ...site, elements: subset }, areaUnit);
+  }, [site, selection, areaUnit]);
   const community = React.useMemo(() => (site ? computeCommunityMetrics(site) : null), [site]);
   const networks = React.useMemo(() => {
     if (!site) return [];
@@ -61,6 +75,22 @@ export function MetricsPanel() {
         <Stat label="Impervious" value={formatPercent(metrics.imperviousRatio)} />
         <Stat label="Open space" value={formatPercent(metrics.openSpaceRatio)} />
       </div>
+
+      {selectionMetrics && (
+        <div>
+          <h4 className="mb-2 text-xs font-medium text-muted-foreground">
+            Selection ({selection.length})
+          </h4>
+          <div className="grid grid-cols-2 gap-2">
+            <Stat label="Area" value={formatArea(selectionMetrics.siteArea, areaUnit)} />
+            <Stat label="Lots" value={formatNumber(selectionMetrics.lotCount)} />
+            <Stat label="Coverage" value={formatPercent(selectionMetrics.coverage)} />
+            <Stat label="FAR" value={formatRatio(selectionMetrics.floorAreaRatio)} />
+            <Stat label="Dwellings" value={formatNumber(selectionMetrics.dwellingUnits)} />
+            <Stat label="Open space" value={formatPercent(selectionMetrics.openSpaceRatio)} />
+          </div>
+        </div>
+      )}
 
       <div>
         <h4 className="mb-2 text-xs font-medium text-muted-foreground">Land-use allocation</h4>
@@ -126,9 +156,9 @@ export function MetricsPanel() {
       <div>
         <h4 className="mb-2 text-xs font-medium text-muted-foreground">Compliance</h4>
         <ul className="flex flex-col gap-1.5">
-          {findings.map((f, i) => (
-            <li key={i} className="flex items-start gap-2 text-xs leading-snug">
-              {f.severity === "error" ? (
+          {findings.map((f, i) => {
+            const icon =
+              f.severity === "error" ? (
                 <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-destructive" />
               ) : f.severity === "warning" ? (
                 <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
@@ -136,12 +166,37 @@ export function MetricsPanel() {
                 <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
               ) : (
                 <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-              )}
+              );
+            const text = (
               <span className={f.severity === "error" ? "text-foreground" : "text-muted-foreground"}>
                 {f.message}
               </span>
-            </li>
-          ))}
+            );
+            // Click a violation to select & zoom the offending element (FE-METRIC-004).
+            if (f.elementId) {
+              return (
+                <li key={i}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      select(f.elementId!);
+                      requestFitSelection();
+                    }}
+                    className="flex w-full items-start gap-2 rounded px-1 py-0.5 text-left text-xs leading-snug transition-colors hover:bg-accent"
+                  >
+                    {icon}
+                    {text}
+                  </button>
+                </li>
+              );
+            }
+            return (
+              <li key={i} className="flex items-start gap-2 px-1 text-xs leading-snug">
+                {icon}
+                {text}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

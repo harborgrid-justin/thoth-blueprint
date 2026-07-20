@@ -9,6 +9,8 @@ interface CanvasState {
   showLabels: boolean;
   /** Show surveyor bearing/distance labels on the selected boundary's edges. */
   showSurveyLabels: boolean;
+  /** Show bearing/distance on every parcel/lot boundary (dense plat annotation). */
+  showDimensions: boolean;
   /** Show road/utility networks. */
   showNetworks: boolean;
   /** Show terrain contour lines. */
@@ -19,10 +21,14 @@ interface CanvasState {
   contourInterval: number;
   /** Show the proposed (graded) surface instead of existing ground. */
   showProposed: boolean;
+  /** Show the land-use legend overlay on the canvas. */
+  showLegend: boolean;
   /** 2D plan canvas or 3D scene. */
   viewMode: "2d" | "3d";
   /** Incremented to ask the canvas to fit the plan into view. */
   fitRequestId: number;
+  /** Incremented to ask the canvas to zoom to the current selection. */
+  fitSelectionRequestId: number;
 
   setViewport(viewport: Viewport): void;
   zoomBy(factor: number): void;
@@ -31,13 +37,16 @@ interface CanvasState {
   toggleSnapToVertices(): void;
   toggleLabels(): void;
   toggleSurveyLabels(): void;
+  toggleDimensions(): void;
   toggleNetworks(): void;
   toggleContours(): void;
   toggleSlope(): void;
   toggleProposed(): void;
+  toggleLegend(): void;
   setContourInterval(interval: number): void;
   setViewMode(mode: "2d" | "3d"): void;
   requestFit(): void;
+  requestFitSelection(): void;
 }
 
 export const useCanvasStore = create<CanvasState>((set, get) => ({
@@ -47,13 +56,16 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   snapToVertices: true,
   showLabels: true,
   showSurveyLabels: true,
+  showDimensions: true,
   showNetworks: true,
   showContours: true,
   showSlope: false,
   contourInterval: 2,
   showProposed: false,
+  showLegend: true,
   viewMode: "2d",
   fitRequestId: 0,
+  fitSelectionRequestId: 0,
 
   setViewport(viewport) {
     set({ viewport });
@@ -77,6 +89,9 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   toggleSurveyLabels() {
     set((s) => ({ showSurveyLabels: !s.showSurveyLabels }));
   },
+  toggleDimensions() {
+    set((s) => ({ showDimensions: !s.showDimensions }));
+  },
   toggleNetworks() {
     set((s) => ({ showNetworks: !s.showNetworks }));
   },
@@ -89,6 +104,9 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   toggleProposed() {
     set((s) => ({ showProposed: !s.showProposed }));
   },
+  toggleLegend() {
+    set((s) => ({ showLegend: !s.showLegend }));
+  },
   setContourInterval(interval) {
     set({ contourInterval: Math.max(0.1, interval) });
   },
@@ -97,5 +115,8 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   },
   requestFit() {
     set((s) => ({ fitRequestId: s.fitRequestId + 1 }));
+  },
+  requestFitSelection() {
+    set((s) => ({ fitSelectionRequestId: s.fitSelectionRequestId + 1 }));
   },
 }));

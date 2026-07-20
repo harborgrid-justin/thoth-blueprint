@@ -1,11 +1,14 @@
 import * as React from "react";
 import {
-  bearingText,
   bounds,
   buildableEnvelope,
+  bulgeToArc,
   centroid,
   contourLevels,
   DEFAULT_ROAD_WIDTH,
+  densifyArc,
+  densifyBoundary,
+  edgeBulge,
   elevationAt,
   isPointElement,
   isSpatialElement,
@@ -26,11 +29,23 @@ import {
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
 import { useInteropStore } from "@/store/interopStore";
+import { useFindStore } from "@/store/findStore";
+import { usePrefsStore } from "@/store/prefsStore";
 import { elementColor } from "@/lib/elementMeta";
+import { elementMatches } from "@/lib/search";
 import { toolDef } from "@/lib/tools";
+import { formatCoord, formatDirection, formatLength } from "@/lib/units";
 import { buildTerrainModel } from "@/features/terrain/terrainModel";
 import { fitBounds, niceGridStep, worldToScreen, zoomAt, type Viewport } from "./viewport";
 import { eventToWorld, snapPoint } from "./snapping";
+import { ScaleBar, NorthArrow, Legend } from "./CanvasOverlays";
+import { AlignmentLayer } from "./AlignmentLayer";
+import { CanvasPatterns, patternFor } from "./patterns";
+import { CivilLayer } from "./CivilLayer";
+import { CivilSymbolLayer } from "./CivilSymbolLayer";
+import { MonumentLayer } from "./MonumentLayer";
+import { FrameworkLayer } from "./FrameworkLayer";
+import { SurveyLegend } from "./SurveyLegend";
 import { formatArea } from "@/lib/format";
 
 interface Size {
@@ -42,7 +57,30 @@ type Interaction =
   | { type: "idle" }
   | { type: "panning"; lastScreen: Point }
   | { type: "moving"; startWorld: Point; delta: Point }
-  | { type: "vertex"; elementId: string; index: number; boundary: Polygon };
+  | { type: "vertex"; elementId: string; index: number; boundary: Polygon }
+  | { type: "edgeBulge"; elementId: string; index: number; from: Point; to: Point; bulge: number };
+
+/** Midpoint of an edge, honoring an existing bulge (the arc's midpoint). */
+function edgeMidpoint(a: Point, b: Point, bulge: number): Point {
+  if (bulge) {
+    const arc = bulgeToArc(a, b, bulge);
+    if (arc) return arc.mid;
+  }
+  return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+}
+
+/** The bulge that makes edge a→b pass through the cursor at its midpoint. */
+function bulgeThroughCursor(a: Point, b: Point, cursor: Point): number {
+  const cx = b.x - a.x;
+  const cy = b.y - a.y;
+  const len = Math.hypot(cx, cy);
+  if (len < 1e-6) return 0;
+  const nx = -cy / len;
+  const ny = cx / len;
+  const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  const off = (cursor.x - mid.x) * nx + (cursor.y - mid.y) * ny;
+  return (2 * off) / len;
+}
 
 /** Elements paired with their layer, ordered back-to-front, hidden layers dropped. */
 function orderedVisibleElements(
@@ -71,7 +109,17 @@ export function PlanningCanvas() {
   const addDrawnElement = useWorkspaceStore((s) => s.addDrawnElement);
   const addPointElement = useWorkspaceStore((s) => s.addPointElement);
   const addNetworkPath = useWorkspaceStore((s) => s.addNetworkPath);
+  const addAlignment = useWorkspaceStore((s) => s.addAlignment);
+  const insertVertex = useWorkspaceStore((s) => s.insertVertex);
+  const deleteVertex = useWorkspaceStore((s) => s.deleteVertex);
+  const setEdgeBulge = useWorkspaceStore((s) => s.setEdgeBulge);
   const setTool = useWorkspaceStore((s) => s.setTool);
+
+  // Find & filter: dim non-matching elements when canvas filtering is on.
+  const findQuery = useFindStore((s) => s.query);
+  const findKind = useFindStore((s) => s.kind);
+  const findFilter = useFindStore((s) => s.filterOnCanvas);
+  const findActive = findFilter && (findQuery.trim().length > 0 || findKind !== "all");
 
   const {
     viewport,
@@ -79,6 +127,7 @@ export function PlanningCanvas() {
     showGrid,
     showLabels,
     showSurveyLabels,
+    showDimensions,
     showNetworks,
     showContours,
     showSlope,
@@ -87,6 +136,7 @@ export function PlanningCanvas() {
     snapToGrid,
     snapToVertices,
     fitRequestId,
+    fitSelectionRequestId,
   } = useCanvasStore();
 
   const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
@@ -97,11 +147,18 @@ export function PlanningCanvas() {
 
   const [draft, setDraft] = React.useState<Point[]>([]);
   const [cursor, setCursor] = React.useState<Point | null>(null);
+  const [cursorSnappedToVertex, setCursorSnappedToVertex] = React.useState(false);
   const [measure, setMeasure] = React.useState<Point[]>([]);
   const interactionRef = React.useRef<Interaction>({ type: "idle" });
   const [, forceRender] = React.useReducer((n: number) => n + 1, 0);
 
   const tool = toolDef(activeTool);
+
+  // Clear any in-progress draft or measurement when the active tool changes.
+  React.useEffect(() => {
+    setDraft([]);
+    setMeasure([]);
+  }, [activeTool]);
 
   // --- size tracking -------------------------------------------------------
   React.useEffect(() => {
@@ -141,22 +198,37 @@ export function PlanningCanvas() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fitRequestId]);
 
+  // Zoom-to-selection: fit the current selection's extent into view (FE-NAV-004).
+  React.useEffect(() => {
+    if (fitSelectionRequestId === 0 || !site || !size.width || !size.height) return;
+    const ids = new Set(useWorkspaceStore.getState().selection);
+    const boxes: Bounds[] = [];
+    for (const el of site.elements) {
+      if (!ids.has(el.id)) continue;
+      if (isSpatialElement(el)) boxes.push(bounds(el.boundary));
+      else boxes.push({ minX: el.position.x, minY: el.position.y, maxX: el.position.x, maxY: el.position.y });
+    }
+    const box = boxes.length ? unionBounds(boxes) : planBounds;
+    if (box) setViewport(fitBounds(padBounds(box), size.width, size.height));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fitSelectionRequestId]);
+
   const gridStep = React.useMemo(() => niceGridStep(viewport.zoom), [viewport.zoom]);
 
   // --- helpers -------------------------------------------------------------
   const getRect = () => containerRef.current!.getBoundingClientRect();
 
   const resolveWorld = React.useCallback(
-    (clientX: number, clientY: number): { world: Point; snapped: Point } => {
+    (clientX: number, clientY: number): { world: Point; snapped: Point; snappedToVertex: boolean } => {
       const rect = getRect();
       const raw = eventToWorld(clientX, clientY, rect, viewport);
       const screen = { x: clientX - rect.left, y: clientY - rect.top };
-      const { point } = snapPoint(raw, screen, viewport, site?.elements ?? [], {
+      const { point, snappedToVertex } = snapPoint(raw, screen, viewport, site?.elements ?? [], {
         gridStep,
         snapToGrid,
         snapToVertices,
       });
-      return { world: raw, snapped: point };
+      return { world: raw, snapped: point, snappedToVertex };
     },
     [viewport, site, gridStep, snapToGrid, snapToVertices],
   );
@@ -169,7 +241,10 @@ export function PlanningCanvas() {
         const { element, layer } = ordered[i];
         if (layer?.locked) continue;
         if (isSpatialElement(element)) {
-          if (pointInPolygon(world, element.boundary)) return element.id;
+          const ring = element.arcs
+            ? densifyBoundary(element.boundary, element.arcs, 4)
+            : element.boundary;
+          if (pointInPolygon(world, ring)) return element.id;
         } else {
           const s = worldToScreen(element.position, viewport);
           const c = worldToScreen(world, viewport);
@@ -198,8 +273,17 @@ export function PlanningCanvas() {
       });
       setDraft([]);
       setTool("select");
+    } else if (tool.id === "alignment" && draft.length >= 2) {
+      // Default curve radius scaled to the drawn tangents so curves fit.
+      let minSeg = Infinity;
+      for (let i = 1; i < draft.length; i++) {
+        minSeg = Math.min(minSeg, Math.hypot(draft[i].x - draft[i - 1].x, draft[i].y - draft[i - 1].y));
+      }
+      addAlignment(draft, draft.length > 2 && Number.isFinite(minSeg) ? minSeg * 0.35 : 0);
+      setDraft([]);
+      setTool("select");
     }
-  }, [tool, draft, addDrawnElement, addNetworkPath, setTool]);
+  }, [tool, draft, addDrawnElement, addNetworkPath, addAlignment, setTool]);
 
   const cancelDraft = React.useCallback(() => {
     setDraft([]);
@@ -264,7 +348,8 @@ export function PlanningCanvas() {
     }
 
     if (tool.mode === "ruler") {
-      setMeasure((m) => (m.length >= 2 ? [snapped] : [...m, snapped]));
+      // Accumulate a multi-point measurement path; Esc starts a new one.
+      setMeasure((m) => [...m, snapped]);
       return;
     }
 
@@ -281,6 +366,11 @@ export function PlanningCanvas() {
         return Math.hypot(s.x - sc.x, s.y - sc.y) < 9;
       });
       if (idx >= 0) {
+        // Alt-click removes a vertex (keeps a triangle minimum); FE-CANVAS-004.
+        if (e.altKey) {
+          deleteVertex(selectedElement.id, idx);
+          return;
+        }
         e.currentTarget.setPointerCapture(e.pointerId);
         interactionRef.current = {
           type: "vertex",
@@ -289,6 +379,20 @@ export function PlanningCanvas() {
           boundary: selectedElement.boundary.slice(),
         };
         return;
+      }
+
+      // Edge midpoint handles: drag to curve an edge (set its arc bulge).
+      const ring = selectedElement.boundary;
+      for (let ei = 0; ei < ring.length; ei++) {
+        const a = ring[ei];
+        const b = ring[(ei + 1) % ring.length];
+        const bulge = edgeBulge(selectedElement.arcs, ei);
+        const ms = worldToScreen(edgeMidpoint(a, b, bulge), viewport);
+        if (Math.hypot(ms.x - sc.x, ms.y - sc.y) < 8) {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          interactionRef.current = { type: "edgeBulge", elementId: selectedElement.id, index: ei, from: a, to: b, bulge };
+          return;
+        }
       }
     }
 
@@ -304,8 +408,9 @@ export function PlanningCanvas() {
   }
 
   function onPointerMove(e: React.PointerEvent) {
-    const { snapped } = resolveWorld(e.clientX, e.clientY);
+    const { snapped, snappedToVertex } = resolveWorld(e.clientX, e.clientY);
     setCursor(snapped);
+    setCursorSnappedToVertex(snappedToVertex);
     const interaction = interactionRef.current;
 
     if (interaction.type === "panning") {
@@ -330,6 +435,12 @@ export function PlanningCanvas() {
       forceRender();
       return;
     }
+
+    if (interaction.type === "edgeBulge") {
+      interaction.bulge = bulgeThroughCursor(interaction.from, interaction.to, snapped);
+      forceRender();
+      return;
+    }
   }
 
   function onPointerUp(e: React.PointerEvent) {
@@ -338,6 +449,8 @@ export function PlanningCanvas() {
       if (interaction.delta.x !== 0 || interaction.delta.y !== 0) moveSelection(interaction.delta);
     } else if (interaction.type === "vertex") {
       updateBoundary(interaction.elementId, interaction.boundary);
+    } else if (interaction.type === "edgeBulge") {
+      setEdgeBulge(interaction.elementId, interaction.index, interaction.bulge);
     }
     interactionRef.current = { type: "idle" };
     try {
@@ -354,8 +467,29 @@ export function PlanningCanvas() {
     setViewport(zoomAt(viewport, anchor, factor));
   }
 
-  function onDoubleClick() {
-    if ((tool.mode === "polygon" || tool.mode === "polyline") && draft.length >= 2) completeDraft();
+  function onDoubleClick(e: React.MouseEvent) {
+    if ((tool.mode === "polygon" || tool.mode === "polyline") && draft.length >= 2) {
+      completeDraft();
+      return;
+    }
+    // Double-click an edge of the selected element to insert a vertex (FE-CANVAS-004).
+    if (tool.mode !== "select" || selection.length !== 1 || !site) return;
+    const el = site.elements.find((x) => x.id === selection[0]);
+    if (!el || !isSpatialElement(el)) return;
+    const rect = getRect();
+    const sc = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    let bestIdx = -1;
+    let bestDist = 8;
+    for (let i = 0; i < el.boundary.length; i++) {
+      const a = worldToScreen(el.boundary[i], viewport);
+      const b = worldToScreen(el.boundary[(i + 1) % el.boundary.length], viewport);
+      const d = pointSegmentDistance(sc, a, b);
+      if (d < bestDist) {
+        bestDist = d;
+        bestIdx = i;
+      }
+    }
+    if (bestIdx >= 0) insertVertex(el.id, bestIdx, resolveWorld(e.clientX, e.clientY).snapped);
   }
 
   if (!site) return null;
@@ -365,6 +499,7 @@ export function PlanningCanvas() {
   const moveDelta = interaction.type === "moving" ? interaction.delta : { x: 0, y: 0 };
   const vertexPreview =
     interaction.type === "vertex" ? { id: interaction.elementId, boundary: interaction.boundary } : null;
+  const bulgePreview = interaction.type === "edgeBulge" ? interaction : null;
   const selectionSet = new Set(selection);
 
   const cursorClass =
@@ -386,12 +521,16 @@ export function PlanningCanvas() {
       onContextMenu={(e) => e.preventDefault()}
     >
       <svg width={size.width} height={size.height} className="absolute inset-0 select-none">
+        <CanvasPatterns />
         {/* Imported raster blueprint underlay, beneath everything. */}
         {underlay?.visible && (
           <UnderlayImage underlay={underlay} viewport={viewport} />
         )}
 
         {showGrid && <Grid viewport={viewport} size={size} step={gridStep} />}
+
+        {/* Survey framework (PLSS section or GA land lot), beneath the plan. */}
+        <FrameworkLayer site={site} viewport={viewport} />
 
         {/* Imported reference point clouds. */}
         {clouds.map(
@@ -416,24 +555,41 @@ export function PlanningCanvas() {
             <NetworkShape key={network.id} network={network} viewport={viewport} />
           ))}
 
+        {/* Stationed horizontal alignments (civil baselines). */}
+        <AlignmentLayer site={site} viewport={viewport} />
+
+        {/* Civil / erosion-control line features (silt fence, tree line, flow). */}
+        <CivilLayer site={site} viewport={viewport} />
+
+        {/* Civil / erosion-control point symbols (inlet protection, ditch check). */}
+        <CivilSymbolLayer site={site} viewport={viewport} />
+
+        {/* Survey monuments with standard symbology. */}
+        <MonumentLayer site={site} viewport={viewport} />
+
         {ordered.map(({ element }) => {
           const shifted =
             selectionSet.has(element.id) && (moveDelta.x !== 0 || moveDelta.y !== 0);
           const previewBoundary =
             vertexPreview?.id === element.id ? vertexPreview.boundary : undefined;
+          const dimmed = findActive && !elementMatches(element, findQuery, findKind);
           return (
-            <ElementShape
-              key={element.id}
-              element={element}
-              viewport={viewport}
-              selected={selectionSet.has(element.id)}
-              showLabels={showLabels}
-              spatialUnits={site.spatial}
-              moveDelta={shifted ? moveDelta : undefined}
-              overrideBoundary={previewBoundary}
-            />
+            <g key={element.id} opacity={dimmed ? 0.15 : 1}>
+              <ElementShape
+                element={element}
+                viewport={viewport}
+                selected={selectionSet.has(element.id)}
+                showLabels={showLabels}
+                spatialUnits={site.spatial}
+                moveDelta={shifted ? moveDelta : undefined}
+                overrideBoundary={previewBoundary}
+              />
+            </g>
           );
         })}
+
+        {/* Dense metes-and-bounds on every parcel/lot boundary (plat style). */}
+        {showDimensions && <BoundaryDimensions site={site} viewport={viewport} />}
 
         {/* Surveyor bearing/distance labels on the selected boundary's edges. */}
         {showSurveyLabels && (
@@ -452,6 +608,26 @@ export function PlanningCanvas() {
           viewport={viewport}
           preview={vertexPreview}
         />
+
+        {/* Edge midpoint handles: drag to curve an edge. */}
+        <EdgeHandles site={site} selection={selection} viewport={viewport} />
+
+        {/* Live preview of the arc while dragging an edge handle. */}
+        {bulgePreview && (
+          <polyline
+            points={[bulgePreview.from, ...densifyArc(bulgePreview.from, bulgePreview.to, bulgePreview.bulge), bulgePreview.to]
+              .map((p) => {
+                const s = worldToScreen(p, viewport);
+                return `${s.x},${s.y}`;
+              })
+              .join(" ")}
+            fill="none"
+            stroke="hsl(var(--primary))"
+            strokeWidth={2}
+            strokeDasharray="4 3"
+            className="pointer-events-none"
+          />
+        )}
 
         {/* In-progress polygon/polyline draft. */}
         {draft.length > 0 && (
@@ -476,7 +652,12 @@ export function PlanningCanvas() {
         draft={draft.length}
         elevation={terrainSurface && cursor ? elevationAt(terrainSurface, cursor) : null}
         units={unitLabel(site.spatial.units)}
+        snappedToVertex={cursorSnappedToVertex}
       />
+      <NorthArrow />
+      <ScaleBar />
+      <Legend />
+      <SurveyLegend site={site} />
     </div>
   );
 }
@@ -484,6 +665,23 @@ export function PlanningCanvas() {
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
+
+/** Shortest distance from point `p` to segment `a`–`b`, in the same space. */
+function pointSegmentDistance(p: Point, a: Point, b: Point): number {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const lenSq = dx * dx + dy * dy;
+  if (lenSq === 0) return Math.hypot(p.x - a.x, p.y - a.y);
+  let t = ((p.x - a.x) * dx + (p.y - a.y) * dy) / lenSq;
+  t = Math.max(0, Math.min(1, t));
+  return Math.hypot(p.x - (a.x + t * dx), p.y - (a.y + t * dy));
+}
+
+/** Expand a bounds by a margin so a tight or zero-size selection keeps context. */
+function padBounds(b: Bounds): Bounds {
+  const pad = Math.max(b.maxX - b.minX, b.maxY - b.minY) * 0.15 || 10;
+  return { minX: b.minX - pad, minY: b.minY - pad, maxX: b.maxX + pad, maxY: b.maxY + pad };
+}
 
 function toPath(boundary: Polygon, viewport: Viewport): string {
   return (
@@ -602,9 +800,11 @@ function ElementShape({
     x: p.x + shift.x,
     y: p.y + shift.y,
   }));
+  const hasArc = !!element.arcs && Object.keys(element.arcs).length > 0;
+  const displayRing = hasArc ? densifyBoundary(boundary, element.arcs, 2) : boundary;
   const category = element.kind === "landuse" ? element.category : undefined;
   const color = elementColor(element.kind, category);
-  const path = toPath(boundary, viewport);
+  const path = toPath(displayRing, viewport);
   const isLine = element.kind === "row";
   const fillOpacity =
     element.kind === "building"
@@ -615,7 +815,7 @@ function ElementShape({
           ? 0.32
           : element.kind === "grade"
             ? 0.2
-            : element.kind === "region"
+            : element.kind === "region" || element.kind === "easement"
               ? 0.06
               : 0.14;
   const dash =
@@ -625,12 +825,16 @@ function ElementShape({
         ? "10 6"
         : element.kind === "grade"
           ? "4 3"
-          : undefined;
+          : element.kind === "easement"
+            ? "7 3 2 3"
+            : undefined;
 
   const label = showLabels && viewport.zoom > 1.4 ? element.name : null;
   const center = label ? worldToScreen(centroid(boundary), viewport) : null;
   const areaLabel =
-    label && viewport.zoom > 3.5 ? formatArea(measuredArea(boundary, spatialUnits, "sqm"), "sqm") : null;
+    label && viewport.zoom > 3.5
+      ? formatArea(measuredArea(displayRing, spatialUnits, "sqm"), "sqm")
+      : null;
 
   // Setback / buildable envelope for a lot.
   let envelopePath: string | null = null;
@@ -639,6 +843,8 @@ function ElementShape({
     const env = buildableEnvelope(shiftedLot);
     if (env) envelopePath = toPath(env, viewport);
   }
+
+  const patternId = isLine ? null : patternFor(element);
 
   return (
     <g>
@@ -652,6 +858,7 @@ function ElementShape({
         vectorEffect="non-scaling-stroke"
         strokeLinejoin="round"
       />
+      {patternId && <path d={path} fill={`url(#${patternId})`} stroke="none" className="pointer-events-none" />}
       {envelopePath && (
         <path
           d={envelopePath}
@@ -715,6 +922,44 @@ function VertexHandles({
             fill="hsl(var(--background))"
             stroke="hsl(var(--primary))"
             strokeWidth={1.5}
+          />
+        );
+      })}
+    </g>
+  );
+}
+
+function EdgeHandles({
+  site,
+  selection,
+  viewport,
+}: {
+  site: NonNullable<ReturnType<typeof useWorkspaceStore.getState>["site"]>;
+  selection: string[];
+  viewport: Viewport;
+}) {
+  if (selection.length !== 1) return null;
+  const element = site.elements.find((e) => e.id === selection[0]);
+  if (!element || !isSpatialElement(element)) return null;
+  const ring = element.boundary;
+  return (
+    <g>
+      {ring.map((a, i) => {
+        const b = ring[(i + 1) % ring.length];
+        const bulge = edgeBulge(element.arcs, i);
+        const s = worldToScreen(edgeMidpoint(a, b, bulge), viewport);
+        return (
+          <rect
+            key={i}
+            x={s.x - 3.5}
+            y={s.y - 3.5}
+            width={7}
+            height={7}
+            transform={`rotate(45 ${s.x} ${s.y})`}
+            fill={bulge ? "hsl(var(--primary))" : "hsl(var(--background))"}
+            stroke="hsl(var(--primary))"
+            strokeWidth={1.2}
+            opacity={0.85}
           />
         );
       })}
@@ -913,6 +1158,61 @@ function NetworkShape({
   );
 }
 
+const DIMENSION_KINDS = new Set(["parcel", "lot", "openspace", "easement", "row", "zone"]);
+
+/** Dense bearing/distance labels on every parcel/lot boundary edge — the packed
+ *  metes-and-bounds annotation a recorded plat carries. */
+function BoundaryDimensions({
+  site,
+  viewport,
+}: {
+  site: NonNullable<ReturnType<typeof useWorkspaceStore.getState>["site"]>;
+  viewport: Viewport;
+}) {
+  const lengthPref = usePrefsStore((s) => s.lengthUnit);
+  const angleFormat = usePrefsStore((s) => s.angleFormat);
+  if (viewport.zoom < 2) return null;
+
+  const items = site.elements.filter((e) => isSpatialElement(e) && DIMENSION_KINDS.has(e.kind));
+  return (
+    <g className="pointer-events-none">
+      {items.flatMap((el) => {
+        if (!isSpatialElement(el)) return [];
+        const boundary = el.boundary;
+        const n = boundary.length;
+        return boundary.map((a, i) => {
+          const b = boundary[(i + 1) % n];
+          const sa = worldToScreen(a, viewport);
+          const sb = worldToScreen(b, viewport);
+          const lenPx = Math.hypot(sb.x - sa.x, sb.y - sa.y);
+          if (lenPx < 42) return null;
+          const bulge = el.arcs ? el.arcs[String(i)] : 0;
+          const mid = { x: (sa.x + sb.x) / 2, y: (sa.y + sb.y) / 2 };
+          let angle = (Math.atan2(sb.y - sa.y, sb.x - sa.x) * 180) / Math.PI;
+          if (angle > 90 || angle < -90) angle += 180;
+          const planLen = Math.hypot(b.x - a.x, b.y - a.y);
+          const dist = formatLength(planLen, site.spatial, lengthPref);
+          const label = bulge ? `⌒ ${dist}` : `${formatDirection(a, b, angleFormat)}  ${dist}`;
+          return (
+            <text
+              key={`${el.id}-${i}`}
+              x={mid.x}
+              y={mid.y}
+              transform={`rotate(${angle} ${mid.x} ${mid.y}) translate(0 -3)`}
+              fontSize={8.5}
+              textAnchor="middle"
+              fill="hsl(var(--foreground))"
+              style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: 2.5 }}
+            >
+              {label}
+            </text>
+          );
+        });
+      })}
+    </g>
+  );
+}
+
 function SurveyEdgeLabels({
   site,
   selection,
@@ -924,6 +1224,8 @@ function SurveyEdgeLabels({
   viewport: Viewport;
   preview: { id: string; boundary: Polygon } | null;
 }) {
+  const lengthPref = usePrefsStore((s) => s.lengthUnit);
+  const angleFormat = usePrefsStore((s) => s.angleFormat);
   if (selection.length !== 1) return null;
   const element = site.elements.find((e) => e.id === selection[0]);
   if (!element || !isSpatialElement(element)) return null;
@@ -932,8 +1234,6 @@ function SurveyEdgeLabels({
 
   const boundary = preview?.id === element.id ? preview.boundary : element.boundary;
   const n = boundary.length;
-  const factor = site.spatial.units === "feet" ? 0.3048 : 1;
-  const u = unitLabel(site.spatial.units);
 
   return (
     <g className="pointer-events-none">
@@ -941,12 +1241,12 @@ function SurveyEdgeLabels({
         const b = boundary[(i + 1) % n];
         const sa = worldToScreen(a, viewport);
         const sb = worldToScreen(b, viewport);
-        const distM = Math.hypot(b.x - a.x, b.y - a.y) * factor;
         if (Math.hypot(sb.x - sa.x, sb.y - sa.y) < 34) return null;
         const mid = { x: (sa.x + sb.x) / 2, y: (sa.y + sb.y) / 2 };
         let angle = (Math.atan2(sb.y - sa.y, sb.x - sa.x) * 180) / Math.PI;
         if (angle > 90 || angle < -90) angle += 180; // keep text upright
-        const label = `${bearingText(a, b)}  ${distM.toFixed(1)} ${u}`;
+        const planLen = Math.hypot(b.x - a.x, b.y - a.y);
+        const label = `${formatDirection(a, b, angleFormat)}  ${formatLength(planLen, site.spatial, lengthPref)}`;
         return (
           <text
             key={i}
@@ -1019,30 +1319,43 @@ function MeasureOverlay({
   viewport: Viewport;
   spatial: SpatialContext;
 }) {
-  const a = points[0];
-  const b = points[1] ?? cursor;
-  if (!b) return null;
-  const sa = worldToScreen(a, viewport);
-  const sb = worldToScreen(b, viewport);
-  const dxWorld = b.x - a.x;
-  const dyWorld = b.y - a.y;
-  const distPlan = Math.hypot(dxWorld, dyWorld);
-  const distM = distPlan * (spatial.units === "feet" ? 0.3048 : 1);
-  const mid = { x: (sa.x + sb.x) / 2, y: (sa.y + sb.y) / 2 };
+  const lengthPref = usePrefsStore((s) => s.lengthUnit);
+  const angleFormat = usePrefsStore((s) => s.angleFormat);
+
+  // The tentative next vertex tracks the cursor while measuring.
+  const pts = cursor ? [...points, cursor] : points;
+  const screen = pts.map((p) => worldToScreen(p, viewport));
+
+  if (pts.length < 2) {
+    const s = screen[0];
+    return <circle cx={s.x} cy={s.y} r={4} fill="#f43f5e" />;
+  }
+
+  let total = 0;
+  for (let i = 1; i < pts.length; i++) {
+    total += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+  }
+  const last = pts[pts.length - 1];
+  const prev = pts[pts.length - 2];
+  const bearing = formatDirection(prev, last, angleFormat);
+  const readout = `${formatLength(total, spatial, lengthPref)} · ${bearing}`;
+  const anchor = screen[screen.length - 1];
+  const poly = screen.map((s) => `${s.x},${s.y}`).join(" ");
+
   return (
-    <g>
-      <line x1={sa.x} y1={sa.y} x2={sb.x} y2={sb.y} stroke="#f43f5e" strokeWidth={2} />
-      <circle cx={sa.x} cy={sa.y} r={4} fill="#f43f5e" />
-      <circle cx={sb.x} cy={sb.y} r={4} fill="#f43f5e" />
+    <g className="pointer-events-none">
+      <polyline points={poly} fill="none" stroke="#f43f5e" strokeWidth={2} strokeLinejoin="round" />
+      {screen.map((s, i) => (
+        <circle key={i} cx={s.x} cy={s.y} r={i === 0 ? 4.5 : 3.5} fill="#f43f5e" />
+      ))}
       <text
-        x={mid.x}
-        y={mid.y - 8}
+        x={anchor.x + 10}
+        y={anchor.y - 10}
         fontSize={12}
-        textAnchor="middle"
         fill="#f43f5e"
         style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: 3 }}
       >
-        {distM.toFixed(1)} m
+        {readout}
       </text>
     </g>
   );
@@ -1054,21 +1367,21 @@ function CanvasHud({
   draft,
   elevation,
   units,
+  snappedToVertex,
 }: {
   tool: string;
   cursor: Point | null;
   draft: number;
   elevation: number | null;
   units: string;
+  snappedToVertex: boolean;
 }) {
+  const coordFormat = usePrefsStore((s) => s.coordFormat);
   return (
     <div className="pointer-events-none absolute bottom-3 left-3 flex items-center gap-2 rounded-md border border-border bg-card/80 px-2.5 py-1 text-xs text-muted-foreground backdrop-blur">
       <span className="font-medium text-foreground">{tool}</span>
-      {cursor && (
-        <span className="tabular-nums">
-          x {cursor.x.toFixed(1)} · y {cursor.y.toFixed(1)}
-        </span>
-      )}
+      {cursor && <span className="tabular-nums">{formatCoord(cursor, coordFormat)}</span>}
+      {snappedToVertex && <span className="font-medium text-primary">⌖ vertex</span>}
       {elevation != null && (
         <span className="tabular-nums text-amber-600 dark:text-amber-500">
           z {elevation.toFixed(1)} {units}

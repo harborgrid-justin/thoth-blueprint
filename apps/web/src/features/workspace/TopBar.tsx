@@ -4,9 +4,11 @@ import {
   Box,
   Check,
   Cloud,
+  Command,
   Compass,
   Grid3x3,
   History,
+  LayoutTemplate,
   Loader2,
   Magnet,
   Maximize,
@@ -14,6 +16,9 @@ import {
   Moon,
   Plus,
   ScrollText,
+  Search,
+  Settings2,
+  Spline,
   Square,
   Sun,
   Tag,
@@ -22,6 +27,7 @@ import type { Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
 import { useUiStore } from "@/store/uiStore";
+import { useFindStore } from "@/store/findStore";
 import { useTheme } from "@/theme/theme-provider";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -56,6 +62,11 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
     setViewMode,
   } = useCanvasStore();
   const openPlat = useUiStore((s) => s.openPlat);
+  const setAlignmentOpen = useUiStore((s) => s.setAlignmentOpen);
+  const setSheetOpen = useUiStore((s) => s.setSheetOpen);
+  const toggleCommand = useUiStore((s) => s.toggleCommand);
+  const setPrefsOpen = useUiStore((s) => s.setPrefsOpen);
+  const openFind = useFindStore((s) => s.openFind);
 
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border bg-card px-3">
@@ -134,6 +145,12 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         <Button variant="ghost" size="sm" onClick={() => openPlat(null)}>
           <ScrollText className="h-4 w-4" /> <span className="hidden md:inline">Plat</span>
         </Button>
+        <Button variant="ghost" size="sm" onClick={() => setAlignmentOpen(true)}>
+          <Spline className="h-4 w-4" /> <span className="hidden lg:inline">Stationing</span>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => setSheetOpen(true)}>
+          <LayoutTemplate className="h-4 w-4" /> <span className="hidden lg:inline">Sheet</span>
+        </Button>
         <Button variant="ghost" size="sm" onClick={onOpenCheckpoints}>
           <History className="h-4 w-4" /> <span className="hidden md:inline">Checkpoints</span>
         </Button>
@@ -143,6 +160,31 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         </Button>
 
         {project && <PresenceBar members={project.members} />}
+
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size="icon-sm" onClick={openFind} aria-label="Find and filter">
+              <Search className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">Find &amp; filter ⌘F</TooltipContent>
+        </Tooltip>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size="icon-sm" onClick={toggleCommand} aria-label="Command palette">
+              <Command className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">Commands ⌘K</TooltipContent>
+        </Tooltip>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size="icon-sm" onClick={() => setPrefsOpen(true)} aria-label="Display preferences">
+              <Settings2 className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">Display preferences</TooltipContent>
+        </Tooltip>
 
         <Tooltip delayDuration={300}>
           <TooltipTrigger asChild>
