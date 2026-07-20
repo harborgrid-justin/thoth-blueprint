@@ -21,6 +21,9 @@ Numeric tolerances referenced below are defined in the
 | `NFR-PERF-003` | Remote edits from a collaborator shall appear to other participants within 500 ms under the reference network profile (`NFR-BENCH-005`). | S | P4 | BE-COLLAB, FE-PRESENCE | A |
 | `NFR-PERF-004` | Opening the `BENCH-TYPICAL` project shall present an interactive canvas within 3 s. | S | P2 | FE-PROJECT, BE-PROJECT | A |
 | `NFR-PERF-005` | Import of a 50 MB dataset shall complete or report progress without blocking the UI. | S | P3 | BE-IMPORT, BE-JOB, FE-IO | A |
+| `NFR-PERF-006` | Opening a `BENCH-SHEETS-TYPICAL` sheet-set shall present the sheet-set browser and first-sheet preview within 3 s on the reference hardware profile. | S | P6 | FE-SHEETSET, FE-SHEET, BE-SHEET | A |
+| `NFR-PERF-007` | Switching between sheets in a `BENCH-SHEETS-TYPICAL` set shall render the next sheet within 500 ms. | S | P6 | FE-SHEET, BE-SHEET | A |
+| `NFR-PERF-008` | Batch-plotting a `BENCH-SHEETS-TYPICAL` set to multi-sheet PDF shall complete within 60 s, or report progress without blocking the UI, on the reference hardware profile. | S | P6 | BE-PLOT, BE-JOB, IOP-PDFSHEET | A |
 
 ## Scalability & capacity — `NFR-SCALE`
 
@@ -30,6 +33,7 @@ Numeric tolerances referenced below are defined in the
 | `NFR-SCALE-002` | Services shall scale horizontally so added instances increase capacity without redesign. | S | P4 | services/* | I |
 | `NFR-SCALE-003` | Project storage shall accommodate plans of `BENCH-STRESS` size (≈ 100,000 elements). | C | P3 | BE-PROJECT, BE-GEO | A |
 | `NFR-SCALE-004` | The platform shall bound per-organization resource use (storage, project count) by a configurable quota. | S | P4 | BE-PROJECT, BE-STORAGE | T |
+| `NFR-SCALE-005` | The platform shall handle a `BENCH-SHEETS-LARGE` sheet-set (≈ 600 sheets across all disciplines) in a single project without loss of interactivity in the sheet-set browser. | S | P6 | FE-SHEETSET, BE-SHEET | A |
 
 ## Security — `NFR-SEC`
 
@@ -150,6 +154,37 @@ Numeric tolerances referenced below are defined in the
 | `NFR-LEGAL-001` | The product shall be distributed under GPLv3; dependencies shall be license-compatible. | M | P0 | repo | I |
 | `NFR-LEGAL-002` | Third-party data/basemaps shall be used within their license terms and attributed where required. | S | P3 | FE-NAV, IOP-*, BE-GEO | I |
 
+## Plot fidelity — `NFR-PLOT`
+
+Correctness of the printed/exported sheet output for Phase-6 CAD sheets. These
+constraints keep a "true-scale" claim honest and a permit-review-ready plot
+free of surprises across viewers and print devices.
+
+| ID | Requirement | Pri | Phase | Constrains | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `NFR-PLOT-001` | A distance measured between two points on a true-scale plot (PDF at 100 % zoom on a calibrated viewer, or physical print) shall be within the plot scale tolerance of the intended distance. | M | P6 | BE-SHEET-005, IOP-PDFSHEET-006, FE-PLOT-004 | A |
+| `NFR-PLOT-002` | Annotative text, dimensions, and symbols shall render at the pinned plotted sizes in the tolerances table (body 2.5 mm, headings 3.5 mm, arrowheads 2.5 mm) regardless of viewport scale, with fonts embedded in the plot output. | M | P6 | DOM-ANNO-002, DOM-DIM-004, BE-PLOT-004, IOP-PDFSHEET-005 | T |
+| `NFR-PLOT-003` | Line weights applied by the plot-style table shall render on paper at the nominal ISO widths (±0.05 mm) on the reference plot device. | S | P6 | DOM-PLOTSTYLE-002, BE-SHEET-005 | A |
+| `NFR-PLOT-004` | Line types (dashed / hidden / centre / phantom) shall preserve their dash-pattern proportions across viewport scale via annotative linetype scaling. | S | P6 | DOM-PLOTSTYLE-003 | T |
+| `NFR-PLOT-005` | The composed on-screen plot preview shall match the produced PDF within one pixel per plotted millimetre at 100 % zoom. | S | P6 | FE-PLOT-004, BE-SHEET-002 | T |
+| `NFR-PLOT-006` | Colour rendering shall follow the plot-style table exactly; monochrome and greyscale modes shall not introduce hue shifts or lineweight distortion. | S | P6 | DOM-PLOTSTYLE-001, BE-PLOT-001 | T |
+
+## Standards conformance — `NFR-STD`
+
+Named external standards the Phase-6 sheet-production capability shall be
+verifiably conformant with. These make `CON-011` testable rather than
+aspirational.
+
+| ID | Requirement | Pri | Phase | Constrains | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `NFR-STD-001` | Sheet sizes and title-block placement shall conform to ANSI/ASME Y14.1 (Arch A–E1, ANSI A–E) and ISO 5457 (A0–A4). | M | P6 | DOM-SHEET-007, FE-SHEET-003 | I |
+| `NFR-STD-002` | Title-block data fields shall conform to ISO 7200. | M | P6 | DOM-TITLEBLOCK-002, FE-TITLE-002 | I |
+| `NFR-STD-003` | Layer names emitted by the system shall be validatable against the US National CAD Standard v6 / AIA Layer Guidelines or ISO 13567, per the project's active layer standard. | M | P6 | DOM-LAYERSTD-001, DOM-LAYERSTD-004, IOP-LAYERMAP-003 | T |
+| `NFR-STD-004` | Sheet numbering shall follow the `<Discipline><Sheet-type><Sequence>` scheme with NCS-conformant discipline designators and sheet-type digits by default. | M | P6 | DOM-DISCIPLINE-001, DOM-NUMBERING-001 | T |
+| `NFR-STD-005` | Dimensioning, line conventions, and lettering shall conform to ISO 128 · ISO 129-1 · ISO 3098 defaults, overridable per project. | S | P6 | DOM-DIM-003, DOM-ANNO-003, DOM-PLOTSTYLE-003 | I |
+| `NFR-STD-006` | Multi-sheet PDF archival output shall pass a PDF/A-2 validator; engineering PDF output, when requested, shall pass a PDF/E-1 validator. | S | P6 | IOP-PDFSHEET-003, IOP-PDFSHEET-004 | T |
+| `NFR-STD-007` | The system shall publish a documented conformance statement per released version enumerating the version of each standard it targets (NCS v6, AIA, ISO 13567, ISO 5457, ISO 7200, ISO 128/129/3098, ISO 19005-2, ISO 24517-1). | S | P6 | Phase 6 sheet output | I |
+
 ## Benchmarks & validation — `NFR-BENCH`
 
 Turns the performance/scalability targets from asserted numbers into **verifiable**
@@ -162,3 +197,4 @@ requirements, by defining the fixed inputs and the validation gate.
 | `NFR-BENCH-003` | Before a release publicly claims a performance or scalability figure, that figure shall be validated by an automated benchmark/load test against the applicable `BENCH` dataset on the reference hardware profile, with results recorded. | M | P2 | NFR-PERF-001..005, NFR-SCALE-001..003 | A |
 | `NFR-BENCH-004` | A performance regression budget shall be enforced in CI so a merge degrading a benchmarked metric beyond a defined threshold (e.g. > 10% on frame time, update latency, or open time vs the recorded baseline) fails the build. | S | P2 | NFR-PERF-001..004, NFR-SCALE-003 | A |
 | `NFR-BENCH-005` | The reference hardware and network profile used for benchmarking (the "mainstream laptop" and "normal network") shall be documented and pinned so measurements are comparable across releases. | S | P2 | NFR-PERF-001, NFR-PERF-003 | I |
+| `NFR-BENCH-006` | The project shall define named sheet-set reference datasets — `BENCH-SHEETS-SMALL` (≈ 30 sheets across 3 disciplines), `BENCH-SHEETS-TYPICAL` (≈ 120 sheets across 6 disciplines), and `BENCH-SHEETS-LARGE` (≈ 600 sheets across all disciplines) — as the fixed inputs for sheet-set composition, plot, and packaging performance targets. | S | P6 | NFR-PLOT-*, BE-SHEET-*, BE-PLOT-*, IOP-PDFSHEET-* | I |

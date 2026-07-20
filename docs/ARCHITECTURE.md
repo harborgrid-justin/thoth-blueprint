@@ -44,6 +44,13 @@ Core concepts (see [GLOSSARY.md](GLOSSARY.md) for definitions):
   `RightOfWay`, `Setback`, and infrastructure networks.
 - **Rules & metrics** — subdivision, setback/envelope computation, land-use
   allocation, density and coverage metrics, and validation of planning constraints.
+- **Sheet & drawing production (Phase 6)** — `Sheet`, `Layout`, `Viewport`,
+  `TitleBlock`, `SheetSet`, `Symbol`, `Dimension`, annotation with annotative
+  scaling, `ColumnGrid`, `LevelDatum`, `MatchLine`, `Callout`, data-driven
+  `Schedule`, `RevisionCloud`, and `IssueSet` — the framework-agnostic model
+  of the CAD sheets that the client composes and the services render, wired
+  to the same planning primitives above so a plan edit propagates to every
+  sheet that shows it.
 
 ### `apps/web` — the planning workspace (client)
 
@@ -60,14 +67,22 @@ as patterns, re-implemented cloud-first.
 
 - **`auth`** — identity, organizations/teams, roles, and access control.
 - **`projects`** — project lifecycle, persistence, versioning, and checkpoints
-  (the "save a snapshot and roll back" capability, now server-side and shared).
+  (the "save a snapshot and roll back" capability, now server-side and shared);
+  also owns Phase-6 sheet-set persistence side of the split: **title-block and
+  symbol-library templates**, **schedule extraction**, and **issue-set
+  packaging** (`BE-TEMPLATE`, `BE-SCHEDULE`, `BE-PACKAGE`).
 - **`geospatial`** — coordinate-system transforms, layer storage, spatial queries,
-  and import/export of GeoJSON/KML/Shapefile/DXF.
+  and import/export of GeoJSON/KML/Shapefile/DXF; also owns Phase-6 sheet
+  **composition rendering** and **plot orchestration** (`BE-SHEET`, `BE-PLOT`)
+  and the multi-sheet DXF/DWG/PDF sheet-set formats (`IOP-DXFSHEET`,
+  `IOP-PDFSHEET`, `IOP-PLTSTYLE`, `IOP-LAYERMAP`, `IOP-TITLEBLOCK`, `IOP-BLOCK`).
 - **`collaboration`** — real-time multi-user editing, presence, and comments/review
   threads.
 
 Service boundaries are logical; how they are deployed (separate services vs. a
 modular monolith to start) is an implementation decision captured in the roadmap.
+The Phase-6 CAD-sheet capability adds new logical areas inside the existing
+`projects` and `geospatial` services — no new top-level service is introduced.
 
 ## Key architectural decisions
 

@@ -95,7 +95,7 @@ def parse_nfr(path):
 nfr_scope, nfr_count = parse_nfr(NFRF)
 
 # ---- roll-ups ----
-PHASES = ["P1", "P2", "P3", "P4", "P5"]
+PHASES = ["P1", "P2", "P3", "P4", "P5", "P6"]
 phase_by_layer = defaultdict(lambda: defaultdict(int))
 verify_ct = defaultdict(int)
 module_ct = defaultdict(int)
@@ -156,13 +156,14 @@ BR_STK = [
     ("BR-002 Domain-native objects", "STK-001, STK-002"),
     ("BR-003 Real-time collaboration", "STK-003, STK-005"),
     ("BR-004 Spatial honesty", "STK-001, STK-002"),
-    ("BR-005 Interoperability", "STK-001, STK-004, STK-007"),
-    ("BR-006 CAD-grade precision", "STK-001, STK-004"),
-    ("BR-007 Governed & auditable", "STK-003, STK-005, STK-006"),
+    ("BR-005 Interoperability", "STK-001, STK-004, STK-007, STK-008"),
+    ("BR-006 CAD-grade precision", "STK-001, STK-004, STK-008"),
+    ("BR-007 Governed & auditable", "STK-003, STK-005, STK-006, STK-008"),
     ("BR-008 Planning intelligence", "STK-001, STK-002, STK-004"),
-    ("BR-009 Full stakeholder spectrum", "STK-001 – STK-007"),
+    ("BR-009 Full stakeholder spectrum", "STK-001 – STK-008"),
     ("BR-010 Open & self-hostable", "STK-007"),
     ("BR-011 Incremental, domain-first", "all (via Phase)"),
+    ("BR-012 Architecture & engineering CAD sheets", "STK-004, STK-008"),
 ]
 for br, stk in BR_STK:
     w(f"| [`{br.split()[0]}`](../01-business/business-requirements.md) {br.split(' ',1)[1]} | {stk} |")
@@ -184,6 +185,7 @@ w("| STK-004 Developer | CANVAS, METRIC, PRINT | EXPORT, JOB | SETBACK, BUILDING
 w("| STK-005 Community | REVIEW, NAV, HELP | ACCESS | — | PDF |")
 w("| STK-006 Org admin | ACCOUNT, STATE | AUTH, ACCESS, AUDIT, SEARCH, STORAGE | — | — |")
 w("| STK-007 Integrator | IO | API, IMPORT, EXPORT, JOB, WEBHOOK | SERIAL | GEOJSON, SHP, GPKG, CSV, FIELD, SCHEMA |")
+w("| STK-008 Architect / engineer / CAD manager | SHEET, VIEWPORT, TITLE, PLOT, ANNO, SYMBOL, GRIDLINE, MATCHLINE, SCHEDULE, REV, SHEETSET | SHEET, TEMPLATE, PLOT, SCHEDULE, PACKAGE | SHEET, TITLEBLOCK, SHEETSET, DISCIPLINE, NUMBERING, LAYERSTD, PLOTSTYLE, SYMBOL, DIM, ANNO, GRID, MATCHLINE, SCHEDULE, REV, ISSUE, XREF | DXFSHEET, PDFSHEET, PLTSTYLE, LAYERMAP, TITLEBLOCK, BLOCK |")
 w()
 w("---")
 w()
@@ -241,7 +243,8 @@ w("| Phase | Focus | FE | BE | DOM | IOP | Total |")
 w("| --- | --- | :--: | :--: | :--: | :--: | :--: |")
 FOCUS = {"P1": "Domain model foundation", "P2": "Single-player cloud workspace",
          "P3": "Interoperability", "P4": "Collaboration & review",
-         "P5": "Analysis & planning depth"}
+         "P5": "Analysis & planning depth",
+         "P6": "Architecture & engineering CAD sheets"}
 col_tot = defaultdict(int)
 for ph in PHASES:
     cells = [phase_by_layer[l][ph] for l in ("FE", "BE", "DOM", "IOP")]

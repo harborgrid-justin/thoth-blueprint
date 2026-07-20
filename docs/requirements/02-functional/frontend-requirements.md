@@ -237,3 +237,129 @@ from the **Trace** column below — keep it authoritative.
 | `FE-ACCOUNT-003` | The workspace shall provide a share dialog to grant view/comment/edit access and produce share links. | M | P4 | STK-006; BR-007 | D |
 | `FE-ACCOUNT-004` | The workspace shall let an organization admin view and manage members and roles. | S | P4 | STK-006; BR-009 | D |
 | `FE-ACCOUNT-005` | The workspace shall let a user invite a person to a project or organization by email. | S | P4 | STK-006; BR-007 | D |
+
+## CAD sheet composer — `FE-SHEET`
+
+Client authoring of the paper-space layouts that make up a discipline-organised
+sheet set (Phase 6). Rendering is sheet-relative (paper), but every viewport
+reaches through to the shared planning-domain model.
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-SHEET-001` | The workspace shall let a user create, rename, reorder, and delete sheets within a project's sheet set. | M | P6 | STK-008; BR-012 | D |
+| `FE-SHEET-002` | The workspace shall present a paper-space canvas rendering each sheet at its actual print size (Arch A–E1 · ANSI A–E · ISO A0–A4). | M | P6 | STK-008; BR-012, CON-011 | D |
+| `FE-SHEET-003` | The workspace shall let a user choose the sheet size and orientation (portrait/landscape) per sheet from the ANSI/ASME Y14.1 and ISO 5457 catalogs. | M | P6 | STK-008; BR-012, CON-011 | D |
+| `FE-SHEET-004` | The workspace shall let a user set per-sheet metadata (title, sheet number, discipline, drawn/checked/approved by, date, scale, revision) that binds to the title block. | M | P6 | STK-008; BR-012 | D |
+| `FE-SHEET-005` | The workspace shall duplicate a sheet, preserving its viewports, layer overrides, and annotation. | S | P6 | STK-008; BR-012 | D |
+| `FE-SHEET-006` | The workspace shall present a sheet-preview thumbnail per sheet reflecting its current composed state. | S | P6 | STK-008; BR-012 | D |
+| `FE-SHEET-007` | The workspace shall let a user toggle a print-preview overlay showing plot area, margins, and non-printable regions. | S | P6 | STK-008; BR-012 | D |
+| `FE-SHEET-008` | The workspace shall enforce that layout-space geometry (title block, dimensions authored on paper, notes) is distinct from model-space geometry and is not offered for CRS-based measurement. | M | P6 | STK-008; BR-012, CON-012 | T |
+
+## Viewports — `FE-VIEWPORT`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-VIEWPORT-001` | The workspace shall let a user place a rectangular viewport on a sheet showing a chosen extent of model space at a chosen plot scale. | M | P6 | STK-008; BR-012 | D |
+| `FE-VIEWPORT-002` | The workspace shall let a user choose the plot scale from a documented, extensible catalog (metric ratios: 1:10 – 1:2000; imperial: 1″=10′, 1/16″=1′-0″, 1/8″=1′-0″, 1/4″=1′-0″, 3/8″=1′-0″, 1/2″=1′-0″, 3/4″=1′-0″, 1″=1′-0″, 3″=1′-0″, full). | M | P6 | STK-008; BR-012 | D |
+| `FE-VIEWPORT-003` | The workspace shall let a user set a non-rectangular (polygon) clip boundary on a viewport. | S | P6 | STK-008; BR-012 | D |
+| `FE-VIEWPORT-004` | The workspace shall let a user rotate a viewport independently of the plan CRS orientation. | S | P6 | STK-008; BR-012 | D |
+| `FE-VIEWPORT-005` | The workspace shall let a user override layer visibility, colour, lineweight, and linetype per viewport. | M | P6 | STK-008; BR-012 | D |
+| `FE-VIEWPORT-006` | The workspace shall let a user lock a viewport's scale/position so pan and zoom inside it do not change the composed plot. | M | P6 | STK-008; BR-012 | D |
+| `FE-VIEWPORT-007` | The workspace shall show the active viewport's plot scale in a persistent readout. | M | P6 | STK-008; BR-012 | D |
+| `FE-VIEWPORT-008` | The workspace shall let a user place multiple viewports on a single sheet (e.g. plan + detail insets + key plan) at independent scales. | M | P6 | STK-008; BR-012 | D |
+| `FE-VIEWPORT-009` | The workspace shall let a user set a per-viewport rendering mode (colour vs. monochrome / greyscale / by plot style). | S | P6 | STK-008; BR-012 | D |
+
+## Title-block editor — `FE-TITLE`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-TITLE-001` | The workspace shall let a user apply a title-block template to a sheet, positioning it in the sheet's printable area. | M | P6 | STK-008; BR-012, CON-011 | D |
+| `FE-TITLE-002` | The title-block editor shall support the ISO 7200 data fields (drawing identifier, sheet number, title, date, revision, sizes/scale, drawn/checked/approved by, owner) plus custom user-defined fields. | M | P6 | STK-008; BR-012, CON-011 | D |
+| `FE-TITLE-003` | The workspace shall bind title-block fields to per-project and per-sheet data so a project-level change (e.g. project name) propagates to every sheet. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `FE-TITLE-004` | The workspace shall render seals, signatures, and consultant logos placed by an authorised user as raster or vector artefacts. | S | P6 | STK-008; BR-012 | D |
+| `FE-TITLE-005` | The workspace shall let a user preview a sheet with each candidate title block before committing. | C | P6 | STK-008; BR-012 | D |
+
+## Plot styles — `FE-PLOT`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-PLOT-001` | The workspace shall let a user assign a plot-style table (CTB colour-dependent or STB named-style) to a sheet or viewport. | M | P6 | STK-008; BR-012, CON-011 | D |
+| `FE-PLOT-002` | The workspace shall let a user edit lineweights, plotted colour, screening (percent), and linetype per plot-style entry. | M | P6 | STK-008; BR-012 | D |
+| `FE-PLOT-003` | The workspace shall present a plot-style preview showing exactly how each layer will appear on paper. | S | P6 | STK-008; BR-012 | D |
+| `FE-PLOT-004` | The workspace shall show a plot preview matching the final rendered PDF within the plot scale tolerance. | M | P6 | STK-008; NFR-PLOT-001 | D |
+| `FE-PLOT-005` | The workspace shall let a user select and plot a single sheet, a filtered subset, or the entire sheet set. | M | P6 | STK-008; BR-012 | D |
+| `FE-PLOT-006` | The workspace shall let a user choose the plot output format (PDF, PDF/A-2, PDF/E-1, DXF, DWG) before invoking a plot. | M | P6 | STK-008; BR-012, DEP-005, DEP-006 | D |
+| `FE-PLOT-007` | The workspace shall show plot progress and a downloadable artefact link when the plot job completes. | M | P6 | STK-008, STK-007; NFR-OBS-002 | D |
+
+## Annotation & dimensions — `FE-ANNO`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-ANNO-001` | The workspace shall let a user place linear, aligned, angular, radial, diameter, ordinate, and arc-length dimensions. | M | P6 | STK-008; BR-012, CON-011 | D |
+| `FE-ANNO-002` | The workspace shall let a user place text notes and leaders anchored to elements or free positions. | M | P6 | STK-008; BR-012 | D |
+| `FE-ANNO-003` | Text, dimensions, leaders, and symbols placed with an annotative scale shall render at the target plotted size (default 2.5 mm body, 3.5 mm heading, 2.5 mm arrowhead) in every viewport in which their scale is enabled. | M | P6 | STK-008; BR-012 | T |
+| `FE-ANNO-004` | The workspace shall let a user attach and switch dimension styles (extension, arrowhead, precision, tolerance) named per project. | M | P6 | STK-008; BR-012, CON-011 | D |
+| `FE-ANNO-005` | Dimensions shall update when the geometry they reference moves. | M | P6 | STK-008; BR-012 | T |
+| `FE-ANNO-006` | The workspace shall let a user place a callout (leader with text/tag) referencing an element, a coordinate, or another sheet. | S | P6 | STK-008; BR-012 | D |
+| `FE-ANNO-007` | The workspace shall report a warning when a text or dimension is placed too small to legibly plot at its viewport's scale. | S | P6 | STK-008; NFR-PLOT-002 | D |
+
+## Symbol / block library — `FE-SYMBOL`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-SYMBOL-001` | The workspace shall present a searchable palette of symbols/blocks grouped by discipline and category (grid bubble, section/elevation/detail marker, north arrow, scale bar, revision cloud, door, window, fixture, fitting, etc.). | M | P6 | STK-008; BR-012 | D |
+| `FE-SYMBOL-002` | The workspace shall let a user place a symbol on a sheet or in model space with an optional rotation and per-instance attribute values. | M | P6 | STK-008; BR-012 | D |
+| `FE-SYMBOL-003` | The workspace shall let a user import an external DWG/DXF block or a symbol library archive into the project palette. | S | P6 | STK-008; BR-012, DEP-006 | D |
+| `FE-SYMBOL-004` | The workspace shall support instance-level attribute editing on a placed symbol without breaking its link to the source block. | S | P6 | STK-008; BR-012 | D |
+| `FE-SYMBOL-005` | The workspace shall let an org admin curate an organisation-wide symbol library shared across projects. | C | P6 | STK-008, STK-006; BR-012 | D |
+
+## Grids & levels — `FE-GRIDLINE`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-GRIDLINE-001` | The workspace shall let a user author a building column grid with numbered rows and lettered columns (e.g. A/B/C…, 1/2/3…), with per-line spacing entered numerically. | M | P6 | STK-008; BR-012 | D |
+| `FE-GRIDLINE-002` | Grid lines shall render with tagged bubbles on every applicable sheet's viewport in the sheet set. | M | P6 | STK-008; BR-012, CON-012 | D |
+| `FE-GRIDLINE-003` | The workspace shall let a user author level datums (e.g. `L1`, `L2`, `Roof`) with elevations. | S | P6 | STK-008; BR-012 | D |
+| `FE-GRIDLINE-004` | Level datums shall render on section and elevation viewports with tagged elevation callouts. | S | P6 | STK-008; BR-012 | D |
+| `FE-GRIDLINE-005` | The workspace shall let a user renumber/relabel a grid line and have the change propagate to every sheet that shows it. | M | P6 | STK-008; BR-012 | T |
+
+## Match lines & callouts — `FE-MATCHLINE`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-MATCHLINE-001` | The workspace shall let a user place a match-line on a plan viewport with a bound reference to the adjoining sheet number and viewport. | M | P6 | STK-008; BR-012 | D |
+| `FE-MATCHLINE-002` | The workspace shall let a user place a section callout that names the destination sheet and drawing number where the section is drawn, and shall auto-create the reciprocal marker on the destination. | M | P6 | STK-008; BR-012 | D |
+| `FE-MATCHLINE-003` | The workspace shall let a user place elevation and detail callouts with the same bidirectional linkage. | M | P6 | STK-008; BR-012 | D |
+| `FE-MATCHLINE-004` | Callouts and match-lines shall automatically re-render their sheet/drawing tags when the destination sheet is renumbered or moved. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `FE-MATCHLINE-005` | The workspace shall report broken callout/match-line references (destination sheet or drawing missing) and let the user resolve them. | M | P6 | STK-008; NFR-REL-003 | D |
+
+## Schedules & tables — `FE-SCHEDULE`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-SCHEDULE-001` | The workspace shall let a user place a schedule table on a sheet whose rows are queried from the domain model (door, window, room/finish, panel, fixture, equipment). | M | P6 | STK-008; BR-012, CON-012 | D |
+| `FE-SCHEDULE-002` | Schedule rows shall reflect the same domain-object identities rendered on plans; editing a schedule row shall edit the underlying object. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `FE-SCHEDULE-003` | The workspace shall let a user choose columns, sort order, groupings, filters, and formatted derived cells (totals, counts) per schedule. | M | P6 | STK-008; BR-012 | D |
+| `FE-SCHEDULE-004` | The workspace shall let a user save a schedule as a named template reusable across sheets and projects. | S | P6 | STK-008; BR-012 | D |
+| `FE-SCHEDULE-005` | The workspace shall paginate a schedule that overflows its host sheet across continuation sheets with header repeat. | S | P6 | STK-008; BR-012 | D |
+| `FE-SCHEDULE-006` | The workspace shall export a schedule as CSV for downstream systems. | S | P6 | STK-008, STK-007; BR-005 | T |
+
+## Revisions & issue management — `FE-REV`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-REV-001` | The workspace shall let a user place a revision cloud (scalloped freehand outline) around a changed region and tag it with a delta symbol carrying the current revision number. | M | P6 | STK-008; BR-012 | D |
+| `FE-REV-002` | The workspace shall maintain a per-sheet revision block listing revision number, date, description, and drawn/approved by. | M | P6 | STK-008; BR-012, CON-011 | D |
+| `FE-REV-003` | The workspace shall let a user create and name issue sets (e.g. "For Permit", "For Bid", "Issued for Construction", "As-Built") and, on release, stamp every sheet in the set with the issue name and date. | M | P6 | STK-008; BR-012, BR-007 | D |
+| `FE-REV-004` | The workspace shall present a per-sheet revision history that lists every issue in which the sheet was released and the revision number at each release. | S | P6 | STK-008; BR-007 | D |
+| `FE-REV-005` | The workspace shall let a user compare two revisions of a sheet visually (side-by-side or diff overlay). | C | P6 | STK-008; BR-007 | D |
+
+## Sheet-set browser — `FE-SHEETSET`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `FE-SHEETSET-001` | The workspace shall present a sheet-set browser (project navigator) listing every sheet grouped by discipline, in sheet-number order, with title, revision, and issue status per row. | M | P6 | STK-008; BR-012, CON-011 | D |
+| `FE-SHEETSET-002` | The workspace shall let a user filter the sheet-set browser by discipline, sheet-type digit (plans/elevations/sections/etc.), phase, and issue set. | S | P6 | STK-008; BR-012 | D |
+| `FE-SHEETSET-003` | The workspace shall auto-generate a sheet index sheet whose contents match the current sheet set and update when sheets are added/renumbered. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `FE-SHEETSET-004` | The workspace shall let a user renumber a sheet or a range of sheets, and every callout, match-line, and sheet-index reference to those sheets shall update to the new number. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `FE-SHEETSET-005` | The workspace shall present a batch-plot dialog that plots the current filtered set as one multi-sheet PDF or DXF/DWG archive. | M | P6 | STK-008; BR-012 | D |

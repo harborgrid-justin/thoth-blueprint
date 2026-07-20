@@ -22,12 +22,18 @@ MoSCoW (see [conventions](../00-overview/standards-and-conventions.md)).
 | `BR-009` | The product shall serve the **full stakeholder spectrum**, from professional planners to non-CAD community stakeholders, with role-appropriate capability. | Adoption depends on both power users and the public being able to participate. VISION §who it's for. | S | `STK-001`–`STK-007`; `BE-ACCESS`,`FE-ACCOUNT`,`FE-REVIEW`,`NFR-A11Y` |
 | `BR-010` | The product shall be **open and self-hostable** under GPLv3, inspectable and extensible by the community. | Openness is a stated product principle and a trust/adoption lever. VISION principle 7; `CON-007`. | S | `STK-007`; `BE-API`,`NFR-PORT`,`NFR-LEGAL`,`NFR-MAINT` |
 | `BR-011` | The product shall be delivered **incrementally, domain-model first**, so later capability builds on a correct, shared planning model. | The domain model gates most later work; sequencing reduces rework. ROADMAP; `CON-010`. | M | all functional areas via phase mapping; `DOM-*` (P1) |
+| `BR-012` | The product shall **produce complete architecture and engineering CAD sheet sets** from the shared planning model — composed, standards-conformant, discipline-organised, printable, and deliverable as multi-sheet PDF and DXF/DWG sheet sets for design review, permit, issue-for-construction, and record submissions. | Planners' output *is* drawings; a live plan that cannot be issued as a CAD sheet set stops short of the deliverable that permits, funds, and builds the project. ROADMAP Phase 6; `CON-011`, `CON-012`. | M | `STK-004`, `STK-008`; `FE-SHEET*`, `FE-VIEWPORT`, `FE-TITLE`, `FE-PLOT`, `FE-ANNO`, `FE-SYMBOL`, `FE-REV`, `FE-SCHEDULE`, `FE-GRIDLINE`, `FE-MATCHLINE`, `FE-SHEETSET`, `BE-SHEET`, `BE-TEMPLATE`, `BE-PLOT`, `BE-SCHEDULE`, `BE-PACKAGE`, `DOM-SHEET`, `DOM-TITLEBLOCK`, `DOM-SHEETSET`, `DOM-PLOTSTYLE`, `DOM-SYMBOL`, `DOM-DIM`, `DOM-ANNO`, `DOM-LAYERSTD`, `DOM-GRID`, `DOM-SCHEDULE`, `DOM-REV`, `DOM-XREF`, `DOM-MATCHLINE`, `DOM-DISCIPLINE`, `DOM-NUMBERING`, `IOP-DXFSHEET`, `IOP-PDFSHEET`, `IOP-PLTSTYLE`, `IOP-LAYERMAP`, `IOP-TITLEBLOCK`, `IOP-BLOCK`, `NFR-PLOT`, `NFR-STD` |
 
 ## Notes
 
 - `BR-011` is a delivery/business requirement rather than a product feature; it is
   realized through the **Phase** column on every functional requirement and the
   RTM's phase view, not through a single feature.
+- `BR-012` expands the product beyond a live planning canvas into the produced
+  drawings that permit, fund, and build the project. It reverses two earlier
+  non-goals (construction documentation and multi-sheet plan sets) that are
+  now Phase-6 scope in [ROADMAP.md](../../ROADMAP.md); *engineering
+  calculations* that populate those sheets remain out of scope.
 - Business requirements intentionally omit the AREA segment of the ID scheme (they
   are product-wide). See the
   [identifier scheme](../00-overview/standards-and-conventions.md#identifier-scheme).

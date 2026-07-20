@@ -90,6 +90,68 @@ language.
   that is impervious, and the ratio of open (unbuilt) space; morphology metrics
   alongside coverage and FAR.
 
+## Sheets & drawing production
+
+- **Sheet** — a single printable page of a construction/permit drawing set,
+  bearing a title block and one or more viewports; the atomic unit of a CAD
+  sheet set.
+- **Sheet Set** — the ordered, discipline-organised collection of sheets that
+  makes up a project's deliverable drawings.
+- **Layout / Paper Space** — the virtual sheet at print size (Arch D, ISO A1,
+  etc.) on which viewports, title blocks, and sheet-relative annotations are
+  composed; distinct from *model space* where the world-scale drawing lives.
+- **Model Space** — the coordinate world (drawn at 1:1 in real units) that
+  viewports look into.
+- **Viewport** — a rectangular window on a layout that displays a region of
+  model space at an explicit plot scale, optionally clipped, rotated, or with
+  per-viewport layer overrides.
+- **Plot Scale** — the printed-to-real distance ratio at which a viewport is
+  plotted (e.g. 1:100, 1/8″=1′-0″).
+- **Title Block** — the framed region on a sheet carrying identifying data
+  (project, sheet number, title, date, revision, seals) per ISO 7200.
+- **Discipline Designator** — the single-letter code identifying which
+  discipline a sheet belongs to, per US NCS v6 (`G` general, `C` civil, `S`
+  structural, `A` architectural, `M` mechanical, `E` electrical, etc.).
+- **Sheet Number** — an identifier of the form
+  `<Discipline><Sheet-type><Sequence>` (e.g. `A-101`), where the sheet-type
+  hundreds digit means plans (1), elevations (2), sections (3), enlarged (4),
+  details (5), schedules (6), 3D (9).
+- **CAD Layer Standard** — a rule-set for layer naming, colour, lineweight and
+  linetype (US NCS / AIA · ISO 13567) that keeps a drawing intelligible across
+  offices and consultants.
+- **Plot Style** — a table (colour-dependent CTB or named STB) mapping on-screen
+  layer/colour to printed lineweight, colour, screening, and linetype.
+- **Annotative Scaling** — the property that lets a text, dimension, or symbol
+  size itself against the sheet (2.5 mm at print) rather than the world, so a
+  single object plots correctly in viewports of different scales.
+- **Dimension** — an annotative measurement placed on a drawing (linear,
+  aligned, angular, radial, ordinate, arc-length).
+- **Symbol / Block** — a reusable, parametric graphic (grid bubble, section
+  marker, detail bubble, north arrow, revision cloud, scale bar, hardware
+  symbol).
+- **Grid Line** — a labelled column-grid reference (A/B/C…, 1/2/3…) that
+  appears on every applicable sheet at the same location.
+- **Level Datum** — a labelled horizontal reference on sections and elevations
+  (e.g. `L1 = 100.00`, `L2 = 112.50`).
+- **Match Line** — a dashed break line on a plan that continues onto an
+  adjacent sheet, tagged with the neighbour's sheet number.
+- **Callout Marker** — an on-plan bubble that names the sheet and drawing
+  number where a section, elevation, or detail is drawn; the destination
+  drawing carries the reciprocal marker.
+- **Schedule** — a data-driven table (door, window, room/finish, panel,
+  fixture, equipment) sourced from the same domain objects that render on the
+  plans.
+- **Revision Cloud** — a scalloped freehand outline around a changed region of
+  a drawing, paired with a **Delta Tag** carrying the revision number.
+- **Revision Block** — the tabular history in a title block listing revision
+  number, date, description, drawn/approved by.
+- **Issue Set** — a named release ("For Permit", "For Bid", "Issued for
+  Construction", "As-Built") that stamps every sheet on release.
+- **Xref (External Reference)** — a drawing file referenced by another (a site
+  plan referenced by every sheet) so source updates propagate.
+- **Sheet Package** — the deliverable archive produced from an issue: a
+  multi-sheet PDF and/or DXF/DWG sheet set with a manifest and checksums.
+
 ## Collaboration & governance
 
 - **Project** — a server-persisted planning workspace containing a site and its

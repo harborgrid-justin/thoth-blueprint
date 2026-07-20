@@ -52,11 +52,13 @@ need …") and then decomposed into the functional areas that satisfy it.
 > boundary, apply setbacks, and read yield, FAR, and coverage — and export an
 > exhibit, so I can make an early go/no-go decision.
 
-- **Satisfies:** `BR-006`, `BR-008`, `BR-005`, `BR-009`
+- **Satisfies:** `BR-006`, `BR-008`, `BR-005`, `BR-009`, `BR-012`
 - **Needs:** fast boundary drawing; setbacks & buildable envelope; buildings;
-  yield/FAR/coverage metrics; PDF/DXF export.
+  yield/FAR/coverage metrics; PDF/DXF export; issue a plan set at the point
+  feasibility becomes an application.
 - **Traces to:** `FE-CANVAS`, `DOM-SETBACK`, `DOM-ENVELOPE`, `DOM-BUILDING`,
-  `DOM-METRIC`, `FE-METRIC`, `IOP-PDF`, `IOP-DXF`
+  `DOM-METRIC`, `FE-METRIC`, `IOP-PDF`, `IOP-DXF`, `FE-SHEET`, `FE-PLOT`,
+  `IOP-PDFSHEET`, `IOP-DXFSHEET`
 
 ## STK-005 — Community stakeholder (public)
 
@@ -89,6 +91,35 @@ need …") and then decomposed into the functional areas that satisfy it.
 - **Needs:** public API; import/export automation; self-hosting; open license.
 - **Traces to:** `BE-API`, `BE-IMPORT`, `BE-EXPORT`, `BE-JOB`, `BE-WEBHOOK`,
   `IOP-*`, `NFR-PORT`, `NFR-LEGAL`
+
+## STK-008 — Architect / engineer / CAD manager
+
+> As an **architect, engineer, or CAD manager** producing the drawings that
+> permit and build the project, I need to compose a complete, standards-
+> conformant sheet set from the live plan — title blocks, viewports at plot
+> scale, discipline-organised numbering, CAD-standard layers and plot styles,
+> annotative dimensions and callouts, coordinated grids and match lines,
+> data-driven schedules, revisions, and issue packaging — and deliver it as
+> multi-sheet PDF and DXF/DWG that a permit reviewer, contractor, or downstream
+> consultant will accept without rework.
+
+- **Satisfies:** `BR-012`, `BR-005`, `BR-006`, `BR-007`, `BR-009`
+- **Needs:** sheet layouts and viewports; title-block templates; NCS/AIA/ISO
+  layer standards and plot-style tables; annotative dimensions and text;
+  reusable symbol/block library; column grids and level datums; section /
+  elevation / detail / match-line callouts wired sheet-to-sheet;
+  data-driven schedules from the same domain objects rendered on the plans;
+  revision clouds, delta tags, revision blocks, and named issue sets;
+  multi-sheet PDF (incl. PDF/A and PDF/E-1) and DXF/DWG sheet-set export;
+  a sheet-set browser and batch plot.
+- **Traces to:** `FE-SHEET`, `FE-VIEWPORT`, `FE-TITLE`, `FE-PLOT`, `FE-ANNO`,
+  `FE-SYMBOL`, `FE-GRIDLINE`, `FE-MATCHLINE`, `FE-SCHEDULE`, `FE-REV`,
+  `FE-SHEETSET`, `BE-SHEET`, `BE-TEMPLATE`, `BE-PLOT`, `BE-SCHEDULE`,
+  `BE-PACKAGE`, `DOM-SHEET`, `DOM-TITLEBLOCK`, `DOM-SHEETSET`, `DOM-PLOTSTYLE`,
+  `DOM-SYMBOL`, `DOM-DIM`, `DOM-ANNO`, `DOM-LAYERSTD`, `DOM-GRID`,
+  `DOM-SCHEDULE`, `DOM-REV`, `DOM-XREF`, `DOM-MATCHLINE`, `DOM-DISCIPLINE`,
+  `DOM-NUMBERING`, `IOP-DXFSHEET`, `IOP-PDFSHEET`, `IOP-PLTSTYLE`,
+  `IOP-LAYERMAP`, `IOP-TITLEBLOCK`, `IOP-BLOCK`
 
 ## Coverage note
 
