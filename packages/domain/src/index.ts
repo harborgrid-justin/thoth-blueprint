@@ -6,44 +6,54 @@
  * framework, no database driver. Vocabulary mirrors docs/GLOSSARY.md.
  */
 
-export * from "./geometry";
-export * from "./curve";
-export * from "./spatial";
-export * from "./landuse";
-export * from "./sheetsize";
-export * from "./drafting";
-export * from "./hatch";
-export * from "./sheet";
-export * from "./sheetview";
-export * from "./dimension";
-export * from "./annotation";
-export * from "./building";
-export * from "./schedule";
-export * from "./primitives";
-export * from "./metrics";
-export * from "./rules";
-export * from "./survey";
-export * from "./plss";
-export * from "./landlot";
-export * from "./regions";
-export * from "./monument";
-export * from "./controls";
-export * from "./alignment";
-export * from "./platset";
-export * from "./network";
-export * from "./terrain";
-export * from "./pointcloud";
-export * from "./collada";
-export * from "./id";
-export * from "./profile";
-export * from "./qto";
-export * from "./pipedesign";
-export * from "./partbuilder";
-export * from "./labeling";
-export * from "./planproduction";
-export * from "./superelevation";
-export * from "./assembly";
-export * from "./corridor";
-export * from "./grading";
-export * from "./descriptionKeys";
+// Spatial foundation
+export * from "./spatial/geometry";
+export * from "./spatial/curve";
+export * from "./spatial/spatial";
+export * from "./spatial/primitives";
+export * from "./spatial/id";
 
+// Survey
+export * from "./survey/survey";
+export * from "./survey/plss";
+export * from "./survey/monument";
+export * from "./survey/controls";
+export * from "./survey/descriptionKeys";
+
+// Planning
+export * from "./planning/landuse";
+export * from "./planning/landlot";
+export * from "./planning/building";
+export * from "./planning/rules";
+export * from "./planning/metrics";
+export * from "./planning/regions";
+export * from "./planning/subdivision";
+
+// Civil
+export * from "./civil/alignment";
+export * from "./civil/corridor";
+export * from "./civil/profile";
+export * from "./civil/superelevation";
+export * from "./civil/assembly";
+export * from "./civil/grading";
+export * from "./civil/terrain";
+export * from "./civil/pointcloud";
+export * from "./civil/network";
+export * from "./civil/pipedesign";
+export * from "./civil/partbuilder";
+
+// Drawing / Drafting / Sheet generation
+export * from "./drawing/sheetsize";
+export * from "./drawing/sheet";
+export * from "./drawing/sheetview";
+export * from "./drawing/drafting";
+export * from "./drawing/hatch";
+export * from "./drawing/dimension";
+export * from "./drawing/annotation";
+export * from "./drawing/labeling";
+export * from "./drawing/planproduction";
+export * from "./drawing/schedule";
+export * from "./drawing/platset";
+export * from "./drawing/qto";
+export * from "./drawing/collada";
+export * from "./planning/sampleData";

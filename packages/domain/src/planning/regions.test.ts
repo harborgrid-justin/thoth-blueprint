@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { defaultSpatialContext } from "./spatial";
-import type { Polygon } from "./geometry";
-import type { Parcel, Site } from "./primitives";
+import { defaultSpatialContext } from "../spatial/spatial";
+import type { Polygon } from "../spatial/geometry";
+import type { Parcel, Site } from "../spatial/primitives";
 import {
   formatLandLot,
   formatLandLotShort,
@@ -16,7 +16,7 @@ import {
   listRegionPlugins,
   resolveCapabilities,
 } from "./regions";
-import { collectSiteCurves } from "./platset";
+import { collectSiteCurves } from "../drawing/platset";
 
 describe("Georgia Land Lot System", () => {
   it("sizes a 202.5-acre land lot (~2970 ft square)", () => {

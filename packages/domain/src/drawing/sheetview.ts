@@ -11,11 +11,13 @@
  * preserves the Y sense (north stays up) and never flips.
  */
 
-import type { Bounds, Point } from "./geometry";
-import { boundsCenter } from "./geometry";
+import _ from "lodash";
+import { mat2d, vec2 } from "gl-matrix";
+import type { Bounds, Point } from "../spatial/geometry";
+import { boundsCenter } from "../spatial/geometry";
 import { scaleRatio } from "./drafting";
 import type { PaperRect, PaperUnit } from "./sheetsize";
-import { METERS_PER_UNIT, type Unit } from "./spatial";
+import { METERS_PER_UNIT, type Unit } from "../spatial/spatial";
 
 const METERS_PER_PAPER_UNIT: Record<PaperUnit, number> = {
   in: 0.0254,
@@ -84,15 +86,17 @@ export function viewportTransform(
   const cx = vp.sheetRect.x + vp.sheetRect.w / 2;
   const cy = vp.sheetRect.y + vp.sheetRect.h / 2;
   const rot = ((vp.rotationDeg ?? 0) * Math.PI) / 180;
-  const cos = Math.cos(rot);
-  const sin = Math.sin(rot);
+
+  const m = mat2d.create();
+  mat2d.translate(m, m, [cx, cy]);
+  mat2d.rotate(m, m, rot);
+  mat2d.scale(m, m, [s, s]);
+  mat2d.translate(m, m, [-vp.modelCenter.x, -vp.modelCenter.y]);
+
   const project = (p: Point): Point => {
-    const dx = (p.x - vp.modelCenter.x) * s;
-    const dy = (p.y - vp.modelCenter.y) * s;
-    return {
-      x: cx + dx * cos - dy * sin,
-      y: cy + dx * sin + dy * cos,
-    };
+    const out = vec2.create();
+    vec2.transformMat2d(out, [p.x, p.y], m);
+    return { x: out[0], y: out[1] };
   };
   return { project, scalePx: s };
 }
@@ -129,9 +133,11 @@ export function fitScale(
   const bw = Math.max(modelBounds.maxX - modelBounds.minX, 1e-6);
   const bh = Math.max(modelBounds.maxY - modelBounds.minY, 1e-6);
   // Larger paperPerModel ⇒ bigger drawing; iterate from biggest to smallest.
-  const sorted = candidates
-    .map((id) => ({ id, s: paperPerModel(id, modelUnit, paperUnit) }))
-    .sort((a, b) => b.s - a.s);
+  const sorted = _.orderBy(
+    candidates.map((id) => ({ id, s: paperPerModel(id, modelUnit, paperUnit) })),
+    ["s"],
+    ["desc"]
+  );
   for (const { id, s } of sorted) {
     if (bw * s <= rect.w && bh * s <= rect.h) return id;
   }
@@ -190,9 +196,8 @@ export interface MatchLine {
 export function sectionGaze(mark: SectionMark): Point {
   if (mark.gaze) return mark.gaze;
   const [a, b] = mark.atLine;
-  const dx = b.x - a.x;
-  const dy = b.y - a.y;
-  const len = Math.hypot(dx, dy) || 1;
+  const v = vec2.fromValues(b.x - a.x, b.y - a.y);
+  const len = vec2.len(v) || 1;
   // Left normal of the cut direction.
-  return { x: -dy / len, y: dx / len };
+  return { x: -v[1] / len, y: v[0] / len };
 }

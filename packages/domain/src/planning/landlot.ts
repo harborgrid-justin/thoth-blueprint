@@ -9,8 +9,8 @@
  * the platform convention: north is −Y, east is +X.
  */
 
-import type { Point, Polygon } from "./geometry";
-import { sectionFrame, type SectionFrame } from "./plss";
+import type { Point, Polygon } from "../spatial/geometry";
+import { sectionFrame, type SectionFrame } from "../survey/plss";
 
 /** Square feet in one acre. */
 export const ACRE_SQFT = 43560;

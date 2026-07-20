@@ -11,8 +11,9 @@
  * horizontal coordinates, so slope is a true rise-over-run.
  */
 
-import { bounds, pointInPolygon, type Bounds, type Point, type Polygon, type Polyline } from "./geometry";
-import type { SpatialContext } from "./spatial";
+import { vec2 } from "gl-matrix";
+import { bounds, pointInPolygon, type Bounds, type Point, type Polygon, type Polyline } from "../spatial/geometry";
+import type { SpatialContext } from "../spatial/spatial";
 
 /** A surveyed elevation at a point (a spot grade / benchmark). */
 export interface SpotElevation {
@@ -283,9 +284,10 @@ export interface SlopeSample {
 export function slopeAtNode(grid: ElevationGrid, c: number, r: number): SlopeSample {
   const dzdx = (nodeHeight(grid, c + 1, r) - nodeHeight(grid, c - 1, r)) / (2 * grid.cellSize);
   const dzdy = (nodeHeight(grid, c, r + 1) - nodeHeight(grid, c, r - 1)) / (2 * grid.cellSize);
-  const slope = Math.hypot(dzdx, dzdy);
+  const grad = vec2.fromValues(dzdx, dzdy);
+  const slope = vec2.len(grad);
   const aspect =
-    slope < 1e-9 ? null : (Math.atan2(dzdx, dzdy) * (180 / Math.PI) + 360) % 360;
+    slope < 1e-9 ? null : (Math.atan2(grad[0], grad[1]) * (180 / Math.PI) + 360) % 360;
   return { slope, percent: slope * 100, degrees: Math.atan(slope) * (180 / Math.PI), aspect };
 }
 
@@ -468,20 +470,18 @@ export function traceWaterDropPath(
     const dzdx = (nodeHeight(grid, c + 1, r) - nodeHeight(grid, c - 1, r)) / (2 * grid.cellSize);
     const dzdy = (nodeHeight(grid, c, r + 1) - nodeHeight(grid, c, r - 1)) / (2 * grid.cellSize);
 
-    const length = Math.hypot(dzdx, dzdy);
+    const grad = vec2.fromValues(dzdx, dzdy);
+    const length = vec2.len(grad);
     if (length < 0.005) {
       break;
     }
 
-    const stepX = -dzdx / length;
-    const stepY = -dzdy / length;
-
     const next = {
-      x: curr.x + stepX * stepSize,
-      y: curr.y + stepY * stepSize
+      x: curr.x - (grad[0] / length) * stepSize,
+      y: curr.y - (grad[1] / length) * stepSize
     };
 
-    if (Math.hypot(next.x - curr.x, next.y - curr.y) < 1e-3) {
+    if (vec2.distance(vec2.fromValues(next.x, next.y), vec2.fromValues(curr.x, curr.y)) < 1e-3) {
       break;
     }
 

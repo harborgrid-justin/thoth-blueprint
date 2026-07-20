@@ -5,7 +5,7 @@
  * drawn with a distinctive drafting symbol rather than a plain stroke.
  */
 
-import type { Point, Polyline } from "./geometry";
+import type { Point, Polyline } from "../spatial/geometry";
 
 export type ControlLineType =
   | "silt-fence"

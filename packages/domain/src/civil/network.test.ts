@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { defaultSpatialContext } from "./spatial";
+import { defaultSpatialContext } from "../spatial/spatial";
 import {
   connectedComponents,
   corridorArea,

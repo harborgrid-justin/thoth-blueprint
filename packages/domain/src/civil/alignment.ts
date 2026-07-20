@@ -14,7 +14,17 @@
  * is clockwise from north in [0, 360). Distances/stations are in plan units.
  */
 
-import { type Point } from "./geometry";
+import _ from "lodash";
+import {
+  type Point,
+  add,
+  subtract as sub,
+  scale as mul,
+  length as len,
+  normalize as norm,
+  dot,
+  cross as crossz,
+} from "../spatial/geometry";
 
 /** Degrees a 100-unit arc subtends at radius R (arc definition of degree of curve). */
 const DEGREE_OF_CURVE_CONST = (100 * 180) / Math.PI; // 5729.5779… for 100-ft stations
@@ -113,30 +123,6 @@ export interface ResolvedAlignment {
 }
 
 // --- vector helpers --------------------------------------------------------
-
-function sub(a: Point, b: Point): Point {
-  return { x: a.x - b.x, y: a.y - b.y };
-}
-function add(a: Point, b: Point): Point {
-  return { x: a.x + b.x, y: a.y + b.y };
-}
-function mul(a: Point, k: number): Point {
-  return { x: a.x * k, y: a.y * k };
-}
-function len(a: Point): number {
-  return Math.hypot(a.x, a.y);
-}
-function norm(a: Point): Point {
-  const l = len(a);
-  return l < 1e-12 ? { x: 0, y: 0 } : { x: a.x / l, y: a.y / l };
-}
-function dot(a: Point, b: Point): number {
-  return a.x * b.x + a.y * b.y;
-}
-/** z of the 2D cross product. */
-function crossz(a: Point, b: Point): number {
-  return a.x * b.y - a.y * b.x;
-}
 
 /** Azimuth (deg clockwise from north, north = −Y) of direction `d`. */
 function azimuthOf(d: Point): number {
@@ -330,7 +316,7 @@ export function stationOffsetOfPoint(
     } else {
       const c = el.curve;
       const toP = sub(p, c.center);
-      let ang = Math.atan2(toP.y, toP.x);
+      const ang = Math.atan2(toP.y, toP.x);
       // Clamp the angle to the swept arc.
       const a0 = c.startAngle;
       const a1 = c.startAngle + c.sweep;
@@ -436,7 +422,7 @@ export function validateAlignmentDesignSpeed(
 
   const getSpeedAtStation = (station: number): number => {
     const zones = alignment.designSpeeds ?? [];
-    const zone = [...zones].sort((a, b) => b.station - a.station).find((z) => station >= z.station);
+    const zone = _.find(_.orderBy(zones, ["station"], ["desc"]), (z) => station >= z.station);
     return zone ? zone.speed : defaultSpeed;
   };
 

@@ -6,15 +6,14 @@
  * same way.
  */
 
+import _ from "lodash";
 import {
   roomArea,
   type BuildingModel,
-  type Door,
-  type Window,
-} from "./building";
+} from "../planning/building";
 import type { SiteCurve } from "./platset";
-import type { AreaUnit, SpatialContext } from "./spatial";
-import { areaUnitLabel } from "./spatial";
+import type { AreaUnit, SpatialContext } from "../spatial/spatial";
+import { areaUnitLabel } from "../spatial/spatial";
 
 /** A schedule column definition. */
 export interface ScheduleColumn {
@@ -42,16 +41,14 @@ export function doorSchedule(model: BuildingModel): ScheduleTable {
     const inch = totalIn - ft * 12;
     return `${ft}'-${inch}"`;
   };
-  const rows: ScheduleRow[] = model.doors
-    .slice()
-    .sort((a: Door, b: Door) => a.mark.localeCompare(b.mark))
-    .map((d) => ({
-      mark: d.mark,
-      width: feetIn(d.width),
-      height: feetIn(d.height),
-      leaf: d.leaf,
-      swing: d.swing,
-    }));
+  const sortedDoors = _.sortBy(model.doors, "mark");
+  const rows: ScheduleRow[] = sortedDoors.map((d) => ({
+    mark: d.mark,
+    width: feetIn(d.width),
+    height: feetIn(d.height),
+    leaf: d.leaf,
+    swing: d.swing,
+  }));
   return {
     id: "door-schedule",
     title: "Door Schedule",
@@ -74,15 +71,13 @@ export function windowSchedule(model: BuildingModel): ScheduleTable {
     const inch = totalIn - ft * 12;
     return `${ft}'-${inch}"`;
   };
-  const rows: ScheduleRow[] = model.windows
-    .slice()
-    .sort((a: Window, b: Window) => a.mark.localeCompare(b.mark))
-    .map((w) => ({
-      mark: w.mark,
-      width: feetIn(w.width),
-      height: feetIn(w.height),
-      sill: feetIn(w.sill),
-    }));
+  const sortedWindows = _.sortBy(model.windows, "mark");
+  const rows: ScheduleRow[] = sortedWindows.map((w) => ({
+    mark: w.mark,
+    width: feetIn(w.width),
+    height: feetIn(w.height),
+    sill: feetIn(w.sill),
+  }));
   return {
     id: "window-schedule",
     title: "Window Schedule",
@@ -102,15 +97,13 @@ export function roomSchedule(
   spatial: SpatialContext,
   unit: AreaUnit = "sqft",
 ): ScheduleTable {
-  const rows: ScheduleRow[] = model.rooms
-    .slice()
-    .sort((a, b) => a.number.localeCompare(b.number))
-    .map((r) => ({
-      number: r.number,
-      name: r.name,
-      area: `${roomArea(r, spatial, unit).toFixed(0)} ${areaUnitLabel(unit)}`,
-      finish: r.floorFinish ?? "—",
-    }));
+  const sortedRooms = _.sortBy(model.rooms, "number");
+  const rows: ScheduleRow[] = sortedRooms.map((r) => ({
+    number: r.number,
+    name: r.name,
+    area: `${roomArea(r, spatial, unit).toFixed(0)} ${areaUnitLabel(unit)}`,
+    finish: r.floorFinish ?? "—",
+  }));
   return {
     id: "room-schedule",
     title: "Room Schedule",
@@ -126,17 +119,15 @@ export function roomSchedule(
 
 /** Finish schedule (floor/base/wall/ceiling per room). */
 export function finishSchedule(model: BuildingModel): ScheduleTable {
-  const rows: ScheduleRow[] = model.rooms
-    .slice()
-    .sort((a, b) => a.number.localeCompare(b.number))
-    .map((r) => ({
-      number: r.number,
-      name: r.name,
-      floor: r.floorFinish ?? "—",
-      base: r.baseFinish ?? "—",
-      wall: r.wallFinish ?? "—",
-      ceiling: r.ceilingFinish ?? "—",
-    }));
+  const sortedRooms = _.sortBy(model.rooms, "number");
+  const rows: ScheduleRow[] = sortedRooms.map((r) => ({
+    number: r.number,
+    name: r.name,
+    floor: r.floorFinish ?? "—",
+    base: r.baseFinish ?? "—",
+    wall: r.wallFinish ?? "—",
+    ceiling: r.ceilingFinish ?? "—",
+  }));
   return {
     id: "finish-schedule",
     title: "Room Finish Schedule",

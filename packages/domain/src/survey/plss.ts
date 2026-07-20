@@ -9,7 +9,7 @@
  * nomenclature. Geometry uses the platform convention: north is −Y, east is +X.
  */
 
-import type { Point, Polygon } from "./geometry";
+import type { Point, Polygon } from "../spatial/geometry";
 
 /** Nominal U.S. section side, feet (one mile). */
 export const SECTION_FEET = 5280;

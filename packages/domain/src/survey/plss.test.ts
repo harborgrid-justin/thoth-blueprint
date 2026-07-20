@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { area as polygonArea } from "./geometry";
+import { area as polygonArea } from "../spatial/geometry";
 import {
   aliquotRect,
   formatAliquot,

@@ -5,14 +5,15 @@
  * intersections, right-of-way corridor area, and service coverage.
  */
 
+import _ from "lodash";
 import {
   closestPointOnSegment,
   distance,
   polylineLength,
   type Point,
   type Polyline,
-} from "./geometry";
-import type { SpatialContext } from "./spatial";
+} from "../spatial/geometry";
+import type { SpatialContext } from "../spatial/spatial";
 
 /** The kind of system a network carries. */
 export type NetworkKind = "road" | "path" | "water" | "sewer" | "storm" | "power";
@@ -72,10 +73,10 @@ export function networkLength(
   spatial: SpatialContext,
 ): { plan: number; meters: number } {
   const nodes = nodeMap(network);
-  const plan = network.edges.reduce((sum, e) => {
+  const plan = _.sumBy(network.edges, (e) => {
     const pts = edgePoints(network, e, nodes);
-    return pts ? sum + distance(pts[0], pts[1]) : sum;
-  }, 0);
+    return pts ? distance(pts[0], pts[1]) : 0;
+  });
   return { plan, meters: plan * (spatial.units === "feet" ? 0.3048 : 1) };
 }
 
@@ -136,12 +137,12 @@ export function isConnected(network: InfrastructureNetwork): boolean {
  */
 export function corridorArea(network: InfrastructureNetwork): number {
   const nodes = nodeMap(network);
-  return network.edges.reduce((sum, e) => {
+  return _.sumBy(network.edges, (e) => {
     const pts = edgePoints(network, e, nodes);
-    if (!pts) return sum;
+    if (!pts) return 0;
     const w = e.width ?? DEFAULT_ROAD_WIDTH[e.roadClass ?? "local"] ?? 0;
-    return sum + distance(pts[0], pts[1]) * w;
-  }, 0);
+    return distance(pts[0], pts[1]) * w;
+  });
 }
 
 /** Shortest distance from a point to any edge of the network, in plan units. */

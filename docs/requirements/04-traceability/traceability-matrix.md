@@ -1,4 +1,4 @@
-﻿# Requirements Traceability Matrix (RTM)
+# Requirements Traceability Matrix (RTM)
 
 > **Generated file.** Matrix C and the roll-ups below are produced by
 > [`_meta/scripts/gen_rtm.py`](../_meta/scripts/gen_rtm.py) from the `Trace`
@@ -381,9 +381,9 @@ in the linked sources; this matrix carries the trace links.
 | DOM-GEOM-009 | STK-001 | NFR-REL-003 | P1 | M | T | â¬œ |
 | DOM-GEOM-010 | STK-001 | BR-005 | P2 | C | T | â¬œ |
 | DOM-GEOM-011 | STK-001 | NFR-COMPAT-001 | P1 | S | T | â¬œ |
-| DOM-SURVEY-001 | STK-001 | BR-002 | P2 | S | T | â¬œ |
-| DOM-SURVEY-002 | STK-001 | BR-004 | P2 | S | T | â¬œ |
-| DOM-SURVEY-003 | STK-001 | NFR-REL-003 | P3 | C | T | â¬œ |
+| DOM-SURVEY-001 | STK-001 | BR-002 | P2 | S | T | âœ… |
+| DOM-SURVEY-002 | STK-001 | BR-004 | P2 | S | T | âœ… |
+| DOM-SURVEY-003 | STK-001 | NFR-REL-003 | P3 | C | T | âœ… |
 | DOM-IDENT-001 | STK-003 | BR-003 | P1 | M | T | â¬œ |
 | DOM-IDENT-002 | STK-001 | NFR-REL-003 | P1 | M | T | â¬œ |
 | DOM-IDENT-003 | STK-002 | BR-002 | P2 | C | T | â¬œ |
@@ -395,15 +395,15 @@ in the linked sources; this matrix carries the trace links.
 | DOM-PARCEL-001 | STK-001 | BR-002 | P1 | M | T | â¬œ |
 | DOM-PARCEL-002 | STK-001 | BR-008 | P1 | M | T | â¬œ |
 | DOM-PARCEL-003 | STK-001 | BR-002 | P1 | S | T | â¬œ |
-| DOM-PARCEL-004 | STK-001 | NFR-REL-003 | P2 | S | T | â¬œ |
-| DOM-PARCEL-005 | STK-004 | BR-008 | P2 | S | T | â¬œ |
-| DOM-PARCEL-006 | STK-001 | BR-002 | P2 | S | T | â¬œ |
-| DOM-PARCEL-007 | STK-001 | BR-008 | P1 | M | T | â¬œ |
+| DOM-PARCEL-004 | STK-001 | NFR-REL-003 | P2 | S | T | âœ… |
+| DOM-PARCEL-005 | STK-004 | BR-008 | P2 | S | T | âœ… |
+| DOM-PARCEL-006 | STK-001 | BR-002 | P2 | S | T | âœ… |
+| DOM-PARCEL-007 | STK-001 | BR-008 | P1 | M | T | âœ… |
 | DOM-LOT-001 | STK-001 | BR-002 | P1 | M | T | â¬œ |
-| DOM-LOT-002 | STK-001 | BR-008 | P1 | M | T | â¬œ |
+| DOM-LOT-002 | STK-001 | BR-008 | P1 | M | T | âœ… |
 | DOM-LOT-003 | STK-001 | BR-002 | P1 | M | T | â¬œ |
 | DOM-BLOCK-001 | STK-001 | BR-002 | P1 | M | T | â¬œ |
-| DOM-BLOCK-002 | STK-001 | BR-002 | P2 | S | T | â¬œ |
+| DOM-BLOCK-002 | STK-001 | BR-002 | P2 | S | T | âœ… |
 | DOM-BLOCK-003 | STK-001 | BR-008 | P1 | S | T | â¬œ |
 | DOM-ZONE-001 | STK-002 | BR-002 | P1 | M | T | â¬œ |
 | DOM-ZONE-002 | STK-002 | BR-008 | P1 | M | T | â¬œ |
@@ -435,9 +435,9 @@ in the linked sources; this matrix carries the trace links.
 | DOM-PARKING-002 | STK-004 | BR-008 | P5 | S | T | â¬œ |
 | DOM-INFRA-001 | STK-001 | BR-002 | P5 | C | T | â¬œ |
 | DOM-INFRA-002 | STK-001 | BR-002 | P5 | C | T | â¬œ |
-| DOM-SUBDIV-001 | STK-001 | BR-002 | P1 | M | T | â¬œ |
-| DOM-SUBDIV-002 | STK-001 | NFR-REL-003 | P2 | S | T | â¬œ |
-| DOM-SUBDIV-003 | STK-004 | BR-008 | P2 | S | T | â¬œ |
+| DOM-SUBDIV-001 | STK-001 | BR-002 | P1 | M | T | âœ… |
+| DOM-SUBDIV-002 | STK-001 | NFR-REL-003 | P2 | S | T | âœ… |
+| DOM-SUBDIV-003 | STK-004 | BR-008 | P2 | S | T | âœ… |
 | DOM-METRIC-001 | STK-002 | BR-008 | P1 | M | T | â¬œ |
 | DOM-METRIC-002 | STK-002 | BR-008 | P1 | M | T | â¬œ |
 | DOM-METRIC-003 | STK-004 | BR-008 | P1 | M | T | â¬œ |

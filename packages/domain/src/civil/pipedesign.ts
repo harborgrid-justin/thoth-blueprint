@@ -1,6 +1,6 @@
 import { type InfrastructureNetwork, type NetworkNode, type NetworkEdge } from "./network";
 import { type ElevationGrid, elevationAt } from "./terrain";
-import { distance } from "./geometry";
+import { distance } from "../spatial/geometry";
 
 /** Design rules settings for utility networks validation. */
 export interface PipeDesignRules {

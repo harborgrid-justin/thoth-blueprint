@@ -1,3 +1,4 @@
+import _ from "lodash";
 import type { HorizontalAlignment } from "./alignment";
 import { resolveAlignment } from "./alignment";
 
@@ -45,7 +46,7 @@ export function calculateSuperelevationRunoff(
   const rightLC = rightOut + tangentRunout / 2;
   const rightNC = rightLC + tangentRunout / 2;
 
-  const transitionStations: SuperelevationStation[] = [
+  const rawStations: SuperelevationStation[] = [
     { station: leftNC, leftOuterSlope: normalCrown, rightOuterSlope: normalCrown, description: "Normal Crown (NC)" },
     { station: leftLC, leftOuterSlope: 0.0, rightOuterSlope: normalCrown, description: "Level Crown (LC)" },
     { station: leftIn, leftOuterSlope: -normalCrown, rightOuterSlope: normalCrown, description: "Reverse Crown (RC)" },
@@ -54,7 +55,9 @@ export function calculateSuperelevationRunoff(
     { station: rightOut, leftOuterSlope: -normalCrown, rightOuterSlope: normalCrown, description: "Reverse Crown (RC)" },
     { station: rightLC, leftOuterSlope: 0.0, rightOuterSlope: normalCrown, description: "Level Crown (LC)" },
     { station: rightNC, leftOuterSlope: normalCrown, rightOuterSlope: normalCrown, description: "Normal Crown (NC)" },
-  ].sort((a, b) => a.station - b.station);
+  ];
+
+  const transitionStations = _.sortBy(rawStations, "station");
 
   return {
     alignmentId: alignment.id,

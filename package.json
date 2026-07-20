@@ -15,7 +15,8 @@
     "build": "npm run build --workspace @thoth/domain && npm run build --workspace @thoth/web",
     "preview": "npm run preview --workspace @thoth/web",
     "test": "npm run test --workspace @thoth/domain",
-    "type-check": "npm run type-check --workspace @thoth/domain && npm run type-check --workspace @thoth/web"
+    "type-check": "npm run type-check --workspace @thoth/domain && npm run type-check --workspace @thoth/web",
+    "lint": "npm run lint --workspace @thoth/domain"
   },
   "engines": {
     "node": ">=20"

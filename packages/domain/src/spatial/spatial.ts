@@ -4,31 +4,9 @@
  * core principle — geometry never travels without this context.
  */
 
-import type { Polygon, Polyline } from "./geometry";
+import type { Polygon, Polyline, Unit, CRS, Scale, SpatialContext, AreaUnit } from "./types";
 import { area as polygonArea, perimeter as polygonPerimeter, polylineLength } from "./geometry";
-
-/** Length units a plan can be expressed in. Attached explicitly — never implied. */
-export type Unit = "meters" | "feet";
-
-/**
- * A coordinate reference system identifier, typically an EPSG code such as
- * "EPSG:3857" (Web Mercator) or "EPSG:4326" (WGS84 lon/lat). Every plan has one;
- * geometry without a CRS is invalid.
- */
-export type CRS = string;
-
-/** The ratio of plan distance to real-world distance (e.g. 1 / 1000). */
-export type Scale = number;
-
-/** The spatial reference attached to all geometry in a plan. */
-export interface SpatialContext {
-  crs: CRS;
-  units: Unit;
-  scale: Scale;
-}
-
-/** Units in which an area metric can be reported. */
-export type AreaUnit = "sqm" | "sqft" | "acres" | "hectares" | "sqkm" | "sqmi";
+export type { Unit, CRS, Scale, SpatialContext, AreaUnit };
 
 /** Meters per one unit of the given length {@link Unit}. */
 export const METERS_PER_UNIT: Record<Unit, number> = {

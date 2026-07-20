@@ -10,9 +10,9 @@
  * Framework-agnostic. Coordinates are plan-space; north is −Y as elsewhere.
  */
 
-import type { Point, Polygon } from "./geometry";
-import { add, distance, normalize, scale, subtract } from "./geometry";
-import { measuredArea, type AreaUnit, type SpatialContext } from "./spatial";
+import type { Point, Polygon } from "../spatial/geometry";
+import { add, distance, normalize, scale, subtract } from "../spatial/geometry";
+import { measuredArea, type AreaUnit, type SpatialContext } from "../spatial/spatial";
 
 /** A building storey/level. */
 export interface Level {

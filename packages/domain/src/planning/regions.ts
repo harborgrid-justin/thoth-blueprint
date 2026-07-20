@@ -11,9 +11,9 @@
  * capability set has everything turned on.
  */
 
-import type { MonumentType } from "./monument";
-import type { Orientation, SheetSizeId } from "./sheetsize";
-import type { AreaUnit, CRS, Unit } from "./spatial";
+import type { MonumentType } from "../survey/monument";
+import type { Orientation, SheetSizeId } from "../drawing/sheetsize";
+import type { AreaUnit, CRS, Unit } from "../spatial/spatial";
 
 /** The rectangular-survey framework a jurisdiction is described in. */
 export type SurveyFramework = "plss" | "georgia-land-lot" | "metes-and-bounds";

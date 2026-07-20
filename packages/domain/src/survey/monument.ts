@@ -5,7 +5,7 @@
  * nail & disc, concrete monuments, and benchmarks, each **found** or **set**.
  */
 
-import type { Point } from "./geometry";
+import type { Point } from "../spatial/geometry";
 
 /** The kinds of survey monument a plat depicts. */
 export type MonumentType =

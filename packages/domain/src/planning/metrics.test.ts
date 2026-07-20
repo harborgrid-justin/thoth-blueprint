@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { defaultSpatialContext } from "./spatial";
-import type { Building, LandUse, Parcel, Site } from "./primitives";
+import { defaultSpatialContext } from "../spatial/spatial";
+import type { Building, LandUse, Parcel, Site } from "../spatial/primitives";
 import {
   coverage,
   computeSiteMetrics,

@@ -16,7 +16,10 @@
  * accompanying {@link SpatialContext}.
  */
 
+import { vec2 } from "gl-matrix";
 import { GEOMETRY_EPSILON, type Point, type Polygon } from "./geometry";
+import type { EdgeArcs } from "./types";
+export type { EdgeArcs };
 
 /** A fully-resolved circular arc between two boundary vertices. */
 export interface Arc {
@@ -41,8 +44,7 @@ export interface Arc {
   ccw: boolean;
 }
 
-/** Per-edge bulges keyed by edge index (edge i runs vertex i → vertex i+1). */
-export type EdgeArcs = Record<string, number>;
+
 
 /** The bulge of edge `i`, or 0 (straight) when absent or non-finite. */
 export function edgeBulge(arcs: EdgeArcs | undefined, i: number): number {
@@ -53,7 +55,10 @@ export function edgeBulge(arcs: EdgeArcs | undefined, i: number): number {
 
 /** Unit-normal to the chord direction (rotated +90°). */
 function chordNormal(a: Point, b: Point, len: number): Point {
-  return { x: -(b.y - a.y) / len, y: (b.x - a.x) / len };
+  const diff = vec2.create();
+  vec2.sub(diff, vec2.fromValues(b.x, b.y), vec2.fromValues(a.x, a.y));
+  const normal = vec2.fromValues(-diff[1] / len, diff[0] / len);
+  return { x: normal[0], y: normal[1] };
 }
 
 /**
@@ -62,7 +67,7 @@ function chordNormal(a: Point, b: Point, len: number): Point {
  */
 export function bulgeToArc(a: Point, b: Point, bulge: number): Arc | null {
   if (!Number.isFinite(bulge) || Math.abs(bulge) < GEOMETRY_EPSILON) return null;
-  const chordLength = Math.hypot(b.x - a.x, b.y - a.y);
+  const chordLength = vec2.distance(vec2.fromValues(a.x, a.y), vec2.fromValues(b.x, b.y));
   if (chordLength < GEOMETRY_EPSILON) return null;
 
   const t = Math.abs(bulge);
@@ -71,22 +76,22 @@ export function bulgeToArc(a: Point, b: Point, bulge: number): Arc | null {
   const halfChord = chordLength / 2;
 
   const n = chordNormal(a, b, chordLength);
-  const bulgeDir = { x: n.x * Math.sign(bulge), y: n.y * Math.sign(bulge) };
+  const nVec = vec2.fromValues(n.x, n.y);
+  const bulgeDir = vec2.create();
+  vec2.scale(bulgeDir, nVec, Math.sign(bulge));
   const midOrdinate = radius * (1 - Math.cos(delta / 2));
-  const chordMid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-  const mid = {
-    x: chordMid.x + bulgeDir.x * midOrdinate,
-    y: chordMid.y + bulgeDir.y * midOrdinate,
-  };
+  const chordMid = vec2.fromValues((a.x + b.x) / 2, (a.y + b.y) / 2);
+  const midPoint = vec2.create();
+  vec2.scaleAndAdd(midPoint, chordMid, bulgeDir, midOrdinate);
+  const mid = { x: midPoint[0], y: midPoint[1] };
 
   // Center lies on the perpendicular bisector; the apothem flips side between a
   // minor arc (|b|<1) and a major arc (|b|>1).
   const apothem = Math.sqrt(Math.max(0, radius * radius - halfChord * halfChord));
   const centerDir = -Math.sign(bulge) * Math.sign(1 - t * t);
-  const center = {
-    x: chordMid.x + n.x * centerDir * apothem,
-    y: chordMid.y + n.y * centerDir * apothem,
-  };
+  const centerPoint = vec2.create();
+  vec2.scaleAndAdd(centerPoint, chordMid, nVec, centerDir * apothem);
+  const center = { x: centerPoint[0], y: centerPoint[1] };
 
   // Sweep direction is fixed by the mid-arc point (which lies on the arc).
   const angA = Math.atan2(a.y - center.y, a.x - center.x);

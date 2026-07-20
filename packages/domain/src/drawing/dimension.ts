@@ -8,9 +8,10 @@
  * diameter, ordinate, and arc-length.
  */
 
-import type { Point } from "./geometry";
-import { add, distance, normalize, scale, subtract } from "./geometry";
-import { METERS_PER_UNIT, type SpatialContext } from "./spatial";
+import type { Point } from "../spatial/geometry";
+import { add, distance, normalize, scale, subtract } from "../spatial/geometry";
+import { METERS_PER_UNIT, type SpatialContext } from "../spatial/spatial";
+import type { CoordinateBasis } from "../survey/survey";
 
 /** Arrowhead terminator style. */
 export type DimArrow = "arrow" | "tick" | "dot" | "open";
@@ -34,6 +35,10 @@ export interface DimensionStyle {
   extensionBeyond: number;
   /** Suppress a trailing "0 in" / trailing zeros. */
   suppressZero: boolean;
+  suppressExtension1?: boolean;
+  suppressExtension2?: boolean;
+  textAlignment?: "horizontal" | "parallel" | "perpendicular";
+  secondaryUnit?: DimUnit;
 }
 
 /** Default dimension styles (architectural ticks, engineering arrows, metric). */
@@ -70,6 +75,55 @@ export const DEFAULT_DIM_STYLES: DimensionStyle[] = [
     extensionGap: 1,
     extensionBeyond: 1,
     suppressZero: true,
+  },
+  {
+    id: "dual-unit",
+    label: "Dual Unit",
+    arrow: "arrow",
+    textHeight: 2.5,
+    precision: 2,
+    unit: "ft-dec",
+    secondaryUnit: "m",
+    extensionGap: 1,
+    extensionBeyond: 1,
+    suppressZero: false,
+  },
+  {
+    id: "suppressed-ext",
+    label: "Suppressed Extensions",
+    arrow: "tick",
+    textHeight: 2.5,
+    precision: 2,
+    unit: "ft-dec",
+    extensionGap: 1,
+    extensionBeyond: 1,
+    suppressZero: false,
+    suppressExtension1: true,
+    suppressExtension2: true,
+  },
+  {
+    id: "align-horizontal",
+    label: "Align Horizontal",
+    arrow: "arrow",
+    textHeight: 2.5,
+    precision: 2,
+    unit: "ft-dec",
+    extensionGap: 1,
+    extensionBeyond: 1,
+    suppressZero: false,
+    textAlignment: "horizontal",
+  },
+  {
+    id: "align-perpendicular",
+    label: "Align Perpendicular",
+    arrow: "arrow",
+    textHeight: 2.5,
+    precision: 2,
+    unit: "ft-dec",
+    extensionGap: 1,
+    extensionBeyond: 1,
+    suppressZero: false,
+    textAlignment: "perpendicular",
   },
 ];
 
@@ -189,10 +243,8 @@ function toDisplayLength(modelDist: number, spatial: SpatialContext, unit: DimUn
   }
 }
 
-/** Format a length value per a dimension style. */
-export function formatDimText(modelDist: number, style: DimensionStyle, spatial: SpatialContext): string {
-  const v = toDisplayLength(modelDist, spatial, style.unit);
-  switch (style.unit) {
+function formatSingleValue(v: number, unit: DimUnit, precision: number, suppressZero: boolean): string {
+  switch (unit) {
     case "ft-in": {
       const totalIn = v * 12;
       let ft = Math.floor(totalIn / 12);
@@ -201,20 +253,32 @@ export function formatDimText(modelDist: number, style: DimensionStyle, spatial:
         ft += 1;
         inch = 0;
       }
-      if (style.suppressZero && inch === 0) return `${ft}'`;
+      if (suppressZero && inch === 0) return `${ft}'`;
       return `${ft}'-${inch}"`;
     }
     case "ft-dec":
-      return `${v.toFixed(style.precision)}'`;
+      return `${v.toFixed(precision)}'`;
     case "in":
-      return `${v.toFixed(style.precision)}"`;
+      return `${v.toFixed(precision)}"`;
     case "m":
-      return `${v.toFixed(style.precision)} m`;
+      return `${v.toFixed(precision)} m`;
     case "cm":
-      return `${v.toFixed(style.precision)} cm`;
+      return `${v.toFixed(precision)} cm`;
     case "mm":
-      return `${v.toFixed(style.precision)} mm`;
+      return `${v.toFixed(precision)} mm`;
   }
+}
+
+/** Format a length value per a dimension style. */
+export function formatDimText(modelDist: number, style: DimensionStyle, spatial: SpatialContext): string {
+  const v1 = toDisplayLength(modelDist, spatial, style.unit);
+  const primaryStr = formatSingleValue(v1, style.unit, style.precision, style.suppressZero);
+  if (style.secondaryUnit) {
+    const v2 = toDisplayLength(modelDist, spatial, style.secondaryUnit);
+    const secondaryStr = formatSingleValue(v2, style.secondaryUnit, style.precision, style.suppressZero);
+    return `${primaryStr} [${secondaryStr}]`;
+  }
+  return primaryStr;
 }
 
 /** Perpendicular (left normal) unit vector of a direction. */
@@ -253,21 +317,34 @@ function measureAligned(dim: AlignedDimension, style: DimensionStyle, spatial: S
   const value = distance(dim.a, dim.b);
   const gap = scale(n, Math.sign(dim.offset || 1) * style.extensionGap);
   const beyond = scale(n, dim.offset + Math.sign(dim.offset || 1) * style.extensionBeyond);
+
+  const lines: [Point, Point][] = [];
+  if (!style.suppressExtension1) {
+    lines.push([add(dim.a, gap), add(dim.a, beyond)]);
+  }
+  if (!style.suppressExtension2) {
+    lines.push([add(dim.b, gap), add(dim.b, beyond)]);
+  }
+  lines.push([a2, b2]);
+
+  let textAngleDeg = (Math.atan2(dir.y, dir.x) * 180) / Math.PI;
+  if (style.textAlignment === "horizontal") {
+    textAngleDeg = 0;
+  } else if (style.textAlignment === "perpendicular") {
+    textAngleDeg = (textAngleDeg + 90) % 360;
+  }
+
   return {
     value,
     label: dim.textOverride ?? formatDimText(value, style, spatial),
     geometry: {
-      lines: [
-        [add(dim.a, gap), add(dim.a, beyond)],
-        [add(dim.b, gap), add(dim.b, beyond)],
-        [a2, b2],
-      ],
+      lines,
       ticks: [
         { at: a2, dir },
         { at: b2, dir: scale(dir, -1) },
       ],
       textAt: add(scale(add(a2, b2), 0.5), scale(n, 0.6)),
-      textAngleDeg: (Math.atan2(dir.y, dir.x) * 180) / Math.PI,
+      textAngleDeg,
     },
   };
 }
@@ -282,21 +359,36 @@ function measureLinear(dim: LinearDimension, style: DimensionStyle, spatial: Spa
   const b2 = dim.axis === "horizontal" ? { x: dim.b.x, y: lineCoord } : { x: lineCoord, y: dim.b.y };
   const value = dim.axis === "horizontal" ? Math.abs(dim.b.x - dim.a.x) : Math.abs(dim.b.y - dim.a.y);
   const segDir = normalize(subtract(b2, a2));
+
+  const lines: [Point, Point][] = [];
+  if (!style.suppressExtension1) {
+    lines.push([dim.a, a2]);
+  }
+  if (!style.suppressExtension2) {
+    lines.push([dim.b, b2]);
+  }
+  lines.push([a2, b2]);
+
+  let textAngleDeg = dim.axis === "horizontal" ? 0 : -90;
+  if (style.textAlignment === "parallel") {
+    textAngleDeg = (Math.atan2(segDir.y, segDir.x) * 180) / Math.PI;
+  } else if (style.textAlignment === "perpendicular") {
+    textAngleDeg = ((Math.atan2(segDir.y, segDir.x) * 180) / Math.PI + 90) % 360;
+  } else if (style.textAlignment === "horizontal") {
+    textAngleDeg = 0;
+  }
+
   return {
     value,
     label: dim.textOverride ?? formatDimText(value, style, spatial),
     geometry: {
-      lines: [
-        [dim.a, a2],
-        [dim.b, b2],
-        [a2, b2],
-      ],
+      lines,
       ticks: [
         { at: a2, dir: segDir },
         { at: b2, dir: scale(segDir, -1) },
       ],
       textAt: add(scale(add(a2, b2), 0.5), scale(n, 0.6)),
-      textAngleDeg: dim.axis === "horizontal" ? 0 : -90,
+      textAngleDeg,
     },
   };
 }
@@ -400,3 +492,87 @@ function measureArcLength(dim: ArcLengthDimension, style: DimensionStyle, spatia
     },
   };
 }
+
+
+/** Formatted coordinates structure for a Spot Coordinate. */
+export interface SpotCoordinate {
+  northing: number;
+  easting: number;
+  text: string;
+}
+
+/** Format a point's coordinates as a Spot Coordinate label detailing Northing and Easting. */
+export function formatSpotCoordinate(p: Point, spatial: SpatialContext, basis?: CoordinateBasis): SpotCoordinate {
+  const easting = p.x + (basis?.falseEasting ?? 5000);
+  const northing = -p.y + (basis?.falseNorthing ?? 5000);
+  const u = spatial.units === "feet" ? "ft" : "m";
+  const eastingStr = `E: ${easting.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} ${u}`;
+  const northingStr = `N: ${northing.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} ${u}`;
+  return {
+    northing,
+    easting,
+    text: `${northingStr}\n${eastingStr}`
+  };
+}
+
+/** Compute vertical slope ratios or grades (e.g. 2% or 4:1) along a segment. */
+export function formatSlope(
+  a: Point & { z?: number },
+  b: Point & { z?: number },
+  format: "percent" | "ratio" = "percent"
+): string {
+  const dist2d = distance(a, b);
+  if (dist2d < 1e-9) return "0.00%";
+  
+  const dz = (b.z ?? 0) - (a.z ?? 0);
+  const slopeVal = Math.abs(dz) / dist2d;
+  if (format === "percent") {
+    return `${(slopeVal * 100).toFixed(2)}%`;
+  } else {
+    if (slopeVal < 1e-9) return "Flat";
+    const h = 1 / slopeVal;
+    return `${h.toFixed(1)}:1`;
+  }
+}
+
+/** Stack overlapping colinear/parallel aligned dimensions to avoid line overlap. */
+export function stackDimensionChains(
+  dimensions: AlignedDimension[],
+  baseGap: number = 8
+): AlignedDimension[] {
+  const stacked = dimensions.map(d => ({ ...d }));
+  const n = stacked.length;
+
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      const d1 = stacked[i];
+      const d2 = stacked[j];
+
+      const v1 = normalize(subtract(d1.b, d1.a));
+      const v2 = normalize(subtract(d2.b, d2.a));
+      const parallel = Math.abs(v1.x * v2.y - v1.y * v2.x) < 1e-3;
+
+      if (parallel) {
+        // Project ends onto d1 direction
+        const p1a = d1.a.x * v1.x + d1.a.y * v1.y;
+        const p1b = d1.b.x * v1.x + d1.b.y * v1.y;
+        const p2a = d2.a.x * v1.x + d2.a.y * v1.y;
+        const p2b = d2.b.x * v1.x + d2.b.y * v1.y;
+
+        const min1 = Math.min(p1a, p1b);
+        const max1 = Math.max(p1a, p1b);
+        const min2 = Math.min(p2a, p2b);
+        const max2 = Math.max(p2a, p2b);
+
+        const overlap = min1 < max2 - 1e-3 && min2 < max1 - 1e-3;
+        if (overlap) {
+          if (Math.abs(d1.offset - d2.offset) < baseGap - 1e-3) {
+            d2.offset = d1.offset + Math.sign(d1.offset || 1) * baseGap;
+          }
+        }
+      }
+    }
+  }
+  return stacked;
+}
+

@@ -5,9 +5,10 @@
  * everywhere the model runs.
  */
 
-import type { Point, Polygon } from "./geometry";
-import { area as polygonArea, bounds, offsetPolygon, pointInPolygon } from "./geometry";
-import type { Building, Lot, Site, Zone } from "./primitives";
+import _ from "lodash";
+import type { Point, Polygon } from "../spatial/geometry";
+import { area as polygonArea, bounds, offsetPolygon, pointInPolygon } from "../spatial/geometry";
+import type { Building, Lot, Site, Zone } from "../spatial/primitives";
 
 /**
  * The buildable envelope of a lot: its boundary inset by the lot's setback.
@@ -186,6 +187,6 @@ export function checkCompliance(site: Site): ComplianceFinding[] {
 function centroidOf(polygon: Polygon): Point {
   const n = polygon.length;
   if (n === 0) return { x: 0, y: 0 };
-  const sum = polygon.reduce((acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 });
+  const sum = _.reduce(polygon, (acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 });
   return { x: sum.x / n, y: sum.y / n };
 }

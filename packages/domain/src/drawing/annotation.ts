@@ -6,8 +6,8 @@
  * geometry helpers; the renderer draws the bubbles, clouds, and leaders.
  */
 
-import type { Point, Polygon } from "./geometry";
-import { add, distance, normalize, scale, subtract } from "./geometry";
+import type { Point, Polygon } from "../spatial/geometry";
+import { add, distance, normalize, scale, subtract } from "../spatial/geometry";
 
 /** Text justification. */
 export type TextJustify = "left" | "center" | "right";

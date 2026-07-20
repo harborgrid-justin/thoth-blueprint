@@ -16,7 +16,8 @@
     "build": "tsc -p tsconfig.json",
     "type-check": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "lint": "eslint src"
   },
   "keywords": [
     "planning",
@@ -26,9 +27,19 @@
     "domain-model"
   ],
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/gl-matrix": "^2.4.5",
+    "@types/lodash": "^4.17.24",
     "@types/node": "^22.10.0",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0",
     "typescript": "^5.7.2",
+    "typescript-eslint": "^8.65.0",
     "vitest": "^2.1.8"
   },
-  "license": "GPL-3.0-or-later"
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "gl-matrix": "^3.4.4",
+    "lodash": "^4.18.1"
+  }
 }

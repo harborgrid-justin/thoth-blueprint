@@ -75,15 +75,15 @@ export function resolveLabelStyle(
   };
 }
 
-import { formatStation } from "./alignment";
+import { formatStation } from "../civil/alignment";
 
 /** Format azimuth degrees as quadrant bearing string, e.g. N 45-30-00 E. */
 export function formatQuadrantBearing(azimuth: number): string {
   const normalized = ((azimuth % 360) + 360) % 360;
   
-  let quadrant = "N";
-  let bearingVal = 0;
-  let exitDir = "E";
+  let quadrant: string;
+  let bearingVal: number;
+  let exitDir: string;
 
   if (normalized >= 0 && normalized < 90) {
     quadrant = "N";
@@ -164,7 +164,7 @@ export function compileLabelTemplate(
           result = result.replace(orig, evaluated.toFixed(2));
         }
       }
-    } catch (e) {
+    } catch {
       // Leave template tag unresolved if math evaluation fails
     }
   }

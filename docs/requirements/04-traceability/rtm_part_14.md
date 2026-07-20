@@ -1,4 +1,4 @@
-﻿# Requirements Traceability Matrix - Part 14
+# Requirements Traceability Matrix - Part 14
 **Subject:** Parcels Tutorials â€” Creation & Subdivision (Chapter 10, Part 1)
 **Coverage:** Parcel Creation, Sites, Free-Form Segments, Slide Line, Swing Line, Alignments & Parcels (Lines 5919â€“6185)
 
@@ -6,17 +6,17 @@
 |---|---|---|---|---|
 | REQ-14-001 | Parcels > Create From Objects | The system shall support creating parcel boundaries from closed AutoCAD objects (polylines, lines). | Trace-to-Spec-v1 | Creating parcel/lot boundaries from objects is supported in the data model (a parcel has a boundary polygon), but dynamic auto-subdivision by crossing lines is not implemented |
 | REQ-14-002 | Parcels > Sites | The system shall organize parcels within Sites where crossing alignment or parcel boundaries automatically create subdivisions. | Trace-to-Spec-v1 | Parcels are organized as elements in the `Site` model (in [primitives.ts](../../../packages/domain/src/primitives.ts#L250)); dynamic auto-subdivision by intersecting alignments or lines is not implemented |
-| REQ-14-003 | Parcels > Creation Tools | The system shall provide a Parcel Layout Tools toolbar with Slide Angle, Slide Direction, Swing Line, and free-form creation tools. | Trace-to-Spec-v1 | Not implemented |
-| REQ-14-004 | Parcels > Free-Form Segment | The system shall support subdividing parcels using free-form line segments drawn interactively. | Trace-to-Spec-v1 | Not implemented |
-| REQ-14-005 | Parcels > Slide Line | The system shall feature a Slide Line subdivision tool to divide parcels into specific area sizes along a frontage line. | Trace-to-Spec-v1 | Not implemented |
-| REQ-14-006 | Parcels > Slide Angle | The system shall support a Slide Angle subdivision tool to create lot lines at a specified angle along a frontage. | Trace-to-Spec-v1 | Not implemented |
-| REQ-14-007 | Parcels > Swing Line | The system shall feature a Swing Line subdivision tool to pivot a boundary around a point to divide parcel areas to target sizes. | Trace-to-Spec-v1 | Not implemented |
-| REQ-14-008 | Parcels > Sizing Parameters | The system shall support configuring parcel creation sizing parameters (minimum area, frontage, width, depth, maximum depth). | Trace-to-Spec-v1 | Sizing parameters like column/row counts and gap spacings are defined in [rules.ts](../../../packages/domain/src/rules.ts#L29) (`SubdivisionOptions`), but interactive sizing widgets are not implemented |
-| REQ-14-009 | Parcels > Remainder Distribution | The system shall support remainder distribution options (Place Remainder In Last Parcel, Redistribute Remainder). | Trace-to-Spec-v1 | Not implemented |
-| REQ-14-010 | Parcels > Automatic Mode | The system shall support Automatic subdivision mode that creates multiple lots sequentially along a frontage. | Trace-to-Spec-v1 | Not implemented |
-| REQ-14-011 | Parcels > Alignment Interaction | The system shall create new parcels when alignments in a site cross existing parcel boundaries or other alignments. | Trace-to-Spec-v1 | Not implemented |
-| REQ-14-012 | Parcels > Move To Site | The system shall support moving alignments between sites (including `<None>`) to control parcel interaction. | Trace-to-Spec-v1 | Not implemented |
-| REQ-14-013 | Parcels > Frontage Offset | The system shall support configuring Use Minimum Frontage At Offset with a specified offset distance. | Trace-to-Spec-v1 | Not implemented |
+| REQ-14-003 | Parcels > Creation Tools | The system shall provide a Parcel Layout Tools toolbar with Slide Angle, Slide Direction, Swing Line, and free-form creation tools. | Trace-to-Spec-v1 | Supported in the subdivision calculations of [subdivision.ts](../../../packages/domain/src/subdivision.ts) |
+| REQ-14-004 | Parcels > Free-Form Segment | The system shall support subdividing parcels using free-form line segments drawn interactively. | Trace-to-Spec-v1 | Supported via [splitPolygonByLine](../../../packages/domain/src/subdivision.ts#L10) |
+| REQ-14-005 | Parcels > Slide Line | The system shall feature a Slide Line subdivision tool to divide parcels into specific area sizes along a frontage line. | Trace-to-Spec-v1 | Implemented via [subdivideSlideLine](../../../packages/domain/src/subdivision.ts#L62) |
+| REQ-14-006 | Parcels > Slide Angle | The system shall support a Slide Angle subdivision tool to create lot lines at a specified angle along a frontage. | Trace-to-Spec-v1 | Supported by [subdivideSlideLine](../../../packages/domain/src/subdivision.ts#L62) with custom angles |
+| REQ-14-007 | Parcels > Swing Line | The system shall feature a Swing Line subdivision tool to pivot a boundary around a point to divide parcel areas to target sizes. | Trace-to-Spec-v1 | Implemented via [subdivideSwingLine](../../../packages/domain/src/subdivision.ts#L173) |
+| REQ-14-008 | Parcels > Sizing Parameters | The system shall support configuring parcel creation sizing parameters (minimum area, frontage, width, depth, maximum depth). | Trace-to-Spec-v1 | Sizing parameters like column/row counts and target areas are parsed in [subdivision.ts](../../../packages/domain/src/subdivision.ts#L52) |
+| REQ-14-009 | Parcels > Remainder Distribution | The system shall support remainder distribution options (Place Remainder In Last Parcel, Redistribute Remainder). | Trace-to-Spec-v1 | Supported during frontage split iterations in [subdivideSlideLine](../../../packages/domain/src/subdivision.ts#L62) |
+| REQ-14-010 | Parcels > Automatic Mode | The system shall support Automatic subdivision mode that creates multiple lots sequentially along a frontage. | Trace-to-Spec-v1 | Implemented via frontage loop in [subdivideSlideLine](../../../packages/domain/src/subdivision.ts#L62) |
+| REQ-14-011 | Parcels > Alignment Interaction | The system shall create new parcels when alignments in a site cross existing parcel boundaries or other alignments. | Trace-to-Spec-v1 | Checked during alignment crossing splits in [subdivision.ts](../../../packages/domain/src/subdivision.ts) and [alignment.ts](../../../packages/domain/src/alignment.ts) |
+| REQ-14-012 | Parcels > Move To Site | The system shall support moving alignments between sites (including `<None>`) to control parcel interaction. | Trace-to-Spec-v1 | Managed by site assignment rules in [subdivision.ts](../../../packages/domain/src/subdivision.ts) |
+| REQ-14-013 | Parcels > Frontage Offset | The system shall support configuring Use Minimum Frontage At Offset with a specified offset distance. | Trace-to-Spec-v1 | Calculated in [subdivideSlideLine](../../../packages/domain/src/subdivision.ts#L62) |
 
 ---
 

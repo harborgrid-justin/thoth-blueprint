@@ -1,30 +1,23 @@
 import { describe, expect, it } from "vitest";
 import {
   type VerticalProfile,
-  resolveVerticalCurve,
   profileElevationAt,
   type CrossSection,
-  sampleCrossSection,
 } from "./profile";
 import {
   calculateSectionArea,
   averageEndAreaVolume,
-  calculateMassHaul,
-} from "./qto";
+} from "../drawing/qto";
 import {
   compileLabelTemplate,
-} from "./labeling";
+} from "../drawing/labeling";
 import {
   validatePipeNetwork,
   type PipeDesignRules,
 } from "./pipedesign";
 import {
-  validateVaultBoxWall,
-  resolveCylindricalManhole,
-} from "./partbuilder";
-import {
   generateViewFrames,
-} from "./planproduction";
+} from "../drawing/planproduction";
 import {
   type HorizontalAlignment,
   resolveAlignment,

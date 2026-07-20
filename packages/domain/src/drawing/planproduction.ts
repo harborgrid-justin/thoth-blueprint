@@ -1,7 +1,8 @@
-import { type ResolvedAlignment, pointAtStation } from "./alignment";
-import { type Point } from "./geometry";
+import { vec2 } from "gl-matrix";
+import { type ResolvedAlignment, pointAtStation } from "../civil/alignment";
+import { type Point } from "../spatial/geometry";
 import { paperPerModel } from "./sheetview";
-import { type Unit } from "./spatial";
+import { type Unit } from "../spatial/spatial";
 import { type PaperUnit } from "./sheetsize";
 import { type Sheet, type DrawingSet } from "./sheet";
 
@@ -92,13 +93,19 @@ export function generateViewFrames(
       if (edgePoint) {
         const rad = (edgePoint.bearing * Math.PI) / 180;
         // Right normal vector
-        const nx = Math.cos(rad);
-        const ny = Math.sin(rad);
+        const normal = vec2.fromValues(Math.cos(rad), Math.sin(rad));
 
         // Match line extends perpendicular left/right of centerline
+        const basePos = vec2.fromValues(edgePoint.point.x, edgePoint.point.y);
+        const leftPos = vec2.create();
+        const rightPos = vec2.create();
         const len = modelHeight / 2;
-        const pLeft: Point = { x: edgePoint.point.x - len * nx, y: edgePoint.point.y - len * ny };
-        const pRight: Point = { x: edgePoint.point.x + len * nx, y: edgePoint.point.y + len * ny };
+
+        vec2.scaleAndAdd(leftPos, basePos, normal, -len);
+        vec2.scaleAndAdd(rightPos, basePos, normal, len);
+
+        const pLeft: Point = { x: leftPos[0], y: leftPos[1] };
+        const pRight: Point = { x: rightPos[0], y: rightPos[1] };
 
         matchLines.push({
           id: `match-${alignmentId}-${idx}`,

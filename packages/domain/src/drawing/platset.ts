@@ -5,10 +5,10 @@
  * baseline they came from.
  */
 
-import { spatialElements, type Site } from "./primitives";
-import { surveyReport } from "./survey";
-import { resolveAlignment } from "./alignment";
-import { azimuthToBearing, formatBearing } from "./survey";
+import { spatialElements, type Site } from "../spatial/primitives";
+import { surveyReport } from "../survey/survey";
+import { resolveAlignment } from "../civil/alignment";
+import { azimuthToBearing, formatBearing } from "../survey/survey";
 
 /** One row of the consolidated curve-data table. */
 export interface SiteCurve {

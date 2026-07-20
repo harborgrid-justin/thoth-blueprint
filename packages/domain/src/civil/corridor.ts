@@ -1,3 +1,4 @@
+import { vec2 } from "gl-matrix";
 import { resolveAlignment, pointAtStation } from "./alignment";
 import type { HorizontalAlignment } from "./alignment";
 import type { VerticalProfile } from "./profile";
@@ -62,15 +63,18 @@ export function buildCorridorSections(
     // 4. Resolve assembly cross-section coordinates
     const offsetPoints = resolveAssemblyOffset(assembly, slopes.leftSlope, slopes.rightSlope);
 
-    // 5. Transform 2D offset points to 3D absolute space along traveled normal
+    // 5. Transform 2D offset points to 3D absolute space along traveled normal using gl-matrix
     const rad = (atStation.bearing * Math.PI) / 180;
-    const dir = { x: Math.sin(rad), y: -Math.cos(rad) };
-    const nx = -dir.y;
-    const ny = dir.x;
+    const dir = vec2.fromValues(Math.sin(rad), -Math.cos(rad));
+    const normal = vec2.fromValues(-dir[1], dir[0]);
+
+    const basePos = vec2.fromValues(atStation.point.x, atStation.point.y);
 
     for (const offsetPt of offsetPoints) {
-      const x = atStation.point.x + offsetPt.x * nx;
-      const y = atStation.point.y + offsetPt.x * ny;
+      const pos = vec2.create();
+      vec2.scaleAndAdd(pos, basePos, normal, offsetPt.x);
+      const x = pos[0];
+      const y = pos[1];
       const z = zBase + offsetPt.y;
 
       sections.push({

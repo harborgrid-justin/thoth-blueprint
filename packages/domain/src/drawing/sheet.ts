@@ -9,6 +9,7 @@
  * sheet-type digit, and a two-digit sequence (e.g. `A-101`).
  */
 
+import _ from "lodash";
 import { DISCIPLINE_ORDER, disciplineName, type DisciplineCode } from "./drafting";
 import type { Orientation, SheetSizeId } from "./sheetsize";
 
@@ -139,7 +140,14 @@ export function compareSheets(a: Sheet, b: Sheet): number {
 
 /** A copy of the set's sheets in canonical NCS order. */
 export function sortSheets(set: DrawingSet): Sheet[] {
-  return set.sheets.slice().sort(compareSheets);
+  return _.sortBy(set.sheets, [
+    (s) => {
+      const idx = DISCIPLINE_ORDER.indexOf(s.number.discipline);
+      return idx === -1 ? Infinity : idx;
+    },
+    (s) => s.number.type,
+    (s) => s.number.sequence,
+  ]);
 }
 
 /** The next free sequence number for a (discipline, type) pair in a set. */

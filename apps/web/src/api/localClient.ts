@@ -1,7 +1,6 @@
-import { computeSiteMetrics, createId, type Site } from "@thoth/domain";
+import { computeSiteMetrics, createId, siteForTemplate, subdivisionSite, districtSite, estateSite, type Site } from "@thoth/domain";
 import type { ApiClient, CreateProjectInput } from "./client";
 import type { Checkpoint, Member, Project, ProjectSummary, ReviewThread, User } from "./types";
-import { districtSite, estateSite, siteForTemplate, subdivisionSite } from "./sampleData";
 
 /**
  * A local, browser-persisted implementation of {@link ApiClient}. It stands in

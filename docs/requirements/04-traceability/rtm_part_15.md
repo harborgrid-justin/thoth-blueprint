@@ -1,14 +1,14 @@
-﻿# Requirements Traceability Matrix - Part 15
+# Requirements Traceability Matrix - Part 15
 **Subject:** Parcels Tutorials â€” Editing, Display & Analysis (Chapter 10, Part 2)
 **Coverage:** Slide/Swing Edit, Lot Line Geometry, Parcel Labels, Display Order, Mapcheck, Data Export (Lines 6185â€“6456)
 
 | Req ID | Tutorial Section / Reference | Requirement Description | Traceability | Code Mapping |
 |---|---|---|---|---|
-| REQ-15-001 | Parcels > Slide Line Edit | The system shall support resizing parcels by sliding an attached lot line along the parcel frontage to reach a target area. | Trace-to-Spec-v1 | Not implemented |
-| REQ-15-002 | Parcels > Swing Line Edit | The system shall support resizing parcels by swinging an attached lot line from a reference point to reach a target area. | Trace-to-Spec-v1 | Not implemented |
+| REQ-15-001 | Parcels > Slide Line Edit | The system shall support resizing parcels by sliding an attached lot line along the parcel frontage to reach a target area. | Trace-to-Spec-v1 | Resizing by sliding lot line is implemented via [subdivideSlideLine](../../../packages/domain/src/subdivision.ts#L62) |
+| REQ-15-002 | Parcels > Swing Line Edit | The system shall support resizing parcels by swinging an attached lot line from a reference point to reach a target area. | Trace-to-Spec-v1 | Resizing by swinging lot line is implemented via [subdivideSwingLine](../../../packages/domain/src/subdivision.ts#L173) |
 | REQ-15-003 | Parcels > Lot Line Geometry | The system shall support editing unattached lot line geometry using grips and feature line editing tools (Insert/Delete PI, Edit Elevations). | Trace-to-Spec-v1 | Grip-based editing of element boundary coordinates is supported in [PlanningCanvas.tsx](../../../apps/web/src/features/canvas/PlanningCanvas.tsx#L367-L388) |
 | REQ-15-004 | Parcels > Renumber Parcels | The system shall support renumbering parcel names and renaming parcels. | Trace-to-Spec-v1 | Renaming/renumbering elements is supported via the properties sidebar panel [PropertiesPanel.tsx](../../../apps/web/src/features/workspace/PropertiesPanel.tsx#L66-L93) |
-| REQ-15-005 | Parcels > Merge Parcels | The system shall support merging parcels by dissolving lot lines to combine adjacent lots. | Trace-to-Spec-v1 | Not implemented |
+| REQ-15-005 | Parcels > Merge Parcels | The system shall support merging parcels by dissolving lot lines to combine adjacent lots. | Trace-to-Spec-v1 | Implemented via [mergeLots](../../../packages/domain/src/subdivision.ts#L254) (polygon dissolution of adjacent boundaries) |
 | REQ-15-006 | Parcels > Display Order | The system shall control parcel boundary line overlapping and visibility using parcel display order (site-level display priority). | Trace-to-Spec-v1 | Elements are rendered on canvas based on active Layer ordering in [PlanningCanvas.tsx](../../../apps/web/src/features/canvas/PlanningCanvas.tsx) |
 | REQ-15-007 | Parcels > Parcel Styles | The system shall support configuring parcel styles controlling fill patterns, boundary colors, and label visibility. | Trace-to-Spec-v1 | Custom boundary colors hint and layers styles supported in [primitives.ts](../../../packages/domain/src/primitives.ts#L50) and active layer styling |
 | REQ-15-008 | Parcels > Parcel Labels | The system shall support labeling parcels with area, perimeter, bearing/distance on segments, and curve data. | Trace-to-Spec-v1 | Areas, perimeters, metes-and-bounds bearing/distance labels, and curves are calculated and displayed in [PlatReportDialog.tsx](../../../apps/web/src/features/survey/PlatReportDialog.tsx) & [PlatSheetDialog.tsx](../../../apps/web/src/features/survey/PlatSheetDialog.tsx) |

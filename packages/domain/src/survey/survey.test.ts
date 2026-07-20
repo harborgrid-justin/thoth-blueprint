@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { defaultSpatialContext } from "./spatial";
-import type { Polygon } from "./geometry";
-import { area as polygonArea } from "./geometry";
+import { defaultSpatialContext } from "../spatial/spatial";
+import type { Polygon } from "../spatial/geometry";
+import { area as polygonArea } from "../spatial/geometry";
 import {
   azimuth,
   azimuthToBearing,
@@ -17,6 +17,8 @@ import {
   surveyReport,
   toDms,
   traverseClosure,
+  parseBearing,
+  adjustTraverse,
 } from "./survey";
 
 // A 100×100 square. Screen Y increases downward, so survey north is −Y.
@@ -198,3 +200,171 @@ describe("legal description", () => {
     expect(text).toContain("Test Subdivision");
   });
 });
+
+describe("bearing parsing", () => {
+  it("parses cardinal directions", () => {
+    expect(parseBearing("Due North")).toEqual({ ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" });
+    expect(parseBearing("N")).toEqual({ ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" });
+    expect(parseBearing("Due West")).toEqual({ ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "W", cardinal: "W" });
+  });
+
+  it("parses standard quadrant bearings", () => {
+    expect(parseBearing("N 45-30-15 E")).toEqual({ ns: "N", degrees: 45, minutes: 30, seconds: 15, ew: "E" });
+    expect(parseBearing("S45.5W")).toEqual({ ns: "S", degrees: 45, minutes: 30, seconds: 0, ew: "W" });
+    expect(parseBearing("N 45°30'15\" E")).toEqual({ ns: "N", degrees: 45, minutes: 30, seconds: 15, ew: "E" });
+  });
+
+  it("throws on invalid bearings", () => {
+    expect(() => parseBearing("Invalid")).toThrow();
+    expect(() => parseBearing("N 100 E")).toThrow(); // Val cannot exceed 90
+  });
+});
+
+describe("traverse adjustments", () => {
+  it("closes an open traverse using Compass (Bowditch) Rule", () => {
+    // Construct manual courses with a 2-unit departure gap (ends at 2,0 instead of 0,0)
+    const courses: SurveyCourse[] = [
+      {
+        index: 1,
+        type: "line",
+        from: { x: 0, y: 0 },
+        to: { x: 100, y: 0 },
+        fromLabel: "P1",
+        toLabel: "P2",
+        azimuth: 90,
+        bearing: { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "E", cardinal: "E" },
+        bearingText: "Due East",
+        distance: 100,
+        distanceMeters: 100,
+        latitude: 0,
+        departure: 100,
+      },
+      {
+        index: 2,
+        type: "line",
+        from: { x: 100, y: 0 },
+        to: { x: 100, y: 100 },
+        fromLabel: "P2",
+        toLabel: "P3",
+        azimuth: 180,
+        bearing: { ns: "S", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "S" },
+        bearingText: "Due South",
+        distance: 100,
+        distanceMeters: 100,
+        latitude: -100,
+        departure: 0,
+      },
+      {
+        index: 3,
+        type: "line",
+        from: { x: 100, y: 100 },
+        to: { x: 0, y: 100 },
+        fromLabel: "P3",
+        toLabel: "P4",
+        azimuth: 270,
+        bearing: { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "W", cardinal: "W" },
+        bearingText: "Due West",
+        distance: 100,
+        distanceMeters: 100,
+        latitude: 0,
+        departure: -100,
+      },
+      {
+        index: 4,
+        type: "line",
+        from: { x: 0, y: 100 },
+        to: { x: 2, y: 0 },
+        fromLabel: "P4",
+        toLabel: "P1",
+        azimuth: 0,
+        bearing: { ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" },
+        bearingText: "Due North",
+        distance: 100,
+        distanceMeters: 100,
+        latitude: 100,
+        departure: 2,
+      },
+    ];
+
+    const closureBefore = traverseClosure(courses);
+    expect(closureBefore.linearMisclosure).toBeGreaterThan(1);
+    expect(closureBefore.precisionText).not.toBe("Exact (closed)");
+
+    const adjusted = adjustTraverse(courses, "compass");
+    expect(adjusted.closureAfter.linearMisclosure).toBeLessThan(1e-9);
+    expect(adjusted.closureAfter.precisionText).toBe("Exact (closed)");
+    expect(adjusted.courses[adjusted.courses.length - 1].to).toEqual({ x: 0, y: 0 });
+  });
+
+  it("closes an open traverse using Transit Rule", () => {
+    // Construct manual courses with a 2-unit latitude gap (ends at 0,-2 instead of 0,0)
+    const courses: SurveyCourse[] = [
+      {
+        index: 1,
+        type: "line",
+        from: { x: 0, y: 0 },
+        to: { x: 100, y: 0 },
+        fromLabel: "P1",
+        toLabel: "P2",
+        azimuth: 90,
+        bearing: { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "E", cardinal: "E" },
+        bearingText: "Due East",
+        distance: 100,
+        distanceMeters: 100,
+        latitude: 0,
+        departure: 100,
+      },
+      {
+        index: 2,
+        type: "line",
+        from: { x: 100, y: 0 },
+        to: { x: 100, y: 100 },
+        fromLabel: "P2",
+        toLabel: "P3",
+        azimuth: 180,
+        bearing: { ns: "S", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "S" },
+        bearingText: "Due South",
+        distance: 100,
+        distanceMeters: 100,
+        latitude: -100,
+        departure: 0,
+      },
+      {
+        index: 3,
+        type: "line",
+        from: { x: 100, y: 100 },
+        to: { x: 0, y: 100 },
+        fromLabel: "P3",
+        toLabel: "P4",
+        azimuth: 270,
+        bearing: { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "W", cardinal: "W" },
+        bearingText: "Due West",
+        distance: 100,
+        distanceMeters: 100,
+        latitude: 0,
+        departure: -100,
+      },
+      {
+        index: 4,
+        type: "line",
+        from: { x: 0, y: 100 },
+        to: { x: 0, y: -2 },
+        fromLabel: "P4",
+        toLabel: "P1",
+        azimuth: 0,
+        bearing: { ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" },
+        bearingText: "Due North",
+        distance: 102,
+        distanceMeters: 102,
+        latitude: 102,
+        departure: 0,
+      },
+    ];
+
+    const adjusted = adjustTraverse(courses, "transit");
+    expect(adjusted.closureAfter.linearMisclosure).toBeLessThan(1e-9);
+    expect(adjusted.closureAfter.precisionText).toBe("Exact (closed)");
+    expect(adjusted.courses[adjusted.courses.length - 1].to).toEqual({ x: 0, y: 0 });
+  });
+});
+

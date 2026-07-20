@@ -8,9 +8,9 @@
  * raw sensor value where a format carries it.
  */
 
-import { bounds as pointsBounds, type Bounds } from "./geometry";
-import type { SpotElevationPoint } from "./primitives";
-import { createId } from "./id";
+import { bounds as pointsBounds, type Bounds } from "../spatial/geometry";
+import type { SpotElevationPoint } from "../spatial/primitives";
+import { createId } from "../spatial/id";
 
 /** A single point with optional color and intensity. */
 export interface CloudPoint {

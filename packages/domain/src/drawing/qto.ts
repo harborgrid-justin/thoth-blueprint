@@ -1,4 +1,5 @@
-import { type CrossSection } from "./profile";
+import _ from "lodash";
+import { type CrossSection } from "../civil/profile";
 
 /** Area of cut and fill calculated on a single cross-section in plan units². */
 export interface SectionArea {
@@ -20,9 +21,9 @@ export function calculateSectionArea(section: CrossSection): SectionArea {
     return { station: section.station, cutArea, fillArea };
   }
 
-  // Ensure points are sorted by offset
-  const existing = section.existingPoints.slice().sort((a, b) => a.offset - b.offset);
-  const proposed = section.proposedPoints.slice().sort((a, b) => a.offset - b.offset);
+  // Ensure points are sorted by offset using lodash
+  const existing = _.sortBy(section.existingPoints, "offset");
+  const proposed = _.sortBy(section.proposedPoints, "offset");
 
   for (let i = 0; i < n - 1; i++) {
     const x0 = existing[i].offset;
@@ -103,7 +104,7 @@ export interface MassHaulPoint {
  */
 export function calculateMassHaul(sections: CrossSection[]): MassHaulPoint[] {
   if (sections.length === 0) return [];
-  const sorted = sections.slice().sort((a, b) => a.station - b.station);
+  const sorted = _.sortBy(sections, "station");
 
   const points: MassHaulPoint[] = [{ station: sorted[0].station, cumulativeVolume: 0 }];
   let runningSum = 0;
@@ -174,7 +175,7 @@ export function evaluatePayItemCost(
         return { quantity: res, cost: res * item.unitCost };
       }
     }
-  } catch (e) {
+  } catch {
     // Fallback on standard calculations
   }
 

@@ -1,4 +1,5 @@
-import { type Point } from "./geometry";
+import _ from "lodash";
+import { type Point } from "../spatial/geometry";
 import { type ResolvedAlignment, pointAtStation } from "./alignment";
 import { type ElevationGrid, elevationAt } from "./terrain";
 
@@ -87,7 +88,7 @@ export function resolveVerticalCurve(
 /** Calculate the vertical profile elevation at a given station. */
 export function profileElevationAt(profile: VerticalProfile, station: number): number {
   if (profile.pvis.length === 0) return 0;
-  const sorted = profile.pvis.slice().sort((a, b) => a.station - b.station);
+  const sorted = _.sortBy(profile.pvis, "station");
 
   if (station <= sorted[0].station) return sorted[0].elevation;
   if (station >= sorted[sorted.length - 1].station) return sorted[sorted.length - 1].elevation;
