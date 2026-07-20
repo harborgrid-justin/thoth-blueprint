@@ -6,6 +6,7 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useInteropStore } from "@/store/interopStore";
 import { buildScene, type SceneResult } from "./buildScene";
+import { ThothPhysicsEngine } from "./physics";
 
 // Sun placement (degrees) — a mid-morning light that reads well for massing.
 const SUN_ELEVATION = 34;
@@ -31,6 +32,7 @@ export function Scene3D() {
   const contentRef = React.useRef<SceneResult | null>(null);
   const cloudDisposeRef = React.useRef<Array<{ dispose: () => void }>>([]);
   const framedRef = React.useRef(false);
+  const physicsRef = React.useRef<ThothPhysicsEngine | null>(null);
 
   // --- one-time setup ------------------------------------------------------
   React.useEffect(() => {
@@ -102,10 +104,46 @@ export function Scene3D() {
     scene.add(sun.target);
     sunRef.current = sun;
 
+    // Initialize WebAssembly physics engine
+    ThothPhysicsEngine.create().then((engine) => {
+      physicsRef.current = engine;
+      const currentSite = useWorkspaceStore.getState().site;
+      if (currentSite) {
+        engine.syncWorld(currentSite, contentRef.current?.exaggeration ?? 1.6);
+      }
+    });
+
     let raf = 0;
     const animate = () => {
       raf = requestAnimationFrame(animate);
       controls.update();
+
+      // Run collision checking if physics engine is loaded
+      if (physicsRef.current && contentRef.current) {
+        const collisions = physicsRef.current.checkCollisions();
+        const buildingMeshes = contentRef.current.buildingMeshes;
+
+        buildingMeshes.forEach((mesh, id) => {
+          const isColliding = collisions.has(id);
+          mesh.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+              const mat = child.material as THREE.MeshStandardMaterial;
+              if (mat) {
+                if (isColliding) {
+                  // Set emissive red glow on overlap
+                  mat.emissive.setHex(0xff0000);
+                  mat.emissiveIntensity = 0.45;
+                } else {
+                  // Reset emissive color
+                  mat.emissive.setHex(0x000000);
+                  mat.emissiveIntensity = 0;
+                }
+              }
+            }
+          });
+        });
+      }
+
       renderer.render(scene, camera);
     };
     animate();
@@ -148,6 +186,10 @@ export function Scene3D() {
 
     const result = buildScene(site);
     if (!result) return;
+
+    if (physicsRef.current) {
+      physicsRef.current.syncWorld(site, result.exaggeration);
+    }
 
     // Imported point clouds, in scene space (plan-centered, y-up, exaggerated).
     for (const c of clouds) {

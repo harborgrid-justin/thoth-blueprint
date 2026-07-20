@@ -3,6 +3,8 @@ import { HardHat } from "lucide-react";
 import {
   type PayItem,
   evaluatePayItemCost,
+  computeRenovationTakeoffs,
+  runRenovationAudit,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { Button } from "@/components/ui/button";
@@ -28,7 +30,7 @@ export function QtoPanel() {
     { elementId: "building-lot", payItemId: "201-100", formula: "area * unitCost" },
   ];
 
-  const [activeTab, setActiveTab] = React.useState<"earthwork" | "payitems">("earthwork");
+  const [activeTab, setActiveTab] = React.useState<"earthwork" | "payitems" | "renovation">("earthwork");
 
   if (!site) return null;
 
@@ -69,15 +71,21 @@ export function QtoPanel() {
         <div className="flex rounded border border-border p-0.5 bg-background">
           <button
             onClick={() => setActiveTab("earthwork")}
-            className={cn("px-2 py-0.5 rounded text-[10px]", activeTab === "earthwork" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
+            className={cn("px-1.5 py-0.5 rounded text-[10px]", activeTab === "earthwork" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
           >
             Earthwork
           </button>
           <button
             onClick={() => setActiveTab("payitems")}
-            className={cn("px-2 py-0.5 rounded text-[10px]", activeTab === "payitems" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
+            className={cn("px-1.5 py-0.5 rounded text-[10px]", activeTab === "payitems" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
           >
             Cost Sheets
+          </button>
+          <button
+            onClick={() => setActiveTab("renovation")}
+            className={cn("px-1.5 py-0.5 rounded text-[10px]", activeTab === "renovation" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
+          >
+            Renovation
           </button>
         </div>
       </div>
@@ -148,7 +156,7 @@ export function QtoPanel() {
             </div>
           </div>
         </div>
-      ) : (
+      ) : activeTab === "payitems" ? (
         <div className="flex flex-col gap-3">
           {/* Assigned cost items list */}
           <div className="rounded-md border border-border bg-card p-2">
@@ -195,6 +203,80 @@ export function QtoPanel() {
                 Select an element on canvas to bind pay items.
               </div>
             )}
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {/* Renovation Quantities (Takeoffs) */}
+          <div className="rounded-md border border-border bg-card p-2">
+            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+              <span>Renovation Quantity Takeoffs</span>
+              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] h-4">REQ-UNIMP-006</Badge>
+            </h4>
+            {(() => {
+              const takeoffs = computeRenovationTakeoffs(site);
+              return (
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b border-border/60 text-muted-foreground text-[10px]">
+                      <th className="py-1">Status</th>
+                      <th className="py-1 text-center">Count</th>
+                      <th className="py-1 text-right">Plan Area</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-border/40">
+                      <td className="py-1 font-medium text-foreground flex items-center gap-1.5">
+                        <span className="h-2 w-2 rounded-full bg-slate-400"></span> Existing
+                      </td>
+                      <td className="py-1 text-center font-semibold">{takeoffs.existing.count}</td>
+                      <td className="py-1 text-right font-semibold">{takeoffs.existing.totalArea.toFixed(1)} sqm</td>
+                    </tr>
+                    <tr className="border-b border-border/40">
+                      <td className="py-1 font-medium text-foreground flex items-center gap-1.5">
+                        <span className="h-2 w-2 rounded-full bg-emerald-500"></span> New Construction
+                      </td>
+                      <td className="py-1 text-center font-semibold text-emerald-500">{takeoffs.new.count}</td>
+                      <td className="py-1 text-right font-semibold text-emerald-500">{takeoffs.new.totalArea.toFixed(1)} sqm</td>
+                    </tr>
+                    <tr className="border-b border-border/40">
+                      <td className="py-1 font-medium text-foreground flex items-center gap-1.5">
+                        <span className="h-2 w-2 rounded-full bg-rose-500"></span> Demolition
+                      </td>
+                      <td className="py-1 text-center font-semibold text-rose-500">{takeoffs.demolished.count}</td>
+                      <td className="py-1 text-right font-semibold text-rose-500">{takeoffs.demolished.totalArea.toFixed(1)} sqm</td>
+                    </tr>
+                  </tbody>
+                </table>
+              );
+            })()}
+          </div>
+
+          {/* Renovation Design Audit warnings (REQ-UNIMP-010) */}
+          <div className="rounded-md border border-border bg-card p-2">
+            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+              <span>Renovation Design Audit</span>
+              <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[9px] h-4">REQ-UNIMP-010</Badge>
+            </h4>
+            {(() => {
+              const warnings = runRenovationAudit(site);
+              if (warnings.length === 0) {
+                return (
+                  <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2 text-[10px] text-emerald-500">
+                    No renovation design violations or structural standard overlaps detected.
+                  </div>
+                );
+              }
+              return (
+                <div className="flex flex-col gap-1.5 max-h-[160px] overflow-y-auto pr-1">
+                  {warnings.map((w, idx) => (
+                    <div key={idx} className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium">
+                      {w}
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
         </div>
       )}

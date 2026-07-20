@@ -5,12 +5,12 @@
   "description": "Geospatial & interoperability for Thoth Blueprint — CRS transforms, layers, spatial ops, and import/export (GeoJSON, KML, Shapefile, DXF, PDF).",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "dev": "yarn run tsx watch src/index.ts",
+    "build": "yarn run tsc",
     "start": "node dist/index.js",
-    "type-check": "tsc --noEmit",
-    "test": "vitest run",
-    "lint": "eslint src"
+    "type-check": "yarn run tsc --noEmit",
+    "test": "yarn run vitest run",
+    "lint": "yarn run eslint src"
   },
   "dependencies": {
     "@thoth/domain": "^0.1.0",
@@ -21,13 +21,17 @@
     "proj4": "^2.15.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.10.2",
     "@types/proj4": "^2.12.5",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0",
     "vitest": "^2.1.9"
   },
   "license": "GPL-3.0-or-later"

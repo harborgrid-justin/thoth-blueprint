@@ -5,11 +5,12 @@
   "description": "Thoth Blueprint cloud planning workspace — the browser canvas for site & community planning.",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "preview": "vite preview",
-    "type-check": "tsc --noEmit",
-    "lint": "eslint . --ext ts,tsx --max-warnings 0"
+    "dev": "yarn run vite",
+    "build": "yarn run tsc --noEmit && yarn run vite build",
+    "preview": "yarn run vite preview",
+    "type-check": "yarn run tsc --noEmit",
+    "test": "yarn run vitest run",
+    "lint": "yarn run eslint src"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.19.3",
@@ -36,16 +37,21 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^22.20.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@types/three": "^0.171.0",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2",
-    "vite": "^6.0.7"
+    "typescript-eslint": "^8.19.0",
+    "vite": "^6.0.7",
+    "vitest": "^2.1.9"
   },
   "license": "GPL-3.0-or-later"
 }

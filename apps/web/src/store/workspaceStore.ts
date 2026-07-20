@@ -119,6 +119,12 @@ export interface WorkspaceState {
   redo(): void;
   canUndo(): boolean;
   canRedo(): boolean;
+
+  // --- renovation mode ---
+  renovationMode: boolean;
+  activeRenovationCategory: "existing" | "new" | "demolished";
+  toggleRenovationMode(): void;
+  setActiveRenovationCategory(category: "existing" | "new" | "demolished"): void;
 }
 
 function snapshot<T>(value: T): T {
@@ -220,6 +226,10 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     lastSavedAt: null,
     viewFrames: [],
     matchLines: [],
+    renovationMode: false,
+    activeRenovationCategory: "new",
+    toggleRenovationMode: () => set((state) => ({ renovationMode: !state.renovationMode })),
+    setActiveRenovationCategory: (category) => set({ activeRenovationCategory: category }),
 
     loadProject(project) {
       set({
@@ -351,6 +361,14 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     insertVertex(id, afterIndex, point) {
+      const { site, renovationMode } = get();
+      if (site) {
+        const el = site.elements.find((e) => e.id === id);
+        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
+          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be modified.");
+          return;
+        }
+      }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
@@ -364,6 +382,14 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     deleteVertex(id, index) {
+      const { site, renovationMode } = get();
+      if (site) {
+        const el = site.elements.find((e) => e.id === id);
+        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
+          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be modified.");
+          return;
+        }
+      }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
@@ -375,6 +401,14 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     setEdgeBulge(id, edgeIndex, bulge) {
+      const { site, renovationMode } = get();
+      if (site) {
+        const el = site.elements.find((e) => e.id === id);
+        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
+          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be modified.");
+          return;
+        }
+      }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
@@ -388,6 +422,14 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     clearArcs(id) {
+      const { site, renovationMode } = get();
+      if (site) {
+        const el = site.elements.find((e) => e.id === id);
+        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
+          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be modified.");
+          return;
+        }
+      }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) =>
@@ -397,17 +439,42 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     addDrawnElement(kind, boundary) {
-      const { site, activeLayerId } = get();
+      const { site, activeLayerId, renovationMode, activeRenovationCategory } = get();
       if (!site) return null;
-      const layerId = activeLayerId ?? elementMeta(kind).defaultLayerId;
+      let layerId = activeLayerId ?? elementMeta(kind).defaultLayerId;
+
+      // Demolition layer auto-routing (REQ-UNIMP-002)
+      if (renovationMode && activeRenovationCategory === "demolished") {
+        layerId = `D-${layerId}`;
+        const layerExists = site.layers.some((l) => l.id === layerId);
+        if (!layerExists) {
+          const originalLayer = site.layers.find((l) => l.id === (activeLayerId || elementMeta(kind).defaultLayerId));
+          const demoLayer: Layer = {
+            id: layerId,
+            name: `Demolition - ${originalLayer?.name || kind.toUpperCase()}`,
+            order: (originalLayer?.order ?? 0) - 100,
+            visible: true,
+            locked: false,
+            color: "#ef4444",
+          };
+          mutate((s) => ({ ...s, layers: [...s.layers, demoLayer] }));
+        }
+      }
+
       const element = createSpatialElement(site, kind, boundary, layerId);
+      
+      // Auto classify renovation status (REQ-UNIMP-005)
+      if (renovationMode) {
+        element.renovationStatus = activeRenovationCategory;
+      }
+
       mutate((s) => ({ ...s, elements: [...s.elements, element] }));
       set({ selection: [element.id] });
       return element.id;
     },
 
     addPointElement(kind, position) {
-      const { site, activeLayerId } = get();
+      const { site, activeLayerId, renovationMode, activeRenovationCategory } = get();
       if (!site) return null;
       const rawDesc = prompt("Enter COGO Point Description (e.g. TR-Oak, MH-Storm, BM-Main):") || "";
       let layerId = activeLayerId ?? elementMeta(kind).defaultLayerId;
@@ -425,6 +492,24 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         }
       }
 
+      // Demolition layer auto-routing (REQ-UNIMP-002)
+      if (renovationMode && activeRenovationCategory === "demolished") {
+        layerId = `D-${layerId}`;
+        const layerExists = site.layers.some((l) => l.id === layerId);
+        if (!layerExists) {
+          const originalLayer = site.layers.find((l) => l.id === (matchingKey?.layerId || activeLayerId || elementMeta(kind).defaultLayerId));
+          const demoLayer: Layer = {
+            id: layerId,
+            name: `Demolition - ${originalLayer?.name || kind.toUpperCase()}`,
+            order: (originalLayer?.order ?? 0) - 100,
+            visible: true,
+            locked: false,
+            color: "#ef4444",
+          };
+          mutate((s) => ({ ...s, layers: [...s.layers, demoLayer] }));
+        }
+      }
+
       const element: any = createPointElement(site, finalKind, position, layerId);
       element.description = rawDesc;
       element.label = finalDesc;
@@ -433,6 +518,11 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       }
       if (matchedSym) {
         element.symbol = matchedSym;
+      }
+
+      // Auto classify renovation status (REQ-UNIMP-005)
+      if (renovationMode) {
+        element.renovationStatus = activeRenovationCategory;
       }
 
       mutate((s) => ({ ...s, elements: [...s.elements, element] }));
@@ -475,6 +565,17 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     updateElement(id, patch) {
+      const { site, renovationMode } = get();
+      if (site) {
+        const el = site.elements.find((e) => e.id === id);
+        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
+          const keys = Object.keys(patch);
+          if (keys.length > 1 || keys[0] !== "renovationStatus") {
+            alert("Renovation Mode Lock: Elements with status 'Existing' cannot be modified.");
+            return;
+          }
+        }
+      }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => (e.id === id ? ({ ...e, ...patch } as PlanElement) : e)),
@@ -482,6 +583,14 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     updateBoundary(id, boundary) {
+      const { site, renovationMode } = get();
+      if (site) {
+        const el = site.elements.find((e) => e.id === id);
+        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
+          alert("Renovation Mode Lock: Elements with status 'Existing' boundary cannot be modified.");
+          return;
+        }
+      }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) =>
@@ -491,9 +600,16 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     moveSelection(delta) {
-      const { selection } = get();
-      if (selection.length === 0) return;
+      const { selection, site, renovationMode } = get();
+      if (selection.length === 0 || !site) return;
       const ids = new Set(selection);
+      if (renovationMode) {
+        const hasExisting = site.elements.some((e) => ids.has(e.id) && (e.renovationStatus || "existing") === "existing");
+        if (hasExisting) {
+          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be translated or edited.");
+          return;
+        }
+      }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
@@ -507,9 +623,16 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     deleteSelection() {
-      const { selection } = get();
-      if (selection.length === 0) return;
+      const { selection, site, renovationMode } = get();
+      if (selection.length === 0 || !site) return;
       const ids = new Set(selection);
+      if (renovationMode) {
+        const hasExisting = site.elements.some((e) => ids.has(e.id) && (e.renovationStatus || "existing") === "existing");
+        if (hasExisting) {
+          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be deleted.");
+          return;
+        }
+      }
       mutate((s) => ({ ...s, elements: s.elements.filter((e) => !ids.has(e.id)) }));
       set({ selection: [] });
     },

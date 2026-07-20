@@ -28,6 +28,7 @@ export * from "./planning/rules";
 export * from "./planning/metrics";
 export * from "./planning/regions";
 export * from "./planning/subdivision";
+export * from "./planning/renovation";
 
 // Civil
 export * from "./civil/alignment";

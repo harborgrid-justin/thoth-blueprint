@@ -137,6 +137,8 @@ export interface ElementBase {
   lineType?: string;
   /** Optional hatch pattern id override. */
   hatchId?: string;
+  /** Renovation status of the planning element. Defaults to "existing" if not specified. */
+  renovationStatus?: "existing" | "new" | "demolished";
 }
 
 /** A large-scale land division above the parcel. */
@@ -254,6 +256,7 @@ export interface PlanNote {
   layerId: string;
   text: string;
   position: Point;
+  renovationStatus?: "existing" | "new" | "demolished";
 }
 
 /** A single tree/shrub as a point, with a canopy radius for coverage math. */
@@ -265,6 +268,7 @@ export interface Tree {
   species?: string;
   /** Canopy radius in plan units. */
   canopyRadius: number;
+  renovationStatus?: "existing" | "new" | "demolished";
 }
 
 /** A surveyed spot elevation / benchmark — a control point for the terrain surface. */
@@ -276,6 +280,7 @@ export interface SpotElevationPoint {
   /** Elevation in plan units. */
   z: number;
   label?: string;
+  renovationStatus?: "existing" | "new" | "demolished";
 }
 
 /** Any spatial planning element (everything carrying a boundary polygon). */

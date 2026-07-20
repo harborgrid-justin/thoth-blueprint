@@ -51,6 +51,10 @@ interface TopBarProps {
 export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarProps) {
   const projectName = useWorkspaceStore((s) => s.projectName);
   const dirty = useWorkspaceStore((s) => s.dirty);
+  const renovationMode = useWorkspaceStore((s) => s.renovationMode);
+  const toggleRenovationMode = useWorkspaceStore((s) => s.toggleRenovationMode);
+  const activeRenovationCategory = useWorkspaceStore((s) => s.activeRenovationCategory);
+  const setActiveRenovationCategory = useWorkspaceStore((s) => s.setActiveRenovationCategory);
   const { theme, toggleTheme } = useTheme();
 
   const {
@@ -92,6 +96,30 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
       </div>
 
       <div className="ml-auto flex items-center gap-1">
+        {/* Renovation Mode Controls */}
+        <div className="mr-2 flex items-center gap-1 rounded-md border border-border bg-card px-2 py-0.5">
+          <label className="flex items-center gap-1.5 text-xs font-semibold cursor-pointer text-foreground select-none">
+            <input
+              type="checkbox"
+              checked={renovationMode}
+              onChange={toggleRenovationMode}
+              className="h-3.5 w-3.5 rounded border-border text-primary focus:ring-primary"
+            />
+            Renovation
+          </label>
+          {renovationMode && (
+            <select
+              value={activeRenovationCategory}
+              onChange={(e) => setActiveRenovationCategory(e.target.value as "existing" | "new" | "demolished")}
+              className="ml-1 h-6 rounded border border-border bg-background px-1 text-[11px] font-medium text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+            >
+              <option value="existing">Existing</option>
+              <option value="new">New</option>
+              <option value="demolished">Demolition</option>
+            </select>
+          )}
+        </div>
+
         {/* 2D / 3D view switch */}
         <div className="mr-1 flex items-center rounded-md border border-border p-0.5">
           <button

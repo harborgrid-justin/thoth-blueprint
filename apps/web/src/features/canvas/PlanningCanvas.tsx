@@ -955,25 +955,44 @@ function ElementShape({
   moveDelta?: Point;
   overrideBoundary?: Polygon;
 }) {
+  const renovationMode = useWorkspaceStore((s) => s.renovationMode);
+  const renovationStatus = element.renovationStatus || "existing";
+
   if (isPointElement(element)) {
     const shift = moveDelta ?? { x: 0, y: 0 };
     const s = worldToScreen({ x: element.position.x + shift.x, y: element.position.y + shift.y }, viewport);
 
     if (element.kind === "tree") {
       const r = Math.max(4, element.canopyRadius * viewport.zoom);
+      let canopyFill = "#22c55e";
+      let canopyStroke = "#16a34a";
+      if (renovationMode) {
+        if (renovationStatus === "new") {
+          canopyFill = "#22c55e";
+          canopyStroke = "#22c55e";
+        } else if (renovationStatus === "demolished") {
+          canopyFill = "#ef4444";
+          canopyStroke = "#ef4444";
+        }
+      }
       return (
         <g>
-          <circle cx={s.x} cy={s.y} r={r} fill="#22c55e" fillOpacity={0.28} stroke="#16a34a" strokeWidth={1} vectorEffect="non-scaling-stroke" />
-          <circle cx={s.x} cy={s.y} r={3} fill="#15803d" />
+          <circle cx={s.x} cy={s.y} r={r} fill={canopyFill} fillOpacity={0.28} stroke={canopyStroke} strokeWidth={1} vectorEffect="non-scaling-stroke" />
+          <circle cx={s.x} cy={s.y} r={3} fill={renovationMode && renovationStatus === "demolished" ? "#b91c1c" : "#15803d"} />
           {selected && <circle cx={s.x} cy={s.y} r={r + 3} fill="none" stroke="hsl(var(--primary))" strokeWidth={1.5} />}
         </g>
       );
     }
 
     if (element.kind === "spot") {
+      let spotFill = "#d97706";
+      if (renovationMode) {
+        if (renovationStatus === "new") spotFill = "#22c55e";
+        else if (renovationStatus === "demolished") spotFill = "#ef4444";
+      }
       return (
         <g>
-          <path d={`M${s.x} ${s.y - 5} L${s.x + 5} ${s.y} L${s.x} ${s.y + 5} L${s.x - 5} ${s.y} Z`} fill="#d97706" stroke="#fff" strokeWidth={1} />
+          <path d={`M${s.x} ${s.y - 5} L${s.x + 5} ${s.y} L${s.x} ${s.y + 5} L${s.x - 5} ${s.y} Z`} fill={spotFill} stroke="#fff" strokeWidth={1} />
           {showLabels && (
             <text x={s.x + 8} y={s.y + 4} fontSize={11} fill="hsl(var(--foreground))" style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: 3 }}>
               {element.z.toFixed(1)}
@@ -985,9 +1004,14 @@ function ElementShape({
     }
 
     // Note.
+    let noteFill = "#eab308";
+    if (renovationMode) {
+      if (renovationStatus === "new") noteFill = "#22c55e";
+      else if (renovationStatus === "demolished") noteFill = "#ef4444";
+    }
     return (
       <g>
-        <circle cx={s.x} cy={s.y} r={5} fill="#eab308" stroke="#fff" strokeWidth={1.5} />
+        <circle cx={s.x} cy={s.y} r={5} fill={noteFill} stroke="#fff" strokeWidth={1.5} />
         {showLabels && (
           <text x={s.x + 9} y={s.y + 4} fontSize={12} fill="hsl(var(--foreground))">
             {element.text}
@@ -1049,15 +1073,34 @@ function ElementShape({
 
   const patternId = isLine ? null : patternFor(element);
 
+  let strokeColor = selected ? "hsl(var(--primary))" : color;
+  let strokeDash = dash;
+  const strokeWidth = selected ? 2.5 : element.kind === "building" ? 1.5 : 1.75;
+  let fillOpacityOverride = isLine ? 0.25 : fillOpacity;
+  let elementColorOverride = color;
+
+  if (renovationMode) {
+    if (renovationStatus === "new") {
+      strokeColor = "#22c55e";
+      elementColorOverride = "#22c55e";
+      fillOpacityOverride = isLine ? 0.35 : Math.max(0.18, fillOpacity * 0.7);
+    } else if (renovationStatus === "demolished") {
+      strokeColor = "#ef4444";
+      strokeDash = "3 3";
+      elementColorOverride = "#ef4444";
+      fillOpacityOverride = isLine ? 0.15 : fillOpacity * 0.4;
+    }
+  }
+
   return (
     <g>
       <path
         d={path}
-        fill={color}
-        fillOpacity={isLine ? 0.25 : fillOpacity}
-        stroke={selected ? "hsl(var(--primary))" : color}
-        strokeWidth={selected ? 2.5 : element.kind === "building" ? 1.5 : 1.75}
-        strokeDasharray={dash}
+        fill={elementColorOverride}
+        fillOpacity={fillOpacityOverride}
+        stroke={strokeColor}
+        strokeWidth={strokeWidth}
+        strokeDasharray={strokeDash}
         vectorEffect="non-scaling-stroke"
         strokeLinejoin="round"
       />
@@ -1087,6 +1130,17 @@ function ElementShape({
           {areaLabel && (
             <tspan x={center.x} dy={14} fontSize={10} fillOpacity={0.7}>
               {areaLabel}
+            </tspan>
+          )}
+          {renovationMode && renovationStatus !== "existing" && (
+            <tspan
+              x={center.x}
+              dy={areaLabel ? 14 : 12}
+              fontSize={9}
+              fill={renovationStatus === "new" ? "#22c55e" : "#ef4444"}
+              fontWeight="bold"
+            >
+              {renovationStatus === "new" ? "● NEW" : "✕ DEMO"}
             </tspan>
           )}
         </text>

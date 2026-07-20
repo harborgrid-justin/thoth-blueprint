@@ -32,6 +32,7 @@ export interface SceneResult {
   /** Height of the terrain at the plan center (for camera targeting). */
   baseElevation: number;
   exaggeration: number;
+  buildingMeshes: Map<string, THREE.Object3D>;
   dispose: () => void;
 }
 
@@ -91,7 +92,7 @@ export function buildScene(site: Site): SceneResult | null {
     metalness: number;
   }> = [];
   const outlines: Array<{ ring: Polygon; color: number; lift: number }> = [];
-  const buildings: THREE.Object3D[] = [];
+  const buildingMeshes = new Map<string, THREE.Object3D>();
 
   for (const el of site.elements) {
     if (isPointElement(el)) {
@@ -109,21 +110,38 @@ export function buildScene(site: Site): SceneResult | null {
       const storeys = Math.max(1, el.storeys);
       const height = (el.height ?? storeys * 3.2) * exag;
       const base = elevAt(centroidOf(ring)) * exag;
-      buildings.push(enterpriseBuilding(ring, center, base, storeys, height, el.use, disposables));
+      const bGroup = enterpriseBuilding(ring, center, base, storeys, height, el.use, el.renovationStatus, disposables);
+      buildingMeshes.set(el.id, bGroup);
       continue;
     }
 
     const category = el.kind === "landuse" ? el.category : undefined;
-    const color = new THREE.Color(elementColor(el.kind, category)).getHex();
-    const opacity =
+    let color = new THREE.Color(elementColor(el.kind, category)).getHex();
+    let opacity =
       el.kind === "water" ? 0.82 : el.kind === "region" ? 0.1 : el.kind === "grade" ? 0.45 : 0.5;
+    
+    // Renovation draped override
+    if (el.renovationStatus === "new") {
+      color = 0x22c55e;
+      opacity = Math.max(opacity, 0.6);
+    } else if (el.renovationStatus === "demolished") {
+      color = 0xef4444;
+      opacity = opacity * 0.4;
+    }
+
     const lift = el.kind === "water" ? -0.3 : el.kind === "region" ? 0.15 : DRAPE_OFFSET;
     const roughness = el.kind === "water" ? 0.12 : 0.9;
     const metalness = el.kind === "water" ? 0.0 : 0.02;
     draped.push({ ring, color, opacity, lift, roughness, metalness });
 
     if (OUTLINE_KINDS.has(el.kind)) {
-      outlines.push({ ring, color: outlineColor(el.kind), lift: DRAPE_OFFSET + 0.18 });
+      let oColor = outlineColor(el.kind);
+      if (el.renovationStatus === "new") {
+        oColor = 0x22c55e;
+      } else if (el.renovationStatus === "demolished") {
+        oColor = 0xef4444;
+      }
+      outlines.push({ ring, color: oColor, lift: DRAPE_OFFSET + 0.18 });
     }
   }
 
@@ -139,7 +157,7 @@ export function buildScene(site: Site): SceneResult | null {
   // Parcel / lot / zone boundary lines drawn on the ground.
   outlines.forEach((o) => group.add(boundaryOutline(o.ring, center, elevAt, exag, o.lift, o.color, disposables)));
 
-  buildings.forEach((b) => group.add(b));
+  buildingMeshes.forEach((b) => group.add(b));
 
   // --- Building interiors (walls per level) --------------------------------
   for (const model of site.buildingModels ?? []) {
@@ -169,6 +187,7 @@ export function buildScene(site: Site): SceneResult | null {
     radius,
     baseElevation: elevAt(center) * exag,
     exaggeration: exag,
+    buildingMeshes,
     dispose: () => disposables.forEach((d) => d.dispose()),
   };
 }
@@ -341,15 +360,33 @@ function enterpriseBuilding(
   storeys: number,
   height: number,
   use: LandUseCategory | undefined,
+  renovationStatus: "existing" | "new" | "demolished" | undefined,
   disposables: Array<{ dispose: () => void }>,
 ): THREE.Group {
   const shape = shapeFromBoundary(ring, center);
   const geo = new THREE.ExtrudeGeometry(shape, { depth: height, bevelEnabled: false });
   geo.rotateX(-Math.PI / 2);
+
+  let bColor = buildingColor(use);
+  let bOpacity = 1.0;
+  let bTransparent = false;
+
+  if (renovationStatus === "new") {
+    bColor = 0x22c55e;
+    bOpacity = 0.75;
+    bTransparent = true;
+  } else if (renovationStatus === "demolished") {
+    bColor = 0xef4444;
+    bOpacity = 0.35;
+    bTransparent = true;
+  }
+
   const mat = new THREE.MeshStandardMaterial({
-    color: buildingColor(use),
+    color: bColor,
     roughness: 0.62,
     metalness: 0.12,
+    transparent: bTransparent,
+    opacity: bOpacity,
   });
   const edgeGeo = new THREE.EdgesGeometry(geo, 20);
   const edgeMat = new THREE.LineBasicMaterial({ color: 0x1f2937, transparent: true, opacity: 0.55 });
