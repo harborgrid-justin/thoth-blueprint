@@ -148,6 +148,20 @@ export function createSpatialElement(
         safetyGlazing: "tempered",
         frameProfile: "vinyl",
       };
+    case "roof":
+      return {
+        ...base,
+        kind,
+        roofType: "gable",
+        pitch: 6,
+        overhang: 0.3,
+        soffitWidth: 0.3,
+        thickness: 0.2,
+        shingleMaterial: "asphalt",
+        gutters: true,
+        soffitVents: true,
+        dormers: [],
+      };
   }
 }
 

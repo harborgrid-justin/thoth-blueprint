@@ -9,11 +9,13 @@ import {
   calculateCurtainWallGeometry,
   calculateDoorGeometry,
   calculateWindowGeometry,
+  calculateRoofGeometry,
   compileUnitSchedule,
   type Stair,
   type CurtainWall,
   type DoorElement,
   type WindowElement,
+  type RoofElement,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { Button } from "@/components/ui/button";
@@ -39,7 +41,7 @@ export function QtoPanel() {
     { elementId: "building-lot", payItemId: "201-100", formula: "area * unitCost" },
   ];
 
-  const [activeTab, setActiveTab] = React.useState<"earthwork" | "payitems" | "renovation" | "stairs" | "curtainwalls" | "assemblies">("earthwork");
+  const [activeTab, setActiveTab] = React.useState<"earthwork" | "payitems" | "renovation" | "stairs" | "curtainwalls" | "assemblies" | "roofs">("earthwork");
 
   if (!site) {return null;}
 
@@ -113,6 +115,12 @@ export function QtoPanel() {
             className={cn("px-1.5 py-0.5 rounded text-[10px]", activeTab === "assemblies" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
           >
             Doors/Wins
+          </button>
+          <button
+            onClick={() => setActiveTab("roofs")}
+            className={cn("px-1.5 py-0.5 rounded text-[10px]", activeTab === "roofs" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
+          >
+            Roofs
           </button>
         </div>
       </div>
@@ -566,6 +574,115 @@ export function QtoPanel() {
                   </div>
                 );
               }
+              return (
+                <div className="flex flex-col gap-1.5 max-h-[140px] overflow-y-auto pr-1">
+                  {warnings.map((w, idx) => (
+                    <div key={idx} className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium">
+                      {w}
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+
+      {activeTab === "roofs" && (
+        <div className="flex flex-col gap-3">
+          {/* Roof Materials List */}
+          <div className="rounded-md border border-border bg-card p-2">
+            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+              <span>Roof Construction Takeoffs</span>
+              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] h-4">Material Volume</Badge>
+            </h4>
+            {(() => {
+              const roofs = site.elements.filter((e) => e.kind === "roof") as RoofElement[];
+              if (roofs.length === 0) {
+                return (
+                  <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
+                    No roof elements drafted in the current site plan.
+                  </div>
+                );
+              }
+              return (
+                <div className="flex flex-col gap-3 max-h-[220px] overflow-y-auto pr-1">
+                  {roofs.map((roof) => {
+                    const res = calculateRoofGeometry(roof);
+                    return (
+                      <div key={roof.id} className="border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                        <div className="font-semibold text-foreground mb-1 flex justify-between">
+                          <span>{roof.name}</span>
+                          <span className="text-muted-foreground text-[9px] capitalize">{roof.roofType} Roof</span>
+                        </div>
+                        <table className="w-full text-left text-[10px]">
+                          <tbody>
+                            <tr className="border-b border-border/30">
+                              <td className="py-0.5 text-muted-foreground">Pitch Angle / Slope Factor</td>
+                              <td className="py-0.5 text-right font-medium">{roof.pitch || 6}:12 ({res.slopeFactor.toFixed(3)})</td>
+                            </tr>
+                            <tr className="border-b border-border/30">
+                              <td className="py-0.5 text-muted-foreground">Plan Area / True Slope Area</td>
+                              <td className="py-0.5 text-right font-medium">{res.planAreaSqm.toFixed(1)} m² / {res.trueAreaSqm.toFixed(1)} m²</td>
+                            </tr>
+                            <tr className="border-b border-border/30">
+                              <td className="py-0.5 text-muted-foreground">Plywood Sheathing Vol</td>
+                              <td className="py-0.5 text-right font-medium text-amber-500">{res.sheathingVolCuM.toFixed(2)} m³</td>
+                            </tr>
+                            <tr className="border-b border-border/30">
+                              <td className="py-0.5 text-muted-foreground">Fiberglass Insulation Vol</td>
+                              <td className="py-0.5 text-right font-medium text-emerald-500">{res.insulationVolCuM.toFixed(2)} m³</td>
+                            </tr>
+                            <tr className="border-b border-border/30">
+                              <td className="py-0.5 text-muted-foreground">Asphalt Shingles Weight</td>
+                              <td className="py-0.5 text-right font-medium text-blue-500">{res.shingleWeightKg.toFixed(0)} kg</td>
+                            </tr>
+                            <tr>
+                              <td className="py-0.5 text-muted-foreground">Timber Board Measure</td>
+                              <td className="py-0.5 text-right font-medium text-indigo-500">{res.timberBoardFeet.toFixed(0)} FBM</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* Roof Ventilation & Drainage Compliance */}
+          <div className="rounded-md border border-border bg-card p-2">
+            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+              <span>Ventilation &amp; Slope Auditing</span>
+              <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[9px] h-4">IRC R806.1</Badge>
+            </h4>
+            {(() => {
+              const warnings: string[] = [];
+              const roofs = site.elements.filter((e) => e.kind === "roof") as RoofElement[];
+
+              roofs.forEach((roof) => {
+                const res = calculateRoofGeometry(roof);
+                res.warnings.forEach((w) => warnings.push(`${roof.name}: ${w}`));
+                res.ventilationWarnings.forEach((w) => warnings.push(`${roof.name}: ${w}`));
+              });
+
+              if (roofs.length === 0) {
+                return (
+                  <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
+                    No roofs drafted to audit.
+                  </div>
+                );
+              }
+
+              if (warnings.length === 0) {
+                return (
+                  <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2 text-[10px] text-emerald-500">
+                    All roof slopes comply with pitch requirements and attic ventilation ratios.
+                  </div>
+                );
+              }
+
               return (
                 <div className="flex flex-col gap-1.5 max-h-[140px] overflow-y-auto pr-1">
                   {warnings.map((w, idx) => (

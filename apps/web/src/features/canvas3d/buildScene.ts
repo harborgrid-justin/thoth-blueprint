@@ -15,6 +15,7 @@ import {
   type CurtainWall,
   type DoorElement,
   type WindowElement,
+  type RoofElement,
 } from "@thoth/domain";
 import { elementColor } from "@/lib/elementMeta";
 import { buildTerrainModel, siteExtent } from "@/features/terrain/terrainModel";
@@ -22,6 +23,7 @@ import { enterpriseStair } from "./stairs3d";
 import { enterpriseCurtainWall } from "./curtainwall3d";
 import { enterpriseDoor, enterpriseWindow } from "./doorwindow3d";
 import { enterpriseBuilding, buildingInterior, shapeFromBoundary } from "./building3d";
+import { enterpriseRoof } from "./roof3d";
 
 export interface SceneResult {
   group: THREE.Group;
@@ -135,6 +137,13 @@ export function buildScene(site: Site): SceneResult | null {
       const base = elevAt(centroid(ring)) * exag;
       const wGroup = enterpriseWindow(el as WindowElement, center, base, exag, disposables);
       group.add(wGroup);
+      continue;
+    }
+
+    if (el.kind === "roof") {
+      const base = elevAt(centroid(ring)) * exag;
+      const rGroup = enterpriseRoof(el as RoofElement, center, base, exag, disposables);
+      group.add(rGroup);
       continue;
     }
 

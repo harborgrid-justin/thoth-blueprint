@@ -176,6 +176,14 @@ const META: Record<ElementKind, ElementKindMeta> = {
     fill: "#22d3ee",
     namePrefix: "Window",
   },
+  roof: {
+    kind: "roof",
+    label: "Roof Construction",
+    defaultLayerId: "layer-buildings",
+    stroke: "#991b1b", // terracotta red stroke
+    fill: "#f87171", // warm red fill
+    namePrefix: "Roof",
+  },
 };
 
 export function elementMeta(kind: ElementKind): ElementKindMeta {

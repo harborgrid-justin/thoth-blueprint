@@ -1,5 +1,5 @@
 import type { RoofElement, Point } from "../spatial/types.js";
-import { measuredArea } from "../spatial/spatial.js";
+import { area } from "../spatial/geometry.js";
 
 export interface RoofGeometryResults {
   pitchAngleRad: number;
@@ -43,7 +43,7 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
   let planAreaSqm = 120; // default benchmark
   let boundary = roof.boundary || [];
   if (boundary.length >= 3) {
-    planAreaSqm = Math.abs(measuredArea(boundary));
+    planAreaSqm = Math.abs(area(boundary));
   } else {
     // Generate dummy square boundary if missing
     boundary = [
@@ -144,7 +144,6 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
   }
 
   // 5. Material takeoffs (REQ-UNIMP-059)
-  const thick = roof.thickness || 0.2;
   const sheathingVolCuM = trueAreaSqm * 0.015; // 15mm plywood sheathing
   const insulationVolCuM = trueAreaSqm * 0.18; // 180mm fiberglass insulation
   const shingleWeightKg = trueAreaSqm * 12.0; // ~12kg/sqm asphalt shingles
@@ -158,7 +157,7 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
   // Calculate provided vent area:
   // Ridge vent (length of ridge * free area width ~ 0.05m)
   let ridgeVentArea = 0;
-  if (ridgeLine.length >= 2) {
+  if (roof.roofType !== "flat" && ridgeLine.length >= 2) {
     const rLen = Math.hypot(ridgeLine[1].x - ridgeLine[0].x, ridgeLine[1].y - ridgeLine[0].y);
     ridgeVentArea = rLen * 0.05;
   }

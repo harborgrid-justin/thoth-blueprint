@@ -24,6 +24,7 @@ import {
   calculateCurtainWallGeometry,
   calculateDoorGeometry,
   calculateWindowGeometry,
+  calculateRoofGeometry,
   type Bounds,
   type ElevationGrid,
   type InfrastructureNetwork,
@@ -35,6 +36,7 @@ import {
   type CurtainWall,
   type DoorElement,
   type WindowElement,
+  type RoofElement,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
@@ -1387,6 +1389,125 @@ function ElementShape({
               const sPoly = poly.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
               if (sPoly.length < 2) return null;
               return <path key={`win-sash-${idx}`} d={`M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={1} />;
+            })}
+          </g>
+        );
+      })()}
+      {element.kind === "roof" && (() => {
+        const roofGeom = calculateRoofGeometry(element as RoofElement);
+        return (
+          <g className="pointer-events-none">
+            {/* 1. Draw structural rafters */}
+            {roofGeom.rafterLines.map((line, idx) => {
+              const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sLine.length < 2) return null;
+              return (
+                <line
+                  key={`rafter-${idx}`}
+                  x1={sLine[0].x}
+                  y1={sLine[0].y}
+                  x2={sLine[1].x}
+                  y2={sLine[1].y}
+                  stroke={strokeColor}
+                  strokeWidth={0.5}
+                  strokeDasharray="2 2"
+                  strokeOpacity={0.4}
+                />
+              );
+            })}
+
+            {/* 2. Draw gutters */}
+            {roofGeom.gutterPaths.map((line, idx) => {
+              const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sLine.length < 2) return null;
+              return (
+                <line
+                  key={`gutter-${idx}`}
+                  x1={sLine[0].x}
+                  y1={sLine[0].y}
+                  x2={sLine[1].x}
+                  y2={sLine[1].y}
+                  stroke="#475569"
+                  strokeWidth={2}
+                  strokeOpacity={0.7}
+                />
+              );
+            })}
+
+            {/* 3. Draw drainage flow arrows */}
+            {roofGeom.drainageFlows.map((line, idx) => {
+              const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sLine.length < 2) return null;
+              const angle = Math.atan2(sLine[1].y - sLine[0].y, sLine[1].x - sLine[0].x);
+              return (
+                <g key={`flow-${idx}`}>
+                  <line
+                    x1={sLine[0].x}
+                    y1={sLine[0].y}
+                    x2={sLine[1].x}
+                    y2={sLine[1].y}
+                    stroke="#0284c7"
+                    strokeWidth={1}
+                    strokeDasharray="3 3"
+                    strokeOpacity={0.6}
+                  />
+                  <polygon
+                    points={`${sLine[1].x},${sLine[1].y} ${sLine[1].x - 6 * Math.cos(angle - Math.PI/6)},${sLine[1].y - 6 * Math.sin(angle - Math.PI/6)} ${sLine[1].x - 6 * Math.cos(angle + Math.PI/6)},${sLine[1].y - 6 * Math.sin(angle + Math.PI/6)}`}
+                    fill="#0284c7"
+                    fillOpacity={0.6}
+                  />
+                </g>
+              );
+            })}
+
+            {/* 4. Draw Hip / Valley lines */}
+            {roofGeom.hipLines.concat(roofGeom.valleyLines).map((line, idx) => {
+              const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sLine.length < 2) return null;
+              return (
+                <line
+                  key={`hip-valley-${idx}`}
+                  x1={sLine[0].x}
+                  y1={sLine[0].y}
+                  x2={sLine[1].x}
+                  y2={sLine[1].y}
+                  stroke={strokeColor}
+                  strokeWidth={1.5}
+                  strokeOpacity={0.7}
+                />
+              );
+            })}
+
+            {/* 5. Draw main ridge line */}
+            {(() => {
+              if (roofGeom.ridgeLine.length < 2) return null;
+              const sRidge = roofGeom.ridgeLine.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              return (
+                <line
+                  x1={sRidge[0].x}
+                  y1={sRidge[0].y}
+                  x2={sRidge[1].x}
+                  y2={sRidge[1].y}
+                  stroke={strokeColor}
+                  strokeWidth={2}
+                />
+              );
+            })()}
+
+            {/* 6. Downspout indicators */}
+            {roofGeom.downspoutAnchors.map((pt, idx) => {
+              const sPt = worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport);
+              return (
+                <circle
+                  key={`downspout-${idx}`}
+                  cx={sPt.x}
+                  cy={sPt.y}
+                  r={3}
+                  fill="#0284c7"
+                  stroke={strokeColor}
+                  strokeWidth={0.75}
+                />
+              );
             })}
           </g>
         );
