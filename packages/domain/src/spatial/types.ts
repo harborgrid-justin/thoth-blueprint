@@ -498,3 +498,16 @@ export interface Site {
     leaders?: Leader[];
   };
 }
+
+/** The severity of a compliance finding. */
+export type ComplianceSeverity = "error" | "warning" | "info";
+
+/** A single result from checking a plan against its constraints. */
+export interface ComplianceFinding {
+  severity: ComplianceSeverity;
+  code: string;
+  message: string;
+  /** The element the finding concerns, if any. */
+  elementId?: string;
+}
+

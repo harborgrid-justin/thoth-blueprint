@@ -51,7 +51,9 @@ export type CivilSymbolType =
   | "erosion-bale"
   | "riprap"
   | "sign"
-  | "flow-arrow";
+  | "flow-arrow"
+  | "stabilized-entrance"
+  | "silt-basin";
 
 /** A placed civil symbol (box-X inlet protection, ditch check, culvert, …). */
 export interface CivilSymbol {
@@ -78,6 +80,8 @@ export const CIVIL_SYMBOL_DEFINITIONS: CivilSymbolDefinition[] = [
   { type: "riprap", label: "Rip-rap / stone" },
   { type: "sign", label: "Sign" },
   { type: "flow-arrow", label: "Surface-water flow" },
+  { type: "stabilized-entrance", label: "Stabilized construction entrance" },
+  { type: "silt-basin", label: "Sediment basin / trap" },
 ];
 
 const SYMBOL_BY_TYPE = new Map(CIVIL_SYMBOL_DEFINITIONS.map((d) => [d.type, d]));

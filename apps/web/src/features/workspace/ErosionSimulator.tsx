@@ -11,18 +11,19 @@ export function ErosionSimulatorPanel() {
 
   const [frames, setFrames] = React.useState<SimulationFrame[]>([]);
   const [speed, setSpeed] = React.useState(100); // ms per step
+  const [soilType, setSoilType] = React.useState<"sand" | "silt" | "clay" | "loam">("loam");
 
-  // Run simulation whenever site layout changes
+  // Run simulation whenever site layout or soil type changes
   React.useEffect(() => {
     if (!site) {return;}
-    const sim = new ErosionSimulator(site);
+    const sim = new ErosionSimulator(site, soilType);
     const recorded = sim.runSimulation(100); // 100 frames
     setFrames(recorded);
     if (recorded.length > 0) {
       setFrame(recorded[0]);
       setActiveStep(0);
     }
-  }, [site, setFrame, setActiveStep]);
+  }, [site, soilType, setFrame, setActiveStep]);
 
   // Playback timer loop
   React.useEffect(() => {
@@ -125,16 +126,28 @@ export function ErosionSimulatorPanel() {
             </Button>
           </div>
 
-          {/* Speed settings */}
-          <select
-            value={speed}
-            onChange={(e) => setSpeed(Number(e.target.value))}
-            className="bg-background border border-border rounded px-1.5 py-0.5 text-[10px] text-muted-foreground"
-          >
-            <option value={200}>0.5x Speed</option>
-            <option value={100}>1.0x Speed</option>
-            <option value={50}>2.0x Speed</option>
-          </select>
+          {/* Soil Type and Speed settings */}
+          <div className="flex gap-1">
+            <select
+              value={soilType}
+              onChange={(e) => setSoilType(e.target.value as any)}
+              className="bg-background border border-border rounded px-1.5 py-0.5 text-[10px] text-muted-foreground"
+            >
+              <option value="loam">Loam Soil</option>
+              <option value="sand">Sandy Soil</option>
+              <option value="clay">Clayey Soil</option>
+              <option value="silt">Silty Soil</option>
+            </select>
+            <select
+              value={speed}
+              onChange={(e) => setSpeed(Number(e.target.value))}
+              className="bg-background border border-border rounded px-1.5 py-0.5 text-[10px] text-muted-foreground"
+            >
+              <option value={200}>0.5x</option>
+              <option value={100}>1.0x</option>
+              <option value={50}>2.0x</option>
+            </select>
+          </div>
         </div>
       </div>
 

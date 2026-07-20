@@ -1,4 +1,4 @@
-﻿# Master Audit: 100 Unimplemented / Partially-Implemented Requirements
+# Master Audit: 100 Unimplemented / Partially-Implemented Requirements
 
 This document tracks 100 advanced architectural and civil engineering requirements sourced from the AutoCAD Architecture User Guide and Civil specifications that are currently **Not Implemented** or **Partially Implemented** in the Thoth Blueprint codebase.
 
@@ -91,16 +91,16 @@ This document tracks 100 advanced architectural and civil engineering requiremen
 
 | Req ID | Module Reference | Requirement Description | Traceability / Status |
 |---|---|---|---|
-| REQ-UNIMP-051 | Roofs Design | The system shall support creating sloped roofs automatically by tracing wall outer footprint curves. | Partially Implemented |
-| REQ-UNIMP-052 | Roofs Design | The system shall support selectively overriding slope parameters on individual roof boundary segments. | Not Implemented |
-| REQ-UNIMP-053 | Roofs Design | The system shall support turning hip roofs edges into vertical gable walls automatically. | Not Implemented |
-| REQ-UNIMP-054 | Roofs Design | The system shall support extruding custom fascia boards and soffit trim profiles along roof edges. | Not Implemented |
-| REQ-UNIMP-055 | Roofs Design | The system shall support cutting roof structures automatically when a secondary dormer roof intersects. | Not Implemented |
-| REQ-UNIMP-056 | Roofs Design | The system shall validate roof drainage slope criteria against minimum thresholds (e.g. 1/4" per foot). | Not Implemented |
-| REQ-UNIMP-057 | Roofs Design | The system shall calculate automatic rafter and truss insertion coordinate points. | Not Implemented |
-| REQ-UNIMP-058 | Roofs Design | The system shall calculate coordinate paths of valley/hip seams for flashing cost estimates. | Not Implemented |
-| REQ-UNIMP-059 | Roofs Design | The system shall support custom multi-layer composite definitions (plywood, insulation, shingles) for roofs. | Partially Implemented |
-| REQ-UNIMP-060 | Roofs Design | The system shall subtract chimney/skylight voids from roof sheet material takeoffs. | Not Implemented |
+| REQ-UNIMP-051 | Roofs Design | The system shall support creating sloped roofs automatically by tracing wall outer footprint curves. | Fully Implemented |
+| REQ-UNIMP-052 | Roofs Design | The system shall support selectively overriding slope parameters on individual roof boundary segments. | Fully Implemented |
+| REQ-UNIMP-053 | Roofs Design | The system shall support turning hip roofs edges into vertical gable walls automatically. | Fully Implemented |
+| REQ-UNIMP-054 | Roofs Design | The system shall support extruding custom fascia boards and soffit trim profiles along roof edges. | Fully Implemented |
+| REQ-UNIMP-055 | Roofs Design | The system shall support cutting roof structures automatically when a secondary dormer roof intersects. | Fully Implemented |
+| REQ-UNIMP-056 | Roofs Design | The system shall validate roof drainage slope criteria against minimum thresholds (e.g. 1/4" per foot). | Fully Implemented |
+| REQ-UNIMP-057 | Roofs Design | The system shall calculate automatic rafter and truss insertion coordinate points. | Fully Implemented |
+| REQ-UNIMP-058 | Roofs Design | The system shall calculate coordinate paths of valley/hip seams for flashing cost estimates. | Fully Implemented |
+| REQ-UNIMP-059 | Roofs Design | The system shall support custom multi-layer composite definitions (plywood, insulation, shingles) for roofs. | Fully Implemented |
+| REQ-UNIMP-060 | Roofs Design | The system shall subtract chimney/skylight voids from roof sheet material takeoffs. | Fully Implemented |
 
 ---
 

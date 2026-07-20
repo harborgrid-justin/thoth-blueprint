@@ -8,7 +8,8 @@
 import _ from "lodash";
 import type { Point, Polygon } from "../spatial/geometry";
 import { area as polygonArea, bounds, offsetPolygon, pointInPolygon } from "../spatial/geometry";
-import type { Building, Lot, Site, Zone } from "../spatial/primitives";
+import type { Building, Lot, Site, Zone, ComplianceFinding } from "../spatial/types";
+import { auditErosionCompliance } from "./erosion.js";
 
 /**
  * The buildable envelope of a lot: its boundary inset by the lot's setback.
@@ -85,17 +86,7 @@ export function subdivideGrid(boundary: Polygon, options: SubdivisionOptions): L
   return lots;
 }
 
-/** The severity of a compliance finding. */
-export type ComplianceSeverity = "error" | "warning" | "info";
-
-/** A single result from checking a plan against its constraints. */
-export interface ComplianceFinding {
-  severity: ComplianceSeverity;
-  code: string;
-  message: string;
-  /** The element the finding concerns, if any. */
-  elementId?: string;
-}
+// Compliance types are imported from spatial/types
 
 /**
  * Check buildings against the coverage/FAR/height limits of the zones that
@@ -180,6 +171,9 @@ export function checkCompliance(site: Site): ComplianceFinding[] {
       message: "No zoning conflicts detected.",
     });
   }
+
+  const erosionFindings = auditErosionCompliance(site);
+  findings.push(...erosionFindings);
 
   return findings;
 }
