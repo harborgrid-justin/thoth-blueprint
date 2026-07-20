@@ -25,7 +25,12 @@ import {
   type PointElement,
   type PlanElement,
   type Site,
-} from "./types";
+  type Stair,
+  type CurtainWall,
+  type CurtainWallGrid,
+  type Door,
+  type Window,
+} from "./types.js";
 
 // Re-export type definitions for downstream consumers
 export type {
@@ -52,6 +57,11 @@ export type {
   PointElement,
   PlanElement,
   Site,
+  Stair,
+  CurtainWall,
+  CurtainWallGrid,
+  Door,
+  Window,
 };
 
 /** Element kinds represented by a single point rather than a boundary. */

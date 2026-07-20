@@ -1,11 +1,14 @@
 import * as THREE from "three";
 import {
   boundsCenter,
+  centroid,
   densifyBoundary,
   elevationAt,
   isPointElement,
   isSpatialElement,
   wallPolygon,
+  calculateStairGeometry,
+  calculateCurtainWallGeometry,
   type Bounds,
   type BuildingModel,
   type ElevationGrid,
@@ -13,6 +16,8 @@ import {
   type Point,
   type Polygon,
   type Site,
+  type Stair,
+  type CurtainWall,
 } from "@thoth/domain";
 import { elementColor } from "@/lib/elementMeta";
 import { buildTerrainModel, siteExtent } from "@/features/terrain/terrainModel";
@@ -112,6 +117,20 @@ export function buildScene(site: Site): SceneResult | null {
       const base = elevAt(centroidOf(ring)) * exag;
       const bGroup = enterpriseBuilding(ring, center, base, storeys, height, el.use, el.renovationStatus, disposables);
       buildingMeshes.set(el.id, bGroup);
+      continue;
+    }
+
+    if (el.kind === "stair") {
+      const base = elevAt(centroid(ring)) * exag;
+      const sGroup = enterpriseStair(el as Stair, center, base, exag, disposables);
+      group.add(sGroup);
+      continue;
+    }
+
+    if (el.kind === "curtainwall") {
+      const base = elevAt(centroid(ring)) * exag;
+      const cwGroup = enterpriseCurtainWall(el as CurtainWall, center, base, exag, disposables);
+      group.add(cwGroup);
       continue;
     }
 
@@ -541,4 +560,326 @@ function networkEdge(
 function centroidOf(boundary: Polygon): Point {
   const sum = boundary.reduce((acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 });
   return { x: sum.x / boundary.length, y: sum.y / boundary.length };
+}
+
+function enterpriseStair(
+  stair: Stair,
+  center: Point,
+  baseElevation: number,
+  exag: number,
+  disposables: Array<{ dispose: () => void }>,
+): THREE.Group {
+  const stairGroup = new THREE.Group();
+  stairGroup.name = stair.name;
+
+  const stairGeom = calculateStairGeometry(stair);
+  const color =
+    stair.renovationStatus === "new"
+      ? 0x22c55e
+      : stair.renovationStatus === "demolished"
+        ? 0xef4444
+        : 0x78716c;
+
+  const mat = new THREE.MeshStandardMaterial({
+    color: color,
+    roughness: 0.8,
+    metalness: 0.1,
+    transparent: stair.renovationStatus !== undefined,
+    opacity:
+      stair.renovationStatus === "new"
+        ? 0.6
+        : stair.renovationStatus === "demolished"
+          ? 0.35
+          : 1.0,
+  });
+  disposables.push(mat);
+
+  let dir = { x: 1, y: 0 };
+  if (stair.boundary.length >= 2) {
+    const dx = stair.boundary[1].x - stair.boundary[0].x;
+    const dy = stair.boundary[1].y - stair.boundary[0].y;
+    const len = Math.hypot(dx, dy) || 1;
+    dir = { x: dx / len, y: dy / len };
+  }
+
+  stairGeom.treadLines.forEach((line, i) => {
+    if (line.length < 2) {return;}
+    const ptA = line[0];
+    const ptB = line[1];
+    const treadW = Math.hypot(ptB.x - ptA.x, ptB.y - ptA.y);
+    const treadAngle = Math.atan2(ptB.y - ptA.y, ptB.x - ptA.x);
+
+    const stepDepth = stairGeom.actualTreadDepth;
+    const stepHeight = stairGeom.actualRiserHeight * exag;
+
+    let tx = (ptA.x + ptB.x) / 2;
+    let tz = (ptA.y + ptB.y) / 2;
+    let rotY = -treadAngle;
+
+    if (stair.stairType === "spiral") {
+      const totalRotRad = ((stair.totalRotation || 270) * Math.PI) / 180;
+      const angle = ((i + 0.5) / stairGeom.treadCount) * totalRotRad;
+      const radius = stair.radius || 1.2;
+      const centerPt = centroid(stair.boundary);
+      tx = centerPt.x + radius * Math.cos(angle);
+      tz = centerPt.y + radius * Math.sin(angle);
+      rotY = -angle;
+    } else {
+      tx -= dir.x * (stepDepth / 2);
+      tz -= dir.y * (stepDepth / 2);
+    }
+
+    const geo = new THREE.BoxGeometry(treadW, stepHeight, stepDepth);
+    disposables.push(geo);
+
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(
+      tx - center.x,
+      baseElevation + i * stepHeight + stepHeight / 2,
+      tz - center.y,
+    );
+    mesh.rotation.y = rotY;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    stairGroup.add(mesh);
+  });
+
+  if (stair.stringerProfile !== "none") {
+    const sWidth = stair.stringerWidth || 0.05;
+    stairGeom.stringerCenterlines.forEach((line) => {
+      if (line.length < 2) {return;}
+
+      for (let i = 0; i < line.length - 1; i++) {
+        const p1 = line[i];
+        const p2 = line[i + 1];
+
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+        const segLen = Math.hypot(dx, dy);
+        const segAngle = Math.atan2(dy, dx);
+
+        const h1 = i * stairGeom.actualRiserHeight * exag;
+        const h2 = (i + 1) * stairGeom.actualRiserHeight * exag;
+        const dh = h2 - h1;
+        const beamLen = Math.hypot(segLen, dh);
+
+        const geo = new THREE.BoxGeometry(sWidth, 0.3 * exag, beamLen);
+        disposables.push(geo);
+
+        const beam = new THREE.Mesh(geo, mat);
+        beam.position.set(
+          (p1.x + p2.x) / 2 - center.x,
+          baseElevation + (h1 + h2) / 2,
+          (p1.y + p2.y) / 2 - center.y,
+        );
+        beam.rotation.y = -segAngle;
+        beam.rotation.x = Math.atan2(dh, segLen);
+        beam.castShadow = true;
+        stairGroup.add(beam);
+      }
+    });
+  }
+
+  return stairGroup;
+}
+
+function enterpriseCurtainWall(
+  wall: CurtainWall,
+  center: Point,
+  baseElevation: number,
+  exag: number,
+  disposables: Array<{ dispose: () => void }>,
+): THREE.Group {
+  const cwGroup = new THREE.Group();
+  cwGroup.name = wall.name;
+
+  const cwGeom = calculateCurtainWallGeometry(wall);
+
+  let startPt = { x: 0, y: 0 };
+  let endPt = { x: 5, y: 0 };
+  if (wall.boundary && wall.boundary.length >= 2) {
+    startPt = wall.boundary[0];
+    endPt = wall.boundary[1];
+  }
+
+  const dx = endPt.x - startPt.x;
+  const dy = endPt.y - startPt.y;
+  const planLen = Math.hypot(dx, dy) || 1.0;
+  const cos = dx / planLen;
+  const sin = dy / planLen;
+  const wallAngle = Math.atan2(dy, dx);
+
+  const totalHeight = wall.height || 3.0;
+  const frameWidth = wall.frameProfileWidth || 0.1;
+  const paneOffset = wall.paneOffset || 0.02;
+
+  const metalMat = new THREE.MeshStandardMaterial({
+    color: 0x475569,
+    roughness: 0.25,
+    metalness: 0.8,
+  });
+  const glassMat = new THREE.MeshStandardMaterial({
+    color: 0x38bdf8,
+    transparent: true,
+    opacity: 0.45,
+    roughness: 0.1,
+    metalness: 0.9,
+  });
+  const brickMat = new THREE.MeshStandardMaterial({
+    color: 0x991b1b,
+    roughness: 0.9,
+    metalness: 0.0,
+  });
+  const insMat = new THREE.MeshStandardMaterial({
+    color: 0xea580c,
+    roughness: 0.8,
+    metalness: 0.1,
+  });
+  const doorMat = new THREE.MeshStandardMaterial({
+    color: 0x86198f,
+    roughness: 0.4,
+  });
+
+  disposables.push(metalMat, glassMat, brickMat, insMat, doorMat);
+
+  // 1. Bottom frame
+  {
+    const geo = new THREE.BoxGeometry(planLen, frameWidth * exag, 0.12);
+    const m = new THREE.Mesh(geo, metalMat);
+    m.position.set(
+      (startPt.x + endPt.x) / 2 - center.x,
+      baseElevation + (frameWidth / 2) * exag,
+      (startPt.y + endPt.y) / 2 - center.y,
+    );
+    m.rotation.y = -wallAngle;
+    m.castShadow = true;
+    cwGroup.add(m);
+    disposables.push(geo);
+  }
+  // Top frame
+  {
+    const geo = new THREE.BoxGeometry(planLen, frameWidth * exag, 0.12);
+    const m = new THREE.Mesh(geo, metalMat);
+    m.position.set(
+      (startPt.x + endPt.x) / 2 - center.x,
+      baseElevation + totalHeight * exag - (frameWidth / 2) * exag,
+      (startPt.y + endPt.y) / 2 - center.y,
+    );
+    m.rotation.y = -wallAngle;
+    m.castShadow = true;
+    cwGroup.add(m);
+    disposables.push(geo);
+  }
+  // Left post
+  {
+    const geo = new THREE.BoxGeometry(frameWidth, totalHeight * exag, 0.12);
+    const m = new THREE.Mesh(geo, metalMat);
+    m.position.set(
+      startPt.x + (frameWidth / 2) * cos - center.x,
+      baseElevation + (totalHeight * exag) / 2,
+      startPt.y + (frameWidth / 2) * sin - center.y,
+    );
+    m.rotation.y = -wallAngle;
+    m.castShadow = true;
+    cwGroup.add(m);
+    disposables.push(geo);
+  }
+  // Right post
+  {
+    const geo = new THREE.BoxGeometry(frameWidth, totalHeight * exag, 0.12);
+    const m = new THREE.Mesh(geo, metalMat);
+    m.position.set(
+      endPt.x - (frameWidth / 2) * cos - center.x,
+      baseElevation + (totalHeight * exag) / 2,
+      endPt.y - (frameWidth / 2) * sin - center.y,
+    );
+    m.rotation.y = -wallAngle;
+    m.castShadow = true;
+    cwGroup.add(m);
+    disposables.push(geo);
+  }
+
+  // 2. Vertical mullion beams
+  cwGeom.mullions.forEach((mull) => {
+    if (mull.direction !== "vertical") {return;}
+    const lx = startPt.x + mull.xStart * cos;
+    const ly = startPt.y + mull.xStart * sin;
+    const geo = new THREE.BoxGeometry(mull.width, (mull.yEnd - mull.yStart) * exag, 0.1);
+    const m = new THREE.Mesh(geo, metalMat);
+    m.position.set(
+      lx - center.x,
+      baseElevation + ((mull.yStart + mull.yEnd) / 2) * exag,
+      ly - center.y,
+    );
+    m.rotation.y = -wallAngle;
+    m.castShadow = true;
+    cwGroup.add(m);
+    disposables.push(geo);
+  });
+
+  // 3. Horizontal mullion beams
+  cwGeom.mullions.forEach((mull) => {
+    if (mull.direction !== "horizontal") {return;}
+    const geo = new THREE.BoxGeometry(planLen, mull.width * exag, 0.08);
+    const m = new THREE.Mesh(geo, metalMat);
+    m.position.set(
+      (startPt.x + endPt.x) / 2 - center.x,
+      baseElevation + mull.yStart * exag,
+      (startPt.y + endPt.y) / 2 - center.y,
+    );
+    m.rotation.y = -wallAngle;
+    m.castShadow = true;
+    cwGroup.add(m);
+    disposables.push(geo);
+  });
+
+  // 4. Infill Panels
+  cwGeom.panels.forEach((pan) => {
+    const mx = (pan.xStart + pan.xEnd) / 2;
+    const pX = startPt.x + mx * cos - paneOffset * -sin;
+    const pY = startPt.y + mx * sin - paneOffset * cos;
+
+    let useMat = glassMat;
+    let thickness = 0.02;
+    if (pan.material === "brick") {
+      useMat = brickMat;
+      thickness = 0.1;
+    } else if (pan.material === "insulation") {
+      useMat = insMat;
+      thickness = 0.08;
+    } else if (pan.material === "door" || pan.material === "window") {
+      useMat = doorMat;
+      thickness = 0.06;
+    }
+
+    const geo = new THREE.BoxGeometry(pan.width, pan.height * exag, thickness);
+    const mesh = new THREE.Mesh(geo, useMat);
+    mesh.position.set(
+      pX - center.x,
+      baseElevation + ((pan.yStart + pan.yEnd) / 2) * exag,
+      pY - center.y,
+    );
+    mesh.rotation.y = -wallAngle;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    cwGroup.add(mesh);
+    disposables.push(geo);
+
+    if (pan.material === "door") {
+      const handleGeo = new THREE.BoxGeometry(0.05, 0.15 * exag, 0.05);
+      const handle = new THREE.Mesh(handleGeo, metalMat);
+      const hX = startPt.x + (pan.xStart + 0.1) * cos - (paneOffset + 0.04) * -sin;
+      const hY = startPt.y + (pan.xStart + 0.1) * sin - (paneOffset + 0.04) * cos;
+      handle.position.set(
+        hX - center.x,
+        baseElevation + 0.9 * exag,
+        hY - center.y,
+      );
+      handle.rotation.y = -wallAngle;
+      cwGroup.add(handle);
+      disposables.push(handleGeo);
+    }
+  });
+
+  return cwGroup;
 }

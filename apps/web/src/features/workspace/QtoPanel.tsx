@@ -5,6 +5,10 @@ import {
   evaluatePayItemCost,
   computeRenovationTakeoffs,
   runRenovationAudit,
+  calculateStairGeometry,
+  calculateCurtainWallGeometry,
+  type Stair,
+  type CurtainWall,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { Button } from "@/components/ui/button";
@@ -30,7 +34,7 @@ export function QtoPanel() {
     { elementId: "building-lot", payItemId: "201-100", formula: "area * unitCost" },
   ];
 
-  const [activeTab, setActiveTab] = React.useState<"earthwork" | "payitems" | "renovation">("earthwork");
+  const [activeTab, setActiveTab] = React.useState<"earthwork" | "payitems" | "renovation" | "stairs" | "curtainwalls">("earthwork");
 
   if (!site) {return null;}
 
@@ -87,10 +91,22 @@ export function QtoPanel() {
           >
             Renovation
           </button>
+          <button
+            onClick={() => setActiveTab("stairs")}
+            className={cn("px-1.5 py-0.5 rounded text-[10px]", activeTab === "stairs" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
+          >
+            Stairs
+          </button>
+          <button
+            onClick={() => setActiveTab("curtainwalls")}
+            className={cn("px-1.5 py-0.5 rounded text-[10px]", activeTab === "curtainwalls" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
+          >
+            Curtains
+          </button>
         </div>
       </div>
 
-      {activeTab === "earthwork" ? (
+      {activeTab === "earthwork" && (
         <div className="flex flex-col gap-3">
           {/* Average End Area Volumes List */}
           <div className="rounded-md border border-border bg-card p-2">
@@ -152,11 +168,12 @@ export function QtoPanel() {
                   strokeWidth="1.5"
                 />
               </svg>
-              <div className="absolute top-1 left-1 text-[8px] text-white/50">Crest (Surplus) / Sag (Deficit)</div>
             </div>
           </div>
         </div>
-      ) : activeTab === "payitems" ? (
+      )}
+
+      {activeTab === "payitems" && (
         <div className="flex flex-col gap-3">
           {/* Assigned cost items list */}
           <div className="rounded-md border border-border bg-card p-2">
@@ -205,7 +222,9 @@ export function QtoPanel() {
             )}
           </div>
         </div>
-      ) : (
+      )}
+
+      {activeTab === "renovation" && (
         <div className="flex flex-col gap-3">
           {/* Renovation Quantities (Takeoffs) */}
           <div className="rounded-md border border-border bg-card p-2">
@@ -269,6 +288,185 @@ export function QtoPanel() {
               }
               return (
                 <div className="flex flex-col gap-1.5 max-h-[160px] overflow-y-auto pr-1">
+                  {warnings.map((w, idx) => (
+                    <div key={idx} className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium">
+                      {w}
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+
+      {activeTab === "stairs" && (
+        <div className="flex flex-col gap-3">
+          {/* Stairs Quantities (Takeoffs) (REQ-UNIMP-025) */}
+          <div className="rounded-md border border-border bg-card p-2">
+            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+              <span>Stairs Structural Takeoffs</span>
+              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] h-4">REQ-UNIMP-025</Badge>
+            </h4>
+            {(() => {
+              const stairs = site.elements.filter((e) => e.kind === "stair") as Stair[];
+              if (stairs.length === 0) {
+                return (
+                  <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
+                    No stairs elements drafted in the current site plan.
+                  </div>
+                );
+              }
+              return (
+                <div className="flex flex-col gap-3">
+                  {stairs.map((stair) => {
+                    const geom = calculateStairGeometry(stair);
+                    return (
+                      <div key={stair.id} className="border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                        <div className="font-semibold text-foreground mb-1">{stair.name} ({stair.stairType})</div>
+                        <table className="w-full text-left text-[10px]">
+                          <tbody>
+                            <tr className="border-b border-border/30">
+                              <td className="py-0.5 text-muted-foreground">Risers / Treads</td>
+                              <td className="py-0.5 text-right font-medium">{geom.riserCount} R / {geom.treadCount} T</td>
+                            </tr>
+                            <tr className="border-b border-border/30">
+                              <td className="py-0.5 text-muted-foreground">Actual Riser Height</td>
+                              <td className="py-0.5 text-right font-medium">{(geom.actualRiserHeight * 100).toFixed(1)} cm</td>
+                            </tr>
+                            <tr className="border-b border-border/30">
+                              <td className="py-0.5 text-muted-foreground">Concrete Volume</td>
+                              <td className="py-0.5 text-right font-medium text-emerald-500">{geom.concreteVolumeCuM.toFixed(2)} m³</td>
+                            </tr>
+                            <tr>
+                              <td className="py-0.5 text-muted-foreground">Timber Board Feet</td>
+                              <td className="py-0.5 text-right font-medium text-amber-500">{geom.timberBoardFeet.toFixed(0)} BF</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* Stairs Safety & Clearance Audit (REQ-UNIMP-017) */}
+          <div className="rounded-md border border-border bg-card p-2">
+            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+              <span>Stairs Safety &amp; Clearance Audit</span>
+              <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[9px] h-4">REQ-UNIMP-017</Badge>
+            </h4>
+            {(() => {
+              const stairs = site.elements.filter((e) => e.kind === "stair") as Stair[];
+              const warnings: string[] = [];
+              stairs.forEach((stair) => {
+                const geom = calculateStairGeometry(stair);
+                geom.warnings.forEach((w) => warnings.push(`${stair.name}: ${w}`));
+              });
+
+              if (warnings.length === 0) {
+                return (
+                  <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2 text-[10px] text-emerald-500">
+                    Stairs comply with structural limits and overhead clearance standards.
+                  </div>
+                );
+              }
+              return (
+                <div className="flex flex-col gap-1.5 max-h-[160px] overflow-y-auto pr-1">
+                  {warnings.map((w, idx) => (
+                    <div key={idx} className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium">
+                      {w}
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+
+      {activeTab === "curtainwalls" && (
+        <div className="flex flex-col gap-3">
+          {/* Curtain Wall Panel Inventory (REQ-UNIMP-040) */}
+          <div className="rounded-md border border-border bg-card p-2">
+            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+              <span>Panel Schedule &amp; Count</span>
+              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] h-4">REQ-UNIMP-040</Badge>
+            </h4>
+            {(() => {
+              const walls = site.elements.filter((e) => e.kind === "curtainwall") as CurtainWall[];
+              if (walls.length === 0) {
+                return (
+                  <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
+                    No curtain walls drafted in the current site plan.
+                  </div>
+                );
+              }
+              return (
+                <div className="flex flex-col gap-3">
+                  {walls.map((wall) => {
+                    const geom = calculateCurtainWallGeometry(wall);
+                    return (
+                      <div key={wall.id} className="border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                        <div className="font-semibold text-foreground mb-1 flex justify-between">
+                          <span>{wall.name}</span>
+                          <span className="text-muted-foreground text-[9px]">U-Factor: {geom.overallUFactor.toFixed(3)} W/m²K</span>
+                        </div>
+                        <table className="w-full text-left text-[10px] mb-2">
+                          <thead>
+                            <tr className="border-b border-border/60 text-muted-foreground text-[9px]">
+                              <th className="py-0.5">Material</th>
+                              <th className="py-0.5">Dimensions</th>
+                              <th className="py-0.5 text-right">Count</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {geom.inventory.map((item, idx) => (
+                              <tr key={idx} className="border-b border-border/30 last:border-0">
+                                <td className="py-0.5 capitalize text-foreground">{item.material}</td>
+                                <td className="py-0.5 text-muted-foreground">{item.width.toFixed(2)}m x {item.height.toFixed(2)}m</td>
+                                <td className="py-0.5 text-right font-medium">{item.count}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                        <div className="flex justify-between items-center text-[9px] bg-muted/30 p-1 rounded border border-border/50">
+                          <span className="text-muted-foreground">Thermal Resistance:</span>
+                          <span className="font-semibold text-emerald-500">R-{geom.overallRValue.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* Curtain Wall Wind Load & Structural Audit */}
+          <div className="rounded-md border border-border bg-card p-2">
+            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+              <span>Wind Load &amp; Attachment Audit</span>
+              <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[9px] h-4">REQ-UNIMP-026</Badge>
+            </h4>
+            {(() => {
+              const walls = site.elements.filter((e) => e.kind === "curtainwall") as CurtainWall[];
+              const warnings: string[] = [];
+              walls.forEach((wall) => {
+                const geom = calculateCurtainWallGeometry(wall);
+                geom.warnings.forEach((w) => warnings.push(`${wall.name}: ${w}`));
+              });
+
+              if (warnings.length === 0) {
+                return (
+                  <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2 text-[10px] text-emerald-500">
+                    Curtain wall panel dimensions are within structural limits.
+                  </div>
+                );
+              }
+              return (
+                <div className="flex flex-col gap-1.5 max-h-[140px] overflow-y-auto pr-1">
                   {warnings.map((w, idx) => (
                     <div key={idx} className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium">
                       {w}

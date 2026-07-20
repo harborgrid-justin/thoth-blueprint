@@ -65,6 +65,53 @@ export function createSpatialElement(
       return { ...base, kind };
     case "easement":
       return { ...base, kind, purpose: "utility" };
+    case "stair":
+      return {
+        ...base,
+        kind,
+        stairType: "straight",
+        width: 1.0,
+        height: 2.8,
+        treadDepthLimit: 0.28,
+        riserHeightLimit: 0.18,
+        stringerProfile: "open",
+        stringerWidth: 0.05,
+        landingSlabThickness: 0.15,
+        treadSlabThickness: 0.12,
+        nosingProfile: "round",
+        nosingOverhang: 0.02,
+        slipResistantGrooves: false,
+      };
+    case "curtainwall":
+      return {
+        ...base,
+        kind,
+        width: 6.0,
+        height: 3.2,
+        grid: {
+          verticalDivisions: "uniform",
+          verticalOffsets: [4],
+          horizontalDivisions: "uniform",
+          horizontalOffsets: [2],
+          infillMaterials: {
+            "0,0": "glazing",
+            "1,0": "glazing",
+            "2,0": "glazing",
+            "3,0": "glazing",
+            "0,1": "glazing",
+            "1,1": "glazing",
+            "2,1": "glazing",
+            "3,1": "glazing",
+          },
+        },
+        cornerStyle: "rectangular",
+        frameProfileWidth: 0.1,
+        expansionGap: 0.01,
+        paneOffset: 0.02,
+        clipSpacing: 0.6,
+        structuralTieSpacing: 1.2,
+        frameRValue: 2.5,
+      };
   }
 }
 

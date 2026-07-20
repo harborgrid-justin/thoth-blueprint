@@ -144,6 +144,22 @@ const META: Record<ElementKind, ElementKindMeta> = {
     fill: "#eab308",
     namePrefix: "Note",
   },
+  stair: {
+    kind: "stair",
+    label: "Staircase",
+    defaultLayerId: "layer-buildings",
+    stroke: "#78716c",
+    fill: "#a8a29e",
+    namePrefix: "Staircase",
+  },
+  curtainwall: {
+    kind: "curtainwall",
+    label: "Curtain Wall",
+    defaultLayerId: "layer-buildings",
+    stroke: "#0284c7",
+    fill: "#38bdf8",
+    namePrefix: "Curtain Wall",
+  },
 };
 
 export function elementMeta(kind: ElementKind): ElementKindMeta {

@@ -29,6 +29,9 @@ export * from "./planning/metrics";
 export * from "./planning/regions";
 export * from "./planning/subdivision";
 export * from "./planning/renovation";
+export * from "./planning/stairs";
+export * from "./planning/curtainwall";
+export * from "./planning/doorwindow";
 
 // Civil
 export * from "./civil/alignment";

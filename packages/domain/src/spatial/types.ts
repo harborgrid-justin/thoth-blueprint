@@ -103,7 +103,11 @@ export type ElementKind =
   | "grade"
   | "tree"
   | "spot"
-  | "note";
+  | "note"
+  | "stair"
+  | "curtainwall"
+  | "door"
+  | "window";
 
 /** A named, orderable grouping of elements that can be shown, hidden, or locked. */
 export interface Layer {
@@ -283,6 +287,111 @@ export interface SpotElevationPoint {
   renovationStatus?: "existing" | "new" | "demolished";
 }
 
+/** A stair planning element representing straight, spiral, or U-shaped stairways. */
+export interface Stair extends ElementBase {
+  kind: "stair";
+  stairType: "straight" | "spiral" | "u-shape";
+
+  // Basic geometry
+  width: number;
+  height: number; // total rise height
+
+  // Spiral parameters (REQ-UNIMP-011)
+  radius?: number; // center radius for spiral stairs
+  totalRotation?: number; // total rotation angle in degrees
+
+  // U-Shape / Flight division parameters (REQ-UNIMP-012, REQ-UNIMP-018)
+  uShapeOffset?: number; // offset between return flights
+  flightCount?: number; // number of flights (1 or 2)
+  intermediateLandingLength?: number; // length of landing if split
+
+  // Calculation parameters (REQ-UNIMP-013, REQ-UNIMP-014)
+  treadDepthLimit: number; // target tread depth
+  riserHeightLimit: number; // target riser height
+
+  // Structural settings (REQ-UNIMP-015, REQ-UNIMP-016, REQ-UNIMP-019, REQ-UNIMP-020)
+  landingSlabThickness?: number;
+  treadSlabThickness?: number;
+  stringerProfile?: "open" | "closed" | "none";
+  stringerWidth?: number;
+  nosingProfile?: "round" | "square" | "none";
+  nosingOverhang?: number;
+  slipResistantGrooves?: boolean;
+
+  // Overhead clearance (REQ-UNIMP-017)
+  overheadClearanceLimit?: number; // standard limit (e.g. 6'8")
+  ceilingElevation?: number; // ceiling elevation above stair starting level
+}
+
+export interface CurtainWallGrid {
+  verticalDivisions: "uniform" | "fixed" | "manual";
+  verticalOffsets: number[]; // division coordinates along the wall width (from start)
+  horizontalDivisions: "uniform" | "fixed" | "manual";
+  horizontalOffsets: number[]; // division heights from bottom sill
+  mullionWidths?: Record<number, number>; // index -> custom width override
+  infillMaterials?: Record<string, "glazing" | "brick" | "insulation" | "door" | "window">; // "row,col" -> material type
+}
+
+/** A curtain wall planning element representing glazed panel structures. */
+export interface CurtainWall extends ElementBase {
+  kind: "curtainwall";
+  width: number; // total wall length in plan
+  height: number; // total height
+  
+  // Grid layout parameters (REQ-UNIMP-026, REQ-UNIMP-028, REQ-UNIMP-029)
+  grid: CurtainWallGrid;
+  
+  // Nested sub-grids mapping: "row,col" of main grid -> nested subgrid definition (REQ-UNIMP-030)
+  nestedGrids?: Record<string, CurtainWallGrid>;
+  
+  // Framing details (REQ-UNIMP-027, REQ-UNIMP-031, REQ-UNIMP-034)
+  cornerStyle?: "rectangular" | "L-corner" | "V-corner";
+  frameProfileWidth?: number; // perimeter frame width (e.g. 0.1m)
+  expansionGap?: number; // gap between frame/panels (e.g. 0.01m)
+  
+  // Pane & accessory options (REQ-UNIMP-035, REQ-UNIMP-036, REQ-UNIMP-037)
+  paneOffset?: number; // front/back glass offset in frame (e.g. 0.02m)
+  clipSpacing?: number; // spacing of glass clips (e.g. 0.5m)
+  structuralTieSpacing?: number; // structural columns ties spacing (e.g. 1.2m)
+  
+  // Thermal and performance properties (REQ-UNIMP-038)
+  frameRValue?: number; // thermal resistance
+}
+
+export interface Door extends ElementBase {
+  kind: "door";
+  width: number;
+  height: number;
+  depth: number;
+  doorOperation: "swing" | "double-swing" | "slide" | "folding" | "pocket" | "overhead";
+  swingAngle?: number; // swing angle in degrees (default 90)
+  sillThickness?: number;
+  sillOverhang?: number;
+  thresholdHeight?: number;
+  weatherstripping?: boolean;
+  hardwareTrim?: "lever" | "knob" | "pull-bar" | "panic-bar";
+  fireRating?: "20-min" | "45-min" | "90-min" | "3-hour" | "none";
+  stcRating?: number;
+  safetyGlazing?: "tempered" | "wire" | "none";
+  frameProfile?: "wood" | "metal" | "vinyl";
+}
+
+export interface Window extends ElementBase {
+  kind: "window";
+  width: number;
+  height: number;
+  depth: number;
+  windowType: "awning" | "casement" | "hopper" | "single-hung" | "double-hung" | "gliding";
+  sillThickness?: number;
+  sillOverhang?: number;
+  thresholdHeight?: number;
+  weatherstripping?: boolean;
+  fireRating?: "20-min" | "45-min" | "90-min" | "3-hour" | "none";
+  stcRating?: number;
+  safetyGlazing?: "tempered" | "wire" | "none";
+  frameProfile?: "wood" | "metal" | "vinyl";
+}
+
 /** Any spatial planning element (everything carrying a boundary polygon). */
 export type SpatialElement =
   | Region
@@ -297,7 +406,11 @@ export type SpatialElement =
   | OpenSpace
   | WaterBody
   | PlantingArea
-  | GradeRegion;
+  | GradeRegion
+  | Stair
+  | CurtainWall
+  | Door
+  | Window;
 
 /** Any point-based element (anchored at a position, no boundary). */
 export type PointElement = PlanNote | Tree | SpotElevationPoint;

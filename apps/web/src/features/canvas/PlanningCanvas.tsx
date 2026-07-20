@@ -20,6 +20,8 @@ import {
   unitLabel,
   resolveAlignment,
   traceWaterDropPath,
+  calculateStairGeometry,
+  calculateCurtainWallGeometry,
   type Bounds,
   type ElevationGrid,
   type InfrastructureNetwork,
@@ -27,6 +29,8 @@ import {
   type Point,
   type Polygon,
   type SpatialContext,
+  type Stair,
+  type CurtainWall,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
@@ -1105,6 +1109,217 @@ function ElementShape({
         strokeLinejoin="round"
       />
       {patternId && <path d={path} fill={`url(#${patternId})`} stroke="none" className="pointer-events-none" />}
+      {element.kind === "stair" && (() => {
+        const stairGeom = calculateStairGeometry(element as Stair);
+        const sArrow = stairGeom.arrowPath.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+        const sBreak = stairGeom.breakLine.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+
+        return (
+          <g className="pointer-events-none">
+            {/* 1. Draw individual steps */}
+            {stairGeom.treadLines.map((line, idx) => {
+              const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sLine.length < 2) return null;
+              return (
+                <line
+                  key={`tread-${idx}`}
+                  x1={sLine[0].x}
+                  y1={sLine[0].y}
+                  x2={sLine[1].x}
+                  y2={sLine[1].y}
+                  stroke={strokeColor}
+                  strokeWidth={1}
+                  strokeOpacity={0.8}
+                />
+              );
+            })}
+
+            {/* 2. Draw stringer centerlines */}
+            {stairGeom.stringerCenterlines.map((line, idx) => {
+              const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sLine.length < 2) return null;
+              const stringerD = `M ${sLine.map(p => `${p.x} ${p.y}`).join(" L ")}`;
+              return (
+                <path
+                  key={`stringer-${idx}`}
+                  d={stringerD}
+                  fill="none"
+                  stroke={strokeColor}
+                  strokeWidth={1.25}
+                  strokeOpacity={0.5}
+                  strokeDasharray="2 2"
+                />
+              );
+            })}
+
+            {/* 3. Direction flow arrow */}
+            {sArrow.length >= 2 && (
+              <g>
+                <path d={`M ${sArrow.map(p => `${p.x} ${p.y}`).join(" L ")}`} fill="none" stroke="hsl(var(--primary))" strokeWidth={1.5} />
+                <circle cx={sArrow[0].x} cy={sArrow[0].y} r={3} fill="hsl(var(--primary))" />
+                <line
+                  x1={sArrow[sArrow.length - 1].x}
+                  y1={sArrow[sArrow.length - 1].y}
+                  x2={sArrow[sArrow.length - 1].x - 6 * Math.cos(Math.atan2(sArrow[sArrow.length - 1].y - sArrow[sArrow.length - 2].y, sArrow[sArrow.length - 1].x - sArrow[sArrow.length - 2].x) - Math.PI/6)}
+                  y2={sArrow[sArrow.length - 1].y - 6 * Math.sin(Math.atan2(sArrow[sArrow.length - 1].y - sArrow[sArrow.length - 2].y, sArrow[sArrow.length - 1].x - sArrow[sArrow.length - 2].x) - Math.PI/6)}
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={1.5}
+                />
+                <line
+                  x1={sArrow[sArrow.length - 1].x}
+                  y1={sArrow[sArrow.length - 1].y}
+                  x2={sArrow[sArrow.length - 1].x - 6 * Math.cos(Math.atan2(sArrow[sArrow.length - 1].y - sArrow[sArrow.length - 2].y, sArrow[sArrow.length - 1].x - sArrow[sArrow.length - 2].x) + Math.PI/6)}
+                  y2={sArrow[sArrow.length - 1].y - 6 * Math.sin(Math.atan2(sArrow[sArrow.length - 1].y - sArrow[sArrow.length - 2].y, sArrow[sArrow.length - 1].x - sArrow[sArrow.length - 2].x) + Math.PI/6)}
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={1.5}
+                />
+              </g>
+            )}
+
+            {/* 4. Breakline cut */}
+            {sBreak.length >= 2 && (() => {
+              const midX = (sBreak[0].x + sBreak[1].x) / 2;
+              const midY = (sBreak[0].y + sBreak[1].y) / 2;
+              const bdx = sBreak[1].x - sBreak[0].x;
+              const bdy = sBreak[1].y - sBreak[0].y;
+              const bAngle = Math.atan2(bdy, bdx);
+              const orthoX = -Math.sin(bAngle) * 6;
+              const orthoY = Math.cos(bAngle) * 6;
+              const breakD = `M ${sBreak[0].x} ${sBreak[0].y} L ${midX - bdx * 0.05} ${midY - bdy * 0.05} L ${midX - bdx * 0.02 + orthoX} ${midY - bdy * 0.02 + orthoY} L ${midX + bdx * 0.02 - orthoX} ${midY + bdy * 0.02 - orthoY} L ${midX + bdx * 0.05} ${midY + bdy * 0.05} L ${sBreak[1].x} ${sBreak[1].y}`;
+              return (
+                <path
+                  d={breakD}
+                  fill="none"
+                  stroke={strokeColor}
+                  strokeWidth={1.5}
+                />
+              );
+            })()}
+
+            {/* 5. Baluster mount anchors */}
+            {viewport.zoom > 2.0 && stairGeom.balusterAnchors.map((pt, idx) => {
+              const sPt = worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport);
+              return (
+                <circle
+                  key={`bal-${idx}`}
+                  cx={sPt.x}
+                  cy={sPt.y}
+                  r={1.25}
+                  fill="none"
+                  stroke={strokeColor}
+                  strokeWidth={0.5}
+                  strokeOpacity={0.6}
+                />
+              );
+            })}
+          </g>
+        );
+      })()}
+      {element.kind === "curtainwall" && (() => {
+        const cwGeom = calculateCurtainWallGeometry(element as CurtainWall);
+        return (
+          <g className="pointer-events-none">
+            {/* 1. Perimeter structural frame */}
+            {cwGeom.perimeterFrame.map((poly, idx) => {
+              const sPoly = poly.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sPoly.length < 2) return null;
+              const d = `M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`;
+              return (
+                <path
+                  key={`frame-${idx}`}
+                  d={d}
+                  fill="none"
+                  stroke={strokeColor}
+                  strokeWidth={1.5}
+                />
+              );
+            })}
+
+            {/* 2. Mullion vertical segments */}
+            {cwGeom.mullions.map((mull, idx) => {
+              if (mull.direction !== "vertical") return null;
+              const sPoly = mull.mullionPolygon.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sPoly.length < 2) return null;
+              const d = `M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`;
+              return (
+                <path
+                  key={`mull-${idx}`}
+                  d={d}
+                  fill={strokeColor}
+                  fillOpacity={0.65}
+                  stroke={strokeColor}
+                  strokeWidth={0.75}
+                />
+              );
+            })}
+
+            {/* 3. Infill Panels (glazing, brick, etc.) */}
+            {cwGeom.panels.map((pan, idx) => {
+              const fillCol =
+                pan.material === "brick"
+                  ? "#991b1b"
+                  : pan.material === "insulation"
+                    ? "#ea580c"
+                    : pan.material === "door"
+                      ? "#a21caf"
+                      : pan.material === "window"
+                        ? "#0284c7"
+                        : "none";
+              const op = pan.material === "glazing" ? 0.15 : 0.6;
+              return pan.panePolygons.map((poly, pidx) => {
+                const sPoly = poly.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+                if (sPoly.length < 2) return null;
+                const d = `M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`;
+                return (
+                  <path
+                    key={`pane-${idx}-${pidx}`}
+                    d={d}
+                    fill={fillCol === "none" ? "hsl(var(--primary))" : fillCol}
+                    fillOpacity={op}
+                    stroke={strokeColor}
+                    strokeWidth={0.5}
+                  />
+                );
+              });
+            })}
+
+            {/* 4. Glass clips */}
+            {viewport.zoom > 3.0 && cwGeom.panels.map((pan) => {
+              if (pan.material !== "glazing") return null;
+              return pan.clipAnchors.map((pt, cidx) => {
+                const sPt = worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport);
+                return (
+                  <circle
+                    key={`clip-${pan.key}-${cidx}`}
+                    cx={sPt.x}
+                    cy={sPt.y}
+                    r={2}
+                    fill="none"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth={1}
+                  />
+                );
+              });
+            })}
+
+            {/* 5. Structural Ties */}
+            {viewport.zoom > 2.0 && cwGeom.structuralTies.map((pt, idx) => {
+              const sPt = worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport);
+              return (
+                <line
+                  key={`tie-${idx}`}
+                  x1={sPt.x - 3}
+                  y1={sPt.y - 3}
+                  x2={sPt.x + 3}
+                  y2={sPt.y + 3}
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={1}
+                />
+              );
+            })}
+          </g>
+        );
+      })()}
       {envelopePath && (
         <path
           d={envelopePath}
