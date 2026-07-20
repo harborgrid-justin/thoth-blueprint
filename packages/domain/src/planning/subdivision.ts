@@ -85,7 +85,19 @@ export interface SlideLineOptions {
  */
 export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions): Lot[] {
   const { targetArea, frontage, angle = 90, layerId, makeId, setback } = options;
-  if (frontage.length < 2 || targetArea <= 0) {return [];}
+  if (frontage.length < 2) {
+    throw new Error("Invalid frontage: must contain at least 2 points.");
+  }
+  if (targetArea <= 0) {
+    throw new Error("Invalid target area: must be greater than 0.");
+  }
+  const totalArea = polygonArea(boundary);
+  if (targetArea > totalArea) {
+    throw new Error(`Unrealistic subdivision: target area (${targetArea.toFixed(2)}) exceeds total parcel area (${totalArea.toFixed(2)}).`);
+  }
+  if (totalArea < 10) {
+    throw new Error("Parcel area is too small to subdivide.");
+  }
 
   let remainder = boundary.slice();
   const lots: Lot[] = [];
@@ -203,7 +215,16 @@ export interface SwingLineOptions {
  */
 export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions): Lot[] {
   const { targetArea, pivot, layerId, makeId, setback } = options;
-  if (targetArea <= 0 || boundary.length < 3) {return [];}
+  if (boundary.length < 3) {
+    throw new Error("Invalid boundary: must contain at least 3 points.");
+  }
+  if (targetArea <= 0) {
+    throw new Error("Invalid target area: must be greater than 0.");
+  }
+  const totalArea = polygonArea(boundary);
+  if (targetArea > totalArea) {
+    throw new Error(`Unrealistic subdivision: target area (${targetArea.toFixed(2)}) exceeds total parcel area (${totalArea.toFixed(2)}).`);
+  }
 
   // Find pivot vertex index in boundary
   let idx = -1;
@@ -384,6 +405,9 @@ export function mergeLots(lots: Lot[], layerId: string, makeId: () => string): L
         }
       }
       if (minD > 1.0) {
+        if (remaining.length > 0) {
+          throw new Error("Cannot merge disjoint lots: boundaries do not connect");
+        }
         break;
       }
     }
