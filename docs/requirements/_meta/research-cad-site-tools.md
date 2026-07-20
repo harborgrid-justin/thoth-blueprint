@@ -1,5 +1,5 @@
-<!-- Raw research capture — background, feeds 00-overview/competitive-analysis.md. Not a normative requirements doc. -->
-# Research capture — CAD & site-design tools
+﻿<!-- Raw research capture â€” background, feeds 00-overview/competitive-analysis.md. Not a normative requirements doc. -->
+# Research capture â€” CAD & site-design tools
 
 Source: background research agent (AutoCAD/Civil 3D, Bentley OpenSite, Vectorworks Landmark).
 
@@ -38,11 +38,11 @@ Source: background research agent (AutoCAD/Civil 3D, Bentley OpenSite, Vectorwor
 
 ## Cross-tool takeaways
 - Shared interchange backbone: DWG/DXF + LandXML near-universal; shapefile/GeoJSON bridge to spatial data.
-- Parcels are objects (topology, labels, legal descriptions, area/frontage) — validates domain-object approach.
+- Parcels are objects (topology, labels, legal descriptions, area/frontage) â€” validates domain-object approach.
 - CRS mandatory: every tool binds geometry to a coordinate system with projection/transform on import.
 - Feasibility/yield metrics and land-use/quantity reports point to auto-computed planning metrics as a differentiator.
 - Sheet/exhibit production is a core deliverable expectation.
-- Grading/earthwork/cut-fill are CAD-engineering — candidate for later phases, not early community planning.
+- Grading/earthwork/cut-fill are CAD-engineering â€” candidate for later phases, not early community planning.
 
 ## Sources
 - https://help.autodesk.com/view/CIV3D/2024/ENU/
@@ -53,3 +53,19 @@ Source: background research agent (AutoCAD/Civil 3D, Bentley OpenSite, Vectorwor
 - https://blog.bentley.com/software/opensite-for-land-developers-site-design-with-topo-import-automated-parking-lot-layout-grading-optimization-and-more/
 - https://www.vectorworks.net/en-US/landmark/capabilities
 - https://app-help.vectorworks.net/2024/eng/VW2024_Guide/SiteModel1/Foundation__Site_modeling.htm
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

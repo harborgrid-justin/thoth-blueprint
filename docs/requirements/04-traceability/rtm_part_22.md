@@ -1,0 +1,50 @@
+﻿# Requirements Traceability Matrix - Part 22
+**Subject:** Pipe Network Tutorials (Chapter 17)
+**Coverage:** Pipe Network Creation, Layout, Parts Lists, Properties, Viewing, Labels, Tables (Lines 10338â€“10809)
+
+| Req ID | Tutorial Section / Reference | Requirement Description | Traceability | Code Mapping |
+|---|---|---|---|---|
+| REQ-22-001 | Pipes > Create From Polyline | The system shall support creating pipe networks from existing polylines with automatic structure placement. | Trace-to-Spec-v1 | Building network segments from drawn polylines supported via `addNetworkPath` (using `networkFromPath`) in [workspaceStore.ts](../../../apps/web/src/store/workspaceStore.ts#L393) |
+| REQ-22-002 | Pipes > Network Layout | The system shall provide Pipe Network Layout tools to place run sequences of pipes and structures interactively in 2D/3D. | Trace-to-Spec-v1 | Drawing network paths interactively on canvas supported in [PlanningCanvas.tsx](../../../apps/web/src/features/canvas/PlanningCanvas.tsx#L283-L293) and added via [workspaceStore.ts](../../../apps/web/src/store/workspaceStore.ts#L393) |
+| REQ-22-003 | Pipes > Add Parts | The system shall support adding individual parts (pipes, structures) to existing pipe networks. | Trace-to-Spec-v1 | Adding nodes and edges to custom network categories supported in [PlanningCanvas.tsx](../../../apps/web/src/features/canvas/PlanningCanvas.tsx#L283-L293) and [workspaceStore.ts](../../../apps/web/src/store/workspaceStore.ts#L393) |
+| REQ-22-004 | Pipes > Parts Catalog | The system shall reference a Parts Catalog defining available structure and pipe types with dimensional parameters. | Trace-to-Spec-v1 | `../../../packages/domain/src/partbuilder.ts#L129` (`getDefaultPartsCatalog`) |
+| REQ-22-005 | Pipes > Parts List | The system shall support creating and editing Parts Lists that specify which catalog parts are available for a network. | Trace-to-Spec-v1 | `../../../packages/domain/src/partbuilder.ts#L129` (`getDefaultPartsCatalog`) |
+| REQ-22-006 | Pipes > Add to Parts List | The system shall support adding new part sizes from the Parts Catalog to a Parts List. | Trace-to-Spec-v1 | `../../../packages/domain/src/partbuilder.ts#L129` |
+| REQ-22-007 | Pipes > Surface & Alignment | The system shall support changing the reference surface, alignment, and design rules configuration for a pipe network. | Trace-to-Spec-v1 | `../../../apps/web/src/features/survey/PipeDesignDialog.tsx` |
+| REQ-22-008 | Pipes > Design Rules | The system shall enforce Design Rules (minimum cover, minimum/maximum slope, minimum pipe diameter) to check network integrity. | Trace-to-Spec-v1 | `../../../packages/domain/src/pipedesign.ts#L43` (`validatePipeNetwork`) |
+| REQ-22-009 | Pipes > Branch Networks | The system shall support adding branch connections to existing pipe networks. | Trace-to-Spec-v1 | Branches and joints modeled as intersections on nodes/edges connectivity graphs in [network.ts](../../../packages/domain/src/network.ts) |
+| REQ-22-010 | Pipes > Profile View Drawing | The system shall support drawing pipe network parts in a profile view along an alignment. | Trace-to-Spec-v1 | `../../../apps/web/src/features/survey/ProfileSectionDialog.tsx` |
+| REQ-22-011 | Pipes > Profile View Labels | The system shall support adding labels to pipe network parts in profile view (pipe length, slope, structure rim/invert). | Trace-to-Spec-v1 | `../../../apps/web/src/features/survey/PipeDesignDialog.tsx#L85` |
+| REQ-22-012 | Pipes > Profile View Editing | The system shall support editing pipe network parts (adjust inverts, resize pipes) directly in profile view using grips. | Trace-to-Spec-v1 | `../../../apps/web/src/features/survey/PipeDesignDialog.tsx#L125` (Invert input grid fixes) |
+| REQ-22-013 | Pipes > Style Override | The system shall support overriding the display style of individual pipe network parts in a profile view. | Trace-to-Spec-v1 | `../../../apps/web/src/features/survey/PipeDesignDialog.tsx` |
+| REQ-22-014 | Pipes > Section View | The system shall support viewing pipe network parts in cross-section views. | Trace-to-Spec-v1 | `../../../apps/web/src/features/survey/ProfileSectionDialog.tsx#L257` |
+| REQ-22-015 | Pipes > Pipe Tables | The system shall support creating dynamic Pipe tables listing pipe properties (length, diameter, slope, material). | Trace-to-Spec-v1 | Total pipeline lengths, node counts, and edge stats are calculated in [network.ts](../../../packages/domain/src/network.ts#L201-L230) and listed in the [MetricsPanel.tsx](../../../apps/web/src/features/workspace/MetricsPanel.tsx#L40) |
+| REQ-22-016 | Pipes > Structure Tables | The system shall support creating dynamic Structure tables listing structure properties (rim elevation, sump depth, diameter). | Trace-to-Spec-v1 | Total nodes count and network statistics displayed in the sidebar [MetricsPanel.tsx](../../../apps/web/src/features/workspace/MetricsPanel.tsx#L40) |
+| REQ-22-017 | Pipes > Alignment from Network | The system shall support creating alignments from pipe network parts for profile view generation. | Trace-to-Spec-v1 | [PlanProductionWizard.tsx](../../../apps/web/src/features/survey/PlanProductionWizard.tsx) |
+| REQ-22-018 | Pipes > Storm Sewer Hydrology | The system shall support rational method runoff peak flows calculations integrated into network models. | Trace-to-Spec-v1 | Not implemented |
+| REQ-22-019 | Pipes > Structure Catalog | The system shall maintain catalog database profiles templates for standard catch basins, manholes, and outlets. | Trace-to-Spec-v1 | Not implemented |
+| REQ-22-020 | Pipes > HGL Calculations | The system shall compute and draw Hydraulic Grade Lines (HGL) and Energy Grade Lines (EGL) in profile views. | Trace-to-Spec-v1 | Not implemented |
+| REQ-22-021 | Pipes > Clash Checkers | The system shall run structural clash audits to highlight spatial overlaps between crossing pipe networks. | Trace-to-Spec-v1 | Not implemented |
+| REQ-22-022 | Pipes > Catchments Delineation | The system shall support automatically calculating catchment runoff boundaries using terrain contours and slope flows. | Trace-to-Spec-v1 | Not implemented |
+| REQ-22-023 | Pipes > Curve Segmentations | The system shall segment pipe runs along layout curves footprint using standard straight lengths. | Trace-to-Spec-v1 | Not implemented |
+| REQ-22-024 | Pipes > Drop Depth Audits | The system shall validate and flag structures where drop elevations between inlet and outlet channels violate maximum tolerances. | Trace-to-Spec-v1 | Not implemented |
+| REQ-22-025 | Pipes > Trench Volumes QTO | The system shall calculate trench excavation and bedding layers volumes based on bedding types, depths, and width specifications. | Trace-to-Spec-v1 | Not implemented |
+| REQ-22-026 | Pipes > SWMM SW Export | The system shall support exporting pipe network structures definitions to SWMM or EPANET formats. | Trace-to-Spec-v1 | Not implemented |
+| REQ-22-027 | Pipes > Sizing Optimizers | The system shall support automatic pipe diameter sizing solvers based on rational runoff flow demands. | Trace-to-Spec-v1 | Not implemented |
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+
+

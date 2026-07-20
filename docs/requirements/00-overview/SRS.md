@@ -1,7 +1,7 @@
-# Software Requirements Specification (SRS)
+﻿# Software Requirements Specification (SRS)
 
-**Product:** Thoth Blueprint — cloud site & community planning platform
-**Status:** Draft · living document · Phase 0 (scaffold)
+**Product:** Thoth Blueprint â€” cloud site & community planning platform
+**Status:** Draft Â· living document Â· Phase 0 (scaffold)
 **Standard:** structured per ISO/IEC/IEEE 29148:2018
 
 This is the master Software Requirements Specification. It is deliberately thin:
@@ -13,8 +13,8 @@ truth; this document is the map to it.
 
 ### 1.1 Purpose
 Specify the requirements for Thoth Blueprint across its frontend workspace,
-backend services, shared domain model, and interoperability — traceably and
-verifiably — so the team builds the right product and can prove it did.
+backend services, shared domain model, and interoperability â€” traceably and
+verifiably â€” so the team builds the right product and can prove it did.
 
 ### 1.2 Scope
 See [scope & context](scope-and-context.md). In scope: a collaborative,
@@ -22,11 +22,11 @@ web-native planning workspace; cloud services for identity, projects, geospatial
 and collaboration; a framework-agnostic planning domain model; interop with
 GeoJSON/KML/Shapefile/DXF/GeoPackage/CSV/PDF; and **architecture &
 engineering CAD sheet production** (Phase 6) with standards-conformant sheet
-sets (US NCS · AIA · ISO 13567 · ISO 5457 · ISO 7200 · ISO 128/129/3098),
+sets (US NCS Â· AIA Â· ISO 13567 Â· ISO 5457 Â· ISO 7200 Â· ISO 128/129/3098),
 plot-style tables, annotative dimensions and symbols, data-driven schedules,
 revision management, and multi-sheet PDF / DXF / DWG output. Out of scope:
 mechanical CAD; a full GIS suite; and engineering *calculations* on the
-sheets themselves (structural, hydraulic, energy) — sheet production is in
+sheets themselves (structural, hydraulic, energy) â€” sheet production is in
 scope, the analyses that populate those sheets are not.
 
 ### 1.3 Definitions
@@ -48,17 +48,17 @@ Requirements conventions (ID scheme, priority, verification, tolerances) are in
 
 ### 2.1 Product perspective
 A cloud service with a browser client, backend services, and a shared domain
-model — the [system context](scope-and-context.md#system-context). It is the
+model â€” the [system context](scope-and-context.md#system-context). It is the
 successor to the archived database-design app under [`artifact/`](../../../artifact/),
 which is read-only reference only.
 
 ### 2.2 Users
 Eight actors from site planner to community stakeholder to integrator to
-architect/engineer/CAD manager — see [stakeholders](../01-business/stakeholders.md).
+architect/engineer/CAD manager â€” see [stakeholders](../01-business/stakeholders.md).
 
 ### 2.3 Constraints, assumptions & dependencies
-Twelve binding constraints (`CON-001`–`CON-012`) and six external dependencies
-(`DEP-001`–`DEP-006`, each with its degraded-mode behavior) —
+Twelve binding constraints (`CON-001`â€“`CON-012`) and six external dependencies
+(`DEP-001`â€“`DEP-006`, each with its degraded-mode behavior) â€”
 see [scope & context](scope-and-context.md#constraints--assumptions). Chief among
 the constraints: web-first, cloud-first, domain-native, spatially explicit,
 framework-agnostic domain model, GPLv3, and CAD-sheet output that conforms to
@@ -77,15 +77,15 @@ The detailed catalog, by layer:
 | --- | --- | :--: |
 | Business | [business-requirements.md](../01-business/business-requirements.md) | 12 |
 | Stakeholder | [stakeholders.md](../01-business/stakeholders.md) | 8 |
-| Functional — Frontend | [frontend-requirements.md](../02-functional/frontend-requirements.md) | 175 |
-| Functional — Backend | [backend-requirements.md](../02-functional/backend-requirements.md) | 100 |
-| Functional — Domain model | [domain-requirements.md](../02-functional/domain-requirements.md) | 166 |
-| Functional — Interoperability | [interoperability-requirements.md](../02-functional/interoperability-requirements.md) | 59 |
+| Functional â€” Frontend | [frontend-requirements.md](../02-functional/frontend-requirements.md) | 175 |
+| Functional â€” Backend | [backend-requirements.md](../02-functional/backend-requirements.md) | 100 |
+| Functional â€” Domain model | [domain-requirements.md](../02-functional/domain-requirements.md) | 166 |
+| Functional â€” Interoperability | [interoperability-requirements.md](../02-functional/interoperability-requirements.md) | 59 |
 | Non-functional | [nonfunctional-requirements.md](../03-nonfunctional/nonfunctional-requirements.md) | 86 |
 
 ## 4. Verification & traceability
 
-Bidirectional traceability across BR → STK → {FE, BE, DOM, IOP} → phase · module ·
+Bidirectional traceability across BR â†’ STK â†’ {FE, BE, DOM, IOP} â†’ phase Â· module Â·
 verification, plus NFR cross-cutting scope, is maintained in the
 [Requirements Traceability Matrix](../04-traceability/traceability-matrix.md) and
 validated in the [coverage report](../04-traceability/coverage-report.md).
@@ -102,3 +102,19 @@ This SRS and its catalog are living documents. Per project convention, *docs mov
 with behavior*: any change to structure or behavior updates the affected
 requirement and its RTM row. Requirement IDs are stable and never reused
 ([stability rule](standards-and-conventions.md#identifier-scheme)).
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

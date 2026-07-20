@@ -1,0 +1,42 @@
+﻿# Requirements Traceability Matrix - Part 05
+**Subject:** Surfaces Tutorials â€” Creating & Adding Data (Chapter 5, Part 1)
+**Coverage:** TIN Surface Creation, Point Data, Contours, Breaklines, Boundaries, Large Surfaces (Lines 1086â€“1500)
+
+| Req ID | Tutorial Section / Reference | Requirement Description | Traceability | Code Mapping |
+|---|---|---|---|---|
+| REQ-05-001 | Surfaces > TIN Surface | The system shall allow creating Triangulated Irregular Network (TIN) surface objects from point groups, point files, contours, or DEM data. | Trace-to-Spec-v1 | Interpolating digital ground surface from spot elevation point lists is supported in [terrain.ts](../../../packages/domain/src/terrain.ts#L96) and built dynamically in [terrainModel.ts](../../../apps/web/src/features/terrain/terrainModel.ts#L45) |
+| REQ-05-002 | Surfaces > Add Point Data | The system shall support adding point group data to a surface definition to build terrain models. | Trace-to-Spec-v1 | Supported by building existing terrain surface model from spot elevations (`SpotElevationPoint`) in [terrainModel.ts](../../../apps/web/src/features/terrain/terrainModel.ts#L45) |
+| REQ-05-003 | Surfaces > Add Contours | The system shall support adding existing contour polylines to a surface definition, with configurable mid-ordinate distances. | Trace-to-Spec-v1 | Contours are calculated dynamically from nodes elevation in [terrain.ts](../../../packages/domain/src/terrain.ts#L169); adding existing contour polylines to define a surface definition is not implemented |
+| REQ-05-004 | Surfaces > Add Breaklines | The system shall support adding Standard, Wall, and Proximity breaklines to surfaces to enforce triangulation along grade changes. | Trace-to-Spec-v1 | Not implemented (interpolation uses IDW on spot elevations) |
+| REQ-05-005 | Surfaces > Crossing Breaklines | The system shall support configuring Allow Crossing Breaklines to resolve elevation conflicts where breaklines cross contours. | Trace-to-Spec-v1 | Not implemented |
+| REQ-05-006 | Surfaces > Outer Boundary | The system shall support adding outer boundaries (from polylines) to limit surface display to a defined region. | Trace-to-Spec-v1 | Supported via clipping stats/computations inside a custom polygon boundary in [terrain.ts](../../../packages/domain/src/terrain.ts#L305). Masking display boundaries is not implemented |
+| REQ-05-007 | Surfaces > Inner/Hide Boundaries | The system shall support adding inner (hide) boundaries to mask areas within the surface triangulation. | Trace-to-Spec-v1 | Not implemented |
+| REQ-05-008 | Surfaces > Non-Destructive Boundary | The system shall support Non-Destructive Breakline boundaries that clip display without removing TIN data. | Trace-to-Spec-v1 | Not implemented |
+| REQ-05-009 | Surfaces > Data Clip Boundary | The system shall support Data Clip boundaries that restrict imported surface data to the extents of a specified region. | Trace-to-Spec-v1 | Not implemented |
+| REQ-05-010 | Surfaces > Large Surfaces | The system shall support working with large surfaces by limiting imported data via data clip boundaries to manage performance. | Trace-to-Spec-v1 | Not implemented |
+| REQ-05-011 | Surfaces > LIDAR Point File Import | The system shall support importing ENZ (comma delimited) point files as surface data, with configurable elevation and coordinate adjustment options. | Trace-to-Spec-v1 | Point scan files (XYZ, PTS, PLY, LAS, DXF formats) imported via [pointCloudIo.ts](../../../apps/web/src/features/interop/pointCloudIo.ts#L15) and converted to spot elevation points for terrain definitions in [ImportExportMenu.tsx](../../../apps/web/src/features/interop/ImportExportMenu.tsx#L73-L83) |
+| REQ-05-012 | Surfaces > Surface Properties | The system shall display surface statistics (min/max elevation, number of points, number of triangles) in the Surface Properties dialog. | Trace-to-Spec-v1 | Displays range of nodes elevations (low point, high point, relief) and slope statistics in [TerrainPanel.tsx](../../../apps/web/src/features/terrain/TerrainPanel.tsx#L90-L100) |
+| REQ-05-013 | Surfaces > Simplify Surface | The system shall provide surface simplification tools to reduce the number of points while maintaining acceptable accuracy. | Trace-to-Spec-v1 | Not implemented |
+| REQ-05-014 | Surfaces > Surface Smoothing | The system shall support surface smoothing (NNI or Kriging) to interpolate additional points for smoother contour display. | Trace-to-Spec-v1 | Interpolation grid cellSize downsampling/sizing is managed dynamically in [terrainModel.ts](../../../apps/web/src/features/terrain/terrainModel.ts#L65) |
+| REQ-05-015 | Surfaces > Contour Style | The system shall support configurable contour styles displaying major/minor contours at user-specified intervals (e.g. 5' and 25'). | Trace-to-Spec-v1 | Major/minor contour lines calculations and customizable slider contour intervals are supported in [TerrainPanel.tsx](../../../apps/web/src/features/terrain/TerrainPanel.tsx#L73-L87) and rendered in [PlanningCanvas.tsx](../../../apps/web/src/features/canvas/PlanningCanvas.tsx) |
+| REQ-05-016 | Surfaces > Definition Operations Order | The system shall support reordering surface definition operations (boundaries, point files, breaklines) to control how data is applied, with up/down arrows in the Surface Properties Definition tab. | Trace-to-Spec-v1 | Not implemented |
+| REQ-05-017 | Surfaces > Rebuild Surface | The system shall support manual surface rebuilding to apply reordered definition operations and recalculate triangulation. | Trace-to-Spec-v1 | Terrain models are rebuilt dynamically whenever spots/grading regions change in [workspaceStore.ts](../../../apps/web/src/store/workspaceStore.ts#L80-L91) |
+| REQ-05-018 | Surfaces > Mid-Ordinate Distance | The system shall support specifying Mid-Ordinate Distance for boundary and contour operations to control arc approximation accuracy. | Trace-to-Spec-v1 | Not implemented |
+| REQ-05-019 | Surfaces > Simplify Point Removal | The system shall support Point Removal surface simplification with configurable percentage of points to remove and maximum elevation change tolerances. | Trace-to-Spec-v1 | Not implemented |
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+
+

@@ -1,5 +1,5 @@
-<!-- Raw research capture — background, feeds frontend/backend collaboration requirements. Not a normative requirements doc. -->
-# Research capture — collaborative canvas mechanics
+﻿<!-- Raw research capture â€” background, feeds frontend/backend collaboration requirements. Not a normative requirements doc. -->
+# Research capture â€” collaborative canvas mechanics
 
 Source: background research agent (Figma, Miro, FigJam, Google Docs). Collaboration mechanics only.
 
@@ -10,11 +10,11 @@ Source: background research agent (Figma, Miro, FigJam, Google Docs). Collaborat
 
 ## Presence, live cursors & observation
 - Presence roster / who-is-here (avatars, online indicators).
-- Follow mode — track a collaborator's viewport/cursor/zoom/page.
+- Follow mode â€” track a collaborator's viewport/cursor/zoom/page.
 - Spotlight / present-to-collaborators; follower-awareness indicators; silent follow.
 - Cursor chat (ephemeral); emotes/stamps/high-fives; live audio chat; voting sessions.
-- Live selection sharing — see what objects others have selected in real time.
-- Note: these tools use static object locking, not presence-aware exclusive locks — true presence-aware locking could differentiate multi-planner site editing.
+- Live selection sharing â€” see what objects others have selected in real time.
+- Note: these tools use static object locking, not presence-aware exclusive locks â€” true presence-aware locking could differentiate multi-planner site editing.
 
 ## Comments & review
 - Threaded comments with replies; pinned/anchored comments (click-to-anchor, drag region, cluster on zoom-out).
@@ -24,8 +24,8 @@ Source: background research agent (Figma, Miro, FigJam, Google Docs). Collaborat
 ## Sharing & permissions
 - Roles: owner / co-owner / editor / commenter / viewer (view includes comment).
 - Seat vs permission separation; link sharing vs explicit email invite; public vs restricted scope.
-- Permission inheritance hierarchy: Org → Team → Project → File; explicit grants override inherited.
-- Password-protected links; link expiry (1h–31d); guest access (external) with org toggle; unregistered visitor tier; embed; view-only present mode.
+- Permission inheritance hierarchy: Org â†’ Team â†’ Project â†’ File; explicit grants override inherited.
+- Password-protected links; link expiry (1hâ€“31d); guest access (external) with org toggle; unregistered visitor tier; embed; view-only present mode.
 - Admin controls (reset/disable invite links; content-admin oversight; SSO/enterprise).
 
 ## Versioning & branching
@@ -46,3 +46,19 @@ Source: background research agent (Figma, Miro, FigJam, Google Docs). Collaborat
 - https://help.miro.com/hc/en-us/articles/360017571194-Roles-in-Miro
 - https://help.miro.com/hc/en-us/articles/360021668819-Board-history-versions
 - https://support.google.com/docs/answer/6033474
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

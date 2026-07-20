@@ -1,4 +1,4 @@
-# Migration: from DB-design tool to cloud planning platform
+﻿# Migration: from DB-design tool to cloud planning platform
 
 This document records the realignment of the Thoth Blueprint repository and how to
 work with the result.
@@ -6,7 +6,7 @@ work with the result.
 ## What changed
 
 Thoth Blueprint began as an **offline-first, browser-based database schema design
-tool** — a drag-and-drop schema editor with DBML/SQL/JSON/SVG export and framework
+tool** â€” a drag-and-drop schema editor with DBML/SQL/JSON/SVG export and framework
 migration generation, storing everything locally in IndexedDB.
 
 The project has been repurposed into a **cloud-based site & community planning
@@ -60,12 +60,12 @@ packages gain build/test tooling, add matching CI jobs next to `artifact-build`.
 
 ## Why archive instead of a fresh repository
 
-- **Preserve history and credit** — contributors and commit history stay intact.
-- **Reuse patterns** — the archived app is a strong reference for canvas editing
+- **Preserve history and credit** â€” contributors and commit history stay intact.
+- **Reuse patterns** â€” the archived app is a strong reference for canvas editing
   (React Flow), state orchestration (Zustand), local persistence (Dexie), and
   import/export ergonomics. We re-implement these cloud-first rather than starting
   from zero knowledge.
-- **Continuity of the name and community** — the project and its audience carry
+- **Continuity of the name and community** â€” the project and its audience carry
   forward.
 
 ## Guidance for contributors
@@ -75,3 +75,19 @@ packages gain build/test tooling, add matching CI jobs next to `artifact-build`.
 - Treat `artifact/` as **read-only reference**. Don't import from it or extend it.
 - Keep the planning **domain model** (`packages/domain`) framework-agnostic.
 - Use the shared **vocabulary** in [GLOSSARY.md](GLOSSARY.md).
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

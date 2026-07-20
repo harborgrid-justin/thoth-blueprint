@@ -1,4 +1,4 @@
-# Requirements Standards & Conventions
+﻿# Requirements Standards & Conventions
 
 This document defines **how requirements are written, identified, and traced** in
 the Thoth Blueprint requirements suite. Every other file in
@@ -11,22 +11,22 @@ consistent and the [Requirements Traceability Matrix](../04-traceability/traceab
 The suite is structured to align with, without ceremonially reproducing, the
 following:
 
-- **ISO/IEC/IEEE 29148:2018** — Requirements engineering. Drives the layering
-  (business → stakeholder → system/software requirements), the requirement
+- **ISO/IEC/IEEE 29148:2018** â€” Requirements engineering. Drives the layering
+  (business â†’ stakeholder â†’ system/software requirements), the requirement
   quality rules below, and the traceability discipline.
-- **IEEE 830 (historical)** — Software Requirements Specification structure,
+- **IEEE 830 (historical)** â€” Software Requirements Specification structure,
   folded into 29148.
-- **ISO/IEC 25010** — the product-quality model used to organize the
+- **ISO/IEC 25010** â€” the product-quality model used to organize the
   [non-functional requirements](../03-nonfunctional/nonfunctional-requirements.md).
-- **OGC Simple Features / GeoJSON (RFC 7946)** — geometry and interchange
+- **OGC Simple Features / GeoJSON (RFC 7946)** â€” geometry and interchange
   semantics referenced by the domain and interoperability requirements.
-- **WCAG 2.2 AA** and **OWASP ASVS 4.0** — external criteria referenced by
+- **WCAG 2.2 AA** and **OWASP ASVS 4.0** â€” external criteria referenced by
   accessibility and security NFRs respectively.
 - **US National CAD Standard v6 / AIA CAD Layer Guidelines**, **ISO 13567**,
   **ANSI/ASME Y14.1**, **ISO 5457**, **ISO 7200**, and **ISO 128 / 129 / 3098**
-  — CAD sheet, layer, title-block, and drawing-convention standards referenced
+  â€” CAD sheet, layer, title-block, and drawing-convention standards referenced
   by the Phase-6 sheet-production requirements and by `CON-011`.
-- **PDF/A (ISO 19005)** and **PDF/E-1 (ISO 24517-1)** — archival and
+- **PDF/A (ISO 19005)** and **PDF/E-1 (ISO 24517-1)** â€” archival and
   engineering PDF variants referenced by multi-sheet plot output.
 
 These are references, not compliance obligations. Where a requirement claims
@@ -41,10 +41,10 @@ above (why it exists) and **down** to the layer below (how it is satisfied).
 | --- | --- | --- | --- |
 | Business requirements | `BR` | Why build this at all? | [`01-business/business-requirements.md`](../01-business/business-requirements.md) |
 | Stakeholder requirements | `STK` | What do specific users need? | [`01-business/stakeholders.md`](../01-business/stakeholders.md) |
-| Functional — Frontend | `FE` | What must the client/workspace do? | [`02-functional/frontend-requirements.md`](../02-functional/frontend-requirements.md) |
-| Functional — Backend | `BE` | What must the cloud services do? | [`02-functional/backend-requirements.md`](../02-functional/backend-requirements.md) |
-| Functional — Domain model | `DOM` | What must `packages/domain` model & compute? | [`02-functional/domain-requirements.md`](../02-functional/domain-requirements.md) |
-| Functional — Interoperability | `IOP` | What must import/export do? | [`02-functional/interoperability-requirements.md`](../02-functional/interoperability-requirements.md) |
+| Functional â€” Frontend | `FE` | What must the client/workspace do? | [`02-functional/frontend-requirements.md`](../02-functional/frontend-requirements.md) |
+| Functional â€” Backend | `BE` | What must the cloud services do? | [`02-functional/backend-requirements.md`](../02-functional/backend-requirements.md) |
+| Functional â€” Domain model | `DOM` | What must `packages/domain` model & compute? | [`02-functional/domain-requirements.md`](../02-functional/domain-requirements.md) |
+| Functional â€” Interoperability | `IOP` | What must import/export do? | [`02-functional/interoperability-requirements.md`](../02-functional/interoperability-requirements.md) |
 | Non-functional | `NFR` | How well must it behave? | [`03-nonfunctional/nonfunctional-requirements.md`](../03-nonfunctional/nonfunctional-requirements.md) |
 | Constraint / assumption | `CON` | What bounds the solution? | [`00-overview/scope-and-context.md`](scope-and-context.md) |
 | Dependency / assumption | `DEP` | What external system does it lean on? | [`00-overview/scope-and-context.md`](scope-and-context.md) |
@@ -57,11 +57,11 @@ Identifiers are stable and never reused. Format:
 <PREFIX>-<AREA>-<NNN>
 ```
 
-- **PREFIX** — one of the layer prefixes above.
-- **AREA** — a short uppercase area code (see catalogs below). Business,
+- **PREFIX** â€” one of the layer prefixes above.
+- **AREA** â€” a short uppercase area code (see catalogs below). Business,
   stakeholder, constraint, and dependency IDs omit the AREA segment (e.g.
   `BR-007`, `DEP-001`).
-- **NNN** — zero-padded 3-digit sequence, unique within its `PREFIX-AREA`.
+- **NNN** â€” zero-padded 3-digit sequence, unique within its `PREFIX-AREA`.
 
 Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 `DOM-PARCEL-001`, `IOP-DXF-002`, `NFR-PERF-003`.
@@ -72,7 +72,7 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 
 ### Functional area codes
 
-**Frontend (`FE-…`)** — the browser planning workspace (`apps/web`):
+**Frontend (`FE-â€¦`)** â€” the browser planning workspace (`apps/web`):
 
 | Area | Scope |
 | --- | --- |
@@ -110,7 +110,7 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `REV` | Revision clouds, delta tags, revision-block editing |
 | `SHEETSET` | Sheet-set browser (project navigator), filters, batch plot |
 
-**Backend (`BE-…`)** — the cloud services (`services/*`):
+**Backend (`BE-â€¦`)** â€” the cloud services (`services/*`):
 
 | Area | Scope | Service |
 | --- | --- | --- |
@@ -136,7 +136,7 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `SCHEDULE` | Server-side extraction of schedules (door/window/room/finish/panel) from domain objects | `services/projects` |
 | `PACKAGE` | Issue-set release packaging: bundle sheets + manifest + checksums into deliverables | `services/projects` |
 
-**Domain model (`DOM-…`)** — `packages/domain`:
+**Domain model (`DOM-â€¦`)** â€” `packages/domain`:
 
 | Area | Scope |
 | --- | --- |
@@ -185,7 +185,7 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `XREF` | External references between sheets/drawings and their invalidation |
 | `ISSUE` | Named issue sets (For Permit / For Bid / IFC / As-Built) and per-sheet stamping |
 
-**Interoperability (`IOP-…`)** — importers/exporters:
+**Interoperability (`IOP-â€¦`)** â€” importers/exporters:
 
 | Area | Format / concern |
 | --- | --- |
@@ -202,7 +202,7 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `BUNDLE` | ZIP / KMZ archive import |
 | `STREAM` | Streaming large-file import |
 | `IDENT` | Round-trip element identity |
-| `SCHEMA` | Documented format↔domain schema mapping |
+| `SCHEMA` | Documented formatâ†”domain schema mapping |
 | `GEOMX` | Unsupported-geometry handling |
 | `PREC` | Coordinate precision on export |
 | `CRSX` | Cross-format CRS handling |
@@ -213,7 +213,7 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `TITLEBLOCK` | Title-block block-import from external DWG/DXF templates |
 | `BLOCK` | Symbol/block library round-trip (import DWG/DXF blocks, export as blocks) |
 
-**Non-functional (`NFR-…`)** — categories from ISO/IEC 25010:
+**Non-functional (`NFR-â€¦`)** â€” categories from ISO/IEC 25010:
 
 | Area | Category |
 | --- | --- |
@@ -245,27 +245,27 @@ columns:
 | --- | --- |
 | **ID** | The stable identifier. |
 | **Requirement** | A single testable statement using **shall**. |
-| **Priority** | MoSCoW: **M** (Must) · **S** (Should) · **C** (Could) · **W** (Won't-yet). |
-| **Phase** | Target roadmap phase `P0`–`P5` (see [ROADMAP](../../ROADMAP.md)). |
+| **Priority** | MoSCoW: **M** (Must) Â· **S** (Should) Â· **C** (Could) Â· **W** (Won't-yet). |
+| **Phase** | Target roadmap phase `P0`â€“`P5` (see [ROADMAP](../../ROADMAP.md)). |
 | **Trace** | Parent requirement IDs this satisfies (upward trace). |
-| **Verify** | Verification method — see below. |
+| **Verify** | Verification method â€” see below. |
 
 Priority reflects product intent, not current build state; a `Must` requirement
 in `P4` is still unbuilt today. Build state lives in the RTM's **Status** column.
 
-## Requirement quality rules (per ISO/IEC/IEEE 29148 §5.2)
+## Requirement quality rules (per ISO/IEC/IEEE 29148 Â§5.2)
 
 Each requirement statement is:
 
-1. **Necessary** — traces to a real business or stakeholder need.
-2. **Singular** — one requirement per statement; no "and/or" compounds that
+1. **Necessary** â€” traces to a real business or stakeholder need.
+2. **Singular** â€” one requirement per statement; no "and/or" compounds that
    hide two requirements.
-3. **Unambiguous** — one interpretation; defined terms come from
+3. **Unambiguous** â€” one interpretation; defined terms come from
    [`GLOSSARY.md`](../../GLOSSARY.md).
-4. **Verifiable** — paired with a verification method that could actually fail.
-5. **Feasible & bounded** — implementable within the architecture; measurable
+4. **Verifiable** â€” paired with a verification method that could actually fail.
+5. **Feasible & bounded** â€” implementable within the architecture; measurable
    thresholds where the requirement is quantitative.
-6. **Free of design** — states *what*, not *how*, unless the how is a genuine
+6. **Free of design** â€” states *what*, not *how*, unless the how is a genuine
    constraint.
 
 The keyword **shall** denotes a binding requirement. *Should* and *may* are
@@ -281,7 +281,7 @@ reserved for non-binding guidance and are avoided in requirement statements
 | **I** | Inspection | Review code, config, or a document. |
 | **A** | Analysis | Reason from models, load tests, or calculation. |
 
-Verification evidence (test-case IDs `TC-…`, once a test suite exists) is
+Verification evidence (test-case IDs `TC-â€¦`, once a test suite exists) is
 tracked in the RTM, keeping this catalog focused on *what* is required.
 
 ## Tolerances
@@ -289,37 +289,53 @@ tracked in the RTM, keeping this catalog focused on *what* is required.
 Requirements that say "within tolerance" refer to these named tolerances. Values
 are **initial targets**, pinned here so the requirements are verifiable and so a
 single change updates every referencing requirement. They are confirmed the same
-way performance targets are — see [`NFR-BENCH`](../03-nonfunctional/nonfunctional-requirements.md#benchmarks--validation--nfr-bench).
+way performance targets are â€” see [`NFR-BENCH`](../03-nonfunctional/nonfunctional-requirements.md#benchmarks--validation--nfr-bench).
 
 | Tolerance | Meaning | Initial target | Referenced by |
 | --- | --- | --- | --- |
 | **Coordinate tolerance** | Distance within which two vertices are treated as coincident (snapping, gap/overlap). | 1 mm in the plan's projected units | `DOM-GEOM-009`, `DOM-PARCEL-004` |
-| **Conversion tolerance** | Max error permitted when converting between units. | ≤ 1 part in 10⁶ | `DOM-UNIT-003` |
-| **Metric tolerance** | Max deviation of an area/distance metric from an authoritative GIS for the same input. | ≤ 0.1% relative | `NFR-COMPAT-002`, `DOM-METRIC-*` |
-| **Interoperability tolerance** | Max positional shift permitted on a format round-trip. | ≤ coordinate tolerance for projected CRS; ≤ 1 mm equivalent for geographic | `NFR-COMPAT-001`, `IOP-*` |
-| **Plot scale tolerance** | Max deviation of a printed distance from the nominal scaled distance on a physical (or true-scale PDF) plot. | ≤ 0.2 mm at plot scale | `NFR-PLOT-001`, `IOP-PDFSHEET-*` |
-| **Annotation plot size** | Nominal plotted text height for schedule and body text; nominal arrowhead length; nominal linetype dash gap — all pinned so annotative scaling can be verified. | body text 2.5 mm; headings 3.5 mm; arrowheads 2.5 mm | `DOM-ANNO-*`, `DOM-DIM-*`, `NFR-PLOT-002` |
+| **Conversion tolerance** | Max error permitted when converting between units. | â‰¤ 1 part in 10â¶ | `DOM-UNIT-003` |
+| **Metric tolerance** | Max deviation of an area/distance metric from an authoritative GIS for the same input. | â‰¤ 0.1% relative | `NFR-COMPAT-002`, `DOM-METRIC-*` |
+| **Interoperability tolerance** | Max positional shift permitted on a format round-trip. | â‰¤ coordinate tolerance for projected CRS; â‰¤ 1 mm equivalent for geographic | `NFR-COMPAT-001`, `IOP-*` |
+| **Plot scale tolerance** | Max deviation of a printed distance from the nominal scaled distance on a physical (or true-scale PDF) plot. | â‰¤ 0.2 mm at plot scale | `NFR-PLOT-001`, `IOP-PDFSHEET-*` |
+| **Annotation plot size** | Nominal plotted text height for schedule and body text; nominal arrowhead length; nominal linetype dash gap â€” all pinned so annotative scaling can be verified. | body text 2.5 mm; headings 3.5 mm; arrowheads 2.5 mm | `DOM-ANNO-*`, `DOM-DIM-*`, `NFR-PLOT-002` |
 
 ## Traceability model
 
 The RTM realizes bidirectional traceability across the full chain:
 
 ```
-BR ─▶ STK ─▶ {FE, BE, DOM, IOP} ─▶ NFR (cross-cutting)
-                   │
-                   ├─▶ Roadmap phase (P0–P5)
-                   ├─▶ Architecture module (apps/web, services/*, packages/domain)
-                   └─▶ Verification method (T/D/I/A) ─▶ TC-… (future)
+BR â”€â–¶ STK â”€â–¶ {FE, BE, DOM, IOP} â”€â–¶ NFR (cross-cutting)
+                   â”‚
+                   â”œâ”€â–¶ Roadmap phase (P0â€“P5)
+                   â”œâ”€â–¶ Architecture module (apps/web, services/*, packages/domain)
+                   â””â”€â–¶ Verification method (T/D/I/A) â”€â–¶ TC-â€¦ (future)
 ```
 
 Coverage rules the RTM validates:
 
-- **R1** — every `BR` traces down to at least one `STK`.
-- **R2** — every `STK` traces down to at least one functional requirement.
-- **R3** — every functional requirement traces up to at least one `STK` (no
+- **R1** â€” every `BR` traces down to at least one `STK`.
+- **R2** â€” every `STK` traces down to at least one functional requirement.
+- **R3** â€” every functional requirement traces up to at least one `STK` (no
   orphan features) and maps to exactly one architecture module.
-- **R4** — every functional requirement has a verification method.
-- **R5** — every `NFR` names the requirements or modules it constrains.
+- **R4** â€” every functional requirement has a verification method.
+- **R5** â€” every `NFR` names the requirements or modules it constrains.
 
 Gaps against these rules are reported in the
 [coverage report](../04-traceability/coverage-report.md).
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

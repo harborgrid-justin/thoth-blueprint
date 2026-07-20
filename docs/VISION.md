@@ -1,9 +1,9 @@
-# Vision
+﻿# Vision
 
 ## The problem
 
-Planning the built environment — subdivisions, districts, campuses, parks,
-neighborhoods — is stuck between two categories of tools:
+Planning the built environment â€” subdivisions, districts, campuses, parks,
+neighborhoods â€” is stuck between two categories of tools:
 
 1. **Heavyweight CAD / GIS suites** (AutoCAD Civil 3D, ArcGIS, and friends). Powerful
    and precise, but expensive, desktop-bound, single-player by default, and steep
@@ -20,32 +20,32 @@ municipality, and a community is painful in both worlds.
 ## The product
 
 **Thoth Blueprint is a cloud-based platform for site planning and community
-planning** — a collaborative, web-native alternative to traditional CAD, scoped
+planning** â€” a collaborative, web-native alternative to traditional CAD, scoped
 specifically to land, sites, and neighborhoods rather than mechanical or product
 design.
 
 It combines:
 
-- **The ergonomics of a modern web app** — open a link, edit together in real time,
+- **The ergonomics of a modern web app** â€” open a link, edit together in real time,
   comment, review, and share; nothing to install.
-- **A domain model that understands planning** — parcels, lots, zones, land uses,
+- **A domain model that understands planning** â€” parcels, lots, zones, land uses,
   setbacks, rights-of-way, and infrastructure are first-class objects with real
-  geometry, units, and rules — not just shapes.
+  geometry, units, and rules â€” not just shapes.
 
 You can lay out a subdivision, compose a mixed-use district, sketch a park or
 campus, model a zoning envelope, allocate land uses, check density and coverage,
 and hand a live, interactive plan to reviewers and the public. When it is time to
 issue, the same model composes into standards-based architecture and engineering
-**CAD sheet sets** — title blocks, dimensions, schedules, sections and details —
+**CAD sheet sets** â€” title blocks, dimensions, schedules, sections and details â€”
 exported as multi-page vector PDF.
 
 ## Who it's for
 
-- **Site planners & civil designers** — parcels, lots, roads, utilities, grading concepts.
-- **Urban & community planners** — neighborhoods, zoning, land-use mixes, corridors.
-- **Municipalities & review boards** — collaborative review and public engagement.
-- **Developers & architects** — fast early-stage site concepts and feasibility.
-- **Community stakeholders** — see and comment on plans without CAD skills.
+- **Site planners & civil designers** â€” parcels, lots, roads, utilities, grading concepts.
+- **Urban & community planners** â€” neighborhoods, zoning, land-use mixes, corridors.
+- **Municipalities & review boards** â€” collaborative review and public engagement.
+- **Developers & architects** â€” fast early-stage site concepts and feasibility.
+- **Community stakeholders** â€” see and comment on plans without CAD skills.
 
 ## Principles
 
@@ -66,7 +66,7 @@ exported as multi-page vector PDF.
 ## What this is *not*
 
 - Not a mechanical/product CAD tool (no MCAD, no parametric part modeling).
-- Not a full GIS analysis platform — it's planning-first, with practical spatial
+- Not a full GIS analysis platform â€” it's planning-first, with practical spatial
   analysis, and interoperates with GIS rather than replacing it.
 - Not the archived database-design app. That product lives on, read-only, in
   [`../artifact/`](../artifact/).
@@ -76,3 +76,19 @@ exported as multi-page vector PDF.
 Incrementally, domain model first. See [ROADMAP.md](ROADMAP.md) for phases and
 current status, and [ARCHITECTURE.md](ARCHITECTURE.md) for how the system is
 structured.
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

@@ -1,5 +1,5 @@
-<!-- Raw research capture — background, feeds 00-overview/competitive-analysis.md. Not a normative requirements doc. -->
-# Research capture — Esri (ArcGIS Urban, ArcGIS Pro/Online, CityEngine)
+﻿<!-- Raw research capture â€” background, feeds 00-overview/competitive-analysis.md. Not a normative requirements doc. -->
+# Research capture â€” Esri (ArcGIS Urban, ArcGIS Pro/Online, CityEngine)
 
 ## ArcGIS Urban
 - Measure-as-you-draw building sketching; auto-generated massing; schematic building types; 3D envelopes; revision tracking.
@@ -24,7 +24,7 @@
 - CGA procedural grammar (extrude/split/texture/component-split); rule-based auto-generation; per-building rules; Python scripting.
 - Urban rule visualizing zoning: setbacks, sky exposure planes, lot coverage, FAR limits; 3D envelope generation; compliant building generation.
 - Dynamic street network generation; block creation; lot/parcel subdivision; interactive street width editing; fence rules.
-- Building_From_Footprint (2D→3D); Building_From_OSM; roof shapes; floor counts; facade textures; vegetation/furniture/labels.
+- Building_From_Footprint (2Dâ†’3D); Building_From_OSM; roof shapes; floor counts; facade textures; vegetation/furniture/labels.
 - Density metrics (FAR, coverage) rule-driven; scenario variations via layers; comparative analysis; reports/metrics.
 - Import: Shapefile, File GDB, GeoJSON, OSM, GeoTIFF, OBJ/FBX/Collada.
 - Export: glTF, CityGML, FBX, USD, Alembic, Collada, OBJ, 3DS, KML/KMZ, WebGL scenes, Unreal/Datasmith.
@@ -39,3 +39,19 @@
 - https://doc.arcgis.com/en/dashboards/latest/get-started/understand-data-sources.htm
 - https://doc.arcgis.com/en/cityengine/latest/help/esri-lib-rules.htm
 - https://doc.arcgis.com/en/cityengine/latest/get-started/get-started-about-cityengine.htm
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

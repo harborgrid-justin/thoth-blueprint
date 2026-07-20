@@ -1,7 +1,7 @@
-<!-- Raw research capture — background for the CAD-sheet requirements added in
+﻿<!-- Raw research capture â€” background for the CAD-sheet requirements added in
 `FE-SHEET*`, `BE-SHEET*`, `DOM-SHEET*`, `IOP-DXFSHEET`/`IOP-PDFSHEET`, and the
 Phase-6 roadmap addition. Not a normative requirements doc. -->
-# Research capture — architecture & engineering CAD sheets
+# Research capture â€” architecture & engineering CAD sheets
 
 Source: background research for the "generate complete architecture and
 engineering CAD sheets" scope expansion. Feeds the sheet-composition areas
@@ -14,11 +14,11 @@ fixed-size drawings, each with a **title block**, **body area**, and one or more
 **viewports** onto model content, plus annotations composed for the sheet's plot
 scale. Typical arch/eng deliverable structure:
 
-- **Cover / title sheet** — project identification, location map, signatures.
-- **Sheet index** — the list of every sheet with title, number, discipline.
+- **Cover / title sheet** â€” project identification, location map, signatures.
+- **Sheet index** â€” the list of every sheet with title, number, discipline.
 - **General notes / abbreviations / symbols legend**.
-- **Discipline sets** in a fixed order (G → C → L → S → A → I → Q → F → P → D →
-  M → E → T — see US NCS discipline designators below), each with:
+- **Discipline sets** in a fixed order (G â†’ C â†’ L â†’ S â†’ A â†’ I â†’ Q â†’ F â†’ P â†’ D â†’
+  M â†’ E â†’ T â€” see US NCS discipline designators below), each with:
   - _plans_ (site, floor, roof, framing, foundation, lighting, power, HVAC,
     plumbing, etc.),
   - _elevations_ and _sections_,
@@ -33,25 +33,25 @@ sheet (paper), not the model (world).
 
 ## B. Sheet-size and title-block standards
 
-- **ANSI/ASME Y14.1** — US flat sizes A (8.5×11) · B (11×17) · C (17×22) ·
-  D (22×34) · E (34×44). Y14.1M defines metric equivalents.
-- **US ARCH sizes** — Arch A (9×12) · B (12×18) · C (18×24) · D (24×36) ·
-  E (36×48) · E1 (30×42). Most US arch sheets are Arch D or E.
-- **ISO 5457** — technical drawing sheet sizes and title-block placement based
-  on ISO 216 (A0 841×1189 mm → A4 210×297 mm).
-- **ISO 7200** — data fields for title blocks (drawing identifier, sheet number,
+- **ANSI/ASME Y14.1** â€” US flat sizes A (8.5Ã—11) Â· B (11Ã—17) Â· C (17Ã—22) Â·
+  D (22Ã—34) Â· E (34Ã—44). Y14.1M defines metric equivalents.
+- **US ARCH sizes** â€” Arch A (9Ã—12) Â· B (12Ã—18) Â· C (18Ã—24) Â· D (24Ã—36) Â·
+  E (36Ã—48) Â· E1 (30Ã—42). Most US arch sheets are Arch D or E.
+- **ISO 5457** â€” technical drawing sheet sizes and title-block placement based
+  on ISO 216 (A0 841Ã—1189 mm â†’ A4 210Ã—297 mm).
+- **ISO 7200** â€” data fields for title blocks (drawing identifier, sheet number,
   title, date, revision, scale, sizes, drawn/checked/approved by, owner).
 
 ## C. Layer-naming standards
 
-- **US National CAD Standard (NCS) v6** — governs discipline designators, layer
+- **US National CAD Standard (NCS) v6** â€” governs discipline designators, layer
   names, and sheet numbering across the US AEC industry. Layer name format:
   `<Discipline><Major group>-<Minor group>-<Status>` e.g. `A-WALL-FULL-N` (New
   Architectural full-height wall).
-- **AIA CAD Layer Guidelines** — the source of the NCS layer scheme.
-- **ISO 13567** (Technical product documentation — layers): agent + element +
+- **AIA CAD Layer Guidelines** â€” the source of the NCS layer scheme.
+- **ISO 13567** (Technical product documentation â€” layers): agent + element +
   presentation + status fields, widely used outside the US.
-- **BS 1192 / PAS 1192 / ISO 19650** — UK/international BIM information
+- **BS 1192 / PAS 1192 / ISO 19650** â€” UK/international BIM information
   management (naming, revisions, common data environment); layer names for CAD
   drawings sit inside these container conventions.
 
@@ -100,115 +100,131 @@ Sheet-type numbering (the hundreds digit):
 
 ## E. Plot styles, line weights, line types
 
-- **Plot styles** — CTB (colour-dependent) and STB (named-style) tables in
+- **Plot styles** â€” CTB (colour-dependent) and STB (named-style) tables in
   AutoCAD map on-screen colour or a named style to printed line weight,
   colour, and line type at output time. A published sheet's on-paper appearance
-  is a function of layer → style → plot table.
-- **Line weights** — commonly 0.13 · 0.18 · 0.25 · 0.35 · 0.50 · 0.70 · 1.00 mm
+  is a function of layer â†’ style â†’ plot table.
+- **Line weights** â€” commonly 0.13 Â· 0.18 Â· 0.25 Â· 0.35 Â· 0.50 Â· 0.70 Â· 1.00 mm
   (ISO); the NCS/AIA scheme maps discipline layers to weights so that walls,
   centrelines, hidden lines, dimensions, and notation each carry a
   distinguishable weight.
-- **Line types** — continuous, dashed, hidden, centre, phantom, etc.; scaled
+- **Line types** â€” continuous, dashed, hidden, centre, phantom, etc.; scaled
   against the sheet plot scale (`LTSCALE` in AutoCAD).
 
 ## F. Dimensioning & annotation standards
 
-- **ISO 128** — general principles of technical drawings (line types, views,
+- **ISO 128** â€” general principles of technical drawings (line types, views,
   arrangement).
-- **ISO 129-1** — dimensioning principles.
-- **ISO 3098** — lettering for technical drawings.
-- **ASME Y14.5** — dimensioning & tolerancing (mechanical-leaning but broadly
+- **ISO 129-1** â€” dimensioning principles.
+- **ISO 3098** â€” lettering for technical drawings.
+- **ASME Y14.5** â€” dimensioning & tolerancing (mechanical-leaning but broadly
   cited; ASME Y14.2 covers line conventions).
-- **Annotative scaling** — text/symbols/dimensions carry an annotation scale so
+- **Annotative scaling** â€” text/symbols/dimensions carry an annotation scale so
   that a note reads at, say, 3 mm on paper regardless of viewport scale; a
   single object appears at different world sizes in a 1:100 vs 1:20 viewport.
 
 ## G. Model space, layouts, viewports
 
-- **Model space** — the world-coordinate model (drawn at 1:1 in real units).
-- **Paper space / layout** — a virtual sheet at print size, one per plotted
+- **Model space** â€” the world-coordinate model (drawn at 1:1 in real units).
+- **Paper space / layout** â€” a virtual sheet at print size, one per plotted
   sheet.
-- **Viewport** — a rectangular window on a layout that displays a region of
-  model space at a chosen scale (1:100, 1/8″=1′-0″, etc.), optionally clipped,
+- **Viewport** â€” a rectangular window on a layout that displays a region of
+  model space at a chosen scale (1:100, 1/8â€³=1â€²-0â€³, etc.), optionally clipped,
   layer-controlled, or rotated.
-- **Xrefs (external references)** — one drawing file referenced by another (a
+- **Xrefs (external references)** â€” one drawing file referenced by another (a
   site plan referenced by every sheet), so the source updates propagate to all
   consumers.
-- **Sheet Set Manager** — AutoCAD's tool that treats a sheet set as a single
+- **Sheet Set Manager** â€” AutoCAD's tool that treats a sheet set as a single
   navigable, publishable, callout-cross-referenced whole.
 
 ## H. Sheet coordination graphics
 
-- **Grid lines & bubbles** — building column/row grids (A, B, C… / 1, 2, 3…)
+- **Grid lines & bubbles** â€” building column/row grids (A, B, Câ€¦ / 1, 2, 3â€¦)
   shown as bubble-tagged lines across every applicable sheet.
-- **Levels / storey markers** — datum elevations on sections/elevations.
-- **Section markers / elevation markers / detail bubbles** — callouts on a plan
+- **Levels / storey markers** â€” datum elevations on sections/elevations.
+- **Section markers / elevation markers / detail bubbles** â€” callouts on a plan
   that name the sheet + drawing number where the section/elevation/detail
   actually lives; the destination drawing shows the reciprocal marker.
-- **Match lines** — dashed break lines where a plan overflows one sheet onto
+- **Match lines** â€” dashed break lines where a plan overflows one sheet onto
   another, tagged with the neighbouring sheet number.
-- **North arrow / true north vs plan north** — orientation indicator that must
+- **North arrow / true north vs plan north** â€” orientation indicator that must
   reflect the sheet's rotation relative to the plan CRS.
 
 ## I. Schedules & tables
 
 Standard arch/eng schedules embedded in sheet sets:
 
-- **Door schedule** — number, type, size, material, hardware set, fire rating.
-- **Window schedule** — number, type, size, glazing, sill height.
-- **Room / finish schedule** — room number, name, area, floor/base/wall/ceiling
+- **Door schedule** â€” number, type, size, material, hardware set, fire rating.
+- **Window schedule** â€” number, type, size, glazing, sill height.
+- **Room / finish schedule** â€” room number, name, area, floor/base/wall/ceiling
   finishes.
-- **Panel schedule** (electrical) — panel, circuits, loads.
+- **Panel schedule** (electrical) â€” panel, circuits, loads.
 - **Fixture / equipment schedules** (M/P).
 - **Wall type / partition legend**.
 
-Schedules are data-driven — the same data that drives plan geometry should
+Schedules are data-driven â€” the same data that drives plan geometry should
 back the schedule; a room's number appears on the plan and in the schedule.
 
 ## J. Revisions & issue management
 
-- **Revision cloud** — a scalloped freehand cloud around a changed area of the
+- **Revision cloud** â€” a scalloped freehand cloud around a changed area of the
   drawing with a triangular **delta tag** carrying the revision number.
-- **Revision block** — a table in the title block listing revision number,
+- **Revision block** â€” a table in the title block listing revision number,
   date, description, drawn/approved by.
-- **Issue set** — a snapshot released for a specific purpose ("For Permit",
+- **Issue set** â€” a snapshot released for a specific purpose ("For Permit",
   "For Bid", "Issued for Construction", "As-Built"), stamped on every sheet.
 
 ## K. Deliverables & packaging
 
-- **Multi-sheet PDF** — the ubiquitous deliverable; usually one PDF per issue
+- **Multi-sheet PDF** â€” the ubiquitous deliverable; usually one PDF per issue
   containing every sheet in sheet-number order with bookmarks per discipline.
-- **DWG/DXF sheet set** — one file per sheet or one file with layouts;
+- **DWG/DXF sheet set** â€” one file per sheet or one file with layouts;
   layers/plot styles preserved.
-- **Plot files (PLT)** — legacy device-driven plot output.
-- **Sheet index cover PDF** — a manifest of the release for archival.
+- **Plot files (PLT)** â€” legacy device-driven plot output.
+- **Sheet index cover PDF** â€” a manifest of the release for archival.
 
 ## L. Related standards / references
 
 - CSI **MasterFormat** (for specification) and **UniFormat** (for functional
   elements) provide the classification numbering that some schedule/notes
   systems reference on sheets.
-- **Uniclass 2015** and **OmniClass** — comparable classification systems used
+- **Uniclass 2015** and **OmniClass** â€” comparable classification systems used
   in UK / North America.
-- **PDF/A** and **PDF/E-1 (ISO 24517-1)** — long-term-archive and engineering
+- **PDF/A** and **PDF/E-1 (ISO 24517-1)** â€” long-term-archive and engineering
   PDF variants often required for permit/record submission.
 
-## Sources (informational — not normative in this suite)
+## Sources (informational â€” not normative in this suite)
 
-- US National CAD Standard v6 overview — https://www.nationalcadstandard.org/
-- AIA CAD Layer Guidelines summary — https://www.aia.org/resources/6076
+- US National CAD Standard v6 overview â€” https://www.nationalcadstandard.org/
+- AIA CAD Layer Guidelines summary â€” https://www.aia.org/resources/6076
   (referenced by NCS)
-- ISO 5457 (drawing sheets) — https://www.iso.org/standard/22743.html
-- ISO 7200 (title-block data fields) — https://www.iso.org/standard/29184.html
-- ISO 128 series (technical drawings) —
+- ISO 5457 (drawing sheets) â€” https://www.iso.org/standard/22743.html
+- ISO 7200 (title-block data fields) â€” https://www.iso.org/standard/29184.html
+- ISO 128 series (technical drawings) â€”
   https://www.iso.org/standard/44236.html
-- ISO 13567 (CAD layer organisation) —
+- ISO 13567 (CAD layer organisation) â€”
   https://www.iso.org/standard/22385.html
-- ISO 19650 (BIM information management) —
+- ISO 19650 (BIM information management) â€”
   https://www.iso.org/standard/68078.html
-- ANSI/ASME Y14.1 (drawing sheet size and format) —
+- ANSI/ASME Y14.1 (drawing sheet size and format) â€”
   https://www.asme.org/codes-standards/find-codes-standards/y14-1-drawing-sheet-size-format
-- ASME Y14.5 (dimensioning & tolerancing) —
+- ASME Y14.5 (dimensioning & tolerancing) â€”
   https://www.asme.org/codes-standards/find-codes-standards/y14-5
-- PDF/A (ISO 19005) — https://www.iso.org/standard/38920.html
-- PDF/E-1 (ISO 24517-1) — https://www.iso.org/standard/42274.html
+- PDF/A (ISO 19005) â€” https://www.iso.org/standard/38920.html
+- PDF/E-1 (ISO 24517-1) â€” https://www.iso.org/standard/42274.html
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

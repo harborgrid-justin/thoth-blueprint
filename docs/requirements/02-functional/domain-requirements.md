@@ -1,4 +1,4 @@
-# Functional Requirements — Domain Model (`DOM`)
+﻿# Functional Requirements â€” Domain Model (`DOM`)
 
 Requirements for the **framework-agnostic planning domain model**
 (`packages/domain`): the spatial foundation, planning primitives, the rules and
@@ -6,16 +6,16 @@ metrics over them, and the model-level concerns (identity, serialization,
 determinism, snapshots) that let the client and services share one source of
 truth. This is the gating Phase-1 work ([ROADMAP](../../ROADMAP.md)).
 
-The model shall remain **framework-agnostic** — no React, no server framework, no
+The model shall remain **framework-agnostic** â€” no React, no server framework, no
 database driver
-([`CON-003`](../00-overview/scope-and-context.md#constraints--assumptions)) — and
+([`CON-003`](../00-overview/scope-and-context.md#constraints--assumptions)) â€” and
 all definitions shall use the vocabulary of [`GLOSSARY.md`](../../GLOSSARY.md).
 Conventions in
 [standards & conventions](../00-overview/standards-and-conventions.md); numeric
 tolerances referenced below are defined in its
 [tolerances table](../00-overview/standards-and-conventions.md#tolerances).
 
-## Coordinate reference systems — `DOM-CRS`
+## Coordinate reference systems â€” `DOM-CRS`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -24,7 +24,7 @@ tolerances referenced below are defined in its
 | `DOM-CRS-003` | The model shall support datum-aware transformation of geometry between CRSs. | M | P1 | STK-001; BR-004 | T |
 | `DOM-CRS-004` | The model shall distinguish geographic (angular) from projected (linear) CRSs so callers can enforce projected-CRS computation of area/distance. | M | P1 | STK-001; NFR-COMPAT-002 | T |
 
-## Units & scale — `DOM-UNIT`
+## Units & scale â€” `DOM-UNIT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -34,7 +34,7 @@ tolerances referenced below are defined in its
 | `DOM-UNIT-004` | The model shall carry explicit area units (at least acre, hectare, square foot, square meter), distinct from linear units. | M | P1 | STK-001; BR-004, BR-008 | T |
 | `DOM-UNIT-005` | The model shall carry explicit angular/bearing units (decimal degrees, degrees-minutes-seconds). | S | P1 | STK-001; BR-004 | T |
 
-## Geometry — `DOM-GEOM`
+## Geometry â€” `DOM-GEOM`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -50,7 +50,7 @@ tolerances referenced below are defined in its
 | `DOM-GEOM-010` | The model shall simplify geometry (vertex reduction) while preserving topology within tolerance. | C | P2 | STK-001; BR-005 | T |
 | `DOM-GEOM-011` | The model shall normalize polygon ring orientation/winding to the OGC right-hand rule. | S | P1 | STK-001; NFR-COMPAT-001 | T |
 
-## Survey / metes-and-bounds — `DOM-SURVEY`
+## Survey / metes-and-bounds â€” `DOM-SURVEY`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -58,15 +58,15 @@ tolerances referenced below are defined in its
 | `DOM-SURVEY-002` | The model shall compute the bearing/azimuth and distance between two coordinates (inverse COGO). | S | P2 | STK-001; BR-004 | T |
 | `DOM-SURVEY-003` | The model shall report closure error for a metes-and-bounds description. | C | P3 | STK-001; NFR-REL-003 | T |
 
-## Identity & integrity — `DOM-IDENT`
+## Identity & integrity â€” `DOM-IDENT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-IDENT-001` | Every domain element shall carry a stable, unique identifier that persists across edits and serialization. | M | P1 | STK-003; BR-003 | T |
-| `DOM-IDENT-002` | The model shall enforce referential integrity of the Site→Parcel→Block→Lot hierarchy (no orphan children, no dangling parent references). | M | P1 | STK-001; NFR-REL-003 | T |
+| `DOM-IDENT-002` | The model shall enforce referential integrity of the Siteâ†’Parcelâ†’Blockâ†’Lot hierarchy (no orphan children, no dangling parent references). | M | P1 | STK-001; NFR-REL-003 | T |
 | `DOM-IDENT-003` | The model shall support grouping of elements independent of layer assignment. | C | P2 | STK-002; BR-002 | T |
 
-## Layers — `DOM-LAYER`
+## Layers â€” `DOM-LAYER`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -74,14 +74,14 @@ tolerances referenced below are defined in its
 | `DOM-LAYER-002` | The model shall carry per-layer visibility and lock state. | M | P1 | STK-002; BR-002 | T |
 | `DOM-LAYER-003` | The model shall associate each element with exactly one layer. | M | P1 | STK-002; BR-002 | T |
 
-## Site — `DOM-SITE`
+## Site â€” `DOM-SITE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-SITE-001` | The model shall provide a `Site` as the top-level container for a project's spatial content. | M | P1 | STK-002; BR-002 | T |
 | `DOM-SITE-002` | A `Site` shall carry its CRS, units, and scale, which its contained geometry inherits. | M | P1 | STK-001; BR-004, CON-004 | T |
 
-## Parcels — `DOM-PARCEL`
+## Parcels â€” `DOM-PARCEL`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -93,7 +93,7 @@ tolerances referenced below are defined in its
 | `DOM-PARCEL-006` | The model shall represent parcel adjacency/topology (shared boundaries between parcels). | S | P2 | STK-001; BR-002 | T |
 | `DOM-PARCEL-007` | The model shall compute a parcel's street frontage. | M | P1 | STK-001; BR-008 | T |
 
-## Lots — `DOM-LOT`
+## Lots â€” `DOM-LOT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -101,7 +101,7 @@ tolerances referenced below are defined in its
 | `DOM-LOT-002` | The model shall compute a lot's area, width, and frontage. | M | P1 | STK-001; BR-008 | T |
 | `DOM-LOT-003` | Each lot shall reference the parcel it derives from and, optionally, the block that contains it. | M | P1 | STK-001; BR-002 | T |
 
-## Blocks — `DOM-BLOCK`
+## Blocks â€” `DOM-BLOCK`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -109,7 +109,7 @@ tolerances referenced below are defined in its
 | `DOM-BLOCK-002` | The model shall derive blocks from the surrounding ROW/street network. | S | P2 | STK-001; BR-002 | T |
 | `DOM-BLOCK-003` | The model shall compute a block's area and perimeter. | S | P1 | STK-001; BR-008 | T |
 
-## Zones — `DOM-ZONE`
+## Zones â€” `DOM-ZONE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -117,7 +117,7 @@ tolerances referenced below are defined in its
 | `DOM-ZONE-002` | A zone shall carry configurable parameters: FAR limit, max height, max coverage, setbacks, and allowed land uses. | M | P1 | STK-002; BR-008 | T |
 | `DOM-ZONE-003` | The model shall associate parcels/lots with the zone(s) governing them. | S | P1 | STK-002; BR-002 | T |
 
-## Land uses — `DOM-LANDUSE`
+## Land uses â€” `DOM-LANDUSE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -125,7 +125,7 @@ tolerances referenced below are defined in its
 | `DOM-LANDUSE-002` | The model shall compute land-use allocation (area per land use) across a site. | M | P1 | STK-002; BR-008 | T |
 | `DOM-LANDUSE-003` | The model shall support a configurable land-use catalog rather than a fixed enumeration. | S | P1 | STK-002; BR-002 | T |
 
-## Rights-of-way — `DOM-ROW`
+## Rights-of-way â€” `DOM-ROW`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -133,21 +133,21 @@ tolerances referenced below are defined in its
 | `DOM-ROW-002` | A ROW shall carry a width and classification (e.g. local, collector, arterial). | S | P2 | STK-001; BR-002 | T |
 | `DOM-ROW-003` | The model shall represent a ROW as an area with an associated centerline. | S | P2 | STK-001; BR-002 | T |
 
-## Easements — `DOM-EASEMENT`
+## Easements â€” `DOM-EASEMENT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-EASEMENT-001` | The model shall provide an `Easement` as an area encumbering a parcel/lot that restricts building (utility, access, drainage). | S | P2 | STK-004; BR-002 | T |
 | `DOM-EASEMENT-002` | The model shall exclude easement areas from a lot's buildable area. | S | P2 | STK-004; BR-008 | T |
 
-## Dedications — `DOM-DEDICATION`
+## Dedications â€” `DOM-DEDICATION`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-DEDICATION-001` | The model shall provide a `Dedication` marking land dedicated to public use (ROW, park, open space). | S | P2 | STK-001; BR-002 | T |
 | `DOM-DEDICATION-002` | The model shall exclude dedicated land from net developable/site area. | S | P2 | STK-004; BR-008 | T |
 
-## Setbacks & buildable area — `DOM-SETBACK`
+## Setbacks & buildable area â€” `DOM-SETBACK`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -156,7 +156,7 @@ tolerances referenced below are defined in its
 | `DOM-SETBACK-003` | The model shall compute the buildable area of a lot from its boundary, setbacks, and encumbrances. | M | P2 | STK-004; BR-008 | T |
 | `DOM-SETBACK-004` | The model shall distinguish building setbacks (buildable-envelope) from landscape/open-space setbacks. | C | P5 | STK-004; BR-008 | T |
 
-## Buildings — `DOM-BUILDING`
+## Buildings â€” `DOM-BUILDING`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -165,7 +165,7 @@ tolerances referenced below are defined in its
 | `DOM-BUILDING-003` | The model shall compute a building's gross floor area from footprint and floors. | S | P2 | STK-004; BR-008 | T |
 | `DOM-BUILDING-004` | A building shall carry a dwelling-unit count and/or use program. | S | P2 | STK-002; BR-008 | T |
 
-## Zoning envelopes — `DOM-ENVELOPE`
+## Zoning envelopes â€” `DOM-ENVELOPE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -173,28 +173,28 @@ tolerances referenced below are defined in its
 | `DOM-ENVELOPE-002` | The model shall express the envelope as a 2D buildable footprint. | S | P5 | STK-004; BR-008 | T |
 | `DOM-ENVELOPE-003` | The model shall express the envelope as a 3D volume. | W | P5 | STK-004; BR-008 | T |
 
-## Open space — `DOM-OPENSPACE`
+## Open space â€” `DOM-OPENSPACE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-OPENSPACE-001` | The model shall provide an `OpenSpace` / common-area designation for unbuilt land reserved as open space. | S | P2 | STK-002; BR-008 | T |
 | `DOM-OPENSPACE-002` | The model shall distinguish required (regulated) from provided open space. | C | P5 | STK-002; BR-008 | T |
 
-## Parking — `DOM-PARKING`
+## Parking â€” `DOM-PARKING`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-PARKING-001` | The model shall represent parking supply as a count of spaces associated with a building, lot, or use. | S | P2 | STK-004; BR-008 | T |
 | `DOM-PARKING-002` | The model shall compute required parking from a configurable ratio and report supply vs requirement. | S | P5 | STK-004; BR-008 | T |
 
-## Infrastructure networks — `DOM-INFRA`
+## Infrastructure networks â€” `DOM-INFRA`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-INFRA-001` | The model shall represent infrastructure (roads, utilities) as a network of nodes and edges rather than loose lines, modeling connectivity only (not hydraulic or geometric-design calculations). | C | P5 | STK-001; BR-002 | T |
 | `DOM-INFRA-002` | The model shall maintain connectivity between network elements under edits. | C | P5 | STK-001; BR-002 | T |
 
-## Subdivision — `DOM-SUBDIV`
+## Subdivision â€” `DOM-SUBDIV`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -202,11 +202,11 @@ tolerances referenced below are defined in its
 | `DOM-SUBDIV-002` | The model shall validate generated lots against configured minimums and flag non-conforming lots. | S | P2 | STK-001; NFR-REL-003 | T |
 | `DOM-SUBDIV-003` | The model shall report subdivision yield (resulting lot count). | S | P2 | STK-004; BR-008 | T |
 
-## Metrics — `DOM-METRIC`
+## Metrics â€” `DOM-METRIC`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
-| `DOM-METRIC-001` | The model shall compute coverage (building/impervious footprint ÷ area) for a parcel, lot, or zone. | M | P1 | STK-002; BR-008 | T |
+| `DOM-METRIC-001` | The model shall compute coverage (building/impervious footprint Ã· area) for a parcel, lot, or zone. | M | P1 | STK-002; BR-008 | T |
 | `DOM-METRIC-002` | The model shall compute density (dwelling units per acre) for an area. | M | P1 | STK-002; BR-008 | T |
 | `DOM-METRIC-003` | The model shall compute floor area ratio (FAR/FSI) for a lot or zone. | M | P1 | STK-004; BR-008 | T |
 | `DOM-METRIC-004` | The model shall compute the land-use allocation breakdown across a site. | M | P1 | STK-002; BR-008 | T |
@@ -215,7 +215,7 @@ tolerances referenced below are defined in its
 | `DOM-METRIC-007` | Area-based metrics shall distinguish gross from net land area (net excluding ROW, easements, dedications, and undevelopable land). | M | P1 | STK-004; BR-008 | T |
 | `DOM-METRIC-008` | Each metric shall be reportable with its defining formula and input values so results are explainable. | C | P5 | STK-004; BR-008 | T |
 
-## Compliance checks — `DOM-COMPLY`
+## Compliance checks â€” `DOM-COMPLY`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -226,7 +226,7 @@ tolerances referenced below are defined in its
 | `DOM-COMPLY-005` | The model shall aggregate all compliance violations across a site into a single validation report. | S | P5 | STK-002; BR-008 | T |
 | `DOM-COMPLY-006` | Each compliance evaluation shall record its parameter source (governing zone/config) and the computed value versus limit. | C | P5 | STK-003; BR-008 | T |
 
-## Scenarios & phasing — `DOM-SCENARIO`
+## Scenarios & phasing â€” `DOM-SCENARIO`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -234,7 +234,7 @@ tolerances referenced below are defined in its
 | `DOM-SCENARIO-002` | The model shall compute metrics per scenario to support side-by-side comparison. | S | P5 | STK-002; BR-008 | T |
 | `DOM-SCENARIO-003` | The model shall represent development phases (staging) within a plan. | C | P5 | STK-002; BR-008 | T |
 
-## Serialization & portability — `DOM-SERIAL`
+## Serialization & portability â€” `DOM-SERIAL`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -242,21 +242,21 @@ tolerances referenced below are defined in its
 | `DOM-SERIAL-002` | The serialized representation shall carry a schema version, and the model shall reject or migrate incompatible versions. | M | P1 | STK-007; NFR-MAINT-001 | T |
 | `DOM-SERIAL-003` | Serialization and deserialization shall round-trip without loss of geometry, attributes, or identity. | M | P1 | STK-007; NFR-REL-003 | T |
 
-## Determinism — `DOM-COMPUTE`
+## Determinism â€” `DOM-COMPUTE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-COMPUTE-001` | All metric and derivation computations shall be deterministic: identical inputs yield identical outputs. | M | P1 | STK-002; NFR-REL-002 | T |
 | `DOM-COMPUTE-002` | The model shall distinguish derived/computed values from authored values. | S | P1 | STK-002; BR-008 | T |
 
-## Snapshots — `DOM-SNAPSHOT`
+## Snapshots â€” `DOM-SNAPSHOT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-SNAPSHOT-001` | The model shall produce an immutable snapshot of a plan's full state suitable for a Checkpoint/Version. | M | P1 | STK-003; BR-003 | T |
 | `DOM-SNAPSHOT-002` | The model shall compute a structural diff between two snapshots (added/removed/changed elements). | C | P5 | STK-003; BR-003 | T |
 
-## Sheets & layouts — `DOM-SHEET`
+## Sheets & layouts â€” `DOM-SHEET`
 
 Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 `apps/web` composes and `services/geospatial` renders for Phase 6 CAD sheets.
@@ -271,7 +271,7 @@ Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 | `DOM-SHEET-006` | The model shall distinguish layout-space geometry (composed on paper) from model-space geometry, so CRS-based measurement/metrics are only reported for the latter. | M | P6 | STK-008; BR-012, CON-004 | T |
 | `DOM-SHEET-007` | The model shall represent a sheet's plot area, printable area, and margin insets per the sheet-size catalog. | S | P6 | STK-008; BR-012, CON-011 | T |
 
-## Title blocks — `DOM-TITLEBLOCK`
+## Title blocks â€” `DOM-TITLEBLOCK`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -280,7 +280,7 @@ Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 | `DOM-TITLEBLOCK-003` | A title-block instance shall bind template fields to project-level and per-sheet data; a project-level change shall propagate to every sheet using the template. | M | P6 | STK-008; BR-012, CON-012 | T |
 | `DOM-TITLEBLOCK-004` | The model shall allow a title block to embed a seal/signature image or vector asset without treating it as editable geometry. | S | P6 | STK-008; BR-012 | T |
 
-## Sheet sets — `DOM-SHEETSET`
+## Sheet sets â€” `DOM-SHEETSET`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -289,7 +289,7 @@ Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 | `DOM-SHEETSET-003` | The model shall derive a canonical sheet index (list of sheets in sheet-number order, with title, discipline, revision, and issue status) from the sheet set. | M | P6 | STK-008; BR-012, CON-011 | T |
 | `DOM-SHEETSET-004` | The model shall enforce sheet-number uniqueness within a sheet set. | M | P6 | STK-008; NFR-REL-003 | T |
 
-## Discipline designators — `DOM-DISCIPLINE`
+## Discipline designators â€” `DOM-DISCIPLINE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -297,15 +297,15 @@ Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 | `DOM-DISCIPLINE-002` | Each `Sheet` shall carry exactly one discipline designator. | M | P6 | STK-008; BR-012 | T |
 | `DOM-DISCIPLINE-003` | The model shall support extensible designators for jurisdictions that use additional codes (documented per project). | C | P6 | STK-008; BR-012 | T |
 
-## Sheet numbering — `DOM-NUMBERING`
+## Sheet numbering â€” `DOM-NUMBERING`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
-| `DOM-NUMBERING-001` | The model shall provide a sheet-number scheme of the form `<Discipline><Sheet-type><Sequence>` (e.g. `A-101`), and interpret the sheet-type hundreds digit per NCS (0 general · 1 plans · 2 elevations · 3 sections · 4 enlarged · 5 details · 6 schedules · 9 3D). | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-NUMBERING-001` | The model shall provide a sheet-number scheme of the form `<Discipline><Sheet-type><Sequence>` (e.g. `A-101`), and interpret the sheet-type hundreds digit per NCS (0 general Â· 1 plans Â· 2 elevations Â· 3 sections Â· 4 enlarged Â· 5 details Â· 6 schedules Â· 9 3D). | M | P6 | STK-008; BR-012, CON-011 | T |
 | `DOM-NUMBERING-002` | The model shall support an alternative jurisdictional numbering scheme configured per project without altering the NCS default. | C | P6 | STK-008; BR-012 | T |
 | `DOM-NUMBERING-003` | Renumbering a sheet or a range of sheets shall update every cross-reference (callouts, match-lines, sheet-index references) to those sheets atomically. | M | P6 | STK-008; NFR-REL-003, CON-012 | T |
 
-## CAD layer standards — `DOM-LAYERSTD`
+## CAD layer standards â€” `DOM-LAYERSTD`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -314,16 +314,16 @@ Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 | `DOM-LAYERSTD-003` | The model shall let a project author a per-project layer catalog that extends the active standard without breaking round-trip. | S | P6 | STK-008; BR-012 | T |
 | `DOM-LAYERSTD-004` | The model shall validate a layer name against the active standard and report non-conforming names. | S | P6 | STK-008; NFR-STD-001 | T |
 
-## Plot styles — `DOM-PLOTSTYLE`
+## Plot styles â€” `DOM-PLOTSTYLE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-PLOTSTYLE-001` | The model shall represent a colour-dependent plot-style table (CTB) and a named plot-style table (STB), each mapping a key to plotted colour, lineweight, screening (percent), and linetype. | M | P6 | STK-008; BR-012, CON-011 | T |
-| `DOM-PLOTSTYLE-002` | The model shall carry an extensible lineweight catalog including the ISO series (0.13 · 0.18 · 0.25 · 0.35 · 0.50 · 0.70 · 1.00 · 1.40 · 2.00 mm). | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-PLOTSTYLE-002` | The model shall carry an extensible lineweight catalog including the ISO series (0.13 Â· 0.18 Â· 0.25 Â· 0.35 Â· 0.50 Â· 0.70 Â· 1.00 Â· 1.40 Â· 2.00 mm). | M | P6 | STK-008; BR-012, CON-011 | T |
 | `DOM-PLOTSTYLE-003` | The model shall carry a linetype catalog (continuous, dashed, hidden, centre, phantom, and user-defined) with an authored dash pattern in paper units. | S | P6 | STK-008; BR-012 | T |
 | `DOM-PLOTSTYLE-004` | A plot-style table shall be applicable at the sheet, viewport, or layer scope, with the innermost binding winning. | S | P6 | STK-008; BR-012 | T |
 
-## Symbols & blocks — `DOM-SYMBOL`
+## Symbols & blocks â€” `DOM-SYMBOL`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -333,7 +333,7 @@ Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 | `DOM-SYMBOL-004` | The model shall provide the standard callout/coordination symbol families (grid bubble, section marker, elevation marker, detail marker, north arrow, scale bar, revision cloud, delta tag, match-line marker). | M | P6 | STK-008; BR-012, CON-011 | T |
 | `DOM-SYMBOL-005` | Editing a symbol shall propagate to every instance of that symbol across the project. | M | P6 | STK-008; BR-012, CON-012 | T |
 
-## Dimensions — `DOM-DIM`
+## Dimensions â€” `DOM-DIM`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -343,25 +343,25 @@ Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 | `DOM-DIM-004` | Dimensions shall support annotative scaling. | M | P6 | STK-008; BR-012 | T |
 | `DOM-DIM-005` | Dimensions authored in paper space shall report distances in paper units; dimensions in model space shall report distances in the plan's units through the viewport scale. | M | P6 | STK-008; BR-004, BR-012 | T |
 
-## Annotation & annotative scaling — `DOM-ANNO`
+## Annotation & annotative scaling â€” `DOM-ANNO`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-ANNO-001` | The model shall provide text, leader, and callout primitives with position, rotation, and style. | M | P6 | STK-008; BR-012 | T |
-| `DOM-ANNO-002` | Text/leader/dimension/symbol primitives shall carry an annotative-scale set (`{1:20, 1:50, …}`); when displayed in a viewport whose plot scale is enabled on the primitive, the primitive shall render at its configured plotted size (default: 2.5 mm body / 3.5 mm heading text · 2.5 mm arrowhead). | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-ANNO-002` | Text/leader/dimension/symbol primitives shall carry an annotative-scale set (`{1:20, 1:50, â€¦}`); when displayed in a viewport whose plot scale is enabled on the primitive, the primitive shall render at its configured plotted size (default: 2.5 mm body / 3.5 mm heading text Â· 2.5 mm arrowhead). | M | P6 | STK-008; BR-012, CON-011 | T |
 | `DOM-ANNO-003` | The model shall provide a `TextStyle` (font, height, width factor, oblique angle) applicable per project or per annotation. | S | P6 | STK-008; BR-012, CON-011 | T |
 | `DOM-ANNO-004` | Annotation shall not participate in area/perimeter/length metrics of a plan. | M | P6 | STK-008; NFR-REL-003 | T |
 
-## Grids & levels — `DOM-GRID`
+## Grids & levels â€” `DOM-GRID`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
-| `DOM-GRID-001` | The model shall provide a `ColumnGrid` composed of labelled orthogonal (or user-oriented) grid lines, each carrying a bubble label (A/B/C… or 1/2/3…). | M | P6 | STK-008; BR-012 | T |
+| `DOM-GRID-001` | The model shall provide a `ColumnGrid` composed of labelled orthogonal (or user-oriented) grid lines, each carrying a bubble label (A/B/Câ€¦ or 1/2/3â€¦). | M | P6 | STK-008; BR-012 | T |
 | `DOM-GRID-002` | The model shall provide a `LevelDatum` (labelled horizontal reference with elevation) for section and elevation viewports. | S | P6 | STK-008; BR-012 | T |
 | `DOM-GRID-003` | Grid lines and level datums shall render on every viewport whose extent intersects them, unless explicitly hidden. | M | P6 | STK-008; BR-012, CON-012 | T |
 | `DOM-GRID-004` | Renaming a grid line or level shall propagate to every viewport that shows it and to every schedule cell that references it. | M | P6 | STK-008; CON-012 | T |
 
-## Match-lines & callouts — `DOM-MATCHLINE`
+## Match-lines & callouts â€” `DOM-MATCHLINE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -370,7 +370,7 @@ Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 | `DOM-MATCHLINE-003` | Creating a section/elevation/detail callout shall create (or link to) a reciprocal marker on the destination drawing, preserving referential integrity. | M | P6 | STK-008; NFR-REL-003 | T |
 | `DOM-MATCHLINE-004` | The model shall report broken callout/match-line references (destination missing or renumbered without an update path). | M | P6 | STK-008; NFR-REL-003 | T |
 
-## Schedules — `DOM-SCHEDULE`
+## Schedules â€” `DOM-SCHEDULE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -380,7 +380,7 @@ Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 | `DOM-SCHEDULE-004` | The model shall support derived cells (total, count, area sum, unit sum) with a defined evaluation order. | S | P6 | STK-008; BR-012 | T |
 | `DOM-SCHEDULE-005` | Schedule computation shall be deterministic (`DOM-COMPUTE-001`). | M | P6 | STK-008; NFR-REL-002 | T |
 
-## Revisions & issues — `DOM-REV`, `DOM-ISSUE`
+## Revisions & issues â€” `DOM-REV`, `DOM-ISSUE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -391,10 +391,26 @@ Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
 | `DOM-ISSUE-002` | Issue-sets shall be immutable once released; edits create a superseding issue-set rather than mutating the prior. | M | P6 | STK-008, STK-003; BR-007, NFR-SEC-001 | T |
 | `DOM-ISSUE-003` | The model shall stamp every sheet of a released issue-set with the issue name, date, and per-sheet revision at release time. | M | P6 | STK-008; BR-012 | T |
 
-## External references — `DOM-XREF`
+## External references â€” `DOM-XREF`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-XREF-001` | The model shall represent an external reference from a sheet/viewport to another project artefact (another sheet, a schedule, an imported CAD file) with a resolvable path and cached last-known version. | M | P6 | STK-008; BR-012 | T |
 | `DOM-XREF-002` | The model shall invalidate a viewport's cached render when any xref target changes, so the next render reflects the change. | M | P6 | STK-008; CON-012 | T |
 | `DOM-XREF-003` | The model shall detect and report a broken or circular xref chain. | M | P6 | STK-008; NFR-REL-003 | T |
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

@@ -1,0 +1,58 @@
+﻿# Requirements Traceability Matrix - Part 73
+**Subject:** Residential Subdivision Grading & Feature Lines (grading-to-rtm.txt)
+**Coverage:** Lot Grading, Feature Lines Site Interaction, Surface Elevation Assignment, Weed Vertex Reduction, Stepped Offsets, PI vs Elevation Points, Panorama Elevation Editor, Quick Elevation Edit, Alignment/Corridor Conversion, Reference Elevations, Criteria Sets, Dynamic Infill, Volume Balancer, Slope Annotations, XML Exports
+
+| Req ID | Tutorial Section / Reference | Requirement Description | Traceability | Code Mapping |
+|---|---|---|---|---|
+| REQ-73-001 | grading-to-rtm.txt > Grading > Lot Grading | The system shall support subdivision lot grading using 3D feature line footprints as grade boundaries. | Trace-to-Spec-v1 | Boundary grades computed reactively in [grading.ts](../../../packages/domain/src/grading.ts) and [terrain.ts](../../../packages/domain/src/terrain.ts#L344) |
+| REQ-73-002 | grading-to-rtm.txt > Grading > Site Interaction | The system shall resolve elevation splits dynamically when two feature lines cross within the same drawing site. | Trace-to-Spec-v1 | Mapped to [grading.ts](../../../packages/domain/src/grading.ts) and checked on pad recalculations |
+| REQ-73-003 | grading-to-rtm.txt > Grading > Surface Elevation | The system shall support setting feature line vertex elevations from a target surface, inserting intermediate grade break points. | Trace-to-Spec-v1 | Interpolating heights from surface coordinates solved using `elevationAt` in [terrain.ts](../../../packages/domain/src/terrain.ts#L65) |
+| REQ-73-004 | grading-to-rtm.txt > Grading > Weed Vertices | The system shall provide a Weed command to filter out redundant vertices from feature lines based on angle/distance thresholds. | Trace-to-Spec-v1 | Handled via coordinate simplification functions in [geometry.ts](../../../packages/domain/src/geometry.ts) |
+| REQ-73-005 | grading-to-rtm.txt > Grading > Stepped Offset | The system shall support Stepped Offset copying lines by horizontal distance and vertically by slope/grade differences. | Trace-to-Spec-v1 | Offsetting boundary points coordinates computed in [geometry.ts](../../../packages/domain/src/geometry.ts) |
+| REQ-73-006 | grading-to-rtm.txt > Grading > Vertex Types | The system shall distinguish between Point of Intersections (PI) which change both direction and grade, and Elevation Points which change grade only. | Trace-to-Spec-v1 | Footprint points and PVI nodes parsed in [alignment.ts](../../../packages/domain/src/alignment.ts) and [profile.ts](../../../packages/domain/src/profile.ts) |
+| REQ-73-007 | grading-to-rtm.txt > Grading > Elevation Editor | The system shall provide a tabular elevation grid (Elevation Editor Panorama) to raise/lower, flatten, and reverse feature lines. | Trace-to-Spec-v1 | Grid inputs mapped in Properties Panel inside [PropertiesPanel.tsx](../../../apps/web/src/features/workspace/PropertiesPanel.tsx) |
+| REQ-73-008 | grading-to-rtm.txt > Grading > Quick Elevation Edit | The system shall support graphical hover editing of elevations and slopes directly in the canvas view (Quick Elevation Edit). | Trace-to-Spec-v1 | Cursor position HUD and inline updates supported in [PlanningCanvas.tsx](../../../apps/web/src/features/canvas/PlanningCanvas.tsx#L820) |
+| REQ-73-009 | grading-to-rtm.txt > Grading > Slope Between Points | The system shall support setting grade/slope between two non-adjacent points on a feature line, applying uniform slope to all intermediate segments. | Trace-to-Spec-v1 | PVI profile slope calculations and interpolation resolved in [profile.ts](../../../packages/domain/src/profile.ts#L45) |
+| REQ-73-010 | grading-to-rtm.txt > Grading > Create from Alignment | The system shall support creating feature lines that dynamically track horizontal alignments and vertical profile designs. | Trace-to-Spec-v1 | Alignment profiles projection and dynamic sync solved in [profile.ts](../../../packages/domain/src/profile.ts) and [workspaceStore.ts](../../../apps/web/src/store/workspaceStore.ts) |
+| REQ-73-011 | grading-to-rtm.txt > Grading > Create from Corridor | The system shall support extracting regular feature lines from corridors, dynamically linking them to update when corridor changes. | Trace-to-Spec-v1 | Corridor offsets calculation and updates resolved in [corridor.ts](../../../packages/domain/src/corridor.ts) |
+| REQ-73-012 | grading-to-rtm.txt > Grading > Reference Elevations | The system shall support setting adjacent elevations by reference for gutter and curb flow lines design offsets. | Trace-to-Spec-v1 | Curve offsets and relative vertical delta calculations handled in [geometry.ts](../../../packages/domain/src/geometry.ts) |
+| REQ-73-013 | grading-to-rtm.txt > Grading > Criteria Sets | The system shall support customizable grading criteria sets defining slope targets, cut/fill ratios, and projection limits. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-014 | grading-to-rtm.txt > Grading > Dynamic Infill | The system shall support dynamic grading infills calculating intermediate triangular mesh faces enclosed by multiple feature lines. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-015 | grading-to-rtm.txt > Grading > Volume Balancer | The system shall support solving for balanced cut/fill target parameters by raising or lowering grading surface elevations. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-016 | grading-to-rtm.txt > Grading > Slope Patterns | The system shall support drawing standard slope pattern vectors (hachure ticks) between top and bottom slope edges on plan views. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-017 | grading-to-rtm.txt > Grading > XML Volume Export | The system shall support exporting calculated cut-fill volume tables dynamically to LandXML or spreadsheet XML formats. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-018 | grading-to-rtm.txt > Grading > Absolute Projections | The system shall support grading criteria projecting slopes to target absolute elevation planes. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-019 | grading-to-rtm.txt > Grading > Relative Deltas | The system shall support grading criteria projecting slopes to relative elevation offsets. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-020 | grading-to-rtm.txt > Grading > Distance Projections | The system shall support grading criteria projecting slopes at specified grades to horizontal distance limits. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-021 | grading-to-rtm.txt > Grading > Surface Daylighting | The system shall support projecting daylight lines to meet active terrain mesh surfaces. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-022 | grading-to-rtm.txt > Grading > Lot Balancing | The system shall compute design elevations to balance cut and fill volumes inside building envelopes. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-023 | grading-to-rtm.txt > Grading > Fillet Intersections | The system shall support filleting intersecting feature lines while maintaining elevation slopes. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-024 | grading-to-rtm.txt > Grading > Surface Draping | The system shall support draping feature lines continuously across TIN surfaces faces. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-025 | grading-to-rtm.txt > Grading > Hachure Spacing | The system shall support customizable spacing and lengths parameters for slope hachure ticks. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-026 | grading-to-rtm.txt > Grading > Material Layers | The system shall support modeling topsoil and base gravel material layers within grading regions. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-027 | grading-to-rtm.txt > Grading > Surface Merging | The system shall support merging individual grading surfaces into a composite design terrain model. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-028 | grading-to-rtm.txt > Grading > Pond Volumes | The system shall compute pond storage capacities at incremental water surface contours elevations. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-029 | grading-to-rtm.txt > Grading > Gutter Drainage | The system shall validate gutter slopes against minimum grade criteria to prevent rainwater stagnation. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-030 | grading-to-rtm.txt > Grading > Point Cloud Elevations | The system shall support extracting elevation coordinates from laser scanner point cloud clusters. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-031 | grading-to-rtm.txt > Grading > Contour Tessellations | The system shall support high-fidelity contour curves generation from grading meshes. | Trace-to-Spec-v1 | Not implemented |
+| REQ-73-032 | grading-to-rtm.txt > Grading > Flow Arrows | The system shall automatically draw drainage flow arrows based on lot grading vectors. | Trace-to-Spec-v1 | Not implemented |
+
+
+
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+
+

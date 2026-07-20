@@ -1,11 +1,11 @@
-# Competitive & Domain Analysis
+﻿# Competitive & Domain Analysis
 
 This document grounds the requirements suite in the capabilities of established
 site- and community-planning software. It is **research-derived**: findings come
 from vendor documentation and standards bodies, captured in
 [`_meta/`](../_meta/) and cited there. It exists to justify *why* each
 requirement area exists and to make sure the catalog is not missing table-stakes
-capability. It is **not** a plan to clone these tools — Thoth Blueprint is
+capability. It is **not** a plan to clone these tools â€” Thoth Blueprint is
 deliberately narrower (planning-first, cloud-native) than the CAD/GIS suites.
 
 ## Tools surveyed
@@ -17,37 +17,37 @@ deliberately narrower (planning-first, cloud-native) than the CAD/GIS suites.
 | **Vectorworks Landmark** | Site / landscape | Existing-vs-proposed site models; hardscape objects; SHP/DWG interop; land-use & quantity reports. |
 | **Esri ArcGIS Urban** | Urban planning | Scenario-based zoning & land-use plans; 3D building envelopes; KPIs; browser-native 3D; public engagement. |
 | **Esri ArcGIS Pro / Online** | GIS | Parcel Fabric (connected parcel network, gap/overlap detection); ~6,000 CRS with on-the-fly reprojection; branch versioning; dashboards. |
-| **Esri CityEngine** | Procedural 3D | Rule-based zoning envelopes (setbacks, sky-exposure, FAR); street→block→lot subdivision; broad 3D export. |
+| **Esri CityEngine** | Procedural 3D | Rule-based zoning envelopes (setbacks, sky-exposure, FAR); streetâ†’blockâ†’lot subdivision; broad 3D export. |
 | **UrbanFootprint** | Scenario planning | Paint-land-use-on-map; parcel gridding; density prototypes; base-vs-proposed scenarios; analysis modules. |
 | **UrbanSim** | Simulation | Parcel/block/zone resolutions; zoning parameters (FAR/setback/coverage/height); scenario comparison. |
 | **TestFit** | Feasibility solver | Draw from metes & bounds; buildable-envelope vs landscape setbacks; real-time yield/FAR/coverage/parking takeoffs. |
 | **Modelur** | Parametric urban | Real-time FSI/GSI/density/parking metrics at building/block/model level; zoning-compliance warnings. |
 | **Figma / Miro / FigJam / Google Docs** | Collaboration | Multiplayer cursors & presence; anchored threaded comments; role-based sharing; version history & branching. |
 
-## Capability landscape → requirement areas
+## Capability landscape â†’ requirement areas
 
-The columns below are the recurring capability clusters. ● = strong/native,
-◐ = partial/adjacent, blank = not a focus. The final column names the
+The columns below are the recurring capability clusters. â— = strong/native,
+â— = partial/adjacent, blank = not a focus. The final column names the
 requirement area(s) each cluster seeds.
 
 | Capability cluster | CAD/Civil3D | ArcGIS | CityEngine | Scenario tools | Collab tools | Seeds |
 | --- | :--: | :--: | :--: | :--: | :--: | --- |
-| Precise drawing & snapping | ● | ● | ● | ◐ | | `FE-CANVAS`, `FE-PRECISION` |
-| Measurement & dimensions | ● | ● | | ◐ | | `FE-MEASURE`, `DOM-GEOM` |
-| Parcels/lots as topological objects | ● | ● | ◐ | ◐ | | `DOM-PARCEL`, `DOM-LOT` |
-| Subdivision (parcel→lots) | ● | ● | ● | ◐ | | `DOM-SUBDIV`, `FE-CANVAS` |
-| Zoning & envelopes | ◐ | ● | ● | ● | | `DOM-ZONE`, `DOM-SETBACK`, `DOM-ENVELOPE` |
-| Land-use allocation | | ● | ◐ | ● | | `DOM-LANDUSE`, `FE-STYLE` |
-| Planning metrics (FAR/coverage/density) | ◐ | ● | ● | ● | | `DOM-METRIC`, `FE-METRIC` |
-| Coordinate systems & reprojection | ● | ● | ● | ◐ | | `DOM-CRS`, `BE-GEO`, `IOP-CRSX` |
-| Layers & styling | ● | ● | ● | ◐ | | `DOM-LAYER`, `FE-LAYER`, `FE-STYLE` |
-| Import/export interoperability | ● | ● | ● | ● | | `IOP-*`, `BE-IMPORT`, `BE-EXPORT` |
-| Real-time multi-user editing | ◐ | ◐ | | ● | ● | `BE-COLLAB`, `FE-PRESENCE` |
-| Comments & review | | ◐ | | ◐ | ● | `BE-COMMENT`, `FE-REVIEW` |
-| Versioning / checkpoints | ● | ● | ◐ | ● | ● | `BE-VERSION`, `FE-PROJECT` |
-| Sharing & permissions | ◐ | ● | | ◐ | ● | `BE-AUTH`, `BE-ACCESS`, `FE-ACCOUNT` |
-| Public engagement / view-only | | ● | ◐ | ◐ | ● | `BE-ACCESS`, `FE-REVIEW` |
-| Sheet / exhibit output (PDF) | ● | ◐ | ◐ | ◐ | | `IOP-PDF`, `FE-IO` |
+| Precise drawing & snapping | â— | â— | â— | â— | | `FE-CANVAS`, `FE-PRECISION` |
+| Measurement & dimensions | â— | â— | | â— | | `FE-MEASURE`, `DOM-GEOM` |
+| Parcels/lots as topological objects | â— | â— | â— | â— | | `DOM-PARCEL`, `DOM-LOT` |
+| Subdivision (parcelâ†’lots) | â— | â— | â— | â— | | `DOM-SUBDIV`, `FE-CANVAS` |
+| Zoning & envelopes | â— | â— | â— | â— | | `DOM-ZONE`, `DOM-SETBACK`, `DOM-ENVELOPE` |
+| Land-use allocation | | â— | â— | â— | | `DOM-LANDUSE`, `FE-STYLE` |
+| Planning metrics (FAR/coverage/density) | â— | â— | â— | â— | | `DOM-METRIC`, `FE-METRIC` |
+| Coordinate systems & reprojection | â— | â— | â— | â— | | `DOM-CRS`, `BE-GEO`, `IOP-CRSX` |
+| Layers & styling | â— | â— | â— | â— | | `DOM-LAYER`, `FE-LAYER`, `FE-STYLE` |
+| Import/export interoperability | â— | â— | â— | â— | | `IOP-*`, `BE-IMPORT`, `BE-EXPORT` |
+| Real-time multi-user editing | â— | â— | | â— | â— | `BE-COLLAB`, `FE-PRESENCE` |
+| Comments & review | | â— | | â— | â— | `BE-COMMENT`, `FE-REVIEW` |
+| Versioning / checkpoints | â— | â— | â— | â— | â— | `BE-VERSION`, `FE-PROJECT` |
+| Sharing & permissions | â— | â— | | â— | â— | `BE-AUTH`, `BE-ACCESS`, `FE-ACCOUNT` |
+| Public engagement / view-only | | â— | â— | â— | â— | `BE-ACCESS`, `FE-REVIEW` |
+| Sheet / exhibit output (PDF) | â— | â— | â— | â— | | `IOP-PDF`, `FE-IO` |
 
 ## Key domain insights that shaped requirements
 
@@ -60,7 +60,7 @@ requirement area(s) each cluster seeds.
    (RFC 7946), but computing area/distance in a geographic or Web-Mercator CRS
    yields materially wrong numbers. Accurate FAR, coverage, and yield **require
    reprojection to a local projected CRS** (US State Plane / UTM) with consistent
-   datums. This is a first-class correctness requirement, not a convenience —
+   datums. This is a first-class correctness requirement, not a convenience â€”
    see `DOM-CRS`, `DOM-METRIC`, and `NFR-COMPAT`.
 
 3. **Setbacks split into buildable-envelope vs landscape/open-space.** TestFit and
@@ -71,7 +71,7 @@ requirement area(s) each cluster seeds.
 4. **Real-time planning metrics are table stakes.** FAR/FSI, coverage/GSI,
    density (DU/acre), parking ratio, and open-space ratio update live in
    Giraffe, TestFit, Modelur, and UrbanFootprint. Metrics are a domain-model
-   responsibility surfaced live in the client (`DOM-METRIC` → `FE-METRIC`).
+   responsibility surfaced live in the client (`DOM-METRIC` â†’ `FE-METRIC`).
 
 5. **The interoperability backbone is GeoJSON + DWG/DXF + Shapefile, with
    LandXML and PDF exhibits close behind.** These are non-negotiable for adoption
@@ -82,7 +82,7 @@ requirement area(s) each cluster seeds.
    web-native and collaborative; the SketchUp/desktop-bound tools (Modelur, Land
    F/X, classic Civil 3D) show exactly the friction Thoth removes. Collaboration
    mechanics (presence, anchored comments, roles, version history/branching) are
-   well-established patterns to adopt — see `BE-COLLAB`, `FE-PRESENCE`,
+   well-established patterns to adopt â€” see `BE-COLLAB`, `FE-PRESENCE`,
    `BE-COMMENT`, `FE-REVIEW`.
 
 7. **Presence-aware locking is an opening.** Figma/Miro/etc. lock objects
@@ -109,3 +109,19 @@ Raw, per-cluster research with source URLs:
 - [`_meta/research-scenario-feasibility.md`](../_meta/research-scenario-feasibility.md)
 - [`_meta/research-collaboration.md`](../_meta/research-collaboration.md)
 - [`_meta/research-formats-metrics-standards.md`](../_meta/research-formats-metrics-standards.md)
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

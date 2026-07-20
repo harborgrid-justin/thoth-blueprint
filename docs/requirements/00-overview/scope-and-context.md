@@ -1,4 +1,4 @@
-# Scope, Context & Constraints
+﻿# Scope, Context & Constraints
 
 This document bounds the requirements suite: what the system is meant to do, what
 it explicitly is not, the actors and external systems it touches, and the
@@ -7,7 +7,7 @@ constraints and assumptions every requirement is written under.
 ## Purpose
 
 Thoth Blueprint is a **cloud-based platform for site planning and community
-planning** — a collaborative, web-native alternative to traditional CAD, scoped
+planning** â€” a collaborative, web-native alternative to traditional CAD, scoped
 to land, sites, and neighborhoods. See [`VISION.md`](../../VISION.md) for the full
 product rationale. This suite translates that vision into **traceable,
 verifiable requirements** spanning the frontend workspace, the backend services,
@@ -38,9 +38,9 @@ Mirrors [`ROADMAP.md`](../../ROADMAP.md) non-goals; requirements are **not**
 written for these:
 
 - Mechanical/product CAD (MCAD), parametric part modeling.
-- A full GIS analysis suite — the platform interoperates with GIS, it does not
+- A full GIS analysis suite â€” the platform interoperates with GIS, it does not
   replace it.
-- **Engineering calculations on the sheets themselves** — structural analysis,
+- **Engineering calculations on the sheets themselves** â€” structural analysis,
   stormwater/hydraulic sizing, load calcs, energy modelling. Sheet production
   and the drafted deliverable are in scope (Phase 6); the analyses that would
   populate those sheets are expected to be performed in specialist tools and
@@ -66,24 +66,24 @@ written for these:
 ## System context
 
 ```
-        ┌──────────────┐        ┌────────────────────┐
-        │  Planners &  │        │  Community &        │
-        │  reviewers   │        │  public stakeholders│
-        └──────┬───────┘        └─────────┬──────────┘
-               │  browser (view/edit/comment)         │
-               ▼                                       ▼
-        ┌──────────────────────────────────────────────────┐
-        │            apps/web  (planning workspace)          │
-        └───────────────┬──────────────────────────────────┘
-                        │ API + realtime
-        ┌───────────────┴───────────────────────────────────┐
-        │  services/auth · projects · geospatial · collaboration │
-        └───────────────┬───────────────────────────────────┘
-                        │ shared model
+        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+        â”‚  Planners &  â”‚        â”‚  Community &        â”‚
+        â”‚  reviewers   â”‚        â”‚  public stakeholdersâ”‚
+        â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+               â”‚  browser (view/edit/comment)         â”‚
+               â–¼                                       â–¼
+        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+        â”‚            apps/web  (planning workspace)          â”‚
+        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                        â”‚ API + realtime
+        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+        â”‚  services/auth Â· projects Â· geospatial Â· collaboration â”‚
+        â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                        â”‚ shared model
                   packages/domain
-                        │
-   ┌────────────────────┼─────────────────────┐
-   ▼                    ▼                     ▼
+                        â”‚
+   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+   â–¼                    â–¼                     â–¼
  Identity provider   External formats     Basemap / tile
  (OIDC, planned)     (GeoJSON, KML, SHP,  providers
                       DXF, GPKG, PDF, CSV) (planned)
@@ -93,7 +93,7 @@ written for these:
 
 | Actor | Description | Primary needs |
 | --- | --- | --- |
-| **Site planner / civil designer** | Lays out parcels, lots, and roads (planning layout, not grading/earthwork engineering — see non-goals). | Precision drawing, subdivision, metrics, DXF/GeoJSON interop. |
+| **Site planner / civil designer** | Lays out parcels, lots, and roads (planning layout, not grading/earthwork engineering â€” see non-goals). | Precision drawing, subdivision, metrics, DXF/GeoJSON interop. |
 | **Urban / community planner** | Neighborhoods, zoning, land-use mixes, corridors. | Zones, land-use allocation, density/coverage, scenarios. |
 | **Municipality / review board** | Reviews and governs plans. | Collaborative review, versioning, audit trail, public sharing. |
 | **Developer / architect** | Early feasibility and site concepts. | Fast massing/envelopes, quick metrics, export exhibits. |
@@ -103,11 +103,11 @@ written for these:
 
 ## External interfaces
 
-- **Identity provider** _(planned)_ — OIDC/OAuth2 for sign-in and SSO.
-- **File formats** — GeoJSON, KML/KMZ, Shapefile, DXF/DWG, GeoPackage, CSV, PDF.
-- **Coordinate reference systems** — EPSG registry (geographic and projected,
+- **Identity provider** _(planned)_ â€” OIDC/OAuth2 for sign-in and SSO.
+- **File formats** â€” GeoJSON, KML/KMZ, Shapefile, DXF/DWG, GeoPackage, CSV, PDF.
+- **Coordinate reference systems** â€” EPSG registry (geographic and projected,
   incl. US State Plane, UTM, Web Mercator).
-- **Basemap / tile providers** _(planned)_ — raster/vector tiles for context.
+- **Basemap / tile providers** _(planned)_ â€” raster/vector tiles for context.
 
 ## Constraints & assumptions
 
@@ -126,14 +126,14 @@ exist because of them.
 | `CON-008` | The archived app under `artifact/` is **read-only reference**; new features shall not import from or extend it. | [MIGRATION](../../MIGRATION.md) |
 | `CON-009` | Implementation is **TypeScript, strict**; `any` is avoided in favor of explicit domain types. | [CLAUDE.md](../../../CLAUDE.md) |
 | `CON-010` | Delivery is **phased, domain-model first** (Phase 1 gates most later work). | [ROADMAP](../../ROADMAP.md) |
-| `CON-011` | CAD sheet production shall conform to recognised industry standards for sheet sizes (ANSI/ASME Y14.1 · ISO 5457), title-block data fields (ISO 7200), layer organisation (US National CAD Standard v6 / AIA Layer Guidelines · ISO 13567), and drawing conventions (ISO 128 / ISO 129 / ISO 3098) rather than a house-only convention. | Phase 6 sheet production; [`_meta/research-cad-sheets.md`](../_meta/research-cad-sheets.md) |
+| `CON-011` | CAD sheet production shall conform to recognised industry standards for sheet sizes (ANSI/ASME Y14.1 Â· ISO 5457), title-block data fields (ISO 7200), layer organisation (US National CAD Standard v6 / AIA Layer Guidelines Â· ISO 13567), and drawing conventions (ISO 128 / ISO 129 / ISO 3098) rather than a house-only convention. | Phase 6 sheet production; [`_meta/research-cad-sheets.md`](../_meta/research-cad-sheets.md) |
 | `CON-012` | CAD sheets shall be **compositions of the shared planning domain model** (`packages/domain`), not a separate authoring model; a change to a modelled object flows to every sheet that shows it. | Phase 6 sheet production; [ARCHITECTURE](../../ARCHITECTURE.md) |
 
 ## Dependencies & assumptions
 
 External systems and platform capabilities the product leans on. Each is a risk
-the whole system depends on; requirements that assume one trace to it (`DEP-…`),
-and each names the degraded behavior if the dependency is unavailable — important
+the whole system depends on; requirements that assume one trace to it (`DEP-â€¦`),
+and each names the degraded behavior if the dependency is unavailable â€” important
 for self-hosting substitution.
 
 | ID | Dependency / assumption | Degraded behavior if absent | Traced by |
@@ -147,8 +147,24 @@ for self-hosting substitution.
 
 ## Relationship to other documents
 
-- [`VISION.md`](../../VISION.md) — the product and its principles (source of `BR`).
-- [`ARCHITECTURE.md`](../../ARCHITECTURE.md) — modules requirements map onto.
-- [`ROADMAP.md`](../../ROADMAP.md) — phases requirements are scheduled into.
-- [`GLOSSARY.md`](../../GLOSSARY.md) — the definitive vocabulary; all defined
+- [`VISION.md`](../../VISION.md) â€” the product and its principles (source of `BR`).
+- [`ARCHITECTURE.md`](../../ARCHITECTURE.md) â€” modules requirements map onto.
+- [`ROADMAP.md`](../../ROADMAP.md) â€” phases requirements are scheduled into.
+- [`GLOSSARY.md`](../../GLOSSARY.md) â€” the definitive vocabulary; all defined
   terms come from here.
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

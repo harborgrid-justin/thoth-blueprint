@@ -1,4 +1,4 @@
-# Functional Requirements — Frontend (`FE`)
+﻿# Functional Requirements â€” Frontend (`FE`)
 
 Requirements for the **browser planning workspace** (`apps/web`): the canvas,
 precision tooling, layers, styling, metrics, navigation, project management,
@@ -13,14 +13,14 @@ Conventions, priorities, and verification codes are defined in
 traces **up** to a [stakeholder requirement](../01-business/stakeholders.md) and,
 through it, to a [business requirement](../01-business/business-requirements.md).
 The [traceability matrix](../04-traceability/traceability-matrix.md) is generated
-from the **Trace** column below — keep it authoritative.
+from the **Trace** column below â€” keep it authoritative.
 
 > The archived app under [`artifact/`](../../../artifact/) is a **pattern
 > reference** for canvas interaction (React Flow), state (Zustand), and
-> import/export ergonomics — re-implemented cloud-first, never imported
+> import/export ergonomics â€” re-implemented cloud-first, never imported
 > ([`CON-008`](../00-overview/scope-and-context.md#constraints--assumptions)).
 
-## Drawing & editing — `FE-CANVAS`
+## Drawing & editing â€” `FE-CANVAS`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -37,7 +37,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-CANVAS-011` | The workspace shall let a user place a Building with a 2D footprint on a lot. | M | P2 | STK-004; BR-008 | D |
 | `FE-CANVAS-012` | The workspace shall let a user merge two adjacent regions into one. | S | P2 | STK-001; BR-002 | D |
 
-## Precision & constraints — `FE-PRECISION`
+## Precision & constraints â€” `FE-PRECISION`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -49,7 +49,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-PRECISION-006` | The workspace shall let a user toggle individual snap types on/off and indicate the active snap. | S | P2 | STK-001; BR-006 | D |
 | `FE-PRECISION-007` | The workspace shall let a user draw a segment by entering a bearing/azimuth and distance (metes-and-bounds entry). | S | P2 | STK-001; BR-006 | D |
 
-## Measurement — `FE-MEASURE`
+## Measurement â€” `FE-MEASURE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -59,7 +59,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-MEASURE-004` | The workspace shall let a user place dimension annotations that update with geometry. | C | P2 | STK-001; BR-004 | D |
 | `FE-MEASURE-005` | The workspace shall report the bearing/azimuth of a picked segment or between two picked points. | S | P2 | STK-001; BR-004 | D |
 
-## Layers — `FE-LAYER`
+## Layers â€” `FE-LAYER`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -69,7 +69,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-LAYER-004` | The workspace shall let a user reorder layers. | S | P2 | STK-002; BR-002 | D |
 | `FE-LAYER-005` | The workspace shall let a user assign elements to a layer. | M | P2 | STK-002; BR-002 | D |
 
-## Styling & labels — `FE-STYLE`
+## Styling & labels â€” `FE-STYLE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -77,7 +77,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-STYLE-002` | The workspace shall render a legend reflecting the active land-use styling. | S | P2 | STK-002; BR-002 | D |
 | `FE-STYLE-003` | The workspace shall label elements with a configurable set of fields drawn from name, land use, and area. | S | P2 | STK-002; BR-002 | D |
 
-## Metrics & analysis panel — `FE-METRIC`
+## Metrics & analysis panel â€” `FE-METRIC`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -86,7 +86,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-METRIC-003` | The workspace shall show metrics scoped to the current selection (parcel/lot/zone). | S | P2 | STK-004; BR-008 | D |
 | `FE-METRIC-004` | The workspace shall visually indicate compliance violations (e.g. setback/coverage/density breaches) on the affected elements. | S | P5 | STK-002; BR-008 | D |
 
-## Navigation & viewport — `FE-NAV`
+## Navigation & viewport â€” `FE-NAV`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -99,7 +99,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-NAV-007` | The workspace shall display a north-arrow orientation indicator reflecting the plan CRS. | S | P2 | STK-001; BR-004 | D |
 | `FE-NAV-008` | The workspace shall provide an overview minimap for navigating large sites. | C | P2 | STK-005; BR-001 | D |
 
-## Selection & editing — `FE-SELECT`
+## Selection & editing â€” `FE-SELECT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -109,7 +109,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-SELECT-004` | The workspace shall let a user delete selected elements (respecting layer locks). | M | P2 | STK-001; BR-006 | D |
 | `FE-SELECT-005` | The workspace shall let a user lock/unlock an individual element independent of its layer. | S | P2 | STK-002; BR-002 | D |
 
-## Clipboard & structural editing — `FE-EDIT`
+## Clipboard & structural editing â€” `FE-EDIT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -118,7 +118,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-EDIT-003` | The workspace shall let a user group and ungroup elements into a manageable set. | S | P2 | STK-001; BR-002 | D |
 | `FE-EDIT-004` | The workspace shall let a user align and distribute selected elements. | C | P2 | STK-001; BR-006 | D |
 
-## Search & find — `FE-FIND`
+## Search & find â€” `FE-FIND`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -126,7 +126,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-FIND-002` | The workspace shall let a user select all elements matching a query or type. | S | P2 | STK-002; BR-002 | D |
 | `FE-FIND-003` | The workspace shall let a user filter the canvas to show only elements matching criteria. | C | P2 | STK-002; BR-002 | D |
 
-## Keyboard & command access — `FE-CMD`
+## Keyboard & command access â€” `FE-CMD`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -135,7 +135,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-CMD-003` | The workspace shall make drawing, selection, and navigation operable by keyboard alone. | S | P2 | STK-005; NFR-A11Y-002 | T |
 | `FE-CMD-004` | The workspace shall present a discoverable reference of available keyboard shortcuts. | C | P2 | STK-001; NFR-USE-001 | D |
 
-## Notifications & activity (client) — `FE-NOTIFY`
+## Notifications & activity (client) â€” `FE-NOTIFY`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -143,7 +143,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-NOTIFY-002` | The workspace shall show an unread/unresolved-comment badge. | C | P4 | STK-003; BR-003 | D |
 | `FE-NOTIFY-003` | The workspace shall present a project activity feed of recent edits, comments, and checkpoints. | S | P4 | STK-003; BR-007 | D |
 
-## Onboarding & help — `FE-HELP`
+## Onboarding & help â€” `FE-HELP`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -151,7 +151,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-HELP-002` | The workspace shall provide a first-run onboarding introduction for new users. | C | P2 | STK-005; BR-009 | D |
 | `FE-HELP-003` | The workspace shall provide in-context access to end-user help/documentation. | C | P2 | STK-005; NFR-USE-004 | D |
 
-## Application state & resilience — `FE-STATE`
+## Application state & resilience â€” `FE-STATE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -162,17 +162,17 @@ from the **Trace** column below — keep it authoritative.
 | `FE-STATE-005` | The workspace shall recover the session (restore server state and pending intent) after a disconnect or reload. | S | P4 | STK-003; BR-003 | T |
 | `FE-STATE-006` | The workspace shall warn a user before navigating away while edits are unsynced. | S | P2 | STK-003; CON-002 | D |
 
-## Display & unit preferences — `FE-PREFS`
+## Display & unit preferences â€” `FE-PREFS`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `FE-PREFS-001` | The workspace shall let a user choose the display unit system (metric/imperial) for a plan. | M | P2 | STK-001; BR-004 | D |
-| `FE-PREFS-002` | The workspace shall let a user choose the area unit for readouts and metrics (m², ha, ft², acres). | S | P2 | STK-001; BR-004 | D |
+| `FE-PREFS-002` | The workspace shall let a user choose the area unit for readouts and metrics (mÂ², ha, ftÂ², acres). | S | P2 | STK-001; BR-004 | D |
 | `FE-PREFS-003` | The workspace shall let a user choose the angle/bearing display format (decimal degrees vs degrees-minutes-seconds). | C | P2 | STK-001; BR-004 | D |
 | `FE-PREFS-004` | The workspace shall let a user choose the coordinate display format for the cursor readout. | C | P2 | STK-001; BR-004 | D |
 | `FE-PREFS-005` | The workspace shall provide a light/dark theme and a high-contrast mode. | S | P2 | STK-005; NFR-A11Y-001 | D |
 
-## Print & exhibit output — `FE-PRINT`
+## Print & exhibit output â€” `FE-PRINT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -180,7 +180,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-PRINT-002` | The workspace shall let a user compose an exhibit sheet with title block, legend, scale bar, and north arrow before output. | C | P3 | STK-004; BR-005 | D |
 | `FE-PRINT-003` | The workspace shall let a user share a link to a specific saved view/extent. | C | P4 | STK-005; BR-009 | D |
 
-## Project management (client) — `FE-PROJECT`
+## Project management (client) â€” `FE-PROJECT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -192,7 +192,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-PROJECT-006` | The workspace shall let a user create a new project from a template. | S | P2 | STK-006; BR-007 | D |
 | `FE-PROJECT-007` | The workspace shall let a user rename, duplicate, archive, or delete a project from the browser. | S | P2 | STK-006; BR-007 | D |
 
-## Review & comments (client) — `FE-REVIEW`
+## Review & comments (client) â€” `FE-REVIEW`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -202,7 +202,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-REVIEW-004` | The workspace shall support @mentions of project members in comments. | S | P4 | STK-003; BR-003 | D |
 | `FE-REVIEW-005` | The workspace shall offer a simplified, comment-first view suitable for non-CAD public stakeholders. | S | P4 | STK-005; BR-009 | D |
 
-## Presence & live collaboration (client) — `FE-PRESENCE`
+## Presence & live collaboration (client) â€” `FE-PRESENCE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -211,7 +211,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-PRESENCE-003` | The workspace shall indicate which elements other participants have selected. | S | P4 | STK-003; BR-003 | D |
 | `FE-PRESENCE-004` | The workspace shall let a user follow another participant's viewport. | C | P4 | STK-003; BR-003 | D |
 
-## Scenario comparison — `FE-SCENARIO`
+## Scenario comparison â€” `FE-SCENARIO`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -219,7 +219,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-SCENARIO-002` | The workspace shall let a user compare two scenarios side-by-side or overlaid. | S | P5 | STK-002; BR-008 | D |
 | `FE-SCENARIO-003` | The workspace shall present a metrics comparison across scenarios. | S | P5 | STK-002, STK-004; BR-008 | D |
 
-## Import / export UI — `FE-IO`
+## Import / export UI â€” `FE-IO`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -228,7 +228,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-IO-003` | The import flow shall let a user map source attributes/layers to planning objects and layers. | S | P3 | STK-001; BR-005 | D |
 | `FE-IO-004` | The import/export flows shall show progress and surface actionable errors. | M | P3 | STK-007; NFR-OBS-002 | D |
 
-## Account & sharing UI — `FE-ACCOUNT`
+## Account & sharing UI â€” `FE-ACCOUNT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -238,7 +238,7 @@ from the **Trace** column below — keep it authoritative.
 | `FE-ACCOUNT-004` | The workspace shall let an organization admin view and manage members and roles. | S | P4 | STK-006; BR-009 | D |
 | `FE-ACCOUNT-005` | The workspace shall let a user invite a person to a project or organization by email. | S | P4 | STK-006; BR-007 | D |
 
-## CAD sheet composer — `FE-SHEET`
+## CAD sheet composer â€” `FE-SHEET`
 
 Client authoring of the paper-space layouts that make up a discipline-organised
 sheet set (Phase 6). Rendering is sheet-relative (paper), but every viewport
@@ -247,7 +247,7 @@ reaches through to the shared planning-domain model.
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `FE-SHEET-001` | The workspace shall let a user create, rename, reorder, and delete sheets within a project's sheet set. | M | P6 | STK-008; BR-012 | D |
-| `FE-SHEET-002` | The workspace shall present a paper-space canvas rendering each sheet at its actual print size (Arch A–E1 · ANSI A–E · ISO A0–A4). | M | P6 | STK-008; BR-012, CON-011 | D |
+| `FE-SHEET-002` | The workspace shall present a paper-space canvas rendering each sheet at its actual print size (Arch Aâ€“E1 Â· ANSI Aâ€“E Â· ISO A0â€“A4). | M | P6 | STK-008; BR-012, CON-011 | D |
 | `FE-SHEET-003` | The workspace shall let a user choose the sheet size and orientation (portrait/landscape) per sheet from the ANSI/ASME Y14.1 and ISO 5457 catalogs. | M | P6 | STK-008; BR-012, CON-011 | D |
 | `FE-SHEET-004` | The workspace shall let a user set per-sheet metadata (title, sheet number, discipline, drawn/checked/approved by, date, scale, revision) that binds to the title block. | M | P6 | STK-008; BR-012 | D |
 | `FE-SHEET-005` | The workspace shall duplicate a sheet, preserving its viewports, layer overrides, and annotation. | S | P6 | STK-008; BR-012 | D |
@@ -255,12 +255,12 @@ reaches through to the shared planning-domain model.
 | `FE-SHEET-007` | The workspace shall let a user toggle a print-preview overlay showing plot area, margins, and non-printable regions. | S | P6 | STK-008; BR-012 | D |
 | `FE-SHEET-008` | The workspace shall enforce that layout-space geometry (title block, dimensions authored on paper, notes) is distinct from model-space geometry and is not offered for CRS-based measurement. | M | P6 | STK-008; BR-012, CON-012 | T |
 
-## Viewports — `FE-VIEWPORT`
+## Viewports â€” `FE-VIEWPORT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `FE-VIEWPORT-001` | The workspace shall let a user place a rectangular viewport on a sheet showing a chosen extent of model space at a chosen plot scale. | M | P6 | STK-008; BR-012 | D |
-| `FE-VIEWPORT-002` | The workspace shall let a user choose the plot scale from a documented, extensible catalog (metric ratios: 1:10 – 1:2000; imperial: 1″=10′, 1/16″=1′-0″, 1/8″=1′-0″, 1/4″=1′-0″, 3/8″=1′-0″, 1/2″=1′-0″, 3/4″=1′-0″, 1″=1′-0″, 3″=1′-0″, full). | M | P6 | STK-008; BR-012 | D |
+| `FE-VIEWPORT-002` | The workspace shall let a user choose the plot scale from a documented, extensible catalog (metric ratios: 1:10 â€“ 1:2000; imperial: 1â€³=10â€², 1/16â€³=1â€²-0â€³, 1/8â€³=1â€²-0â€³, 1/4â€³=1â€²-0â€³, 3/8â€³=1â€²-0â€³, 1/2â€³=1â€²-0â€³, 3/4â€³=1â€²-0â€³, 1â€³=1â€²-0â€³, 3â€³=1â€²-0â€³, full). | M | P6 | STK-008; BR-012 | D |
 | `FE-VIEWPORT-003` | The workspace shall let a user set a non-rectangular (polygon) clip boundary on a viewport. | S | P6 | STK-008; BR-012 | D |
 | `FE-VIEWPORT-004` | The workspace shall let a user rotate a viewport independently of the plan CRS orientation. | S | P6 | STK-008; BR-012 | D |
 | `FE-VIEWPORT-005` | The workspace shall let a user override layer visibility, colour, lineweight, and linetype per viewport. | M | P6 | STK-008; BR-012 | D |
@@ -269,7 +269,7 @@ reaches through to the shared planning-domain model.
 | `FE-VIEWPORT-008` | The workspace shall let a user place multiple viewports on a single sheet (e.g. plan + detail insets + key plan) at independent scales. | M | P6 | STK-008; BR-012 | D |
 | `FE-VIEWPORT-009` | The workspace shall let a user set a per-viewport rendering mode (colour vs. monochrome / greyscale / by plot style). | S | P6 | STK-008; BR-012 | D |
 
-## Title-block editor — `FE-TITLE`
+## Title-block editor â€” `FE-TITLE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -279,7 +279,7 @@ reaches through to the shared planning-domain model.
 | `FE-TITLE-004` | The workspace shall render seals, signatures, and consultant logos placed by an authorised user as raster or vector artefacts. | S | P6 | STK-008; BR-012 | D |
 | `FE-TITLE-005` | The workspace shall let a user preview a sheet with each candidate title block before committing. | C | P6 | STK-008; BR-012 | D |
 
-## Plot styles — `FE-PLOT`
+## Plot styles â€” `FE-PLOT`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -291,7 +291,7 @@ reaches through to the shared planning-domain model.
 | `FE-PLOT-006` | The workspace shall let a user choose the plot output format (PDF, PDF/A-2, PDF/E-1, DXF, DWG) before invoking a plot. | M | P6 | STK-008; BR-012, DEP-005, DEP-006 | D |
 | `FE-PLOT-007` | The workspace shall show plot progress and a downloadable artefact link when the plot job completes. | M | P6 | STK-008, STK-007; NFR-OBS-002 | D |
 
-## Annotation & dimensions — `FE-ANNO`
+## Annotation & dimensions â€” `FE-ANNO`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -303,7 +303,7 @@ reaches through to the shared planning-domain model.
 | `FE-ANNO-006` | The workspace shall let a user place a callout (leader with text/tag) referencing an element, a coordinate, or another sheet. | S | P6 | STK-008; BR-012 | D |
 | `FE-ANNO-007` | The workspace shall report a warning when a text or dimension is placed too small to legibly plot at its viewport's scale. | S | P6 | STK-008; NFR-PLOT-002 | D |
 
-## Symbol / block library — `FE-SYMBOL`
+## Symbol / block library â€” `FE-SYMBOL`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -313,17 +313,17 @@ reaches through to the shared planning-domain model.
 | `FE-SYMBOL-004` | The workspace shall support instance-level attribute editing on a placed symbol without breaking its link to the source block. | S | P6 | STK-008; BR-012 | D |
 | `FE-SYMBOL-005` | The workspace shall let an org admin curate an organisation-wide symbol library shared across projects. | C | P6 | STK-008, STK-006; BR-012 | D |
 
-## Grids & levels — `FE-GRIDLINE`
+## Grids & levels â€” `FE-GRIDLINE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
-| `FE-GRIDLINE-001` | The workspace shall let a user author a building column grid with numbered rows and lettered columns (e.g. A/B/C…, 1/2/3…), with per-line spacing entered numerically. | M | P6 | STK-008; BR-012 | D |
+| `FE-GRIDLINE-001` | The workspace shall let a user author a building column grid with numbered rows and lettered columns (e.g. A/B/Câ€¦, 1/2/3â€¦), with per-line spacing entered numerically. | M | P6 | STK-008; BR-012 | D |
 | `FE-GRIDLINE-002` | Grid lines shall render with tagged bubbles on every applicable sheet's viewport in the sheet set. | M | P6 | STK-008; BR-012, CON-012 | D |
 | `FE-GRIDLINE-003` | The workspace shall let a user author level datums (e.g. `L1`, `L2`, `Roof`) with elevations. | S | P6 | STK-008; BR-012 | D |
 | `FE-GRIDLINE-004` | Level datums shall render on section and elevation viewports with tagged elevation callouts. | S | P6 | STK-008; BR-012 | D |
 | `FE-GRIDLINE-005` | The workspace shall let a user renumber/relabel a grid line and have the change propagate to every sheet that shows it. | M | P6 | STK-008; BR-012 | T |
 
-## Match lines & callouts — `FE-MATCHLINE`
+## Match lines & callouts â€” `FE-MATCHLINE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -333,7 +333,7 @@ reaches through to the shared planning-domain model.
 | `FE-MATCHLINE-004` | Callouts and match-lines shall automatically re-render their sheet/drawing tags when the destination sheet is renumbered or moved. | M | P6 | STK-008; BR-012, CON-012 | T |
 | `FE-MATCHLINE-005` | The workspace shall report broken callout/match-line references (destination sheet or drawing missing) and let the user resolve them. | M | P6 | STK-008; NFR-REL-003 | D |
 
-## Schedules & tables — `FE-SCHEDULE`
+## Schedules & tables â€” `FE-SCHEDULE`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -344,7 +344,7 @@ reaches through to the shared planning-domain model.
 | `FE-SCHEDULE-005` | The workspace shall paginate a schedule that overflows its host sheet across continuation sheets with header repeat. | S | P6 | STK-008; BR-012 | D |
 | `FE-SCHEDULE-006` | The workspace shall export a schedule as CSV for downstream systems. | S | P6 | STK-008, STK-007; BR-005 | T |
 
-## Revisions & issue management — `FE-REV`
+## Revisions & issue management â€” `FE-REV`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -354,7 +354,7 @@ reaches through to the shared planning-domain model.
 | `FE-REV-004` | The workspace shall present a per-sheet revision history that lists every issue in which the sheet was released and the revision number at each release. | S | P6 | STK-008; BR-007 | D |
 | `FE-REV-005` | The workspace shall let a user compare two revisions of a sheet visually (side-by-side or diff overlay). | C | P6 | STK-008; BR-007 | D |
 
-## Sheet-set browser — `FE-SHEETSET`
+## Sheet-set browser â€” `FE-SHEETSET`
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -363,3 +363,19 @@ reaches through to the shared planning-domain model.
 | `FE-SHEETSET-003` | The workspace shall auto-generate a sheet index sheet whose contents match the current sheet set and update when sheets are added/renumbered. | M | P6 | STK-008; BR-012, CON-011 | T |
 | `FE-SHEETSET-004` | The workspace shall let a user renumber a sheet or a range of sheets, and every callout, match-line, and sheet-index reference to those sheets shall update to the new number. | M | P6 | STK-008; BR-012, CON-012 | T |
 | `FE-SHEETSET-005` | The workspace shall present a batch-plot dialog that plots the current filtered set as one multi-sheet PDF or DXF/DWG archive. | M | P6 | STK-008; BR-012 | D |
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

@@ -1,4 +1,4 @@
-# Functional Requirements — Backend (`BE`)
+﻿# Functional Requirements â€” Backend (`BE`)
 
 Requirements for the **cloud services** (`services/*`): identity & access,
 project persistence & versioning, geospatial transforms & storage, import/export,
@@ -16,7 +16,7 @@ from the **Trace** column here.
 > ([ARCHITECTURE](../../ARCHITECTURE.md)). Requirements are written to the logical
 > boundary.
 
-## Identity — `BE-AUTH` (`services/auth`)
+## Identity â€” `BE-AUTH` (`services/auth`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -28,18 +28,18 @@ from the **Trace** column here.
 | `BE-AUTH-006` | The auth service shall transfer ownership of an organization or project to another eligible member. | S | P4 | STK-006 | T |
 | `BE-AUTH-007` | The auth service shall export a user's personal data and account information on request. | S | P4 | STK-006; NFR-PRIV-003 | T |
 
-## Authorization & sharing — `BE-ACCESS` (`services/auth`)
+## Authorization & sharing â€” `BE-ACCESS` (`services/auth`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `BE-ACCESS-001` | The service shall authorize every action against the actor's role and the target resource. | M | P2 | STK-006; NFR-SEC-003 | T |
 | `BE-ACCESS-002` | The service shall support project-level sharing at view, comment, and edit levels. | M | P4 | STK-003, STK-006; BR-007 | T |
 | `BE-ACCESS-003` | The service shall support public read-only and comment-only access to a plan via a shareable link. | S | P4 | STK-005; BR-009 | T |
-| `BE-ACCESS-004` | Permissions shall follow an inheritance hierarchy (organization → team → project), with explicit grants overriding inherited ones. | S | P4 | STK-006 | T |
+| `BE-ACCESS-004` | Permissions shall follow an inheritance hierarchy (organization â†’ team â†’ project), with explicit grants overriding inherited ones. | S | P4 | STK-006 | T |
 | `BE-ACCESS-005` | The service shall support expiring and revoking share links. | S | P4 | STK-006; NFR-SEC-001 | T |
 | `BE-ACCESS-006` | The service shall invite a user to a project or organization by email and track the invitation as pending until accepted, declined, or expired. | M | P4 | STK-006; BR-007 | T |
 
-## Projects & persistence — `BE-PROJECT` (`services/projects`)
+## Projects & persistence â€” `BE-PROJECT` (`services/projects`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -55,7 +55,7 @@ from the **Trace** column here.
 > `BE-PROJECT-004` is phased P4 (multi-user editing); single-user durable
 > persistence at P2 is covered by `BE-PROJECT-002` and `NFR-REL-001`.
 
-## Versioning & checkpoints — `BE-VERSION` (`services/projects`)
+## Versioning & checkpoints â€” `BE-VERSION` (`services/projects`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -65,7 +65,7 @@ from the **Trace** column here.
 | `BE-VERSION-004` | The service shall expose queryable version/checkpoint history. | S | P4 | STK-003; BR-007 | T |
 | `BE-VERSION-005` | The service shall compute the differences between two versions or checkpoints of a project. | C | P4 | STK-003; BR-007 | T |
 
-## Geospatial — `BE-GEO` (`services/geospatial`)
+## Geospatial â€” `BE-GEO` (`services/geospatial`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -75,7 +75,7 @@ from the **Trace** column here.
 | `BE-GEO-004` | The service shall reproject to an appropriate **projected** CRS before computing any area- or distance-based metric, never computing area/distance in a geographic or area-distorting CRS. | M | P3 | STK-001; BR-004, NFR-COMPAT-002 | T |
 | `BE-GEO-005` | The service shall proxy and cache external basemap/tile-provider requests while preserving required provider attribution. | S | P3 | STK-001; NFR-LEGAL-002, DEP-003 | T |
 
-## Import — `BE-IMPORT` (`services/geospatial`)
+## Import â€” `BE-IMPORT` (`services/geospatial`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -83,7 +83,7 @@ from the **Trace** column here.
 | `BE-IMPORT-002` | The service shall detect the source CRS where declared and require the user to specify it where absent. | M | P3 | STK-001; BR-004 | T |
 | `BE-IMPORT-003` | The service shall validate imported data and return actionable errors/warnings without partial corruption. | M | P3 | STK-007; NFR-REL-003 | T |
 
-## Export — `BE-EXPORT` (`services/geospatial`)
+## Export â€” `BE-EXPORT` (`services/geospatial`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -91,7 +91,7 @@ from the **Trace** column here.
 | `BE-EXPORT-002` | The service shall let the caller export a chosen extent and layer subset. | S | P3 | STK-004; BR-005 | T |
 | `BE-EXPORT-003` | The service shall generate a to-scale PDF exhibit with legend, north arrow, and scale bar. | S | P3 | STK-004; BR-005 | D |
 
-## Asynchronous jobs — `BE-JOB` (`services/geospatial`)
+## Asynchronous jobs â€” `BE-JOB` (`services/geospatial`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -100,7 +100,7 @@ from the **Trace** column here.
 | `BE-JOB-003` | The service shall let an authorized caller cancel an in-progress job. | S | P3 | STK-007 | T |
 | `BE-JOB-004` | The service shall deliver a completed job's output artifact via an authenticated, expiring download link. | S | P3 | STK-004, STK-007; NFR-SEC-002 | T |
 
-## Asset storage — `BE-STORAGE` (`services/projects`)
+## Asset storage â€” `BE-STORAGE` (`services/projects`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -109,18 +109,18 @@ from the **Trace** column here.
 | `BE-STORAGE-003` | The service shall enforce per-type and per-size upload limits and reject unsupported or oversized uploads. | S | P3 | STK-007; NFR-SEC-006 | T |
 | `BE-STORAGE-004` | The service shall delete an asset's stored bytes when its owning project or attachment is deleted. | S | P4 | STK-006; NFR-PRIV-003 | T |
 
-## Collaboration — `BE-COLLAB` (`services/collaboration`)
+## Collaboration â€” `BE-COLLAB` (`services/collaboration`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `BE-COLLAB-001` | The collaboration service shall propagate edits to all participants of a plan in near-real-time. | M | P4 | STK-003; BR-003 | T |
-| `BE-COLLAB-002` | The service shall resolve concurrent edits to a converged, consistent state using a defined strategy (CRDT or OT — decided in the service). | M | P4 | STK-003; NFR-REL-002 | T |
+| `BE-COLLAB-002` | The service shall resolve concurrent edits to a converged, consistent state using a defined strategy (CRDT or OT â€” decided in the service). | M | P4 | STK-003; NFR-REL-002 | T |
 | `BE-COLLAB-003` | The service shall broadcast presence (who is viewing/editing) and cursor/selection state. | M | P4 | STK-003; BR-003 | T |
 | `BE-COLLAB-004` | The service shall support presence-aware locking of an element being actively edited. | C | P4 | STK-003; BR-003 | T |
 | `BE-COLLAB-005` | The service shall manage editing-session lifecycle (join, heartbeat, leave) and reap presence and locks held by disconnected clients. | S | P4 | STK-003; NFR-REL-005 | T |
 | `BE-COLLAB-006` | The service shall reconcile edits made by a client while disconnected upon reconnection, converging without lost updates. | C | P5 | STK-003; CON-002, NFR-REL-005 | T |
 
-## Comments & review — `BE-COMMENT` (`services/collaboration`)
+## Comments & review â€” `BE-COMMENT` (`services/collaboration`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -129,7 +129,7 @@ from the **Trace** column here.
 | `BE-COMMENT-003` | The service shall raise notification events for mentioned users and thread participants. | S | P4 | STK-003; BR-003 | T |
 | `BE-COMMENT-004` | The service shall support file and image attachments on comments. | C | P4 | STK-003 | T |
 
-## Notifications — `BE-NOTIFY` (`services/collaboration`)
+## Notifications â€” `BE-NOTIFY` (`services/collaboration`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -137,7 +137,7 @@ from the **Trace** column here.
 | `BE-NOTIFY-002` | The service shall notify a user of events relevant to them (invitation received, mention, review request, job completion). | S | P4 | STK-003, STK-006 | T |
 | `BE-NOTIFY-003` | The service shall let a user configure which notification types they receive and on which channel, including unsubscribe. | C | P4 | STK-006; NFR-PRIV-004 | T |
 
-## Search & listing — `BE-SEARCH` (`services/projects`)
+## Search & listing â€” `BE-SEARCH` (`services/projects`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -145,23 +145,23 @@ from the **Trace** column here.
 | `BE-SEARCH-002` | The service shall filter and sort project listings by attributes (name, owner/team, last-modified). | S | P2 | STK-006 | T |
 | `BE-SEARCH-003` | The service shall search projects by name and metadata text. | C | P4 | STK-006 | T |
 
-## Audit & governance — `BE-AUDIT` (`services/projects`)
+## Audit & governance â€” `BE-AUDIT` (`services/projects`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `BE-AUDIT-001` | The service shall record an audit event (actor, action, target, timestamp) for changes to a project. | M | P4 | STK-003, STK-006; BR-007 | T |
 | `BE-AUDIT-002` | The service shall expose a queryable audit trail for a project. | S | P4 | STK-006; BR-007 | T |
 | `BE-AUDIT-003` | The audit trail shall be append-only / tamper-evident. | C | P4 | STK-003; NFR-SEC-001 | A |
-| `BE-AUDIT-004` | The service shall record security-relevant events — authentication, role/permission changes, and share grants/revocations. | S | P4 | STK-006; NFR-SEC-001 | T |
+| `BE-AUDIT-004` | The service shall record security-relevant events â€” authentication, role/permission changes, and share grants/revocations. | S | P4 | STK-006; NFR-SEC-001 | T |
 
-## Webhooks — `BE-WEBHOOK` (all services)
+## Webhooks â€” `BE-WEBHOOK` (all services)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `BE-WEBHOOK-001` | The platform shall let an integrator register webhook subscriptions for project and plan events. | C | P5 | STK-007; BR-010 | T |
 | `BE-WEBHOOK-002` | The platform shall deliver webhook payloads as signed, verifiable requests and retry on delivery failure. | C | P5 | STK-007; NFR-SEC-001 | T |
 
-## Public API — `BE-API` (all services)
+## Public API â€” `BE-API` (all services)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -174,7 +174,7 @@ from the **Trace** column here.
 | `BE-API-007` | The API shall return errors in a consistent, documented structure carrying a machine-readable code and a correlation id. | S | P3 | STK-007; NFR-OBS-002 | I |
 | `BE-API-008` | The API shall support optimistic concurrency (resource version / ETag) so a stale write is rejected rather than silently overwriting. | S | P3 | STK-007; NFR-REL-002 | T |
 
-## Sheet composition & rendering — `BE-SHEET` (`services/geospatial`)
+## Sheet composition & rendering â€” `BE-SHEET` (`services/geospatial`)
 
 Server-side sheet-set persistence, viewport rendering into paper space, and
 per-sheet plot generation for the Phase-6 CAD sheet capability.
@@ -188,7 +188,7 @@ per-sheet plot generation for the Phase-6 CAD sheet capability.
 | `BE-SHEET-005` | The service shall render a plot within the plot scale tolerance and lineweight fidelity defined in `NFR-PLOT`. | M | P6 | STK-008; NFR-PLOT-001, NFR-PLOT-002 | A |
 | `BE-SHEET-006` | The service shall detect a sheet with a broken callout/match-line/xref reference and refuse to plot it until the reference is resolved or explicitly suppressed. | M | P6 | STK-008; NFR-REL-003 | T |
 
-## Sheet & symbol templates — `BE-TEMPLATE` (`services/projects`)
+## Sheet & symbol templates â€” `BE-TEMPLATE` (`services/projects`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -197,7 +197,7 @@ per-sheet plot generation for the Phase-6 CAD sheet capability.
 | `BE-TEMPLATE-003` | The service shall let an org admin publish, deprecate, and retire template versions with a documented compatibility contract. | S | P6 | STK-006; BR-012, NFR-MAINT-005 | T |
 | `BE-TEMPLATE-004` | The service shall enforce access control on templates so private organisation templates are not readable outside the organisation. | M | P6 | STK-006; NFR-PRIV-001 | T |
 
-## Plot orchestration — `BE-PLOT` (`services/geospatial`)
+## Plot orchestration â€” `BE-PLOT` (`services/geospatial`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -208,7 +208,7 @@ per-sheet plot generation for the Phase-6 CAD sheet capability.
 | `BE-PLOT-005` | The service shall let a caller request a PDF plot conformant with PDF/A-2 or PDF/E-1 for archival/permit submission. | S | P6 | STK-008; BR-012, DEP-005 | T |
 | `BE-PLOT-006` | The service shall reject a plot request whose sheet contains unresolved callouts/xrefs unless the caller explicitly opts to plot the placeholder state. | S | P6 | STK-008; NFR-REL-003 | T |
 
-## Schedule extraction — `BE-SCHEDULE` (`services/projects`)
+## Schedule extraction â€” `BE-SCHEDULE` (`services/projects`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
@@ -217,12 +217,28 @@ per-sheet plot generation for the Phase-6 CAD sheet capability.
 | `BE-SCHEDULE-003` | The service shall recompute a schedule deterministically for the same project state (`DOM-COMPUTE-001`). | M | P6 | STK-008; NFR-REL-002 | T |
 | `BE-SCHEDULE-004` | The service shall provide schedule rows as CSV or JSON for API and export consumers. | S | P6 | STK-007; BR-005 | T |
 
-## Issue-set packaging — `BE-PACKAGE` (`services/projects`)
+## Issue-set packaging â€” `BE-PACKAGE` (`services/projects`)
 
 | ID | Requirement | Pri | Phase | Trace | Verify |
 | --- | --- | :--: | :--: | --- | :--: |
 | `BE-PACKAGE-001` | The service shall record a named issue set (e.g. "For Permit 2026-08-01") as an immutable release that pins every sheet's revision at release time. | M | P6 | STK-008; BR-012, BR-007 | T |
-| `BE-PACKAGE-002` | The service shall assemble an issue-set deliverable bundle containing the multi-sheet PDF, a DXF/DWG sheet set, a machine-readable manifest (per-sheet number, title, revision, checksum), and — when requested — the PDF/A archival variant. | M | P6 | STK-008; BR-012, DEP-005 | T |
+| `BE-PACKAGE-002` | The service shall assemble an issue-set deliverable bundle containing the multi-sheet PDF, a DXF/DWG sheet set, a machine-readable manifest (per-sheet number, title, revision, checksum), and â€” when requested â€” the PDF/A archival variant. | M | P6 | STK-008; BR-012, DEP-005 | T |
 | `BE-PACKAGE-003` | The service shall compute and record a cryptographic checksum per sheet and per bundle so a downstream reviewer can verify the release was not altered. | S | P6 | STK-008, STK-003; NFR-SEC-001, BR-007 | T |
 | `BE-PACKAGE-004` | The service shall retain every published issue-set bundle for the project's retention window without allowing edit or overwrite. | M | P6 | STK-003, STK-008; NFR-AVAIL-002, BR-007 | T |
 | `BE-PACKAGE-005` | The service shall let an authorised caller supersede an issue-set with a later named release without deleting the earlier one, preserving the audit trail. | S | P6 | STK-003; BR-007, NFR-SEC-001 | T |
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+

@@ -1,0 +1,39 @@
+﻿# Requirements Traceability Matrix - Part 02
+**Subject:** Points Tutorials â€” Creating & Importing Point Data (Chapter 3, Part 1)
+**Coverage:** COGO Points, Create Points Tool, Import Formats, Description Keys, Point Groups (Lines 501â€“750)
+
+| Req ID | Tutorial Section / Reference | Requirement Description | Traceability | Code Mapping |
+|---|---|---|---|---|
+| REQ-02-001 | Points > Create Points | The system shall provide a Create Points tool to create COGO points manually by specifying coordinates, or programmatically from command line input. | Trace-to-Spec-v1 | `FE-CANVAS-003`; interactive spot placement in [workspaceStore.ts](../../../apps/web/src/store/workspaceStore.ts#L82) & [PlanningCanvas.tsx](../../../apps/web/src/features/canvas/PlanningCanvas.tsx#L351) |
+| REQ-02-002 | Points > Import Formats | The system shall support importing points using customizable file format definitions (e.g. PNEZD comma-delimited, ENZ space-delimited). | Trace-to-Spec-v1 | Parsing standard formats (XYZ, PTS, PLY, LAS, DXF) in [pointcloud.ts](../../../packages/domain/src/pointcloud.ts#L62) & loaded via [pointCloudIo.ts](../../../apps/web/src/features/interop/pointCloudIo.ts#L15) |
+| REQ-02-003 | Points > Description Keys | The system shall provide Description Keys to automatically map imported point descriptions to specific point styles, label styles, and layers. | Trace-to-Spec-v1 | Matches point raw descriptions to style rules and target layer configurations in [descriptionKeys.ts](../../../packages/domain/src/descriptionKeys.ts#L22) and maps them upon placement in [workspaceStore.ts](../../../apps/web/src/store/workspaceStore.ts#L416-L430) |
+| REQ-02-004 | Points > Coordinate System | The system shall support coordinate transformations during point import when the drawing coordinate zone is defined. | Trace-to-Spec-v1 | Coordinate systems and zones supported in [spatial.ts](../../../packages/domain/src/spatial.ts#L30) (via `SpatialContext`), but automated import transform is not implemented |
+| REQ-02-005 | Points > Point Groups | The system shall allow organizing points into Point Groups based on queries filtering by raw description, point numbers, and elevations. | Trace-to-Spec-v1 | Groups points dynamically by raw description queries, with counts displayed in [LayerPanel.tsx](../../../apps/web/src/features/workspace/LayerPanel.tsx#L143-L170) |
+| REQ-02-006 | Points > Group Creation | The system shall support creating point groups with inclusion and exclusion filters on raw descriptions and point number ranges. | Trace-to-Spec-v1 | Filter queries matching raw descriptions evaluated in [descriptionKeys.ts](../../../packages/domain/src/descriptionKeys.ts#L43) |
+| REQ-02-007 | Points > Description Key Sets | The system shall allow creating Description Key Sets that automate point numbering, default elevations, and scale factors during import. | Trace-to-Spec-v1 | Default description key sets mapped for Trees (TR*), Manholes (MH*), and Benchmarks (BM*) in [descriptionKeys.ts](../../../packages/domain/src/descriptionKeys.ts#L49) |
+| REQ-02-008 | Points > Prospector Point List | The system shall display imported points in a Prospector list view showing point number, northing, easting, elevation, and description. | Trace-to-Spec-v1 | Selected spot elevations inspected in [PropertiesPanel.tsx](../../../apps/web/src/features/workspace/PropertiesPanel.tsx#L88) (Prospector list view replacement) |
+| REQ-02-009 | Points > Interactive Point Placement | The system shall support placing individual COGO points interactively in the drawing by clicking locations. | Trace-to-Spec-v1 | `FE-CANVAS-003`; supported for spot elevations, trees, and notes in [workspaceStore.ts](../../../apps/web/src/store/workspaceStore.ts#L82) & [PlanningCanvas.tsx](../../../apps/web/src/features/canvas/PlanningCanvas.tsx#L351) |
+| REQ-02-010 | Points > Point File Formats | The system shall allow defining custom Point File Format definitions specifying column order and delimiters for import/export. | Trace-to-Spec-v1 | File format configurations defined in [pointcloud.ts](../../../packages/domain/src/pointcloud.ts#L62); custom columns formatting wizard is not implemented |
+| REQ-02-011 | Points > Description Key Wildcards | The system shall support wildcard characters (e.g. asterisk *) in description key Code fields to match any suffix in raw descriptions. | Trace-to-Spec-v1 | Wildcard suffix matches evaluated dynamically using `matchWildcard` in [descriptionKeys.ts](../../../packages/domain/src/descriptionKeys.ts#L16) |
+| REQ-02-012 | Points > Format Column ($*) | The system shall support a Format column in Description Keys specifying how raw descriptions map to full descriptions (e.g. $* to copy as-is, or custom text). | Trace-to-Spec-v1 | Description formats resolved using `formatDescription` in [descriptionKeys.ts](../../../packages/domain/src/descriptionKeys.ts#L36) |
+| REQ-02-013 | Points > _All Points Group | The system shall automatically maintain a built-in _All Points point group that always contains every point in the drawing. | Trace-to-Spec-v1 | Managed as wildcard '*' Point Group query in [LayerPanel.tsx](../../../apps/web/src/features/workspace/LayerPanel.tsx#L6) |
+| REQ-02-014 | Points > Duplicate Point Resolution | The system shall support Duplicate Point Number resolution options (Merge, Overwrite, Skip, Renumber) during import to handle conflicting point numbers. | Trace-to-Spec-v1 | Not implemented |
+| REQ-02-015 | Points > Query Builder (SQL) | The system shall support a SQL-like Query Builder for point group membership, allowing custom criteria combining raw descriptions, point numbers, and user-defined properties. | Trace-to-Spec-v1 | Query matching wildcard patterns supported in [descriptionKeys.ts](../../../packages/domain/src/descriptionKeys.ts#L16) & [LayerPanel.tsx](../../../apps/web/src/features/workspace/LayerPanel.tsx#L143-L170) |
+| REQ-02-016 | Points > Layer Assignment | The system shall support assigning points to specific drawing layers via Description Keys for display attribute control. | Trace-to-Spec-v1 | Elements are assigned to active drawing layers via [workspaceStore.ts](../../../apps/web/src/store/workspaceStore.ts#L82) during interactive draw/placement |
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+
+

@@ -1,0 +1,55 @@
+﻿# Requirements Traceability Matrix - Part 24
+**Subject:** Labels and Tables Tutorials (Chapter 19)
+**Coverage:** Annotation Setup, Label Groups, Manual Labels, Label Styles, Overrides, Expressions, Tables, Tags (Lines 11715â€“12729)
+
+| Req ID | Tutorial Section / Reference | Requirement Description | Traceability | Code Mapping |
+|---|---|---|---|---|
+| REQ-24-001 | Labels > Xref Annotation | The system shall support attaching drawings as Xrefs and annotating objects in referenced drawings from the host drawing. | Trace-to-Spec-v1 | Reference underlay images and mesh maps are supported via [ImportExportMenu.tsx](../../../apps/web/src/features/interop/ImportExportMenu.tsx) |
+| REQ-24-002 | Labels > Ribbon Annotation Tools | The system shall provide annotation tools on the Annotate tab ribbon for adding labels, tables, and notes. | Trace-to-Spec-v1 | `../../../apps/web/src/features/workspace/TopBar.tsx` (Annotate/profile/pipes/framing toolbar buttons) |
+| REQ-24-003 | Labels > Label Sets | The system shall support Label Sets that apply multiple label types (station, geometry point, design speed) simultaneously when creating objects. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L29` (`LabelStyle`) |
+| REQ-24-004 | Labels > Group Labels | The system shall support placing group labels (major/minor station labels, geometry point labels) automatically along alignments. | Trace-to-Spec-v1 | Station tick marks and labels are placed automatically along alignment baselines at configurable zoom scales in [AlignmentLayer.tsx](../../../apps/web/src/features/canvas/AlignmentLayer.tsx#L92) |
+| REQ-24-005 | Labels > Modify Label Set | The system shall support modifying label sets on existing objects to add/remove label types and change styles after creation. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-006 | Labels > Xref Labels | The system shall support adding labels in the host drawing to objects that reside in externally referenced drawings. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-007 | Labels > Manual Labels | The system shall support manually labeling individual object segments (lines, curves) with specific label styles. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-008 | Labels > Select & Move | The system shall support selecting, moving, and dragging labels to reposition them while maintaining linkage to parent objects. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L23` (`LabelStyleDraggedState`) |
+| REQ-24-009 | Labels > Flip Labels | The system shall support flipping labels to the opposite side of an alignment. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-010 | Labels > Reset Labels | The system shall support resetting label positions to their original locations. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-011 | Labels > Dynamic Linkage | The system shall dynamically link labels to parent objects so they automatically update when geometry changes. | Trace-to-Spec-v1 | Canvas rendering layers (such as [AlignmentLayer.tsx](../../../apps/web/src/features/canvas/AlignmentLayer.tsx)) are re-evaluated and updated dynamically whenever state updates |
+| REQ-24-012 | Labels > Label Properties | The system shall support editing label properties (style, visibility, lock state) in the Properties palette. | Trace-to-Spec-v1 | `../../../apps/web/src/features/workspace/PropertiesPanel.tsx` |
+| REQ-24-013 | Labels > Pin Labels | The system shall support pinning labels to lock their position (pin to screen or pin to object). | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-014 | Labels > Text Override | The system shall support overriding label text content directly in the label properties. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-015 | Labels > Drawing Settings Override | The system shall support changing label content globally via Drawing Settings (unit display, precision, label components). | Trace-to-Spec-v1 | Global measurement units, precision, and display formats are managed in [PreferencesDialog.tsx](../../../apps/web/src/features/preferences/PreferencesDialog.tsx) and [prefsStore.ts](../../../apps/web/src/store/prefsStore.ts) |
+| REQ-24-016 | Labels > Parcel Area Table | The system shall support creating dynamic Parcel Area Tables that list parcel names and calculated areas. | Trace-to-Spec-v1 | Dynamic area allocations and metrics schedules are computed and listed in [MetricsPanel.tsx](../../../apps/web/src/features/workspace/MetricsPanel.tsx) |
+| REQ-24-017 | Labels > Convert to Tags | The system shall support converting labels to tags, replacing inline text with tag numbers for table reference. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-018 | Labels > Renumber Tags | The system shall support renumbering table tags with configurable starting number and increment. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-019 | Labels > Label Style Composer | The system shall provide a Label Style Composer with Information, General, Layout, Dragged State, and Summary tabs for comprehensive style control. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L6` (`LabelStyleGeneral`, `LabelStyleLayout`, `LabelStyleDraggedState` tabs data structures) |
+| REQ-24-020 | Labels > Create Label Style | The system shall support creating label styles with text, line, tick, and block components with configurable anchoring and attachment. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L29` (`LabelStyle`) |
+| REQ-24-021 | Labels > Child Label Styles | { The system shall support child label styles that inherit properties from parent styles and override specific settings. } | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L38` (`resolveLabelStyle` property inheritance overrides) |
+| REQ-24-022 | Labels > Layer Control | The system shall support controlling label appearance using layers, including visibility toggling and layer-based color. | Trace-to-Spec-v1 | Element styles and labels display visibility are toggled via layers controls in [LayerPanel.tsx](../../../apps/web/src/features/workspace/LayerPanel.tsx) |
+| REQ-24-023 | Labels > Dragged State | The system shall support configuring the Dragged State of labels (stacked text, leader lines, gap) for relocated labels. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L23` (`LabelStyleDraggedState` stacked text, leaders, gap) |
+| REQ-24-024 | Labels > Change Label Style | The system shall support changing label styles on existing labels and applying styles to multiple labels simultaneously. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-025 | Labels > Reference Text | The system shall support creating Reference Text label components that display data from other object types (e.g. surface elevation on an alignment label). | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L121` (`compileLabelTemplate` template tags substitution) |
+| REQ-24-026 | Labels > Reference Object Association | The system shall support associating reference text components with specific objects in the drawing for dynamic data display. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L121` |
+| REQ-24-027 | Labels > Plan Readable | The system shall support Plan-Readable text settings to maintain upright legibility at any label angle. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L9` (`planReadable`) |
+| REQ-24-028 | Labels > Flip Anchors | The system shall support Flip Anchors With Text to maintain mirror-correct label positioning when labels rotate. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts` |
+| REQ-24-029 | Labels > Expressions | The system shall allow creating mathematical Expressions using object properties (e.g. Instantaneous Direction) with functions and operators. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L121` (`compileLabelTemplate` parsing and evaluating math expressions) |
+| REQ-24-030 | Labels > Expression Properties | The system shall support inserting expressions into label style text components, with Format Result As options (Direction, Number, Elevation). | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L121` (`compileLabelTemplate` formatting results) |
+| REQ-24-031 | Labels > Magnetic Direction Expression | The system shall support computing magnetic compass direction from true direction by applying declination correction expressions. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L121` (`compileLabelTemplate` declination parameter correction) |
+| REQ-24-032 | Labels > Insert Expression | The system shall support inserting expression results into existing label style text components via the Text Component Editor. | Trace-to-Spec-v1 | `../../../packages/domain/src/labeling.ts#L121` |
+
+---
+
+## Related Requirement Documents
+
+For the complete set of system requirements and traceability matrices, refer to the following documents:
+- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+
+
