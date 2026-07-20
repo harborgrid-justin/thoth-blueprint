@@ -173,3 +173,56 @@ from the **Trace** column here.
 | `BE-API-006` | The API shall paginate every collection endpoint with a stable, documented paging contract. | S | P3 | STK-007; NFR-MAINT-001 | I |
 | `BE-API-007` | The API shall return errors in a consistent, documented structure carrying a machine-readable code and a correlation id. | S | P3 | STK-007; NFR-OBS-002 | I |
 | `BE-API-008` | The API shall support optimistic concurrency (resource version / ETag) so a stale write is rejected rather than silently overwriting. | S | P3 | STK-007; NFR-REL-002 | T |
+
+## Sheet composition & rendering — `BE-SHEET` (`services/geospatial`)
+
+Server-side sheet-set persistence, viewport rendering into paper space, and
+per-sheet plot generation for the Phase-6 CAD sheet capability.
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `BE-SHEET-001` | The service shall persist a sheet set (sheets, layouts, viewports, per-viewport layer overrides, annotations, revisions, issues) as a first-class part of the project. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `BE-SHEET-002` | The service shall render a single sheet's composed content (title block, viewports, annotations) into a to-scale vector representation suitable for PDF, DXF, and DWG generation. | M | P6 | STK-008; BR-012 | T |
+| `BE-SHEET-003` | The service shall preserve viewport scale, clipping, rotation, and per-viewport layer overrides when rendering. | M | P6 | STK-008; BR-012 | T |
+| `BE-SHEET-004` | The service shall render dimensions, text, and symbols at their annotative-scale plotted size, invariant to viewport scale. | M | P6 | STK-008; BR-012 | T |
+| `BE-SHEET-005` | The service shall render a plot within the plot scale tolerance and lineweight fidelity defined in `NFR-PLOT`. | M | P6 | STK-008; NFR-PLOT-001, NFR-PLOT-002 | A |
+| `BE-SHEET-006` | The service shall detect a sheet with a broken callout/match-line/xref reference and refuse to plot it until the reference is resolved or explicitly suppressed. | M | P6 | STK-008; NFR-REL-003 | T |
+
+## Sheet & symbol templates — `BE-TEMPLATE` (`services/projects`)
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `BE-TEMPLATE-001` | The service shall store and version reusable title-block templates, sheet templates, and symbol/block libraries at project and organisation scope. | M | P6 | STK-008, STK-006; BR-012 | T |
+| `BE-TEMPLATE-002` | The service shall let a project instantiate a template without copying its bytes, so a curated template change reaches every project that references it. | S | P6 | STK-008, STK-006; BR-012 | T |
+| `BE-TEMPLATE-003` | The service shall let an org admin publish, deprecate, and retire template versions with a documented compatibility contract. | S | P6 | STK-006; BR-012, NFR-MAINT-005 | T |
+| `BE-TEMPLATE-004` | The service shall enforce access control on templates so private organisation templates are not readable outside the organisation. | M | P6 | STK-006; NFR-PRIV-001 | T |
+
+## Plot orchestration — `BE-PLOT` (`services/geospatial`)
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `BE-PLOT-001` | The service shall store plot-style tables (CTB/STB) at project and organisation scope and apply them at plot time. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `BE-PLOT-002` | The service shall execute a batch plot of a filtered sheet-set as an asynchronous job (see `BE-JOB`), producing a single multi-sheet PDF, an archive of per-sheet PDFs, or a DXF/DWG sheet-set. | M | P6 | STK-008, STK-007; BR-012, NFR-PERF-005 | T |
+| `BE-PLOT-003` | A completed plot artefact shall be retrievable via an authenticated, expiring download link produced by `BE-JOB-004`. | M | P6 | STK-008, STK-007; NFR-SEC-002 | T |
+| `BE-PLOT-004` | The service shall embed fonts referenced by annotations in the PDF output so the plot is reproducible without host fonts. | S | P6 | STK-008; NFR-PLOT-002 | T |
+| `BE-PLOT-005` | The service shall let a caller request a PDF plot conformant with PDF/A-2 or PDF/E-1 for archival/permit submission. | S | P6 | STK-008; BR-012, DEP-005 | T |
+| `BE-PLOT-006` | The service shall reject a plot request whose sheet contains unresolved callouts/xrefs unless the caller explicitly opts to plot the placeholder state. | S | P6 | STK-008; NFR-REL-003 | T |
+
+## Schedule extraction — `BE-SCHEDULE` (`services/projects`)
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `BE-SCHEDULE-001` | The service shall compute the rows of a schedule (door, window, room/finish, panel, fixture, equipment) from a saved query against the project's domain objects. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `BE-SCHEDULE-002` | A committed edit to a schedule row shall write back to the underlying domain object; the schedule shall not maintain its own duplicate state. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `BE-SCHEDULE-003` | The service shall recompute a schedule deterministically for the same project state (`DOM-COMPUTE-001`). | M | P6 | STK-008; NFR-REL-002 | T |
+| `BE-SCHEDULE-004` | The service shall provide schedule rows as CSV or JSON for API and export consumers. | S | P6 | STK-007; BR-005 | T |
+
+## Issue-set packaging — `BE-PACKAGE` (`services/projects`)
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `BE-PACKAGE-001` | The service shall record a named issue set (e.g. "For Permit 2026-08-01") as an immutable release that pins every sheet's revision at release time. | M | P6 | STK-008; BR-012, BR-007 | T |
+| `BE-PACKAGE-002` | The service shall assemble an issue-set deliverable bundle containing the multi-sheet PDF, a DXF/DWG sheet set, a machine-readable manifest (per-sheet number, title, revision, checksum), and — when requested — the PDF/A archival variant. | M | P6 | STK-008; BR-012, DEP-005 | T |
+| `BE-PACKAGE-003` | The service shall compute and record a cryptographic checksum per sheet and per bundle so a downstream reviewer can verify the release was not altered. | S | P6 | STK-008, STK-003; NFR-SEC-001, BR-007 | T |
+| `BE-PACKAGE-004` | The service shall retain every published issue-set bundle for the project's retention window without allowing edit or overwrite. | M | P6 | STK-003, STK-008; NFR-AVAIL-002, BR-007 | T |
+| `BE-PACKAGE-005` | The service shall let an authorised caller supersede an issue-set with a later named release without deleting the earlier one, preserving the audit trail. | S | P6 | STK-003; BR-007, NFR-SEC-001 | T |

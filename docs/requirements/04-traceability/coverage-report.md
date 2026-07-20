@@ -5,32 +5,32 @@ coverage rules `R1`–`R5`
 ([standards & conventions](../00-overview/standards-and-conventions.md#traceability-model)).
 The RTM is **generated** from the requirement source files and validated by
 [`_meta/scripts/validate.py`](../_meta/scripts/validate.py); this report records
-the result. Date of last validation: **2026-07-19**.
+the result. Date of last validation: **2026-07-20**.
 
 ## Requirement inventory
 
 | Layer | File | Count |
 | --- | --- | :--: |
-| Business (`BR`) | [business-requirements.md](../01-business/business-requirements.md) | 11 |
-| Stakeholder (`STK`) | [stakeholders.md](../01-business/stakeholders.md) | 7 |
-| Functional — Frontend (`FE`) | [frontend-requirements.md](../02-functional/frontend-requirements.md) | 108 |
-| Functional — Backend (`BE`) | [backend-requirements.md](../02-functional/backend-requirements.md) | 75 |
-| Functional — Domain (`DOM`) | [domain-requirements.md](../02-functional/domain-requirements.md) | 101 |
-| Functional — Interop (`IOP`) | [interoperability-requirements.md](../02-functional/interoperability-requirements.md) | 35 |
-| Non-functional (`NFR`) | [nonfunctional-requirements.md](../03-nonfunctional/nonfunctional-requirements.md) | 68 |
-| Constraints (`CON`) | [scope-and-context.md](../00-overview/scope-and-context.md) | 10 |
-| Dependencies (`DEP`) | [scope-and-context.md](../00-overview/scope-and-context.md) | 4 |
-| **Total** | | **419** |
+| Business (`BR`) | [business-requirements.md](../01-business/business-requirements.md) | 12 |
+| Stakeholder (`STK`) | [stakeholders.md](../01-business/stakeholders.md) | 8 |
+| Functional — Frontend (`FE`) | [frontend-requirements.md](../02-functional/frontend-requirements.md) | 175 |
+| Functional — Backend (`BE`) | [backend-requirements.md](../02-functional/backend-requirements.md) | 100 |
+| Functional — Domain (`DOM`) | [domain-requirements.md](../02-functional/domain-requirements.md) | 166 |
+| Functional — Interop (`IOP`) | [interoperability-requirements.md](../02-functional/interoperability-requirements.md) | 59 |
+| Non-functional (`NFR`) | [nonfunctional-requirements.md](../03-nonfunctional/nonfunctional-requirements.md) | 86 |
+| Constraints (`CON`) | [scope-and-context.md](../00-overview/scope-and-context.md) | 12 |
+| Dependencies (`DEP`) | [scope-and-context.md](../00-overview/scope-and-context.md) | 6 |
+| **Total** | | **624** |
 
-Functional total: **319**.
+Functional total: **500**.
 
 ## Automated validation
 
 `validate.py` output (must be green in CI alongside the link check):
 
 ```
-Functional requirements: 319
-NFRs: 68 | BR: 11 | STK: 7 | CON: 10 | DEP: 4
+Functional requirements: 500
+NFRs: 86 | BR: 12 | STK: 8 | CON: 12 | DEP: 6
 PASS — R1–R5 and ID hygiene OK.
 ```
 
@@ -38,15 +38,24 @@ PASS — R1–R5 and ID hygiene OK.
 
 ### R1 — every `BR` traces down to at least one `STK` ✅
 
-All 11 business requirements are served by at least one stakeholder
+All 12 business requirements are served by at least one stakeholder
 ([Matrix A](traceability-matrix.md#matrix-a--business--stakeholder)). `validate.py`
 confirms every `BR` except `BR-011` (a delivery requirement realized via the phase
-mapping) appears in some stakeholder's **Satisfies** list.
+mapping) appears in some stakeholder's **Satisfies** list. `BR-012`
+(architecture & engineering CAD sheets) is claimed by `STK-004` and `STK-008`.
 
 ### R2 — every `STK` traces down to at least one functional requirement ✅
 
-`validate.py` confirms all of `STK-001`–`STK-007` appear in at least one functional
-requirement's **Trace** column.
+`validate.py` confirms all of `STK-001`–`STK-008` appear in at least one functional
+requirement's **Trace** column. `STK-008` is traced across the new Phase-6
+functional areas (`FE-SHEET*`, `FE-VIEWPORT`, `FE-TITLE`, `FE-PLOT`, `FE-ANNO`,
+`FE-SYMBOL`, `FE-GRIDLINE`, `FE-MATCHLINE`, `FE-SCHEDULE`, `FE-REV`,
+`FE-SHEETSET`, the `BE-SHEET`/`BE-TEMPLATE`/`BE-PLOT`/`BE-SCHEDULE`/`BE-PACKAGE`
+services, and the `DOM-SHEET*`/`DOM-TITLEBLOCK`/`DOM-SHEETSET`/`DOM-PLOTSTYLE`/
+`DOM-SYMBOL`/`DOM-DIM`/`DOM-ANNO`/`DOM-LAYERSTD`/`DOM-GRID`/`DOM-SCHEDULE`/
+`DOM-REV`/`DOM-ISSUE`/`DOM-XREF`/`DOM-MATCHLINE`/`DOM-DISCIPLINE`/`DOM-NUMBERING`
+model and the `IOP-DXFSHEET`/`IOP-PDFSHEET`/`IOP-PLTSTYLE`/`IOP-LAYERMAP`/
+`IOP-TITLEBLOCK`/`IOP-BLOCK` interop).
 
 ### R3 — every functional requirement traces up to ≥1 `STK` and maps to one module ✅
 
@@ -63,8 +72,10 @@ distribution is in the
 
 ### R5 — every `NFR` names the requirements/modules it constrains ✅
 
-`validate.py` confirms all 68 NFRs have a non-empty **Constrains** cell
+`validate.py` confirms all 86 NFRs have a non-empty **Constrains** cell
 ([Matrix D](traceability-matrix.md#matrix-d--non-functional--constrained-scope)).
+The new `NFR-PLOT` (plot fidelity) and `NFR-STD` (standards conformance)
+categories each constrain the Phase-6 CAD sheet requirements they govern.
 
 ### ID hygiene ✅
 
@@ -82,54 +93,91 @@ Downward reachability BR → STK → functional area (all ✅):
 | BR-003 Collaboration | BE-COLLAB, BE-COMMENT, BE-NOTIFY, FE-PRESENCE, FE-NOTIFY, FE-REVIEW |
 | BR-004 Spatial honesty | DOM-CRS, DOM-UNIT, DOM-GEOM, BE-GEO, IOP-CRSX, FE-PREFS |
 | BR-005 Interoperability | IOP-*, BE-IMPORT, BE-EXPORT, BE-JOB, FE-IO |
-| BR-006 Precision | FE-PRECISION, FE-MEASURE, FE-EDIT, FE-SELECT |
-| BR-007 Governed & auditable | BE-VERSION, BE-AUDIT, BE-ACCESS, FE-PROJECT |
+| BR-006 Precision | FE-PRECISION, FE-MEASURE, FE-EDIT, FE-SELECT, FE-ANNO |
+| BR-007 Governed & auditable | BE-VERSION, BE-AUDIT, BE-ACCESS, FE-PROJECT, DOM-ISSUE, BE-PACKAGE |
 | BR-008 Planning intelligence | DOM-METRIC, DOM-COMPLY, DOM-BUILDING, FE-METRIC |
 | BR-009 Full spectrum | BE-ACCESS, FE-ACCOUNT, FE-HELP, FE-REVIEW, NFR-A11Y |
 | BR-010 Open & self-hostable | BE-API, BE-WEBHOOK, NFR-PORT, NFR-LEGAL |
 | BR-011 Incremental delivery | realized via Phase mapping (Matrix E) |
+| BR-012 Arch/eng CAD sheets | FE-SHEET*, FE-VIEWPORT, FE-TITLE, FE-PLOT, FE-ANNO, FE-SYMBOL, FE-GRIDLINE, FE-MATCHLINE, FE-SCHEDULE, FE-REV, FE-SHEETSET, BE-SHEET, BE-TEMPLATE, BE-PLOT, BE-SCHEDULE, BE-PACKAGE, DOM-SHEET, DOM-TITLEBLOCK, DOM-SHEETSET, DOM-DISCIPLINE, DOM-NUMBERING, DOM-LAYERSTD, DOM-PLOTSTYLE, DOM-SYMBOL, DOM-DIM, DOM-ANNO, DOM-GRID, DOM-MATCHLINE, DOM-SCHEDULE, DOM-REV, DOM-ISSUE, DOM-XREF, IOP-DXFSHEET, IOP-PDFSHEET, IOP-PLTSTYLE, IOP-LAYERMAP, IOP-TITLEBLOCK, IOP-BLOCK, NFR-PLOT, NFR-STD |
 
 ## Frontend vs backend balance
 
-The request required both front-end and back-end coverage. Confirmed:
+The suite covers both front-end and back-end and now the CAD-sheet production
+tier. Current split:
 
-- **Frontend:** 108 requirements across 22 areas (`apps/web`).
-- **Backend services:** 75 requirements across `auth`, `projects`, `geospatial`,
-  `collaboration`, plus cross-service API/webhook areas.
-- **Domain + interop (shared/backend):** 101 + 35 = 136 requirements.
-- Backend-and-shared total (BE + DOM + IOP): **211**.
+- **Frontend:** 175 requirements across 33 areas (`apps/web`).
+- **Backend services:** 100 requirements across `auth`, `projects`,
+  `geospatial`, `collaboration`, plus cross-service API/webhook areas.
+- **Domain + interop (shared/backend):** 166 + 59 = 225 requirements.
+- Backend-and-shared total (BE + DOM + IOP): **325**.
 
 Every backend service module named in [ARCHITECTURE.md](../../ARCHITECTURE.md) has
 requirements ([Matrix F](traceability-matrix.md#matrix-f--module-coverage)).
+Phase-6 sheet work adds `BE-SHEET`, `BE-TEMPLATE`, `BE-PLOT`, `BE-SCHEDULE`, and
+`BE-PACKAGE` inside the existing `services/geospatial` and `services/projects`
+modules — no new architectural boundary is introduced.
 
-## Second-pass changes (what the review added/fixed)
+## Third-pass changes (what the review added/fixed)
 
-This report reflects a second review pass over the first-pass suite:
+This report reflects a third review pass that added Phase 6 —
+architecture & engineering CAD sheet production:
 
-- **Benchmark/validation NFRs added** (`NFR-BENCH-001..005`): the earlier caveat
-  that performance targets are "initial targets to be confirmed against real
-  workloads" is now discharged by requirements that define named benchmark
-  datasets, mandate validation before a figure is claimed, and enforce a CI
-  regression budget. `NFR-PERF`/`NFR-SCALE` now reference those datasets instead
-  of the undefined word "typical."
-- **Missing domain primitive fixed:** `DOM-BUILDING-*` and `FE-CANVAS-011` define
-  the Building/footprint object that coverage, FAR, and density metrics require but
-  the first pass never modeled.
-- **Model-portability gaps filled:** `DOM-SERIAL-*` (canonical serialization +
-  schema versioning), `DOM-IDENT-*` (stable element identity), `DOM-SNAPSHOT-*`,
-  and `BE-PROJECT-005` (stored-plan migration).
-- **Unowned cross-service concerns given owners:** notifications (`BE-NOTIFY`,
-  `FE-NOTIFY`), async jobs (`BE-JOB`), asset storage (`BE-STORAGE`), deletion
-  cascade (`BE-PROJECT-008`), and a dependencies register (`DEP-001..004`).
-- **Defects fixed:** compound requirements split; "unlimited undo" bounded;
-  a P2 Must that depended on P4 collaboration re-phased (`BE-PROJECT-004`);
-  audit promoted to Must (`BE-AUDIT-001`); the `IOP-KML` mis-trace corrected;
-  `BR-009` reconciled across Matrix A and the stakeholder files; a **tolerances
-  table** added so "within tolerance" is defined.
-- **Scope hardened:** non-goals for grading/earthwork, corridor/alignment,
-  procedural 3D, financial pro forma, predictive simulation, and multi-sheet plan
-  sets promoted into the canonical scope list; the "grading concepts" actor blurb
-  corrected.
+- **New business requirement `BR-012`** for producing complete architecture and
+  engineering CAD sheet sets.
+- **New stakeholder `STK-008`** — Architect / engineer / CAD manager — and
+  `STK-004` extended with sheet-set output.
+- **New Phase 6** in [`ROADMAP.md`](../../ROADMAP.md) covering sheet
+  composition, title blocks, viewports at plot scale, discipline-organised
+  sheet numbering, CAD layer standards (NCS/AIA/ISO 13567), annotative
+  dimensions and symbols, coordination graphics (grids, levels, match-lines,
+  callouts), data-driven schedules, revisions & issue management, and
+  multi-sheet PDF / DXF / DWG export.
+- **Scope adjusted** in [`scope-and-context.md`](../00-overview/scope-and-context.md):
+  "multi-sheet construction plan sets" and "detailed construction
+  documentation" removed from non-goals and folded into Phase 6; *engineering
+  calculations* (structural, hydraulic, energy) and *3D BIM authoring*
+  explicitly retained as non-goals so the scope shift is bounded.
+- **Two new constraints:** `CON-011` (industry-standards conformance for
+  sheets) and `CON-012` (sheets are compositions of the shared planning
+  model, not a separate authoring surface).
+- **Two new dependencies:** `DEP-005` (PDF generation runtime with PDF/A and
+  PDF/E-1 conformance) and `DEP-006` (CAD interchange library for DXF/DWG
+  sheet-set export).
+- **New functional area codes** — Frontend: `SHEET`, `VIEWPORT`, `TITLE`,
+  `PLOT`, `ANNO`, `SYMBOL`, `GRIDLINE`, `MATCHLINE`, `SCHEDULE`, `REV`,
+  `SHEETSET`. Backend: `SHEET`, `TEMPLATE`, `PLOT`, `SCHEDULE`, `PACKAGE`.
+  Domain: `SHEET`, `TITLEBLOCK`, `SHEETSET`, `DISCIPLINE`, `NUMBERING`,
+  `LAYERSTD`, `PLOTSTYLE`, `SYMBOL`, `DIM`, `ANNO`, `GRID`, `MATCHLINE`,
+  `SCHEDULE`, `REV`, `ISSUE`, `XREF`. Interop: `DXFSHEET`, `PDFSHEET`,
+  `PLTSTYLE`, `LAYERMAP`, `TITLEBLOCK`, `BLOCK`.
+- **Two new non-functional categories:** `NFR-PLOT` (plot fidelity: true-scale,
+  lineweight, annotation size, colour, preview parity) and `NFR-STD`
+  (verifiable conformance to ANSI/ASME Y14.1, ISO 5457, ISO 7200, NCS v6, ISO
+  13567, ISO 128/129/3098, PDF/A-2, PDF/E-1).
+- **Tolerances added:** plot scale tolerance (≤ 0.2 mm on paper) and
+  annotation-plot-size defaults (body 2.5 mm, headings 3.5 mm, arrowheads
+  2.5 mm) so `NFR-PLOT` is measurable.
+- **Benchmark scale added:** `NFR-BENCH-006` defines sheet-set reference
+  datasets (`BENCH-SHEETS-SMALL/-TYPICAL/-LARGE`) and PERF/SCALE targets
+  reference them.
+- **Grounding** captured in
+  [`_meta/research-cad-sheets.md`](../_meta/research-cad-sheets.md) —
+  sheet-set anatomy, discipline designators, sheet numbering, layer
+  standards, plot styles, dimensioning standards, model/paper/viewport,
+  coordination graphics, schedules, revisions, and packaging.
+
+## Second-pass changes (from the prior review pass, retained)
+
+- **Benchmark/validation NFRs added** (`NFR-BENCH-001..005`) — quantitative
+  targets are validated against named datasets on the reference hardware.
+- **Missing domain primitive fixed:** `DOM-BUILDING-*` and `FE-CANVAS-011`.
+- **Model-portability gaps filled:** `DOM-SERIAL-*`, `DOM-IDENT-*`,
+  `DOM-SNAPSHOT-*`, and `BE-PROJECT-005`.
+- **Unowned cross-service concerns given owners:** notifications, async jobs,
+  asset storage, deletion cascade, dependencies register.
+- **Scope hardened** for grading/earthwork, corridor/alignment, procedural 3D,
+  financial pro forma, predictive simulation, and 3D BIM authoring.
 
 ## Known gaps & watch items
 
@@ -140,9 +188,16 @@ Honest accounting of what this suite still does **not** do:
    ships, but concrete test cases await a test suite (the repo is Phase-0 scaffold).
 2. **Numeric NFR thresholds and tolerances are initial targets.** They are now
    pinned (benchmark datasets, tolerances table) so they are verifiable, but the
-   specific numbers will be confirmed by `NFR-BENCH-003` benchmarking and may move.
-3. **3D, civil-engineering, procedural, financial, and simulation capabilities are
-   intentionally out of scope** — documented exclusions, not coverage gaps.
+   specific numbers — including the Phase-6 plot scale and annotation-size
+   defaults — will be confirmed by `NFR-BENCH-003`/`NFR-BENCH-006` benchmarking
+   and may move.
+3. **3D, engineering-calculation, procedural, financial, and simulation
+   capabilities remain out of scope** — documented exclusions, not coverage
+   gaps. Phase 6 produces the *drawings*, not the calculations that populate
+   them.
+4. **Sheet-set import from a DWG/DXF authored elsewhere** (`IOP-DXFSHEET-006`)
+   is Should-priority for Phase 6 and depends on the depth of DXF/DWG parsing
+   the chosen interchange library actually supports (`DEP-006`).
 
 ## How to regenerate & validate
 

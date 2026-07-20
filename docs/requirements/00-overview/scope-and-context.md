@@ -23,7 +23,14 @@ the shared domain model, and interoperability.
   primitives (`Site`, `Parcel`, `Lot`, `Zone`, `LandUse`, `Right-of-Way`,
   `Setback`, zoning envelope, infrastructure network), and rules/metrics.
 - Interoperability with the formats planners use: GeoJSON, KML/KMZ, Shapefile,
-  DXF/DWG (basemaps), GeoPackage, PDF exhibits, CSV.
+  DXF/DWG (basemaps and sheet-set import/export), GeoPackage, PDF exhibits, CSV.
+- **Architecture & engineering CAD sheet production** (Phase 6): composed,
+  standards-conformant multi-sheet drawing sets with title blocks, viewports,
+  annotative dimensions and text, discipline-organised sheet numbering
+  (US National CAD Standard), CAD layer standards (NCS/AIA/ISO 13567), symbol
+  libraries, grids/levels, coordination callouts, match lines, data-driven
+  schedules (door/window/room/finish/panel), revision management, and
+  packaged plot output (multi-sheet PDF, DXF/DWG sheet sets).
 
 ## Out of scope (non-goals)
 
@@ -33,18 +40,22 @@ written for these:
 - Mechanical/product CAD (MCAD), parametric part modeling.
 - A full GIS analysis suite — the platform interoperates with GIS, it does not
   replace it.
-- Detailed construction documentation / engineering deliverables (structural,
-  stormwater design, utility engineering calcs).
+- **Engineering calculations on the sheets themselves** — structural analysis,
+  stormwater/hydraulic sizing, load calcs, energy modelling. Sheet production
+  and the drafted deliverable are in scope (Phase 6); the analyses that would
+  populate those sheets are expected to be performed in specialist tools and
+  imported.
 - **Grading and earthwork engineering** (cut/fill optimization, TIN/terrain
   surface design, machine-guidance output).
 - **Corridor / alignment design** (horizontal/vertical road alignments, profiles,
   corridor models).
 - **Procedural 3D city generation** and detailed 3D building/facade modeling.
+- **3D BIM authoring** (IFC/Revit-class object modelling). Sheets are 2D
+  compositions of the planning-domain model; IFC/BIM ingest may inform sheet
+  content in a later phase but is not a Phase-6 promise.
 - **Financial pro forma / cost estimating.** Feasibility here is spatial
   (yield/FAR/coverage/density), not financial.
 - **Predictive simulation** (travel-demand, environmental, or market simulation).
-- **Multi-sheet construction plan sets.** A single to-scale PDF *exhibit* is in
-  scope (`IOP-PDF-001`); a construction/permit sheet series is not.
 - Native mobile or desktop-installed applications (the client is web-first).
 
 > These exclusions are also reflected in the
@@ -115,6 +126,8 @@ exist because of them.
 | `CON-008` | The archived app under `artifact/` is **read-only reference**; new features shall not import from or extend it. | [MIGRATION](../../MIGRATION.md) |
 | `CON-009` | Implementation is **TypeScript, strict**; `any` is avoided in favor of explicit domain types. | [CLAUDE.md](../../../CLAUDE.md) |
 | `CON-010` | Delivery is **phased, domain-model first** (Phase 1 gates most later work). | [ROADMAP](../../ROADMAP.md) |
+| `CON-011` | CAD sheet production shall conform to recognised industry standards for sheet sizes (ANSI/ASME Y14.1 · ISO 5457), title-block data fields (ISO 7200), layer organisation (US National CAD Standard v6 / AIA Layer Guidelines · ISO 13567), and drawing conventions (ISO 128 / ISO 129 / ISO 3098) rather than a house-only convention. | Phase 6 sheet production; [`_meta/research-cad-sheets.md`](../_meta/research-cad-sheets.md) |
+| `CON-012` | CAD sheets shall be **compositions of the shared planning domain model** (`packages/domain`), not a separate authoring model; a change to a modelled object flows to every sheet that shows it. | Phase 6 sheet production; [ARCHITECTURE](../../ARCHITECTURE.md) |
 
 ## Dependencies & assumptions
 
@@ -129,6 +142,8 @@ for self-hosting substitution.
 | `DEP-002` | An **EPSG registry / coordinate-transformation library** for CRS definitions and datum transforms. | CRS assignment/reprojection and area/distance-correct metrics are unavailable. | `BE-GEO-001`, `DOM-CRS-002` |
 | `DEP-003` | A **basemap / tile provider** for contextual imagery _(planned)_. | The plan renders without a contextual basemap; all planning geometry still works. | `BE-GEO-005`, `FE-NAV-003` |
 | `DEP-004` | A modern **evergreen browser** providing Canvas/WebGL rendering, WebSocket (presence), and the File API (import). | The workspace is unsupported below the browser matrix (`NFR-COMPAT-005`); no silent degradation. | `apps/web`, `FE-*` |
+| `DEP-005` | A **PDF generation runtime** capable of vector output, embedded fonts, layers/optional content, and (for archival releases) PDF/A-2 and PDF/E-1 conformance. | Multi-sheet PDF plot output is unavailable; DXF/DWG export and on-screen sheet composition continue to work. | `BE-SHEET-*`, `IOP-PDFSHEET-*` |
+| `DEP-006` | A **CAD interchange library** capable of writing DXF/DWG containing layouts, viewports, xrefs, plot styles, and NCS-conformant layer names. | DXF/DWG sheet-set export is unavailable; PDF sheet export continues to work. | `IOP-DXFSHEET-*` |
 
 ## Relationship to other documents
 

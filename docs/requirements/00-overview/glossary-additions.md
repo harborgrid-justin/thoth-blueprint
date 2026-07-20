@@ -59,6 +59,50 @@ the requirement that introduces it.
   interoperability); values in the
   [standards tolerances table](standards-and-conventions.md#tolerances).
 
+## CAD sheet & drawing-production terms
+
+Planning-domain sheet terms live in the project [`GLOSSARY.md`](../../GLOSSARY.md)
+under "Sheets & drawing production". Requirements-suite-specific terms added
+here name the requirement that introduces them.
+
+- **Sheet Composer** — the workspace mode/tool that authors a paper-space
+  layout: title block, viewports at plot scale, sheet-relative annotations.
+  (`FE-SHEET-*`, `FE-VIEWPORT-*`)
+- **Plot-Style Table (CTB/STB)** — a table binding on-screen layer/colour to
+  printed lineweight, colour, screening, and linetype. CTB = colour-dependent;
+  STB = named style. (`FE-PLOT-*`, `DOM-PLOTSTYLE-*`, `IOP-PLTSTYLE-*`)
+- **Discipline Designator Catalog** — the US NCS v6 letter set
+  (`G`, `H`, `V`, `B`, `C`, `L`, `S`, `A`, `I`, `Q`, `F`, `P`, `D`, `M`, `E`,
+  `T`, `R`, `X`, `Z`, `O`). (`DOM-DISCIPLINE-*`)
+- **Sheet-Number Scheme** — `<Discipline><Sheet-type><Sequence>`, e.g.
+  `A-101`. (`DOM-NUMBERING-*`)
+- **Layer Standard** — a named catalog governing layer names, colour,
+  lineweight, and linetype (US National CAD Standard v6 / AIA · ISO 13567).
+  (`DOM-LAYERSTD-*`)
+- **Annotative-Scale Set** — the set of viewport plot scales for which an
+  annotation renders at its pinned plotted size. (`DOM-ANNO-002`, `DOM-DIM-004`)
+- **Viewport Layer Override** — a per-viewport change to a layer's visibility,
+  colour, lineweight, or linetype that does not mutate the shared layer model.
+  (`DOM-SHEET-004`, `FE-VIEWPORT-005`)
+- **Sheet-Set Browser / Project Navigator** — the client view of every sheet
+  in a project, grouped by discipline and filterable, from which batch plots
+  are launched. (`FE-SHEETSET-*`)
+- **Callout / Match-Line Linkage** — the referential integrity between a
+  section/elevation/detail callout on one sheet and the destination drawing.
+  (`FE-MATCHLINE-*`, `DOM-MATCHLINE-*`)
+- **Data-Driven Schedule** — a table whose rows are derived from a saved query
+  over the domain model, not authored independently. (`FE-SCHEDULE-*`,
+  `DOM-SCHEDULE-*`, `BE-SCHEDULE-*`)
+- **Issue Set / Release Package** — a named, immutable release of a sheet-set
+  ("For Permit", "For Bid", "Issued for Construction", "As-Built") plus its
+  deliverable bundle (multi-sheet PDF + DXF/DWG + manifest + checksums).
+  (`DOM-ISSUE-*`, `BE-PACKAGE-*`)
+- **True-Scale Plot** — a plot at which a measured on-paper distance matches
+  the intended distance within the plot scale tolerance. (`NFR-PLOT-001`,
+  `IOP-PDFSHEET-006`)
+- **Layer-Mapping Profile** — a persisted correspondence between an external
+  CAD-file layer name and the project's active layer standard. (`IOP-LAYERMAP-*`)
+
 ## Non-functional terms
 
 - **Benchmark Scenario / Reference Dataset** — a named fixed input

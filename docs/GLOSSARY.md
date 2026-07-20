@@ -90,42 +90,67 @@ language.
   that is impervious, and the ratio of open (unbuilt) space; morphology metrics
   alongside coverage and FAR.
 
-## CAD sheets & drafting
+## Sheets & drawing production
 
-The platform composes site and building models into issued construction-document
-sheet sets. Vocabulary follows the US National CAD Standard (NCS).
-
-- **Sheet** — a single plotted page (see *Sheet Size*) carrying one or more
-  viewports, a title block, and revisions.
-- **Drawing Set** — the ordered, issued collection of sheets for a project (the
-  deliverable). Sheets sort by discipline, then sheet type, then sequence.
-- **Sheet Size** — the physical page: ANSI A–E, ARCH A–E, or ISO A4–A0.
-- **Sheet Number (NCS)** — `AA-NNN`: a *Discipline Designator* letter, a *Sheet
-  Type* digit (0 general, 1 plans, 2 elevations, 3 sections, 5 details, 6
-  schedules, 9 3D), and a two-digit sequence — e.g. `A-101`, `C-501`.
-- **Discipline Designator** — the NCS single-letter discipline: G general, V
-  survey, C civil, L landscape, S structural, A architectural, and so on.
-- **Title Block** — the sheet's identifying block (project, scale, date, sheet
-  number, "n of N"). **Revision** entries + delta tags record issued changes.
-- **Viewport** — a rectangle on a sheet showing the model at a named *Scale*
-  (paper space, distinct from the model's world coordinates).
-- **Dimension** — an annotated measurement (linear, aligned, angular, radial,
-  ordinate, arc-length) with a dimension *style* (ticks or arrows, precision).
-- **Schedule** — a tabular data block (door, window, room, finish, curve, line).
-- **Section / Elevation / Detail** — orthographic views of a building or site; a
-  **Callout** (section/elevation/detail mark) cross-references the view to the
-  sheet it is drawn on. A **Match Line** marks where a plan continues on an
-  adjoining sheet; a **Key Map** indexes the sheets over the whole site.
-- **Grid / Grid Bubble** — a structural/column grid with bubbled, labelled
-  gridlines (digits one way, letters the other) that locate building elements.
-- **Line Weight / Line Type** — plotted stroke width (ISO pen ladder) and dash
-  pattern (continuous, hidden, centre, phantom, …).
-- **CAD Layer** — an NCS/AIA-named plotting layer (`A-WALL`, `C-TOPO`, …) with a
-  colour, line weight, and line type.
-- **Hatch** — a standardized material fill (ANSI31 diagonal, concrete, earth, …).
-- **Level / Wall / Door / Window / Room / Finish** — building-interior primitives:
-  a storey; a thick, tall wall body; wall-hosted openings with marks and swings;
-  a bounded, numbered space; and its floor/base/wall/ceiling finishes.
+- **Sheet** — a single printable page of a construction/permit drawing set,
+  bearing a title block and one or more viewports; the atomic unit of a CAD
+  sheet set.
+- **Sheet Set** — the ordered, discipline-organised collection of sheets that
+  makes up a project's deliverable drawings.
+- **Layout / Paper Space** — the virtual sheet at print size (Arch D, ISO A1,
+  etc.) on which viewports, title blocks, and sheet-relative annotations are
+  composed; distinct from *model space* where the world-scale drawing lives.
+- **Model Space** — the coordinate world (drawn at 1:1 in real units) that
+  viewports look into.
+- **Viewport** — a rectangular window on a layout that displays a region of
+  model space at an explicit plot scale, optionally clipped, rotated, or with
+  per-viewport layer overrides.
+- **Plot Scale** — the printed-to-real distance ratio at which a viewport is
+  plotted (e.g. 1:100, 1/8″=1′-0″).
+- **Title Block** — the framed region on a sheet carrying identifying data
+  (project, sheet number, title, date, revision, seals) per ISO 7200.
+- **Discipline Designator** — the single-letter code identifying which
+  discipline a sheet belongs to, per US NCS v6 (`G` general, `C` civil, `S`
+  structural, `A` architectural, `M` mechanical, `E` electrical, etc.).
+- **Sheet Number** — an identifier of the form
+  `<Discipline><Sheet-type><Sequence>` (e.g. `A-101`), where the sheet-type
+  hundreds digit means plans (1), elevations (2), sections (3), enlarged (4),
+  details (5), schedules (6), 3D (9).
+- **CAD Layer Standard** — a rule-set for layer naming, colour, lineweight and
+  linetype (US NCS / AIA · ISO 13567) that keeps a drawing intelligible across
+  offices and consultants.
+- **Plot Style** — a table (colour-dependent CTB or named STB) mapping on-screen
+  layer/colour to printed lineweight, colour, screening, and linetype.
+- **Annotative Scaling** — the property that lets a text, dimension, or symbol
+  size itself against the sheet (2.5 mm at print) rather than the world, so a
+  single object plots correctly in viewports of different scales.
+- **Dimension** — an annotative measurement placed on a drawing (linear,
+  aligned, angular, radial, ordinate, arc-length).
+- **Symbol / Block** — a reusable, parametric graphic (grid bubble, section
+  marker, detail bubble, north arrow, revision cloud, scale bar, hardware
+  symbol).
+- **Grid Line** — a labelled column-grid reference (A/B/C…, 1/2/3…) that
+  appears on every applicable sheet at the same location.
+- **Level Datum** — a labelled horizontal reference on sections and elevations
+  (e.g. `L1 = 100.00`, `L2 = 112.50`).
+- **Match Line** — a dashed break line on a plan that continues onto an
+  adjacent sheet, tagged with the neighbour's sheet number.
+- **Callout Marker** — an on-plan bubble that names the sheet and drawing
+  number where a section, elevation, or detail is drawn; the destination
+  drawing carries the reciprocal marker.
+- **Schedule** — a data-driven table (door, window, room/finish, panel,
+  fixture, equipment) sourced from the same domain objects that render on the
+  plans.
+- **Revision Cloud** — a scalloped freehand outline around a changed region of
+  a drawing, paired with a **Delta Tag** carrying the revision number.
+- **Revision Block** — the tabular history in a title block listing revision
+  number, date, description, drawn/approved by.
+- **Issue Set** — a named release ("For Permit", "For Bid", "Issued for
+  Construction", "As-Built") that stamps every sheet on release.
+- **Xref (External Reference)** — a drawing file referenced by another (a site
+  plan referenced by every sheet) so source updates propagate.
+- **Sheet Package** — the deliverable archive produced from an issue: a
+  multi-sheet PDF and/or DXF/DWG sheet set with a manifest and checksums.
 
 ## Collaboration & governance
 
