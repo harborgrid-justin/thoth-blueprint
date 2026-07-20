@@ -125,10 +125,11 @@ export function wallLength(wall: Wall): number {
  * straight (2-point) baseline; polyline walls are offset segment-wise.
  */
 export function wallPolygon(wall: Wall): Polygon {
+  const pts = wall.baseline;
+  if (pts.length < 2) return [];
   const half = wall.thickness / 2;
   const left: Point[] = [];
   const right: Point[] = [];
-  const pts = wall.baseline;
   for (let i = 0; i < pts.length; i++) {
     const prev = pts[Math.max(0, i - 1)];
     const next = pts[Math.min(pts.length - 1, i + 1)];
