@@ -38,13 +38,14 @@ Source: [business requirements](../01-business/business-requirements.md).
 | [`BR-002`](../01-business/business-requirements.md) Domain-native objects | STK-001, STK-002 |
 | [`BR-003`](../01-business/business-requirements.md) Real-time collaboration | STK-003, STK-005 |
 | [`BR-004`](../01-business/business-requirements.md) Spatial honesty | STK-001, STK-002 |
-| [`BR-005`](../01-business/business-requirements.md) Interoperability | STK-001, STK-004, STK-007 |
-| [`BR-006`](../01-business/business-requirements.md) CAD-grade precision | STK-001, STK-004 |
-| [`BR-007`](../01-business/business-requirements.md) Governed & auditable | STK-003, STK-005, STK-006 |
+| [`BR-005`](../01-business/business-requirements.md) Interoperability | STK-001, STK-004, STK-007, STK-008 |
+| [`BR-006`](../01-business/business-requirements.md) CAD-grade precision | STK-001, STK-004, STK-008 |
+| [`BR-007`](../01-business/business-requirements.md) Governed & auditable | STK-003, STK-005, STK-006, STK-008 |
 | [`BR-008`](../01-business/business-requirements.md) Planning intelligence | STK-001, STK-002, STK-004 |
-| [`BR-009`](../01-business/business-requirements.md) Full stakeholder spectrum | STK-001 – STK-007 |
+| [`BR-009`](../01-business/business-requirements.md) Full stakeholder spectrum | STK-001 – STK-008 |
 | [`BR-010`](../01-business/business-requirements.md) Open & self-hostable | STK-007 |
 | [`BR-011`](../01-business/business-requirements.md) Incremental, domain-first | all (via Phase) |
+| [`BR-012`](../01-business/business-requirements.md) Architecture & engineering CAD sheets | STK-004, STK-008 |
 
 ## Matrix B — Stakeholder → functional areas & module
 
@@ -62,6 +63,7 @@ Source: [stakeholders](../01-business/stakeholders.md).
 | STK-005 Community | REVIEW, NAV, HELP | ACCESS | — | PDF |
 | STK-006 Org admin | ACCOUNT, STATE | AUTH, ACCESS, AUDIT, SEARCH, STORAGE | — | — |
 | STK-007 Integrator | IO | API, IMPORT, EXPORT, JOB, WEBHOOK | SERIAL | GEOJSON, SHP, GPKG, CSV, FIELD, SCHEMA |
+| STK-008 Architect / engineer / CAD manager | SHEET, VIEWPORT, TITLE, PLOT, ANNO, SYMBOL, GRIDLINE, MATCHLINE, SCHEDULE, REV, SHEETSET | SHEET, TEMPLATE, PLOT, SCHEDULE, PACKAGE | SHEET, TITLEBLOCK, SHEETSET, DISCIPLINE, NUMBERING, LAYERSTD, PLOTSTYLE, SYMBOL, DIM, ANNO, GRID, MATCHLINE, SCHEDULE, REV, ISSUE, XREF | DXFSHEET, PDFSHEET, PLTSTYLE, LAYERMAP, TITLEBLOCK, BLOCK |
 
 ---
 
@@ -182,6 +184,73 @@ in the linked sources; this matrix carries the trace links.
 | FE-ACCOUNT-003 | STK-006 | BR-007 | P4 | M | D | ⬜ |
 | FE-ACCOUNT-004 | STK-006 | BR-009 | P4 | S | D | ⬜ |
 | FE-ACCOUNT-005 | STK-006 | BR-007 | P4 | S | D | ⬜ |
+| FE-SHEET-001 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-SHEET-002 | STK-008 | BR-012, CON-011 | P6 | M | D | ⬜ |
+| FE-SHEET-003 | STK-008 | BR-012, CON-011 | P6 | M | D | ⬜ |
+| FE-SHEET-004 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-SHEET-005 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-SHEET-006 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-SHEET-007 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-SHEET-008 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| FE-VIEWPORT-001 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-VIEWPORT-002 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-VIEWPORT-003 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-VIEWPORT-004 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-VIEWPORT-005 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-VIEWPORT-006 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-VIEWPORT-007 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-VIEWPORT-008 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-VIEWPORT-009 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-TITLE-001 | STK-008 | BR-012, CON-011 | P6 | M | D | ⬜ |
+| FE-TITLE-002 | STK-008 | BR-012, CON-011 | P6 | M | D | ⬜ |
+| FE-TITLE-003 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| FE-TITLE-004 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-TITLE-005 | STK-008 | BR-012 | P6 | C | D | ⬜ |
+| FE-PLOT-001 | STK-008 | BR-012, CON-011 | P6 | M | D | ⬜ |
+| FE-PLOT-002 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-PLOT-003 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-PLOT-004 | STK-008 | NFR-PLOT-001 | P6 | M | D | ⬜ |
+| FE-PLOT-005 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-PLOT-006 | STK-008 | BR-012, DEP-005, DEP-006 | P6 | M | D | ⬜ |
+| FE-PLOT-007 | STK-008, STK-007 | NFR-OBS-002 | P6 | M | D | ⬜ |
+| FE-ANNO-001 | STK-008 | BR-012, CON-011 | P6 | M | D | ⬜ |
+| FE-ANNO-002 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-ANNO-003 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| FE-ANNO-004 | STK-008 | BR-012, CON-011 | P6 | M | D | ⬜ |
+| FE-ANNO-005 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| FE-ANNO-006 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-ANNO-007 | STK-008 | NFR-PLOT-002 | P6 | S | D | ⬜ |
+| FE-SYMBOL-001 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-SYMBOL-002 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-SYMBOL-003 | STK-008 | BR-012, DEP-006 | P6 | S | D | ⬜ |
+| FE-SYMBOL-004 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-SYMBOL-005 | STK-008, STK-006 | BR-012 | P6 | C | D | ⬜ |
+| FE-GRIDLINE-001 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-GRIDLINE-002 | STK-008 | BR-012, CON-012 | P6 | M | D | ⬜ |
+| FE-GRIDLINE-003 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-GRIDLINE-004 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-GRIDLINE-005 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| FE-MATCHLINE-001 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-MATCHLINE-002 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-MATCHLINE-003 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-MATCHLINE-004 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| FE-MATCHLINE-005 | STK-008 | NFR-REL-003 | P6 | M | D | ⬜ |
+| FE-SCHEDULE-001 | STK-008 | BR-012, CON-012 | P6 | M | D | ⬜ |
+| FE-SCHEDULE-002 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| FE-SCHEDULE-003 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-SCHEDULE-004 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-SCHEDULE-005 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-SCHEDULE-006 | STK-008, STK-007 | BR-005 | P6 | S | T | ⬜ |
+| FE-REV-001 | STK-008 | BR-012 | P6 | M | D | ⬜ |
+| FE-REV-002 | STK-008 | BR-012, CON-011 | P6 | M | D | ⬜ |
+| FE-REV-003 | STK-008 | BR-012, BR-007 | P6 | M | D | ⬜ |
+| FE-REV-004 | STK-008 | BR-007 | P6 | S | D | ⬜ |
+| FE-REV-005 | STK-008 | BR-007 | P6 | C | D | ⬜ |
+| FE-SHEETSET-001 | STK-008 | BR-012, CON-011 | P6 | M | D | ⬜ |
+| FE-SHEETSET-002 | STK-008 | BR-012 | P6 | S | D | ⬜ |
+| FE-SHEETSET-003 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| FE-SHEETSET-004 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| FE-SHEETSET-005 | STK-008 | BR-012 | P6 | M | D | ⬜ |
 
 ### C.2 Backend — modules `services/*` · source [backend-requirements.md](../02-functional/backend-requirements.md)
 
@@ -262,6 +331,31 @@ in the linked sources; this matrix carries the trace links.
 | BE-API-006 | all services | STK-007 | NFR-MAINT-001 | P3 | S | I | ⬜ |
 | BE-API-007 | all services | STK-007 | NFR-OBS-002 | P3 | S | I | ⬜ |
 | BE-API-008 | all services | STK-007 | NFR-REL-002 | P3 | S | T | ⬜ |
+| BE-SHEET-001 | services/geospatial | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| BE-SHEET-002 | services/geospatial | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| BE-SHEET-003 | services/geospatial | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| BE-SHEET-004 | services/geospatial | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| BE-SHEET-005 | services/geospatial | STK-008 | NFR-PLOT-001, NFR-PLOT-002 | P6 | M | A | ⬜ |
+| BE-SHEET-006 | services/geospatial | STK-008 | NFR-REL-003 | P6 | M | T | ⬜ |
+| BE-TEMPLATE-001 | services/projects | STK-008, STK-006 | BR-012 | P6 | M | T | ⬜ |
+| BE-TEMPLATE-002 | services/projects | STK-008, STK-006 | BR-012 | P6 | S | T | ⬜ |
+| BE-TEMPLATE-003 | services/projects | STK-006 | BR-012, NFR-MAINT-005 | P6 | S | T | ⬜ |
+| BE-TEMPLATE-004 | services/projects | STK-006 | NFR-PRIV-001 | P6 | M | T | ⬜ |
+| BE-PLOT-001 | services/geospatial | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| BE-PLOT-002 | services/geospatial | STK-008, STK-007 | BR-012, NFR-PERF-005 | P6 | M | T | ⬜ |
+| BE-PLOT-003 | services/geospatial | STK-008, STK-007 | NFR-SEC-002 | P6 | M | T | ⬜ |
+| BE-PLOT-004 | services/geospatial | STK-008 | NFR-PLOT-002 | P6 | S | T | ⬜ |
+| BE-PLOT-005 | services/geospatial | STK-008 | BR-012, DEP-005 | P6 | S | T | ⬜ |
+| BE-PLOT-006 | services/geospatial | STK-008 | NFR-REL-003 | P6 | S | T | ⬜ |
+| BE-SCHEDULE-001 | services/projects | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| BE-SCHEDULE-002 | services/projects | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| BE-SCHEDULE-003 | services/projects | STK-008 | NFR-REL-002 | P6 | M | T | ⬜ |
+| BE-SCHEDULE-004 | services/projects | STK-007 | BR-005 | P6 | S | T | ⬜ |
+| BE-PACKAGE-001 | services/projects | STK-008 | BR-012, BR-007 | P6 | M | T | ⬜ |
+| BE-PACKAGE-002 | services/projects | STK-008 | BR-012, DEP-005 | P6 | M | T | ⬜ |
+| BE-PACKAGE-003 | services/projects | STK-008, STK-003 | NFR-SEC-001, BR-007 | P6 | S | T | ⬜ |
+| BE-PACKAGE-004 | services/projects | STK-003, STK-008 | NFR-AVAIL-002, BR-007 | P6 | M | T | ⬜ |
+| BE-PACKAGE-005 | services/projects | STK-003 | BR-007, NFR-SEC-001 | P6 | S | T | ⬜ |
 
 ### C.3 Domain model — module `packages/domain` · source [domain-requirements.md](../02-functional/domain-requirements.md)
 
@@ -368,6 +462,71 @@ in the linked sources; this matrix carries the trace links.
 | DOM-COMPUTE-002 | STK-002 | BR-008 | P1 | S | T | ⬜ |
 | DOM-SNAPSHOT-001 | STK-003 | BR-003 | P1 | M | T | ⬜ |
 | DOM-SNAPSHOT-002 | STK-003 | BR-003 | P5 | C | T | ⬜ |
+| DOM-SHEET-001 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-SHEET-002 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| DOM-SHEET-003 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-SHEET-004 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-SHEET-005 | STK-008 | NFR-REL-002 | P6 | M | T | ⬜ |
+| DOM-SHEET-006 | STK-008 | BR-012, CON-004 | P6 | M | T | ⬜ |
+| DOM-SHEET-007 | STK-008 | BR-012, CON-011 | P6 | S | T | ⬜ |
+| DOM-TITLEBLOCK-001 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-TITLEBLOCK-002 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-TITLEBLOCK-003 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| DOM-TITLEBLOCK-004 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| DOM-SHEETSET-001 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-SHEETSET-002 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| DOM-SHEETSET-003 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-SHEETSET-004 | STK-008 | NFR-REL-003 | P6 | M | T | ⬜ |
+| DOM-DISCIPLINE-001 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-DISCIPLINE-002 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-DISCIPLINE-003 | STK-008 | BR-012 | P6 | C | T | ⬜ |
+| DOM-NUMBERING-001 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-NUMBERING-002 | STK-008 | BR-012 | P6 | C | T | ⬜ |
+| DOM-NUMBERING-003 | STK-008 | NFR-REL-003, CON-012 | P6 | M | T | ⬜ |
+| DOM-LAYERSTD-001 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-LAYERSTD-002 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-LAYERSTD-003 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| DOM-LAYERSTD-004 | STK-008 | NFR-STD-001 | P6 | S | T | ⬜ |
+| DOM-PLOTSTYLE-001 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-PLOTSTYLE-002 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-PLOTSTYLE-003 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| DOM-PLOTSTYLE-004 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| DOM-SYMBOL-001 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-SYMBOL-002 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-SYMBOL-003 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-SYMBOL-004 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-SYMBOL-005 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| DOM-DIM-001 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-DIM-002 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| DOM-DIM-003 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-DIM-004 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-DIM-005 | STK-008 | BR-004, BR-012 | P6 | M | T | ⬜ |
+| DOM-ANNO-001 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-ANNO-002 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-ANNO-003 | STK-008 | BR-012, CON-011 | P6 | S | T | ⬜ |
+| DOM-ANNO-004 | STK-008 | NFR-REL-003 | P6 | M | T | ⬜ |
+| DOM-GRID-001 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-GRID-002 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| DOM-GRID-003 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| DOM-GRID-004 | STK-008 | CON-012 | P6 | M | T | ⬜ |
+| DOM-MATCHLINE-001 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-MATCHLINE-002 | STK-008 | CON-012 | P6 | M | T | ⬜ |
+| DOM-MATCHLINE-003 | STK-008 | NFR-REL-003 | P6 | M | T | ⬜ |
+| DOM-MATCHLINE-004 | STK-008 | NFR-REL-003 | P6 | M | T | ⬜ |
+| DOM-SCHEDULE-001 | STK-008 | BR-012, CON-012 | P6 | M | T | ⬜ |
+| DOM-SCHEDULE-002 | STK-008 | CON-012 | P6 | M | T | ⬜ |
+| DOM-SCHEDULE-003 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-SCHEDULE-004 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| DOM-SCHEDULE-005 | STK-008 | NFR-REL-002 | P6 | M | T | ⬜ |
+| DOM-REV-001 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-REV-002 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| DOM-REV-003 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| DOM-ISSUE-001 | STK-008 | BR-012, BR-007 | P6 | M | T | ⬜ |
+| DOM-ISSUE-002 | STK-008, STK-003 | BR-007, NFR-SEC-001 | P6 | M | T | ⬜ |
+| DOM-ISSUE-003 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-XREF-001 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| DOM-XREF-002 | STK-008 | CON-012 | P6 | M | T | ⬜ |
+| DOM-XREF-003 | STK-008 | NFR-REL-003 | P6 | M | T | ⬜ |
 
 ### C.4 Interoperability — module `services/geospatial` (+`apps/web` via `FE-IO`) · source [interoperability-requirements.md](../02-functional/interoperability-requirements.md)
 
@@ -408,6 +567,30 @@ in the linked sources; this matrix carries the trace links.
 | IOP-CRSX-001 | STK-001 | BR-004 | P3 | M | T | ⬜ |
 | IOP-CRSX-002 | STK-001 | BR-004 | P3 | M | T | ⬜ |
 | IOP-CRSX-003 | STK-001 | NFR-COMPAT-002 | P3 | S | D | ⬜ |
+| IOP-DXFSHEET-001 | STK-008 | BR-012, DEP-006 | P6 | M | T | ⬜ |
+| IOP-DXFSHEET-002 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| IOP-DXFSHEET-003 | STK-008 | BR-012 | P6 | M | T | ⬜ |
+| IOP-DXFSHEET-004 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| IOP-DXFSHEET-005 | STK-008 | BR-012, CON-011 | P6 | M | T | ⬜ |
+| IOP-DXFSHEET-006 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| IOP-PDFSHEET-001 | STK-008 | BR-012, DEP-005 | P6 | M | T | ⬜ |
+| IOP-PDFSHEET-002 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| IOP-PDFSHEET-003 | STK-008 | BR-012, DEP-005 | P6 | S | T | ⬜ |
+| IOP-PDFSHEET-004 | STK-008 | BR-012, DEP-005 | P6 | C | T | ⬜ |
+| IOP-PDFSHEET-005 | STK-008 | NFR-PLOT-002, DEP-005 | P6 | M | T | ⬜ |
+| IOP-PDFSHEET-006 | STK-008 | NFR-PLOT-001 | P6 | M | A | ⬜ |
+| IOP-PDFSHEET-007 | STK-008 | BR-012, DEP-005 | P6 | S | T | ⬜ |
+| IOP-PDFSHEET-008 | STK-008, STK-003 | BR-007 | P6 | S | T | ⬜ |
+| IOP-PLTSTYLE-001 | STK-008 | BR-012, CON-011 | P6 | S | T | ⬜ |
+| IOP-PLTSTYLE-002 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| IOP-LAYERMAP-001 | STK-008 | BR-012, CON-011 | P6 | M | D | ⬜ |
+| IOP-LAYERMAP-002 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| IOP-LAYERMAP-003 | STK-008 | BR-012 | P6 | S | T | ⬜ |
+| IOP-TITLEBLOCK-001 | STK-008 | BR-012, DEP-006 | P6 | S | T | ⬜ |
+| IOP-TITLEBLOCK-002 | STK-008 | BR-012, CON-011 | P6 | S | D | ⬜ |
+| IOP-TITLEBLOCK-003 | STK-008 | BR-012 | P6 | C | T | ⬜ |
+| IOP-BLOCK-001 | STK-008 | BR-012, DEP-006 | P6 | S | T | ⬜ |
+| IOP-BLOCK-002 | STK-008 | BR-012 | P6 | S | T | ⬜ |
 
 ---
 
@@ -419,8 +602,8 @@ from the `Constrains` column of the
 
 | NFR category | Constrains (areas / modules / requirements) |
 | --- | --- |
-| NFR-PERF | FE-CANVAS, FE-NAV, FE-METRIC, DOM-METRIC, BE-COLLAB, FE-PRESENCE, FE-PROJECT, BE-PROJECT, BE-IMPORT, BE-JOB, FE-IO |
-| NFR-SCALE | BE-COLLAB, BE-PROJECT, services/*, BE-GEO, BE-STORAGE |
+| NFR-PERF | FE-CANVAS, FE-NAV, FE-METRIC, DOM-METRIC, BE-COLLAB, FE-PRESENCE, FE-PROJECT, BE-PROJECT, BE-IMPORT, BE-JOB, FE-IO, FE-SHEETSET, FE-SHEET, BE-SHEET, BE-PLOT, IOP-PDFSHEET |
+| NFR-SCALE | BE-COLLAB, BE-PROJECT, services/*, BE-GEO, BE-STORAGE, FE-SHEETSET, BE-SHEET |
 | NFR-SEC | BE-*, BE-API, BE-AUTH, BE-ACCESS, services/*, apps/web, BE-STORAGE, monorepo, repo |
 | NFR-PRIV | BE-ACCESS, BE-AUTH, apps/web, services/*, BE-PROJECT |
 | NFR-A11Y | FE-*, FE-STYLE, FE-METRIC, FE-REVIEW |
@@ -434,7 +617,9 @@ from the `Constrains` column of the
 | NFR-OBS | services/*, FE-IO |
 | NFR-PORT | services/*, apps/web |
 | NFR-LEGAL | repo, FE-NAV, IOP-*, BE-GEO |
-| NFR-BENCH | NFR-PERF-001..005, NFR-SCALE-001..003, NFR-SCALE-001, NFR-PERF-003, NFR-REL-002, NFR-PERF-001..004, NFR-SCALE-003, NFR-PERF-001 |
+| NFR-PLOT | BE-SHEET-005, IOP-PDFSHEET-006, FE-PLOT-004, DOM-ANNO-002, DOM-DIM-004, BE-PLOT-004, IOP-PDFSHEET-005, DOM-PLOTSTYLE-002, DOM-PLOTSTYLE-003, BE-SHEET-002, DOM-PLOTSTYLE-001, BE-PLOT-001 |
+| NFR-STD | DOM-SHEET-007, FE-SHEET-003, DOM-TITLEBLOCK-002, FE-TITLE-002, DOM-LAYERSTD-001, DOM-LAYERSTD-004, IOP-LAYERMAP-003, DOM-DISCIPLINE-001, DOM-NUMBERING-001, DOM-DIM-003, DOM-ANNO-003, DOM-PLOTSTYLE-003, IOP-PDFSHEET-003, IOP-PDFSHEET-004, Phase 6 sheet output |
+| NFR-BENCH | NFR-PERF-001..005, NFR-SCALE-001..003, NFR-SCALE-001, NFR-PERF-003, NFR-REL-002, NFR-PERF-001..004, NFR-SCALE-003, NFR-PERF-001, NFR-PLOT-*, BE-SHEET-*, BE-PLOT-*, IOP-PDFSHEET-* |
 
 ---
 
@@ -450,9 +635,10 @@ Confirms the domain model (P1) leads and later phases build on it.
 | **P3** | Interoperability | 9 | 26 | 1 | 35 | 71 |
 | **P4** | Collaboration & review | 19 | 32 | 0 | 0 | 51 |
 | **P5** | Analysis & planning depth | 4 | 3 | 19 | 0 | 26 |
-| | **Totals** | **108** | **75** | **101** | **35** | **319** |
+| **P6** | Architecture & engineering CAD sheets | 67 | 25 | 65 | 24 | 181 |
+| | **Totals** | **175** | **100** | **166** | **59** | **500** |
 
-> NFRs (68) are cross-cutting and phased with the areas they constrain.
+> NFRs (86) are cross-cutting and phased with the areas they constrain.
 
 ## Matrix F — Module coverage
 
@@ -460,23 +646,23 @@ Every functional requirement maps to exactly one architecture module (rule `R3`)
 
 | Architecture module | Areas | Count |
 | --- | --- | :--: |
-| `apps/web` | FE-ACCOUNT, FE-CANVAS, FE-CMD, FE-EDIT, FE-FIND, FE-HELP, FE-IO, FE-LAYER, FE-MEASURE, FE-METRIC, FE-NAV, FE-NOTIFY, FE-PRECISION, FE-PREFS, FE-PRESENCE, FE-PRINT, FE-PROJECT, FE-REVIEW, FE-SCENARIO, FE-SELECT, FE-STATE, FE-STYLE | 108 |
+| `apps/web` | FE-ACCOUNT, FE-ANNO, FE-CANVAS, FE-CMD, FE-EDIT, FE-FIND, FE-GRIDLINE, FE-HELP, FE-IO, FE-LAYER, FE-MATCHLINE, FE-MEASURE, FE-METRIC, FE-NAV, FE-NOTIFY, FE-PLOT, FE-PRECISION, FE-PREFS, FE-PRESENCE, FE-PRINT, FE-PROJECT, FE-REV, FE-REVIEW, FE-SCENARIO, FE-SCHEDULE, FE-SELECT, FE-SHEET, FE-SHEETSET, FE-STATE, FE-STYLE, FE-SYMBOL, FE-TITLE, FE-VIEWPORT | 175 |
 | `services/auth` | BE-ACCESS, BE-AUTH | 13 |
-| `services/projects` | BE-AUDIT, BE-PROJECT, BE-SEARCH, BE-STORAGE, BE-VERSION | 24 |
-| `services/geospatial` | BE-EXPORT, BE-GEO, BE-IMPORT, BE-JOB, IOP-BUNDLE, IOP-CRSX, IOP-CSV, IOP-DXF, IOP-ENC, IOP-FIELD, IOP-GEOJSON, IOP-GEOMX, IOP-GPKG, IOP-IDENT, IOP-KML, IOP-PDF, IOP-PREC, IOP-RASTER, IOP-SCHEMA, IOP-SHP, IOP-STREAM | 50 |
+| `services/projects` | BE-AUDIT, BE-PACKAGE, BE-PROJECT, BE-SCHEDULE, BE-SEARCH, BE-STORAGE, BE-TEMPLATE, BE-VERSION | 37 |
+| `services/geospatial` | BE-EXPORT, BE-GEO, BE-IMPORT, BE-JOB, BE-PLOT, BE-SHEET, IOP-BLOCK, IOP-BUNDLE, IOP-CRSX, IOP-CSV, IOP-DXF, IOP-DXFSHEET, IOP-ENC, IOP-FIELD, IOP-GEOJSON, IOP-GEOMX, IOP-GPKG, IOP-IDENT, IOP-KML, IOP-LAYERMAP, IOP-PDF, IOP-PDFSHEET, IOP-PLTSTYLE, IOP-PREC, IOP-RASTER, IOP-SCHEMA, IOP-SHP, IOP-STREAM, IOP-TITLEBLOCK | 86 |
 | `services/collaboration` | BE-COLLAB, BE-COMMENT, BE-NOTIFY | 13 |
-| `packages/domain` | DOM-BLOCK, DOM-BUILDING, DOM-COMPLY, DOM-COMPUTE, DOM-CRS, DOM-DEDICATION, DOM-EASEMENT, DOM-ENVELOPE, DOM-GEOM, DOM-IDENT, DOM-INFRA, DOM-LANDUSE, DOM-LAYER, DOM-LOT, DOM-METRIC, DOM-OPENSPACE, DOM-PARCEL, DOM-PARKING, DOM-ROW, DOM-SCENARIO, DOM-SERIAL, DOM-SETBACK, DOM-SITE, DOM-SNAPSHOT, DOM-SUBDIV, DOM-SURVEY, DOM-UNIT, DOM-ZONE | 101 |
+| `packages/domain` | DOM-ANNO, DOM-BLOCK, DOM-BUILDING, DOM-COMPLY, DOM-COMPUTE, DOM-CRS, DOM-DEDICATION, DOM-DIM, DOM-DISCIPLINE, DOM-EASEMENT, DOM-ENVELOPE, DOM-GEOM, DOM-GRID, DOM-IDENT, DOM-INFRA, DOM-ISSUE, DOM-LANDUSE, DOM-LAYER, DOM-LAYERSTD, DOM-LOT, DOM-MATCHLINE, DOM-METRIC, DOM-NUMBERING, DOM-OPENSPACE, DOM-PARCEL, DOM-PARKING, DOM-PLOTSTYLE, DOM-REV, DOM-ROW, DOM-SCENARIO, DOM-SCHEDULE, DOM-SERIAL, DOM-SETBACK, DOM-SHEET, DOM-SHEETSET, DOM-SITE, DOM-SNAPSHOT, DOM-SUBDIV, DOM-SURVEY, DOM-SYMBOL, DOM-TITLEBLOCK, DOM-UNIT, DOM-XREF, DOM-ZONE | 166 |
 | `all services` | BE-API, BE-WEBHOOK | 10 |
-| | **Total** | **319** |
+| | **Total** | **500** |
 
 ## Verification method summary
 
 | Method | Count (functional) | Typical requirements |
 | --- | :--: | --- |
-| **T** Test | 203 | Domain rules/metrics, service behavior, format round-trips |
-| **D** Demonstration | 108 | Canvas/UI interactions, wizards, exhibits |
+| **T** Test | 323 | Domain rules/metrics, service behavior, format round-trips |
+| **D** Demonstration | 167 | Canvas/UI interactions, wizards, exhibits |
 | **I** Inspection | 6 | API docs, license, config, schema mapping |
-| **A** Analysis | 2 | Performance/load, audit immutability |
+| **A** Analysis | 4 | Performance/load, audit immutability |
 
 > Verification **evidence** (test-case IDs `TC-…`) attaches here once a test
 > suite exists; today the matrix specifies the method, per the

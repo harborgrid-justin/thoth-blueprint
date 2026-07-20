@@ -255,3 +255,146 @@ tolerances referenced below are defined in its
 | --- | --- | :--: | :--: | --- | :--: |
 | `DOM-SNAPSHOT-001` | The model shall produce an immutable snapshot of a plan's full state suitable for a Checkpoint/Version. | M | P1 | STK-003; BR-003 | T |
 | `DOM-SNAPSHOT-002` | The model shall compute a structural diff between two snapshots (added/removed/changed elements). | C | P5 | STK-003; BR-003 | T |
+
+## Sheets & layouts — `DOM-SHEET`
+
+Framework-agnostic sheet, layout, viewport, and paper-space geometry model that
+`apps/web` composes and `services/geospatial` renders for Phase 6 CAD sheets.
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-SHEET-001` | The model shall provide a `Sheet` as a printable page carrying a sheet number, title, discipline designator, sheet size, orientation, and rotation. | M | P6 | STK-008; BR-012 | T |
+| `DOM-SHEET-002` | The model shall provide a `Layout` (paper space) associated with a sheet, expressed in the sheet's paper units (mm or inches), distinct from world-scale model space. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `DOM-SHEET-003` | The model shall provide a `Viewport` referencing model-space extents at an explicit plot scale, with an optional polygon clip and rotation. | M | P6 | STK-008; BR-012 | T |
+| `DOM-SHEET-004` | A viewport shall carry per-viewport layer overrides (visibility, colour, lineweight, linetype) that do not mutate the shared layer model. | M | P6 | STK-008; BR-012 | T |
+| `DOM-SHEET-005` | The model shall compute the world-to-paper affine transform for a viewport from its extent, scale, and rotation, and expose it deterministically. | M | P6 | STK-008; NFR-REL-002 | T |
+| `DOM-SHEET-006` | The model shall distinguish layout-space geometry (composed on paper) from model-space geometry, so CRS-based measurement/metrics are only reported for the latter. | M | P6 | STK-008; BR-012, CON-004 | T |
+| `DOM-SHEET-007` | The model shall represent a sheet's plot area, printable area, and margin insets per the sheet-size catalog. | S | P6 | STK-008; BR-012, CON-011 | T |
+
+## Title blocks — `DOM-TITLEBLOCK`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-TITLEBLOCK-001` | The model shall provide a `TitleBlock` template defining a set of named data fields, their placement in paper space, and their formatting. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-TITLEBLOCK-002` | Templates shall accept at minimum the ISO 7200 data fields (drawing identifier, sheet number, title, date, revision, sizes/scale, drawn/checked/approved by, owner) plus custom user-defined fields. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-TITLEBLOCK-003` | A title-block instance shall bind template fields to project-level and per-sheet data; a project-level change shall propagate to every sheet using the template. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `DOM-TITLEBLOCK-004` | The model shall allow a title block to embed a seal/signature image or vector asset without treating it as editable geometry. | S | P6 | STK-008; BR-012 | T |
+
+## Sheet sets — `DOM-SHEETSET`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-SHEETSET-001` | The model shall provide a `SheetSet` as an ordered, discipline-grouped collection of sheets owned by a project. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-SHEETSET-002` | The model shall let a sheet set be filtered by discipline, sheet-type digit, phase, and issue set. | S | P6 | STK-008; BR-012 | T |
+| `DOM-SHEETSET-003` | The model shall derive a canonical sheet index (list of sheets in sheet-number order, with title, discipline, revision, and issue status) from the sheet set. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-SHEETSET-004` | The model shall enforce sheet-number uniqueness within a sheet set. | M | P6 | STK-008; NFR-REL-003 | T |
+
+## Discipline designators — `DOM-DISCIPLINE`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-DISCIPLINE-001` | The model shall provide the US NCS v6 discipline designator catalog (G, H, V, B, C, L, S, A, I, Q, F, P, D, M, E, T, R, X, Z, O) with human names. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-DISCIPLINE-002` | Each `Sheet` shall carry exactly one discipline designator. | M | P6 | STK-008; BR-012 | T |
+| `DOM-DISCIPLINE-003` | The model shall support extensible designators for jurisdictions that use additional codes (documented per project). | C | P6 | STK-008; BR-012 | T |
+
+## Sheet numbering — `DOM-NUMBERING`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-NUMBERING-001` | The model shall provide a sheet-number scheme of the form `<Discipline><Sheet-type><Sequence>` (e.g. `A-101`), and interpret the sheet-type hundreds digit per NCS (0 general · 1 plans · 2 elevations · 3 sections · 4 enlarged · 5 details · 6 schedules · 9 3D). | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-NUMBERING-002` | The model shall support an alternative jurisdictional numbering scheme configured per project without altering the NCS default. | C | P6 | STK-008; BR-012 | T |
+| `DOM-NUMBERING-003` | Renumbering a sheet or a range of sheets shall update every cross-reference (callouts, match-lines, sheet-index references) to those sheets atomically. | M | P6 | STK-008; NFR-REL-003, CON-012 | T |
+
+## CAD layer standards — `DOM-LAYERSTD`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-LAYERSTD-001` | The model shall provide layer-name catalogs for the US National CAD Standard v6 / AIA Layer Guidelines and for ISO 13567. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-LAYERSTD-002` | A project shall carry a designated active layer standard used to name new layers automatically from element type + status. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-LAYERSTD-003` | The model shall let a project author a per-project layer catalog that extends the active standard without breaking round-trip. | S | P6 | STK-008; BR-012 | T |
+| `DOM-LAYERSTD-004` | The model shall validate a layer name against the active standard and report non-conforming names. | S | P6 | STK-008; NFR-STD-001 | T |
+
+## Plot styles — `DOM-PLOTSTYLE`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-PLOTSTYLE-001` | The model shall represent a colour-dependent plot-style table (CTB) and a named plot-style table (STB), each mapping a key to plotted colour, lineweight, screening (percent), and linetype. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-PLOTSTYLE-002` | The model shall carry an extensible lineweight catalog including the ISO series (0.13 · 0.18 · 0.25 · 0.35 · 0.50 · 0.70 · 1.00 · 1.40 · 2.00 mm). | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-PLOTSTYLE-003` | The model shall carry a linetype catalog (continuous, dashed, hidden, centre, phantom, and user-defined) with an authored dash pattern in paper units. | S | P6 | STK-008; BR-012 | T |
+| `DOM-PLOTSTYLE-004` | A plot-style table shall be applicable at the sheet, viewport, or layer scope, with the innermost binding winning. | S | P6 | STK-008; BR-012 | T |
+
+## Symbols & blocks — `DOM-SYMBOL`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-SYMBOL-001` | The model shall provide a `Symbol` (block) primitive with a base geometry, a set of authored parameters, and a scoping rule (paper-space, model-space, or both). | M | P6 | STK-008; BR-012 | T |
+| `DOM-SYMBOL-002` | The model shall provide a `SymbolInstance` referencing a symbol with a placement, rotation, and per-instance parameter values, without duplicating the symbol geometry. | M | P6 | STK-008; BR-012 | T |
+| `DOM-SYMBOL-003` | Symbols shall support annotative scaling (see `DOM-ANNO`). | M | P6 | STK-008; BR-012 | T |
+| `DOM-SYMBOL-004` | The model shall provide the standard callout/coordination symbol families (grid bubble, section marker, elevation marker, detail marker, north arrow, scale bar, revision cloud, delta tag, match-line marker). | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-SYMBOL-005` | Editing a symbol shall propagate to every instance of that symbol across the project. | M | P6 | STK-008; BR-012, CON-012 | T |
+
+## Dimensions — `DOM-DIM`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-DIM-001` | The model shall provide linear, aligned, angular, radial, diameter, ordinate, and arc-length dimension primitives. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-DIM-002` | A dimension shall reference the geometry it measures (element+vertex/edge/arc), and its reported value shall update when that geometry moves. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `DOM-DIM-003` | The model shall provide a `DimensionStyle` (extension length/offset, arrowhead type/size, text style, precision, tolerance format, unit conversion) applicable per project or per dimension. | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-DIM-004` | Dimensions shall support annotative scaling. | M | P6 | STK-008; BR-012 | T |
+| `DOM-DIM-005` | Dimensions authored in paper space shall report distances in paper units; dimensions in model space shall report distances in the plan's units through the viewport scale. | M | P6 | STK-008; BR-004, BR-012 | T |
+
+## Annotation & annotative scaling — `DOM-ANNO`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-ANNO-001` | The model shall provide text, leader, and callout primitives with position, rotation, and style. | M | P6 | STK-008; BR-012 | T |
+| `DOM-ANNO-002` | Text/leader/dimension/symbol primitives shall carry an annotative-scale set (`{1:20, 1:50, …}`); when displayed in a viewport whose plot scale is enabled on the primitive, the primitive shall render at its configured plotted size (default: 2.5 mm body / 3.5 mm heading text · 2.5 mm arrowhead). | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-ANNO-003` | The model shall provide a `TextStyle` (font, height, width factor, oblique angle) applicable per project or per annotation. | S | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-ANNO-004` | Annotation shall not participate in area/perimeter/length metrics of a plan. | M | P6 | STK-008; NFR-REL-003 | T |
+
+## Grids & levels — `DOM-GRID`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-GRID-001` | The model shall provide a `ColumnGrid` composed of labelled orthogonal (or user-oriented) grid lines, each carrying a bubble label (A/B/C… or 1/2/3…). | M | P6 | STK-008; BR-012 | T |
+| `DOM-GRID-002` | The model shall provide a `LevelDatum` (labelled horizontal reference with elevation) for section and elevation viewports. | S | P6 | STK-008; BR-012 | T |
+| `DOM-GRID-003` | Grid lines and level datums shall render on every viewport whose extent intersects them, unless explicitly hidden. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `DOM-GRID-004` | Renaming a grid line or level shall propagate to every viewport that shows it and to every schedule cell that references it. | M | P6 | STK-008; CON-012 | T |
+
+## Match-lines & callouts — `DOM-MATCHLINE`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-MATCHLINE-001` | The model shall provide a `MatchLine` polyline on a viewport that carries a reference to the adjoining sheet + viewport, and a `Callout` primitive (section, elevation, detail) that carries a reference to a destination sheet + drawing number. | M | P6 | STK-008; BR-012 | T |
+| `DOM-MATCHLINE-002` | Callouts and match-lines shall auto-render the current sheet/drawing number of their target, updating on renumber. | M | P6 | STK-008; CON-012 | T |
+| `DOM-MATCHLINE-003` | Creating a section/elevation/detail callout shall create (or link to) a reciprocal marker on the destination drawing, preserving referential integrity. | M | P6 | STK-008; NFR-REL-003 | T |
+| `DOM-MATCHLINE-004` | The model shall report broken callout/match-line references (destination missing or renumbered without an update path). | M | P6 | STK-008; NFR-REL-003 | T |
+
+## Schedules — `DOM-SCHEDULE`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-SCHEDULE-001` | The model shall provide a `Schedule` primitive representing a query over domain objects (e.g. all `Door` objects on the project, grouped by fire rating), plus column definitions and formatting. | M | P6 | STK-008; BR-012, CON-012 | T |
+| `DOM-SCHEDULE-002` | Schedule rows shall be derived from the underlying objects and shall not carry independent state. | M | P6 | STK-008; CON-012 | T |
+| `DOM-SCHEDULE-003` | The model shall support standard schedule types (door, window, room/finish, panel, fixture, equipment) with a documented default column set. | M | P6 | STK-008; BR-012 | T |
+| `DOM-SCHEDULE-004` | The model shall support derived cells (total, count, area sum, unit sum) with a defined evaluation order. | S | P6 | STK-008; BR-012 | T |
+| `DOM-SCHEDULE-005` | Schedule computation shall be deterministic (`DOM-COMPUTE-001`). | M | P6 | STK-008; NFR-REL-002 | T |
+
+## Revisions & issues — `DOM-REV`, `DOM-ISSUE`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-REV-001` | The model shall provide a `RevisionCloud` (scalloped polyline with metadata) and a `DeltaTag` (numbered triangle) primitive that anchor to a sheet's paper-space region. | M | P6 | STK-008; BR-012 | T |
+| `DOM-REV-002` | The model shall maintain a per-sheet revision block: an ordered list of revisions (number, date, description, drawn/approved by). | M | P6 | STK-008; BR-012, CON-011 | T |
+| `DOM-REV-003` | A revision shall track which sheets it touches, so a batch operation can plot only touched sheets. | S | P6 | STK-008; BR-012 | T |
+| `DOM-ISSUE-001` | The model shall provide an `IssueSet` (name, purpose, issue date, member sheets, per-sheet revision-pin) representing a formal release. | M | P6 | STK-008; BR-012, BR-007 | T |
+| `DOM-ISSUE-002` | Issue-sets shall be immutable once released; edits create a superseding issue-set rather than mutating the prior. | M | P6 | STK-008, STK-003; BR-007, NFR-SEC-001 | T |
+| `DOM-ISSUE-003` | The model shall stamp every sheet of a released issue-set with the issue name, date, and per-sheet revision at release time. | M | P6 | STK-008; BR-012 | T |
+
+## External references — `DOM-XREF`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `DOM-XREF-001` | The model shall represent an external reference from a sheet/viewport to another project artefact (another sheet, a schedule, an imported CAD file) with a resolvable path and cached last-known version. | M | P6 | STK-008; BR-012 | T |
+| `DOM-XREF-002` | The model shall invalidate a viewport's cached render when any xref target changes, so the next render reflects the change. | M | P6 | STK-008; CON-012 | T |
+| `DOM-XREF-003` | The model shall detect and report a broken or circular xref chain. | M | P6 | STK-008; NFR-REL-003 | T |

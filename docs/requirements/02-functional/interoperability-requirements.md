@@ -139,6 +139,66 @@ the **Trace** column here.
 | `IOP-CRSX-002` | The system shall reproject imported/exported geometry between the source CRS and the plan CRS with the correct datum transformation. | M | P3 | STK-001; BR-004 | T |
 | `IOP-CRSX-003` | The system shall warn the user when a chosen CRS is unsuitable for area/distance work (e.g. a geographic or Web-Mercator CRS used as the plan CRS). | S | P3 | STK-001; NFR-COMPAT-002 | D |
 
+## Multi-sheet DXF/DWG sheet-set export — `IOP-DXFSHEET`
+
+Phase-6 sheet-set export that preserves layouts, viewports, xrefs, plot styles,
+and NCS-conformant layer names. Distinct from the planar `IOP-DXF` basemap
+interchange.
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `IOP-DXFSHEET-001` | The system shall export a sheet-set as DXF (and, where DEP-006 permits, DWG), one layout per sheet, preserving viewport extent, plot scale, clipping, and rotation. | M | P6 | STK-008; BR-012, DEP-006 | T |
+| `IOP-DXFSHEET-002` | The export shall preserve per-viewport layer overrides (visibility, colour, lineweight, linetype). | M | P6 | STK-008; BR-012 | T |
+| `IOP-DXFSHEET-003` | The export shall preserve title blocks, dimensions, text, symbols/blocks (including annotative scale sets), and revision graphics. | M | P6 | STK-008; BR-012 | T |
+| `IOP-DXFSHEET-004` | The export shall preserve xref relationships between sheets and referenced drawings/schedules. | S | P6 | STK-008; BR-012 | T |
+| `IOP-DXFSHEET-005` | The export shall write layer names conformant with the project's active layer standard (`DOM-LAYERSTD`). | M | P6 | STK-008; BR-012, CON-011 | T |
+| `IOP-DXFSHEET-006` | Sheet-set import from a well-formed DXF/DWG shall reconstruct sheets, layouts, viewports, title-block instances, layers, and per-viewport overrides. | S | P6 | STK-008; BR-012 | T |
+
+## Multi-sheet PDF plot output — `IOP-PDFSHEET`
+
+Phase-6 multi-sheet PDF, distinct from the single-page `IOP-PDF` exhibit.
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `IOP-PDFSHEET-001` | The system shall export a sheet-set as a single multi-sheet PDF in sheet-number order with a bookmark per sheet and per discipline. | M | P6 | STK-008; BR-012, DEP-005 | T |
+| `IOP-PDFSHEET-002` | The system shall alternatively export the sheet-set as a per-sheet ZIP archive of single-page PDFs. | S | P6 | STK-008; BR-012 | T |
+| `IOP-PDFSHEET-003` | The system shall optionally produce a PDF conformant with PDF/A-2 (ISO 19005-2) for archival submission. | S | P6 | STK-008; BR-012, DEP-005 | T |
+| `IOP-PDFSHEET-004` | The system shall optionally produce a PDF conformant with PDF/E-1 (ISO 24517-1) for engineering deliverables. | C | P6 | STK-008; BR-012, DEP-005 | T |
+| `IOP-PDFSHEET-005` | The PDF shall embed all fonts used by annotations, dimensions, and title blocks. | M | P6 | STK-008; NFR-PLOT-002, DEP-005 | T |
+| `IOP-PDFSHEET-006` | The PDF shall be plotted at true scale so that a distance measured on a printed sheet at 100 % is within the plot scale tolerance of the intended distance. | M | P6 | STK-008; NFR-PLOT-001 | A |
+| `IOP-PDFSHEET-007` | The PDF shall preserve layer/optional-content groups so that consumers with a compatible viewer can toggle disciplines/layers. | S | P6 | STK-008; BR-012, DEP-005 | T |
+| `IOP-PDFSHEET-008` | The PDF export flow shall include a manifest file listing sheet number, title, revision, and issue for every sheet in the bundle. | S | P6 | STK-008, STK-003; BR-007 | T |
+
+## Plot-style-table interchange — `IOP-PLTSTYLE`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `IOP-PLTSTYLE-001` | The system shall import a colour-dependent plot-style table (CTB) or a named plot-style table (STB) supplied by a project team and apply it to sheet-set plots. | S | P6 | STK-008; BR-012, CON-011 | T |
+| `IOP-PLTSTYLE-002` | The system shall export the project's active plot-style tables in CTB/STB form for consumers who require them for downstream production. | S | P6 | STK-008; BR-012 | T |
+
+## CAD layer-name mapping — `IOP-LAYERMAP`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `IOP-LAYERMAP-001` | On import the system shall let a user map source CAD layer names to the project's active layer standard (NCS/AIA/ISO 13567) with a documented default. | M | P6 | STK-008; BR-012, CON-011 | D |
+| `IOP-LAYERMAP-002` | The system shall persist a named layer-mapping profile per source template for reuse across imports from the same source. | S | P6 | STK-008; BR-012 | T |
+| `IOP-LAYERMAP-003` | On export the system shall emit layers using the project's active layer standard, or a caller-specified alternative standard, without altering the on-project canonical names. | S | P6 | STK-008; BR-012 | T |
+
+## Title-block interchange — `IOP-TITLEBLOCK`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `IOP-TITLEBLOCK-001` | The system shall import a title-block template supplied as a DWG/DXF drawing (block definition + attribute placeholders) into the project's title-block catalog. | S | P6 | STK-008; BR-012, DEP-006 | T |
+| `IOP-TITLEBLOCK-002` | The import shall map DWG/DXF block attributes to the ISO 7200 data fields and prompt for unmapped attributes. | S | P6 | STK-008; BR-012, CON-011 | D |
+| `IOP-TITLEBLOCK-003` | The system shall export a title-block template as a DWG/DXF block for round-trip. | C | P6 | STK-008; BR-012 | T |
+
+## Symbol / block library interchange — `IOP-BLOCK`
+
+| ID | Requirement | Pri | Phase | Trace | Verify |
+| --- | --- | :--: | :--: | --- | :--: |
+| `IOP-BLOCK-001` | The system shall import a DWG/DXF block library archive into the project or organisation symbol palette, preserving attributes and (where present) annotative-scale sets. | S | P6 | STK-008; BR-012, DEP-006 | T |
+| `IOP-BLOCK-002` | The system shall export placed symbols as DWG/DXF block instances on sheet-set export, preserving the block-instance relationship rather than exploding to primitive geometry. | S | P6 | STK-008; BR-012 | T |
+
 ## Format coverage summary
 
 | Format | Import | Export | Priority | Phase |
@@ -146,14 +206,21 @@ the **Trace** column here.
 | GeoJSON | ✓ | ✓ | M | P3 |
 | KML/KMZ | ✓ | ✓ | S | P3 |
 | Shapefile | ✓ | ✓ | M / S | P3 |
-| DXF/DWG | ✓ | ✓ | M / S | P3 |
+| DXF/DWG (basemap) | ✓ | ✓ | M / S | P3 |
+| DXF/DWG sheet-set | ✓ | ✓ | S / M | P6 |
 | GeoPackage | ✓ | ✓ | C | P3 |
 | GeoTIFF (raster underlay) | ✓ | — | M | P3 |
 | Image/PDF underlay | ✓ | — | S | P3 |
-| PDF exhibit | — | ✓ | S | P3 |
+| PDF exhibit (single page) | — | ✓ | S | P3 |
+| PDF sheet-set (multi-page) | — | ✓ | M | P6 |
+| PDF/A-2 archival | — | ✓ | S | P6 |
+| PDF/E-1 engineering | — | ✓ | C | P6 |
 | CSV | ✓ | ✓ | C | P3 |
+| Plot-style tables (CTB/STB) | ✓ | ✓ | S | P6 |
+| Title-block templates (DWG/DXF block) | ✓ | ✓ | S / C | P6 |
+| Symbol/block libraries (DWG/DXF) | ✓ | ✓ | S | P6 |
 
 > Formats deliberately **excluded** for now (per [scope](../00-overview/scope-and-context.md#out-of-scope-non-goals)):
-> LandXML, CityGML, IFC, and glTF/OBJ 3D exchange. These are candidates for a
-> later phase if 3D and civil-engineering interchange enter scope; they are not
-> requirements today.
+> LandXML, CityGML, IFC/BIM, and glTF/OBJ 3D exchange. These are candidates for a
+> later phase if 3D and BIM interchange enter scope; they are not requirements
+> today. Sheet-set interchange is scoped to DXF/DWG and PDF variants.

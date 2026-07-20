@@ -8,8 +8,10 @@ goal to verification.
 
 It is grounded in a survey of established site- and community-planning software
 (AutoCAD/Civil 3D, ArcGIS Urban/Pro, CityEngine, UrbanFootprint, TestFit, Modelur,
-and collaborative web canvases) and structured to align with **ISO/IEC/IEEE
-29148**.
+and collaborative web canvases) plus a Phase-6 grounding in architecture &
+engineering CAD-sheet standards (US National CAD Standard v6, AIA CAD Layer
+Guidelines, ISO 13567, ANSI/ASME Y14.1, ISO 5457, ISO 7200, ISO 128/129/3098,
+PDF/A-2, PDF/E-1). It is structured to align with **ISO/IEC/IEEE 29148**.
 
 > New here? Read the [SRS](00-overview/SRS.md) for the 2-minute map, then jump to
 > the [Traceability Matrix](04-traceability/traceability-matrix.md) to see how it
@@ -19,11 +21,12 @@ and collaborative web canvases) and structured to align with **ISO/IEC/IEEE
 
 | | |
 | --- | --- |
-| **Requirements** | 419 total — 319 functional, 68 non-functional, 11 business, 7 stakeholder, 10 constraints, 4 dependencies |
-| **Frontend** | 108 requirements (`apps/web`) |
-| **Backend & shared** | 211 requirements (backend services 75 · `packages/domain` 101 · interop 35) |
+| **Requirements** | 624 total — 500 functional, 86 non-functional, 12 business, 8 stakeholder, 12 constraints, 6 dependencies |
+| **Frontend** | 175 requirements (`apps/web`) |
+| **Backend & shared** | 325 requirements (backend services 100 · `packages/domain` 166 · interop 59) |
 | **Traceability** | BR → STK → {FE, BE, DOM, IOP} → phase · module · verification (RTM generated from source) |
 | **Status** | Draft · specified, not yet built (repo is Phase-0 scaffold) |
+| **Phase coverage** | Phase 1 (domain foundation) → Phase 6 (architecture & engineering CAD sheets) |
 
 ## How to navigate
 

@@ -19,9 +19,15 @@ verifiably — so the team builds the right product and can prove it did.
 ### 1.2 Scope
 See [scope & context](scope-and-context.md). In scope: a collaborative,
 web-native planning workspace; cloud services for identity, projects, geospatial,
-and collaboration; a framework-agnostic planning domain model; and interop with
-GeoJSON/KML/Shapefile/DXF/GeoPackage/CSV/PDF. Out of scope: mechanical CAD, a full
-GIS suite, and construction-documentation deliverables.
+and collaboration; a framework-agnostic planning domain model; interop with
+GeoJSON/KML/Shapefile/DXF/GeoPackage/CSV/PDF; and **architecture &
+engineering CAD sheet production** (Phase 6) with standards-conformant sheet
+sets (US NCS · AIA · ISO 13567 · ISO 5457 · ISO 7200 · ISO 128/129/3098),
+plot-style tables, annotative dimensions and symbols, data-driven schedules,
+revision management, and multi-sheet PDF / DXF / DWG output. Out of scope:
+mechanical CAD; a full GIS suite; and engineering *calculations* on the
+sheets themselves (structural, hydraulic, energy) — sheet production is in
+scope, the analyses that populate those sheets are not.
 
 ### 1.3 Definitions
 Planning terms use the project [glossary](../../GLOSSARY.md); technical/UI terms
@@ -47,15 +53,16 @@ successor to the archived database-design app under [`artifact/`](../../../artif
 which is read-only reference only.
 
 ### 2.2 Users
-Seven actors from site planner to community stakeholder to integrator —
-see [stakeholders](../01-business/stakeholders.md).
+Eight actors from site planner to community stakeholder to integrator to
+architect/engineer/CAD manager — see [stakeholders](../01-business/stakeholders.md).
 
 ### 2.3 Constraints, assumptions & dependencies
-Ten binding constraints (`CON-001`–`CON-010`) and four external dependencies
-(`DEP-001`–`DEP-004`, each with its degraded-mode behavior) —
+Twelve binding constraints (`CON-001`–`CON-012`) and six external dependencies
+(`DEP-001`–`DEP-006`, each with its degraded-mode behavior) —
 see [scope & context](scope-and-context.md#constraints--assumptions). Chief among
 the constraints: web-first, cloud-first, domain-native, spatially explicit,
-framework-agnostic domain model, GPLv3.
+framework-agnostic domain model, GPLv3, and CAD-sheet output that conforms to
+recognised industry standards and is composed from the shared planning model.
 
 ### 2.4 Design & competitive grounding
 Requirement areas are justified against established tools (AutoCAD/Civil 3D,
@@ -68,13 +75,13 @@ The detailed catalog, by layer:
 
 | Layer | Document | Count |
 | --- | --- | :--: |
-| Business | [business-requirements.md](../01-business/business-requirements.md) | 11 |
-| Stakeholder | [stakeholders.md](../01-business/stakeholders.md) | 7 |
-| Functional — Frontend | [frontend-requirements.md](../02-functional/frontend-requirements.md) | 108 |
-| Functional — Backend | [backend-requirements.md](../02-functional/backend-requirements.md) | 75 |
-| Functional — Domain model | [domain-requirements.md](../02-functional/domain-requirements.md) | 101 |
-| Functional — Interoperability | [interoperability-requirements.md](../02-functional/interoperability-requirements.md) | 35 |
-| Non-functional | [nonfunctional-requirements.md](../03-nonfunctional/nonfunctional-requirements.md) | 68 |
+| Business | [business-requirements.md](../01-business/business-requirements.md) | 12 |
+| Stakeholder | [stakeholders.md](../01-business/stakeholders.md) | 8 |
+| Functional — Frontend | [frontend-requirements.md](../02-functional/frontend-requirements.md) | 175 |
+| Functional — Backend | [backend-requirements.md](../02-functional/backend-requirements.md) | 100 |
+| Functional — Domain model | [domain-requirements.md](../02-functional/domain-requirements.md) | 166 |
+| Functional — Interoperability | [interoperability-requirements.md](../02-functional/interoperability-requirements.md) | 59 |
+| Non-functional | [nonfunctional-requirements.md](../03-nonfunctional/nonfunctional-requirements.md) | 86 |
 
 ## 4. Verification & traceability
 

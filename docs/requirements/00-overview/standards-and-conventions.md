@@ -22,6 +22,12 @@ following:
   semantics referenced by the domain and interoperability requirements.
 - **WCAG 2.2 AA** and **OWASP ASVS 4.0** — external criteria referenced by
   accessibility and security NFRs respectively.
+- **US National CAD Standard v6 / AIA CAD Layer Guidelines**, **ISO 13567**,
+  **ANSI/ASME Y14.1**, **ISO 5457**, **ISO 7200**, and **ISO 128 / 129 / 3098**
+  — CAD sheet, layer, title-block, and drawing-convention standards referenced
+  by the Phase-6 sheet-production requirements and by `CON-011`.
+- **PDF/A (ISO 19005)** and **PDF/E-1 (ISO 24517-1)** — archival and
+  engineering PDF variants referenced by multi-sheet plot output.
 
 These are references, not compliance obligations. Where a requirement claims
 conformance it says so explicitly and names the criterion.
@@ -92,6 +98,17 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `PREFS` | Display, unit, and theme preferences |
 | `PRINT` | Print & exhibit-sheet output |
 | `SCENARIO` | Scenario/variant comparison (client) |
+| `SHEET` | CAD sheet composer: layouts (paper space), sheet size, per-sheet properties |
+| `VIEWPORT` | Viewports on a layout: extent, scale, clipping, per-viewport layer overrides |
+| `TITLE` | Title-block editor and per-sheet title-block data binding |
+| `PLOT` | Plot styles / lineweights / pen tables / plot preview |
+| `ANNO` | Annotation authoring: dimensions, text, leaders, callouts with annotative scaling |
+| `SYMBOL` | Symbol / block library palette and placement |
+| `GRIDLINE` | Column-grid and level datum authoring and display |
+| `MATCHLINE` | Match lines and section/elevation/detail callouts across sheets |
+| `SCHEDULE` | Schedule / table editor (door, window, room/finish, panel, fixture, equipment) |
+| `REV` | Revision clouds, delta tags, revision-block editing |
+| `SHEETSET` | Sheet-set browser (project navigator), filters, batch plot |
 
 **Backend (`BE-…`)** — the cloud services (`services/*`):
 
@@ -113,6 +130,11 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `NOTIFY` | Notification delivery (in-app, email) | `services/collaboration` |
 | `SEARCH` | Project listing, filtering, search | `services/projects` |
 | `WEBHOOK` | Integrator event webhooks | all |
+| `SHEET` | Sheet-set persistence, layout/viewport rendering, per-sheet plot generation | `services/geospatial` |
+| `TEMPLATE` | Title-block templates, sheet templates, symbol/block library storage & versioning | `services/projects` |
+| `PLOT` | Plot-style/CTB/STB table storage, batch plot orchestration | `services/geospatial` |
+| `SCHEDULE` | Server-side extraction of schedules (door/window/room/finish/panel) from domain objects | `services/projects` |
+| `PACKAGE` | Issue-set release packaging: bundle sheets + manifest + checksums into deliverables | `services/projects` |
 
 **Domain model (`DOM-…`)** — `packages/domain`:
 
@@ -146,6 +168,22 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `SERIAL` | Plan serialization & portability |
 | `COMPUTE` | Computation determinism |
 | `SNAPSHOT` | Immutable snapshots & diff |
+| `SHEET` | Sheet, layout, viewport primitives; sheet-relative (paper) vs model-relative geometry |
+| `TITLEBLOCK` | Title-block template model, data fields, per-sheet binding |
+| `SHEETSET` | Sheet-set collection, ordering, filters |
+| `DISCIPLINE` | Discipline designators (NCS v6: G, H, V, B, C, L, S, A, I, Q, F, P, D, M, E, T, R, X, Z, O) |
+| `NUMBERING` | Sheet-numbering schemes (`<Discipline><Sheet-type><Sequence>`), automatic renumbering |
+| `LAYERSTD` | CAD layer standards (NCS/AIA, ISO 13567) and layer catalogs |
+| `PLOTSTYLE` | Plot-style tables (CTB/STB), lineweight, linetype, and colour maps |
+| `SYMBOL` | Symbol/block model with parametric attributes |
+| `DIM` | Dimension primitives (linear, aligned, angular, radial, ordinate, arc-length) |
+| `ANNO` | Text, leader, callout, and annotative-scale model |
+| `GRID` | Building column grids (A/B/C, 1/2/3) and level datums |
+| `MATCHLINE` | Match-line and section/elevation/detail-callout model |
+| `SCHEDULE` | Schedule/table model derived from domain-object queries |
+| `REV` | Revision, revision cloud, delta tag, revision-block model |
+| `XREF` | External references between sheets/drawings and their invalidation |
+| `ISSUE` | Named issue sets (For Permit / For Bid / IFC / As-Built) and per-sheet stamping |
 
 **Interoperability (`IOP-…`)** — importers/exporters:
 
@@ -168,6 +206,12 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `GEOMX` | Unsupported-geometry handling |
 | `PREC` | Coordinate precision on export |
 | `CRSX` | Cross-format CRS handling |
+| `DXFSHEET` | DXF/DWG multi-sheet export (layouts, viewports, xrefs, plot styles) |
+| `PDFSHEET` | Multi-sheet PDF plot output (incl. PDF/A, PDF/E-1) |
+| `PLTSTYLE` | Plot-style-table (CTB/STB) import/export and translation |
+| `LAYERMAP` | Layer-name mapping to/from NCS/AIA/ISO 13567 on import/export |
+| `TITLEBLOCK` | Title-block block-import from external DWG/DXF templates |
+| `BLOCK` | Symbol/block library round-trip (import DWG/DXF blocks, export as blocks) |
 
 **Non-functional (`NFR-…`)** — categories from ISO/IEC 25010:
 
@@ -189,6 +233,8 @@ Examples: `BR-003`, `STK-002`, `FE-CANVAS-004`, `BE-AUTH-002`,
 | `I18N` | Internationalization & localization |
 | `MOD` | Content safety & moderation |
 | `BENCH` | Benchmarks & performance validation |
+| `PLOT` | Plot fidelity: paper accuracy, lineweight rendering, scale trueness, font embedding |
+| `STD` | Standards conformance for sheet size, layer naming, title-block fields, numbering |
 
 ## Requirement attributes
 
@@ -251,6 +297,8 @@ way performance targets are — see [`NFR-BENCH`](../03-nonfunctional/nonfunctio
 | **Conversion tolerance** | Max error permitted when converting between units. | ≤ 1 part in 10⁶ | `DOM-UNIT-003` |
 | **Metric tolerance** | Max deviation of an area/distance metric from an authoritative GIS for the same input. | ≤ 0.1% relative | `NFR-COMPAT-002`, `DOM-METRIC-*` |
 | **Interoperability tolerance** | Max positional shift permitted on a format round-trip. | ≤ coordinate tolerance for projected CRS; ≤ 1 mm equivalent for geographic | `NFR-COMPAT-001`, `IOP-*` |
+| **Plot scale tolerance** | Max deviation of a printed distance from the nominal scaled distance on a physical (or true-scale PDF) plot. | ≤ 0.2 mm at plot scale | `NFR-PLOT-001`, `IOP-PDFSHEET-*` |
+| **Annotation plot size** | Nominal plotted text height for schedule and body text; nominal arrowhead length; nominal linetype dash gap — all pinned so annotative scaling can be verified. | body text 2.5 mm; headings 3.5 mm; arrowheads 2.5 mm | `DOM-ANNO-*`, `DOM-DIM-*`, `NFR-PLOT-002` |
 
 ## Traceability model
 

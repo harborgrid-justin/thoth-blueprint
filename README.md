@@ -66,6 +66,11 @@ team and community stakeholders — all in the browser, all in the cloud.
   program/zoning compliance surfaced as you plan.
 - 🔐 **Governed & auditable** — versioning, checkpoints, and an audit trail suitable
   for public review processes.
+- 📄 **Architecture & engineering CAD sheets** — turn the live plan into a
+  standards-conformant sheet set (US NCS · AIA · ISO 13567 · ISO 5457 · ISO 7200)
+  with title blocks, viewports at plot scale, annotative dimensions, symbol
+  libraries, grids, coordination callouts, data-driven schedules, revisions,
+  and multi-sheet PDF / DXF / DWG output for permit, bid, and IFC issue sets.
 
 > Not all of this exists yet, but a lot does: the **planning workspace runs today**
 > (`npm run dev`) on an **implemented, tested domain model** — drawing, layers,
