@@ -20,9 +20,9 @@ Use these exact terms for types, functions, and UI:
 
 - **Spatial:** Coordinate Reference System (CRS), Units, Scale, Geometry, Layer.
 - **Primitives:** `Site`, `Parcel`, `Lot`, `Zone`, `LandUse`, `RightOfWay`,
-  `Setback`, `ZoningEnvelope`, `InfrastructureNetwork`.
+  `Setback`, `ZoningEnvelope`, `InfrastructureNetwork`, `SoilType`, `ErosionControl`.
 - **Operations/metrics:** `subdivision`, `coverage`, `density`,
-  `landUseAllocation`, `complianceCheck`.
+  `landUseAllocation`, `complianceCheck`, `auditErosionCompliance`.
 - **Collaboration:** `Project`, `Checkpoint`, `Version`, `ReviewThread`, `Presence`,
   `Audit Trail`.
 
@@ -45,6 +45,7 @@ glossary term or propose a glossary update in the same change.
    it.
 6. **Named tolerances.** Geometric comparisons use named, documented tolerance
    constants — never bare magic numbers.
+7. **Strict mathematical boundaries & Regulations.** Reject any subdivision or collision logic that fails to enforce strict boundaries. Code must throw explicit, realistic errors when given physically impossible geometries or parameters that violate state/local regulations (e.g. 9VAC25-875 erosion standards).
 
 ## Review output
 

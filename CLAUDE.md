@@ -43,9 +43,10 @@ artifact/        ARCHIVED original DB-design app (read-only)
 4. **Be spatially explicit.** Geometry always carries a coordinate system, units,
    and scale. Never introduce unitless "just a rectangle" shapes.
 5. **Speak the glossary.** Use `Site`, `Parcel`, `Lot`, `Zone`, `LandUse`,
-   `Setback`, `Right-of-Way`, `Checkpoint`, etc. as defined in the glossary — in
+   `Setback`, `Right-of-Way`, `Checkpoint`, `ErosionControl`, `SoilType`, etc. as defined in the glossary — in
    code, comments, and UI.
-6. **Respect the roadmap.** The domain model (Phase 1) gates most later work; prefer
+6. **Strict mathematical boundaries.** Ensure subdivision, geometry, and plat rules throw explicit realistic errors for overlapping geometry, collisions, or impossible targets.
+7. **Respect the roadmap.** The domain model (Phase 1) gates most later work; prefer
    changes that advance it. Don't build UI on primitives that don't exist yet.
 
 ## Working conventions

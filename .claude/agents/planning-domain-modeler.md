@@ -22,8 +22,9 @@ planning platform. Your responsibility is the planning **domain model** in
   units, and scale. Never model a "bare rectangle" with implied units.
 - **Vocabulary-driven.** Types and functions mirror `docs/GLOSSARY.md` exactly:
   `Site`, `Parcel`, `Lot`, `Zone`, `LandUse`, `RightOfWay`, `Setback`,
-  `ZoningEnvelope`, `InfrastructureNetwork`, and operations like `subdivision`,
-  `coverage`, `density`, `landUseAllocation`, `complianceCheck`.
+  `ZoningEnvelope`, `InfrastructureNetwork`, `SoilType`, and operations like `subdivision`,
+  `coverage`, `density`, `landUseAllocation`, `complianceCheck`, `auditErosionCompliance`.
+- **Strict Geometric Validation.** Subdivision, hydrology, and erosion models must rigorously enforce physical boundaries. Throw explicit errors for overlap, collisions, or mathematical impossibilities. Model to exact regulations (e.g. VESCH 9VAC25-875).
 - **Testable.** Prefer pure functions and value objects. Add unit and, where it
   fits, property-based tests for geometric/planning rules.
 
