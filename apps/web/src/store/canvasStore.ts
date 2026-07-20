@@ -56,6 +56,9 @@ interface CanvasState {
   setViewMode(mode: "2d" | "3d"): void;
   requestFit(): void;
   requestFitSelection(): void;
+  namedViews: { name: string; viewport: Viewport }[];
+  addNamedView(name: string): void;
+  deleteNamedView(name: string): void;
 }
 
 export const useCanvasStore = create<CanvasState>((set, get) => ({
@@ -139,5 +142,22 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
   },
   requestFitSelection() {
     set((s) => ({ fitSelectionRequestId: s.fitSelectionRequestId + 1 }));
+  },
+
+  namedViews: [
+    { name: "Site View", viewport: { offsetX: 0, offsetY: 0, zoom: 3 } },
+    { name: "South Subdivision", viewport: { offsetX: 100, offsetY: 150, zoom: 5 } },
+    { name: "Retention Pond", viewport: { offsetX: -120, offsetY: -200, zoom: 6 } },
+  ],
+  addNamedView(name) {
+    const viewport = get().viewport;
+    set((s) => ({
+      namedViews: [...s.namedViews.filter((v) => v.name !== name), { name, viewport }],
+    }));
+  },
+  deleteNamedView(name) {
+    set((s) => ({
+      namedViews: s.namedViews.filter((v) => v.name !== name),
+    }));
   },
 }));

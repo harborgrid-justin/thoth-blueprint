@@ -7,6 +7,8 @@ import {
   measuredPerimeter,
   type LandUseCategory,
   type PlanElement,
+  resolveAlignment,
+  validateAlignmentDesignSpeed,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useUiStore } from "@/store/uiStore";
@@ -37,7 +39,54 @@ export function PropertiesPanel() {
           <Field label="Units" value={site.spatial.units} readOnly />
           <Field label="Scale" value={`1:${site.spatial.scale}`} readOnly />
         </div>
-        <p className="text-xs leading-relaxed text-muted-foreground/70">
+
+        {/* Alignment Design Criteria & AASHTO Checks */}
+        {site.alignments && site.alignments.length > 0 && (
+          <div className="mt-2 border-t border-border/40 pt-3">
+            <h4 className="font-semibold text-muted-foreground text-[10px] uppercase tracking-wide mb-1.5">
+              Alignment Design Speeds &amp; Checks
+            </h4>
+            <div className="flex flex-col gap-2">
+              {site.alignments.map((align) => {
+                const resolved = resolveAlignment(align);
+                if (!resolved) return null;
+                const checks = validateAlignmentDesignSpeed(align, resolved);
+                const speed = align.designSpeed ?? 35;
+                const violations = checks.filter((c) => c.isViolation);
+
+                return (
+                  <div key={align.id} className="rounded border border-border bg-muted/10 p-2">
+                    <div className="flex justify-between items-center text-[11px] font-semibold">
+                      <span className="text-primary">{align.name}</span>
+                      <span className="text-muted-foreground">{speed} MPH</span>
+                    </div>
+                    <div className="text-[10px] text-muted-foreground mt-1 flex justify-between">
+                      <span>Length: {resolved.length.toFixed(1)} ft</span>
+                      <span>Curves: {resolved.curves.length}</span>
+                    </div>
+                    
+                    {/* Violations List */}
+                    {violations.length > 0 ? (
+                      <div className="mt-1.5 flex flex-col gap-1">
+                        {violations.map((v, idx) => (
+                          <div key={idx} className="text-[9px] text-rose-400 bg-rose-500/10 rounded px-1.5 py-0.5 border border-rose-500/15">
+                            ⚠️ Min R: {v.requiredRadius} ft | Curve R: {v.curveRadius.toFixed(1)} ft
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-[9px] text-emerald-400 bg-emerald-500/10 rounded px-1.5 py-0.5 border border-emerald-500/15 mt-1.5">
+                        ✅ Design standards fully satisfied.
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        <p className="text-xs leading-relaxed text-muted-foreground/70 mt-1">
           Select an element to edit its planning attributes, or pick a drawing tool to add parcels,
           zones, lots, land uses, and buildings.
         </p>

@@ -43,6 +43,10 @@ export interface HorizontalAlignment {
   startStation: number;
   /** Parallel offset lines to generate (edge of pavement, right-of-way, …). */
   offsets?: AlignmentOffset[];
+  /** Default Design Speed in mph (e.g. 45) */
+  designSpeed?: number;
+  /** Station-specific design speeds (e.g., zones) */
+  designSpeeds?: { station: number; speed: number }[];
 }
 
 /** Resolved circular curve at a PI, with the values a plan sheet lists. */
@@ -399,3 +403,63 @@ export function formatStation(value: number, precision = 2): string {
   const plus = (v - sta * 100).toFixed(precision).padStart(precision + 3, "0");
   return `${neg ? "-" : ""}${sta}+${plus}`;
 }
+
+export interface DesignSpeedCheckResult {
+  piIndex: number;
+  station: number;
+  curveRadius: number;
+  requiredRadius: number;
+  designSpeed: number;
+  isViolation: boolean;
+  message: string;
+}
+
+/**
+ * Validates alignment curve radii against AASHTO design speed standards.
+ * Minimum radius values for eMax=6% crown rate.
+ */
+export function validateAlignmentDesignSpeed(
+  alignment: HorizontalAlignment,
+  resolved: ResolvedAlignment
+): DesignSpeedCheckResult[] {
+  const defaultSpeed = alignment.designSpeed ?? 35;
+  const checks: DesignSpeedCheckResult[] = [];
+
+  const getMinRadius = (speed: number): number => {
+    if (speed <= 15) return 50;
+    if (speed <= 25) return 150;
+    if (speed <= 35) return 350;
+    if (speed <= 45) return 600;
+    if (speed <= 55) return 1000;
+    return 1600; // 65 mph or above
+  };
+
+  const getSpeedAtStation = (station: number): number => {
+    const zones = alignment.designSpeeds ?? [];
+    const zone = [...zones].sort((a, b) => b.station - a.station).find((z) => station >= z.station);
+    return zone ? zone.speed : defaultSpeed;
+  };
+
+  for (const curve of resolved.curves) {
+    const station = curve.pcStation;
+    const speed = getSpeedAtStation(station);
+    const minRad = getMinRadius(speed);
+    const radius = curve.radius;
+
+    const isViolation = radius < minRad;
+    checks.push({
+      piIndex: curve.piIndex,
+      station,
+      curveRadius: radius,
+      requiredRadius: minRad,
+      designSpeed: speed,
+      isViolation,
+      message: isViolation
+        ? `Curve at station ${formatStation(station)} has radius ${radius.toFixed(1)} which is less than AASHTO minimum of ${minRad} for design speed ${speed} mph.`
+        : `Curve at station ${formatStation(station)} satisfies design standards.`
+    });
+  }
+
+  return checks;
+}
+

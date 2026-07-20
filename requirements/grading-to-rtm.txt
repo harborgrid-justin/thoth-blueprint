@@ -1,0 +1,144 @@
+[MIGRATED TO RTM_PART_73.md - RESIDENTIAL GRADING & FEATURE LINES]
+
+ CI125140 
+Residential Subdivision Grading—Grading Beyond the Roads 
+Brian J. Hailey, P.E. CAD-1 
+Learning Objectives 
+. 
+Create and Edit Feature Lines Effectively 
+
+. 
+Maximize Efficiency and accuracy while grading 
+
+. 
+Stylize and label Feature Lines to assist in the grading process 
+
+. 
+Create final grading surfaces to be used by the rest of the project 
+
+
+
+
+Description 
+That final detailed grading around the houses when designing a residential subdivision has always been a time-consuming and tedious process. This class will show you techniques that will let you quickly and accurately grade that final design. The focus of this class will be primarily on using feature lines to grade out the lots. You will learn different techniques for creating feature lines, most of the editing tools for feature lines, how to stylize and label your feature lines, and how they can be incorporated into a surface. Even if you’ve never graded a subdivision and never plan on doing so, if you’ve ever done any grading at all, you’ll benefit from this class, as the tools we’ll show here are extremely versatile and you can use them in just about any grading exercise. 
+
+Speaker(s) 
+In 1998, armed with a Bachelor of Science in Civil Engineering from Colorado State University, I began my career working at a general civil engineering firm using Land Desktop (LDT). Within a short time, I became the resident (self-taught) expert in LDT and AutoCAD and then learned AutoCAD Civil 3D upon its release.    Today, as a registered professional engineer in the State of Colorado and technical specialist, it’s my goal to deliver best-in-class training and support for CAD-1 clients using AutoCAD Civil 3D, Infraworks 360 and other Autodesk solutions. To that end, I am professionally certified in Autodesk software, have taught at Autodesk University eight times since 2007 and won the AUGI Top DAUG competition at AU 2011.  With a strong technical skillset and experience as a Civil Engineer and instructor, I regularly provide custom, effective trainings for any size firm. These training sessions include AutoCAD, AutoCAD Civil 3D, AutoCAD Map3D, and InfraWorks 360. 
+
+
+
+Feature Lines 
+What are Feature Lines? 
+In short, feature lines are the replacement of the 3D polyline in Civil 3D. They are linear features that have elevation but unlike the 3D polyline, feature lines can have curves (3D polylines must approximate a curve with short straight segments). Feature lines can be created manually, from existing AutoCAD objects, or from Civil 3D objects such as alignments and corridors. Feature lines also can interact with each other if they exist in the same site (sites will be discussed shortly). Feature lines can be used as the footprint for the grading tools, as breaklines in surfaces, and as the baseline for a corridor. These are standard things feature lines are used for, but they aren’t limited to this. People have used feature lines for a multitude of things in a design, from the edge of asphalt in a complex corridor to representing pipes to just about any other feature on a project. 
+
+Figure 1 Feature Lines can have curves 
+
+Sites 
+Sites are probably one of the most misunderstood aspects in all of Civil 3D. In my experience teaching for the last decade, the primary cause of misunderstanding stems from the name, “site”. When most civil engineering professionals think of the term “site”, they think of location. Examples of this are as follows: the engineer goes on a “site” visit, the surveyor performs a “site” survey, this project is going to increase traffic so an “offsite” intersection needs to be upgraded, etc. 
+A site in Civil 3D really has nothing to do with location, it’s a collection of objects that interact with each other. For example, all parcel segments in a site will interact with all other objects in a site. Relevant to this topic, every location (each unique XY value) in a site only gets one elevations. What this means for feature lines is when they intersect each other horizontally, they must have the same elevation. If you don’t know this is happening, this could cause major issues but if you know this happens, it’s a very powerful tool. 
+
+Figure 2 Feature Lines in the same Site 
+
+Creating Feature Lines
+There are several methods to create feature lines within Civil 3D. Some work better in certain situations. When grading a subdivision, the primary methods of creating feature lines will be with the commands Create Feature Lines and Create Feature Lines from Objects. The other two methods, Create from Alignment and Create from Corridor will be discussed as well although they will not be used in this class. 
+Create Feature Lines 
+The Create Feature Lines command allows you to create a feature line from scratch without needing anything else in the drawing. As you create the feature line, the command will prompt you for the location of each vertex of the feature line as well as the elevation of each vertex. The elevation can be set to a specific elevation, can be set from the elevation of a surface, or can be relative to the previous vertex. The relative option can be a relative elevation from the last vertex or a relative slope from the last vertex. Additionally, the elevations can transition across multiple vertices. 
+
+Figure 3 Create Feature Line 
+
+Create Feature Lines from Objects
+Probably the most often used method of creating feature line is to draw the linework in first and then convert that linework to feature line using the command “Create Feature Lines from Objects”. This is great tool to use as often the final elevations of the vertices aren’t know when the feature line is created. Rather than assigning the elevations as the feature line is created, simply create the feature line at elevation 0 (or perhaps the elevation of a surface) and then come back later and edit the elevations of the feature line to the desired design using the tools available in Civil 3D. 
+There are several options when using the command: Erase existing entities, Assign elevations, and Weed points. 
+Figure 4 Conversion options when creating from objects 
+If you want to keep the original object (often a polyline), uncheck the option “Erase existing entities”. When you should and shouldn’t erase the original objects is up to you but something to consider is why the original objects were created. Were they created with the sole intention of creating these feature line? If so, there’s no need to keep them in the drawing as you have the feature line. If you created the objects for some other reason and you’re just using them to help you get the feature line, then you will probably want to keep them for whatever that other purpose is. 
+
+There are three options when assigning elevations. First, you can simply type in the elevation you want the feature line to have. This will set the elevation of all the vertices to the same value. Second, you can assign the elevations from a grading. In the image below this is greyed out because there are no gradings in the drawing. Finally, you can assign elevations from a surface. Doing this will bring each vertex up to the elevation of the surface. When using this option, you can also “Insert intermediate grade break points”. This will put an elevation point on the feature line at each point that it crosses a triangle edge of the surface. The feature line can also be set to be relative to the surface. This way, when the surface changes, the feature line changes too (this elevation doesn’t have to be the same as the surface, there can be a vertical offset applied to it). 
+Figure 5 Assign Elevations to Feature Lines 
+The last options, “Weed points” is used when you have extremely complex objects that you are using to create the feature line from (often this is contours). 
+Figure 6 Factors Used when Weeding Vertices 
+
+Other Ways of Creating Feature Lines
+The final two methods of creating feature line will be discussed here briefly but won’t be used in the examples that follow, Create from Alignment and Create from Corridor. 
+Create from Alignment
+When using the command Create from Alignment, the feature line that is created follows horizontally along the alignment and gets all its elevations from a profile. The profile can be either a surface profile or a layout/design profile. When the feature line is created, it can be set up to react dynamically to the alignment and profile. This way, if the alignment or profile changes, the feature line will adjust accordingly. 
+Figure 7 Create Feature Line from Alignment 
+
+Create from Corridor 
+In a similar fashion to the Create from Alignment command, the Create from Corridor will create your feature line directly from the corridor. Corridors have feature lines but these are not the same feature lines that have been discussed so far. The feature lines in corridors do not have to be in a site, they can’t be edited, and they can’t be added directly to a surface (they must be added to a corridor surface). 
+When the command Create from Corridor is used, one or more of the corridor feature lines are used to create regular feature lines. Just like feature lines created from alignments, feature lines created from a corridor can dynamically update as the corridor changes. 
+When you run the command, you’ll be prompted to select the feature line from the corridor. Once you do, you’ll be able to refine your selection. This is necessary as often there are multiple corridor feature lines on top of each other. Once the corridor feature line has been selected, set the appropriate options in the rest of the dialog box to create your feature line(s). The Settings… button in the top right corner of the dialog box allows you to set the feature lines to be dynamic to the corridor as well. 
+Figure 8 Create Feature Lines from Corridor 
+
+
+
+Editing Feature Lines
+Often, it’s considerably easier to create the feature lines and then to come back and edit them. Most of the time this is because the final elevations and layout of the feature lines aren’t known when they are created. There are two sets of command for editing the feature lines. These are found on the Modify tab of the Ribbon under the panels Edit Geometry and Edit Elevations (these panels are also available on the contextual ribbon tab when a feature line is selected). One thing to note, several of the feature line editing tools can be used on other objects as well, such as polylines, survey figures, and parcel segments. 
+
+Figure 9 Editing Feature Lines 
+Not every command for editing feature lines will be discussed here but a few of the more commonly used commands will be touched on. For a complete list of the functionality of the commands, refer to the in-product help. 
+
+Horizontal Edits 
+The Edit Geometry panel (see Figure 9 Editing Feature Lines) is where most of the tools that are used to edit the horizontal properties of your feature lines is found. The tools are: 
+
+Insert PI and Delete PI – These commands will add an additional 
+vertex (also known as a Point of Intersection or PI) to your feature line or remove one. 
+When you use the Insert PI command, you’ll be prompted for the location and elevation 
+of the new vertex. It will default to the elevation of the feature line that is closest to the 
+location you picked for the new PI. When you use the Delete PI command, the PI closest 
+to the point you pick in the drawing will be removed. 
+Break, Trim, Join, and Reverse – These commands are very similar to the AutoCAD commands you are probably familiar with. Some AutoCAD commands will work on feature lines (such as Extend) but others you must use the specific feature 
+
+Edit Curve, Fillet, Fit Curve, and Smooth – These are the tools that 
+you’ll use to adjust the curves of the feature line. Typically, it’s a lot easier to edit the 
+curves of polylines and then convert them to feature lines once the curves are created. 
+Once the feature line is made, these are the tools you’ll use. 
+Weed and Stepped Offset – The Weed command is very important if you have a feature line with an excessive number of vertices, especially when using the grading tools. This command will assist you in removing the vertices that aren’t as necessary to defining the feature line. The Stepped Offset command is an extremely powerful tool. It creates a new feature line a set distance from another and it gives you options for how you want the elevations to be set. You can set the new elevations based on a difference, a slope or grade, or set to a specific elevation (this will make the feature line level). 
+
+Vertical Edits 
+The Edit Elevations panel (see Figure 9 Editing Feature Lines) is where most of the tools that are used to edit the elevations of your feature lines are found. The tools are: 
+
+editing command (such as Trim). .
+. 
+Elevation Editor – The Elevation Editor will open in your Panorama. Here you can change elevations and slopes of your feature lines. There are several tools in the elevation editor that allow you to do many things such as: raise and lower the feature 
+
+line, flatten the feature line, reverse the feature line, and add or remove grade breaks. 
+Figure 10 Elevation Editor Opens in the Panorama 
+
+Insert Elevation Point and Delete Elevation Point – Elevation 
+points are very similar to PIs, they allow you to make changes to the feature line at a 
+specific location. Where a PI will allow you to change both the direction and grade of the 
+feature line, an elevation point only allows you to change the grade of the feature line. 
+
+Quick Elevation Edit, Edit Elevations, Set Grade/Slope between 
+Points, and Insert High/Low Elevation Point – The Quick Elevation Edit command 
+allows you to graphically edit the elevations and slopes of your feature lines directly in 
+the drawing (personal note: this is one of my favorite commands when it comes to 
+grading). The Edit Elevations command also allows you to edit the elevations of your 
+feature lines graphically but not quite as nicely as the Quick Elevation Edit command. An 
+advantage the Edit Elevations command has is it also works on objects other than 
+feature lines (such as polylines, survey figures, 3D polylines, etc.) whereas the Quick 
+Elevation Edit command only works on feature lines and parcel segments.  The 
+command Set Grade/Slope between Points allows you to specify the grade between two 
+points on a feature line. The two points don’t have be adjacent, there can be multiple 
+vertices between the two points. In cases like this, all the line segments between the two 
+points will have the same slope. Finally, the Insert High/Low Elevation Point command 
+will calculate a grade break point for you along the feature line. You specify the start 
+point, the end point, and the grades coming from those points. If the math works out, it 
+will place an elevation point at the high point, low point, or grade break point (it doesn’t 
+
+Raise/Lower by Reference, Set Elevation by Reference, Adjacent 
+Elevations by Reference, and Grade Extension by Reference – This next set of 
+elevation editing tools allow you to set the elevations of your feature line based on the 
+elevation of something else. Use the Raise/Lower by Reference command to raise or 
+lower a feature line, based on a grade, slope, or relative elevation from any elevation in 
+the drawing. The Set Elevation by Reference does basically the same thing but only for 
+one vertex of the feature line. Adjacent Elevations by Reference is a great command, 
+especially if you’re using feature lines to model curb and gutter (or some other prismatic 
+structure). If the elevations of the flow line feature line change, use this command to set 
+the elevations of the adjacent feature lines accordingly. Finally, the Grade Extension by 
+Reference command allows you to set the elevation of a point on a feature by extending 
+
+have to be a high or low point). .
+
+
+

@@ -1,0 +1,1888 @@
+[MIGRATED TO RTM_PART_46.md - PROJECT STANDARDS]
+the standards and the project. Synchronization can be set up to run invisibly in the background, run automatically with user prompting, or can be manually initiated by the user. 
+project tool palette group A project tool palette group is associated automatically with the project. It can be referenced from a shared location or be copied to each user’s computer. 
+project tools Project tools are tools in the project tool palettes set for the project. In order to ensure that the current style definition is always used, project-specific tools should point directly to the styles within a standards drawing. 
+standards drawing location When standards drawings, catalogs, and libraries are located within the project folder, they are treated as project-specific. For example, if the project is used as a template for a new project, all files from the standards folder are copied to the new project, to enable changing and overwriting them in the new project. Standards files that are located outside the project folder are not copied when creating a new project; they are only referenced from their original location in both the existing and the new project. This would be appropriate for files containing company standards that should not be changed from project to project. 
+
+Project Standards Overview 
+Standard styles and display settings for a project are specified and stored in one or more standards drawings that are associated with the project. This allows you to organize your standards drawings in various ways. For example, you could have one standards drawing for styles, another for display settings, and a third for AutoCAD components such as layers, dimension styles, text styles, and linetypes. Or you could place all your wall styles in one standards drawing and all of your property set definitions and data format styles into another. 
+Project standards can be accessed from a variety of AutoCAD file formats. They can be saved in one or more drawing files (DWG), drawing templates (DWT), or AutoCAD standards drawings (DWS). Each of these file types can be associated with a project as standards drawings. 
+The project can be compared to the project standards at any time during the project lifecycle, and if version discrepancies between the standards and the project drawings are detected, be synchronized with the standards. In addition, the standards can be updated from the project drawings if necessary. 
+
+AEC Standards 
+AEC standards for a project include all items from Style Manager and Display Manager. AEC standard objects are included in the synchronization and can be updated from a project drawing. 
+They include these items: 
+¦ object styles (for example, wall styles, door styles, and so on) 
+¦ 
+property set definitions 
+
+¦ 
+property data formats 
+
+¦ 
+schedule table styles 
+
+¦ 
+classification definitions 
+
+¦ 
+display theme styles 
+
+¦ 
+layer key styles 
+
+¦ 
+mask block definitions 
+
+¦ 
+material definitions 
+
+¦ 
+multi-view block definitions 
+
+¦ 
+profile definitions 
+
+¦ 
+display properties 
+
+¦ 
+display sets 
+
+¦ 
+display configurations 
+
+
+Standard Scheduling Information 
+Project standards enable you to define and distribute a set of property set definitions, property data formats, schedule table styles, and object tags across a project. Property set definitions, property data formats, and schedule table styles are created and accessed through Style Manager. Schedule tags are accessed through the project tool palettes. 
+
+Standard Material Definitions 
+Material definitions can be defined and distributed across the project. Materials are an integral part of object styles, and should be contained in the same standards drawing as the object styles that reference them. 
+
+Layer Key Styles 
+Layer key styles can be defined in a project standards drawing, and distributed across the project. Layer standards, however, are not set in the project standards. If you want to associate a layer standard with a project, you need to associate it with the drawing templates used for elements, constructs, views, and sheets. 
+
+Profiles 
+Profile definitions for a project are specified in one or more project standards drawings. Profiles can be used by many objects, for example mass element shapes or window styles. 
+
+Classification Definitions 
+A project may have a set of classification definitions in one or more standards drawings. Classifications are used as a reporting and display tool for building objects. Classifications are attached to object styles. If you want to use a classification in a project standard style, the classification needs to be stored in the same standards drawing as the object style to which it is referenced. 
+
+Display Settings 
+You can define standard display representations, display sets, and display configurations for a project. This will ensure consistent display of drawing objects in the project. Only one display standards drawing can be set for a project. 
+
+
+AutoCAD Standards 
+The Project Standards feature integrates the AutoCAD Standards checker, allowing the user to set up one or more DWS files for AutoCAD components. AutoCAD components that can be included in a standards check are: 
+¦ 
+AutoCAD dimension styles 
+
+¦ 
+AutoCAD layers 
+
+¦ 
+Text styles 
+
+¦ 
+Linetypes 
+
+
+When you set up AutoCAD standards, a CHX batch checker file is created for the project. The CHX file contains all project drawings as drawings to be checked, and all specified DWS files as drawings to check against. You can run this batch file for checking the whole project, or check individual project drawings manually. For more information, see Synchronizing a Project with AutoCAD Standards on page 652 and Synchronizing a Project Drawing with AutoCAD Standards on page 653. 
+
+Standard Tools 
+Standard styles can be organized and accessed through tools. You can define project tool palettes and a project library in Content Browser for quick and easy access. For detailed information, see Setting up Standard Tools in a Project on page 608. 
+Project Tool Palette Group 
+You can define a project tool palette group containing standard project styles. You can choose between defining a shared tool palette group on a network location, or a copy of the project tool palette group on the local users’ machines. 
+
+Standard Content Browser Library 
+An icon now appears on the Project Navigator Palette to launch the Content Browser. You can set a custom Content Browser library that is opened by default when Content Browser is started from the Project Navigator. With the possibility of creating tool catalogs from existing drawings, as described in Creating a Project Standards Tool Catalog on page 612, it is now easy to create standard tools and catalogs for a project. 
+
+
+Synchronizing the Project 
+During the lifecycle of a project, project standards can change. For example, the hatching associated with a wall component can change its pattern, or a property set definition can have added properties. In cases such as these, the project must be synchronized with the modified standards. You can configure the project standards so that project drawings are automatically checked against the standards when opened, and automatically updated with the new edits. You can also manually start a synchronization for a project drawing or on the complete project at any time or you can configure standards for manual synchronization regardless of the overall project synchronization settings. 
+
+Process Overview: Using Standards in a Project 
+Setting up and using standards in a project entails the following actions: 
+1 Create standard styles, display settings, and AutoCAD components 
+in one or more standards drawings. Standards drawings can be drawing files (DWG), drawing templates (DWT), or AutoCAD standard files (DWS). 
+Optionally, you can create different project standards files for 
+different styles, display settings, and AutoCAD components. 
+2 If desired, create a tool catalog that uses the styles from the standards drawings for their tool definitions. 
+3 Optionally, you can create a Content Browser library that should be used throughout the project. 
+4 Associate the standards drawings with the project. 
+5 If there are multiple standards drawings for styles, define which style type should be controlled by which standards drawing. 
+6 Set up the desired synchronization behavior of the project. You can choose between different synchronization modes, depending on your project workflows. For example, you can specify that a project drawing is synchronized with the standards when it is opened, or you can specify that synchronization happens only manually. 
+7 Add standard styles and display settings to your project drawings by one of these methods: 
+¦ 
+Use tools from the standard palettes. 
+
+¦ 
+Use tools from the standard Content Browser library. 
+
+¦ 
+Copy styles and display settings from the standards drawings through Style Manager and Display Manager. 
+
+
+8 Synchronize project drawings with the project standards. Project drawings can be synchronized automatically on opening, or manually by the user. 
+9 Update any inconsistent objects. 
+
+Using Project Standards 
+Project standards help ensure consistency across a project. 
+The following workflows demonstrate how to use standards in a project: 
+¦ 
+The user opens a project drawing, and the styles and display settings are synchronized with the associated project standards. Depending on the standard settings, the user can either be prompted to update out-of-synch objects, or they can be automatically updated by the software. 
+
+¦ 
+The CAD manager makes changes to a style in a standards drawing, applies a version to the change, and saves and closes the standards drawing. The next time a project drawing is opened it can be synchronized with the changed style, making it match the version in the standards file. 
+
+¦ 
+A user receives a project drawing from another user or a subcontractor, and performs a standards audit on it to determine if there are any not standardized styles or display settings, or if any of them are out-of-date. The user can decide whether to update out-of-date styles and display settings, or ignore them. 
+
+¦ 
+The CAD manager sets up a default Content Browser library for the project. When a user starts Content Browser from the current project in Project Navigator, the project library is displayed. The user can then drag standard tools into a project drawing. 
+
+¦ 
+To create a standard tool catalog based on an existing project, the CAD manager opens the AEC Tool Catalog Generator, browses to the project, and creates a tool catalog from the project drawings. He adds the new catalog to a Content Browser library and connects that library to a project. From there, the tools can be used either directly in the project or be used to build up a project-specific tool palette group. 
+
+
+¦ 
+To transmit the project to an external subcontractor, the CAD manager creates an e-transmit package containing all project drawing files, standards drawings, and standard catalogs, as well as the standard Content Browser library. The subcontractor unzips the package to access these standard objects for use on the subcontracted design work. 
+
+¦ 
+The CAD manager wants to create a hierarchical structure for standards. Some standards are specific to the project, whereas others are specific to a customer or general company standards. By placing different standards drawings in different locations, some can be copied and overwritten for a specific project, whereas others are referenced from a central location and are read-only. 
+
+
+
+Prerequisites for Working with Project Standards 
+The following points need to be taken into consideration to work efficiently with the project standards feature: 
+¦ 
+Project standards can be used only with projects. A drawing must be part of a project to be synchronized with project standards. Project standards cannot be applied to standalone drawings. You can copy standard styles and display settings into standalone drawings, but they will not be synchronized when the standards change. 
+
+¦ 
+Project standards can be distributed among multiple standards drawings, if desired. However, there can be only one drawing that is designated for the display settings in a project. 
+
+¦ 
+Project standards can be stored in DWG, DWT, and DWS files. 
+
+¦ 
+AutoCAD standards for layers, text styles, linetypes, and AutoCAD dimension styles must be placed in DWS files. 
+
+¦ 
+Demand loading needs to be enabled for working with project standards. The XLOADCTL system variable must be set to 2 (default value). 
+
+
+
+
+Setting up Standards in a Project 
+You can define one or more files to use as the source for standard styles and display settings. You can also specify options for synchronizing the styles and display settings with the standards. Additionally, you can set up DWS files for AutoCAD layers, dimension styles, text styles, and linetypes. 
+Creating a New Project with Predefined Standards 
+The quickest and easiest way to create a new project that already has standards associated with it, is to use an existing project with standards as a template. When you use an existing project as a template, the following files and structures are copied to the new project: 
+¦ 
+All project DWG files and XML files 
+
+¦ 
+AEC standards files 
+
+¦ 
+AutoCAD standards files 
+
+¦ 
+Project standards synchronization settings 
+
+¦ 
+Sheet set template 
+
+¦ 
+Project details 
+
+¦ 
+Drawing template paths 
+
+¦ 
+Keynote and detail component database paths 
+
+¦ 
+Project tool palette group 
+
+¦ 
+Tool content root path 
+
+¦ 
+Project Content Browser library 
+
+
+NOTE Project standards files, tool palettes, and the project Content Browser library are copied to the new project only if they are located within the original project folder. Standard components located outside the project folder will be referenced by the new project, but not copied to it. 
+For information about creating a project with predefined standards, see Creating a New Project Based on a Template (Copying a Project) on page 313. 
+When you create a new project based on a template, all files that are in the project folder, will be copied, including the project drawings (DWG) and their associated XML files. If you want to copy only the standards files and support files, as well as the structure of the project, you need to create a project with a copied structure, as described in Creating a New Project with the Structure of an Existing Project on page 315. 
+
+Configuring Project Standards 
+After setting up a project, you can configure the project standards. If you have created a project based on a template, the initial project standard settings come from the template. If you have not used a template, the settings are undefined or default settings. 
+Project standard settings include the following: 
+¦ 
+Standard styles 
+
+¦ 
+Standard display settings 
+
+¦ 
+Synchronization settings 
+
+¦ 
+AutoCAD standards (layers, dimension styles, text styles and linetypes) 
+
+
+NOTE To set up project standards, you must have one or more project standards drawings available. If you have created a new project based on a project with standards, the standards drawings of the original project are copied to the new project and are automatically associated with the new project. If you have created a new project not based on a template, or based on a project without standards, you first need to define one or more standards drawings. For more information, see Creating a New Project Standards Drawing on page 657. 
+
+Setting up Standard Styles and Display Settings 
+Use this procedure to set up standard styles and display settings for a project. 
+NOTE Standard styles include object styles, definitions, profiles, materials, property set definitions, and classifications. 
+To set up standard styles and display settings, you define one or more project standards drawings that contain the standards for styles and display settings. These drawings can be DWG, DWT, or DWS files and are added in the configuration dialog. 
+Standard files are marked by icons next to their name in the configuration setup. 
+Icon Description 
+
+Standards drawing (DWG) 
+
+Icon Description 
+
+Standards template (DWT) 
+
+AutoCAD Standards file (DWS) 
+
+Missing standards file 
+
+Synchronization Order 
+If you have multiple standards drawings associated with a specific style type, then during synchronization the occurrence of the style in the first standards drawing is used as the style with which the style in the project drawing is synchronized. Further drawings containing the same standard style are ignored. 
+Order of standards drawings 
+
+1 Click 
+. Open . Project. 
+NOTE To access the standards configuration of the current project only, click Manage tab . Project Standards panel . Configure
+ . 
+2 Select the project for which you want to configure standards, right-click, and click Project Properties. 
+3 Expand Advanced and click Project Standards 
+. 
+
+4 To add a new standards drawing for styles, click 
+. 
+5 In the Select Standards Drawing dialog box, select a DWG, DWT, or DWS file that contains standard styles, and click Open. If you do not yet have standards drawings, see Creating a New 
+Project Standards Drawing on page 657. 
+The new styles drawing is appended to the Standards Drawings list. The order of the columns, from left to right, defines the search order and precedence during synchronization. To change the order of the drawings, select the drawing name in the column 
+header, and click 
+to move the drawing up in the drawing order, and click 
+to move the drawing down in the drawing 
+order. 
+After you have added styles drawings to the project standards setup, you need to define for which style types each drawing should be the standard. To do this, you associate each style type with a standards drawing. The style types are listed under Objects in the Standard Styles tab. You can find all style types from Style Manager here. 
+6 To display only style types of one style category, select the category under Select which objects to display in the list below. If you want to see all style categories, select All Objects. 
+7 To define that a specific style type should be controlled by a specific standards drawing, click the style type’s check box in the appropriate drawing column. 
+TIP If you want to select one drawing for all style types, right-click in the header, and click Select Column. 
+
+If a style type has not been associated with a standards drawing, these styles are not controlled by the standards. For example, if the standards drawing “Standard Styles 1.dwg” has not been associated with the Wall Styles type, then even if wall styles from this standards drawing exist in a project drawing, they will be interpreted as “not standardized” by the synchronization. 
+If you select multiple standards drawings for one style type, then during synchronization, each drawing is searched for that style type in the order of the drawings. This means that you can distribute standard styles for a style type among different drawings. For example, you could store your concrete wall styles in the standards drawing “Wall Styles - Concrete (Imperial)”, and your brick wall styles in the drawing “Wall Styles - Brick (Imperial)”. 
+NOTE If two standards drawings contain a style of the same name and type, the style in the first standards drawing will be used for synchronization. Further instances of that style will be ignored. The order of standards drawings is determined by their position from left 
+to right in the table. To re-order the drawings, use the Up 
+and 
+Down 
+buttons. 
+8 To remove a standard styles drawing from the project, click on 
+its name in the Standards Drawings list, and click 
+. Removing a standards drawing from the list only removes the reference of this drawing to the project. The drawing is not deleted from the file system. 
+Next, you need to define a standards drawings for the display settings in the project. You can assign only one standards drawing for display settings. The standard display settings drawing can be one already assigned as a styles standards drawing. 
+9 Under Select drawing to use for standard display settings, select a file. If necessary, select Browse to browse for a file. 
+NOTE If you are using a display standards drawing that is different from the styles standards drawing, or if you have multiple styles standards drawings, you need to make sure that the styles standard drawings are in synch with the display standards drawing. For more information, see Synchronizing Project Standards with Each Other on page 676. 
+10 Click the Synchronization tab. 
+If you have added a standards drawing to the project, and the 
+drawing is located in the project folder, the drawing will 
+automatically have initial version information added to all styles 
+and display settings. If the new standards drawing is located 
+outside the project folder, and has not yet been versioned, you 
+need to version it as described in Versioning a Project Standards 
+Drawing on page 673. For more information about versioning, see 
+Versioning Standards on page 661. 
+11 If necessary, enter a universal comment to all versioned styles and 
+display settings. 
+For instance, you might want to add a comment to indicate what 
+has changed in the style as of this version. 
+
+12 Click OK. 
+NOTE If some of the standards drawings have been set to read-only, they cannot be automatically versioned. In this case, they need to be versioned manually by a user with read-write access. 
+
+
+
+Synchronization Options 
+When a project uses standards, it needs to be synchronized with the standards in regular intervals to make sure the standards are observed. During synchronization with its standards, the styles and display settings in the project or project drawing are compared with the project standards, to find version discrepancies between them, and fix them. 
+You can set different synchronization options. Before deciding on settings, you should review your desired workflow to find the optimal choice. Keep in mind that the option you select will be in effect for all users of the project. 
+Automatic Synchronization 
+If you select automatic synchronization, the following behavior is defined for the synchronization: 
+¦ 
+Project drawings are compared with the project standards when they are opened. 
+
+¦ 
+In case of version discrepancies between a project drawing and the project standards, the styles and display settings in the project drawing are overwritten by the styles and display settings from the project standards without prompting. The user cannot prevent the update. 
+
+¦ 
+No notification of not standardized styles and display settings in the project drawing is displayed during the automatic synchronization. If not standardized styles and display settings exist, they are ignored. 
+
+
+TIP To display not standardized styles and display settings, you can audit the drawing, as described in Auditing a Project or a Drawing on page 654. 
+¦ When users make changes to a standard style or display setting in a project drawing, they will not be prompted to upload the styles or display settings to the projects standards drawings accordingly. Unless a user uploads the changed objects to the standards drawing manually, they will not be copied into the standards drawing. 
+
+Semi-Automatic Synchronization 
+If you select semi-automatic synchronization, the following behavior is defined for the synchronization: 
+¦ 
+Project drawings are compared with the project standards when they are opened. 
+
+¦ 
+In case of version discrepancies between a project drawing and the project standards, a notification dialog is displayed where the user can decide whether the styles and display settings in the project drawings should be overwritten with the standards. The user has the option to ignore inconsistent styles and display settings. 
+
+¦ 
+Not standardized styles and display settings in the project drawing are displayed in a list. 
+
+¦ 
+When users make changes to a standard style or display setting in a project drawing, they will be prompted to upload the styles or display settings to the projects standards drawings. 
+
+
+
+Manual Synchronization 
+If you select manual synchronization, the following behavior is defined for the synchronization: 
+¦ 
+Project drawings are not compared and synchronized with the project standards when opening the project drawing. To perform a synchronization, the user needs to manually initiate it. For more information, see Synchronizing a Project with the Standards on page 633. 
+
+¦ 
+In case of version discrepancies between a project drawing and the project standards, a notification dialog is displayed where the user can decide whether the styles and display settings in the project drawings should be overwritten with the project standards. The user has the option to ignore inconsistent standard styles or display settings. 
+
+
+¦ 
+Not standardized styles and display settings in the project drawing are displayed in a list. 
+
+¦ 
+When users make changes to a standard style or display setting in a project drawing, they will not be prompted to upload the changes to the projects standards. Unless a user uploads the changed standards in the standards drawing manually, they will not be copied into the standards drawing. 
+
+
+The synchronization settings are valid for all users of the project. So the synchronization method selected should reflect the workflow needs of the majority of users. For example, if you want all users to be in synch with all project standards at all times, you should choose automatic synchronization. If you want greater transparency and user control, you could choose semi-automatic or manual synchronization. 
+If you have selected automatic synchronization, the synchronization of project drawings will run “invisible” in the background. On opening, each drawing will automatically be synchronized with the standards without notification to the user. If you have selected semi-automatic or manual synchronization, you have more control and information about the synchronization process; you can display lists of not standardized styles and display settings, nonstandard versions, or older versions, and individually decide if you want to update or ignore them. 
+
+
+Setting up Synchronization of AEC Standards 
+Use this procedure to set up the synchronization options for the AEC standards in a project. 
+NOTE The synchronization settings you define are relevant only for the synchronization of the AEC standard styles and display settings in a project, as specified in Setting up Standard Styles and Display Settings on page 595. They do not affect the synchronization of AutoCAD standards in a project, as defined in Setting up AutoCAD Standards on page 604. For more information about synchronization, see Synchronizing a Project with the Standards on page 633. 
+NOTE The settings in this dialog box control only how project drawings are synchronized with project standards drawings. They do not specify how project standards drawings are synchronized with each other. For information on synchronizing project standards drawings, see Synchronizing Project Standards with Each Other on page 676. 
+1 Click 
+. Open . Project. 
+NOTE To access the standards configuration of the current project only, click Manage tab . Project Standards panel . Configure
+ . 
+2 Select the project for which you want to configure standards, right-click, and click Project Properties. 
+3 Expand Advanced and click Project Standards 
+. 4 Click the Synchronization tab. 
+
+5 Select the synchronization method for your project. 
+For information about the available methods, see Synchronization 
+Options on page 600. 
+6 To create a log file of the synchronization, select Create log file. 
+When the log file is created, you can choose between a report in 
+XML or HTML format. The log file contains information about 
+the drawings synchronized, the standards drawings used, and the 
+changes made to standard styles and display settings in the course 
+of synchronization. 
+7 Click OK or click the AutoCAD Standards tab. 
+
+Setting up AutoCAD Standards 
+Use this procedure to set up AutoCAD standards for the project. 
+AutoCAD standards include AutoCAD layers, AutoCAD dimension styles, text styles, and linetypes, and are contained in DWS files. You cannot define different DWS files for different components; for example, you cannot define one DWS file for dimension styles, and another one for linetypes. Each setting from each DWS file is processed. If there is conflicting information in different DWS files, then the first one in the list is used. If necessary, you can change the order of the DWS files to change the precedence. For more information, see “Define Standards” in AutoCAD Help. 
+When you set up AutoCAD standards, a CHX batch checker file with the same name as the project file is created in the project folder. The CHX file contains all project drawings as drawings to be checked, and all specified DWS files as drawings to check against. You can run this batch file for checking the whole project, or check individual project drawings manually. For more information, see Synchronizing a Project with AutoCAD Standards on page 652 and Synchronizing a Project Drawing with AutoCAD Standards on page 653. 
+1 Click 
+. Open . Project. 
+2 Select the project for which you want to set up AutoCAD standards, right-click, and click Project Properties. 
+3 Expand Advanced and click Project Standards 
+. 4 Click the AutoCAD Standards tab. 
+
+
+5 To add a new DWS file, click By default, the new DWS file is appended to the end of the list. That means that will be processed last, and settings from higher listed DWS files will take precedence. 
+6 To change the order of the DWS files in the list, use the Up 
+
+and Down 
+buttons. 7 To remove a DWS file from the list, click on its name in the list, 
+and click 
+. Removing a DWS file from the list only removes the reference of this file to the project. The file is not deleted from the file system. 
+8 If you have set up DWS files as AEC standards drawings in Setting up Standard Styles and Display Settings on page 595, you can re-use them for the AutoCAD standards by clicking Add .dws files from Standard Styles. This will copy the AEC standards files to the AutoCAD Standards tab, and use them as AutoCAD standard files in the project. 
+
+Copying Project Standards from Another Project 
+Use this procedure to copy the project standard settings from an existing project. 
+Copying the project standards copies the following standards settings: 
+¦ 
+Copy or reference the style and display standards drawings to the new project 
+
+¦ 
+Copy or reference AutoCAD standards drawings to the new project 
+
+¦ 
+Duplicate the association of standards drawings to style types in the new project 
+
+¦ 
+Duplicate the synchronization settings in the new project 
+
+When you copy the standards of an existing project to a new project, standards drawings can be either referenced from their original location in the new project, or be copied to the new project. 
+
+¦ 
+If the project standards drawings of the copied project are located within the original project folder, then the drawings are copied to the new project. You would do this if you wanted to have a separate set of project standards drawings for each project you create. That way, you can make project-specific changes for each set of project standards. 
+
+¦ 
+If the standards drawings of the copied project are outside the original project folder, they will not be copied to the new project, but will be referenced from their original location. You could do this if your project standards are not specific to one project, but are rather department-specific or company-wide standards. If you make changes to a project standards drawing referenced by several projects, all projects will be able to be synchronized with the changes. 
+
+
+1 Click 
+. Open . Project. 2 Select the project for which you want to set up AutoCAD standards, right-click, and click Project Properties. 
+3 Expand Advanced and click Project Standards 
+. 4 Click the Standard Styles tab. 
+5 Click 
+. 6 In the Select Project dialog box, select the project file (APJ) from which you want to copy project standards, and then click Open. 
+
+7 Select the copy settings. 
+If you want to… Then… 
+overwrite the existing project click Remove existing settings. standards with the copied project standards 
+add the project standards  click Append copied settings to existing  
+from the selected project to  settings.  
+any existing project standards  Existing settings that are inconsistent  
+with the copied settings will be replaced  
+with the copied settings.  
+
+8 Click OK twice. 
+
+
+Enabling Project Standards for a Project 
+After defining the standards for a project, you need to enable them to make them active within the project. 
+While you are still working on setting up the standards for a project, you might not want the standards to be activated in the project right away, as standards styles might still be added, removed, or changed. Once the setup is complete, however, you must enable the standards for the project. 
+1 Click 
+. Open . Project. 
+2 Select the project for which you want to enable AutoCAD standards, right-click, and click Project Properties. 
+3 Expand Advanced and click Project Standards 
+. 4 Select Enable project standards for project <Project Name>. 5 Click OK twice. 
+The selected synchronization behavior (automatic, semi-automatic, or manual) is now activated. 
+NOTE Enabling the standards in a project does not mean that standard styles and display settings are copied to project drawings. To add standard styles and display settings to project drawings, see Adding Standards to a Project Drawing on page 628. 
+
+Generating a Project Standards Setup Report 
+Use this procedure to create an HTML or XML report that lists the project’s standard drawings, and standard styles and display settings, along with their version history. 
+1 Verify that the project for which you want to create a standards 
+setup report is set as the current project. For information on setting a project current, see Setting a Project Current on page 312. 
+2 Click Manage tab . Project Standards panel .
+. Setup 
+Report
+ . 
+3 In the Save Setup Report dialog box, select a file name, location, and format for the generated report. 
+4 Click Save. The report is saved in the specified location and can be displayed with a Web Browser or XML editor. 
+
+
+Setting up Standard Tools in a Project 
+Every project has a project tool palette group associated with it. If you are using project standards, the tools should point to standard styles from a project standards drawing. To make working with project tools easier, a project-specific library can be created in Content Browser. 
+Setting up standard tool palettes is usually a task for a CAD manager or project owner. Depending on the requirements of the project, different steps can be taken to achieve the desired results. The main considerations for creating the project tool palettes are the following: 
+Per User Workspace Catalog and Shared Workspace Catalog 
+The CAD manager can decide whether to create a group of tools and palettes that are shared by all users of a project and accessed from a single location, or to define a project catalog and Content Browser library, and maybe create a starter set of palettes for copying to individual users’ computers. For more information, see Before You Begin: Working in a Network Environment on page 302. 
+AutoCAD Architecture loads the tool palettes found in the paths specified in the Files tab of the Options dialog box. Projects allow you to specify an additional location path for a tool palettes file that contains project-specific tool palettes. This path is appended to the current profile when the project is made current, and removed when the project is closed or when another project is set current. 
+Projects support two workflows for working with project palettes: 
+Per user workspace catalog: This the recommended option. Use the Per user workspace catalog option in conjunction with project tool catalogs in Content Browser. In this mode, users can access the tools and tool palettes they need for the job from tool catalogs in Content Browser on a per-user basis. By utilizing the refresh/linking behavior of Content Browser, you can make changes to the original tools and tool palettes in project catalogs, and your team can refresh their tools and palettes to get the latest versions. Thus, each user’s workspace is maintained by the application uniquely, but linked palettes allow for global updates. 
+You can optionally provide your project team with a starter set of tool palettes, including the initial layout and tool ordering. To do this, you would create the project palettes in your own workspace, and then use Windows Explorer to copy the files to the location specified for the tool palette file location in the project properties. For detailed instructions, see the workflow examples below. 
+Shared workspace catalog: This option is recommended if you wish to mandate a set collection of project tool palettes for everyone on the project. In this case you do not want users going to Content Browser to customize project tools or tool palettes. To create a shared workspace, you specify a shared network location and assign it to the tool palette file location of the project. As this path will be appended to every project team member’s profile when the project is set current, the path should be read-only. Otherwise changes made by one user would affect every user, and the last change would be the final form of the tool. 
+NOTE If you make changes to the shared tool palettes, they are not copied to disk until you close the project to close AutoCAD Architecture. Similarly, other users will not see your updates until the next time the project is set current or AutoCAD Architecture is closed and re-opened with the project still current. 
+
+Using Content Browser or Style Manager 
+You can create standard catalogs in Content Browser and define a standard Content Browser library for a project. You can use the catalog and library to drag tools and palettes to the workspace or to the project tool palettes. This would likely be the case if you set up the project using the Per user workspace catalog option. If you do not want to give users access to a Content Browser library with standard tools, do not set a library for the project. In that case, you need to build the project tool palettes from standard styles in Style Manager. You would typically do this if you are using the Shared workspace catalog option. 
+
+Using Linked or Unlinked Tools 
+When you build your project palettes from a project catalog in Content Browser, you can either link the palettes and tools from Content Browser, or create an unlinked copy in the project palettes. If you want to be able to make frequent updates in Content Browser, linking tools and palettes is recommended. 
+Following are two suggested workflows for setting up standard tools. The first one is based on a per user workspace catalog, giving more freedom to the individual users of the project. The second one is based on a shared workspace catalog, and puts greater emphasis on adhering to a given structure. 
+Workflow 1: Using a Per User Workspace Catalog 
+1 Create standard styles in standards drawings and associate them with the project. For more information, see Creating a New Project Standards Drawing on page 657 and Setting up Standard Styles and Display Settings on page 595. 
+2 Create one or more tool catalogs from the standards drawings. For more information, see Creating a Tool Catalog for a Project on page 612. 
+3 Create a project library in Content Browser, and add the standard catalogs. For more information, see Adding a Project Catalog to a Content Browser Library on page 617. 
+TIP By default, tool catalogs are set to be linking. This makes it easier to update them once they have been copied to the workspace tool palettes. 
+4 Define the tool palette file location for the project. For more information, see Adding a Project Library and Tool Palette Group on page 618. 
+TIP If you are using one of the project templates provide with the software, the tool palette file location is by default set to \<Project Folder>\WorkspaceToolPalettes. 
+5 For Tool palette storage type, select Per user workspace catalog. 
+6 Associate the Content Browser library you have created with the project. For more information, see Adding a Project Library and Tool Palette Group on page 618. 
+7 Build up the project tool palette group. For more information, see Building the Tool Palette Group on page 625. 
+8 If you want your project users to start out with the same tools you have in your workspace, copy the palettes to the location specified in the tool palette file location path. For more information, see Copying the Project Tool Palettes to the Tool Palette File Location on page 627. 
+9 If you want your project users to have the same palette groupings, icon size, and ordering as you have, copy the project profile (AWS) to the location specified in the tool palette file location path. That way, new project users will have the profile installed in their Documents and Settings folder. For more information, see Adding the Project Profile to the Tool Palette File Location on page 627. 
+Workflow 2: Using a Shared Workspace Catalog 
+1 Create standard styles in standards drawings and associate them with the project. For more information, see Creating a New Project Standards Drawing on page 657 and Setting up Standard Styles and Display Settings on page 595. 
+2 Define the tool palette file location for the project. For more information, see Adding a Project Library and Tool Palette Group on page 618. 
+TIP If you are working with a shared workspace catalog, it is highly recommended that you point the tool palette file location to a read-only folder. 
+3 For Tool palette storage type, select Shared workspace catalog. 
+4 Build up the project tool palette group. For more information, see Building the Tool Palette Group on page 625. 
+5 If you want your project users to have the same palette groupings, icon size, and ordering as you have, copy the project profile (AWS) to the location specified in the tool palette file location path. That way, new project users will have the profile installed in their Documents and Settings folder. For more information, see Adding the Project Profile to the Tool Palette File Location on page 627. 
+
+Creating a Tool Catalog for a Project 
+A tool catalog for a project should contain tools from project standards drawings. The easiest way to generate a tool catalog from standards drawings is to either create a new tool catalog based on one or more project standards drawings, or to add tools from a project standards drawing to an existing tool catalog. 
+The tool catalog can then be added to the Content Browser library that is associated with the project. This makes it easy to use the tools either in the drawing or add them to the project tool palettes. 
+
+Creating a Project Standards Tool Catalog 
+Use this procedure to create a new tool catalog based on existing standards drawings. You specify the styles from which tools will be created and whether the new tools are organized in categories or palettes. 
+1 Click Manage tab . Customization panel .
+. Generate Tool 
+Catalog
+ . 
+
+2 Under Catalog, select Create a new catalog. 3 Enter a name for the new catalog. 4 Click Browse to define the location of the catalog. 5 Under Content Source, specify whether you want the new catalog 
+to be created from multiple drawings in a folder or from a single drawing. Then, enter the path for the folder or drawing. 
+NOTE When you specify a folder as the catalog source, any nested folders are included in the new tool catalog. 
+6 Specify how you want the tools organized in the new catalog: 
+¦ 
+To organize the new tools by their source drawing, select Group tools by source drawing. This option is well suited for a tool catalog that is generated from a number of styles drawings. The resulting tools could be placed in categories or palettes named “Wall Styles ­Concrete (Imperial)”, “Wall Styles - Brick (Imperial),” and so on. 
+
+¦ 
+To organize the new tools by their object type, select Group tools by object type. This option is well suited if you want to merge styles from various drawings into palettes or categories. The resulting tools will be placed in categories or palettes named “Walls”, “Doors,” and so on. 
+
+
+NOTE If both options are enabled, the catalog is first grouped by the drawings and then by the object type, generating categories from the drawings, and palettes from the object types. This is implemented because palettes cannot be nested. In this case the radio buttons for categories and palettes are disabled, and the Create tools in palettes option is selected for the catalog. 
+NOTE If neither of the two options is enabled, all new tools will be generated in the top category of the catalog. 
+¦ 
+To organize the new tools in categories, select Create Tools in Categories. If you selected Group tools by source drawing, a category will be created for each source drawing. If you selected Group tools by object type, a category will be created for each object type. 
+
+¦ 
+To organize the new tools in palettes, select Create Tools in Palettes. If you selected Group tools by source drawing, a palette will be created for each source drawing. If you selected Group tools by object type, a palette will be created for each object type. 
+
+
+7 Under Create tools for the following objects, select the object 
+styles you want to appear as tools in the new catalog. By default, all available style types are selected. Use the Select All and Clear All buttons as necessary. 
+8 Click OK. A progress bar in the application status bar informs you of the progress of the catalog generation. This can take a few moments for a large catalog. 
+NOTE Each category and each palette is created in its own ATC file. The category and palette ATC files are stored in the Palettes or Categories subfolders within the folder where the new catalog is created. 
+For information about associating a tool catalog to a project library, see Adding a Project Catalog to a Content Browser Library on page 617. 
+
+Adding Standard Tools to a Tool Catalog 
+Use this procedure to add project standard tools to an existing tool catalog. 
+1 Click Manage tab . Customization panel .
+. Generate Tool Catalog
+ . 
+
+2 Under Catalog, select Add to an existing catalog. 3 Enter the name and the path of the catalog. 4 Click Append to Catalog and select Ignore Duplicate Styles if you 
+want to prevent existing styles from being overwritten by styles 
+with the same name and file path from the appended drawing. If you clear Ignore Duplicate Styles, existing styles are overwritten with styles from the appended drawing if they have the same name and file path. 
+5 If you want to overwrite the existing catalog, click Overwrite 
+Catalog. This deletes the whole catalog and replaces it with the palettes, categories, and tools from the source drawing(s). 
+WARNING You should use that option with great caution, as it will delete the complete existing catalog. If you just want to overwrite tools with their up-to-date versions from a content drawing, select Append to Catalog instead, and verify that Ignore Duplicate Styles is cleared. 
+6 Under Content Source, select a project standards drawing or standards folder to use as source for the new tools. 
+If you want to… Then… 
+add tools from multiple  select Create from drawings in folder, and  
+drawings in a folder  then enter the path and folder name under  
+Type the source folder location.  
+
+add tools from a single  select Create from drawing, and then enter  
+drawing  the path and drawing name under Type the  
+source drawing.  
+
+7 Specify how the tools should be ordered in the catalog. 
+¦ 
+To order the resulting tools by their source drawing, select Group tools by source drawing. This option is well suited for a tool catalog that is generated from a number of styles drawings. The resulting tools could be placed in categories or palettes named “Wall Styles ­Concrete (Imperial)”, “Wall Styles - CMU (Imperial)” and so on. 
+
+¦ 
+To order the resulting tools by their object type, select Group tools by object type. This option is well suited if you want to merge styles from various drawings into the catalog. The resulting tools will be placed in categories or palettes named after the style type, for example “Walls”, “Doors,” and so on. 
+
+
+NOTE If both options are enabled, then the tools are first grouped by the drawings and then by the object type, generating categories from the drawings, and palettes from the object types. This is implemented because palettes cannot be nested. In this case the radio buttons below are disabled and the Create tools in palettes option is selected for the tools. 
+NOTE If neither of the two options are enabled, all new tools will be generated in the top category of the catalog. 
+¦ 
+To place the new tools in categories, select Create Tools in Categories. If you selected to group tools by their source drawing, then for each source drawing a category will be created. If you selected to group tools by their object type, then for each object type a category will be created. 
+
+¦ 
+To place the new tools in palettes, select Create Tools in Palettes. If you selected to group tools by their source drawing, then for each source drawing a palette will be created. If you selected to group tools by their object type, then for each object type a palette will be created. 
+
+
+8 Under Create tools for the following objects, select which object 
+styles should appear as tools in the catalog. By default, all available style types are selected. Use the Select All and Clear All buttons as needed to make your selections. 
+9 Click OK. A progress bar in the application status bar indicates the progress of the tool generation. When a large number of tools are being added, the process can take a few moments. 
+NOTE Each category and each palette is created in its own ATC file. The category and palette ATC files are stored in the Palettes or Categories subfolders in the folder in which the new catalog is created. 
+For information about associating a tool catalog to a project library, see Adding a Project Catalog to a Content Browser Library on page 617. 
+
+Adding a Project Catalog to a Content Browser Library 
+Tool catalogs are placed in catalog libraries. If you have created a tool catalog with standard tools, you need to add it to a catalog library. A Content Browser library can be set up on a shared network volume to be accessed by all project users. The CAD manager or project owner can point the project to that Content Browser library to have quick access to standard tools. For more information, see Adding a Project Library and Tool Palette Group on page 618. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Click 
+ to display the catalog library. 
+3 Click 
+to create a catalog. 
+4 In the Add Catalog dialog box, select Add an existing catalog or website. 
+5 Enter the location of the standards tool catalog created in Creating a Project Standards Tool Catalog on page 612, or click Browse a to navigate to the catalog. 
+6 Click OK. 
+NOTE Alternatively, you can drag and drop an ATC file from Windows Explorer to the Content Browser library pane. 
+
+Adding a Project Library and Tool Palette Group 
+If you have created a project library in Content Browser, you can associate it to a project. When you open the Content Browser from Project Navigator, the project library is automatically displayed. 
+The project library can be used to drag tools in project drawings, or to fill the project tool palettes with standard tools. 
+
+Project Tool Palette Group 
+Each project has a specific tool palette group (ATC) associated with it. Depending on how you created the project, the tool palette group can be created and displayed in different ways. 
+For a new project, the project tool palette group is by default empty, unless the project settings are pointing to an existing palette group. 
+Selecting the project tool palette group 
+
+
+Tool Content Root Path 
+Setting a tool content root path can help you keep your tools consistent with standards if the project or the standards drawings are moved during the project lifecycle. 
+When tools on the project tool palettes point to the tool content root path specified in the project settings, the content root path is created as a variable (%AECPROJECT_DIR%) in the XML definition of the tool. When the tool content root path in the project settings is changed, the path of the tools is changed accordingly. 
+For example, if all project tools point to content stored under <Project Root Folder>\Standards\Content\Content 1\, you can move the content to <Project Root Folder>\Standards\Content\Content 2\, adjust the tool content root path in the project setup accordingly, and all tools will now point correctly to <Project Root Folder>\Standards\Content\Content 2. 
+Another use case for changing the tool content root path would be if a user wants to work offline, and for that purpose creates an e-transmit package of the project and its tool content files. When the e-transmit package is unpacked on the local computer, the path to the content files will have changes. If it was P:\ <Project Root Folder>\Standards\Content\Content, it could now be C:\ <Project Root Folder>\Standards\Content\Content. If the tool content root path is redirected to the user’s C drive, and all content will remain valid. 
+Later, when the drawings the user modified offline are copied back to the main project on the P server, the content root path will automatically change back to P:\ <Project Root Folder>\Standards\Content\Content, as this is the path in the main APJ file. 
+
+Project Library 
+A Content Browser library can be set up on a shared network volume to be accessed by all project users. The CAD manager or project owner can associate the library with the project to have quick access to standard tools. This can be especially useful on a large project. For more information, see Before You Begin: Working in a Network Environment on page 302. 
+When Content Browser is opened from the Project Navigator, it will automatically open the library associated with the project. 
+1 Click 
+. Open . Project. 
+2 Select the project for which you want to specify the tool palette group and the Content Browser library, right-click, and click Project Properties. 
+
+3 Under Tool Palette Group, specify the location of the project tool palette group. You can select a local folder or a network folder here. 
+If you do not explicitly set a location here, the following default behavior is selected depending on how you created your project: 
+Project Type Tool Palette File Loca-Project Tool Palette tion Group 
+Legacy project  pointing to new empty  Created, but not dis- 
+from Autodesk  ATC file under \<Project­ played. To display the tool  
+Architectural  Name>\Standards\ Work- palette group in the tool  
+Desktop 2005  spaceToolPalettes\ <Project­ palettes set and add tools  
+Name>.atc  to it, see Displaying the  
+Project Tool Palette Group  
+on page 623 and Building  
+the Tool Palette Group on  
+page 625.  
+
+Project Type Tool Palette File Loca-Project Tool Palette tion Group 
+New project  pointing to new empty  Created, but not dis- 
+not based on  ATC file under \<Project­ played. To display the tool  
+a template  Name>\Standards\ Work- palette group in the tool  
+spaceToolPalettes\ <Project­ palettes set and add tools  
+Name>.atc  to it, see Displaying the  
+Project Tool Palette Group  
+on page 623 and Building  
+the Tool Palette Group on  
+page 625.  
+
+New project based on de­fault AutoCAD Architecture template pro­ject pointing to new ATC file under \<Project­Name>\Standards\ Work­spaceToolPalettes\ <Project­Name>.atc. By default, one empty tool palette is already inserted in ATC. 
+Created and displayed with empty default tool palette. To add tools and palettes, see Building the Tool Palette Group on page 625. 
+New project  If the tool palette group of  Displayed as either copied  
+based on user- the template project is loc­ tool palette group or refer- 
+defined exist­ ated within the template  enced tool palette group  
+ing template  project folder, it will be  
+project  copied with all contained  
+palettes to the correspond­ 
+ing folder of the new pro­ 
+ject. The tool palette file  
+location of the new project  
+will point to the copied  
+tool palette group.  
+If the tool palette group of  
+the template project is loc­ 
+ated outside the template  
+project folder, the tool  
+palette file location of the  
+new project will point to  
+the same location, sharing  
+the tool palette group with  
+the template project.  
+
+4 For Project Tool Palette Group, select Shared Workspace Catalog or Per User Workspace Catalog. If you select Shared Workspace Catalog, the path selected under Tool Palette File Location is added to the user’s project profile (AWS), and the tool catalog is used from the specified location. If you select Per User Workspace Catalog, a folder is created under \\Documents and Settings\<User Name>\ and the tool palettes are copied to that folder. 
+5 Under Tool Content Root Path, you can set a root path for the tools used in the project tool palette group. When tools on project palettes are created with the tool content root path specified in the project setup, the content root path is created as a variable (%AECPROJECT_DIR%). When the tool content root path in the project setup is changed, and the referenced style drawings are moved to the new location, the path of the project tools is changed accordingly. 
+NOTE When a project is re-pathed, and the content root path is within the project folder, then it will be re-pathed accordingly. 
+6 Under Content Browser Library, select the default Content Browser library (CBL) to be displayed when opening Content Browser from the Project Navigator. 
+7 Click OK. 
+
+
+Displaying the Project Tool Palette Group 
+Use this procedure to display the project tool palette group in the tool palettes set. 
+Depending on the setting of the tool palette file location in Adding a Project Content Browser Library and Tool Palette Group on page 329, the project tool palette group can be displayed automatically after setting a project current and closing Project Browser, or it can be empty and not be displayed on the tool palettes set. The project tool palette group is displayed automatically when it contains at least one palette. 
+Tool palette groups that are not automatically displayed can appear in the following cases: 
+¦ A new project that is not based on a template, and does not point to an existing tool palette group 
+¦ 
+A legacy project from Autodesk Architectural Desktop 2005 that is not manually re-pointed to an existing tool palette group 
+
+¦ 
+A project that is based on a template project without project tool palettes 
+
+
+If an empty tool palette group is created for a project, it is not displayed in the tool palettes set after the project is set current. To display it, you need to add at least one tool palette to it. 
+1 Click Home tab . Build panel . Tools drop-down . Design Tools. 
+2 In the title bar of the tool palettes set, click 
+. 
+¦ If the project tool palette group contains at least one palette, it is displayed in the list of available tool palette groups, and can be selected. 
+Selecting the project tool palette group 
+
+¦ If the tool palette group of the current project is empty, it is not displayed. 
+3 To display the project tool palette group, click 
+, and click 
+Customize. On the left, all available palettes are listed. On the right, all palette groups are listed. The empty project tool palette group is listed there. 
+4 Right-click in the palettes list on the left, and click New Palette. 5 Enter a name for the new palette. 6 Select the palette, and drag it on the project palette group on the 
+right. 
+7 Click Close, and click 
+again. The project tool palette group is listed under the available palette groups and can be selected. 
+
+Building the Tool Palette Group 
+When a new project is created, its associated tool palette group is empty, unless the new project is explicitly pointing to an existing tool palette group. You can add and remove palettes, add, remove, and rearrange tools to suit the needs of the current project. 
+TIP To make sure that the changes you make here are distributed to all project collaborators, you should define the tool palette storage type as a shared workspace catalog. 
+IMPORTANT All new palettes you add to the tool palettes set while a project is current are added to the current project’s tool palette group. This happens regardless of whether the project tool palette group is active or not. In order to add new palettes to the global tool palettes associated with your user profile, you must first close any project that is current. 
+You can add standard tools to the project palette group in these ways: 
+¦ 
+Add standard tools from the project library 
+
+¦ 
+Add standard tools from the from standards drawings in Style Manager 
+
+
+1 Set the desired project current. 2 Click Home tab . Build panel . Tools drop-down . Design Tools. 
+3 In the title bar of the tool palettes set, click 
+, and then select the project tool palette group. 
+Selecting the project palette group 
+
+4 Add and rename palettes as necessary. For detailed information, see Creating a New Tool Palette on page 86. 
+5 To add standard tools from the project library, click 
+in the Project Navigator toolbar. The Content Browser is opened with the project library displayed. 
+6 Drag tools or palettes from the project library to the project palette group. 7 To add standard tools from the standards drawings, open a project drawing, and click Manage tab . Style & Display panel . Style 
+Manager
+ . The project standards drawings are displayed under the project node. You can drag-and-drop styles from the Style Manager to the project palettes. 
+The next time you open the project, the new palettes and tools will be present in the project tool palettes. 
+
+Copying the Project Tool Palettes to the Tool Palette File Location 
+If you are working with a per user workspace catalog, you can create a starter set of palettes and tools for the project users by copying your palettes to the project tool palette file location. The first time a user opens the project, the tool palettes from the tool palette file location will be copied to the local users’ machines. 
+1 Set up project standards tools as described in Adding a Project Library and Tool Palette Group on page 618 and Building the Tool Palette Group on page 625. 
+2 Close AutoCAD Architecture. 
+3 In Windows Explorer, navigate to C:\Documents and Settings\<username>\Application Data\Autodesk\ACA 2011\enu\Support\Profiles\ProjectCatalogs\. 
+4 Select the project catalog folder. If you have just closed AutoCAD Architecture, the current project folder is the one with the latest date. In addition, the folder is named with the project GUID, which you can also find in the project APJ file. 
+5 Copy the project catalog folder and paste it to the folder specified as the tool palette file location for the project. 
+
+Adding the Project Profile to the Tool Palette File Location 
+After setting up the project tool palette group, the CAD manager or project owner needs to ensure that new users of the project will all have an identical set of tools and palettes when they are working with the project. To do this, the project profile needs to be copied to the folder specified as the tool palette file location. 
+1 Set up project standards tools as described in Adding a Project Library and Tool Palette Group on page 618 and Building the Tool Palette Group on page 625. 
+2 Close AutoCAD Architecture. 
+3 In Windows Explorer, navigate to C:\Documents and Settings\<username>\Application Data\Autodesk\ACA 2011\enu\Support\Profiles\ProjectProfiles\. 
+4 Select the project AWS file. 
+If you have just closed AutoCAD Architecture, the current project profile is the one with the latest date. In addition, the AWS contains the project GUID which you can also find in the project APJ file. 
+5 Copy the project AWS file and paste it to the folder specified as the tool palette file location of the project. 
+
+
+Adding Standards to a Project Drawing 
+If you set up standards for a new project, or add new drawings to an existing project, standard styles and display settings do not yet exist in these drawings and need to copied there. 
+If you have configured project standard tools as described in Setting up Standard Tools in a Project on page 608, you can drag-and-drop them from the project library or the project standards palettes to project drawings. 
+If you want to use standard styles and display settings in a project drawing without using tools, you need to copy them through Style Manager and Display Manager. 
+WARNING Project standard styles and display settings can be used only in project drawings. You can copy standard styles and display settings into standalone drawings as well; however, they will not be synchronized or versioned and maintain no link to the project standards. 
+There are different methods of copying standard styles and display settings to a drawing: 
+¦ 
+Project tool palettes can be defined, as described in Building the Tool Palette Group on page 625. If the tools reference styles from standards drawings, the associated standard style is copied to the project drawing when the tool is executed. 
+
+¦ 
+A Content Browser library for the project can be defined, as described in Adding a Project Library and Tool Palette Group on page 618. You can drag-and-drop tools from Content Browser to a project drawing. 
+
+¦ 
+Standards drawings are displayed in the Style Manager and Display Manager under the project node. You can drag-and-drop styles and display settings into a project drawing from a project standards drawing. 
+
+
+Project Tool Palette Group 
+When you create a project, a project palette group is associated with it. The project palette group is displayed in the tool palettes set when the project is set current. For information about creating a project tool palette group, see Setting up Standard Tools in a Project on page 608. 
+
+Adding Standard Styles from the Project Tool Palettes 
+If you want to copy a standard style from a project palette into the current drawing, you can either insert the tool into the drawing, or import the associated style from the tool palette into the drawing. 
+1 Right-click the tool, and click Properties. Verifying the style location 
+
+Under Style location, the associated style drawing is listed. 
+2 Verify that the tool points to a project standards drawing. 3 Click OK. 4 To add the standard style into the drawing, do one of the 
+following: 
+¦ 
+Select the tool, right-click, and click Import <Style Name> <Object> Style. For example, if you want to add the wall style CMU-190 into the drawing, click Import CMU-190 Wall Style. 
+
+¦ 
+Click the tool to execute its function which will automatically use the referenced style. 
+
+
+Both of these options add the style to the drawing. 
+
+Adding Standard Styles from Content Browser 
+The CAD manager can set up a library in Content Browser that contains standard tools. Standard tools can be dragged from Content Browser directly to a drawing or to a tool palette. 
+For information about associating a library for a project, see Adding a Project Library and Tool Palette Group on page 618. 
+1 Set the project current, as described in Setting a Project Current on page 312, and close the Project Browser. 
+2 Click View tab . Palettes panel . Project Navigator
+ . 
+3 In the Project Navigator toolbar, click 
+. The Content Browser is opened with the project library displayed. 
+4 Select a standard tool by its eyedropper tool, and drag it either to the drawing area of AutoCAD Architecture, or to one of the tool palettes. 
+NOTE Be sure to hold down the mouse button until the eyedropper appears to “fill up” before dragging it to the drawing or tool palette. 
+
+Adding Standard Styles from Style Manager 
+You can add standard styles to project drawings in Style Manager. When standards drawings are specified in the project standards configuration, they are displayed in Style Manager when you open a project drawing. Styles can be dragged from the project node to the project drawing node here. 
+Standard styles in Style Manager 
+
+1 Open the project drawing to which you want to add standard styles. 
+2 Click Manage tab . Style & Display panel . Style Manager
+ . The standards drawings specified in the standards configuration are listed under the project node. 
+3 Expand the node for the project standards drawing containing the style you want to add, and expand subnodes as necessary to locate the style. 
+4 Drag the style from the project standards drawing node to the project drawing node in the tree view. The standard style is copied to the project drawing node. 
+NOTE For the synchronization of the standard style to work, the style needs to come from a standards drawing that has been selected as a standards drawing for this style type in the configuration setup. For example, if the standards drawing “Wall Styles.dwg” has been configured as the standard for wall styles, and the standards drawing “Door Styles.dwg” has been configured as the standards drawing for door styles, you should not copy any wall styles from the “Door Styles.dwg” to the project drawing. Because that drawing has not been defined as the standards drawing for wall styles, the copied styles will display as not standardized in the synchronization. For information on configuring standards drawings, see Setting up Standard Styles and Display Settings on page 595. 
+5 Click OK. 
+You can also drag styles from a project standards drawing into a drawing that is not part of the current project. If the drawing is not part of any project, no synchronization will happen to that style in the future. If the drawing is part of a different project, the style will display as not standardized in future synchronizations of that project, unless that project references the same standards drawing from which the style was dragged. 
+
+Adding Standard Display Settings from Display Manager 
+You can add standard display settings to project drawings in the Display Manager. When a standard display drawing is specified in the project standards configuration, it is displayed in Display Manager under the project node. From there, display configurations, display sets, and display representations can be dragged to the project drawing nodes. 
+Adding standard display settings from Display Manager 
+
+1 Open the project drawing to which you want to add standard display settings. 
+2 Click Manage tab . Style & Display panel . Display Manager 
+
+. The drawing that has been defined as display standards drawings in the project standards configuration is listed under the project node. 
+3 Expand the standards drawing node and navigate to the desired type nodes for Configurations, Sets, and Representations by object. 4 Drag the component to the project drawing node in the tree view. 5 Click OK. 
+
+
+Synchronizing a Project with the Standards 
+When a project or project drawing is synchronized with its standards, the styles and display settings in it are compared with the project standards to find version discrepancies between them, and fix them. 
+Synchronization can become necessary in these cases: 
+¦ 
+A style or display setting in a project drawing has changed and needs to be updated with the correct version from the project standards. 
+
+¦ 
+A style or display setting in the project standards has changed and needs to be updated in the project drawings. 
+
+¦ 
+Not standardized styles and display settings have been introduced in a project drawing. 
+
+
+Depending on the synchronization settings specified in Setting up Synchronization of AEC Standards on page 602, outdated standards in the project drawings are either automatically updated with the latest version from the project standards drawings, or you are presented with a list of objects that need to be updated. You can select individual objects to update, while ignoring others. If you select to update a style with the associated standard, the selected style is copied from the project standards drawing into the project drawing, overwriting the existing style definition. 
+NOTE Automatic synchronization of standard styles and display settings does not happen during background plot/publish. 
+WARNING You should always synchronize the display settings in your project. Version discrepancies between the display settings in the project drawings can result in objects in project drawings not being displayed consistently. You also need to make sure to synchronize all project standards drawings with the current standard display settings, as described in Synchronizing Project Standards with Each Other on page 676, to ensure consistent display in the standards drawings. 
+Synchronizing a project with standards 
+
+
+Versioning Styles and Display Settings 
+To determine whether a standard style or display setting in a project drawing is identical to the corresponding object in the project standards drawing, styles and display settings in a project are versioned. The version information includes a unique GUID (Global Unique Identifier), the date and time of the last modification, the windows login name of who last modified the object, and an optional comment. 
+A new version of a standard style or display setting in a project drawing is created each time the style or display setting is changed in Style Manager or Display Manager, and saved. 
+In a project standards drawing, a new version of a standard style or display setting must be manually created after the style or display setting has been changed in Style Manager or Display Manager. For information about versioning standard styles and display settings, see Versioning Standards on page 661. In project standards drawings, a version history is also stored. The version history will be used to determine if styles or display settings in project drawings are identical to the version in the project standards drawing, or newer or older versions. 
+An older version of a style or display setting in a project drawing is a version that exists in the project standards drawing, but is not the latest version. A newer version of a style or display setting in a project drawing is a style or display setting that exists in the project standards drawing, but has no corresponding version in its version history. 
+A special case occurs if a standard style or display setting in a standards drawing has no version information. This can happen if the version information has been purged, as described in Purging the Version Information from a Project Standards Drawing on page 675. In this case, the standard style or display setting still participates in the synchronization and is considered the “latest version” when comparing with versions of the object in project drawings. No attempt is made during synchronization to automatically create a version GUID or history list. If you want to add version information to the standard style or display setting, you need to manually version the object as described in Updating Standard Objects in a Project Standards Drawing on page 665. 
+
+Synchronization Conditions 
+Two styles or display settings are considered identical if the following are identical: 
+¦ 
+Object type (e.g. wall style, display set) 
+
+¦ 
+Name 
+
+
+¦ Version GUID 
+If the synchronization process finds a style or display setting in a project drawing that has the same type, name, and version GUID as the corresponding style or display setting in the project standards, it concludes that the style or display setting is up-to-date with the project standards. In that case, no change is necessary. 
+NOTE A synchronization does not perform a property-by-property comparison between the versions. The reason for this is that such a comparison would slow down the software considerably, and that the GUID, date and time stamp in the version information provides sufficient information to identify changes. 
+
+Synchronization Order 
+If you have multiple standards drawings containing the same standard styles associated with a specific style type, then the instance of the style in the first standards drawing is used as the style to which the style in the project drawing is synchronized. The first standards drawing is the one listed on the left in the standards configuration table. Further drawings containing the same standard style are ignored. 
+Order of standards drawings 
+
+NOTE The order of the synchronization is observed in all cases, even if a later project standards drawing contains a newer version of a standard style than the one contained in the preceding standards drawing. 
+
+Dependent Styles 
+Some styles have dependent styles or definitions used to create them. This could be, for example, door and window styles that are used within window assembly or curtain wall styles. In a case like that, it is recommended that all dependent styles and definitions are placed in the same standards drawing. 
+
+Synchronization Granularity 
+You can synchronize different parts of a project. You can synchronize a complete project, an individual project drawing, or an individual style or display setting. 
+Synchronizing only one drawing or style will take considerably less time, and may often be sufficient. 
+
+Synchronizing AutoCAD Standards 
+Synchronizing the AutoCAD standards (DWS) of a project is a separate process from synchronizing the AEC standards of a project. While you can set the AEC standards in a project to be automatically synchronized every time a drawing is opened, synchronization of the AutoCAD standards has to be initiated manually by the user. When AutoCAD standards are set up in a project, a CHX file is automatically created containing the project drawings and the associated AutoCAD project standards drawings. The batch standards checker can be used to open the project’s CHX file and batch check the entire project. 
+
+Synchronization Status 
+When you synchronize a project or a drawing with its AEC project standards, the styles and display settings in the project drawings are compared with the versions in the standards drawings. If the version of the style or display setting in the project drawing is not identical to the version in the standards drawing, you can choose from several possible actions regarding the style or display setting. 
+Synchronization dialog 
+
+Status Description Action 
+Current standard  The style or display set- No action required. The object is in  
+version  ting in the project draw­ synch with the standard.  
+ing is identical to the  
+version in the project  
+standards drawing.  
+
+Status Description Action 
+Older version of standard style or dis­play setting The style or display set­ting in a project drawing is an older version than the style in the project standards drawing. 
+NOTE The version GUID is used to determine which version is more current. 
+You can choose from these actions: 
+¦ 
+Update from Standard: this copies the version from the pro­ject standards drawing to the project drawing. The object in the project drawing is overwrit­ten. 
+
+¦ 
+Do not Update: The style or dis­play setting is skipped for this synchronization. The next time the drawing is synchronized, it will display as inconsistent with the standards again. 
+
+¦ 
+Ignore: The style or display set­tings is skipped now and for fu­ture synchronizations. 
+
+
+NOTE If you choose this option, you may choose to display ignored ob­jects during each synchronization. 
+Nonstandard (New-The style or display set-er) Version of stand-ting in the project draw­ard style or display ing is a version not found setting in the project standards 
+drawing’s version history. 
+Not standardized  The style or display set- 
+style or display set­ ting in the project draw- 
+ting  ing is not present in the  
+project standards draw­ 
+ings.  
+
+¦ 
+Skip: The not standardized ob­ject is skipped for this synchron­ization. The next time the pro­ject is synchronized, it will dis­play as not standardized again. 
+
+¦ 
+Ignore: The not standardized object is skipped now and for future synchronizations. 
+
+
+NOTE If you choose this option, you may choose to display ignored ob­jects during each synchronization. 
+
+
+Synchronizing a Project with AEC Standards 
+When you have set up AEC project standards and enabled them, you can synchronize the project with the standards. 
+For information about setting up AEC standards, see Setting up Standard Styles and Display Settings on page 595. 
+Synchronizing a project will synchronize all drawings contained within. Depending on your system setup and project size, this might take some time. Also, project drawings that are open during the synchronization might not be correctly synchronized because they will not be able to be saved after the synchronization. In that case, the drawings need to be closed, and the synchronization repeated. 
+NOTE Synchronizing a project will not synchronize the project standards drawings with each other, even if they are located within the project folder. To synchronize project standards drawings with each other, see Synchronizing Project Standards with Each Other on page 676. 
+1 Verify that the project you want to synchronize is the current 
+project. For information about setting a project current, see Setting a Project Current on page 312. 
+2 Click Manage tab . Project Standards panel . Synchronize Project . 
+
+
+Synchronizing a project with AEC standards 
+
+The synchronization dialog is displayed with two lists. The top list shows styles and display settings that are either older versions of standard styles or display settings, or nonstandard (newer) versions. The bottom list shows a list of not standardized styles and display settings. For a definition of terms, see Project Standards Terminology on page 585. 
+3 To synchronize a style or display setting that is either an older version or a nonstandard (newer) version, select Update from Standards from the Action drop-down list. 
+4 To skip over a style or display setting that is either an older version or a nonstandard (newer) version, select Do not Update from the Action drop-down list. 
+In this case, the nonstandard version remains in the project drawing for now, and is not updated with the standard. The next time the drawing is synchronized, the style or display setting will be listed again as inconsistent with the standard. 
+5 To ignore a style or display setting that is inconsistent with the standard, select Ignore from the Action drop-down list. In this case, the inconsistent object will not be listed again in future synchronizations, except if you select Show objects set to ignore during project standards synchronization, or remove the Ignore flag from the style or display setting in Style Manager or Display Manager, as described in Excluding Styles and Display Settings from Synchronization on page 651. 
+WARNING You should use the Ignore option only in clearly defined exception cases where you are sure that a style or display setting does not need to conform to the project standards. 
+6 To skip over a not standardized style or display setting, select Skip 
+from the Action drop-down list. The next time the drawing is synchronized, the style or display setting will be listed again as not standardized. 
+NOTE You cannot promote not standardized styles and display settings to standard ones here. To do this, you need to add the not standardized style to the project standards, as described in Adding Standard Objects from a Project Drawing to a Project Standards Drawing on page 670. 
+7 To ignore a not standardized style or display setting, select Ignore 
+from the Action drop-down list. In this case, the not standardized object will not be listed again in future synchronizations, except if you select Show objects set to ignore during project standards synchronization, or remove the Ignore flag from the style or display setting in Style Manager or Display Manager, as described in Excluding Styles and Display Settings from Synchronization on page 651. 
+8 Click OK. 
+
+Synchronization Exceptions 
+When you synchronize a complete project, drawings that are currently opened by another user or are read-only will be excluded from the synchronization. Before the synchronization of the project is started, the program runs an internal check to see if there are drawings that cannot be synchronized at the time. If such drawings are found, the Synchronization Warning worksheet is displayed. 
+NOTE If a project drawing is opened by the same user who is trying to synchronize the project, no error warning is displayed. The program will detect that the drawing is open and will be able to make the synchronization changes to the open drawing. 
+If you get a warning message like this, you can either wait until all project drawings are available to you, or you can synchronize the project now, accepting that there are drawings that cannot be included. 
+1 Verify that the project you want to synchronize is the current 
+project. For information on setting a project current, see Setting a Project Current on page 312. 
+2 Click Manage tab . Project Standards panel . Synchronize Project
+
+ . If there are project drawings that are currently unavailable for synchronization, you will receive the following warning message: 
+
+3 Click Synchronize to synchronize all project drawings not listed in the warning worksheet. 
+4 When the Synchronization dialog is opened, follow the instructions in Synchronizing a Project with AEC Standards on page 640. 
+
+Synchronizing a Project Drawing with AEC Standards 
+Use this procedure to synchronize a project drawing with the AEC project standards. 
+NOTE If you have selected automatic or semi-automatic synchronization in your standards configuration, the synchronization is automatically started every time you open the project drawing. For information on setting the synchronization mode, see Synchronization Options on page 600. 
+1 Open the project drawing you want to synchronize. 
+2 Click Manage tab . Project Standards panel . Synchronize DWG . 
+
+Synchronizing a project drawing with AEC standards 
+
+Two lists are displayed. The top list shows styles and display settings that have corresponding styles or display settings in the project standards, but are either an older version of a standard style or display setting, or a nonstandard (newer) version. The bottom list shows a list of styles and display settings that do not have corresponding styles or display settings in the standards (not standardized styles and display settings). For a definition of the terms, see Project Standards Terminology on page 585. 
+3 To synchronize a style or display setting that is either an older version or a nonstandard (newer) version, select Update from Standards from the Action drop-down list. 
+4 To skip over a style or display setting that is either an older version or a nonstandard (newer) version, select Do not Update from the Action drop-down list. 
+In this case, the nonstandard version remains in the project drawing for now, and is not updated with the standard version. The next time the drawing is synchronized, the style or display settings will be listed again as older version or nonstandard version. 
+5 To ignore a style or display setting that is either an older version or a nonstandard version, select Ignore from the Action drop-down list. 
+In this case, the nonstandard version will not be listed again in future synchronizations, except if you select Show objects set to ignore during project standards synchronization, or remove the Ignore flag from the style or display setting in Style Manager or Display Manager, as described in Excluding Styles and Display 
+Settings from Synchronization on page 651. 
+You should use the Ignore option only in clearly defined exception cases where you are sure that a style or display setting does not need to conform to the project standards. 
+6 To skip over a not standardized style or display setting, select Skip 
+from the Action drop-down list. The next time the drawing is synchronized, the style or display setting will be listed again as not standardized. 
+NOTE You cannot promote not standardized styles and display settings to standard ones here. To do this, you need to add the not standardized style to the project standards, as described in Adding Standard Objects from a Project Drawing to a Project Standards Drawing on page 670. 
+7 To ignore a not standardized style or display setting, select Ignore 
+from the Action drop-down list. In this case, the not standardized object will not be listed again in future synchronizations, except if you select Show objects set to ignore during project standards synchronization, or remove the Ignore flag from the style or display setting in Style Manager or Display Manager, as described in Excluding Styles and Display Settings from Synchronization on page 651. 
+8 Click OK. 
+
+Synchronizing Selected Styles and Display Settings with AEC Standards 
+You can synchronize individual styles and display settings in Style Manager and Display Manager. You could do this if you have accidentally changed a style in the project drawing, and want to restore the correct version from the project standards. Synchronizing an individual style or display setting will take less time than synchronizing a drawing or the project. 
+Standard styles in Style Manager 
+
+This process only synchronizes styles and display settings in a project drawing with the standards. It does not synchronize styles and display settings in different standards drawings with each other. For information on synchronizing standards drawings among themselves, see Synchronizing Project Standards with Each Other on page 676. 
+
+Standard Icons 
+Standard styles and display settings are displayed in Style Manager and Display Manager. Depending on their status with regards to the project standards, there are a number of different icons to differentiate them. 
+Icon Description 
+
+Standard style or display setting When a blue icon appears on a style or display setting in a project drawing or project standards drawing, the style or display setting is a standard one and is in synch with the standard. No update or synchron­ization is necessary. 
+
+Standard style or display setting that is outdated When this icon appears on a style or display setting in a project draw­ing, the style or display setting is a standard one, but is out of date. This means that the corresponding style or display setting in the project 
+
+Icon Description 
+standards drawing has a newer GUID than the one in the project drawing. To update the style or display setting in the project drawing, see Synchronizing Individual Styles with AEC Standards on page 650 and Synchronizing Individual Display Settings with AEC Standards on page 650. 
+
+Standard style or display setting that has a non-standard (newer) ver­sion When this icon appears on a style or display setting in a project draw­ing, the object is a standard object, but has a version GUID that cannot be found in the project standards. If you encounter this icon, you can either overwrite the non-standard version with the current version from the standards drawing, as described in Synchronizing Individual Styles with AEC Standards on page 650 and Synchronizing Individual Display Settings with AEC Standards on page 650, or you can update the standards with the version from the project drawing, as described in 
+Updating Standard Objects in a Project Standards Drawing from a Project Drawing on page 668. 
+
+Standard style or display setting that is excluded from synchronization When this icon appears on a style or display setting, the object is ex­cluded from synchronization. For more information, see Excluding Styles and Display Settings from Synchronization on page 651. 
+
+Standard style or display setting that has no version information When this icon appears on a style or display setting in a project standards drawing, the style or display setting has no version informa­tion. Version information can be deleted, as described in Purging the Version Information from a Project Standards Drawing on page 675. To add version information to a style or display setting, see Updating Standard Objects in a Project Standards Drawing on page 665. 
+
+Standard style or display setting that has been changed, but not ver­sioned When this icon appears on a style or display setting in a project standards drawing, the object has been modified, but not versioned yet. In order for the changes to be included in the synchronization, the object must be versioned, as described in Updating Standard Ob­
+jects in a Project Standards Drawing on page 665. 
+
+Icon Description 
+This icon appears only in project standards drawings. Changes in pro­ject drawings are versioned automatically when you click Apply or OK in Style Manager or Display Manager. 
+
+Not standardized style or display setting When a gray icon appears on a style or display setting in a project drawing, this object has no equivalent in the project standards, or (in the case of styles) the equivalent style in the project standards has not been associated with that style type in the project standards configur­ation. When this icon appears on a style in a project standards drawing, the style type it belongs to has not been associated with the corresponding standard style type in the project configuration setup. For example, if the Wall style type in the standards configuration has been associated with the Standards Drawing “Wall Styles 1.dwg” then the wall styles in “Wall Styles 1.dwg” will be displayed as standard styles in the Style Manager. The wall styles in “Wall Styles 2.dwg” will be displayed as not standardized styles. 
+
+
+Overview: Styles in Project Drawings 
+You can synchronize individual styles in a project drawing. 
+¦ 
+All styles in a project drawing 
+
+¦ 
+Style Categories: You can synchronize all styles contained in a style category. For example, you can synchronize all styles contained in Documentation Objects, if you have made changes to property set definitions, table styles, and data formats. 
+
+¦ 
+Style types: You can synchronize all styles belonging to a style type. For example, you can synchronize all wall styles or all door styles. 
+
+¦ 
+Styles: You can synchronize individual styles. You could do this if you have made a single change to a standard style, and do not want to start a complete synchronization of the drawing. 
+
+
+
+Overview: Display Settings in Project Drawings 
+You can synchronize individual components of the display system in a project drawing. 
+Display Manager tree 
+
+¦ 
+All display settings in a project drawing: You can synchronize all display settings in a project drawing. This includes display configurations, display sets, and display representations. 
+
+¦ 
+Display configurations: You can synchronize either an individual display configuration or all display configurations in the drawing. 
+
+
+NOTE A change to the cut plane is not a versionable change. If you change the cut plane, and synchronize the display configuration with the project standards, the changed cut plane will not be overwritten with the project standard. 
+¦ Display Sets: You can either synchronize an individual display set or all display sets in the drawing, 
+NOTE Changes to the Live Section settings are not a versionable change. If you change the Live Section settings, and synchronize the display set with the project standards, the changed Live Section settings will not be overwritten with the project standard. 
+¦ Display representations: You can either synchronize an individual display representation, all display representations of an object type, or all display representations in the drawing. 
+
+Synchronizing Individual Styles with AEC Standards 
+Use this procedure to synchronize styles in a project drawing. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 In the Style Manager tree, navigate to the style, style type, or style category you want to synchronize. 
+3 Select the object in the tree, right-click, and click Synchronize with Project Standards. 
+4 In the Synchronize Drawing with Project Standards dialog box, select Update from Standard from the Action drop-down list for each object that should be synchronized. 
+5 Click OK. 
+
+Synchronizing Individual Display Settings with AEC Standards 
+Use this procedure to synchronize display settings in a project drawing. 
+NOTE Display settings should always be synchronized with the latest standard settings. Out-of-synch display settings in a project can cause objects to be displayed inconsistently. 
+1 Click Manage tab . Style & Display panel . Display Manager . 2 In the Display Manager tree, navigate to the object you want to synchronize. You can synchronize the following objects: 
+
+¦ 
+All display settings in a drawing 
+
+¦ 
+all display configurations 
+
+¦ 
+single display configuration 
+
+¦ 
+all display sets 
+
+¦ 
+single display set 
+
+¦ 
+all display representations 
+
+¦ 
+all display representations of an object type 
+
+¦ 
+a single display representation on an object type 
+
+
+3 Select the object in the tree, right-click, and click Synchronize with Project Standards. 
+4 In the Synchronize Drawing with Project Standards dialog box, select Update from Standard from the Action drop-down list for each object that should be synchronized. 
+5 Click OK. 
+
+Excluding Styles and Display Settings from Synchronization 
+Use this procedure to specify individual styles and display settings that you want to be ignored during synchronization. 
+Specified styles and display settings will not be overwritten with standards during automatic synchronization and will not be displayed as version mismatches during semi-automatic or manual synchronization, unless you select the Show objects set to ignore during project standards synchronization check box in the Synchronization dialog box. 
+1 Click Manage tab . Style & Display panel . Style Manager 
+
+or Display Manager
+ . 
+2 Navigate to the style or display setting to be excluded, right-click, and click Ignore During Synchronization. Note that the Ignore During Synchronization option now has a 
+check mark next to it. If you click the option again, the check mark disappears and the selected style or display setting is removed from the list of components to be ignored. 
+
+Generating a Synchronization Report 
+When you synchronize a project or a project drawing, you can save a synchronization report in HTML or XML format. 
+You can define in the project setup whether a synchronization report should be generated when synchronizing a project. 
+1 Verify that the creation of synchronization log files has been activated in the project configuration, as described in Setting up Synchronization of AEC Standards on page 602. 
+2 Synchronize a project or a drawing with its standards, as described in Synchronizing a Project with AEC Standards on page 640 or Synchronizing a Project Drawing with AEC Standards on page 643. 
+When the synchronization is finished, the Save Project Standards Report dialog box is displayed. 
+
+3 Select a file location and enter a name for the synchronization report. 
+4 Click Save. 
+The report is saved as an HTML or XML document in the specified location. You can open it with a Web Browser or an XML editor. 
+The report offers you various ways to display synchronization results; for example, you can view the synchronization results by drawing, by standard objects, or by problems encountered. 
+
+Synchronizing a Project with AutoCAD Standards 
+Use this procedure to synchronize a project with its AutoCAD standards. For information on defining AutoCAD standards for a project, see Setting up AutoCAD Standards on page 604. 
+When you set up AutoCAD standards for a project, a CHX batch checker file with the project name is created in the project folder. The CHX file contains a list of all project drawings as drawings to be checked, and a list of all specified AutoCAD standards files (DWS) as files to check against. If you want to synchronize a whole project against the AutoCAD standards, you need to run this batch file using the AutoCAD Batch Standards Checker. 
+The AutoCAD Batch Standards Checker runs independently from AutoCAD Architecture. 
+Before you start the AutoCAD Batch Standards Checker, you should update the project CHX file to make sure the CHX contains the current list of AutoCAD standard files and project files. 
+1 Verify that the project you want to check is the current project. For information on setting a project current, see Setting a Project Current on page 312. 
+2 Click Manage tab . CAD Standards panel . Batch Checker. A progress bar indicates the progress of the CHX update. 
+3 Click Start (Windows) menu . All Programs (or Programs) . Autodesk . AutoCAD Architecture 2011 . Batch Standards Checker. 
+4 Click File menu . Open Check File. 5 In the File Open dialog box, select the project CHX file. 
+Batch Standards Checker 
+
+6 Click Check menu . Start Check. For more information about AutoCAD standards, see “Maintain Standards in Drawings” in AutoCAD help. 
+
+Synchronizing a Project Drawing with AutoCAD Standards 
+Use this procedure to synchronize a project drawing with its associated AutoCAD standards. AutoCAD standards include AutoCAD layer settings, AutoCAD dimension styles, linetypes, and text styles. 
+1 Open the drawing you want to synchronize with AutoCAD standards. 
+2 Click Manage tab . Project Standards panel . Update
+ . A progress bar indicates the progress of the CHX update. 
+3 Click Manage tab . CAD Standards panel . Check. 
+
+Under Problem, the first AutoCAD dimension style, text style, layer, or linetype style that is inconsistent with the AutoCAD standards of the project is listed. 
+4 To synchronize the component with the project standards, select one of the styles listed under Replace with, and click Fix. 
+5 To retain the not standardized component in the drawing, click Mark this Problem as ignored. 
+6 Click Next to display the next not standardized component. When all problem components have been processed, a message displays with a summary of the problems. 
+7 Click OK, and then click Close. 
+
+
+Auditing a Project or a Drawing 
+When a project or a drawing is audited, the styles and display settings in the project drawing are compared with those of the project standards, and any out-of-synch standards will be reported. 
+Out-of-synch standards can appear in these cases: 
+¦ 
+A style or display setting in a project drawing has changed and needs to be updated with the correct version from the project standards. 
+
+¦ 
+A style or display setting in the project standards has changed and needs to be updated in the project drawings. 
+
+¦ 
+Not standardized styles and display settings have been introduced in a project drawing. 
+
+
+You could for example run an audit on drawings that come from contractors, or from other outside sources. Before you synchronize the drawings with the project standards, you first want to look at what actually is different between the drawings and the standards. For information on synchronizing standards, see Synchronizing a Project Drawing with AEC Standards on page 643. 
+NOTE A drawing needs to be part of a project to be audited against project standards. You cannot audit standalone drawings. If a drawing had been outsourced, it needs to be copied back into the project before it can be audited. For more information, see Converting a Drawing to a Construct on page 393. 
+The result of the audit is placed in an HTML or XML audit report. 
+1 To create an audit report for the project click Manage tab . Project 
+Standards panel . Audit Report
+ . 2 To create an audit report for the project drawing click Manage 
+tab . Project Standards panel . Audit Project Drawing
+ . When the audit is finished, the Save Project Standards Report dialog box is displayed. 
+
+3 Select a file location and enter a name for the synchronization report. 
+4 Click Save. 
+The report is saved as an HTML or XML document in the specified location. You can open it with a Web Browser or an XML editor. 
+The report offers you various ways to display audit results; for example, you can view the audit results by drawing, by standard objects, or by problems encountered. 
+
+Showing Display Overrides in Project Drawings 
+To keep project drawings synchronized, it is important to control the properties and display properties of building objects by style, to be able to update the objects when the project standards change. Introducing object-level overrides makes it impossible for the overridden objects to be updated through the synchronization process when project standards change. 
+Use this procedure to detect object-level overrides on style-based objects in the current drawing. 
+1 Click Manage tab . Style & Display panel . Show Display Overrides. 
+NOTE Alternatively, enter AecShowDisplayOverrides on the command line. 
+2 On the command line, enter a display option: 
+If you want to… Then… 
+highlight the overridden enter O (byObject). objects in the drawing area. 
+display a list of overridden enter S (byStyle) objects in the AutoCAD command window 
+highlight the objects and enter B (Both). display a list in the Auto-CAD command window 
+3 Remove any object-level overrides. 
+
+
+Editing Project Drawings Outside the Project 
+You need to work on a project drawing outside of a project in any of the following cases: 
+¦ 
+A drawing is edited by an outside contractor. 
+
+¦ 
+A user wants to work on a drawing offline without access to the project. 
+
+¦ 
+A drawing has been created outside the project and is integrated into the project later. 
+
+
+When you are working with a project drawing outside of a project, you can use the drawing’s standard styles and display settings, but they cannot be updated with changes that are made to the project standards during that time. So it is important to synchronize the drawing after it has been re-integrated into the project. 
+If you have made changes to standard styles and display settings in the project drawing during working outside the project, a new version of the styles and display settings is created automatically to track the changes when synchronizing the drawing with the project standards. You can select to either overwrite the new version with the current version from the project standards, or you can update the project standards with the version from the project drawing. For more information, see Synchronizing a Project Drawing with AEC Standards on page 643 and Updating Standard Objects in a Project Standards Drawing from a Project Drawing on page 668. 
+
+Creating a New Project Standards Drawing 
+Project standards drawings are assigned to a project, but are not project drawings like elements, constructs, views, and sheets. The styles and display settings in project drawings are compared with the standards and updated as necessary during the synchronization process. 
+To create a project standards drawing, you need to create a drawing file or a drawing template containing styles and display settings that should be used in the project. 
+For example, you can create one drawing that contains the standard wall styles, and another one that contains the standard door styles, or mask block definitions. 
+Project standard files can be of the file format DWG, DWT, or DWS. If you select the DWS format for your standards drawings, you can simultaneously use them as your AutoCAD standards drawings. 
+A project standards drawing is a regular drawing file. The definition of the drawing as a project standards drawing is created when the drawing is added as a project standards drawing to the standards configuration of a project, as described in Setting up Standard Styles and Display Settings on page 595. 
+Styles vs. Display Settings 
+You can assign multiple standards drawings for project styles. During synchronization, project drawings are compared against the project standards drawings in the order you establish in the project standards configuration. If a style is located in multiple standards drawings, the first instance in the search order is used as the standard. 
+For display settings, you can assign only a single standards drawing. It must contain all standard display settings for the project. Note, however, that the same standards drawing can be used for both styles and display settings. 
+
+File Location of Project Standards Drawings 
+You can choose two different options for storing project standards drawings: 
+
+Project Folder 
+If the project standards drawings are located within the project, they are treated as project specific. Typically, drawings containing project-specific standards are stored inside the project folder. For example, if you create styles for only one building project, you would place them in a project-specific standards drawing within the project folder. Placing standards drawings under the project folder has the following implications: 
+¦ 
+When you use the project as a template for a new project, the project standards drawings are copied to the new project, and repathed to their new location. 
+
+¦ 
+If you copy the standards of the project to another project, the project standards drawings are copied to that project. 
+
+¦ 
+If you synchronize project standards drawings with each other, only standards drawings within the project will be included in the synchronization. For more information, see Synchronizing Project Standards with Each Other on page 676. 
+
+
+¦ The standards drawings are included in e-transmit and archiving packages created of the project. 
+You would place your standards drawings within the project if you want to keep the standards drawings specific to that project. You can copy the standards drawings to a new project, but any changes you make to one set of the standards drawings will not be propagated to the other one. 
+
+A Folder Outside the Project 
+If project standards drawings are located outside the project, they are referenced from that location. You would do this typically for standards that are not specific to a project, but rather to the department or the company. In that case, copying the standards to individual projects would create a risk of version discrepancies being introduced in the multiple copies. Also, a change made to a company-wide standards file would not be automatically propagated to all projects using that standards file. Placing a standards drawing outside the project has the following implications: 
+¦ 
+When you use the project as a template for a new project, the project standards drawings are not copied to the new project. They are referenced from their original location. 
+
+¦ 
+If you copy the standards of the project to another project, the project standards drawings are referenced from their original location in the other project. 
+
+¦ 
+If you synchronize project standards drawings with each other, standards drawings outside the project will not be included in the synchronization. For more information, see Synchronizing Project Standards with Each Other on page 676. 
+
+¦ 
+The standards drawings outside the project folder are not included in e-transmit and archiving packages created of the project. For more information, see Electronically Transmitting a Project on page 337. 
+
+
+1 Open a new drawing file. 
+2 Add the standard styles and display settings you need in this 
+project. 
+For more information, see Style Manager on page 855, Display 
+System on page 777, and the relevant object chapters. 
+3 Save the drawing as DWG, DWT, or DWS format. 
+If you want to… Then… 
+make the standards drawing  save it within the project folder.  
+specific to a project  
+NOTE You can create subfolders  
+for standards drawings.  
+
+make the standards drawing save it outside the project folder. available for general use within the company or team 
+4 Associate the standards drawing with a project, as described in Setting up Standard Styles and Display Settings on page 595. 
+
+
+
+Updating Project Standards Drawings 
+When a standard style or display setting changes during the lifecycle of a project, it needs to be versioned, saved, and then updated in the project drawings and the other project standards drawings. 
+A standard component can be either changed directly in the standards drawing, or be updated from a project drawing. For more information, see Updating Standard Objects in a Project Standards Drawing on page 665 and Updating Standard Objects in a Project Standards Drawing from a Project Drawing on page 668. 
+Updating AEC project standards drawings 
+
+
+Process Overview: Updating AEC Standards in a Project 
+When a change is made to an AEC project standard, the following high-level steps need to be performed throughout the project: 
+1 Make a change to a standard style or display setting in a project standards drawing. 
+2 Version the changed style or display setting in Style Manager or Display Manager, and save or close the standards drawing. For more information, see Versioning Standards on page 661. 
+3 Synchronize the project, individual project drawings, or individual styles or display settings with the changed standard. For more information, see Synchronizing a Project with the Standards on page 633. 
+4 It is recommended that you synchronize all other project standards drawings with the change. For more information, see Synchronizing Project Standards with Each Other on page 676. 
+
+Versioning Standards 
+Styles and display settings in project standards drawings and project drawings have a version. The version is used to determine whether a style or display setting needs to be synchronized. The version information includes a unique GUID (Global Unique Identifier), the date and time of the last modification, the Windows login name of the user who last modified the object, and an optional comment. 
+Version Comparison 
+When a project is audited or synchronized with its standards, the comparison of the versions determines whether styles and display settings in the project are identical, older, or newer than the project standard. 
+Styles or display settings are considered identical to the project standards if the following are identical: 
+¦ 
+Object type (such as Wall style or display set) 
+
+¦ 
+Name 
+
+¦ 
+Version GUID 
+
+
+For determining whether a style in a project drawing is identical to a project standard style, the GUIDs of both are compared. The GUID is a unique string that is newly created for each version of a standard object. In the project standards drawing, a list of previous GUIDs is kept as a version history to enable comparison with objects in a project drawing. 
+If the synchronization process finds a style or display setting in a project drawing that has the same type, name, and version GUID as the corresponding style or display setting in the project standards drawing, it concludes that the style or display setting is a standard one, and in synch with the object in the project standards drawing. In that case, no change is necessary. 
+If the comparison finds that the GUID in the project drawing does not match the GUID of the style in the project standards drawing, but matches a previous GUID from the standard style version list, it labels the style in the project drawing an “older version of a standard style.” 
+If the comparison finds a style or display setting that matches a standard object in name and object type, but has a GUID not appearing in the version history of the standard style or display setting, the style or display setting in the project drawing is labeled “nonstandard (newer) version of standard object.” 
+NOTE Synchronization does not perform a property-by-property comparison between the versions. The reason for this is that such a comparison would slow down the software considerably, and that the GUID, date and time stamp in the version information provides sufficient information to identify changes. 
+
+Creating Versions 
+A new version of a standard style or display setting in a project drawing is created automatically each time the style or display setting is changed in Style Manager or Display Manager. 
+A new version of a standard style or display setting in a project standards drawing must be created manually when the style or display setting is changed in Style Manager or Display Manager. In project standards drawings, a version history for each standard style and display setting is also stored. The version history is used during synchronization to determine if styles or display settings in project drawings match the versions in the project standards drawing, or are newer or older versions. 
+
+Versioning Exceptions for Display Settings in Project Standards Drawings 
+There are a few cases where modifications to the display settings will not be automatically versioned, as this will in most use cases not be a desirable effect. 
+Some settings will routinely vary from the standards drawing, so these settings will not be included in the automatic versioning process. 
+¦ 
+Display Configuration: Cut Plane 
+
+¦ 
+Display Set: Surface Hatch on/off 
+
+¦ 
+Display Set: Live Section on/off 
+
+¦ 
+Wall display: wall graph toggle on/off 
+
+
+
+Version History 
+Standard styles and display settings in project standards drawings contain a version history for changes made to them during the project. You cannot roll back to a previous version of a standard object. The version history is only used to determine the current state of standard styles and display settings. 
+
+
+Change Types in Project Standards Drawings 
+Different types of changes you can make to project standards require different actions to be applied throughout the project. 
+Change Type Actions required 
+Modifying a standard style or display ¦ Version style or display setting setting 
+¦ 
+Save project standards drawing 
+
+¦ 
+Synchronize project drawings 
+
+¦ 
+Synchronize other project standards drawings (optional) 
+
+
+Renaming a standard style or display setting 
+¦ 
+Rename style or display setting 
+
+¦ 
+Save project standards drawing 
+
+¦ 
+Copy style or display setting to project drawings 
+
+¦ 
+Assign style or display settings in project drawing 
+
+¦ 
+Remove older name version from project drawings 
+
+
+
+Change Type Actions required 
+NOTE Renaming a style is not considered a modification to the style and cannot be synchron­ized. 
+Adding a new standard style or dis-¦ Create new style or display setting play setting 
+¦ 
+Save project standards drawing 
+
+¦ 
+Copy style or display setting to project drawings 
+
+¦ 
+Copy style or display setting to other project standards drawings (optional) 
+
+
+Deleting a standard style or display ¦ Verify that the style or display setting is not setting needed anymore in the project 
+¦ 
+Delete style or display setting 
+
+¦ 
+Save project standards drawing 
+
+¦ 
+Remove style or display setting from project drawings 
+
+
+Modifying a standard style or display setting: When you make a modification to a standard style or display setting (except for renaming), you need to synchronize the project drawings that use the style or display setting. If the standard style or display setting is used in other project standards drawings, they need to be synchronized, too. 
+Renaming a standard style or display setting: Renaming a style or display setting is similar to creating a new style. The previous version history of the renamed style remains. If you want to use the renamed object in a project drawing or in another project standards drawing, you need to copy it there. Any instances of the older name in a project drawing or a project standards drawing should be deleted. 
+Adding a new standard style or display setting: If you have added a new standard style or display setting to a standards drawing and want to use the style in a project drawing or in another project standards drawing, you need to copy it through Style Manager and Display Manager or through tool palettes to these drawings. For information on copying styles and display settings to project drawings, see Adding Standards to a Project Drawing on page 628. Once it has been copied, the new style or display setting will be included in future synchronizations. 
+Deleting a standard style or display setting: When you remove a standard style or display setting from a standards drawing, instances of that style in project drawings will be identified as not standardized in subsequent synchronizations. The not standardized instances should be removed from these drawings, as well. 
+NOTE Standard styles and display settings can only be deleted in their standards drawings. The synchronization does not delete unused standard styles or display settings. 
+
+
+Updating Standard Objects in a Project Standards Drawing 
+You can change a standard style or display setting in a project standards drawing. When a change has been made, you must version it and then synchronize the project with the change. 
+When you change a standard style or display setting directly in the standards drawing, you do not need to version every single change. Many changes may be necessary to create a standard style or display setting in its final form; to create a version for every intermediate stage would slow down the process. unnecessarily. 
+You can make multiple changes, save and close the drawing, reopen it, and then version the style or display setting when it is ready for propagating in the project. As long as the changes are saved to the project standards drawing, no edits will be lost, even without versioning in between. 
+WARNING As long as your changes are saved, but not versioned, any synchronizations taking place during that time will not recognize the styles and display settings as changed, since the object comparison is performed on the version GUID, and not the actual object properties. As a consequence, changed but unversioned styles and display settings in the project standards will not be updated in the project drawings. To have the changes synchronized with the project, you need to version the styles or display settings first. 
+To make changes to a project standards drawing, you must have write access to the drawing. If a standards drawing is read-only, it is marked with a Lock 
+icon ( 
+ ) in Style Manager or Display Manager. You can make changes to that drawing, but you cannot save them. If you need to make changes to a locked drawing, contact the drawing owner or CAD manager. 
+Standards drawings and standard styles under the project node 
+
+Changing a standard style or display setting 1 Open a project standards drawing. 2 Click Manage tab . Style & Display panel . Style Manager or Display Manager
+ . 
+
+TIP All standards drawings are listed under the project node in Style Manager and Display Manager. 
+3 Select the style or display setting you want to edit, and make your changes. 
+Versioning changed styles and display settings 
+4 Click the Version History tab of the changed style or display setting. 
+
+5 Click Version. 
+
+6 If necessary, enter a comment for the new version. 7 Click OK. The new version is appended to the Version History tab. 
+8 To version multiple styles or display settings in a project standards drawing, select a group of objects and version them: 
+
+9 Select the styles or display settings that should be versioned. 10 If desired, enter a comment. The comment will be applied to all objects selected for versioning. 11 Click OK. 
+NOTE To version all styles and display settings in a drawing, click 
+Manage tab . Project Standards panel .
+. Apply Versioning To Current Drawing. 
+
+
+Updating Standard Objects in a Project Standards Drawing from a Project Drawing 
+You can change a standard style or display setting in a project standards drawing by overwriting it with the corresponding style or display setting from a project drawing. When you have updated the project standard from a project drawing, the project needs to be synchronized to use the updated styles and display settings. For information, see Synchronizing a Project with the Standards on page 633. 
+NOTE Before you change a project standard from a project drawing, you should verify that this is the correct procedure. Once the project standard has been changed, the style or display setting will be updated in all project drawings during the next project synchronization, if automatic synchronization is selected. 
+To make changes to a standards drawing, you must have write access to the drawing. If a standards drawing is read-only, it is marked with a Lock icon (
+
+ ) in Style Manager or Display Manager. You can make changes to that drawing, but you cannot save them. If you need to make changes to a locked drawing, contact the drawing owner or CAD manager. 
+1 Open a project drawing from Project Navigator. 
+2 Click Manage tab . Style & Display panel . Style Manager 
+
+or Display Manager
+ . 3 Expand the node of the project drawing, and select the standard style or display setting with which you want to update the project standards. 
+NOTE A standard style or display setting in a project drawing is marked with a blue icon. If a style or display setting is displayed with a gray icon, it is not a standard style or display setting. In that case, you can add it to the project standards, as described in Adding Standard Objects from a Project Drawing to a Project Standards Drawing on page 670. 
+4 Right-click, and click Update Standards from Drawing. 
+NOTE You can select multiple objects here. 
+
+The selected style or display setting is listed in the top panel. 
+5 To update the project standards from a style or display setting in the project drawing, select Update Project Standards from the Action drop-down list of the style or display setting. 
+6 To not update the project standards from a style or display setting in the project drawing, select Do not Update Project Standards from the Action drop-down list of the style or display setting. 
+In this case, the version in the project standards is not overwritten with the version in the project drawing. During the next synchronization of the project drawing, the style or display setting will be displayed as out of synch with the project standards. 
+7 To ignore the out of synch version of the style or display setting, 
+select Ignore from the Action drop-down list. In this case, the style or display setting will not be displayed in future updates, except when you select Show objects set to ignore during project standards synchronization or remove the Ignore flag from the style or display setting in Style Manager or Display Manager, as described in Excluding Styles and Display Settings from Synchronization on page 651. 
+8 Click OK. 9 In Style Manager or Display Manager, click OK or Apply. 
+10 Click Yes to save the updated project standards drawing. 
+
+Adding Standard Objects from a Project Drawing to a Project Standards Drawing 
+You can add not standardized styles or display settings from the current project drawing to the project standards. You can do this, for example, if you have created a complex style in a project drawing and want to include that in your standards. 
+If you want to add a style to the project standards in this way, in addition to copying the style to the standards drawing you need to verify that the style type in question has been selected for that standards drawing in the project configuration. Otherwise, it will not be used as a standard. For example, if you copy a wall style from a project drawing to the standards drawing “Standards 1.dwg,” you need to make sure that in the project configuration the Wall Style type has been checked for “Standards 1.dwg.” For more information, see Setting up Standard Styles and Display Settings on page 595. 
+After copying a style or display setting to the project standards, you need to synchronize the project to use the new standard object. 
+1 Open a project drawing from Project Navigator. 
+2 Click Manage tab . Style & Display panel . Style Manager or Display Manager
+ . 3 Add a new style or display setting to the current project drawing. 4 Select the new style or display setting, right-click, and click Update Standards from Drawing. 
+
+NOTE You can select multiple items here. 
+
+The new style or display setting is listed in the lower panel, which displays styles and display settings in the project drawing that do not exist in the project standards. 
+5 To add the style or display setting to a project standards drawing, and thereby make it a standard style or display setting, select Add to Project Standards in the Action drop-down list. 
+NOTE If you are adding a display setting to the project standards, it is added to the display standards drawing. If you are adding a style to the project standards, it is added to the first project standards drawing in the search order that has been associated with that style type in the project standards configuration, as described in Setting up Standard Styles and Display Settings on page 595. 
+6 To skip over the not standardized style or display setting select 
+Skip from the Action drop-down list. In this case, the not standardized object remains in the project drawing, and is not entered in the standards. 
+7 To ignore the style or display setting, select Ignore from the Action 
+drop-down list. In this case, the not standardized object will not be listed again in future updates, except if you select Show objects set to ignore during project standards synchronization or remove the Ignore flag from the style or display setting in Style Manager or Display Manager, as described in Excluding Styles and Display Settings from Synchronization on page 651. 
+8 Click OK. 9 In Style Manager or Display Manager, click OK or Apply. 
+10 Click Yes to save the updated project standards drawing. 
+
+Editing the Version History of a Standard Object 
+Each style and display setting in a project standards drawing has a version history. The version history displays the unique version identifier (GUID), date and time of the modification, user name and any additional comments entered by the user. 
+You can edit the history by selectively removing individual versions, or removing all versions. 
+1 Open a project standards drawing. 
+2 Click Manage tab . Style & Display panel . Style Manager 
+
+or Display Manager
+ . 3 Select the standard style from the project standards node of the tree. 4 Click the Version History tab. 
+
+5 To add a new version, click Version, and enter the versioning information. 
+6 To remove an existing version, select the version from the Version History list, and click Remove. To remove all versions in one step, click Remove All. 
+7 If you want the style or display setting to be ignored during synchronization of standards, select Ignore during project standards synchronization. 
+8 Click OK. 
+
+Versioning a Project Standards Drawing 
+You can version all styles and display settings in a project standards drawing in a one step. 
+1 Open a project standards drawing. 
+2 Click Manage tab . Project Standards panel .
+. Apply Versioning To Current Drawing. 
+
+3 Select the styles or display settings that should be versioned. 
+4 If desired, enter a comment. The comment will be applied to all objects selected for versioning. 
+5 Click OK. 
+
+Purging the Version History from a Project Standards Drawing 
+You can remove the version history from all standard styles and display settings in a project standards drawing with one command. Purging the version history will remove all versions except the current one from the standard styles and display settings. You can do that to avoid cluttering your styles and display settings. 
+When you purge the version history, no version GUID except for the current one remains. That means that the synchronization can no longer distinguish between an older version of a standard style and a non standard version of a style. Each style in a project drawing that does not have the current GUID of the corresponding standard style, will be labeled a “non-standard,” or newer version. 
+1 Verify that the project with which the project standards drawing is associated is the current project. 
+2 Open the Project Standards drawing from which you want to purge the version history. 
+NOTE Project standards drawings do not appear on the Project 
+Navigator. You need to open them by clicking 
+
+. Open . Drawing. 
+3 On the command line, enter AecClearVersionHistory. The version history is removed from all standard styles and display settings in the drawing. 
+
+Purging the Version Information from a Project Standards Drawing 
+You can remove the version information from all standard styles and display settings in a project standards drawing. When you remove the version information, the version history and the current version information is deleted. 
+When you run a synchronization, the standard style or display setting still participates in the synchronization and is considered the latest version when comparing with versions of the object in project drawings. No attempt is made during synchronization to automatically create a version GUID or history list. If you want to add version information to the standard style or display setting, you need to manually version the object as described in Updating Standard Objects in a Project Standards Drawing on page 665. 
+1 Verify that the project with which the project standards drawing is associated is set current. 
+2 Open the project standards drawing from which you want to remove the version information. 
+NOTE Project standards drawings do not appear on the Project 
+Navigator. You need to open them by clicking 
+
+. Open . Drawing. 
+3 On the command line, enter AecPurgeVersion. The version information is removed from all standard styles and display settings in the drawing. 
+NOTE To re-add a version to all styles or display settings in the drawing, open Style Manager or Display Manager, select the drawing in the tree, right-click, and click Version Drawing. 
+
+Synchronizing Project Standards with Each Other 
+Project standard styles and display settings can be distributed among multiple standards drawings, and depend on each other. For example, the styles in a styles drawing should use the display settings from the standard display drawing. If display changes are introduced in a standard styles drawing, and not synchronized with the standard display drawing, styles can display inconsistently across the project. Therefore, you should synchronize project standards drawings with each other when changes have been made to individual standards drawings. 
+You can synchronize project standards drawings among themselves either from the project standards node in Style Manager and Display Manager, or from the CAD Manager menu. 
+When project standards drawings are synchronized among themselves, the following criteria are used to determine how the objects are updated: 
+¦ 
+Standards drawing type: The display settings in the Standards display drawing update the display settings in all standard styles drawings. 
+
+¦ 
+Assigned style types: When a drawing has been associated with a style type in the standards configuration setup, the styles in this drawing will update all other standards drawings that may contain standard styles of that type. For example, if the standards drawing “Door Styles.dwg” has been associated with the Door style type, the styles in that drawing will overwrite any existing door standard styles in all of the other standards drawings. Note that in most cases, you will not place standard styles anywhere but in the designated standards drawing for that style type. 
+
+¦ 
+Search order: When more than one standards drawings in the standards configuration setup have been associated with a style type, the first standards drawing in the search order will update all other drawings associated with that style type. 
+
+
+Synchronizing project standards drawings among themselves is an automatic synchronization process, where no user interaction is possible. That means that no styles or display settings can be excluded from the synchronization process. 
+1 Verify that the project of which you want to synchronize the standards is the current project. 
+2 Click Manage tab . Style & Display panel . Style Manager 
+
+or Display Manager
+ . 
+3 Select the project node in the tree view, right-click, and click Synchronize Project Standards Drawings. 
+4 When the synchronization is finished, click OK to exit Style Manager or Display Manager. 
+NOTE Alternatively, you can click Manage tab . Project Standards panel .
+. Synchronize Project Standards
+ . 
+
+
+Editing Project Standards Drawings Outside the Project 
+You can edit project standards drawings outside the current project. This could happen, if you need to work offline, without access to the project, or if you want to work on a project standards drawing that is not part of the current project. 
+The following high-level steps are necessary to edit a project standards drawing outside of a project: 
+1 If necessary, copy the project standards drawing to an offline location outside the project. 
+2 Open the project standards drawing, and open Style Manager or Display Manager. 
+3 Edit the styles or display settings as necessary. 
+NOTE If the style or display setting you are editing already has a version history within the project, the version history is displayed in Style Manager or Display Manager. 
+4 Upon closing Style Manager or Display Manager, you are prompted to version changed styles or display settings. Version them just like you would within the project. 
+5 Save and close the project standards drawing. 
+6 If necessary, copy the project standards drawing back to the project. 
+7 Set the project current, and start a synchronization to propagate the changed styles and display settings to the project. 
+
+Scripting Project Standards Commands 
+Commands can help you automate the standards in your project by scripting your workflows and processes. The following commands are available for the project standards feature: 
+Command Description 
+AecProjectStandards Launches the Configure AEC Project Standards dialog box for the current project. For more information, see Configuring Project Standards on page 595. 
+AecSynchronizeProjectDrawing Synchronizes the current drawing with the project standards. 
+TIP To run this command without user interaction, make sure the automatic synchronization option is selected, as described in Setting up Synchronization of AEC Standards on page 602. 
+AecSynchronizeProject Synchronizes the current project with the project standards. 
+TIP To run this command without user interaction, make sure the automatic synchronization option is selected, as described in Setting up Synchronization of AEC Standards on page 602. 
+AecAuditProjectDrawing Audits the current drawing against the project standards. For more information, see Auditing a Project or a Drawing on page 654 
+AecAuditProject Audits the current project against the project standards. For more information, see Auditing a Project or a Drawing on page 654 
+AecShowObjectDisplayOverrides Identifies objects in the current drawing that have their display properties overridden at the object level. For more information, see Showing Display Overrides in Project Drawings on page 656. 
+
+Command Description 
+AecVersionModifiedObjects Versions all modified styles and display settings in the current drawing. For more information, see Up­
+dating Standard Objects in a Project Standards Drawing on page 665. 
+NOTE This command works only with project standards drawings.  
+AecProjectStandardsSetupReport  Generates a tracking report for the project standards setup. For more information, see Generating a Pro­
+ject Standards Setup Report on page 608.  
+AecUpdateStandards  Updates the project standards with the styles and display settings from the current drawing. For more information, see Updating Standard Objects in a Project Standards Drawing from a Project Drawing on page 668.  
+AecPurgeVersion  Purges the version information from all styles and display settings in the current drawing. For more information, see Purging the Version Information from a Project Standards Drawing on page 675.  
+
+NOTE This command works only with project standards drawings. 
+AecClearVersionHistory Purges the version history from all styles and display settings in the current drawing, except for the cur­rent version. For more information, see Purging the Version History from a Project Standards Drawing on page 674. 
+NOTE This command works only with project standards drawings. 
+AecSynchronizeStandards Synchronizes the project standards drawings of the current project among themselves. For more inform­ation, see Synchronizing Project Standards with Each Other on page 676. 
+AecUpdateProjectCADStandards Updates the project's CAD Standards Batch Stand­ards Checker CHX file. It also updates the CAD 
+
+Command Description 
+Standards file associations with each drawing in the current project. 
+NOTE The commands for the Drawing Management feature can also be useful for creating scripts for project standards. For more information, see Drawing Management Commands on page 548. 
+
+
+
+Drawing Compare 
+9 
+An efficient review of drawings and revisions is key as you move through the design, development, and construction phases of a project. The Drawing Compare feature makes it easier and faster to compare versions of drawings visually and review proposed changes. In addition to AutoCAD Architecture, Drawing Compare also allows you to compare drawings from AutoCAD®, Revit MEP, Revit Architecture, and Revit Structure. 
+Overview of Drawing Compare 
+A typical project requires multiple reviews as you produce drawings and add supplemental information. Drawing Compare compares review drawings to project drawings. The original drawings are the project drawings. The drawings that are revised and ready for evaluation are the review drawings. 
+The comparison process is like how drawings were compared when they were received on tracing paper or Mylar sheets and then overlaid on the original project drawings. Drawing Compare displays informational data about the objects in your drawing as well as displaying the graphical changes on the drawing screen. 
+You select the review drawings and compare each to its corresponding project drawing on the Setup tab of the Drawing Compare palette. After the comparison, you view the results on the Review tab of the Drawing Compare palette and in the drawing area. 
+Drawing Compare identifies objects that have been modified, added, or removed in the review drawings. Based on the status of the objects (modified, new, or missing), colors are assigned, and a list of the changes is generated. 
+
+Drawing Compare palette 
+In the following example, a simple floor plan was modified to show what information Drawing Compare displays during a comparison session. The review drawing shows that changes to the project drawing include moving the lower vertical interior wall segment to the left (resulting in a shorter horizontal interior wall segment), adding an exterior door to the right exterior wall segment, and removing a window from the upper exterior wall segment. 
+
+When the drawings are compared, color-coded changes are displayed, based on the type of change. 
+
+Information about changes is also displayed in the Object Report List on the Review tab. 
+
+
+File Organization for Drawing Compare 
+AutoCAD Architecture projects (the drawing management feature) provide automated tools to aid in the management, viewing, and construction of a building. Although it is not necessary for your drawings to be in a structured project, Drawing Compare works best when they are. When you are working in a project environment, Drawing Compare recognizes the Autodesk Project Information (APJ) file that identifies the collection of drawing files as being organized in a project. For more information about managing drawings in projects, see Workflow for a Project Environment on page 289. Different people on the team can access, share, and redirect project and review drawings in top-level folders in a project setting. For more information, see Working with Design Teams Located Remotely on page 307. 
+If you are not working with a structured project in AutoCAD Architecture, organize original drawings in project folders, and organize the revised drawings for review in review folders. The project drawings must all be contained within the same top-level folder to provide the correct context to perform the comparison. You specify these source folders for both Project and Review folders when you start Drawing Compare. Your drawings may be loosely organized as plans, elevations, and sections and look like this: 
+
+
+General Guidelines for Comparing Drawings 
+Drawing Compare only works in model space. If a drawing selected for comparison was saved in paper space, Drawing Compare automatically switches to the model tab. Because the content of sheets is exclusive to paper space, Drawing Compare does not display sheets in the list of project drawings in the Select Project Drawing pane. 
+Drawing Compare creates a snapshot of current drawing conditions. If you make changes, such as modifying project entities or changing the annotation scale while the review process is active, the results of the changes do not display until you run a new comparison. 
+During a Drawing Compare session, the drawing open on your screen is the project drawing with a screened image of the review drawing overlaid. Any changes you make are made in the project drawing. You can save changes you make to this project drawing, but you cannot merge review drawings with project drawings or modify review drawings. 
+Drawing Compare is not an integration tool. After the Drawing Compare process is complete and differences between the drawings are compiled, review drawings are not automatically integrated into your project. You are responsible for manually integrating and copying review drawings and all of their associated files (xref and image files, for example) to their appropriate locations. 
+IMPORTANT The data collected from the comparison is not saved. When you exit Drawing Compare, the results of the comparison are discarded. 
+
+
+Starting a Drawing Compare Session 
+The Setup tab of the Drawing Compare palette is where you specify the context in which drawings are matched and analyzed. Under Select Folders, the review folder contains updated or revised drawings, and the project folder contains the original version of the drawing files. All the project drawings must be contained within the same top-level folder to provide the correct context. For more information, see File Organization for Drawing Compare on page 683. 
+
+The matching and analyzing process looks at each review drawing to verify whether it is a modified version of a project drawing. If so, the 2 drawing files are matched. For more information, see General Guidelines for Comparing Drawings on page 684. 
+1 Click 
+. Utilities . Drawing Compare. 
+2 On the Setup tab, for Review Folder, click Browse 
+, navigate 
+to the folder containing project drawings, and select it. Drawing files in this folder are displayed alphabetically in the Select Review Drawing pane. These files include host drawings and any drawings nested within them as external references (xrefs). 
+3 For Project Folder, click Browse 
+, navigate to the folder containing project drawings, and select it. The Confirm Automatic Matching and Analyzing dialog displays. 
+
+NOTE The automatic matching and analyzing option is strongly recommended for most use cases. Match drawings manually only when a review drawing has been renamed, or if you want to compare a smaller set of drawings. 
+4 Match review drawings to project drawings. 
+If you want to… Then… 
+let Drawing Compare  click Yes.  
+automatically match all  The Automatically Matching and Analyzing  
+the review drawings  Drawings progress bar displays. The software  
+against all of the project  matches drawings by file name.  
+drawings in these folders  
+
+select a different project  click No, and under Select Folders, browse  
+folder for Project Folder  to the folder that contains project drawings  
+before automatically  for Project Folder. Click Yes when the Con- 
+matching  firm Automatic Matching and Analyzing dia­ 
+log displays.  
+
+You can also selectively match drawings: 
+
+If you want to… Then… 
+select specific draw- click No, and in the Select Review Drawing  
+ings/folder for automatic  pane, right-click the drawings or drawing  
+matching  folder to be matched, and select Automatic­ 
+ally Match.  
+
+match drawings manually 
+click No, and in the Select Review Drawing pane, select a drawing, and drag it onto a drawing in the Select Project Drawing pane. When you manually match drawings with different names, a relationship is established between the drawings. This affects what dis­plays when you use the filter mode for the Project folder. 
+exclude specific drawings  click No. In the Select Review Drawing pane,  
+from matching  right-click the drawings or drawing folder to  
+be excluded, and clear Include in Comparis­ 
+on.  
+
+NOTE If you choose to exclude draw­ings from a comparison, objects in ex­cluded drawings will appear as unmod­ified after the comparison. This allows you to focus on a smaller, more manage­able set of modifications. 
+A file excluded from a comparison will act as if it, and all its xrefs, are exact copies of the originals. Objects in excluded files (or xrefed by excluded files) will appear as unmodified. You should exclude files that you do not want to include in a comparison. 
+NOTE Architectural Desktop R14 drawings or earlier versions may not match automatically, but they can still be compared. You can either update the older drawings by saving them in the 2007 format, or you can match them manually. 
+After project and review drawings have been matched, icons next to the drawing name indicate status of the drawings as follows: 
+
+Icon Description 
+
+No match attempted yet. This is the initial state of all review drawings. 
+
+A review drawing is matched but is not selected. 
+
+A review drawing that is matched and selected. 
+
+A project drawing for which a matched review drawing is selected. 
+
+No match for a review drawing is found. 
+
+A review drawing that was specifically excluded from comparison by the user. 
+The date the selected drawing file was modified and the name of the person who made the modifications displays when you select a drawing from the review or project folder. 
+
+5 If desired, the drawings in the Review folder can be reset from matched to unmatched. This undoes an incorrect or inadvertent match, removing the match relationship. 
+
+¦ 
+You can un-match all review drawings at once by selecting the top-level folder in the Select Review Drawing pane, right-clicking, and clicking Un-Match All. 
+
+¦ 
+You can un-match a single review drawing by selecting the drawing, right-clicking, and clicking Un-Match. 
+
+
+6 If you want to set up a filter for results, select any drawing in the 
+Select Review Drawing pane, and click 
+on the Select Project 
+Drawing title bar. With the filter on, drawings in the project folder are filtered to display only those drawings that were matched to the drawing selected in the review folder and any project drawings into which the selected review drawing is xrefed. When you turn the filter mode off, all of the drawings in the project folder are listed. 
+7 Begin a comparison using one of the following methods. 
+¦ 
+Select a review drawing from the Select Review Drawing pane, select a project drawing from the Select Project Drawing pane, right-click, and click Begin comparison from this drawing. 
+
+¦ 
+Select a review drawing from the Select Review Drawing pane, select a project drawing from the Select Project Drawing pane, 
+
+
+then click 
+(Start Drawing Comparison) at the bottom of 
+the tab. 
+¦ Select a review drawing from the Select Review Drawing pane, double-click the project drawing from the Select Project Drawing pane. 
+The Object Comparison progress bar displays the number of objects being compared as they are processed. For results to be generated, always allow the Drawing Compare process to finish. For more information, see Reviewing the Results of a Drawing Compare Session on page 690. 
+
+IMPORTANT Although you can use the AutoCAD Undo command while working in a drawing, you cannot use it to undo any actions specific to Drawing Compare. 
+After the comparison is complete, the Review tab of the Drawing Compare palette displays along with a separate Drawing Compare panel. For more information, see Reviewing the Results of a Drawing Compare Session on page 690. 
+
+
+Reviewing the Results of a Drawing Compare Session 
+After you begin a comparison between a review drawing and a project drawing (see Starting a Drawing Compare Session on page 684), the Object Comparison progress indicator displays as shown. 
+
+When all objects in the drawings have been compared, the following events occur: 
+¦ 
+The Review tab of the Drawing Compare palette becomes active. This tab has a legend for the colors used in the drawing area and lists all objects for which differences were found. Select an object in the list to view a comparative list of its properties in both drawings (and optionally zoom in on the object in the drawing area). 
+
+¦ 
+Comparison results are shown graphically in the drawing area, with review drawing geometry overlaid on the project drawing. Objects for which differences were found display in color according to the Visual Filter Legend on the Review tab. For more information, see Creating a Visual Filter on page 696. 
+
+¦ 
+The Drawing Compare panel displays on the Home tab, providing a set of tools for reviewing comparison results. 
+
+
+
+Icon Description 
+
+Ends a Drawing Compare session. There is no Undo option for exiting Drawing Compare, and the compiled data is not 
+
+Icon Description 
+saved. There is no way to recapture the information you were reviewing without beginning a new comparison. 
+
+Plots a Drawing Compare session. You can publish the current comparison results (based on the current display system, layers, and filter settings) of the review drawing to 2D DWF or plot with foreground plotting. For more information, see Publishing Drawings to DWF and DWFx on page 263 and “Plot and Publish Drawings” in AutoCAD Help. 
+NOTE Foreground plotting is used by default; back­ground plotting is disabled when the plot button is selected. If you choose to plot or publish using back­ground plotting, your comparison results will not be plotted, and you will lose the themed results. 
+
+Selects the previous or next object in the Object Report List, and zooms in on the object in the drawing area if the Zoom to option is activated. 
+
+Selects an object in the drawing area and highlights it in the Object Report List. 
+
+Activates/deactivates the Zoom to option. Activate this op­tion to move forward and back through objects in the Object Report List. 
+
+Hides/displays the Drawing Compare palette. You can minimize the Drawing Compare palette and use the Drawing Compare panel on the Home tab of the ribbon to navigate when viewing objects. Expand the palette when necessary to review information about objects and properties. 
+
+Using the Review Tab 
+The Review tab of the Drawing Compare palette lets you review the results of a Drawing Compare session on an object-by-object basis. It also provides a mechanism for filtering the display in the drawing area to show/hide certain categories of objects or an entire drawing. The tab includes the following sections. 
+¦ 
+Setup: This section displays the full paths for the review and project drawings that are being compared. If multiple comparisons are active, this information updates as you switch between drawings. 
+
+¦ 
+Visual Filter Legend: The Visual Filter Legend identifies the colors used to indicate different categories of drawings and objects. You can switch the Hide/Show settings to control what will be visible in the drawing area. The icons for new, missing, and modified objects show 2 colors: the color in the upper-left corner of the icon is used for objects that have not been viewed; the color at the lower right is used for objects that have been viewed. When you start a Drawing Compare session, the last used filter from the previous session is still in effect. To change the colors or plot styles for any 
+
+of the categories in the legend, click the Edit Visual Filter icon ( 
+) on the Visual Filter Legend title bar to open the Visual Filter dialog. For more information, see Creating a Visual Filter on page 696. 
+
+¦ 
+Visual Filter: The Visual Filter dialog displays after you click the Edit Visual 
+
+
+
+
+Filter icon ( 
+ ) on the Visual Filter Legend title bar. It allows you to specify filters that affect how objects display during your Drawing Compare session. Select which objects will be compared under Included Objects. For example, you can set up a visual filter to include only modified windows to be included in the comparison. All other objects would display as unchanged. Under Visual Filtering Color Theme, you can adjust the color schemes and assign plot styles to different groups of objects, such as all modified windows. The Color column lists the colors for pending objects before they are selected. The Viewed Color column lists the colors for objects after they are selected. For more information, see Creating a Visual Filter on page 696. 
+
+¦ Object Report List: Objects that changed in the selected review drawing are listed alphabetically by categories, such as Circle, Door, Multi-View Block, and Polyline. All the information is in bold text initially, indicating objects as pending (not yet viewed). After an object is viewed, the associated information displays as normal text. 
+
+Select objects from the list to reset their status to pending or to viewed. Use the SHIFT key to select multiple objects and the CTRL key to select objects one at a time, right-clicking, and clicking Reset to pending or Mark as viewed. Resetting the objects changes the text style on the Object Report List and updates values in the Object List Summary. 
+The option to zoom in on an object turns on and off when you click the 
+Activate/Deactivate Zoom to icon ( 
+) on the Object Report List title bar or on the Drawing Compare panel. The software zooms into an object automatically after you select it in the Object Report List when this option is turned on. 
+When you select changed objects in the drawing area, the object is highlighted in the Object Report List. When you hold the cursor over new 
+or modified objects in the drawing, a lock icon indicates that these objects 
+cannot be changed. The Object Report List works hand-in-hand with the Object List Summary and the Object Properties. When you select an object from the Report List, the number of Pending objects changes, and the properties of the object display under Object Properties. 
+
+¦ Object List Summary: This summary displays the total number of objects changed and the total number of objects waiting to be viewed. In the following example, a total of 209 objects changed in the review drawing in some way, and 7 of these were reviewed, leaving 202 objects still pending; that is, not yet selected in the Object Report List. As you change the status of objects in the Object Report List, the number of Pending objects decreases or increases accordingly. 
+
+¦ Object Properties: This option is on by default and displays properties that have changed for the object that is selected in the Object Report List. If you want to view all properties of the selected object, click the Display 
+properties for reviewed objects icon ( 
+) on the Object Properties title bar to turn it off. If the object is missing, data is listed in the Project Object column only. If the object is new, data is listed in the Review Object column only. For modified objects, both project and review properties display. 
+
+
+
+Creating a Visual Filter 
+Use this procedure when you want to create a filter that controls which objects display and how they display during a review session. The changes you make on the worksheet are applied to the drawing and the Visual Filter Legend after you click OK. 
+1 On the Review tab, click the Edit Visual Filter button ( 
+). 
+2 On the Visual Filter dialog, in the Included Objects pane, select or clear the objects as needed to specify which ones will display. 
+TIP The context menu includes options to Clear All or Select All objects. 
+3 Specify settings for the visual filtering color theme: 
+If you want to… 
+Then click the 
+
+change the primary color  under Color to display the Select Color dialog  
+of object groups pending  box, select the primary color to appear on  
+review  the icon, and click OK.  
+
+
+If you want to… 
+Then click the 
+
+change the secondary  under Viewed Color to display the Select  
+color of object groups  Color dialog box, select the secondary color  
+after they are selected and  to appear on the icon, and click OK.  
+viewed  
+
+select a plot style 
+under Plot Style to display the Select Plot Style dialog box, select the plot style for the object group, and click OK. 
+NOTE No options are listed for draw­ings that use the CTB plot style. If the STB style is used, you can change the color and pen thickness for this group of objects. For more information about plot styles, see “Change Plot Style Set­tings” in AutoCAD Help. 
+4 Click OK. 
+
+
+Drawing Compare Commands 
+You can run certain Drawing Compare commands from the command line. 
+¦ 
+To open the Drawing Compare palette, enter DwgCompare at the command line. 
+
+¦ 
+To open the Visual Filter dialog (when the Review tab is current), enter VisualFilter. 
+
+
+
+Frequently Asked Questions about Drawing Compare 
+Question: When I copy an object from a project drawing to a review drawing and then start a Drawing Compare session, I would expect that the copied object would be identified as unchanged. However, the copied object is identified as new and missing. Why is this? 
+Answer: Drawing Compare uses object handles to match objects in review drawings to objects in the project drawings. When an object is copied from 
+one drawing to another, it is assigned a new object handle and is identified as a new version of the object. This results in the object being identified as missing in the project drawing and new in the review drawing. 
+Question: When I run a Drawing Compare session, objects that I know have been altered are not identified as modified. What causes this situation? 
+Answer: Check the Visual Filter worksheet and verify that the objects in question are not excluded from the Drawing Compare review. In the Included Objects section, expand each list of objects and select the appropriate objects for inclusion in the Drawing Compare review if necessary. If the properties that have been modified are annotation scale-dependent, they may not have been modified at the current annotation scale. 
+Drawing Compare uses the current model space annotation scale from the project drawing when comparing drawings. Annotative entities that do not support the current scale are still compared, but properties that can vary by scale representation will be identified as ''Missing scale representation.'' Properties that never vary by scale representation are always identified with their actual values. For any specific annotative entity, Drawing Compare will compare all its non-annotative properties as well as those scale-specific properties that are associated with the current annotation scale. 
+Non-annotative entities will always appear at the same size and rotation and will have the same property values regardless of the current annotation scale. 
+Question: I expect the Drawing Compare feature to zoom to each object that I select in the Object Report List, but this is not happening. Why? 
+Answer: The following reasons may apply: 
+¦ 
+You may have clicked the Zoom to button and toggled off the option. 
+
+¦ 
+You may be in the middle of a command. Click the Zoom to button again to toggle the option on, or end the command that you started to return to your Drawing Compare session. 
+
+¦ 
+The selected object is not currently visible because of layer or display system settings. A message displays on the command line when a non-visible object is selected from the Object Report List. 
+
+
+Question: My Drawing Comparison results identify xrefs that are new and missing, but I expect these xrefs to be identified as unchanged or modified. Why is this? 
+Answer: Drawing Compare uses object handles to match objects in review drawings to objects in the project drawings. If the xref has been detached, then reattached, the xref is assigned a different object handle and is identified as a new version of the xref. This results in the xref being identified as new in the review drawing and missing in the project drawing. 
+Question: After drawings from review and project folders are matched automatically, some of the drawings are still identified as unmatched even though these drawings in question share the same name. How can this be? 
+Answer: The drawing names may be the same, but the individual drawing internal IDs are different. This can occur, for example, when a drawing is W-blocked into a new drawing. Different drawing internal IDs are also assigned to AutoCAD Architecture or Revit Architecture drawings when they are exported to AutoCAD. 
+NOTE Using the Save or Save As commands does not alter a drawing’s internal ID. 
+Question: Why is my Select Project Drawing list empty after I select a project folder? 
+Answer: This occurs when the Project Drawing filter is toggled on and either no review drawing has been selected or the selected review drawing is not matched with a project drawing. 
+Question: Why do I not see the drawings that have been recently added to the project or review folder? 
+Answer: Folder contents are not automatically updated when drawings are added or removed. To update folder contents after they have been changed, reselect the appropriate folder. 
+Question: I see an external block reference identified in the Object Report List as new, modified, or missing, yet this external block reference does not appear graphically with any color assigned by the Visual Filter settings. What causes this problem? 
+Answer: External block references cannot have Visual Filter settings assigned to them. This is to ensure that the modifications to underlying objects within the external block reference are assigned colors according to the Visual Filter settings. 
+Question: Objects that have had their display settings modified are not identified in the Object Report List as modified. Why is this? 
+Answer: The Drawing Compare process does not review display settings for objects. Only the property and style settings of objects are reviewed. 
+Question: When comparing drawings exported from Revit Architecture or Revit Structure, I notice that a simple modification that I made to an object in these drawings results in numerous differences in associated objects. Why? 
+Answer: Each Revit object may be exported as separate objects, each of which may show up as a separate modification. 
+Question: Why do I have to always manually match drawings exported from Revit Architecture? 
+Answer: A new internal drawing ID is automatically assigned to each drawing file exported from Revit Architecture. 
+
+
+Layer Management 
+10 
+Enhanced layer management helps you to create, view, and modify the numerous and diverse elements of architectural plans. Use the Layer Properties Manager in AutoCAD Architecture to effectively organize and manage conceptual groupings in a drawing. 
+Layer Management 
+Layer Properties Manager 
+The Layer Properties Manager helps you organize, sort, and group layers, and allows you to work with layer standards, layer key styles, layer filters, layer overrides, and saved layer states. 
+In the Layer Properties Manager you can perform all activities related to layers: 
+¦ 
+Create, rename, and delete layers 
+
+¦ 
+Set and change layer properties 
+
+¦ 
+Make a layer current 
+
+¦ 
+Work with layer standards and layer key styles 
+
+¦ 
+Create layer groups and layer filters 
+
+¦ 
+Create layer overrides for layout viewports 
+
+¦ 
+Get notified about new layers in the drawing and its xrefs 
+
+¦ 
+Save and restore layer states 
+
+
+When you display the Layer Properties Manager, all the layers in the current drawing are displayed in the All layer group. If there are any external reference 
+files linked to the drawing, the layers are listed in a separate layer group, listed by referenced drawing. 
+
+
+Layer Filters 
+You can create layer filters to manage large sets of layers. The Layer Properties Manager allows you to create three types of layer filters: group filters, property filters, and layer standards filters. Property filters group layers based on layer properties and states, like for example visibility or color. Group filters contain any layers that you put in them. Standards filters contain layers associated with a specified layer standards category. 
+Creating a layer properties filter 
+
+
+Layer States 
+You can save the current layer settings in a drawing as a layer state and restore this layer configuration later. Saving layer states is convenient if you need to 
+

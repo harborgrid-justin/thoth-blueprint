@@ -1,0 +1,1504 @@
+[MIGRATED TO RTM_PART_68.md - KEYNOTES]
+2 Select the Edit Attributes grip. 3 Select one of the Width grips. 4 Specify a new grip location. 
+Using grips to change the width of a multiline attribute 
+
+Break Mark Tool Properties 
+Block-based break mark tools are used to mask or trim underlying objects with a polyline and an AEC Polygon. The default break mark tool is the Cut Line tool provided on the Annotation tool palette. Additional types of break marks are available from the Stock Tool and Documentation Catalogs of the Content Browser. For more information about working with AEC Polygons, see AEC Polygon Styles on page 1842. 
+
+The following table lists and describes tool properties for break marks that can be configured through the Tool Properties worksheet. Once a break mark is inserted into a drawing, its properties can be modified using the associated Properties palette. 
+Property Cat-Description egory/Name 
+Layer key Specifies the layer key for the layer to which the break mark is assigned. To change, click the current value (de­fault is ANNSYMOBJ) to access the Select Layer Key dialog box. 
+Layer override Specifies one or more layer key overrides. Click the work­sheet icon to access the Select Layer Overrides dialog box. 
+Symbol Specifies the block-based symbol to be used for the break mark. For sheet keynotes, the block contains an automat­ically updatable field value that determines keynote format 
+Property Cat-Description egory/Name 
+and either specifies a particular keynote or serves as a placeholder. The placeholder value is then replaced by whatever keynote is associated with the selected object or component or by a keynote selected manually during the insertion process. For more information, see Configur­
+ing the Annotation Tool for Keynoting on page 3571. 
+Symbol location The location of the drawing file containing the specified break mark symbol. Click the property and use the Browse option from the drop-down list to locate and enter the path to the file. If this property is unspecified (--), then only those blocks in the current drawing file are listed. 
+Symbol behavior Specifies whether the break mark inserts as Scaled or Stretched. If Stretched is selected, the cut line is stretched to correspond with the start point and endpoint, but the graphic of the cut remains the same. If Scaled is selected, the graphic in the cut line is scaled to correspond with the start point and endpoint of the cut line. 
+AEC Polygon style Specifies whether the break mark has masking properties. If this property is unspecified (--), the style defaults to the standard style. 
+AEC Polygon style location Specifies the location of the drawing file containing the AEC Polygon. Click the property and use the Browse op­tion from the drop-down list to locate and enter the path to the file. If this property is unspecified (--), then only those AEC Polygons in the current drawing file are listed. 
+Break mark behavior Specifies whether the break mark masks or trims the un­derlying object. An AEC Polygon and a polyline together represent the mask behavior of a break mark and do not modify the underlying object. A polyline represents the trim behavior of a break mark and clips the underlying object. 
+Type This property specifies whether the cut line is represented by a single edge of an AEC Polygon (single break) or two parallel edges of an AEC Polygon (dual break). 
+Creating a Text-Only Annotation 
+Use this procedure to add a multiline text object (without a leader) anywhere in the drawing area. The annotation does not have to be associated with any object or linework. 
+NOTE These instructions are based on one of the annotation tool configurations provided with the software. Depending on customization, the same tool may or may not appear on your Annotation tool palette. However, the same basic procedure applies to any annotation tool configuration in which the Content type is set to Mtext, the Leader type is set to None, and the Default text is unspecified (--). A basic Text Tool is also included in the Stock Tool Catalog in your Content Browser. 
+1 On the Annotation tool palette, click the Text Tool. Alternatively, you can click Annotate tab . Text panel . Text. 
+2 In the drawing area, specify the point where you want the annotation to begin. 
+3 Press ENTER to accept the default width for the annotation, or specify a width either by entering a value or by specifying a second point. 
+4 Enter the first line of text, and press ENTER to indicate the end of the line. 
+5 Press ENTER again to indicate the end of the annotation, or repeat 
+Step 3 for each subsequent line of text. Each line of text is displayed on the command line as you enter it. The completed annotation is displayed horizontally in the drawing area when you press ENTER twice in succession. 
+Creating Text with Single Leader Annotation 
+Use this procedure to add a multiline text object with a single leader that points to any point you specify in the drawing area. Leaders are drawn in the same manner as polylines: you specify two points to insert a straight line segment. Or, depending on the setting for the Limit points property, you can specify additional points to insert an angled leader consisting of two or more segments. 
+NOTE These instructions are based on one of the annotation tool configurations provided with the software. Depending on customization, the same tool may or may not appear on your Annotation tool palette. However, the same basic procedure applies to any annotation tool configuration in which the Content type is set to Mtext, the Leader type is set to Straight, and the Default text is unspecified (--). Leader properties can be modified on the Tool Properties worksheet of the annotation tool. Any unspecified properties use the leader settings in effect for the current drawing, which can be modified using the Leader Settings dialog box. A basic Text Tool is also included in the Stock Tool Catalog in your Content Browser. 
+1 On the Annotation tool palette, click the Text (Straight Leader) 
+tool. Alternatively, you can click Annotate tab . Keynoting panel . Text drop-down . Text (Straight Leader). 
+2 Specify the starting point for the leader. (This determines where the leader arrow is displayed.) 
+3 Specify one or more additional points to create the desired leader, and then press ENTER. 
+4 Press ENTER to accept the default width for the annotation, or specify a width either by entering a value or by specifying a second point. 
+5 Enter the first line of text, and press ENTER to indicate the end of the line. 
+6 Press ENTER again to indicate the end of the annotation, or repeat Step 4 for each subsequent line of text. 
+Drawing annotation text with leaders 
+
+Each line of text is displayed on the command line as you enter it. When you press ENTER twice in succession, the completed annotation is displayed in the drawing area. 
+Adding and Removing Leader Lines from Leaders 
+Use this procedure to add and remove leader lines from the following Annotation tools: 
+¦ 
+Text (Straight Leader) 
+
+¦ 
+Square (Straight Leader) 
+
+¦ 
+Reference Keynote (Straight Leader) 
+
+¦ 
+Sheet Keynote 
+
+
+Adding a Leader Line 1 Select an existing leader. 2 Right-click and click Add Leader. 
+A new leader is added starting from the nearest point on the leader line or symbol that you specify. 3 Specify the new leader arrowhead location. Adding a leader line 
+
+Removing Leader Line 1 Select an existing multiline leader. 2 Right-click and click Remove Leader. 3 Select the leader to remove. 
+Removing a leader line 
+
+Creating a Break Mark 
+Use this procedure to add a new break mark that has the properties specified in the break mark tool that you select. 
+NOTE These instructions are based on the default Cut Line tool provided with the software. Depending on customization, the same tool may or may not appear on your Annotation tool palette. However, the same basic procedure applies to any break mark tool. 
+1 On the Annotation tool palette, click the Cut Line Tool. 2 In the drawing area, specify the point where you want the cut 
+line to begin. 3 Specify the point where you want the cut line to end. 4 Specify the extents of the break. 
+Creating a Block-Based Annotation with a Leader 
+Use this procedure to add a block-based symbol with a leader that points to any point you specify in the drawing area. 
+NOTE These instructions are based on one of the annotation tool configurations provided with the software. Depending on customization, the same tool may or may not appear on your Annotation tool palette. However, the same basic procedure applies to any annotation tool configuration in which the Content type is set to Block, the Leader type is set to Straight, and the Symbol and Symbol location properties specify a block-based symbol that is accessible to the tool. Leader properties can be modified on the Tool Properties worksheet of the annotation tool. Any unspecified properties use the leader settings in effect for the current drawing, which can be modified using the Leader Settings dialog box. 
+1 On the Annotation tool palette, click the Square (Straight Leader) 
+tool. Click Annotate tab . Keynoting panel . Text drop-down . Square (Straight Leader). 
+2 Specify the starting point for the leader. (This determines where the leader arrow is displayed.) 
+3 Specify one or more additional points to create the desired leader, 
+and then press ENTER. The symbol and its default attribute value are inserted at the end of the leader, and the Edit Attributes dialog box is displayed. (If a limit has been set for the number of leader points, this happens as soon as you specify the last point within the limit.) 
+4 In the Edit Attributes dialog box, edit the ID attribute text as desired, and then click OK. The edited attribute text is displayed within the symbol. 
+Drawing block-based annotation with a leader 
+
+Editing a Text-Based Annotation 
+Use this procedure to edit a text-based annotation or change its typographical characteristics using the Multiline Text Editor. 1 Double-click the annotation to display the Multiline Text Editor. Multiline Text Editor dialog box 
+
+2 Edit the text as desired in the text editing box, or change the text style, font, height, color, or other characteristics using the drop-down lists and buttons on the toolbar. 
+3 Click OK on the toolbar or click anywhere in the drawing area to close the Multiline Text Editor and implement your changes. 
+NOTE The Multiline Text Editor also lets you add automatically updatable fields (such as a date and time stamp or other project information) to an annotation by right-clicking the annotation and clicking Insert Field (or Edit Field, if the annotation already includes such a field). This will display the Field dialog box. For more information, see “Use Fields in Text” in AutoCAD Help. 
+Editing a Masking Break Mark 
+Use this procedure to hide or show the boundary of a break mark that masks an underlying object. A masking break mark is defined by an AEC Polygon style and a polyline. 
+NOTE To see these options you must select the AEC Polygon, not the polyline (which defines the cut line). 
+. Select the break mark. 
+If you want to… Then… 
+show an edge click AEC Polygon tab . Modify pan­
+el . Show Edge
+ . The boundary edge of the break mark (represented by the AEC Polygon) highlights. Select the edge to show, and press ENTER. 
+hide an edge click AEC Polygon tab . Modify panel . Hide 
+Edge
+ . The boundary edge of the break mark (represented by the AEC Polygon) highlights. Select the edge to hide, and press ENTER. 
+Since the masking behavior of a break mark depends on an AEC Polygon, many of the same editing options available for AEC Polygons can also be applied to masking break marks. For more information, see Editing AEC Polygons on page 1819 and Masking Underlying Objects with AEC Polygons on page 1845. 
+Editing a Block-Based Annotation 
+Use this procedure to edit a block-based annotation or change its typographical characteristics and other properties using the Edit Attributes dialog. 
+1 Double-click the annotation to display the Edit Attributes dialog. 
+NOTE Alternatively, you can click Insert tab . Attributes panel . Edit Attribute drop-down . Single
+ . 
+Attribute Editor 
+
+2 Specify the changes you want to make to the annotation: 
+3 Click OK to dismiss the Edit Attributes dialog and implement any changes you have made to the annotation. 
+Keynoting Tools 
+Keynoting is a consistent way of annotating the different types of drawings in a set of construction documents to identify building materials or to provide special instructions or explanations. AutoCAD Architecture provides a flexible tool-based method of inserting keynotes that are linked to a keynote database and thus can be modified globally as well as individually. This method supports both reference keynoting (where the keynote key corresponds to a section in an accompanying specification and may appear on different drawings) and sheet keynoting (where keynote keys are sequentially numbered for each drawing). 
+AutoCAD Architecture supplies pre-specified keynotes for its size-specific default detail components and for architectural objects that represent assemblies with multiple components (for example, 8” CMU wall). For variable-size objects and material definitions, a keynote classification group is pre-specified, and you specify a size when the keynote is inserted. For detail components, these keynotes and groups are based on the widely used MasterFormat 2004 standard maintained by the Construction Specifications Institute (CSI). For assemblies, the CSI Uniformat standard is used. However, because the software accommodates multiple keynote databases, it also supports other common or locally developed keynoting systems, so your localized version of AutoCAD Architecture may vary. Whatever the source of the keynote, you can also associate it with a particular object style or material definition (see Specifying Keynotes on page 3593). This lets you use the keynote insertion tools on individual components of an object or on linework in two-dimensional (2D) sections or elevations. In cases where no keynotes are pre-specified, you select a keynote from the available database(s). You can also configure a keynote insertion tool to insert a particular keynote, regardless of the insertion point (see Inserting or Editing an AEC Keynotes Field on page 3574). 
+In addition to tools for inserting keynotes (derived from the basic annotation tool), the software includes tools for generating keynote legends that list selected keynotes from one or more drawing sheets and help you to quickly locate all instances of a particular keynote. You can also generate a keynote legend for a drawing prior to inserting keynotes; in this case the legend would include all keynotes that are likely to be used. 
+Other keynoting features include the ability to toggle the format for all keynotes within a drawing to display keys only, notes only, or both keys and notes. Moving the cursor over a keynote in the drawing lets you view keynote text without having to toggle the format or zoom in. 
+NOTE The keynoting feature supports automatic updating of keynotes to reflect changes to the corresponding entry in the keynote database. However, automatic updating of a keynote to reflect changes to a keynoted object is not currently supported. Changes in objects can be addressed using the re-keynoting option described in Viewing and Editing Keynotes in a Drawing on page 3588. 
+Configuring the Annotation Tool for Keynoting 
+AutoCAD Architecture provides several default tools for inserting keynotes into a drawing. If your software has not been customized locally, these tools can be found on the sample Annotation tool palette. They are also accessible from the Documentation Tool Catalog in the Content Browser and can be copied to any tool palette using the i-drop® feature. These keynote insertion tools are derived from the basic annotation tool and can be further customized through the Tool Properties worksheet available from their context menus. 
+
+The mechanism that allows the annotation tool to insert keynotes is the AEC Keynotes field. This is an Mtext object that specifies the type and format of the keynote annotation to be inserted and includes an automatically updatable field value that serves as a placeholder for the actual keynote. The keynote itself is obtained from a database, and can be pre-specified for a selected object or selected manually from the Select Keynote dialog box. For more information, see Using Keynote Insertion Tools on page 3575. In cases where the same keynote needs to be inserted frequently, you can configure the AEC Keynotes field to specify a particular keynote rather than serve as a placeholder. 
+For reference keynote insertion tools, the AEC Keynotes field value is specified as the Default text property on the Tool Properties worksheet. For a sheet keynote insertion tool, the AEC Keynotes field value is specified as an attribute definition within the block identified by the Symbol and Symbol location properties. In either case, you can insert an AEC Keynotes field or edit an existing one using the Field dialog box. For specific instructions, see Inserting or Editing an AEC Keynotes Field on page 3574. 
+
+Inserting or Editing an AEC Keynotes Field 
+Use this procedure to insert an AEC Keynotes field or edit an existing one for 
+a reference keynote tool or a sheet keynote tool. 
+1 Open the Tool Properties palette for the tool. 
+2 Open the Field dialog box: 
+If… Then… 
+the Content type is double-click the Default text property. If the prop-Mtext erty is unspecified, right-click and click Insert Field. 
+the Content type is Block 
+open the drawing specified by the Symbol location property and select the symbol. Click Insert 
+tab . Reference panel .
+. Edit Reference. In the Reference Edit dialog box, click OK. Double-click the KEY tag in the symbol to open the Edit Attributes Definition dialog box, and then double-click the Default value. If the value is not an updat­able field, right-click and click Insert Field. 
+3 In the Field dialog, confirm that the Field category is AEC Keynotes. 
+Field dialog 
+
+4 From the Field names list, select the type and form of keynote you want to insert. 
+5 If the selected Field name is Reference Key and Note or Sheet Key and Note, select a Keynote Format to determine how the key and the note are separated typographically. 
+6 Select a Format to determine case and capitalization for the keynote text. 
+7 Confirm that Insert as placeholder is selected if you want to insert pre-specified keynotes or prompt for manual keynote selection, as applicable. Otherwise, the keynote indicated by the Key and Note values is inserted. You can select a particular keynote by clicking Select Keynote. 
+8 Click OK to close the Field dialog box and implement the AEC Keynotes field you have specified. 
+Using Keynote Insertion Tools 
+The keynote insertion tools provided on the sample Annotation palette (also available from the Documentation Tool Catalog in the Content Browser) represent two basic kinds of keynotes: reference and sheet. The tool for sheet keynotes is configured to let you draw a leader that connects the keynote to the selected object or point. For reference keynotes, two tools are provided: one that inserts a leader and one that inserts only the keynote. 
+For both sheet and reference keynotes, you have the option of keynoting either a particular object or “nothing” (that is, a point within an empty region of the drawing area). Both tools insert any keynote that is pre-specified for a selected object, unless there is ambiguity, as when keynotes are specified for the components of an object. In that case, you must select a component or use the keynote that is pre-specified for the object as a whole. You can also choose a different keynote from the Select Keynote dialog box. This dialog box is presented if no keynote is pre-specified for a selected object or its components. 
+The Select Keynote Dialog Box 
+The Select Keynote dialog box provides a hierarchical tree view of a keynote database. You can select a keynote to insert into a drawing or to associate with an object style, a material definition, or a detail component. This dialog box is displayed if you attempt to keynote an object for which no keynote is specified. You can also select it from the Field dialog box and from the dialog boxes used to specify keynotes for architectural objects or their components. 
+When generating a keynote legend, you can access the Select Keynote dialog box during the insertion process by right-clicking and clicking from Database, or by entering d (for database) at the command line. 
+You select a keynote database at the top of the dialog box. The AEC Keynote database is the default for keynoting detail components, while the AecKeynote-Assemblies database is the default for keynoting architectural objects that are assemblies of multiple components. 
+You can expand nodes in the tree view to find individual components, or you can type text into the Filter box below the tree view. Clicking the Filter button, pressing TAB, or pressing ENTER expands all nodes under any node whose name includes the text you enter. When a keynote is highlighted, clicking OK completes the selection. 
+
+NOTE The Save button at the bottom of the dialog box and the 5 buttons arranged vertically along the right side are displayed only if you have read-write privileges for the currently selected keynote database. These buttons let you modify a database by adding, editing, or deleting keynotes and keynote groups. The buttons function in the same manner as they do in the Keynote Editor dialog box. For detailed information, see Creating and Modifying Keynote Databases on page 3601. 
+Inserting a Keynote 
+Use this procedure to annotate a drawing with either a sheet keynote or a reference keynote. If using a tool configured to insert a leader, you can select an object for the leader to point to, or you can specify a point in an empty region of the drawing. 
+1 On the Annotation tool palette, click the tool for the type of keynote you want to include. The tools included on the sample palette include Reference Keynote, Reference Keynote w/Straight Leader, and Sheet Keynote (which also inserts a leader). 
+Alternatively, you can click one of the keynote tools on the 
+Annotate tab . Keynoting panel . Keynotes drop-down. 
+NOTE The default leader is a straight line. You can change the leader type and other properties using the Tool Properties palette, which is accessed from the context menu of the tool. 
+2 Select the object/component/linework you want to keynote, or 
+press ENTER and specify a point in the drawing area. If a keynote is already associated with your selection, you can finish drawing the leader as explained in Step 4. Otherwise, a dialog is displayed. 
+3 Specify the keynote you want to insert: 
+If… Then… 
+no keynote is associ­ated with the selec­ted object (or if you specified a point rather than select­ing an object) the Select Keynote dialog box is displayed. Make sure the currently selected database is the one you want. Then navigate the hierarchical tree view to find the keynote you want, select it, and click OK. 
+one or more key­notes are already associated with the object style or with the material defini­tions of the selected objects components the Select Element to Keynote dialog box is dis­played. 
+¦ 
+If you want to keynote an object component, select it in the Component column, and click OK. 
+
+¦ 
+If you want to keynote the object as a whole, and a keynote is specified for the object style, select Style, and then click OK. 
+
+
+If… Then… 
+¦ If you do not see the keynote you want, click Select Keynote to display the Select Keynote dialog box. Select a keynote and click OK. The keynote is now displayed in the Select Element to Keynote dialog box. Click OK to complete the selection process. 
+Select Element to Keynote dialog box 
+
+4 To insert a leader, specify one or more additional points to create the desired leader, and then press ENTER. The pre-specified keynote (or the keynote you specified in Step 
+3) is displayed. If you also inserted a leader, the keynote is attached to the leader. 
+NOTE Sheet keynotes are not resolved at the time of insertion. The attribute to be displayed inside the symbol is determined when a sheet keynote legend is generated. Until then, sheet keynotes display a question mark as shown in the following illustration. The sequential numbering for resolved keynotes is based on group order and keynote order within the source keynote database. 
+Sheet keynote before and after sheet keynote legend is generated 
+
+Repeating a Keynote Insertion 
+After you have inserted a keynote into a drawing with a keynote insertion tool, you can activate the same tool again by pressing ENTER, pressing the spacebar, or right-clicking and clicking Repeat. If you have used other tools since the one you want to repeat, you can activate the tool by right-clicking any keynote it inserted and then clicking Add Selected. 
+Using Keynote Legends 
+AutoCAD Architecture lets you insert or view keynotes in three formats: key only, note only, or both key and note. By using keys only, you can reduce the amount of annotation in a drawing. However, keys alone are not likely to be useful unless the reader also has access to the corresponding notes. The keynote legend tool enables you to easily annotate a drawing with a keynote legend that lists keys along with their corresponding notes. All keys and column headings in the keynote legend can be validated at any time through a simple context menu selection. Moreover, when viewing a drawing in model space or paper space, you can select a keynote in the legend and quickly locate all instances of that keynote in the drawing. 
+Keynote Legend Tool Properties 
+The following illustrations show the Tool Properties worksheet settings for two versions of the keynote legend tool (sheet and reference) that are included on the sample Annotation tool palette. Under the General category, note the different settings for Table style, Legend type, Table title, Grouping level, and Blank rows. 
+
+The following table describes the keynote legend tool properties that can be configured through the Tool Properties worksheet. For information on modifying an existing keynote legend, see Editing a Keynote Legend on page 3584. 
+Property Name Description 
+Layer key Specifies the layer key for the layer to which the legend is assigned. To change, click the current value (default is ANNOBJ) to access the Select Layer Key dialog box. 
+Layer override Specifies one or more layer key overrides. Click the field to access the Select Layer Overrides dialog box. 
+Table style Specifies the AutoCAD table style for the keynote legend. Possible values are Reference Keynote Legend, Sheet Keynote Legend, and Standard. When this property is unspecified (--), the current table style for the drawing is used. 
+Table style location Specifies the location of the drawing file containing the table style. Click the property and use the Browse option from the drop-down list to locate and enter the path to locations other than the default. 
+Legend type Possible values are Reference Keynote Legend, Sheet Keynote Legend, and Basic Table. 
+Display symbol Specifies whether the symbol inserted for block-based sheet keynotes also appears in the keynote legend. (Not displayed if Legend type is Basic Table). 
+Table title The title that appears for keynote legend in the drawing. You can edit the default value as needed. 
+Grouping level Specifies the number of keynoting standard organizational levels (such as division, group, and subgroup) for which headings will appear in the legend. For example, if three levels are specified for a legend containing keynotes for metal studs from the Aec Keynote Database, the metal stud keynotes are listed under three headers: DIVISION 9 
+- FINISHES, 09100 METAL SUPPORT ASSEMBLIES, and 09110 NONLOADBEARING WALL FRAMING. For the Sheet 
+Property Name Description 
+Keynote Legend tool, the default setting for this property is zero. (Not displayed if Legend type is Basic Table). 
+Blank rows Specifies the number of blank rows, if any, to be inserted between headers in the keynote legend. (Not displayed if Legend type is Basic Table). 
+Data delimiter Unspecified (--) by default. You can add a delimiter to appear between the name of the group and its descrip­tion. Use of a delimiter adds a column to the table. (Not displayed if Legend type is Basic Table.) 
+Group delimiter Specifies a delimiter to appear between the key and the note. The default for both reference and sheet keynote legends is a dash (-). Use of a delimiter adds a column to the table. (Not displayed if Legend type is Basic Table.) 
+Generating a Keynote Legend 
+Use this procedure to generate and position a keynote legend within the current drawing. Keynotes to include in the legend can be selected individually from the current drawing, or you can specify one or more sheets from which all keynotes of the selected type (sheet or reference) will be included. You can also generate a legend containing keynotes that have not yet been inserted. In this case, you select the keynotes from a database. 
+1 On the Annotation tool palette, click either the Sheet Keynote Legend tool or the Reference Keynote Legend tool. 
+NOTE Alternatively, you can click Annotate tab . Keynoting panel . Sheet Keynote Legend drop-down . Sheet Keynote Legend or Annotate tab . Keynoting panel . Sheet Keynote Legend drop-down . Reference Keynote Legend
+ . 
+
+2 Specify the keynotes to be included in the keynote legend: 
+If you want to… Then… 
+include only selected  select each keynote you want to include, and  
+keynotes from the cur- press ENTER.  
+rent drawing  
+
+include all keynotes from other sheets 
+right-click, and click Sheets to display the Select Sheets for Keynote Legend dialog box. The left pane lists sheets in the current project. Select sheets as desired and move them to the right pane by clicking Add. You can also click Browse to find and retrieve sheets from other projects or drawings that have not been saved as sheets. When the right pane shows all the draw­ings/sheets from which you want to include keynotes, click OK. 
+include selected key­notes from a keynote database 
+right-click, and click from Database to display the Select Keynote dialog box. To select mul­tiple keynotes, press CTRL while you click con­secutive keynotes. You can repeat this tech­nique in different groups within the hierarchy. When all selections are made, click OK. 
+NOTE If you select keynotes of a type other than the type specified for the keynote legend, they will be filtered from the resulting keynote legend. 
+Selecting sheets to include in keynote legend 
+
+NOTE If your selections include keynotes from databases that do not share the same group hierarchy, you are prompted to select one database. Only keynotes from that database are included in the resulting legend. To include other keynotes, you can create additional legends by rerunning the keynote legend command and specifying different databases. 
+3 Specify an insertion point for the upper-left corner of the keynote 
+legend table. The keynote legend is displayed in the drawing area, automatically layer keyed and scaled to 1:1 in paper space, or to the scale of the current drawing in model space. 
+Editing a Keynote Legend 
+Although keynote legends are actually AutoCAD® tables, they are similar to other AutoCAD Architecture schedule tables in that the size, location, color, and other aspects of the keynote legends appearance can be modified using the Properties palette or the Basic Modify Tools option on the context menu. Individual rows, columns, and cells can also be edited through their context menus. The topics in this section describe editing functions that apply to the keynote legend as a whole and are available from its context menu. 
+Reselecting Keynotes for a Keynote Legend 
+Use this procedure to regenerate a keynote legend with a different selection of keynotes. You might like this method better than adding or removing keynotes individually, or deleting the legend and generating a new one, especially if you have modified the size, location, or appearance of the existing one. 
+1 Select the keynote legend, right-click, and click Selection . Reselect. 
+2 Specify the keynotes to include in the keynote legend. 
+If you want to… Then… If you want to… Then… 
+include only selected  select each keynote you want to include, and  
+keynotes from the cur- press ENTER.  
+rent drawing  
+
+include all keynotes from other sheets right click, and click Sheets to display the Select Sheets to Keynote dialog box. The left pane lists sheets in the current project. Select sheets as desired and move them to the right pane by clicking Add. You can also click Browse to find and retrieve sheets from other projects or drawings that have not been saved as sheets. When the right pane shows all the draw­ings/sheets from which you want to include keynotes, click OK. 
+include selected key­notes from a keynote database 
+right-click, and click from Database to display the Select Keynote dialog box. You can select multiple keynotes by pressing TRL key while clicking consecutive keynotes. You can repeat this technique in different groups within the hierarchy. When all selections are made, click OK. 
+The keynote legend is regenerated to include only your new selections. It may be larger or smaller, depending on whether keynotes were added or removed, but the location and other characteristics remain unchanged. 
+NOTE If your selections include keynotes from databases that do not share the same group hierarchy, you are prompted to select one database. Only keynotes from that database are included in the resulting legend. To include other keynotes, you can create additional legends as necessary by rerunning the keynote legend command and specifying different databases. 
+Updating a Keynote Legend 
+Use this procedure to validate a keynote legend against the database on which it was based. (All keynotes in a keynote legend must be from the same database.) Any keynotes not found in the database are invalid and are removed from the keynote legend. 
+1 Select the keynote legend. 2 Right-click, and click Update Keynote Legend. 
+The keynote legend is updated to include only valid keynotes, and the number of rows removed is reported on the command line. 
+Adding Keynotes to a Keynote Legend 
+Use this procedure to add keynotes to a keynote legend. The procedure is similar to generating a keynote legend, but the prompts vary depending on whether the legend was created from selected drawings/sheets or from selected keynotes. 
+1 Select the keynote legend, right-click, and click Selection . Add. 2 Specify the keynotes to include in the keynote legend. 
+If … Then… 
+the keynote legend was  select each keynote you want to include, and  
+based on keynotes selec­ press ENTER.  
+ted only from the cur­ 
+rent drawing  
+
+the keynote legend was based on keynotes from other sheets 
+right-click, and click Sheets to display the Select Sheets to Keynote dialog box. The left pane lists sheets in the current project. Select sheets as desired and move them to the right pane by clicking Add. You can also click Browse to find and retrieve sheets from other projects or drawings that have not been saved as sheets. When the right pane shows all the draw­ings/sheets from which you want to include keynotes, click OK. 
+the keynote legend was based on keynotes selec­ted from a database. 
+right-click, and click from Database to display the Select Keynote dialog box. To select mul­tiple keynotes, press CTRL while you click con­secutive keynotes. You can repeat this tech­nique in different groups within the hierarchy. When all selections are made, click OK. 
+NOTE If your selections include keynotes from databases that do not share the same group hierarchy, you are prompted to select one database. Only keynotes from that database are included in the resulting legend. To include other keynotes, you can create additional legends by rerunning the keynote legend command and specifying different databases. 
+Removing Keynotes from a Keynote Legend 
+You can remove keynotes from a keynote legend simply by selecting them and pressing DELETE. Likewise, you can select and delete the rows/cells that contain keynote division and group names. 
+Using a Keynote Legend to Locate Keynotes 
+Use this procedure to locate all instances of a selected sheet or reference keynote in a drawing for which a keynote legend has been generated. 
+1 Select the keynote legend, right-click, and click Selection . Show. 
+2 Hover the cursor above the row containing the keynote you want to locate. All instances of the selected keynote are highlighted in the 
+drawing and a tooltip displays the total number of instances. Only those keynotes of the same type as the selected keynote legend (sheet or reference) are highlighted or included in the count. 
+Alternatively, press CTRL and click a row in the legend to zoom to a magnification that bounds all instances of the selected keynote. 
+Editing Keynote Legend Table Styles 
+Keynote legends use AutoCAD table styles. Use this procedure to modify the available table styles. 
+1 Click Home tab . Annotation panel .
+. Table Style. 
+2 In the Styles list, select the style you want to modify, and then click Modify. 
+3 Adjust the settings under the Data, Column Heads, and Title tabs as desired, and then click OK. For more detailed explanations of style settings, see “New and Modify Table Style Dialogs” in AutoCAD help. 
+Table Style and Modify Table Style dialogs 
+
+Viewing and Editing Keynotes in a Drawing 
+This section describes editing operations that can be performed on keynotes once they have been inserted in a drawing. 
+Re-Keynoting 
+Use this procedure to change a keynote so that it references a different keynote. The new keynote can be from the same database as the original or from a different one. 
+1 Select the keynote, right-click, and click Re-Keynote. 
+2 Select the keynoted object, or press ENTER if the keynote does not apply to a specific object. 
+3 In the Select Keynote dialog box, select the keynote you want to use, and then click OK. The new keynote is added to the drawing in place of the old one. 
+Note that the change is not reflected in keynote legends that include the original keynote. If the new keynote is from the same database as the original one, you can update any associated keynote legends by adding and deleting individual entries. However, if different databases are involved, you must regenerate keynote legends for each of them. In any case, if you have performed more than a few re-keynotings, it may be preferable to use the Reselect option on the keynote legend context menu, or to regenerate the keynote legend. See Generating a Keynote Legend on page 3582 and Reselecting Keynotes for a Keynote Legend on page 3584. 
+Editing Keynotes 
+Use the following procedure to edit a keynote after it has been inserted into a drawing. You cannot directly edit the key or the note, but you can add text before or after the keynote using the Multiline Text Editor, and you can change the keynote or its format using the Field dialog box. 
+1 Double-click the keynote to display the Multiline Text Editor. Multiline Text Editor 
+
+2 Add text before or after the keynote, or double-click the keynote to change the format or specify a different keynote using the Field dialog box (see Inserting or Editing an AEC Keynotes Field on page 3574). 
+3 Click OK to close the Field dialog box, if necessary. 
+4 Click OK on the toolbar or click anywhere in the drawing area to close the Multiline Text Editor and implement your changes. 
+NOTE You can also add automatically updatable fields (such as a date and time stamp or other project information) before or after the keynote by right-clicking and clicking Insert Field. 
+Changing Keynote Formats 
+Keynotes can be displayed in three formats: key only, note only, or both key and note. When using both keys and notes, you can also specify the typographical device used to separate the key from the note (for example, key 
+-note as opposed to key:note). 
+You can change keynote formats individually or globally within a single drawing. For example, you may want to display both keys and notes while you are keynoting a drawing, but display only keys when you finish. 
+Changing Individual Keynote Formats 
+Use this procedure to change the format of a keynote that has been inserted in a drawing. 
+1 Double-click the keynote to display the Multiline Text Editor. 2 In the Text Formatting box, right-click the selected keynote. 3 In the Field dialog box, make sure the current Field category is 
+Aec Keynotes, and then select a keynote format under Field names. If one of the key-and-note options is selected, you can select an option under Keynote Format. You can also change the setting under Format, if desired. 
+Keynote format options in the Field dialog box 
+
+4 Click OK twice. The selected keynote is reformatted. 
+Globally Changing Keynote Formats 
+Use this procedure to change the format of all keynotes of a given type (reference or sheet) within a drawing. 
+1 Click Annotate tab . Keynoting panel .
+. Reference 
+Keynote Display
+ . or click Annotate tab . Keynoting panel . 
+
+. Sheet Keynote Display
+ . 2 In the Select Reference Keynote Display or Select Sheet Keynote Display dialog box, select an option for Field names. If you select the Key and Note option, you can also select an option for Keynote 
+Formats. You can change the Format setting regardless of the Field name selection. 
+Select Reference Keynote Display dialog (identical for sheet keynotes) 
+
+3 Click OK to implement the format changes for all keynotes of the selected type within the drawing. 
+Changing Databases for Existing Keynotes 
+AutoCAD Architecture keynoting functionality includes a tool that lets you globally change database references for existing keynotes within a drawing, provided the same keys exist in both the currently referenced database and the one you want to use instead. When you run the tool, it identifies all currently referenced databases for selected keynotes in the drawing, and then prompts you to identify the database you want to switch from and the database you want to switch to. This capability is useful in situations where it is discovered that project team members have inadvertently used two different databases to keynote a drawing, or when you decide to switch from an office standard keynote database to a project standard keynote database. The tool can be run from the command line by entering AecKeynoteDatabaseReselect, or you can set it up as a menu selection, as in the following procedure. 
+1 Click Annotate tab . Keynoting panel .
+. Select Database
+
+ . 
+2 Select the keynotes you want to run the tool against and press ENTER. All databases referenced by the selected keynotes are listed on the 
+command line. 
+3 Enter the full path or the Globally Unique ID (GUID) for the database currently referenced by the keynotes you want to change. 
+4 Enter the full path or the Globally Unique ID (GUID) for the 
+database you want to be referenced. The number of keynotes updated by the tool is displayed on the command line. 
+Specifying Keynotes 
+AutoCAD Architecture provides pre-specified keynotes for detail components and many architectural objects that are included with the software. You can change these associations to specify different keynotes from either the AecKeynotes or AecKeynotes-Assemblies databases or from a database that you have loaded. You can also specify keynotes for individual components of architectural objects by associating keynotes with material definitions. Because material definitions supplied with the software are not size-specific, individual keynotes are not pre-specified. Instead, each material definition is pre-associated with a particular group from the MasterFormat 2004 scheme. This streamlines the process of locating the appropriate keynote when you want to specify one for the material. 
+The method used to specify a keynote depends on the type of object. For architectural objects and their components, you associate keynotes with individual styles and material definitions using the Style or Material Definition Properties dialog box, which can be accessed through the Style Manager or from the context menu of the object. For detail components, you use the Detail Component Manager to access and edit the Keynote field values. 
+Specifying Keynotes for Object Styles 
+Use this procedure to specify a keynote for an architectural object by associating the keynote with the object style. The same procedure applies whether you are specifying a keynote association for the first time or changing an existing one. Note, however, that if you change the keynote association for an object style, it does not affect previously inserted keynotes for objects created using that style. Those objects must be re-keynoted if you want them to reflect the newly specified keynote. 
+If you are establishing keynote associations for a number of the object styles that are included with AutoCAD Architecture, you may find it most efficient to work from the Styles drawing files (located at C:\ProgramData\Autodesk\ACA 2011\enu\Styles). 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 In the left pane of the Style Manager, expand Architectural Objects and any subcategories as necessary to locate the object style for which you want to specify a keynote. 
+3 Select the desired object style. 
+4 On the General tab of the Style Properties dialog box, click Select Keynote. 
+5 In the Select Keynote dialog box, make sure the correct database is displayed in the Keynote Database field (if you are using the default keynote databases, it should be AecKeynote-Assemblies), and then select the desired keynote from the hierarchical tree view. 
+6 Click OK twice. The keynote is specified for the selected object style and will be used for subsequent keynote insertions for objects using that style. 
+Specifying Keynotes for Object Components 
+Use this procedure to specify a keynote for a particular component of an architectural object by associating the keynote with the material definition for that component. The same procedure applies, whether you are specifying a keynote association for the first time or changing an existing one. Note, however, that if you change the keynote association for a material definition, it does not affect previously inserted keynotes for object components using that material definition. Those object components must be re-keynoted if you want them to reflect the newly specified keynote. 
+If you are establishing keynote associations for a number of material definitions that are included with AutoCAD Architecture, you may find it most efficient to work from the material definitions drawing file (located at C:\ProgramData\Autodesk\ACA 2011\enu\Styles). 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 In the left pane of the Style Manager, expand Multi-Purpose Objects, and expand Material Definitions. Locate the material 
+definition for which you want to specify a keynote. 
+3 Select the desired material definition. 
+4 On the General tab of the Material Definition Properties dialog 
+box, click Select Keynote. 
+5 In the Select Keynote dialog box, make sure the correct database is displayed in the Keynote Database field (if you are using the default keynote databases, it should be Aec Keynote), and then 
+select the desired keynote from the hierarchical tree view. 
+6 Click OK twice. The keynote is specified for the selected material definition and will be used for subsequent keynote insertions for object components with that material definition. 
+Specifying Keynotes for Detail Components 
+Use this procedure to specify a keynote for a detail component. The same procedure applies, whether you are specifying a keynote association for the first time or changing an existing one. Note, however, that if you change the keynote association for a detail component, it does not affect previously inserted keynotes for that detail component. Those detail components must be re-keynoted if you want them to reflect the newly specified keynote. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 In the Detail Component Manager, make sure the Current detail component database field displays the correct database. 
+3 In the hierarchical tree view, select the group that contains the detail component for which you want to specify a keynote, and then select the detail component in the size table at the bottom of the window. 
+4 Resize the Detail Component Manager window, or use the scroll bar at the bottom of the window as necessary so that the Keynote column is visible. 
+5 Select the Keynote field for the selected detail component, right-click, and click Edit. 
+6 In the Select Keynote dialog box, make sure the correct database is displayed in the Keynote Database field, and then select the desired keynote from the hierarchical tree view. 
+7 Click OK. The key for the selected keynote is displayed in the Keynote field. 
+8 Click Close, and click Yes when prompted to save changes. The keynote is specified for the selected detail component and will be used for subsequent keynote insertions for that component. 
+NOTE If no keynote is specified for the detail component, the Select Keynote dialog box is displayed. If a keynote is specified for the components table or group to which the detail component belongs, the node representing that group is highlighted within the tree view. Keynotes cannot be specified at the table level using AutoCAD Architecture functionality. This requires customization of the detail component database using Microsoft® Access. 
+Working with Keynote Databases 
+Keynotes used in AutoCAD Architecture are stored in Microsoft® Access databases. There are two default keynote databases: 
+¦ 
+AecKeynotes: This database is used for keynoting individual detail components and materials according to the Construction Specifications Institute (CSI) MasterFormat 2004 standard. 
+
+¦ 
+AecKeynotes-Assemblies: This database is used for keynoting architectural objects that are assemblies of multiple components. These keynotes are based on the CSI Uniformat standard. 
+
+
+To accommodate proprietary office standards and other project-specific keynoting schemes, you can modify the default databases or you can create your own databases using either Microsoft® Access or the editing functionality provided with the software. You can also configure keynote databases to control which ones are available for assigning to individual projects and to specify the order in which they are searched. 
+Configuring Keynote Databases 
+AutoCAD Architecture supports multiple keynote databases, which you can assign to individual projects (see Specifying the Project Detail Component Databases for a Project on page 328). When you are working within a given project, only those databases assigned to that project are accessible through the Select Keynote dialog box. 
+Before a database can be assigned to a project, however, it must be on the list of available databases. Both keynote databases provided with the software (AecKeynotes and AecKeynotes-Assemblies) are included on this list by default. You can add databases to the list or remove them. If a particular keynote exists in multiple databases, you can specify the order in which the databases are searched to find a keynote that has been specified for an object. (Only the key is stored with the object style; the corresponding note must be retrieved from a database at the time of insertion.) 
+Adding a Keynote Database 
+Use this procedure to add a database to the list of available keynote databases. 
+1 Click 
+. Options. 2 In the Options dialog box, click the AEC Content tab. 3 On the AEC Content page, click the Add/Remove button for 
+Keynote Databases. 4 In the Add/Remove Keynote Databases dialog box, click Add. 
+
+5 In the Select Component Database browser window, locate the database you want to add, and click Open. 
+
+The selected database is added to the bottom of the list in the Add/Remove Keynote Databases dialog box. You can specify the order in which databases are searched by clicking the Move Up and Move Down buttons to change the position of a selected database within the list. Moving a database to the top of the list makes it the default selection for the Select Keynote dialog box. 
+6 Click OK twice. 
+Removing a Keynote Database 
+Use this procedure to remove a database from the list of available keynote databases. 
+1 Click 
+. Options. 2 In the Options dialog box, click the AEC Content tab. 3 On the AEC Content page, click the Add/Remove button for 
+Keynote Databases. 
+4 In the Add/Remove Keynote Databases dialog box, select the database you want to remove from the list, and click Remove. 
+
+5 Click OK twice. Note that if you remove the top database in the list, the next database listed becomes the default selection in the Select Keynote dialog box. 
+Merging Old and New Keynote Databases 
+If you have modified one of the default keynote databases supplied with a previous release of AutoCAD Architecture, and you want to migrate your modifications to the corresponding database in the current release, you can do so using the Detail Component/Keynote Database Migration utility. For detailed instructions, see Migrating Detail Component and Keynote Databases on page 3963. 
+IMPORTANT Beginning with AutoCAD Architecture 2011, the US detail component and keynote databases supplied with the software use the CSI MasterFormat 2004 standard. Using the Detail Component/Keynote Database Migration utility to migrate your customizations from a database that uses the CSI MasterFormat 95 standard (as in Autodesk Architectural Desktop 2007 and previous releases) is not supported. The utility will not properly migrate custom records from the older database and may errantly overwrite records in the new database with MasterFormat 95 data. If you want to use a MasterFormat 95 database with the current release of AutoCAD Architecture, you can load it as described under Adding a Detail Component Database to Available Databases on page 3545 or Adding a Keynote Database on page 3597. Note that the older database must be located with the previous release content and must maintain that content folder structure to function properly. An older detail component database will not function with 2008 or later US details content. Likewise, an older keynote database will not automatically keynote 2008 or later US details content; it will only keynote detail components inserted using previous version details or details in previous version drawings. The Detail Component/Keynote Database Migration utility can still be used to migrate records from one CSI MasterFormat 95 database to another. 
+Setting Keynote Database Permissions in a Multi-User Environment 
+If you are working in a multi-user network environment with keynote and detail content on a remote server, you may want to allow some users to edit databases and others to have read-only access. For this to work properly, all users must have write permission to the folder where the databases are installed. Without write permission to the folder, a user will not be able to open any database within the folder, because the necessary lock file cannot be generated on that user’s behalf, regardless of whether the user has write permission to the database itself. Once all users have write permission to the folder, permissions for individual databases (*.mdb files) can then be set on a per-user basis. Note, however, that this arrangement allows users to access and edit other content within the folder, such as drawing, image, and XML recipe files, unless you set permissions on these files individually to prevent it. For this reason, you may want to keep the folders containing keynote and detail content separate from other content installed with AutoCAD Architecture so that write permission is not available to all users for all content. 
+Creating and Modifying Keynote Databases 
+You can create and modify keynote databases using Microsoft® Access directly if you are familiar with that product and with the structure of keynote databases in AutoCAD Architecture (for more information, see Keynote Database Schema on page 3611). However, the preferred method is to use the Keynote Editor provided with the software. For databases to which you have read/write access, most of the Keynote Editor functions are also available from the Select Keynote dialog box. 
+NOTE If you are working in a multi-user environment, it is recommended that you modify a keynote database only when no other users are accessing it. 
+The Keynote Editor 
+The Keynote Editor is a standalone application that lets you create and modify keynote databases. Accessed from the CAD Manager menu, the Keynote Editor dialog box provides a hierarchical tree view of the currently selected database, which displays as a root node. For an existing database, you can expand the root node to display groups, and then expand group nodes to display sub-groups or individual keynotes. Alternatively, you can enter text into the Filter box below the tree view. Clicking the Filter button, pressing TAB, or pressing ENTER expands all nodes under any node whose name includes the text you enter. 
+If you are creating a new database, you add the root node using the New Database button, and then add groups and keynotes using the buttons along the right side of the dialog box. These buttons (Add Group, Delete, Add Keynote, Edit, and Specify Keysort) are also available from the Select Keynote dialog box for databases to which you have read-write access. 
+
+Creating a Keynote Database 
+Using the Keynote Editor to create a new keynote database entails the following basic steps: 
+1 Create a blank database by specifying a name and location. (For detailed instructions, see Creating a Blank Keynote Database on page 3603.) 
+2 Add groups and subgroups to reflect the major and minor divisions within the keynoting scheme. (For detailed instructions, see Adding Groups to a Keynote Database on page 3604.) 
+3 Add individual keynotes within groups and subgroups as applicable. (For detailed instructions, see Adding Keynotes to a Keynote Database on page 3605.) 
+4 Save the new database. 
+After saving the new database, you can add it to the list of available databases (see Adding a Keynote Database on page 3597) and assign it to projects (see Specifying the Project Detail Component Databases for a Project on page 328). 
+Creating a Blank Keynote Database 
+Use this procedure to create a blank Microsoft® Access database with all required tables and queries for keynote storage and retrieval. This is the first step in creating a new keynote database using the Keynote Editor. 
+1 Click Annotate tab . Keynoting panel .
+. Keynote Editor
+
+ . 
+2 At the bottom of the Keynote Editor dialog box, click New Database. The Create a new keynote database browser window is displayed. 
+
+3 In the browser window, navigate to the location for the new database. 
+4 Enter a name for the new database in the File name field. 
+5 Click Save. A node named New Keynote Database is displayed in the Keynote Editor. 
+6 Select the new database node, and click 
+. 
+7 In the Keynote Database Properties dialog box, enter the Display Name, Description, and Author for the new database, and click OK. 
+
+A blank Microsoft® Access database is created with all required tables and queries for keynote storage and retrieval. The new database has the global unique identifier shown in the GUID field and is displayed in the Keynote Editor as a root node with the display name you provided. 
+8 Click Save. You can now begin populating the database by using the Keynote Editor to add groups and individual keynotes. 
+Adding Groups to a Keynote Database 
+Use this procedure to add a group to a keynote database. You can use the same basic procedure to add as many levels of subgroups as you want within a group. 
+1 Click Annotate tab . Keynoting panel .
+. Keynote Editor
+
+ . 
+NOTE The rest of this procedure can also be performed from the Select Keynote dialog box. 
+2 Select a database from the Keynote Database list. 
+3 Select the root node for the database if you want to add a top-level group, or expand the root node and group/subgroup nodes as 
+necessary until you can select the node to which you want to add a subgroup. 
+4 Click 
+. The Add Group dialog box is displayed with the read-only ID field showing the database identifier for the group you are adding. 
+
+5 Enter a Group Name and a Description, and click OK. The group or subgroup you have defined is displayed as a new node in the hierarchical tree view. 
+Adding Keynotes to a Keynote Database 
+Use this procedure to add a keynote to a group or subgroup within a keynote database. 
+1 Click Annotate tab . Keynoting panel .
+. Keynote Editor
+
+ . 
+NOTE The rest of this procedure can also be performed from the Select Keynote dialog box. 
+2 Select a database from the Keynote Database list. 
+3 Expand the root node and group/subgroup nodes as necessary until you can select the node to which you want to add a keynote. 
+4 Click 
+. 
+The Add Keynote dialog box is displayed with the read-only ID field showing the database identifier for the keynote you are adding. 
+
+5 Enter a key and a note, and click OK. The keynote you have defined is displayed as a new node in the hierarchical tree view. 
+TIP If you need to add a series of keynotes within a group or subgroup, you can save time by adding the first keynote, right-clicking it, and clicking Copy Series. You then specify the number of copies to make and click OK. The specified number of sequentially numbered keys are added to the group. For example, if you create key A1001 and then use the Copy Series option to add 10 copies, keys A1002 through A1011 are added. You can then edit keynote nodes individually to add the notes, as explained under Adding Components to a Detail Component Database on page 3531. 
+Editing Groups in a Keynote Database 
+Use this procedure to change the name or description of a group within a keynote database. 
+1 Click Annotate tab . Keynoting panel .
+. Keynote Editor . 
+
+NOTE The rest of this procedure can also be performed from the Select Keynote dialog box. 
+2 Select a database from the Keynote Database list. 
+3 Expand the root node and group/subgroup nodes as necessary, and select the group/subgroup you want to edit. 
+4 Click 
+. The Group Properties dialog box is displayed with the read-only ID field showing the database identifier for the group you are editing. 
+
+5 Edit the Group Name and Description values as desired, and click OK. 
+Editing Keynotes in a Keynote Database 
+Use this procedure to change the key or the note for a keynote within a database. 
+1 Click Annotate tab . Keynoting panel .
+. Keynote Editor
+
+ . 
+NOTE The rest of this procedure can also be performed from the Select Keynote dialog box. 
+2 Select a database from the Keynote Database list. 
+3 Expand the root node and group/subgroup nodes as necessary, and select the keynote you want to edit. 
+4 Click 
+. 
+The Keynote Properties dialog box is displayed with the read-only ID field showing the database identifier for the keynote you are editing. 
+
+5 Edit the Key and Note values as desired, and click OK. 
+Deleting Keynotes or Groups from a Keynote Database 
+Use this procedure to delete one or more groups, subgroups, or keynotes from a keynote database. Note that deleting a group also deletes any subgroups and keynotes within that group. 
+1 Click Annotate tab . Keynoting panel .
+. Keynote Editor
+
+ . 
+NOTE The rest of this procedure can also be performed from the Select Keynote dialog box. 
+2 Select a database from the Keynote Database list. 
+3 Select the nodes representing keynote groups, subgroups or keynotes you want to delete. 
+TIP To select multiple nodes, hold down the CTRL key while clicking the nodes. 
+4 Click 
+. The selected nodes are deleted from the hierarchical tree view in the Keynote Editor. 
+Moving Keynotes or Groups in a Keynote Database 
+Use this procedure to move a keynote, group, or subgroup to a different group or level within the database hierarchy. Note that moving a group also moves any subgroups and keynotes within that group. 
+1 Click Annotate tab . Keynoting panel .
+. Keynote Editor
+
+ . 
+NOTE The rest of this procedure can also be performed from the Select Keynote dialog box. 
+2 Select a database from the Keynote Database list. 
+3 Select the node (group, subgroup, or keynote) to move and drag it to the desired location in the hierarchical tree view. 
+Specifying Sort Order for Keynotes 
+Use this procedure to specify the order in which keynotes in a given database are listed when displayed in the Keynote Editor, the Select Keynote dialog box, or keynote legends. To specify the sort order, you enter one or more masks that correspond to the patterns used for keys in the database. Keynotes are sorted on a field-by-field basis within each pattern. In other words, all keynotes having the same key pattern as the first mask you enter will be listed before any keynotes having the second pattern you enter. 
+When entering a mask, use the following conventions to represent the fields, characters, and delimiters that comprise the key pattern: 
+¦ 
+Enclose sortable fields in brackets [ ] and delimiters in curly brackets { }. Example: [field]{delimiter}[field]. 
+
+¦ 
+Delimiters can be any character except a backslash (\) or any character string that does not begin with a backslash. (The backslash is reserved for system use.) 
+
+¦ 
+Use a pound sign (#) to indicate a numeric character and a question mark (?) to indicate an alphanumeric character (digit, letter, or punctuation mark). 
+
+¦ 
+For fixed-length fields, use the specified number of characters. Example: [###] indicates a 3-digit fixed-length field. 
+
+
+¦ 
+Use [#...#] to indicate a variable-length numeric field, and [?...?] for a variable-length alphanumeric field. 
+
+¦ 
+A variable-length field is always followed by a delimiter unless it is the final field in the mask. 
+
+
+As an example, the AecKeynotes database uses keys that consist of a 5-digit field, followed by a delimiter (.), a 1-character alphanumeric field, and a variable-length numeric field (for example, 09250.A101). The mask representing this pattern would be [#####]{.}[?][#...#] 
+1 Click Annotate tab . Keynoting panel .
+. Keynote Editor
+
+ . 2 Select a database from the Keynote Database list. 
+3 Click 
+to display the Specify Key Sort dialog box. 
+
+4 In the Specify Key Sort dialog box, enter a key sort mask for each key pattern in the selected database. Use a different line for each mask. 
+5 Click OK. 
+Keynote Database Schema 
+To create or modify a keynote database by using Microsoft® Access (rather than using the Keynote Editor), you need to be familiar with the database schema used in AutoCAD Architecture. 
+A keynote database contains four tables: 
+¦ 
+Fingerprint 
+
+¦ 
+Groups 
+
+¦ 
+Keynotes 
+
+¦ 
+KeySort 
+
+
+Fingerprint Table 
+
+The Fingerprint table uniquely identifies a keynote database and contains the following fields: 
+¦ 
+GUID: The GUID is the global unique identifier for a particular keynote database. When you insert an AEC Keynotes field to specify a keynote, a link to the keynote database is established using this GUID and the row ID of the keynote in the Keynotes table. If you leave this field empty when creating a database, a GUID is generated when the database is loaded using the Add/Remove Keynote Databases dialog box. 
+
+¦ 
+Type: For a keynote database, this field must contain the string “Keynote.” (For a detail component database, the string must be “Component.”) 
+
+¦ 
+Author, Display Name, and Description: The values for these fields are displayed in the corresponding fields in the Add/Remove Keynote Databases dialog box. 
+
+
+Groups Table 
+
+The Groups table defines the hierarchical organization of keynotes within the database. This hierarchy determines the order in which divisions, groups, subgroups and individual keynotes are displayed in the Keynote Editor, the Select Keynote dialog box, and keynote legends. The following fields apply to each row in the table: 
+¦ 
+ID: A sequential number identifying a particular row in the table. This number should never change. 
+
+¦ 
+Parent: Identifies the parent of the group identified in the Group field. 
+
+¦ 
+Group: Identifies a particular division, group, or subgroup. Note that the root parent group (\-*) is special and its ID is zero. 
+
+¦ 
+Description: Provides the descriptive name of the group. 
+
+¦ 
+Modified: When the box is checked, it indicates that the row has been modified and prevents the row from being overwritten if the database is migrated when new content is released by Autodesk. You must click the box to enable this protection for any row you modify. 
+
+
+Keynotes Table 
+
+This table defines the individual keynotes for all the groups identified in the Groups table. The following fields are included: 
+¦ 
+ID: A sequential number identifying a particular row in the table. This number should never change. This ID, combined with the GUID of the database, is tracked by the AEC Keynotes field when you insert a keynote into a drawing. This enables keynotes in a drawing to be updated when changes are made to the keynote database. 
+
+¦ 
+Parent Group: Identifies the parent of the keynote, displaying the Group and Description field values from the Groups table. 
+
+
+TIP If you want a flat (non-hierarchical) keynote list, you can assign the root parent group (\-*) to all keynotes in this table. 
+¦ 
+Key: Specifies the key for the keynote. If you are creating a database and have already created the Groups table, this field displays the value from the Group field. The delimiter and suffix are user-definable. 
+
+¦ 
+Note: Provides the note for the specified key. 
+
+¦ 
+Modified: When the box is checked, it indicates that the row has been modified and prevents the row from being overwritten if the database is migrated when new content is released by Autodesk. You must click the box to enable this protection for any row you modify. For more information on database migration, see Migrating Detail Component and Keynote Databases on page 3963. 
+
+
+KeySort Table 
+
+This table contains key sort masks that represent the different key patterns used in the database. The order in which the masks are listed in this table determines the order in which key patterns are listed in the Keynote Editor, the Select Keynote dialog box, and keynote legends; that is, all keynotes with keys using the pattern identified by the mask in record 1 are listed before keynotes with key patterns identified by subsequent records in the table. The illustration above shows the key sort mask for the AecKeynotes database provided with AutoCAD Architecture. The following conventions are used for key sort masks: 
+¦ 
+Enclose sortable fields in brackets [ ] and delimiters in curly brackets { }. Example: [field]{delimiter}[field]. 
+
+¦ 
+Delimiters can be any character except a backslash (\) or any character string that does not begin with a backslash. (The backslash is reserved for system use.) 
+
+¦ 
+Use a pound sign (#) to indicate a numeric character and a question mark (?) to indicate an alphanumeric character (digit, letter, or punctuation mark). 
+
+¦ 
+For fixed-length fields, use the specified number of characters. Example: [###] indicates a 3-digit fixed-length field. 
+
+¦ 
+Use [#...#] to indicate a variable-length numeric field, and [?...?] for a variable-length alphanumeric field. 
+
+¦ 
+A variable-length field is always followed by a delimiter unless it is the final field in the mask. 
+
+
+Examples of keys using the pattern defined by the [#####]{.}[?][#...#] mask in the illustration above would include 03250.A1, 07250.B102, and 09250.C1007. 
+You can also specify key sort masks using the Keynote Editor, as explained in Specifying Sort Order for Keynotes on page 3609. 
+North Arrow and Datum Point Tools 
+North arrow and datum point annotations are used for defining directions in a drawing. Formerly available as content blocks in DesignCenter, these annotations are now available through tools on the tool palettes and in Content Browser. 
+In this release of AutoCAD Architecture, north arrows and datum points are converted from DesignCenter content blocks to true tools with tool properties. 
+North arrow and datum point symbols 
+
+By default, all north arrow and datum point tools are set to be annotative, which means that the annotations you insert with these tools are controlled by annotative scaling. For more information, see Annotation Scaling on page 3637. 
+IMPORTANT If you have legacy drawings with old DesignCenter-based annotation symbols in them, then the old block definition will continue to be used for new tool-based blocks if the blocks are identically named. (This is the case for the datum point tool, but not the north arrow tools which have been renamed.) In such a case, either change the Annotative setting manually by using BEDIT, or rename the old block before inserting new tool-based annotation symbols into the drawing. 
+You can find north arrow tools and a datum point tool in these locations in a default US install of AutoCAD Architecture: 
+¦ In the Annotation tool palette 
+¦ In Content Browser in these catalogs: 
+¦ 
+Stock Tool Catalog 
+
+¦ 
+Sample Palette Catalog (Imperial or Metric), under \Document\Annotation 
+
+¦ 
+Documentation Tool Catalog (Imperial or Metric), under \Miscellaneous 
+
+
+TIP You can also search for these types of tools by name in Content Browser. 
+These properties of north arrow and datum point tools can be customized: 
+Property Cat-Description egory/Name 
+General/Layer key Specifies the layer key for the layer to which the north arrow or datum point is assigned. To change, click the current value to access the Select Layer Key worksheet. The default layer key for north arrows is ANNOBJ; the default value for the datum point is ANNSYMOBJ. 
+General/Layer overrides Specifies one or more layer key overrides. Click the work­sheet icon to access the Select Layer Overrides worksheet. 
+General/Symbol Specifies the block-based symbol to be used for the north arrow or datum point. 
+General/Symbol location 
+The location of the drawing file containing the specified north arrow or datum point symbol. Click the property and use the Browse option from the drop-down list to locate and enter the path to the file. If this property is unspecified (--), then only those blocks in the current drawing file are listed. Symbol blocks shipped with AutoCAD Architecture are by default located in %AECCONTENT_DIR%\Styles\Im­perial\AEC Annotation Symbols (Imperial).dwg or %AECCONTENT_DIR%\Styles\Metric\AEC Annotation Symbols (Metric).dwg. 
+Text/Attribute text style This property specifies whether attribute text within the symbol uses the text style of the current drawing (Target drawing text style) or the style defined by the attribute tag (As defined by content). 
+Property Cat-Description egory/Name 
+Text/Attribute text angle Specifies the angle for attribute text. The choices are Right reading (which keeps the text right-side up regardless of rotation angle), As inserted (which sets text rotation at the angle of the last leader segment), and Force horizontal (which keeps the text horizontal regardless of the match line rotation angle.) 
+NOTE The north arrow and datum point tools shipped with AutoCAD Architecture do not have attributes in their block definitions, so that these settings are set to Un­defined (--). 
+Inserting a North Arrow or Datum Point in the Drawing 
+Use this procedure to insert a north arrow or datum point into the drawing. 
+1 Select a north arrow or datum point tool on a tool palette. (A north arrow tool and a datum point tool are located on the Annotation palette.) 
+2 Specify the insertion point of the north arrow or datum point in the drawing area. 
+3 Specify the rotation. 
+For information about editing the properties of north arrows and datum points in the drawing, see Editing Block-Based Annotation Symbols on page 3631. 
+NOTE North arrows and datum points that have been inserted with a north arrow or datum point tool can be modified in the drawing and saved back as a tool on a tool palette. By default, a north arrow or datum point tool created that way will have the same layer key, layer overrides, and symbol as the original tool that was used to create the annotation symbol in the drawing. The symbol location will be the current drawing. 
+Fire Rating Line Tools 
+Fire rating annotations are used for adding fire rating information a drawing. Formerly available as content blocks in DesignCenter, these annotations are now available through tools on the tool palettes and in Content Browser. 
+In this release of AutoCAD Architecture, fire rating lines are converted from DesignCenter content blocks to true tools with tool properties. 
+Fire rating lines are polylines and are not controlled by annotative scaling. 
+Fire rating line tools 
+
+You can find fire rating line tools in these locations in a default US install of AutoCAD Architecture: 
+¦ 
+In the Annotation tool palette 
+
+¦ 
+In Content Browser in these catalogs: 
+
+¦ 
+Stock Tool Catalog 
+
+¦ 
+Sample Palette Catalog (Imperial or Metric), under \Document\Annotation 
+
+¦ 
+Documentation Tool Catalog (Imperial or Metric), under \Miscellaneous\Fire Rating 
+
+
+
+
+TIP You can also search for these types of tools by name in Content Browser. 
+These properties of Fire Rating Line tools can be customized: 
+Property Cat-Description egory/Name 
+General/Layer key Specifies the layer key for the layer to which the fire rating line is assigned. To change, click the current value to ac­cess the Select Layer Key worksheet. The default layer key is WALLFIRE. 
+General/Layer overrides Specifies one or more layer key overrides. Click the work­sheet icon to access the Select Layer Overrides worksheet. 
+General/Line width Specifies the line width of the fire rating polyline. 
+Property Cat-Description egory/Name 
+General/Linetype Specifies the linetype of the fire rating line. In the fire rat­ing line tools shipped with AutoCAD Architecture there is a specific linetype for each fire rating level - for example, the 1 Hr fire rating line tool has the Aec_Rating_1Hr line-type specified. The linetypes for rating line tools have been added to the acad.lin and acadISO.lin files. 
+Inserting a Fire Rating Line in the Drawing 
+Use this procedure to insert a fire rating line into the drawing. 
+1 Select a fire rating line tool on a tool palette. (A fire rating line tool is located on the Annotation palette.) 
+2 Specify the start point of the wall you want to annotate with a fire rating line. 3 Specify the wall endpoint in the direction you want the line to be drawn. 4 Continue specifying wall points to extend the line as needed. 5 Press ENTER to end the command. Adding a fire rating line to a wall segment 
+
+For information about editing the properties of fire rating lines in the drawing, see Editing Polyline-Based Annotation Symbols on page 3634. 
+NOTE Fire rating lines that have been inserted with fire rating tools can be modified in the drawing and saved back as tools on a tool palette. By default, a fire rating line tool created that way will have the same layer key, layer overrides, linetype, and line width as the original tool that was used to create the annotation symbol in the drawing. 
+Match Line Tools 
+Match line annotations are used for annotating a drawing. Formerly available as content blocks in DesignCenter, these annotations are now available through tools on the tool palettes and in Content Browser. 
+In this release of AutoCAD Architecture, match lines are converted from DesignCenter content blocks to true tools with tool properties. 
+Match line tools 
+
+By default, all match line tools are set to be annotative, which means that the annotations you insert with these tools are controlled by annotative scaling. For more information, see Annotation Scaling on page 3637. 
+IMPORTANT If you have legacy drawings with old DesignCenter-based annotation symbols in them, then the old block definition will continue to be used for new tool-based blocks if the blocks are identically named. In such a case, either change the Annotative setting manually by using BEDIT, or rename the old block before inserting new tool-based annotation symbols into the drawing. 
+You can find match line tools in these locations in a default US install of AutoCAD Architecture: 
+¦ 
+In the Annotation tool palette 
+
+¦ 
+In Content Browser in these catalogs: 
+
+¦ 
+Stock Tool Catalog 
+
+¦ 
+Sample Palette Catalog (Imperial or Metric), under \Document\Annotation 
+
+
+
+
+¦ Documentation Tool Catalog (Imperial or Metric), under \Miscellaneous\Match Lines 
+TIP You can also search for these types of tools by name in Content Browser. 
+These properties of match line tools can be customized: 
+Property Cat-Description egory/Name 
+General/Layer key Specifies the layer key for the layer to which the match line is assigned. To change, click the current value to ac­cess the Select Layer Key worksheet. The default layer key is ANNOBJ. 
+General/Layer overrides Specifies one or more layer key overrides. Click the work­sheet icon to access the Select Layer Overrides worksheet. 
+General/Symbol Specifies the block-based symbol to be used for the match line. 
+General/Symbol location 
+The location of the drawing file containing the specified match line symbol. Click the property and use the Browse option from the drop-down list to locate and enter the path to the file. If this property is unspecified (--), then only those blocks in the current drawing file are listed. Symbol blocks shipped with AutoCAD Architecture are by default located in %AECCONTENT_DIR%\Styles\Im­perial\AEC Annotation Symbols (Imperial).dwg or %AECCONTENT_DIR%\Styles\Metric\AEC Annotation Symbols (Metric).dwg. 
+General/Line width Specifies the line width of the match line. 
+NOTE This setting uses paper size, not model size. 
+General/Linetype Specifies the linetype of the match line. For the match line tools shipped with AutoCAD Architecture, linetype Aec_Match_Line is specified. This linetype has been added to the acad.lin and acadISO.lin files. 
+Text/Attribute text style This property specifies whether attribute text within the symbol uses the text style of the current drawing (Target 
+Property Cat-Description egory/Name 
+drawing text style) or the style defined by the attribute tag (As defined by content). 
+Text/Attribute text angle Specifies the angle for attribute text. The choices are Right reading (which keeps the text right-side up regardless of rotation angle), As inserted (which sets text rotation at the angle of the last leader segment), and Force horizontal (which keeps the text horizontal regardless of the match line rotation angle.) 
+Inserting a Match Line in the Drawing 
+Use this procedure to insert a match line into the drawing. 
+1 Select a match line tool on a tool palette. (A match line tool is located on the Annotation palette.) 
+2 Specify the first point of the match line in the drawing area. 
+3 Specify the next points of the match line, and press ENTER when the line is complete. 
+4 In the Edit Attributes dialog, enter the text you want displayed on the match line, and click OK. 
+For information about editing the properties of match lines in the drawing, see Editing Block-Based Annotation Symbols on page 3631 and Editing Polyline-Based Annotation Symbols on page 3634. 
+NOTE Match lines that have been inserted with match line tools can be modified in the drawing and saved back as tools on a tool palette. By default, a match line tool created that way will have the same layer key, layer overrides, symbol, line width, linetype, attribute text style, and attribute text angle as the original tool that was used to create the annotation symbol in the drawing. The symbol location will be the current drawing. 
+Revision Cloud Tools 
+Revision cloud annotations are used for marking up to-be-revised areas in a drawing. Formerly available as content blocks in DesignCenter, these 
+annotations are now available through tools on the tool palettes and in Content Browser. 
+In this release of AutoCAD Architecture, revision clouds are converted from DesignCenter content blocks to true tools with tool properties. 
+Revision cloud tools 
+
+If a revision cloud has a tag, the tag symbol is a block reference which can be controlled by annotative scaling. The polyline representing the cloud shape does not participate in annotation scaling. For more information, see Annotation Scaling on page 3637. 
+IMPORTANT If you have legacy drawings with old DesignCenter-based annotation symbols in them, then the old block definition will continue to be used for new tool-based blocks if the blocks are identically named. In such a case, either change the Annotative setting manually by using BEDIT, or rename the old block before inserting new tool-based annotation symbols into the drawing. 
+You can find revision cloud tools in these locations in a default US install of AutoCAD Architecture: 
+¦ 
+In the Annotation tool palette 
+
+¦ 
+In Content Browser in these catalogs: 
+
+¦ Stock Tool Catalog 
+
+¦ 
+Sample Palette Catalog (Imperial or Metric), under \Document\Annotation 
+
+¦ 
+Documentation Tool Catalog (Imperial or Metric), under \Revision Clouds 
+
+
+TIP You can also search for these types of tools by name in Content Browser. 
+These properties of Revision Cloud tools can be customized: 
+Property Cat-Description egory/Name 
+General/Layer key Specifies the layer key for the layer to which the revision cloud is assigned. To change, click the current value to access the Select Layer Key worksheet. The default layer key is ANNREV. 
+General/Layer overrides Specifies one or more layer key overrides. Click the work­sheet icon to access the Select Layer Overrides worksheet. 
+General/Symbol If the revision cloud tool contains a tag, this line specifies the block-based symbol to be used for the tag. If the revi­sion cloud tool does not contain a tag, the symbol is un­defined. 
+General/Symbol location 
+The location of the drawing file containing the specified tag symbol. Click the property and use the Browse option from the drop-down list to locate and enter the path to the file. If this property is unspecified (--), then only those blocks in the current drawing file are listed. Symbol blocks shipped with AutoCAD Architecture are by default located in %AECCONTENT_DIR%\Styles\Im­perial\AEC Annotation Symbols (Imperial).dwg or %AECCONTENT_DIR%\Styles\Metric\AEC Annotation Symbols (Metric).dwg. 
+General/Line width Specifies the line width of the cloud polyline. 
+NOTE This setting uses paper size, not model size. 
+Property Cat-Description egory/Name 
+General/Arc length Specifies the arc length of each cloud segment. 
+NOTE This value is in paper space units. 
+Text/Attribute text style This property specifies whether attribute text within the symbol uses the text style of the current drawing (Target drawing text style) or the style defined by the attribute tag (As defined by content). 
+Text/Attribute text angle Specifies the angle for attribute text. The choices are Right reading (which keeps the text right-side up regardless of rotation angle), As inserted (which sets text rotation at the angle of the last leader segment), and Force horizontal (which keeps the text horizontal regardless of the match line rotation angle.) 
+Inserting a Revision Cloud in the Drawing 
+Use this procedure to insert a revision cloud into the drawing. 1 Select a revision cloud tool on a tool palette. (A revision cloud tool with a tag symbol is located on the Annotation palette.) 2 Specify the first point of the cloud shape in the drawing area. 
+NOTE Revision clouds are drawn counter-clockwise. 
+3 Specify the cloud shape, and click once when the cloud is closed. If the revision cloud tool contains a tag, the Edit Attributes dialog opens. 
+4 Enter the text you want displayed in the tag, and click OK. 
+For information about editing the properties of revision clouds in the drawing, see Editing Block-Based Annotation Symbols on page 3631 and Editing Polyline-Based Annotation Symbols on page 3634. 
+NOTE Revision clouds that have been inserted with revision cloud tools can be modified in the drawing and saved back as tools on a tool palette. By default, a revision cloud tool created that way will have the same layer key, layer overrides, symbol, line width, arc length, attribute text style, and attribute text angle as the original tool that was used to create the annotation symbol in the drawing. The symbol location will be the current drawing. 
+Bar Scale Tools 
+Bar scale annotations are used for annotating a drawing. These annotations are now available through tools on the tool palettes and in Content Browser. 
+Bar scale tool 
+
+By default, all bar scale tools are set to be non-annotative, which means that the annotations you insert with these tools are not controlled by annotative scaling. You can make them annotative if desired. For more information, see Annotation Scaling on page 3637. 
+IMPORTANT If you have legacy drawings with old DesignCenter-based annotation symbols in them, then the old block definition will continue to be used for new tool-based blocks if the blocks are identically named. In such a case, either change the Annotative setting manually by using BEDIT, or rename the old block before inserting new tool-based annotation symbols into the drawing. 
+IMPORTANT The bar scale tool has been set to be non-annotative by default because the numerical values created on insertion are static and will not update automatically when the annotation scale of the symbol is changed. 
+You can find a bar scale tool in these locations in a default US install of AutoCAD Architecture: 
+¦ 
+In the Annotation tool palette 
+
+¦ 
+In Content Browser in these catalogs: 
+
+¦ 
+Stock Tool Catalog 
+
+¦ 
+Sample Palette Catalog (Imperial or Metric), under \Document\Annotation 
+
+¦ 
+Documentation Tool Catalog (Imperial or Metric), under \Miscellaneous 
+
+
+
+
+TIP You can also search for these types of tools by name in Content Browser. 
+These properties of bar scale tools can be customized: 
+Property Cat-Description egory/Name 
+General/Layer key Specifies the layer key for the layer to which the bar scale is assigned. To change, click the current value to access the Select Layer Key worksheet. The default layer key is TITTEXT. 
+General/Layer overrides Specifies one or more layer key overrides. Click the work­sheet icon to access the Select Layer Overrides worksheet. 
+General/Symbol Specifies the block-based symbol to be used for the bar scale. 
+General/Symbol location 
+The location of the drawing file containing the specified symbol. Click the property and use the Browse option from the drop-down list to locate and enter the path to the file. If this property is unspecified (--), then only those blocks in the current drawing file are listed. Symbol blocks shipped with AutoCAD Architecture are by default located in %AECCONTENT_DIR%\Styles\Im­perial\AEC Annotation Symbols (Imperial).dwg or %AECCONTENT_DIR%\Styles\Metric\AEC Annotation Symbols (Metric).dwg. 
+Text/Attribute text style This property specifies whether attribute text within the symbol uses the text style of the current drawing (Target drawing text style) or the style defined by the attribute tag (As defined by content). 
+Text/Attribute text angle Specifies the angle for attribute text. The choices are Right reading (which keeps the text right-side up regardless of rotation angle), As inserted (which sets text rotation at the angle of the last leader segment), and Force horizontal (which keeps the text horizontal regardless of the match line rotation angle.) 
+Inserting a Bar Scale in the Drawing 
+Use this procedure to insert a bar scale into the drawing. 1 Select a bar scale tool on a tool palette. (A bar scale tool is located on the Annotation palette.) 2 Specify the insertion point of the bar scale. 3 Specify the rotation of the bar scale. For information about editing the properties of bar scales in the drawing, see Editing Block-Based Annotation Symbols on page 3631. 
+NOTE Bar scales that have been inserted with a bar scale tool can be modified in the drawing and saved back as a tool on a tool palette. By default, a bar scale tool created that way will have the same layer key, layer overrides, symbol, attribute text style, and attribute text angle as the original tool that was used to create the annotation symbol in the drawing. The symbol location will be the current drawing. 
+Column Grid Bubble Tools 
+Column grid bubble annotations are used for annotating column grids in a drawing. These annotations are available through tools on the tool palettes and in Content Browser. The column grid bubble is a true tool with tool properties. 
+Column grid bubble tool 
+
+The default column grid bubble tool is set to be annotative, which means that the annotations you insert with the tool are controlled by annotative scaling. For more information, see Annotation Scaling on page 3637. 
+IMPORTANT If you have legacy drawings with old DesignCenter-based annotation symbols in them, then the old block definition will continue to be used for new tool-based blocks if the blocks are identically named. In such a case, either change the Annotative setting manually by using BEDIT, or rename the old block before inserting new tool-based annotation symbols into the drawing. 
+The column grid bubble tool is based on a multi-view block. To make changes to the annotative behavior, you must change the referenced block within the multi-view block with BEDIT. 
+You can find a column grid bubble tool in these locations in a default US install of AutoCAD Architecture: 
+¦ 
+In the Annotation tool palette 
+
+¦ 
+In Content Browser in these catalogs: 
+
+¦ 
+Stock Tool Catalog 
+
+¦ 
+Sample Palette Catalog (Imperial or Metric), under \Document\Annotation 
+
+¦ 
+Documentation Tool Catalog (Imperial or Metric), under \Miscellaneous 
+
+
+
+
+TIP You can also search for these types of tools by name in Content Browser. 
+These properties of Column Grid Bubble tools can be customized: 
+Property Cat-Description egory/Name 
+General/Layer key Specifies the layer key for the layer to which the column grid bubble is assigned. To change, click the current value to access the Select Layer Key worksheet. The default layer is GRIDBUB. 
+General/Layer overrides Specifies one or more layer key overrides. Click the work­sheet icon to access the Select Layer Overrides worksheet. 
+General/Symbol Specifies the block-based symbol to be used for the column grid bubble. 
+General/Symbol location 
+The location of the drawing file containing the specified symbol. Click the property and use the Browse option from the drop-down list to locate and enter the path to the file. If this property is unspecified (--), then only those blocks in the current drawing file are listed. Symbol blocks shipped with AutoCAD Architecture are by default located in %AECCONTENT_DIR%\Styles\Im­perial\AEC Annotation Symbols (Imperial).dwg or %AECCONTENT_DIR%\Styles\Metric\AEC Annotation Symbols (Metric).dwg. 
+Label prefix Specifies the default bubble text. The last character of the prefix will be incremented if multiple column grid bubbles 
+Property Cat-Description egory/Name 
+are inserted within one command sequence. For example, if the label prefix is A1, then subsequent bubbles will be named A2, A3, and so on. 
+NOTE When the command is ended, and later the tool is started again, it will start incrementing from 1 again.  
+Label both ends  Specifies whether a bubble is applied to only the selected node (No) or to the node on the opposite end of the grid as well (Yes).  
+Extension length  Specifies the length of the extension line from the column grid node to the bubble.  
+
+NOTE These values are defined in model space units. 
+Text/Attribute text style This property specifies whether attribute text within the symbol uses the text style of the current drawing (Target drawing text style) or the style defined by the attribute tag (As defined by content). 
+Text/Attribute text angle Specifies the angle for attribute text. The choices are Right reading (which keeps the text right-side up regardless of rotation angle), As inserted (which sets text rotation at the angle of the last leader segment), and Force horizontal (which keeps the text horizontal regardless of the match line rotation angle.) 
+Inserting a Column Grid Bubble in the Drawing 
+Use this procedure to add a column grid bubble to a column grid in the drawing. 
+1 Select a column grid bubble tool on a tool palette. (A column grid bubble tool is located on the Annotation palette.) 
+2 Select the desired node on the column grid you want to label. 
+3 In the Create Grid Bubble dialog, you can either choose to confirm the tool settings for label prefix, extension line length, and one­
+or two-sided labelling, or you can overwrite them. Click OK when the settings are according to your wishes. 4 To label more nodes on the column grid, select them and repeat the previous step. 5 To end the bubble creation, press ENTER. 
+The column grid bubble tool shipped with AutoCAD Architecture is a multi-view block referencing a bubble definition in a block. To edit the block, you must run the BEDIT command. 
+NOTE Column grid bubbles that have been inserted with a column grid bubble tool can be modified in the drawing and saved back as a tool on a tool palette. By default, a column grid bubble tool created that way will have the same layer key, layer overrides, symbol, label prefix, extension line length, attribute text style, and attribute text angle as the original tool that was used to create the annotation symbol in the drawing. The symbol location will be the current drawing. 
+Editing Annotation Symbols in the Drawing 
+Depending on whether you are using a block-based or polyline-based annotation tool, different properties of the inserted annotation symbols can be edited. 
+Editing Block-Based Annotation Symbols 
+The annotation symbols for north arrows, datum points, match lines, bar scales, and revision clouds (with tag) contain block references. To edit the properties of the block, select the desired tool in the drawing, and change the following properties on the Properties palette: 
+TIP Match lines and revision clouds with tags are composed of a block reference and a polyline. To confirm that you have selected the block reference part of the symbol, verify that the drop-down list in the Properties palette reads “Block Reference.” 
+Category/Property Description 
+General/Color The default color of an annotation symbol is defined by the layer the symbol is inser­ted on. You can manually select a different color. 
+Category/Property Description 
+General/Layer The layer of an annotation symbol is defined by the layer key of the tool. You can manually select a different layer. 
+General/Linetype The default linetype of an annotation sym­bol is defined by the layer the tool is inser­ted on. You can manually select a different linetype. 
+General/Linetype scale 
+The linetype scale of a block-based annota­tion symbol is set in the block referenced by the tool. To change the linetype scale of the block, you must run BEDIT. 
+NOTE Changing the linetype scale of the block will affect all tools and symbols refer­encing that block. 
+General/Plot style The plot style is controlled by the plot style table defined for the drawing. To change the plot style, you must select a different plot style table. 
+General/Lineweight The default lineweight of an annotation symbol is defined by the layer the symbol is inserted on. You can manually select a different lineweight. 
+General/Hyperlink You can attach a hyperlink to an annotation symbol in the drawing. 
+3D Visualization/Material 
+The default material used when displaying the drawing in a 3D visualization style is defined by the layer the symbol is on. In most cases material settings do not affect annotation symbols, as they typically do not appear in rendered views of the draw­ing. 
+Geometry/Position X/Y/Z The position of the symbol is initially defined by the location at which it is inser­
+Category/Property Description 
+Geometry/Scale X/Y/Z 
+ted in the drawing. You can change the position either by dragging the symbol to a different location or by entering different position coordinates in the Properties palette. 
+The scale of the symbol when inserted is defined by the Annotation plot size defined for the drawing. You can manually change the scale. The values for X, Y, and Z are al­ways proportional; changing the X scale changes the Y and Z scales, too. For inform­ation about annotation plot size, see Creat­
+ing Annotation Scales and Assigning them to Display Configurations on page 195. 
+Misc/Name The name of the block that is referenced by the symbol. 
+Misc/Rotation The rotation is specified by the user when inserting the symbol. You can change the rotation by entering a different angle on the Properties palette. 
+Misc/Annotative Indicates whether the symbol is participat­ing in annotation scaling. To change the annotative behavior, you must change the annotative behavior of the referenced block by running BEDIT. 
+Misc/Annotative scale The currently active annotation scale (vis­ible only for symbols that are controlled by annotation scaling.) 
+Misc/Match orientation to layout Indicates whether the symbol is aligned to the spatial orientation of the drawing lay­out. The default setting is No. To change the orientation behavior, you must change the orientation of the referenced block by running BEDIT. 
+Category/Property Description 
+Misc/Block Unit Specifies the insertion units. To change this setting, you must change the insertion units of the referenced block by running BEDIT. 
+Misc/Unit factor Specifies the conversion factor between block units and drawing units. To change this value, you must change the unit factor of the referenced block by running BEDIT. 
+Attributes/<Attribute Name> If the block reference of the annotation symbol contains one or more editable at­tributes, you can directly edit them in the Properties palette. By default, match lines and bar scales contain editable attributes. 
+Editing Polyline-Based Annotation Symbols 
+The annotation symbols for fire rating lines, match lines, and revision clouds contain polylines. To edit the properties of the polyline, select the desired tool in the drawing, and change the following properties on the Properties palette: 
+TIP Match lines and revision clouds with tags are composed of a block reference and a polyline. To confirm that you have selected the polyline, verify that the drop-down list in the Properties palette reads “Polyline.” 
+Category/Property Description 
+General/Color By default, the color of a polyline in an an­notation symbol is defined by the layer the symbol is inserted on. You can manually select a different color. 
+General/Layer The layer of an annotation symbol is defined by the layer key of the tool. You can manually select a different layer. 
+General/Linetype By default, the linetype of a polyline in an annotation symbol is defined by the line­
+Category/Property Description 
+type setting in the tool. You can manually select a different linetype. 
+General/Linetype scale By default, the linetype scale of a polyline in an annotation symbol is defined by the layer the symbol is inserted on. You can manually select a different linetype scale. 
+General/Plot style The plotstyle is defined by the plot style table defined for the drawing. To change the plot style, you must select a different plot style table. 
+General/Lineweight By default, the lineweight of an annotation symbol is defined by the layer the symbol is inserted on. You can manually select a different lineweight. 
+General/Hyperlink You can attach a hyperlink to a polyline in the drawing. 
+General/Thickness The thickness setting lets you add a 3D thickness to a 2D polyline. By default this is set to 0 as annotation symbols and their linework components normally do not re­quire a 3D extrusion. 
+3D Visualization/Material By default, the material used when display­ing the drawing in a 3D visualization style is defined by the layer the symbol is on. Normally this setting does not need to be changed, as annotation symbols are rarely used in rendered views of a drawing. 
+Geometry/Vertex The Vertex option displays the number of the vertex that is currently editable. Use the arrows to scroll between vertices. 
+Geometry/Vertex X/Y Here, you can edit the vertex coordinates of the vertex selected in the line above. 
+Category/Property Description 
+Geometry/Start segment width This setting defines the width of the poly­line segment at the start of the selected vertex. 
+Geometry/End segment width This setting defines the width of the poly­line segment at the end of the selected vertex. 
+Geometry/Global width Here, you can enter a global width for the overall polyline. By default the line width setting defined in the tool is used. 
+Geometry/Elevation This setting specifies the elevation of the polyline relative to the z-axis of the poly­line’s object coordinate system. Annotation symbols are by default inserted at elevation 0. 
+Geometry/Area This value is set only if the polyline has been set to have a width. 
+Geometry/Length This value displays the overall length of the polyline. 
+Misc/Closed This setting displays whether the polyline in the annotation symbol is closed or open. Typically, fire rating lines and match lines are open polylines; a revision cloud is a closed polyline. 
+Misc/Linetype generation 
+This setting allows you to use a smaller linetype scale than the regular selected linetype scale on very short polyline seg­ments. This can be useful when the line-type has a pattern (for example dashed) and certain segments are too short to dis­play the pattern. In this case, enabling linetype generation generates the pattern on those segments with a scale small enough to display. 
+Annotation Scaling 
+Annotation scaling allows you to plot annotation at the same height or size regardless of the viewport zoom scale. Annotation scales can be associated with annotative objects in AutoCAD Architecture so that these objects can be sized properly for specific annotation scales in model space and displayed correctly in paper space. You can also toggle on or off the display of annotation objects that do not participate in the current annotation scale. 
+The following illustration shows a door tag displayed at two different annotation scales. The door tag was created in the drawing at the first annotation scale, then the annotation scale was changed. 
+
+The following illustration shows an AEC dimension displayed at two different annotation scales. The AEC dimension was created in the drawing at the first annotation scale, then the annotation scale was changed. 
+
+Annotation Tools with Annotative Properties 
+Use annotation tools to create annotation objects that respond to specific annotation scales. An annotation tool is a customizable AutoCAD Architecture tool for adding the following types of annotations to drawings: 
+¦ Multi-line text notes 
+¦ 
+Symbol-based notes with attributes 
+
+¦ 
+Reference keynotes 
+
+¦ 
+Sheet notes 
+
+¦ 
+Callouts 
+
+
+The annotation tools appear on the Annotation tab of the Document tool palette: 
+
+For more information about working with annotation tools, see The Basic Annotation Tool on page 3549. 
+NOTE DesignCenter tools do not generate objects that respond to annotation scaling. 
+An annotation object is any object that participates in annotation scaling. The following are annotation objects created by AutoCAD Architecture: 
+¦ 
+Multi-view blocks 
+
+¦ 
+AEC dimensions 
+
+
+Multi-view blocks derive their annotative properties from their block definition. AEC dimensions derive their annotative properties from their dimension style. For more information, refer to AutoCAD help. 
+The following are annotation objects created by AutoCAD: 
+¦ Text 
+¦ 
+MText 
+
+¦ 
+Dimensions 
+
+¦ 
+Leaders 
+
+¦ 
+Block References 
+
+¦ 
+Hatches 
+
+The following AutoCAD styles are also annotative: 
+
+¦ 
+Text 
+
+¦ 
+Dimensions 
+
+¦ 
+Block Definitions 
+
+¦ 
+MLeaders 
+
+
+The specific type of annotation, its appearance, and other characteristics are determined by user-editable values on the Tool Properties worksheet, which is accessed from the context menu of the particular tool. 
+
+Specifying Annotation Scale 
+When you use AutoCAD Architecture tools to generate AutoCAD objects such as leaders and callouts, these objects become annotative objects that respond to annotation scaling. When you generate Multi-view blocks and AEC dimensions, these objects are also annotative and respond to annotation scaling with respect to scale and location based on the current annotation scale. 
+The annotation scale is a setting associated with the model tab and paper space viewports and is also saved with model views. It is controlled by the CANNOSCALE system variable value which sets the current annotation scale. Different annotation scales can be assigned to model views and paper space viewports. 
+Specify the current annotation scale by selecting one from the Annotation Scale flyout menu. 
+
+Annotation Scales and Viewports 
+When working in a paper space viewport, the annotation scale of the viewport controls the scale of the annotative objects created in the viewport. If multiple scale representations are supported, the annotative objects in the viewport are drawn and scaled based on the annotation scale without affecting the scale or display in the model tab or in other paper space viewports. 
+The viewport and annotation scales are synchronized when the annotation scaling controls are used. For example, when you change the viewport scale, the annotation scale updates to match the new viewport scale. However, as you zoom in or out of a viewport with your mouse wheel or by using the Zoom commands, the viewport scale updates while the annotation scale will remain unchanged. 
+Scale representations allow for the display of the same annotative object differently in different paper space viewports at the same time. Scale representations allow annotative objects to be drawn at different sizes based on the annotation scale. Each scale representation may also have different values for positional properties, such as a text string base point. The properties that can vary per scale representation depend on the object type. 
+The following illustration shows a door tag shown at two different annotation scales and different locations based on the annotation scale and base point. 
+
+Whenever an annotation object is identified as annotative as you add it to a drawing, the current annotation scale is added to the object as a participatory scale. AutoCAD Architecture objects identified as annotative will scale to match the current annotation scale. The scale point is the insertion point of the block definition. 
+NOTE Any annotation settings within all nested text or dimension styles referred to by an AutoCAD Architecture object, such as materials or component hatching, schedule tables, or stairs, will be ignored. Display properties for these objects do not respect annotation scaling. 
+Annotative objects such as door tags now have a Scale Representation Location Grip. Use this grip to relocate the current scale representation instance. Use the Location grip to relocate all of the scale representations at once. If there is only one scale representation supported for a particular tag, only the Location grip is displayed. 
+
+The model space or paper space text height is the height at which text will be plotted for a given scale. The following formula determines object scaling: 
+Object Height x Annotation Scale x Annotation Plot Size = Model Space or Paper Space Height 
+For example, the model space text height for a text string when displayed in a viewport scaled to 1/4" = 1' - 0" is 12". Assuming an object height of 1 unit, the formula applies as follows: 
+1 x 48 x 1/4” = 12” 
+Blocks used by AutoCAD Architecture callouts, title marks, and other kinds of annotation must be created relative to a single AutoCAD unit (either an inch or a millimeter, depending upon whether your working in imperial or metric units). Documentation content files, regardless of whether they are based on blocks or multi-view blocks have the additional requirement that they be inserted at a scale relative to your anticipated plot scale, and taking into account the “Annotation Plot Size” setting in the drawing setup dialog box. As a baseline, you can use one AutoCAD unit, and anything in the content file that is one unit in size will be the annotation plot size when plotted at the specified annotation scale. Everything in the block, including geometry and text, must be created relative to the single AutoCAD unit. The entire block is scaled proportionally. 
+Updating Legacy Annotative Objects 
+When you are working with previous versions of Architectural Desktop, you can update appropriate objects in AutoCAD Architecture so that they are annotative. This sections outlines the procedure for updating three types of objects: AutoCAD objects (text, dimensions, and hatching, for example), AutoCAD Architecture blocks, and AutoCAD Architecture multi-view blocks and AEC dimensions. 
+If you choose only one occurrence of an object to make annotative, only that instance of the object will be annotative. To apply an annotative property to all of the objects in a particular style, edit that style and assign an annotative property to all instances of that style. You can also enter ANNOUPDATE on the Command line to update the selected text objects. Leaders, MText, dimensions, and other objects are assigned an annotative property by this same procedure. 
+Updating Legacy AutoCAD Text to Annotative 
+Use this procedure to edit a legacy AutoCAD text style and add an annotative property. You can also use this procedure to update AutoCAD dimensions. 
+1 Open the legacy Architectural Desktop drawing in AutoCAD Architecture. 
+2 Specify the same annotation scale in the new AutoCAD Architecture drawing as in the legacy Architectural Desktop drawing. 
+3 From the Format menu, click Text Style. 
+4 In the Text Style dialog, from the Styles list, select the appropriate text style. 
+5 Under Size, select Annotative. 
+
+6 Click Apply. 
+7 On the Command Line, enter ANNOUPDATE to update all annotative objects. 
+Any text strings of the selected text style are now annotative. 
+Updating Legacy Architectural Desktop Blocks to Annotative 
+Use this procedure to edit legacy Architectural Desktop blocks, such as callouts or titlemarks, and add an annotative property. 
+1 Open the legacy Architectural Desktop drawing in AutoCAD Architecture. 
+2 Specify the same annotation scale in the new AutoCAD Architecture drawing as in the legacy Architectural Desktop drawing. 
+3 Click Insert tab . Block panel . Edit Block. 
+4 In the Edit Block Definition dialog, select the block to edit, and then click OK. 
+5 On the Properties Palette, under Block, select Yes for Annotative. 
+
+6 On the Block Editor toolbar, click Close Block Editor and then save your changes. 
+Any blocks of the selected block style are now annotative. 
+Updating Legacy Architectural Desktop Multi-view Blocks to Annotative 
+Use this procedure to edit a legacy Architectural Desktop multi-view block and add an annotative property to each block for each view. You can also use this procedure to update legacy AEC dimensions. 
+1 Open the legacy Architectural Desktop drawing in AutoCAD Architecture. 
+2 Specify the same annotation scale in the new AutoCAD Architecture drawing as in the legacy Architectural Desktop drawing. 
+3 Click Insert tab . Block panel . Edit Block. 
+4 In the Edit Block Definition dialog, select the first block to edit, and then click OK. 
+5 On the Properties Palette, under Block, select Yes for Annotative. 
+
+6 On the Block Editor toolbar, click Close Block Editor and then save your changes. 
+7 Repeat these steps for the remaining blocks of the remaining views of the multi-view block. 
+8 On the Command Line, enter ANNOUPDATE to update the selected blocks. 
+The selected blocks now have an annotative property. 
+Copying Participating Annotation Scales from One AEC Object to Another 
+You can copy annotation scales from annotative multi-view blocks and AEC dimensions as source AEC objects to other AEC objects. A prerequisite is that your drawing must contain an annotative AEC object that participates in at least 2 annotation scales. For example, you can copy annotation scales from one door tag to another. 
+1 Add 2 doors to your drawing. 2 Add a door tag to the first door. 
+This is the source object. 
+3 Select the door tag, and click Annotate tab . Annotation Scaling panel . Add/Delete Scales. 
+
+You can also specify a new current annotation scale by selecting one from the Annotation Scale flyout menu. 
+4 In the Annotation Object Scale dialog, click Add. 
+
+5 Select additional scales to add to the source object and click OK. 6 Verify the new scales added to the source object in the Annotation 
+Object Scale dialog, and click OK. 7 Select the door tag, right-click and click Add Selected. 8 Select the second door. 9 Add the new door tag to your drawing. 
+10 Select the new door tag, and click Annotate tab . Annotation Scaling panel . Add/Delete Scales. 11 In the Annotation Object Scale dialog, verify that the new door tag has the same assigned scales as the source door tag. 
+Linking Display Configurations to Annotation Scales 
+You can specify which display configuration is associated with a particular annotation scale in your drawing. For example, you can link a Low Detail Reflected Ceiling Plan display configuration with a 1/8” = 1’-0” annotation scale and a Medium Detail Reflected Ceiling Plan display configuration with a 1/4” = 1’-0” annotation scale. 
+This relationship exists for the following display configuration conditions: 
+Model Tab: Annotation scale and display configuration changes 
+Current Paper Space Viewport: Annotation scale changes, zoom scale changes, and display configuration changes 
+Selected Paper Space Viewports: Annotation scale changes for all unlocked viewports, zoom scale changes for all unlocked viewports, and display configuration changes for all unlocked viewports 
+Derivation of Annotative Properties 
+The following table lists objects, their associated AutoCAD Architecture tool that creates them, and the source of their annotative properties, if any. 
+Object AutoCAD Architec-Annotative Property Derivation ture Tool 
+MText* Annotation Leader Dimension Style tool proper­ties 
+Blocks* Annotation/Callout/De-Block Style definition tail Mark/Title Mark 
+Leaders* Annotation/Callout/De-Leader Dimension Style tool proper-tail Mark/Title Mark ties 
+Multi-view Blocks Multi-view Block Block Style definition Tool/Schedule Tag Tool 
+Multi-view Blocks  DesignCenter Content  None; Annotative property can be  
+Tool/DesignCenter  assigned to view blocks  
+Command Tool/  
+
+AEC Dimensions Dimension Tool AutoCAD Dimension Style specified in the AEC Dimension display proper­ties 
+* AutoCAD object created by AutoCAD Architecture tool 
+Callouts 
+48 
+Details, sections, and elevations are views of the building model and part of the construction documentation. They can be created with callouts. Callout tools create a callout that is referenced to a model space view containing a user-defined part of the building model, such as a section, an elevation or a detail. They are coordinated across the complete construction document set with the help of projects and sheet sets. 
+Working with Callouts 
+Callout tools allow you to define portions of the building model as details, sections, and elevations. These portions are placed in model space views created for the callout. 
+A model space view is a portion of a view drawing that may be displayed in its own viewport on a layout tab of a drawing. A model space view has its own name, description, display configuration, layer snapshot, drawing scale, layer state, and view direction. Model space views are an evolution of the Named Views concept of AutoCAD, but as opposed to Named Views, model spaces views have a defined boundary. 
+You can place a model space view containing a detail, section, or elevation in the current view drawing, an existing project view drawing, or a new project view drawing. 
+The New View Drawing Types 
+View drawings have been enhanced for AutoCAD Architecture. In addition to the existing general view drawings, users may now access some specialized drawing types designed for saving details, sections, and elevations in a project. All of these view types are organized in the Project Navigator. 
+These are the types of view drawings in the Drawing Management feature: 
+¦ General view drawings: A general view drawing contains referenced constructs from the project, representing a specific view on the building model. General view drawings are based on the general view template defined in the project settings. 
+3D view of entire building 
+
+¦ Detail view drawings: A detail view drawing can contain one or more model space views that show a defined portion of the building model. This could be a detail or an enlarged part of a plan. You can specify the level of detail with the help of the display configuration and the 2D Section/elevation style. A model space view containing a detail can be created with a callout. Detail view drawings are based on the detail view template defined in the project settings. 
+Detail view in callout 
+
+¦ Section/Elevation view drawings: A section/elevation view drawing can contain one or more model space views that show a section/elevation of the building model. A model space view containing a section or elevation can be created with a callout. Specific callout tools have been added to make the creation of four-way exterior and interior elevations easier and better. Section/elevation view drawings are based on the section/elevation view template defined in the project settings. 
+4 model space exterior elevations 
+
+For more information on the view system in AutoCAD Architecture, see Views on page 432. 
+Using Fields in Callout Tools 
+Fields enhance the documentation capabilities within a drawing file. A field is updatable text that is set up to display data that may change during the life cycle of the drawing. When the field is updated, the latest value of the field is displayed. Fields can be inserted into attribute definitions and can be used to create callout tools. 
+For more information, see Fields on page 3449 and Creating New Callout Tools on page 3694. 
+Callouts and Projects 
+Callouts and their referenced model space views are closely linked to projects in the Drawing Management feature. Although you can use callouts to some degree outside a project, to use them optimally, you need to be working within a project. For information on working outside a project, see Working with Callouts Outside a Project on page 3690. 
+Callout Tools 
+Plans, sections, elevations, and details are typically referenced to a callout. AutoCAD Architecture provides a number of predefined callout tools for the various view types. You can also place a callout that is not referenced to a view, and reference it later. 
+Callout tools in AutoCAD Architecture 
+
+The default tool palettes in the workspace contain sample callout tools that you can use and customize as needed. In addition, the following catalogs provided with the software contain callout tools that you can add to your tool palettes: 
+¦ 
+Stock Tool catalog 
+
+¦ 
+AutoCAD Architecture Sample Palette catalog 
+
+¦ 
+Documentation Tool Catalog 
+
+
+Custom palettes created by your CAD manager or other users may also contain callout tools with properties that are customized for your projects or office standards. 
+The following callout tools are provided with the software: 
+Tool Description 
+
+A detail callout tool with a circular boundary that can optionally insert a title mark. The callout symbol has field placeholders for the sheet number and the detail number, which are resolved when the detail is placed on a sheet. 
+
+A detail callout tool with a rectangular boundary that can optionally insert a title mark. The callout symbol has field placeholders for the sheet number and the detail number, which are resolved when the detail is placed on a sheet. 
+
+A detail callout tool with a freeform boundary that can optionally insert a title mark. The callout symbol has field placeholders for the sheet number and the detail number, which are resolved when the detail is placed on a sheet. 
+
+A detail tool with a leader line. The callout symbol has a field place­holder for the detail number that gets resolved when the detail is placed on a sheet. 
+
+A detail tool with a leader line and a tail. The callout symbol has a field placeholder for the detail number that gets resolved when the detail is placed on a sheet. 
+
+A detail tool with a leader line. The callout symbol has field placehold­ers for the detail number and the sheet number that get resolved when the detail is placed on a sheet. 
+
+A detail tool with a leader line and a tail. The callout symbol has field placeholders for the detail number and the sheet number that get resolved when the detail is placed on a sheet. 
+Tool Description 
+
+A single elevation mark tool. The elevation mark has a field placeholder for the elevation number that gets resolved when the elevation is placed on a sheet. 
+NOTE This tool is just a variation of the other single elevation mark tools, using a different symbol style. 
+
+A single elevation mark tool. The elevation mark has field placeholders for the elevation number and the sheet number that get resolved when the elevation is placed on a sheet. 
+NOTE This tool is just a variation of the other single elevation mark tools, using a different symbol style. 
+
+A four-way interior elevation mark tool in the format 1/2/3/4. The elevation marks contain a field placeholder for the sheet number that gets resolved when the elevation are placed on a sheet. 
+
+A four-way interior elevation mark tool in the format N/S/E/W. The elevation marks contain a field placeholder for the sheet number that gets resolved when the elevation are placed on a sheet. 
+
+A four-way exterior elevation mark tool. The elevation marks contain a field placeholder for the sheet number that get resolved when the elevation are placed on a sheet. 
+
+A single interior elevation mark tool. The elevation mark contains field placeholders for the sheet number and the elevation number that get resolved when the elevation is placed on a sheet. 
+
+A single interior elevation mark tool with inverted text. The elevation mark contains field placeholders for the sheet number and the eleva­tion number that get resolved when the elevation is placed on a sheet. 
+
+A single section mark tool with a leader line. The section mark contains a field placeholder for the section number that gets resolved when the section is placed on a sheet. 
+
+A single section mark tool with a leader line and a tail. The section mark contains a field placeholder for the section number that gets resolved when the section is placed on a sheet. 
+Tool Description 
+
+A single section mark tool with a leader line. The section mark contains field placeholders for the section number and the sheet number that get resolved when the section is placed on a sheet. 
+
+A single section mark tool with a leader line and a tail. The section mark contains field placeholders for the section number and the sheet number that get resolved when the section is placed on a sheet. 
+
+A double section mark tool with a section line. The section marks contain field placeholders for the section number and the sheet number that get resolved when the section is placed on a sheet. 
+
+A title mark with fields for view title, viewport scale and view number. 
+
+A title mark with fields for view title and viewport scale. 
+Workflow for Annotating Drawings with Callouts 
+
+Open the drawing in which you want to add a callout. If you are working in a structured AutoCAD Architecture project, open a view on page 447 drawing from the Project Navigator. 
+
+Select a callout tool on page 3652, and add the callout to the drawing. 
+
+Determine if the callout is connected to a model space view on page 3690 or not Placing a Callout Without a Model Space View on page 3685, and name the model space view if necessary. 
+
+Generate a model space view for a detail on page 3665, section on page 3671, or elevation on page 3679 callout by specifying its scale and where it is to be created. If you are working in a structured AutoCAD Architecture project on page 448, you have options of where to place the image generated by the callout. 
+
+Add the model space view by specifying the insertion point on page 3691 in the current drawing. If you are working in a structured AutoCAD Architecture project, fields on page 3694 contain placeholder information in the callout. 
+
+Resolve on page 3689 the field placeholder information, like the view number or the sheet number, in the callout by placing the model space view on a sheet if you are working in a structured AutoCAD Architecture project. 
+The Properties of a Callout Tool 
+You can use callout tools to create section views, elevation views, and detail views that are referenced to a callout. Depending on the view type you want to create, you need to set different options in the callout tool. 
+Properties of a detail callout Properties of an elevation callout 
+
+
+Properties of a title mark tool 
+
+The following table lists the properties you can set for the individual tool types. 
+Property Tool Type Description 
+General Category 
+Layer Key General (all Here, you specify the layer key in which the callout types) callout symbol should be inserted. 
+Layer Overrides General If necessary, you can specify a layer key over­ride for the callout symbol here. 
+Callout type General 
+Here, you define the type of callout tool you want to insert. You can choose between these types: 
+¦ 
+Detail Boundary: a tool consisting of a detail boundary and a detail mark 
+
+¦ 
+Detail Mark: a tool consisting of only a detail mark 
+
+¦ 
+Elevation Single: a tool consisting of a single elevation mark 
+
+¦ 
+Elevation Four-Way: a tool consisting of four elevation marks and lines 
+
+
+Property Tool Type Description 
+¦ 
+Section Tag and Tail: a tool consisting of a section line with a tag and a tail 
+
+¦ 
+Section Tag and Tag: a tool consisting of a section line with two tags on start and end 
+
+
+Callout boundary type  Detail Bound- You can choose the shape of the detail  
+ary  boundary. Available options are circular,  
+rectangular, and freeform.  
+
+Four way elevation  Elevation Four  You can select the type of four-way elevation  
+type  Way  the tool should create. Available options are  
+interior and exterior elevations.  
+
+NOTE For an interior elevation, you can select spaces as the elevation region. 
+Tag name General Here, you define the block that is used as the callout tag. 
+Tag and arrow loca- General  Defines the location of the available callout  
+tion  symbol tags, and, if applicable, the location  
+of the available tag arrows.  
+
+Arrow Section/ Eleva-Define the block for the section/elevation tion mark arrow. 
+Attribute text style General Here you select if the text style for attributes in the callout should be the text style of the callout tag (Content) or the current text style of the drawing (Target). 
+Attribute text angle General Here, you select the text angle of the attribute text. You can choose to insert the attribute text at the same angle as the callout symbol (As Inserted), horizontal in the drawing (Hori­zontal), or to be read from the right side (Right Reading). 
+Dimensions Category 
+Property Tool Type Description 
+Corner Radius Detail Bound-Defines the corner radius of rectangular and ary freeform detail boundaries. 
+Boundary linetype Detail Bound-Defines the linetype of the detail boundary. ary 
+Boundary width Detail Bound-Defines the line width of the boundary lines. ary 
+View Defaults Cat­egory 
+View Type General 
+This setting determines the type of view gen­erated by the callout tool. You can choose between the following: 
+¦ 
+Detail View: If you have selected Detail View for type, and create a model space view in a new drawing, the Detail View template set in the project will be used for the new drawing. 
+
+¦ 
+Section/Elevation View: If you have selec­ted Section/Elevation View for type, and create a model space view in a new drawing, the Section/Elevation View template set in the project will be used for the new drawing. 
+
+¦ 
+General View: If you have selected Gener­al View for type, and create a model space view in a new drawing, the General View template set in the project will be used for the new drawing. 
+
+
+Generate Section/Elev-General Here, you can choose if the tool should create ation a 2D section elevation. 
+Section/Elevation style General If you have selected to generate a 2D sec­tion/elevation from the tool, you need to set a 2D section/elevation style. 
+Property Tool Type Description 
+Section/Elevation style  General  Sets the drawing or template file from in  
+location  which the available 2D section/elevation styles  
+reside.  
+
+Display set General If you have selected to generate a 2D sec­tion/elevation from the tool, you need to set a display set for the 2D section/elevation here. 
+Display set location General Sets the drawing or template file from in which the available display sets reside. 
+Scale General 
+In this setting, you define the scale of the model space view generated from the tool, as well as the scale of sheet views generated from the model space view. 
+NOTE You can override the scale set in the tool during insertion of the callout in the drawing. 
+Name General Sets a default name for model space views that are created by this tool. You can override the name set in the tool when inserting a callout in the drawing. 
+Increment General Sets a default incrementing method for nam­ing multiple model space views created with this callout tool. Available options are Integer and Character. 
+Place a title mark General Here, you can select if a title mark should be attached to model space views created with this tool. 
+Title mark Category 
+Layer Key General By default, a title mark that is associated to a callout tool is inserted on the same layer as the model space view generated. You can however define a different layer for the title mark by selecting a different layer key here. 
+Property Tool Type Description 
+Layer Overrides General If necessary, you can specify a layer key over­ride for the title mark here. 
+Justify General This setting specifies the justification of the title mark in relation to the title mark line. Available options are Left and Right. 
+Tag General In this list, you select the block used for the title mark symbol. 
+Tag location General Sets the drawing or template file from in which the available blocks reside. 
+Title General Here, you define the title symbol. 
+Title location General Sets the drawing or template file from in which the available title symbols reside. 
+Attribute Text Style General Here you select if the text style for attributes in the title should be the text style of the title tag (Content) or the current text style of the drawing (Target). 
+Polyline width General This setting specifies the width of the polyline separator. The value is measured in plotting units and scaled appropriately based on the current annotation scale. 
+Setting the Properties of a Callout Tool 
+Use this procedure to set the properties of a callout tool. 
+1 On the Tool Palettes, click 
+(Properties), and click Document. 2 Click the Callouts palette. 3 Select the callout tool for which you want to change properties, 
+right-click, and click Properties. 
+4 Change the properties as necessary. For a description of the available properties, see The Properties of a Callout Tool on page 3656. 
+5 Click OK. 
+Placing Title Marks 
+You can place title marks in a drawing. A title mark can contain fields for information about model space views and sheet views. A title mark cannot be used to create a model space view, but it can be connected to an existing one. This is useful when working with legacy drawings or when annotating drawings at a later stage. You can connect title marks to any type of model space view, like details, sections, and elevations. 
+Placing a Title Mark 
+Use this procedure to place a title mark in a drawing. 
+NOTE The title marks shipped with AutoCAD Architecture contain fields for (model) view number, (model) view title, and (model) viewport scale. To display that information, they need to be associated with a model space view. 
+1 Open the view drawing containing the model space view to which you want to add the title mark. 
+2 On the Tool Palettes, click 
+(Properties), and click Document. 3 Click the Callouts palette. 4 Select a title mark tool. 
+Alternatively you can click Annotate tab . Callouts panel . Title 
+drop-down . Title
+ . 
+5 Select the model space view you want to associate the title mark to. 
+NOTE When you hover over the a model space view, its boundaries are highlighted. 
+6 Click to place the start point of the title mark. 
+7 Click to specify the end point of the title mark. The title mark is inserted with the view fields filled in. If your title mark contains fields for sheet information, the model space view might need to be associated with a sheet before resolving these fields. 
+Title mark 
+
+Placing Detail Callouts 
+You can use callouts to create specific, enlarged views of the building model. Typically, you detail components to a detail to call out items that are not included as part of the building model, like bolts and connectors, or detailed brick hatches. You can also use callouts to generate sections or elevations of an existing section or elevation. For example, you could create a section of the building model, and then create an enlarged detail from part of the section. To that detail, you could then add detail components for the construction document. 
+For more information about detail components, see Detail Components on page 3489. 
+Door head detail example 
+
+Creating a Detail in the Current View Drawing 
+Use this procedure to place a callout that creates a detail in the current view drawing. 
+Viewing building section detail boundary 
+
+1 On the Quick Access toolbar, click Project Navigator
+ . 2 Click the Views tab. 3 Select the view drawing in which you want to place the detail 
+callout, right-click, and click Open. 
+4 On the Tool Palettes, click 
+(Properties), and click Document. 5 Click the Callouts palette. 6 Select a detail callout tool. 
+If you want to … Then … 
+create a callout with a  select one of the detail boundary tools. Auto- 
+detail boundary and a  CAD Architecture provides tools for circular,  
+detail mark  rectangular, and freeform detail boundaries.  
+
+create a callout without  select one of the detail mark tools. AutoCAD  
+a detail boundary  Architecture provides tools for regular detail  
+marks, detail marks with a tail, and detail  
+marks with a sheet number attribute.  
+
+Alternatively, you can click Annotate tab . Callouts panel . 
+
+. Detail Boundary drop-down for callouts with a detail boundary, 
+or Annotate tab . Callouts panel .
+. Detail drop-down for callouts without a detail boundary. 
+7 If you selected a detail boundary tool, specify the extents of the detail boundary. 
+8 Specify the detail leader line, and press ENTER. 
+
+9 Under New Model Space View Name, enter a name for the new model space view containing the detail. 10 If necessary, select Generate Section/Elevation. 11 If you want to add a title mark to the model space view, select Place Titlemark. 12 Select the scale for the model space view. 13 Click Current Drawing. 14 If you selected to create a detail with a section/elevation, specify the insertion point of the 2D section/elevation result. 
+15 If you selected to create a detail without a section/elevation, specify the extents of the model space view containing the area being detailed. 
+The extents of the model space view will dictate the default sheet view size, so if the model space boundary is too small, you may have problems placing annotations in it. 
+Once the model space view has been placed in the drawing, the field placeholders in the callout change to a question mark. To resolve them, the model space view needs to be placed onto a sheet, as described in Resolving Fields in Callout Symbols on page 3689. 
+The model space view is displayed in the Project Navigator under the view drawing in which you have created it. 
+Creating a Detail in an Existing Drawing 
+Use this procedure to place a callout that creates a detail in an existing project view drawing. 
+1 On the Quick Access toolbar, click Project Navigator
+ . 2 Click the Views tab. 3 Select the view drawing in which you want to place the detail 
+callout, right-click, and click Open. 
+4 On the Tool Palettes, click 
+(Properties), and click Document. 5 Click the Callouts palette. 6 Select a detail callout tool: 
+
+If you want to… Then… 
+create a callout with a  select one of the detail boundary tools. Auto- 
+detail boundary and a  CAD Architecture provides tools for circular,  
+detail mark  rectangular, and freeform detail boundaries.  
+
+create a callout without  select one of the detail mark tools. AutoCAD  
+a detail boundary  Architecture provides tools for regular detail  
+marks, detail marks with a tail, and detail  
+marks with a sheet number attribute.  
+
+Alternatively, you can click Annotate tab . Callouts panel . 
+
+. Detail Boundary drop-down for callouts with a detail boundary, 
+or Annotate tab . Callouts panel .
+. Detail drop-down for callouts without a detail boundary. 
+7 If you selected a detail boundary tool, specify the extents of the detail boundary. 
+8 Specify the detail leader line, and press ENTER. 
+9 Under New Model Space View Name, enter a name for the new model space view containing the detail. 
+10 If necessary, select Generate Section/Elevation. 11 If you want to add a title mark to the new model space view, select 
+Place Titlemark. 12 Select the scale for the model space view. 13 Click Existing View Drawing. 
+Select a drawing to place the detail 
+
+14 Select the project view drawing in which to place the model space view, and click OK. 
+15 If you selected to create a detail with a section/elevation, specify the insertion point of the 2D section/elevation result. 
+16 If you selected to create a detail without a section/elevation, specify the extents of the model space view containing the area being detailed. 
+The extents of the model space view will dictate the default sheet view size, so if the model space boundary is too small, you may have problems placing annotations in it. 
+Once the model space view has been placed in the drawing, the field placeholders in the callout change to a question mark. To resolve them, the model space view needs to be placed onto a sheet, as described in Resolving Fields in Callout Symbols on page 3689. 
+17 To display the model space view in the Project Navigator, navigate to the target drawing, and expand it. The model space view is listed under the drawing. 
+For information on opening the model space view, see Opening a Model Space View on page 3688. 
+Creating a Detail in a New Drawing 
+Use this procedure to place a callout that creates a detail in a new project view drawing. 
+You can place each detail in its own detail drawing. The Detail View template set in the project is used to create the new drawing. For more information, see Creating a New Project on page 313. 
+When you create a new drawing for a detail, it contains by default the same constructs, levels, and divisions as the drawing from which the detail is taken. You can change that assignment, if necessary. 
+1 On the Quick Access toolbar, click Project Navigator
+ . 2 Click the Views tab. 3 Select the view drawing in which you want to place a detail 
+callout, right-click, and click Open. 
+4 On the Tool Palettes, click 
+(Properties), and click Document. 5 Click the Callouts palette. 6 Select a detail callout tool: 
+If you want to… Then… 
+create a callout with a  select one of the detail boundary tools. Auto- 
+detail boundary and a  CAD Architecture provides tools for circular,  
+detail mark  rectangular, and freeform detail boundaries.  
+
+create a callout without  select one of the detail mark tools. AutoCAD  
+a detail boundary  Architecture provides tools for regular detail  
+marks, detail marks with a tail, and detail  
+marks with a sheet number attribute.  
+
+Alternatively, you can click Annotate tab . Callouts panel . 
+
+. Detail Boundary drop-down for callouts with a detail boundary, 
+or Annotate tab . Callouts panel .
+. Detail drop-down for callouts without a detail boundary. 
+7 If you selected a detail boundary tool, specify the extents of the detail boundary. 8 Specify the detail leader line, and press ENTER. 9 Under New Model Space View Name, enter a name for the new model space view containing the detail. 10 If necessary, select Generate Section/Elevation. 11 If you want to add a title mark to the new model space view, select Place Titlemark. 12 Select the scale for the model space view. 13 Click New View Drawing. 14 Define the properties of the new view drawing, as described in Creating a New View Drawing on page 439. 
+15 Click Finish. Once the model space view has been placed in the new view drawing, the field placeholders in the callout change to a question mark. To resolve them, the model space view needs to be placed onto a sheet, as described in Resolving Fields in Callout Symbols on page 3689. 
+Placing Section Callouts 
+You can use callouts to create sections of the building model. A section can be used as the basis for a detail, containing information about components such as insulation, materials, and finishes. 
+Viewing a wall section mark 
+
+Creating a Section in the Current Drawing 
+Use this procedure to place a callout that creates a 2D section in the current project view drawing. 
+NOTE The 2D section style and the display set for the model space view containing the section are set in the callout tool. For more information, see Setting the Properties of a Callout Tool on page 3663. 
+1 On the Quick Access toolbar, click Project Navigator
+ . 2 Click the Views tab. 3 Select the view drawing in which you want to place the section 
+callout, right-click, and click Open. 
+4 On the Tool Palettes, click 
+(Properties), and click Document. 5 Click the Callouts palette. 6 Select a section callout tool. 
+For a description of the section callout tools included with the 
+software, see Callout Tools in AutoCAD Architecture on page 3652. Alternatively, you can click Annotate tab . Callouts panel . Sections drop-down, and select one of the section tools. 
+7 In the drawing area, specify the first point of the section line. 
+8 Continue to add points to the section line. When you have finished the shape of the section line, press ENTER. 
+9 Specify the direction of the section mark arrow. 
+
+10 Under New Model Space View Name, enter a name for the new model space view containing the section. 
+11 Verify that Generate Section/Elevation is selected. 
+12 If you want to add a title mark to the new model space view, select Place Titlemark. 
+13 Select the scale for the model space view. 
+14 Click Current Drawing. 
+15 In the drawing area, select the insertion point for the model space view. Once the model space view has been placed, the field placeholders in the section callout change to a question mark. To resolve them, the model space view needs to be placed onto a sheet, as described in Resolving Fields in Callout Symbols on page 3689. 
+Building section view 
+
+Creating a Section in an Existing Drawing 
+Use this procedure to place a callout that creates a 2D section in an existing project view drawing. 
+Sections are often placed into a designated section drawing. Whenever a new section is created, it is added to that drawing. 
+1 On the Quick Access toolbar, click Project Navigator
+ . 2 Click the Views tab. 3 Select the view drawing in which you want to place a section 
+callout, right-click, and click Open. 
+4 On the Tool Palettes, click 
+(Properties), and click Document. 5 Click the Callouts palette. 6 Select a section callout tool. 
+For a description of the section mark tools included with the 
+software, see Callout Tools in AutoCAD Architecture on page 3652. Alternatively, you can click Annotate tab . Callouts panel . Sections drop-down, and select one of the section tools. 
+7 In the drawing area, specify the first point of the section line. 8 Continue to add points to the section line. When you have finished the shape of the section line, press ENTER. 
+9 Specify the direction of the section mark arrow. 
+
+10 Under New Model Space View Name, enter a name for the new model space view containing the section. 
+11 Verify that Generate Section/Elevation is selected. 
+12 If you want to add a title mark to new model space view, select Place Titlemark. 
+13 Select the scale for the model space view. 
+14 Click Existing View Drawing. 
+Select a drawing to place the section 
+
+15 In the Add Model Space View dialog, select the project view drawing in which the model space view should be placed, and click OK. 
+16 In the drawing area, select the insertion point of the generated section. 
+NOTE Although you select the insertion point in the current drawing, it will be used in the target drawing where the section result is placed. That way, you have control over the insertion point of the 2D section without opening the target drawing. You can change the location of the 2D section later, when you open the drawing in which the 2D section was placed, and change it there. 
+Once the model space view has been placed, the field placeholders in the section callout change to a question mark. To resolve them, the model space view needs to be placed onto a sheet, as described in Resolving Fields in Callout Symbols on page 3689. 
+17 To display the section view in the Project Navigator, navigate to the target drawing, and expand it. The model space view is listed under the drawing. 
+For information on opening the model space view, see Opening a Model Space View on page 3688. 
+Creating a Section in a New Drawing 
+Use this procedure to place a callout that creates a 2D section in a new project view drawing. 
+When you create a section view in a new drawing, the building model is referenced into the new drawing. A 2D section is based on the geometry of the objects cut by the section line. If you place a callout in your First Floor Plan view drawing, and create a 2D section in that drawing, then the section will only contain the first floor geometry - only those building model objects that are present either as drawing objects or external references it the current drawing. When you create a new section view drawing for the 2D section, you can control which levels, divisions, and constructs are included in the section. This affords you enhanced control over what objects will be included in the section. You could, for example, deselect the Furniture construct from the First Floor Plan view drawing, to avoid cluttering up the section with unnecessary building components. In the same way, you can add constructs, levels or divisions not present in the current view drawing, for example, to create background graphics. 
+Floor plan (top) and building section (bottom) 
+
+1 On the Quick Access toolbar, click Project Navigator
+ . 2 Click the Views tab. 
+3 Select the view drawing in which you want to place a section callout, right-click, and click Open. 
+4 On the Tool Palettes, click 
+(Properties), and click Document. 5 Click the Callouts palette. 6 Select a section mark tool. 
+For a description of the section mark tools provided with the 
+software, see Callout Tools in AutoCAD Architecture on page 3652. Alternatively, you can click Annotate tab . Callouts panel . Sections drop-down, and select one of the section tools. 
+7 In the drawing area, specify the first point of the section line. 8 Continue to add points to the section line. When you have finished the shape of the section line, press ENTER. 9 Specify the direction of the section mark arrow. 10 Under New Model Space View Name, enter a name for the new 
+model space view containing the section. 11 Verify that Generate Section/Elevation is selected. 12 If you want to add a title mark to the new model space view, select 
+Place Titlemark. 13 Select the scale for the model space view. 14 Define the properties of the new view drawing, as described in 
+Creating a New View Drawing on page 439. 
+NOTE By default, all constructs, levels, and divisions are preselected here. 
+15 Click Finish. 
+16 In the drawing area, select the insertion point of the generated section. 
+NOTE Although you select the insertion point in the current drawing, it will be used in the target drawing where the section result is placed. That way, you have control over the insertion point of the 2D section without opening the target drawing. You can change the location of the 2D section later, when you open the drawing in which the 2D section was placed, and change it there. 
+Once the model space view has been placed in the new view drawing, the field placeholders in the section callout change to 
+

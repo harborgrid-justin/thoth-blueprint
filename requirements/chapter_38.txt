@@ -1,0 +1,905 @@
+[MIGRATED TO RTM_PART_34.md - MULTI-VIEW BLOCKS & SURVEY SYMBOLS]
+
+If you want to… Then… 
+Browser
+ . Locate the multi-view block tool you want to copy, then 
+click the 
+icon associated with the tool and drag it to the tool palette in the workspace. 
+copy a tool on the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool  open the other tool palette, right- 
+palette  click the tool, and click Copy. Re­ 
+open the palette where you want  
+to add the tool, right-click, and click  
+Paste.  
+
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. This description is used as the tool’s tooltip on the tool palette, and to describe the tool if it is stored in a tool catalog. 
+6 Expand Basic, and expand General. 
+7 Click 
+next to Description to enter a description of the tool. 
+8 If you do not want to use the default layer key for multi-view 
+blocks, click 
+ next to Layer key to select a layer key. 9 If you want to override the default layer name for multi-view 
+blocks, click 
+next to Layer overrides to select a layer override. 
+10 Select a multi-view block definition. 
+11 For Style location, select the drawing file containing the definition 
+used for this multi-view block, or select Browse and use a standard file selection dialog box to select the file. 
+12 Under Bound Spaces, define if this multi-view block tool can be used as a bounding object for associative spaces. 
+You can select three options here: 
+¦ 
+Yes: this multi-view block tool can be used as bounding object for associative spaces. 
+
+¦ 
+No: this multi-view block tool cannot be used as bounding object for associative spaces. 
+
+¦ 
+By style: this multi-view block tool will use the bounding settings from the multi-view block definition. 
+
+
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+13 Expand Scale. 14 Specify the scale of the multi-view block: 
+If you want to… Then… 
+specify fixed values for the scale select No for Specify scale on screen, and enter X, Y, and Z values for the scale. 
+allow users to specify the scale of select Yes for Specify scale on the object upon insertion screen. 
+15 Expand Location. 16 Specify the rotation of the multi-view block: 
+If you want to… Then… 
+specify a fixed value for the rotation select No for Specify rotation on screen, and enter a value for Rota­tion. 
+allow users to specify the rotation select Yes for Specify rotation on of the object upon insertion screen. 
+17 Expand Advanced. 
+18 Click 
+ next to Insertion offsets, and enter X, Y, and Z offsets for each view block in the multi-view block, as necessary. 
+19 Click OK. 
+20 Click 
+next to Attributes, and edit the prompt and value of each attribute, as necessary. 
+21 Click OK twice. 
+Adding Multi-View Blocks to a Drawing 
+Multi-view blocks are inserted in a drawing by referencing their definitions in one or more of the following locations: 
+¦ 
+DesignCenter™ 
+
+¦ 
+Tool palettes 
+
+¦ 
+Tool catalogs 
+
+
+Predefined multi-view blocks supplied with AutoCAD Architecture are available with DesignCenter. These blocks represent items such as furniture, electrical appliances, pipes, ducts, annotation symbols, and schedule tags. 
+A generic multi-view block reference tool is supplied in the AutoCAD Architecture Stock Tool catalog. This tool is in the Helper Tools category. 
+How you access a custom multi-view block definition—for example, blocks that you or someone else in your organization defined—depends on what you do with the block after you define it. You can use the multi-view block definition to create AEC content in DesignCenter, or to create a multi-view block tool that can be stored in a tool palette or tool catalog. 
+When you insert a multi-view block reference in a drawing, you are prompted to specify the insertion point for the block. Depending on how the multi-view block was defined, you may be prompted to specify rotation angle and scale values. 
+Inserting a Multi-View Block 
+Use this procedure to add a multi-view block to a drawing. 
+1 Find the multi-view block definition and begin the insertion process: 
+If the multi-view block is… Then… 
+stored as AEC content click Insert tab . Content pan­el . Content Browser drop-
+If the multi-view block is… Then… 
+down . Design Center
+ . Loc­ate the AEC content, and double-click the content. 
+inserted using a tool on a tool open the tool palette containing palette the multi-view block tool, and click the tool. 
+inserted using a tool stored in a tool  click Home tab . Build pan- 
+catalog  el . Tools drop-down . Content  
+Browser  . Locate the tool, click  
+the  icon for the tool, and drag  
+it to the drawing area.  
+
+2 Specify the insertion point for the block. If you added insertion points to the view blocks, you can cycle through the points with the CTRL key. 3 Specify the scale, if prompted: 
+If you want to… Then… 
+specify a scale value enter a value at the Command prompt. 
+dynamically set the scale use the pointing device, and click when you see the appropriate scale. 
+set the scale to match that of anoth-enter m (match) at the Command er multi-view block in the drawing prompt, and select a multi-view block to match the scale. 
+4 Specify the rotation angle, if prompted: 
+If you want to… Then… 
+specify a rotation value enter a value at the Command prompt. 
+If you want to… Then… 
+dynamically set the rotation use the pointing device, and click when you see the appropriate rota­tion. 
+set the rotation to match that of enter m (match) at the Command another multi-view block in the prompt, and select a multi-view drawing block to match the rotation. 
+5 To insert additional references to the multi-view block, continue from step 2. 
+6 Press ENTER to finish inserting blocks. 
+Modifying Multi-View Blocks 
+You can change the attributes of a multi-view block in a drawing. For example, you can change the rotation or the scaling factor. 
+Changing the Rotation of a Multi-View Block 
+Use this procedure to change the rotation of a multi-view block. 
+1 Double-click the multi-view block whose rotation you want to change. 
+2 On the Properties palette, expand Basic, and expand Location. 
+3 Enter a value for Rotation. 
+Changing the Associated Multi-View Block Definition 
+Use this procedure to change the multi-view block definition associated to the multi-view block. For information about the relationship between multi-view blocks and multi-view block definitions, see Creating Multi-View Block Definitions on page 2856. 
+1 Double-click the multi-view block you want to change. 2 On the Properties palette, expand Basic, and expand General. 3 Click Definition, and select a new multi-view block definition for 
+the multi-view block. 
+Changing the Scale Factor of a Multi-View Block 
+Use this procedure to change the scale factor of a multi-view block. 1 Double-click the multi-view block you want to change. 2 On the Properties palette, expand Basic, and expand Scale. 3 Change the scale factor as needed: 
+If you want to… Then… 
+change the X scale factor enter a new value for X. 
+change the Y scale factor enter a new value for Y. 
+change the Z scale factor enter a new value for Z. 
+Changing the Offset of a Multi-View Block Using Grips 
+Use this procedure to change the offset of a multi-view block using the Location grip. 
+When you first add a multi-view block to a drawing, the offset value is set to 
+0. You can change the position of the multi-view block by offsetting it from its original insertion point. You can also change the offset of a multi-view block using the Properties palette. 
+1 Select the multi-view block you want to change. 
+2 Click Multi-View Block tab . Modify panel . Edit View Block Offsets. 
+3 Select the view block to change. 
+
+In Model view, the Location grip has three possible edit modes: Edit Along XY Plane, Edit Along XZ Plane, and Edit Along ZX Plane. Press CTRL to cycle among modes until you are in the desired mode. The default edit mode is along the XY plane. In Plan view, the Location grip is restricted to movement in one plane. 
+4 Offset the multi-view block to the desired location and click once, 
+or enter a value and press ENTER. If you want to enter a specific value for the second direction in any edit mode (for example, in the Y direction when editing along the XY plane), press TAB to cycle to the second direction. 
+You can also lock the movement of the multi-view block along a specific direction. If you enter a value for either dimension direction in the current edit mode, and then press TAB, the movement of the multi-view block is constrained to the second dimension direction. When editing along the XY plane, for example, you can enter a value for X dimension, and then press TAB. The X dimension is locked at that value, and movement of the multi-view block is constrained to the Y dimension direction. 
+5 Click Multi-View Block tab . Modify panel . Edit View Block Offsets to exit view block offset editing mode. 
+
+The selected view block is offset from the original insertion point. 
+Changing the Location of a Multi-View Block Using Grips 
+Use this procedure to relocate an existing multi-view block using the Location grip. In Model view, the Location grip has three possible edit modes: Edit Along Object’s XY Plane, Edit Along Object’s YZ Plane, and Edit Along Object’s XZ Plane. Press CTRL to cycle among modes until you are in the desired mode. 
+The default edit mode is along the XY plane. In Plan view, the Location grip is restricted to movement in one plane. 
+You can also change the location of a multi-view block using the Properties palette. 
+1 Select the multi-view block you want to relocate. 2 Select the Location grip. 
+
+3 Move the multi-view block to the desired location and click once, 
+or enter a value and press ENTER. If you want to enter a specific value for the second direction in any edit mode (for example, in the Y direction when editing along the XY plane), press TAB to cycle to the second direction. 
+You can also lock the movement of the multi-view block along a specific direction. If you enter a value for either dimension direction in the current edit mode, and then press TAB, the movement of the multi-view block is constrained to the second dimension direction. When editing along the XY plane, for example, you can enter a value for X dimension, and then press TAB. The X dimension is locked at that value, and movement of the multi-view block is constrained to the Y dimension direction. 
+
+4 Right-click, and click Deselect All to turn off grips. 
+Attaching Hyperlinks, Notes, or Files to a Multi-View Block 
+Use this procedure to attach hyperlinks, enter notes, or attach reference files to a multi-view block in a drawing. You can also edit notes and edit or detach reference files from a multi-view block. 
+1 Double-click the multi-view block to which you want to attach information. 
+2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click 
+next to Hyperlink, and specify the 
+link. For more information about adding hyperlinks, see “Add Hyperlinks to a Drawing” in AutoCAD Help. 
+4 To add or edit a note, click 
+next to Notes, enter text, and click OK. 
+5 To attach, detach, or edit a reference file, Click 
+next to Reference documents: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+If you want to… Then… 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+Editing the Location and Rotation of Attributes in a Multi-View Block 
+Use this procedure to change the location and rotation of attributes within a multi-view block. 
+NOTE The location and rotation of an attribute in a multi-view block can only be modified if the attributes have not been inserted with the Lock position in block option selected during attribute creation. For more information, see “Attribute Definition Dialog Box” in AutoCAD Help. 
+Rotating a tag attribute in Plan view 
+
+1 Select the multi-view block whose attributes you want to edit. 
+2 Click Multi-View Block tab . Modify panel . Edit Attributes. Each attribute has a grip for location and for rotation. 
+In Model view, the Location grip has three possible edit modes: Edit Along Object’s XY Plane, Edit Along Object’s YZ Plane, and Edit Along Object’s XZ Plane. Press CTRL to cycle among modes until you are in the desired mode. The default edit mode is along the XY plane. In Plan view, the Location grip is restricted to movement in one plane. 
+If there is more than one attribute with the same offset value, the attribute location grips reposition themselves according to their priority over other offset grips. 
+3 To change the location of an attribute relative to the multi-view block, select the Location grip, move the block attribute to the desired location and click once, or enter a value and press ENTER. 
+If you want to enter a specific value for the second direction in any edit mode (for example, in the Y direction when editing along the XY plane), press TAB to cycle to the second direction. 
+You can also lock the movement of the block attribute along a specific direction. If you enter a value for either dimension direction in the current edit mode, and then press TAB, the movement of the block attribute is constrained to the second dimension direction. When editing along the XY plane, for example, you can enter a value for X dimension, and then press TAB. The X dimension is locked at that value, and movement of the block attribute is constrained to the Y dimension direction. 
+4 To change the rotation of an attribute relative to the multi-view block, select the Rotation grip, rotate the block attribute to the desired angle and click once, or enter a value and press ENTER. 
+5 To exit the attribute editing mode, right-click, and click Exit Edit Attribute Orientations. Alternatively, you can deselect the multi-view block. 
+Updating Multi-View Block Attributes 
+Use this procedure to update the attributes of blocks in your drawing, using the current attributes defined for the view blocks upon which each multi-view block is based. You need to do this if you change attribute definitions in one or more of the block definitions on which the multi-view block is based. 
+1 Select the multi-view block. 
+2 Click Multi-View Block tab . Modify panel . Update
+ . 
+3 Enter y (Yes) to include text style properties (for example, width factor, oblique, mirroring) when updating attributes, or n (No) to update all attributes properties except those relating to text style. 
+4 Press ENTER to end the update process. 
+Documentation 
+Spaces 
+39 
+Spaces are 2-dimensional or 3-dimensional style-based architectural objects that contain spatial information about a building, including floor area, wall area, volume, surface information, and more. Spaces can be used for organizing reports such as statements of probable construction cost, energy requirements and analysis, leasing documents, operating costs and fixtures, and lists of furniture and equipment. 
+Space Types 
+The following types of spaces can be modeled in AutoCAD Architecture: 
+Associative and Non-Associative Spaces 
+Associative spaces are generated from boundary objects. When the boundary objects change, the space updates accordingly. 
+In addition to associative spaces you can also create non-associative spaces with user-defined geometry. A non-associative space can stand alone in the drawing, but you can use it to generate calculations just like you would use an associative space. 
+Non-associative spaces can be connected to boundary objects after their creation; similarly, associative spaces can be disconnected from their boundary objects. 
+2D Spaces 
+2D spaces display spatial information in 2 plan dimensions. 
+2D spaces in Plan view 
+
+The Z direction is by default set to 0 and ignored during creating, editing, and scheduling the space. 2D spaces can be rectangular or polygonal. 2D spaces can either be non-associative or associative. A 2D space can be bounded by 3D objects and linework. 2D spaces are typically used for Plan views, where 3D information is not needed. 
+Extruded 3D Spaces 
+An extruded 3D space is similar to a 2D space, but has a user-defined extrusion height. Extruded spaces are useful for regularly shaped 3D spaces like uniform-height rooms in a building. Extruded spaces can have floor and ceiling components and space above the ceiling and below the floor. The space above the ceiling is often used to place ductwork, cables and electrical installations in a room. 
+Space height components 
+
+Space ceiling and floor components 
+
+Extruded 3D spaces can be associative to 3D objects and linework, but they are bounded only in the X and Y directions. The Z direction is defined by the extrusion height. If you need a space that is fully bounded by objects in all 3 spatial dimensions, you need to generate a 3D freeform space. 
+Additional space dimension components 
+
+3D Freeform Spaces 
+3D freeform spaces are generated from boundary objects, like walls and slabs, and are associative to them. Associative 3D freeform spaces must be bounded in all directions to form a valid boundary shape. A 3D freeform space is a complex 3D geometry with any number of surfaces needed to generate the space shape. 
+Some examples for 3D freeform spaces 
+
+Workflows for Spaces 
+Workflow for Generating Associative Spaces 
+Associative spaces are generated from building geometry in the drawing and are updated if it changes. Updates can be triggered automatically or manually. 
+
+Use walls on page 1147 or other building objects to create the floor plan. If you are working in a structured AutoCAD Architecture project, open a construct on page 396 from the Project Navigator. 
+
+Select a space tool on page 2903 to generate a space. You can specify that a tag is added as the space is created on the Properties palette on page 2897. 
+Specify Generate on page 2916 on the Properties palette, and then specify a point within bounding geometry, or type G to generate spaces within all valid on page 2905 boundaries. If you change your bounding geometry and the space does not update, check the space settings on page 2928. 
+
+Workflow for Manually Defining Net, Usable, and Gross Areas 
+Spaces can have separate boundaries for the base area, net area, usable area, and gross area of the space. These can be defined manually. 
+If you want to use a predefined area calculation standard, see Workflow for Determining Net, Usable, and Gross Areas With a Calculation Standard on page 2885. 
+Use walls on page 1147 or other building objects to create the floor plan. If you are working in a structured AutoCAD Architecture project, open a construct on page 396 from the Project Navigator. 
+
+
+Use a space tool on page 2903 to create the space. 
+
+Use grips on page 2981 on the space boundaries to manually on page 2969 define the net, usable, and gross areas of the spaces. 
+Workflow for Determining Net, Usable, and Gross Areas With a Calculation Standard 
+Spaces can have separate boundaries for the base area, net area, usable area, and gross area of the space. AutoCAD Architecture includes standards based on the rules of DIN 277 (Germany), BOMA (United States), and SIS (Sweden). 
+If you want to define these manually, see Workflow for Manually Defining Net, Usable, and Gross Areas on page 2884. 
+
+Use walls on page 1147 or other building objects to create the floor plan. If you are working in a structured AutoCAD Architecture project, open a construct on page 396 from the Project Navigator. 
+
+
+Use a tool on page 2903 to create the space. 
+Use a calculation standard on page 2974. 
+Classify on page 2976 spaces if required by the selected area calculation standard. 
+Workflow for Creating a Space Evaluation Report 
+After creating spaces and zones in your floor plan, you can generate a space evaluation report. 
+
+Generate the spaces and zones you need for the space evaluation with a tool on page 2903. 
+Attach calculation modifiers on page 3127 as necessary. 
+Specify on page 3141 how the space evaluation information displays. 
+
+Generate on page 3149 the evaluation file either as Microsoft® Excel spreadsheet or a text (TXT) document. 
+
+Adjusting Space Calculations 
+Spaces are a powerful tool to create any type of room-based object, schedule it and create calculations for it. The following sections outline some main features associated with spaces in AutoCAD Architecture. 
+Working with List Definitions - Overview 
+List definitions are named lists for spaces and zones. You can attach a list definition to a space style or to a zone style to ensure that all spaces or zones inserted with that style use names from the list. List definitions can be created for a number of purposes, for example to enforce consistent naming of spaces according to a building standard. 
+1 Create a list definition in Style Manager, as described in List Definitions on page 3073. 
+
+2 Attach the list definition to a space or zone style, as described in Attaching a List Definition to a Space Style on page 3061 and Attaching a List Definition to a Zone Style on page 3104. 
+3 Add a space or zone to the drawing, and select a name from the list. 
+
+Working with Zones - Overview 
+Zones are objects that can be used to group spaces. Zones can have spaces attached to them and can contain other zones in an hierarchical structure. For example, you can create a zone called Office Building with sub-zones for the individual offices in the building. Each workplace within an office can be represented by a space. 
+Zones in a building 
+
+1 Create a zone style in Style Manager, as described in Creating a Zone Style on page 3103. 
+2 If you have a zone structure that you want to use again because it represents a standard, create a zone template, as described in Creating a Zone Template on page 3115. 
+Zones based on DIN277 template 
+
+3 Add a zone or zone template to the drawing. 
+4 If necessary, attach calculation modifiers to the zone. A calculation modifier attached to a zone is used for all spaces and zones attached to the zone. 
+5 Attach spaces or other zones to the zone, as described in Attaching Spaces and Zones to Zones on page 3091. 
+Zone with attached subzones and spaces 
+
+Working with Calculation Modifiers - Overview 
+A calculation modifier is a value or formula you can add to the area and perimeter values of each boundary of a space to modify values for certain calculations. For example, you can specify a 3% plaster deduction for all interior walls, or calculate a balcony at only 50% of its square meters for renting. 
+1 In Style Manager, create a new calculation modifier style, as described in Creating a Calculation Modifier Style on page 3129. 
+2 Define a formula with which to calculate the value of the base area or base perimeter of the space. 
+
+3 Add the calculation modifier to a space or to a zone, as described in Adding and Removing Calculation Modifiers for Spaces on page 3128 and Changing Calculation Modifiers for a Zone on page 3096. 
+
+4 To apply the modifier to the net, usable, and gross boundaries of a space, create and apply a property set definition that contains properties for the calculated area and perimeter values of the net, usable and gross boundaries. For more information, see Property Set Definitions on page 3785. 
+5 Use the modified values in a schedule table or in a space evaluation. For more information, see Basic Schedules on page 3709 and Space Evaluation on page 3140. 
+Working with Calculation Cut Planes - Overview 
+If you are working with 3D freeform spaces, you can calculate their area at 2 different cut plane heights. This is useful for attics, where different heights are calculated differently. 
+
+1 Create a 3D freeform space, as described in Generating an Associative Space on page 2916 or Converting Mass Elements to Spaces on page 2951. 
+2 Define the calculation cut planes of the space, as described in Setting Calculation Cut Planes for 3D Freeform Spaces on page 3133. 
+
+3 Define the display properties for the 2 calculation cut planes and the cut plane hatches, as described in Specifying the Display Properties of a Space Style on page 3065. 
+4 Generate and apply a property set definition with automatic properties for calculation cut planes. Then create a schedule table with the calculated cut plane values. For more information, see Basic Schedules on page 3709. 
+Moving Forward to AutoCAD Architecture 2011 from Autodesk Architectural Desktop 2006 and Earlier 
+If you are transitioning from Autodesk Architectural Desktop 2006 or earlier to AutoCAD Architecture, you will see a number of changes in the space planning features. In AutoCAD Architecture, spaces, areas, and space boundaries have been unified into one space object which contains the properties formerly associated with these other objects, as well as new and enhanced features designed to provide a comprehensive solution for spatial design within the building model. 
+The table below maps objects from earlier releases to their newer counterparts. 
+Prior Releases AutoCAD Architecture 2011 
+Spaces Spaces 
+Space boundaries Spaces 
+Areas Spaces 
+Area groups Zones 
+Area name definitions List definitions 
+Area group templates Zone templates 
+Area evaluation Space evaluation 
+Spaces 
+Spaces now contain the properties associated with spaces and areas prior to AutoCAD Architecture 2011, as well as engineering properties for working in AutoCAD MEP. Spaces can be associatively generated as 3D freeform objects, as extruded 3D spaces, or as 2D spaces. A space can have different boundaries for base area, net area, usable area, and gross area. Spaces can be grouped into zones and processed in space evaluations. 
+Space Boundaries 
+Space boundaries are now part of the space object, and not separate objects as they were prior to AutoCAD Architecture 2011. A space has a base boundary, net boundary, usable boundary, and a gross boundary. Space boundaries created in previous versions will be converted to walls when the drawing that contains them is opened in the current version of the software. Managed spaces will be converted to associative spaces. Space boundaries include a number of scheduling properties. 
+For information about converting space boundaries to walls and spaces, see Conversion of Space Boundaries to Walls and Spaces on page 3160. 
+Space boundaries 
+
+Areas 
+Areas have been integrated into spaces, which now include the properties formerly specific to areas. Among the area-specific features are the decomposition view, name definitions, calculation modifiers, and space evaluation. When you open a drawing that contains areas, the areas are automatically converted to spaces, with all area properties being converted to the corresponding space properties. For new properties, default values are used. Area tools are no longer needed and are omitted. 
+For information about converting areas to spaces, see Auto-Converting Legacy Areas to Spaces on page 2895. 
+Area Groups and Zones 
+Area groups have been converted to zones. When you open a drawing that contains area groups, the area groups are automatically converted to zones, with all area group properties being converted to the corresponding zone properties. For new properties, default values are used. Area group tools are no longer needed and are omitted. 
+Zones are a new object and serve as a grouping mechanism for spaces. Zones can be created to group spaces according to function, location, or any user-defined system. You can attach specific calculation modifiers and schedule properties to a zone. You can also build hierarchical zone structures that represent the structure of your building, a space categorization standard, or any user-defined grouping structure. 
+For information about converting area groups to zones, see Converting Area Groups to Zones on page 3089. 
+Area Name Definitions and List Definitions 
+Area name definitions have been converted to list definitions. A list definition is a list of names that can be assigned to a space or zone style to ensure consistent naming of spaces and zones across a project. For example, a list definition could contain entries for bedroom, living room, bathroom, and so on. When you open a drawing that contains area name definitions associated with an area or area group, the area name definition is automatically converted to a list definition. You can assign the list definition to the converted space or zone through its style. 
+Area Group Templates and Zone Templates 
+Area group templates have been converted to zone templates, which provide structure definitions for zone hierarchies. You define a zone template with a set of subzones and content restrictions, and use it to create the zone structure in the drawing. When you open a drawing that contains area group templates, the area group templates are automatically converted to zone templates. 
+Area Evaluation and Space Evaluation 
+The area evaluation feature has been converted to the space evaluation feature. Space evaluation is a documentation feature that calculates the area and perimeter information for your finished floor plan. This information is displayed in a separate file that you export from AutoCAD Architecture to a spreadsheet or text processing application. Evaluation templates ensure that the information is displayed in a consistent, structured way. Architects need the space evaluation feature for submitting floor plans to the building authorities and customers. Space evaluation can also be used for performing cost estimates, assigning jobs to contractors, or organizing the facility management of buildings. 
+Auto-Converting Legacy Areas to Spaces 
+If you have legacy drawings created in previous versions, and they contain area objects, these areas will automatically be converted to spaces when you open the drawing with the current software. The following table maps area properties to space properties. 
+Area property Space property Value/Default value 
+Name Name Existing value 
+Description Description Existing value 
+Area property Space property Value/Default value 
+Layer Layer Existing layer (A-Area-G) 
+Style Style 
+Area style is converted to space style. Properties are matched where possible; new properties have default values. For more in­formation, see Converting Area Styles to Space Styles on page 3072. 
+Calculation modifiers Calculation modifiers Existing modifiers 
+NOTE By default, converted cal­culation modifiers are applied only to the base area and base perimeter of the space. 
+N/A Geometry 2D 
+Base Area Base Area Existing value 
+Calculated Area Calculated Area Existing value 
+Base Perimeter Base Perimeter Existing value 
+Calculated Perimeter Calculated perimeter Existing value 
+Rotation Rotation Existing value 
+Elevation Elevation Existing value 
+Additional Information Additional Information Existing values (Location) (Location) 
+N/A Length Existing value 
+N/A Width Existing value 
+NOTE Subtracted areas and hatches will be ignored when converting a legacy area from Autodesk Architectural Desktop 2006 or earlier to a space in AutoCAD Architecture. If necessary, you can re-subtract any void portions, as described in Creating Holes in Extruded 3D Spaces on page 3005. 
+If the legacy area has no override for display properties at the style level, then one will be created on the migrated space to mimic the drawing default display properties of the legacy areas. This is intended to preserve visual fidelity for legacy areas that do not have display property overrides. Existing style or object display property overrides on legacy areas will carry forward to the migrated spaces. 
+Previous versions of the software allowed users to create areas that self-intersect. Spaces cannot self-intersect. During migration, a self-intersecting area is converted into a self-intersecting space, and a solution tip displays, advising you to grip-edit the base boundary to remove the self-intersection. For more information on grip-editing, see Grip-Editing Space Boundaries on page 2981. 
+Space Properties 
+The properties of space objects are illustrated and described below. Note that some properties are limited to specific space types. For example, a 2D space does not have any height properties. 
+Property Space Type Description 
+General Category 
+Description All User-defined description of the space. 
+Layer All Specifies the layer on which the space is placed. By default the layer assignment is defined in the space style. 
+Style All Specifies the space style. The style defined in the space tool is the default. 
+Name All The name of the space. If a list definition has been specified in the space style, the defined list of names is available as a drop-down list. For more information, see Attaching a List Definition to a Space Style on page 3061. 
+Property Space Type Description 
+Tag  All (only avail- Specifies a space tag to be inserted when  
+able during  adding the space. Space tags are available in  
+space add  the sample drawings shipped with the soft- 
+and in tool  ware. You can also create your own space  
+properties)  tags.  
+
+Associative All Indicates whether the space is associative. The geometry of an associative space is dependent on its boundary objects. You can disconnect the associativity of a space after adding it. 
+Offset Boundaries All 
+NOTE If you insert a non-associative space, the Associative field reads No and is read-only. To change the space associativity, see Making a Space Associative or Non-Associative on page 2936. 
+Specifies the calculation type by which the 4 space boundaries (base boundary, net boundary, usable boundary, and gross boundary) are calculated. 
+¦ 
+Manual: you use the grips on the individu­al boundaries to generate offsets between the individual boundaries. 
+
+¦ 
+By Style: you define the boundaries by defining offsets between them in the space style. 
+
+¦ 
+By Standard <Standard Name>: the space boundaries and their offsets from each other are determined by the area calcula­tion standard listed. For more information, see Specifying an Area Calculation Standard for a Drawing on page 2974. 
+
+
+Calculation Modifiers All Identifies any calculation modifiers for the space. A calculation modifier is a formula that modifies area and perimeter values of the boundaries of the space. 
+Property Space Type Description 
+NOTE To apply the modifier to the net, us­able, and gross boundaries of a space, you need to create and apply a property set definition that contains properties for the calculated area and perimeter values for those 3 boundaries. For more information, see Schedule Properties of Spaces on page 3121. 
+Space/Zone Manager All Accesses the Space/Zone Manager worksheet, in which you enter information used to pro­cess spaces in engineering applications. For more information, see Editing Space Surface Properties on page 3025. 
+Create Type Non-Associat­ive Spaces (only available during adding a space and in tool proper­ties) Specifies the type of space to be created: 
+¦ 
+Insert: inserts a space according to the target dimension settings in the space style. For information on setting target dimensions of a space in the space style, see Specifying Target Dimensions for the Space on page 3059. 
+
+¦ 
+Rectangle: lets you create a rectangular space with user-defined dimensions. 
+
+¦ 
+Polygon: lets you create a space com­posed of user-defined line and arc seg­ments. 
+
+¦ 
+Generate: lets you generate a space from boundary objects. The space is associative to the boundary objects. 
+
+
+Segment type  Non-associat- Specifies whether the individual segments of  
+ive polygonal  a polygonal space are lines or arcs.  
+spaces (only  
+available dur­ 
+ing adding a  
+space and in  
+tool proper­ 
+ties)  
+
+Property Space Type Description 
+Generate Space Cat- Associative  
+egory  spaces (only  
+available dur­ 
+ing adding a  
+space and in  
+tool proper­ 
+ties)  
+
+Allow overlapping  Specifies whether you can generate spaces  
+spaces  from boundary objects that already contain  
+a space. By default, this setting is set to No.  
+
+Component Dimen­sions Category 
+Geometry Type All 
+Specifies the geometry type of the space to be created: 
+¦ 
+2D: creates a 2D space. 
+
+¦ 
+Extrusion: creates a 3D space with a height extruded from the 2D geometry. Extruded 3D spaces have floor and ceiling components and can have room above the ceiling and below the floor. 
+
+¦ 
+Freeform: creates a 3D freeform space. A 3D freeform space can be generated from boundary objects or be converted from a mass element shape. 
+
+
+Overall Space Height 3D spaces Specifies the overall height of the space, in­cluding floor to ceiling height, floor thickness, ceiling thickness, space above ceiling, and space below floor. 
+NOTE This value is read-only for 3D freeform spaces. 
+Property Space Type Description 
+Ceiling height 3D spaces Specifies the ceiling height of the space. 
+NOTE This height is calculated from the top of the floor to the bottom of the ceiling. You can define additional floor and ceiling thick­ness. 
+Floor thickness 3D spaces Specifies the thickness of the floor. If the floor thickness is set to 0, no floor is displayed. 
+Ceiling thickness 3D spaces Specifies the thickness of the ceiling. If the ceiling thickness is set to 0, no ceiling is displayed. 
+Height above ceiling 3D spaces Specifies the distance between the top of the space ceiling to the top of the space. 
+Height below floor 3D spaces Specifies the distance between the bottom of the space floor and the bottom of the space. 
+Default surface height 3D spaces Specifies the combined height of ceiling height, ceiling thickness, and height above ceiling. 
+Justification Extruded 3D spaces 
+Actual Dimensions Category 
+Specifies the relative vertical position of the space insertion point on the space as one of the following: 
+¦ 
+Top of floor 
+
+¦ 
+Bottom of floor 
+
+¦ 
+Bottom of space below floor (available only if the height of the space below the floor is greater than 0.) 
+
+
+3D freeform spaces are always justified to the top of floor. 
+Length All Specifies the length of the space. 
+Property Space Type Description 
+Width All Specifies the width of the space. 
+Base area All Displays the base area of the space. When inserting a space based on target dimen­sions, you can enter a base area value if you have not chosen to constrain the area. 
+Base Perimeter All Displays the base perimeter of the space. 
+Base Volume 3D spaces Displays the base volume of the space. 
+Advanced Dimen­sions 
+Calculation Plane 1 +  3D freeform  Specifies the height for calculating the areas  
+2 Height  spaces  of a 3D freeform space on 2 different calcula­ 
+tion planes. This would be useful to calculate  
+the rentable area of a room directly under the  
+roof at 2 different room heights.  
+
+Target Dimensions 
+Target area  Non-associat- Displays the target area defined in the space  
+ive spaces  style.  
+based on tar­ 
+get dimen­ 
+sions  
+
+Maximum area  Non-associat- Displays the maximum area defined in the  
+ive spaces  space style.  
+based on tar­ 
+get dimen­ 
+sions  
+
+Minimum area  Non-associat- Displays the minimum area defined in the  
+ive spaces  space style.  
+based on tar­ 
+get dimen­ 
+sions  
+
+Location 
+Property Space Type Description 
+Rotation Non-associat-Specifies the rotation of the space. ive spaces 
+Elevation Non-associat-Specifies the elevation of the space. ive spaces 
+Additional Information Non-associat-Specifies the location and coordinate system ive spaces of the space. 
+In addition to these object properties there are a number of schedule properties that can be attached and calculated for a space. For a full list, see Schedule Properties of Spaces on page 3121. 
+Using Space Tools to Create Spaces 
+Tools provided with AutoCAD Architecture let you quickly place spaces by selecting a space tool with a specific space style and other predefined properties. You can use the tool with its default settings, or you can change any properties that are not controlled by the style. You can also use space tools to create new spaces by applying tool properties to existing objects. 
+Tool palette containing space tools 
+
+The default tool palettes in the workspace contain space tools that you can use and customize as needed. In addition, the following catalogs provided with the software contain space tools that you can add to your tool palettes: 
+¦ Stock Tool catalog 
+¦ 
+Sample Palette catalog 
+
+¦ 
+Design Tool catalog 
+
+
+For more information on accessing tools in these catalogs, see Content Browser on page 137. 
+Custom palettes created by your CAD manager or other users may also contain space tools with space styles and properties that are customized for your projects or office standards. 
+Generating Associative Spaces 
+Associative spaces are bounded by objects that define the space area. If the boundary objects change, the space inside them is updated, too. You will typically work with associative spaces when entering the documentation phase of the project. 
+Geometry Types of Associative Spaces 
+Associative spaces can be 2D spaces, extruded 3D spaces, or 3D freeform spaces. An associative 2D or extruded 3D space is associative only to the objects in the X and Y direction of the floor plan. The height is either 0 or a user-defined extrusion height. A 3D freeform space is associative to the objects bounding it in all 3 spatial dimensions. 
+Spaces can be associative to many 3D and linework objects. For a listing of valid boundary objects, see Valid Boundary Objects for Associative Spaces on page 2905. 
+External References 
+A space can be associative to boundary objects in external references. If the boundary objects in the external reference change, the space in the host drawing changes, too. However, spaces that have been generated in an external reference do not interact with boundary objects in the host drawing. 
+Boundary Objects for Associative Spaces 
+Associative spaces are bounded by objects. An object must fulfill a number of conditions to bound a space: 
+¦ 
+The object must be a valid boundary object for associative spaces. For a complete list, see Valid Boundary Objects for Associative Spaces on page 2905. 
+
+¦ 
+The Bound Spaces property of the object must be set to Yes. For more information, see Setting the Bound Spaces Property for Boundary Objects on page 2910. 
+
+
+Valid Boundary Objects for Associative Spaces 
+The following table lists all objects that are valid as boundary objects for associative spaces. There are different valid boundary objects for 2D/extruded 3D spaces and 3D freeform spaces. 3D freeform spaces must be bounded by objects that have a 3D geometry; 2D and extruded 3D spaces can be bounded by 2D linework, too. 
+All valid boundary objects must have their Bound Spaces property set to Yes in order for associative spaces to be generated from them. The Bound Spaces property for an object is located on the Properties palette. For objects that use styles, the Bound Spaces property can also be set in the style. The default value of the setting varies depending on the object type. Objects like walls and curtain walls ave a default Bound Spaces value of Yes. Others, like structural members or linework have a default Bound Spaces value of No. Change the Bound Spaces properties of objects as needed to generate your spaces (as described in Setting the Bound Spaces Property for Boundary Objects on page 2910). 
+IMPORTANT Objects that are set as boundary objects for associative spaces and then are placed on a frozen or hidden layer still participate in the generation of associative spaces. It is possible to generate spaces from invisible boundary objects. If this is the case, review your layer settings, and unhide or unfreeze those layers as necessary. 
+The following table lists all valid boundary objects for both 2D/Extruded 3D spaces and 3D freeform spaces, as well as the default value of their Bound Spaces property when inserted in a drawing: 
+Ob­ject  Boundary object for 3D freeform spaces  Boundary object for 2D/Ex­truded 3D  Default Bound Spaces value  
+spaces  
+
+Wall Yes The 3D freeform space is generated at the near face of the wall body (at base curve)  Yes  Yes (by Style)  
+NOTE If a modifier creates a hole or gap through  
+the wall, then the gap might be ignored in the space  
+generation if the maximum gap size value (see De­
+ 
+fining a Maximum Gap Size for Associative Spaces  
+on page 2926) is greater than the width of the hole.  
+Plan modifiers, body modifiers, interferences, sweeps,  
+end caps, and opening end caps are included in the  
+geometry of the generated space.  
+Cur-Yes  Yes  Yes (by  
+tain The 3D freeform space is generated at the curtain  Style)  
+wall/Cur­wall body.  
+tain Interferences, roof line, floor line, and frame profiles  
+wall are included in the geometry of the generated space.  
+
+unit 
+NOTE Empty cells or holes created by a curtain wall modifier do not impact the space generation. They are ignored and the space is generated as if the curtain wall was closed. 
+Door and win­dow as­sembly NOTE Empty cells or holes created by a door and window assembly modifier do not impact the space generation. They are ignored and the space is gen­erated as if the assembly was closed. 
+Yes  Yes  Yes (by  
+The 3D freeform space is generated at the near face  Style)  
+of the frame (at base curve).  
+Interferences and frame profiles are included in the  
+geometry of the generated space boundary.  
+
+Ob­ject  Boundary object for 3D freeform spaces  Boundary object for 2D/Ex­truded 3D  Default Bound Spaces value  
+spaces  
+
+Door/Win- Yes  Yes  Door/Win­ 
+dow/Open­ing  NOTE If a door, window, or opening is anchored in a wall, the Bound Spaces setting of the wall is used for the opening, too.  dow: Yes (by Style) Opening: Yes  
+The opening shape also defines openings in gener­ 
+ated freeform space surfaces.  
+
+Mass ele­ment Yes The 3D freeform space is generated on the near face of the mass element body. 
+Yes The 2D/Ex­truded 3D space is generated at the near face of the mass ele­ment body at the mass element bottom. 
+No (by Style) 
+Roof Yes No Yes The 3D freeform space is generated at the near face of the roof body. 
+Roof  Yes  No  Yes (by  
+slab  The 3D freeform space is generated at the near face  Style)  
+of the roof slab body (at cut plane).  
+Body modifiers, fascia, and soffit bodies are included  
+in the geometry of the generated space boundary.  
+
+NOTE Interferences and holes in the roof slab will be ignored when the space is generated. 
+Slab  Yes  No  Yes (by  
+The 3D freeform space is generated at the near face  Style)  
+of the slab body (at cut plane).  
+Ob­ject  Boundary object for 3D freeform spaces  Boundary object for 2D/Ex­truded 3D  Default Bound Spaces value  
+spaces  
+
+Body modifiers, fascia, and soffit bodies are included in the geometry of the generated space boundary. 
+NOTE Interferences and holes in the slab will be ig­nored when the space is generated. 
+Struc- Yes  Yes  No (by  
+tural  The freeform space is generated at the near face of  Style)  
+mem­ the member body (at base curve).  
+ber  Holes or gaps in the structural member are ignored  
+when the placement of the space boundary is de­ 
+termined.  
+
+Multi-view block Refer­ence 
+Yes  Yes  No (by  
+In order to bound 3D freeform spaces, a multi-view  Style)  
+block must contain objects that have a 3D geometry  
+and are valid boundary objects for spaces. The geo­ 
+metry stored in the model view block is used to  
+generate the space.  
+The space is generated from the model geometry  
+(at bottom).  
+
+Cus- Yes  No  Yes (by  
+tom  Style)  
+dis­ 
+play  
+blocks  
+
+Block  Yes  Yes  Depend- 
+In order to bound 3D freeform spaces, a block must  ent on  
+contain objects that have a 3D geometry and are  the ob- 
+valid boundary objects for spaces.  jects con­ 
+tained in  
+the block  
+
+Ex- Yes  Yes  Yes  
+tern- In order to bound 3D freeform spaces, an external  
+al  reference must contain objects that have a 3D geo­ 
+metry and are valid boundary objects for spaces.  
+Ob­ject  Boundary object for 3D freeform spaces  Boundary object for 2D/Ex­truded 3D  Default Bound Spaces value  
+spaces  
+
+Line No Yes No 
+Circle No Yes No 
+Poly-No Yes No line 
+3DNo Yes No Poly­line 
+El-No Yes No lipse 
+Spline No Yes No 
+Arc No Yes No 
+TIP AutoCAD 3D solids are not valid boundary objects for spaces. In order to use a 3D solid to generate a space, use one of the following methods: 
+¦ 
+Convert the 3D solid to a mass element, as described in Creating a Mass Element from a 3D Solid on page 1007, and use the mass element to generate the space. 
+
+¦ 
+Wrap a polyline around the solid and use the polyline to generate the space. 
+
+
+The Space Separator Tool 
+In addition to the regular objects that can be used as boundary objects for spaces, you can also use a space separator tool that lets you separate spaces when no real object is there to separate them. This could be the case when you have different functional areas within the same room. 
+Using the room separator tool to create two different spaces in one room 
+
+1 Select the Space Separator tool on the Spaces tool palette. If your tool palette layout does not contain the Spaces palette, open Content Browser (Home tab . Build panel . Tools 
+drop-down . Content Browser
+ ) and search for “Space 
+Separator”. 
+NOTE Alternatively you can select the space to be divided and click Space tab . Modify panel . Divide Space. 
+2 Specify the separating line on screen. 
+TIP The space separator uses a polyline to generate the separating line, so that you can create a multi-segment separator line. 
+3 Press Enter to finish the separator line. 
+4 To remove the separator line, you can either delete it from the drawing, or select it, and set its Bound Spaces property on the Properties palette to No. 
+Setting the Bound Spaces Property for Boundary Objects 
+The objects designed to form the boundary of an associative space must have their Bound Spaces property set to Yes before generating the space. You can set the Bound Spaces property on the object, or, for objects that use styles, you can set it in the object style. 
+TIP Before setting the Bound Spaces property of a boundary object to Yes, verify that this type of object is a valid boundary object for the space you want to generate. For example, a roof or roof slab is a valid boundary object only for 3D freeform spaces; you cannot use it to generate an extruded 3D space or a 2D space, even if the slab’s Bound Spaces property is set to Yes. 
+The following overview graphic shows how the setting of the Bound Spaces property on the boundary object affects the generation of associative spaces. For detailed information on how to set the Bound Spaces property for a boundary object, consult the sections following below. 
+Note that the term “AutoCAD object” in the graphic below refers to AutoCAD linework (lines, arcs, circles, and polylines etc.) 
+
+Migrating Profiles from Previous Versions of the Software 
+Beginning with AutoCAD Architecture 2009, the mechanism by which objects are defined as boundary objects for spaces has changed. In previous versions, objects were selected by applying an object filter during the space generation. In AutoCAD Architecture 2011, each object has its own Bound Spaces property on the Properties palette or in the object style and is there defined as a boundary object. 
+When you import a profile (ARG file) from a previous release, the Bound spaces property in the Properties palette is not displayed for AutoCAD linework (lines, arcs, circles, polylines) in the imported profile. In order to display that property for AutoCAD linework, run the AecSpaceDisplayBoundSpacesProperty command on the command line. This will enable the display of the Bound Spaces property for AutoCAD linework in the Properties palette. 
+Setting the Bound Spaces Property in the Object Style 
+Use this procedure to set the Bound Spaces property of objects designed to bound associative spaces in the object style. You can use this method for all boundary objects that use styles. When an object style is set to bound spaces, all objects of that style will bound associative spaces. You can however override the Bound Spaces property for an individual object of that style in the Properties palette. 
+For example, if walls of a specific style - such as toilet stall walls or half-height kitchen counter walls - should normally not be used as boundary objects, you can set the Bound Spaces property of the wall style to No, so that any walls of that style are ignored when you generate a space. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects. 3 Expand the desired object category, and select the style for which 
+you want to set the Bound Spaces property. 
+4 Click the General tab. 
+5 Select the check box for Objects of this style may act as a boundary 
+for associative spaces. 
+
+6 Click OK. 
+Setting the Bound Spaces Property in the Properties Palette 
+Use this procedure to set the Bound Spaces property of objects designed to bound associative spaces in the Properties palette. You can use this method for all boundary objects, regardless of whether they use styles. If you set a different value for the Bound Spaces property in the Properties palette than in the object style, the settings from the Properties palette override the settings from the style. 
+TIP If you want to define walls that do not act as boundary objects for spaces you must place these walls in a different cleanup group than those walls that do act as space boundaries. Otherwise the cleanup will result in unexpected results. 
+1 Select the object for which you want to set the Bound Spaces property, and double-click. 
+2 In the Properties palette, display the Bound Spaces setting in one the following locations: 
+Object Type Location of Bound Spaces property 
+Architectural objects: Expand the General category. 
+Linework objects: Expand the Advanced category. 
+NOTE The Bound Spaces property will not be displayed when opening the drawing in an AutoCAD Architecture Object Enabler environment such as AutoCAD, Civil 3D, or Land Desktop, or when you run AutoCAD Architecture as AutoCAD. It will only be displayed in full installations of AutoCAD Architecture or AutoCAD MEP. 
+3 For Bound Spaces, select one of the following options: 
+¦ 
+By Style (Yes/No): This object uses the Bound Spaces setting defined in the object’s style. This is the default setting for objects that have styles. 
+
+¦ 
+Yes: this object can bound associative spaces. 
+
+¦ 
+No: this object cannot bound associative spaces. 
+
+
+
+Displaying all Boundary Objects in the Drawing Area 
+In large drawings it can sometimes be difficult to determine which objects can act as boundary objects for spaces. If you are trying to generate associative spaces, and you get unexpected results or error messages, this is frequently 
+due to wrong boundary objects. Click Home tab . Inquiry panel . 
+
+. Show Space Boundaries
+ to display only the objects in the drawing area that are currently defined as boundary objects. If one of the objects you need for a space boundary is not displayed, the object is either not a valid boundary object or its Bound Spaces property has been set to No. 
+You can use objects on frozen, hidden, and locked layers as boundary objects for associative spaces. When you choose to display all boundary objects in the drawing area, frozen and hidden objects are displayed, too. When you end the boundary objects-only view mode, these objects will be hidden or frozen again, and not displayed anymore. If you choose to remain in the boundary objects-only view, these objects will remain visible until you return to the normal view. 
+In the following example, you want to generate two spaces from the geometry below, for two different functional areas in a lobby. However, only one space is generated: 
+
+To find out if there is a problem with your boundary objects, you display only boundary objects, and get the following result: 
+
+From this result, you can deduce that the line that should separate the two functional areas has its Bound Spaces property currently set to No. After you have ended the command to display boundary objects, you can change the property accordingly (Setting the Bound Spaces Property in the Properties Palette on page 2913) in order to get the correct result: 
+
+1 Zoom in the drawing area until all desired spaces are visible. 
+2 Click Home tab . Inquiry panel .
+. Show Space Boundaries . 3 Select one of the following options: 
+
+If you want to Then 
+see boundary objects and associat-press ENTER. 
+ive spaces NOTE The view includes boundary objects on frozen, hidden, and locked layers. 
+see only boundary objects but no enter S (hide associative Spaces). associative spaces 
+exit the command and restore the  enter X (eXit).  
+original visibility settings  
+ 
+NOTE Any boundary objects  
+on frozen, hidden, and locked  
+layers will not be displayed  
+anymore.  
+
+Generating an Associative Space 
+Use this procedure to generate an associative space. Associative spaces are generated from boundary objects, and are updated when the boundary objects change. 
+Associative 3D Freeform Spaces 
+To create an associative 3D freeform space, the space must be fully bounded by objects on all surfaces. 
+Generating a 3D freeform space 
+
+Associative 2D and Extruded 3D Spaces 
+When you generate an associative 2D or extruded 3D space from boundary objects, the boundary objects determine the extents of the space in the X and Y directions, and the space is associative to these. The Z-direction is either 0 (for a 2D space) or it is a user-defined extrusion height (in extruded 3D spaces). 
+For an associative 2D or extruded 3D space, you can define the gap allowed between colinear boundary objects. This would be useful for example if you have created a plan of a building with lines, and represented doors and windows as gaps between the lines. You can set a gap tolerance for these gaps, and the software will calculate the missing geometry from the existing colinear line segments. (AEC windows, doors, and openings in walls are not considered as gaps.) 
+NOTE Gaps are allowed only between colinear segments that do not contain other boundary objects, not between objects that are at other angles to each other or between colinear segments when the gap contains other boundary objects. 
+Generating an extruded 3D space from walls 
+
+As a special case, you can generate an associative 2D or extruded 3D space from the outline of an object in a drawing. In this case, the object outline will be used as the boundary of the new space. For example, if you generate spaces from wall outlines, spaces will be generated from the wall outline. 
+Walls (left) and space generated from wall outlines (right) 
+
+IMPORTANT In previous versions of the software, objects that were invisible due to a frozen or hidden layer were never included in the generation or update of associative spaces. Beginning with this version, frozen and hidden objects are included in the space generation and update if they are set as boundary objects. 
+Generating an associative space 
+1 Verify that all necessary boundary objects have their Bound Spaces property set to Yes. 
+TIP Click Home tab . Inquiry panel .
+. Show Space 
+Boundaries
+ to display all objects that currently have their Bound Spaces property set to Yes (including objects on frozen, hidden, and locked layers.) If the selection does not meet your needs, cancel the space generation, and first change the Bound Spaces property on all necessary objects, as described in Setting the Bound Spaces Property for Boundary Objects on page 2910. 
+2 Open the tool palette that contains the Space tool you want to use, and select it. 
+NOTE Alternatively, you can click Home tab . Build panel . Space drop-down . Generate Space
+ . 
+3 For Offset boundaries, select how the 4 space boundaries (base, net, usable, and gross boundary) are calculated. For information about space boundaries, see Working with Space Boundaries on page 2968. 
+¦ 
+Manual: The net, usable, and gross boundaries can be manually edited with grips. 
+
+¦ 
+By style: The net, usable, and gross boundaries are offset from the base boundary by a value defined in the space style. For more information, see Specifying Space Boundary Offsets in a Space Style on page 3060. 
+
+¦ 
+By standard <Standard Name>: The net, usable, and gross boundaries are defined by the area calculation standard listed. For more information, see Specifying an Area Calculation Standard for a Drawing on page 2974. 
+
+
+4 On the Properties palette, for Create type, select Generate. 
+NOTE The Associative property is interlinked with the Create type. If the Create type is Generate, the Associative setting defaults to Yes. If the Create type is Insert, Rectangle, or Polygon, the Associative setting defaults to No and becomes read-only. 
+5 Select Yes for Allow Overlapping Spaces if you want to be able to generate spaces from boundaries that already contain a space. This could be useful if you want to generate spaces from an xref drawing that already contains spaces, but you need to generate spaces with different settings (for example, with a different area calculation standard). 
+6 For Geometry type, select one of the following: 
+¦ 
+2D: generates an associative 2D space. 
+
+¦ 
+Extrusion: generates an associative extruded 3D space. For an extruded 3D space, the height (Z) is defined by the user and is applied uniformly to the space. 
+
+¦ 
+Freeform: generates an associative 3D freeform space. 
+
+
+IMPORTANT For descriptions of other Spaces settings on the Properties palette, see Space Properties on page 2897. 
+7 Before creating the spaces, you can perform these two optional steps to help with successfully creating spaces: 
+¦ Verify that all necessary boundary objects have their Bound Spaces property set to Yes. In order to do this, enter sh (SHow Bounding Objects). This option displays all objects that have their Bound Spaces property set to Yes. If an object you need for your space is not displayed, you can cancel the space generation and first change the Bound Spaces property on the object to Yes. 
+¦ Verify that all boundary objects are visible in the drawing area. If necessary, zoom in or out to display the desired objects, and then enter v (reset Visible boundaries) to update the drawing area. 
+8 In the drawing, generate the spaces: 
+If you want to… Then… 
+generate a 3D freeform space Enter G (Generate all). 
+generate a 2D or extruded 3D use one of the following options: 
+space ¦ Enter G (Generate all) to gener­ate spaces for all visible bound­aries. 
+¦ Pick inside closed boundaries in order to generate spaces for them. 
+Generating Associative Spaces from Xrefs and Blocks 
+You can generate associative spaces from objects in xrefs and blocks. The workflow for this has changed between the previous version of AutoCAD Architecture and the current version. The following sections describe the changes, as well as the workflows recommended for using xrefs and blocks for generating spaces. 
+Automatic Update of Associative Spaces through External References 
+Associative spaces that are bounded by objects in external references are now included in the automatic update of associative spaces. No manual updates are necessary anymore. 
+Migrating Xref Spaces from previous Versions of AutoCAD Architecture 
+Beginning with AutoCAD Architecture 2009, the mechanism by which linework objects (line, arc, circle, polyline) are defined as boundary objects for spaces has changed. In previous versions, linework boundaries were selected by applying an object filter during space generation. In AutoCAD Architecture 2011, each linework object has its own Bound Spaces property on the Properties 
+palette and can be defined as a boundary object there. Additionally, xrefs and blocks now have a Bound Spaces property as well. 
+When you migrate a drawing with associative spaces that use linework from an xref as boundary objects you’ll see the following behavior: 
+¦ 
+All lines, arcs, circles, and polylines (as well as object outlines selected via the All Linework filter) that were defined as boundary objects in the host drawing will have their Bound Spaces setting correctly translated to the new mechanism and will continue to bound spaces. 
+
+¦ 
+All lines, arcs, circles, and polylines from not-yet migrated xrefs however will not act as boundary objects for spaces in the host drawing anymore, so that if the spaces in the host drawing are updated (or new spaces are generated), the generation or update fails for these xref linework objects. 
+
+
+In order to update your spaces correctly, you can use an xref override on the affected linework objects (see Changing the Display Configuration Used in Xref Drawings on page 825). Alternatively, you can open the xref drawing, set the Bound spaces property on the desired linework objects to Yes, re-load the xref, and regenerate the spaces. 
+NOTE When you are converting drawings with xrefs and associative spaces from a previous version, the first time the host drawing is opened, will be accompanied by a noticeable performance delay. This is however only a one-time effect; once the host drawing and its associated xref drawings have been opened and saved with the current version, the performance will be improved in all future sessions. 
+Generating Spaces from Xrefs or Blocks Using the Xref or Block Settings 
+Within an xref or block you can define objects as boundary objects for spaces. These objects can be used to generate spaces in a host drawing. 
+In order to use boundary objects from an xref in a host drawing, the xref must have its Bound Spaces property set to Yes. (This is the default setting when inserting an xref.) If the xref’s Bound Spaces property is set to Yes, objects in it that have their Bound Spaces property set to Yes, too, will be used to generate spaces in the host drawing. If the Bound Spaces property of the xref has been set to No, any objects in the xref are ignored when generating spaces in the host drawing, regardless of whether they have their Bound Spaces property set to Yes. 
+Perform these steps to use boundary objects from an xref to generate spaces in a host drawing: 
+1 Set the Bound Spaces property of the desired objects in the xref drawing to Yes. For instructions, see Setting the Bound Spaces Property for Boundary Objects on page 2910. 
+2 Reference the drawing into the host drawing where you want to generate spaces. 
+3 Select the xref. 
+4 In the Properties palette, expand the Advanced category. 
+5 Verify that the Bound Spaces property is set to Yes. 
+6 Generate spaces as described in Generating an Associative Space on page 2916. 
+This mechanism allows you to generate different spaces from multiple instances of the same xref, because the same referenced geometry can be used as boundary for spaces in one instance but not in another. 
+NOTE External references in Project Navigator have different default settings for the Bound Spaces property: By default, external references attached to elements, constructs and views from Project Navigator have their Bound Spaces property set to Yes; external references attached to sheets from Project Navigator have their Bound Spaces property set to No. 
+Blocks work according to the same principle, except that the default setting for the Bound Spaces property of a block is dependent on the Bound Spaces properties of the objects inside the block. If none the objects inside the block has its Bound Spaces property set to Yes, then the block’s Bound Spaces property will be No. If there is at least one object inside the block that has its Bound Spaces property set to Yes, then the block’s Bound Spaces property will be set to Yes, too. 
+IMPORTANT When you change the Bound Spaces properties of objects inside a block via the Block Editor, these changes are not automatically updated in the host drawing upon saving and closing the Block Editor. In order to verify that all spaces are updated correctly, you must perform a manual update of all affected spaces, as described in Manually Updating Associative Spaces on page 2930. 
+When blocks or external references are nested, and a block or external reference in the hierarchy has its Bound Spaces property set to No, then all blocks and external references nested in it are not used to bound spaces, even if some of the nested blocks or external references contain objects that have their Bound Spaces property set to Yes. In order to use boundary objects from nested blocks and xrefs, the containing level must have its Bound Spaces property set to Yes. 
+If a legacy drawing is opened in AutoCAD Architecture 2011, all blocks and external references that contain boundary objects will by default have their Bound Spaces property set to Yes. 
+Generating Spaces from Xrefs Using Overrides in the Host Drawing 
+If you do not want to make changes to the Bound Spaces property of objects in the xref drawing, you can use an override in the host drawing to change the boundary objects in xrefs without making a change to the xref drawing. For example, if you are a building engineer and receive an architectural drawing from which you want to generate spaces, but you do not want to change any boundary objects in the original drawing, you can xref the drawing into a new host drawing, and override the Bound Spaces property of xref objects in the new host drawing. The source drawing remains unchanged, but you can still generate spaces in the new drawing that are different from those generated in the xref drawing. 
+Override the Bound Spaces properties of xref objects in a host drawing 
+1 Xref the drawing from which you want to generate spaces into the host drawing. 
+2 Select the xref. 
+3 In the Properties palette, expand the Advanced category. 
+4 Verify that the Bound Spaces setting is set to Yes. 
+5 Display all boundary objects in the drawing (both host and xref) by 
+clicking Home tab . Inquiry panel .
+. Show Space Boundaries 
+
+. 
+If the objects displayed by that command do not meet your needs, you 
+need cancel space generation, and first apply overrides to the Bound 
+Spaces properties of the desired xref objects. 
+6 At the command prompt, enter AecSpaceSetBoundingObjects. 
+7 Select the desired boundary objects in the xref, and press ENTER. 
+8 On the command line, enter Y (Yes) to generate the override, and press ENTER. 
+NOTE An xref override is only valid for the selected instance of the xref in the host drawing where it is set. If the same xref drawing is referenced into a different host drawing, or as another instance into the same host drawing, no overrides exist. 
+If you now generate the spaces, all overridden objects in the xref will now be used to generate spaces. 
+9 If you have not applied any overrides yet, and no valid space boundaries can be found because none of the objects in the xref drawing have their Bound Spaces property set to Yes or the objects that are do not enclose a valid space, a task dialog will appear and prompt you to select objects that should bound spaces. 
+10 In this case either select all visible objects as boundary objects, or select individual objects, and press ENTER. This will automatically set the Bound Spaces properties of all selected objects to Yes, and if those objects are in an xref will add an override to them in the current drawing. 
+You can remove space boundary overrides from objects in xrefs. When the override is removed, the Bound Spaces settings of the xref objects are used again. 
+To remove a space boundary override from an object in an xref 
+1 At the command prompt, enter AecSpaceSetBoundingObjects. 
+2 Select the boundary objects in the xref from which you want to remove the override, and press ENTER. 
+3 On the command line, enter R (Remove Override), and press ENTER. 
+4 If necessary, update the spaces in your drawing. 
+Generating Spaces from an Xref Drawing Containing Spaces 
+If you receive a drawing with spaces, but want to generate a different set of spaces, verify that the Allow Overlapping Spaces setting in the Properties palette is set to Yes before you pick your spaces. Otherwise, spaces can only be generated in areas that do not contain a space from the xref. 
+Defining a Maximum Gap Size for Associative Spaces 
+When you are generating 2D or extruded 3D spaces, it is possible to define an allowed gap size between colinear boundary objects. The software will calculate the missing segments and create the space profile from that. You cannot define a gap size for 3D freeform spaces. 
+1 Click 
+. Options. 2 Click the AEC Object Settings tab. 
+
+3 Under Maximum Gap Size, select the largest gap you want to allow between the boundary objects of an associative space. 
+4 Click OK. 
+TIP Alternatively, you can set the maximum allowed gap size between boundary objects on the command line by entering AecSpaceMaxGapSize. 
+Updating Associative Spaces 
+Associative spaces are defined by their boundary objects and are updated when the boundary objects change. You can choose to have associative spaces update automatically whenever there is a relevant change to boundary objects, or you can choose to perform the space update manually. 
+
+Updating Associative Spaces Bounded by External References 
+Objects in external references can serve as boundary objects for associative spaces in the host drawing. When the objects in the external reference change, the space is updated too. In previous versions, a manual update was necessary to propagate changes in the external reference’s boundary objects to the spaces in the host drawing; now changes from external references are automatically updated when reloading the external reference, if the automatic update of associative spaces is activated (see Activating and Deactivating Automatic Updates on page 2928). 
+Roundtripping Associative Spaces between AutoCAD Architecture 2011 and previous Versions 
+In previous versions of the software, boundary linework objects were defined by a filter selection during space generation. In the current version, each object has its own Bound Spaces property in the Properties palette. This includes blocks and xrefs. These changes can cause discrepancies when roundtripping drawings that contain 2D linework, blocks, and external references. For example, when a line in the current version of the software has its Bound Spaces property set to Yes, and is opened in a previous version, it will still be a boundary object for spaces, but it will be selected via the boundary filter of the space. When the filter is removed from the space in the previous version, and the drawing is re-opened in AutoCAD Architecture 2011, the change in the filter setting will be ignored. It is recommended that you carefully examine your spaces after roundtripping them between different versions of AutoCAD Architecture in order to avoid space errors. 
+Activating and Deactivating Automatic Updates 
+Use this procedure to activate or deactivate the automatic update of associative spaces. 
+Updating each temporary change to the space geometry might not be necessary or desirable. For example, if you delete a wall only to replace it with a different one in the same position, you only need the space to update after the new wall is in place, rather than once when the old wall is removed and again when the new one is inserted. 
+Manual updates offer better performance, but mean that the geometry of spaces and their boundary objects might be out-of-synch at a given time during the drawing session. 
+When the automatic update of associative spaces is deactivated, and an area calculation standard has been selected to calculate boundary offsets, the rules of the standard will only be applied to changed spaces when either the automatic update has been activated again or the spaces are updated manually, as described in Manually Updating Associative Spaces on page 2930. 
+IMPORTANT When you re-activate the automatic update of spaces, only those spaces will be updated that had no boundary objects added while the update was off. For example, if you added a dividing wall to a space while the automatic update was off, and then turn the automatic update on, the space will not be divided by the wall. Update the space manually to reflect the new geometry. 
+1 Click 
+. Options. 2 Click the AEC Object Settings tab. 
+
+3 Under Space Settings, specify whether associative spaces will be updated automatically: 
+If you want to… Then… 
+update associative spaces select Automatically update associative spaces. automatically each time you make a change to the boundary objects 
+update associative spaces clear Automatically update associative spaces. manually 
+4 Click OK. 
+TIP The automatic update of spaces can also be turned on or off via the AecSpaceAutoUpdate command. 
+Manually Updating Associative Spaces 
+Use this procedure to manually update an associative space after its boundary objects have changed. A manual update can be necessary in these cases: 
+¦ 
+The automatic update of associative spaces has been deactivated, as described in Activating and Deactivating Automatic Updates on page 2928, and the boundary objects of an associative space have been modified. 
+
+¦ 
+A new boundary object has been added while the automatic update of spaces was deactivated. 
+
+¦ 
+The automatic update cannot be performed due to any of the conditions described in Troubleshooting Associative Spaces on page 2938. 
+
+
+You can choose to either update only selected spaces, or all associative spaces in the drawing. 
+IMPORTANT Previously, objects that were on a frozen or hidden layer were not included in any space updates. Now, frozen or hidden objects are included in the space update if their Bound Spaces property is set to Yes. 
+When the automatic update of associative spaces is deactivated, and an area calculation standard has been selected to calculate boundary offsets, the rules of the standard will only be applied to changed spaces when either the automatic update has been activated again or the spaces are updated manually. 
+Manually updating selected spaces 
+1 Select the associative space you want to update. 
+2 Click Space tab . Modify panel . Update drop-down . Selected 
+Space
+ . 
+
+Manually updating all associative spaces in the drawing 
+1 Select any associative space in the drawing. 2 Click Space tab . Modify panel . Update drop-down . All 
+Associative Spaces
+ . 
+Merging Associative Spaces 
+Associative spaces can be merged by removing boundary objects that separate them. If you activated the automatic update of associative spaces (as described in Activating and Deactivating Automatic Updates on page 2928), the update is run automatically. 
+
+The following rules determine in descending order the precedence of property inheritance in the merged space: 
+1 If only one of the spaces to be merged has object property set data, the properties of that space are applied to the merged space. 
+2 If only one of the spaces to be merged has classification data, the properties of that space are applied to the merged space. 
+3 If both of the spaces have object property set data or classification data, the properties of the larger space are applied to the resulting space. 
+4 If only one of the spaces to be merged has style-defined property set data, the properties of that space are applied to the merged space. 
+5 If all of the above criteria apply to none or both of the spaces to be 
+merged, the properties of the older spaces are applied to the merged space. This can result in unexpected property assignments, so it is recommended that you check the merged space’s properties. 
+If the automatic update of associative spaces is not activated, you need to merge spaces between deleted boundary objects manually. This process involves more steps than the automatic update, but allows you more control over which space’s properties are retained in the resulting space. 
+Manually merging associative spaces 
+1 Verify that the automatic update of associative spaces is deactivated, as described in Activating and Deactivating Automatic Updates on page 2928. 
+

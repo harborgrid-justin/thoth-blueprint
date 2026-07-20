@@ -1,0 +1,1418 @@
+[MIGRATED TO RTM_PART_41.md - THE WORKSPACE]
+1 Click 
+to open the application menu. 2 At the bottom of the application menu, click Options. 3 On the Open and Save tab of the Options dialog, under 
+Application Menu, change the value for Number of recently-used files. 
+4 Click OK. 
+
+The Quick Access Toolbar 
+The Quick Access toolbar is a customizable toolbar located at the top of the application window, just to the right of the application menu button. 
+
+By default, this toolbar contains a set of frequently used commands for the application. You can add and remove commands as needed. 
+To add a command from the ribbon 
+1 On the ribbon, locate the command you want to add. 2 Right-click the command, and click Add to Quick Access Toolbar. 
+NOTE Not all commands can be added to the Quick Access Toolbar. If a command is ineligible, the Add to Quick Access Toolbar command is not visible in the context menu. 
+
+To add other commands to the Quick Access Toolbar 
+3 On the Quick Access Toolbar, click the down arrow at the right end of the toolbar, and select More Commands. 
+4 In the Customize User Interface Editor, select the command you want to add and drag it onto the Quick Access toolbar. 
+
+To remove a command from the Quick Access toolbar 
+. Select the command on the Quick Access Toolbar, right-click, and click Remove from Quick Access Toolbar. 
+
+
+Context Menus 
+When you right-click in the drawing area, the content of the context menu depends on the currently selected object(s). For example, if one or more door objects are selected, a door-specific context menu is displayed as shown. 
+Door context menu 
+
+Most commands that can be found on the context menu of an object exist in the contextual ribbon tab of the object, too. 
+If more than one type of object is selected, the context menu includes only those commands that can be applied to all the selected objects. Likewise, the ribbon displays a Multiple Objects contextual tab that contains only the applicable commands. If no objects are selected, the general context menu is displayed as shown below. This menu contains non-object-specific commands. 
+General drawing context menu 
+
+
+Tool Palettes 
+Tool palettes provide the main method for accessing tools to create objects in your model. You can have tools for standard objects as well as for objects with specific styles and properties. Tool palettes are organized by tool palette groups in a tool palettes set. You can create your own tool palettes, or you can copy existing tool palettes from the Content Browser. 
+Design tool palette with tools for standard design objects 
+
+For more information, see Working with Tool Palettes on page 78. 
+
+Properties Palette 
+The Properties palette provides a central location to view and modify both the physical and graphical properties of an object. The object can be one you are about to draw, or one that is already selected in the drawing area. Using the Extended Data tab of the Properties palette, you can also attach other kinds of information to an object, such as classifications, notes, reference documents, hyperlinks, and property set data. You typically keep the Properties palette open during an AutoCAD Architecture session. 
+Properties Palette for a standard wall object 
+
+For more information, see The Properties Palette on page 115. 
+
+Drawing Status Bar 
+Located at the bottom of the drawing area, the drawing status bar displays status information about the current drawing and provides access to commands that can be applied to the drawing. 
+
+The drawing status bar contains the following information and controls: 
+¦ 
+Project Information: If the drawing is part of an AutoCAD Architecture project, this information includes the name of the project and the type of file, (such as View or Construct). For more information, see Drawing Management on page 289. 
+
+¦ 
+Annotation Scale: To change the annotation scale for the current viewport, click the current value, and select a new one from the list. Changing the scale may also change the Level of Detail setting described below. 
+
+¦ Annotation Visibility: Click 
+to show annotative objects for all scales. 
+Click 
+to automatically add scales to annotative objects when the annotation scale changes. 
+
+¦ 
+Level of Detail: Shows the current display configuration of the active viewport and provides a drop-down list from which you can select another configuration. 
+
+¦ 
+Cut Plane: Identifies the global cut plane height for the active display configuration and provides access to a dialog that lets you adjust the setting. For more information, see Global Cut Planes on page 536. 
+
+
+
+
+¦
+ (Surface Hatch Toggle): Lets you switch the display of surface hatching on or off. For more information, see Working with Surface Hatches on page 890. 
+¦
+ (Layer Key Overrides): Lets you switch layer key overrides on or off in the Layer Key Overrides dialog. For more information, see Layer Key Overrides on page 757. 
+¦
+ (Isolate Objects): Lets you hide or display objects you have selected in the drawing. For more information, see Editing Objects in Temporary Views on page 1121. 
+¦
+ (AEC Project Standards): When a project is loaded, click here to synchronize or configure standards for the current project. For more information, see Project Standards on page 585. 
+¦
+ (Autodesk Trusted DWG): This icon indicates that you have opened a DWG, DWT, or DWS file that is created using Autodesk applications or RealDWG™-based applications. 
+¦
+ (Manage Xrefs): Click to open the External References palette, where you can reload xrefs that are associated with your current drawing. 
+¦ 
+Missing Standards File(s): When applicable, this warning indicates that standards files are missing in the current drawing; you can then check settings for the standards and configure them as necessary. For more information, see Configuring Project Standards on page 595. 
+
+¦ 
+Drawing Status Bar Menu: A drop-down list of the settings and commands available for display on the drawing status bar. 
+
+
+
+
+Showing and Hiding Commands on the Drawing Status Bar 
+You can specify which features on the drawing status bar menu are shown or hidden as needed. 
+1 at the right end of the drawing status bar, click the drawing status bar menu arrow. 
+
+2 Select commands you want show, and clear commands you want to hide. 
+
+Showing and Hiding the Drawing Status Bar 
+The drawing status bar can be turned on and off from the ribbon or from the application status bar on page 56. Turning the drawing status bar off will increase the size of the drawing area. 
+To show and hide the drawing status bar, click View tab . Windows panel . Drawing Status Bar. 
+
+Command Line 
+You can directly enter commands using the command line window located immediately below the drawing status bar. 
+To hide and display the command line window, click View tab . Windows panel . Command Line. 
+If you want to hide the command line window except for its title bar when 
+you are not using it, click 
+ on the title bar of the command line window. Moving the cursor over the title bar will redisplay the command line window. 
+
+
+Application Status Bar 
+The application status bar contains settings for the current drawing session. Some settings, such as options for different elevations, only display if you are working within a project. 
+The group of commands on the left side of the application status bar can be displayed as icons or text labels. 
+Commands displayed as icons 
+
+Commands displayed as text labels 
+
+To change the display of these commands right-click any of them, and select Use Icons. 
+To activate or deactivate any of the commands in this group, click the icon or label. Blue indicates an active control; gray indicates an inactive control. To change the settings for one of these commands, right-click the icon or label, and click Settings. 
+For detailed information about these options, see “Use Precision Tools” in the AutoCAD Help. 
+The following commands and settings are available on the application status bar: 
+¦ 
+Cursor coordinate values: Controls the coordinate format as either relative or absolute. For more information, see “Overview of Coordinate Entry” in the AutoCAD Help. 
+
+¦
+ (Snap): Lets you restrict the movement of the cursor to the drawing grid. 
+
+¦
+ (Grid): Lets you display a rectangular grid as a drawing aid. 
+¦
+ (Ortho): Lets you restrict cursor movement to horizontal and vertical directions when creating and modifying objects. 
+¦
+ (Polar Tracking): Lets you restrict cursor movement to specified angles. 
+¦
+ (Object Snap): Lets you restrict movement of the cursor to specified points on objects, such as the midpoint or an intersection point. 
+¦
+ (Object Snap Tracking): Lets the cursor track along alignment paths based on other object snap points when specifying points in a command. This feature can be used only in conjunction with Object Snap. 
+¦
+ (Dynamic UCS): Lets you temporarily and automatically align the XY plane of the UCS with a plane on a solid model while creating objects. 
+¦
+ (Dynamic Input): Lets you enter values for objects directly onscreen near the cursor. Dynamic input can be turned on and off during creating or editing an object in the drawing area. 
+¦
+ (Lineweight): Lets you turn the lineweight display component on or off for objects in the drawing. In model space, lineweights are displayed in pixels and do not change when zoomed in or out. Displaying the lineweight could create some very heavy line display. 
+¦
+ (Quick Properties): This feature is intended for AutoCAD objects and is turned off in AutoCAD Architecture. 
+¦
+ (Model Space) or 
+(Paper Space): Switches between layouts. For more information, see “Work with Model Space and Paper Space” in the AutoCAD Help. 
+¦
+ (Quick View Layouts): Lets you preview model space and all layouts in a drawing as a horizontal row of images. Click on a preview image to display the layout. For more information, see Quick View Tools on page 
+
+73 and “Navigate within a Drawing (Model Space and Layouts)” in the AutoCAD Help. 
+¦
+ (Quick View Drawings): Lets you preview all currently open drawings with their model space and layouts. Click on the preview image to display the drawing or layout. For more information, see Quick View Tools on page 73 and “Navigate Between Open Drawings” in the AutoCAD Help. 
+¦
+ (ShowMotion): Provides an onscreen display that can be used to create, select, and play back cinematic camera animations called shots. These animations can be used for presentation purposes or for navigation. For more information, see “ShowMotion” in the AutoCAD Help. 
+¦
+ (Pan): Lets you drag the view to reposition it within the drawing area 
+¦
+ (Zoom): Lets you increase or decrease the apparent size of objects in the drawing area 
+
+¦
+ (SteeringWheel): Lets you display a tracking menu containing different navigation tools. For more information, see “Navigate with SteeringWheels” in the AutoCAD Help. 
+¦
+ (Workspaces): Lets you switch between workspaces. For more information, see The Workspace Concept on page 30. 
+¦
+ (Toolbar/Window Positions): Lets you switch between docked windows and toolbars and floating windows and toolbars. 
+¦ 
+Elevation: Lets you define the elevation of the construct relative to the level you have selected. This button opens the Elevation Offset worksheet where you enter or pick the elevation offset. 
+
+¦
+ (Replace Z value with current elevation): Can be switched on or off, replacing the existing Z value with the current elevation. 
+¦
+ (Clean Screen): Click to switch between the standard screen and a full screen. In full-screen mode, all toolbars and palettes (except the tool palettes) are hidden. Hidden palettes retain their current state. 
+
+
+
+Showing and Hiding Commands on the Application Status Bar 
+You can show or hide individual commands on the application status bar menu. 
+1 At the right end of the application status bar, click the application status bar menu arrow. 
+
+2 Select commands as desired. 
+NOTE Alternatively, you can click View tab . Windows panel . Status Bar to access these commands. 
+
+Project Navigator Palette 
+The Project Navigator palette is the central location to create, modify, and access AutoCAD Architecture project files. You typically have the Project Navigator palette open in the workspace while you work on a project. For more information, see Drawing Management on page 289. 
+Project Navigator palette 
+
+
+
+Finding Information in AutoCAD Architecture 
+In addition to online help and tutorials, AutoCAD Architecture provides various ways to quickly access the information you need to be successful with new and existing features. Review the sections below to learn how you can get help quickly and with minimal disruption of your workflow. 
+InfoCenter Toolbar 
+InfoCenter is a central location where you can search for product-related help and other information sources. You can search for information through keywords (or by typing a phrase), display the Communication Center panel for product updates and announcements, or display the Favorites panel to access saved topics. 
+
+When you enter keywords or type a phrase, and then press ENTER or click the Search button, you search multiple Help resources in addition to any files that have been specified in the InfoCenter Settings dialog. The results are displayed as links on a panel. You can click any of these links to display the Help topic, article, or document. 
+In addition, Communication Center displays Did You Know balloons for selected feature areas. These balloons provide knowledge base information and general instructional messages such as tips. You can click on the arrow icon to expand the balloon to view the detailed information. 
+
+For detailed information about InfoCenter, see “Find Information Using InfoCenter” in the AutoCAD Help. 
+
+Help Menu 
+With the removal of the menu bars, the commands to access Help features have been moved into the InfoCenter at the top right of the application window. Here, you can find the Help menu that lets you access Help, Tutorials, and other interactive resources. 
+
+
+Communication Center 
+Communication Center is accessed from the InfoCenter toolbar. This resource displays links to information about product updates and product announcements, and may include links to Subscription Center, CAD Manager specified files, and RSS feeds. 
+
+F1 Context Help 
+For many commands and dialogs you can access a context-related Help topic using one of the following methods: 
+¦ 
+Press F1 while a command is active or a dialog is open. 
+
+¦ 
+Press F1 while a ribbon tooltip is displayed. 
+
+¦ 
+Click the Help button in a dialog. 
+
+
+
+Tooltips 
+In addition to interactive tooltips that help you to create and edit objects (see Direct Editing with Grips and Dynamic Dimensions on page 123), AutoCAD Architecture provides tooltips that display information about the command, option, or file over which you pause the cursor. 
+
+Command Tooltips 
+A short description displays whenever you pause the cursor over a command in any of the following locations: 
+¦ 
+The ribbon 
+
+¦ 
+The Quick Access toolbar 
+
+
+For some commands, an extended tooltip displays after a user-specified time interval. 
+Standard tooltip for command 
+
+Extended tooltip for command 
+
+
+Controlling the Display of Command Tooltips 
+You can change the display of command tooltips. For extended tooltips you can define a time interval between the display of the basic tooltip and the extended tooltip. 
+1 Click 
+. Options. 2 Click the Display tab. 3 Under Window Elements, select Show Tooltips. 4 If you want to change the time interval between displaying the 
+basic tooltip and the extended tooltip, select a different value for Number of seconds to delay. If you want to turn off the extended tooltip information completely, deselect Show extended Tooltips. 
+5 Click OK. 
+
+Dialog and Palette Tooltips 
+The following dialogs and palettes support extended tooltips: 
+¦ 
+Project Browser dialog 
+
+¦ 
+Project Navigator palette 
+
+¦ 
+Drawing Compare palette 
+
+
+
+
+Object Rollover Tooltips 
+When you pause the cursor over an object in the drawing area, an informational tooltip displays basic information about the object. 
+
+Unlike the rollover tooltips provided for AutoCAD objects, such as lines or polylines, this information is standardized and cannot be changed. For information on how to configure rollover tooltips for AutoCAD objects, see “Customize Rollover Tooltips” in the AutoCAD Customization Guide. 
+
+Property Palette Tooltips 
+The Properties palette displays tooltips when you pause the cursor over a property in the list. 
+
+
+Thumbnail (Preview) Tooltips 
+In the Project Navigator, you can display thumbnail previews of project drawings. The preview can be a graphic or a detail, or a combination of both. Displaying thumbnails can be helpful when you are navigating large projects with many drawings. 
+
+To activate preview tooltips in the Project Navigator 
+1 On the Quick Access Toolbar, click 
+. 2 In the Project Navigator, open the Constructs, Views, or Sheets 
+tab. 3 Right-click in the toolbar area at the bottom of the tab. 4 Click Tooltip Style, and select one of these options: 
+
+Use this option… To display 
+Name only the name of the drawing file, maxim­izing the file tree visibility. 
+Preview only a preview image of the drawing at the size you specify (Small, Medium, or Large). 
+Details only a text description of the file, identify­ing its location, size, last-saved date, and last editor. 
+Preview & Details both a a text description and a preview image at the size you specify (Small, Medi­um, or Large). 
+5 If you want a static display of the preview image or the detailed file description, right-click in the toolbar area again, and click 
+Preview/Details Pane. Regardless of which tooltip style is selected, this option displays a preview of a selected file in an pane below the file tree. Use the buttons on the pane's title bar to switch between the Preview pane containing the image and the Detail pane containing the text description. 
+
+
+
+Solution Tips 
+The intended interaction among objects in an AutoCAD Architecture drawing depends on various rules about how objects are placed in relation to one another. Whenever the software identifies a problem with the placement of objects or their components, a solution tip icon is displayed to identify the location of the problem, as shown. 
+
+Move the cursor over the icon to display a message that describes the problem and provides one or more possible solutions. Some solution tips provide 
+complete instructions for resolving the problem. Where more detailed instructions are required, you can press F1 to access the relevant topic in Help. 
+
+Note that not all object configuration problems have an easily identifiable cause or a specific solution. This is often true in the case of boolean operations where an entity such as a body modifier is added to or subtracted from an object. In these cases, the solution tip identifies the kind of object or component involved and suggests corrective action. You may be advised to modify the location or the geometry of the object, but it is essentially a trial-and-error approach. The messages are tips rather than guaranteed solutions. 
+By default, solution tip icons are displayed when you are drafting, but not during plotting or publishing. You can change these settings in the Options dialog using the following procedure: 
+1 Click 
+. Options. 2 In the Options dialog, click the AEC Editor tab. 3 In the Solution Tip panel, select or clear Drafting and 
+Plotting/Publishing as desired. 
+
+Object Grip Tooltips 
+Objects in AutoCAD Architecture have grips you can use to manipulate them. Pause the cursor on a grip to display a tooltip identifying the grip's function. 
+Door dimension grips 
+
+Many grip tooltips contain additional information on how to use the grip. 
+Displaying the tooltip for door standard size 
+
+For more information, see Direct Editing with Grips and Dynamic Dimensions on page 123. 
+
+
+Working with Objects in the Workspace 
+The AutoCAD Architecture workspace is where you add and manipulate the architectural objects that make up your drawings. 
+Adding Objects 
+You add objects to the drawing with tools. 
+Tools generally have preset creation parameters called properties. When you click an object tool to add an object in the drawing, the Properties palette opens, and you can change properties for the new object if desired. If not, you can go ahead and place the object in the drawing. For more information, see Tools on page 93. 
+Adding a wall to the drawing 
+
+Tools are arranged on tool palettes for easy access. To open the default Design tool palette, click Home tab . Build panel . Tools drop-down . Design Tools
+
+ . 
+
+Modifying Objects 
+You can modify an object using any of the following methods: 
+¦ Object-specific (contextual) ribbon tab: When you select an object, an object-specific tab is displayed on the ribbon. For example, when you select a door, the Door tab displays. The object-specific tab contains commands that apply to the selected object. 
+
+¦ 
+Properties palette: The Properties palette is one of the central locations for entering and changing information about an object. This palette has categories that group the properties by type. For detailed information, see The Properties Palette on page 115. 
+
+¦ 
+Matching properties between objects: You can use the Match Properties command to copy the style and display properties of one AEC object and apply them to one or more other objects of the same type. For more information, see Matching Object Properties on page 132. 
+
+¦ 
+Context menu: Right-click the object to display its available commands. 
+
+
+
+Door context menu 
+
+¦ Direct editing with grips: Commands for modifying an object are accessible from the object’s grips. Click an object in a two-dimensional (2D) or three-dimensional (3D) view to display its grips. For detailed information about object grips, see Direct Editing with Grips and Dynamic Dimensions on page 123. Information about grip-editing is also covered in the individual object topics. 
+Window grips for direct editing 
+
+
+
+View and Navigation Tools 
+There are various ways to view the model in AutoCAD Architecture. For a complete description, see “Control the Drawing Views” and “Work with Multiple Open Drawings” in the AutoCAD Help. The following topics highlight view and navigation tools in AutoCAD Architecture. 
+Quick View Tools 
+Quick View tools make navigating and selecting drawings and layouts easier. 
+Quick View Layouts 
+This feature lets you preview and easily switch between model space and all layouts in the current drawing. 
+Click 
+ (Quick View Layouts) on the application status bar to display a row of thumbnail images above the bar: 
+
+Click a thumbnail to navigate to that model space or layout. 
+You can also easily plot or publish with the buttons that display at the top corners of the layout thumbnail when the cursor is on it. 
+For more information, see “Switch Between Layouts in the Current Drawing” in the AutoCAD Help. 
+
+Quick View Drawings 
+This feature lets you preview and easily switch between model space and 
+layout in all currently open drawings. Click 
+ (Quick View Drawings) on the application status bar to display a row of drawing thumbnail images above the bar: 
+
+Move the cursor over a drawing image to display its Save and Close buttons as well as smaller images of the model space and layouts for that drawing. When you move the cursor over one of the model/layout images, they enlarge and the drawing images shrink. 
+You can also create and open a new drawing using the toolbar that displays below the drawing thumbnails. 
+For more information, see “Switch Between Open Drawings” in the AutoCAD Help. 
+
+
+ViewCube 
+The ViewCube is a 3D navigation tool that appears when the 3D graphics system is enabled and allows you to switch between standard and isometric views. 
+
+Once the ViewCube is displayed, it displays in one of the corners of the drawing window over the model in an inactive state. When you position the cursor over the ViewCube, it becomes active. You can switch to one of the available preset views, roll the current view, or change to the Home view of the model. 
+Displaying the ViewCube in the drawing area 
+. Click View tab . Navigate panel .
+. View Cube. 
+NOTE The View Cube is visible by default. An exception to this are the 2D Wireframe and 3D Hidden visual styles, where View Cube is not displayed. 
+ViewCube is also displayed in the Object Viewers. 
+
+NOTE When ViewCube is displayed in the drawing area, you have access to a compass and can define a UCS. In an Object Viewer, no UCS option and no compass are available. 
+The ViewCube is always turned on in Object Viewers. 
+For more information, see “View Cube” in the AutoCAD Help. 
+For information about Object Viewer, see Object Viewer on page 1097. 
+
+
+SteeringWheels 
+SteeringWheels are tracking menus that are divided into different sections known as wedges. Each wedge on a wheel represents a single navigation tool. You can pan, zoom, or manipulate the current view of a model in different ways. 
+SteeringWheels can save you time and clicks by combining many of the common navigation tools into a single interface. Wheels are specific to the context that a model is being viewed in. 
+
+To display SteeringWheels in the drawing area, click View tab . Navigate panel . Full Navigation Wheel. 
+Alternatively, you can right-click in the drawing area (with no objects selected), and click SteeringWheels. 
+You can choose from several different wheels, each with its own drafting theme. Some wheels are designed for 2D navigation, while other wheels are better suited for 3D navigation. 
+The SteeringWheels can also be displayed in the Object Viewers. 
+
+Showing and Hiding the Steering Wheel in an Object Viewer 1 Open the Object Viewer from the context menu of an object or from the Style Manager. 2 Right-click in the view area, and click SteeringWheel. 
+
+Alternatively, you can click 
+3 To close the SteeringWheel, right-click, and click Close Wheel, or 
+click 
+again. 
+For detailed information, see “SteeringWheels” in the AutoCAD Help. 
+
+ShowMotion 
+The ShowMotion feature lets you add movement and transitions to captured camera position called shots. You can create still shots, cinematic shots, or a recorded walk that allows you to click and drag along the path of desired animation. Shots can be grouped together to form sequences called view categories. 
+To start ShowMotion, click 
+ on the application status bar. 
+For detailed information, see “ShowMotion” in the AutoCAD Help. 
+
+
+Working with Tool Palettes 
+Tool palettes provide instant access to a complete inventory of AutoCAD Architecture tools—such as walls, doors, and windows—in one consistent user interface. Highly visual, tool palettes include previews of styles. You can create custom tool palettes that address your specific design needs. For example, you can create a palette to store a list of commonly used curtain wall, stair, and window tools. 
+Tool palette components 
+
+Tool Palettes Set 
+Tool palettes sets contain groups of tool palettes. You can rename the default tool palettes set or create a custom tool palettes set. Additionally, you can add, remove, and rearrange palettes and groups in the set. 
+You can add tool palettes to the tool palettes set from a tool catalog. For example, you could create one tool palette set for imperial tools and another for metric tools. For more information, see Specifying Different Tool Palettes for the Tool Palettes Set on page 83. 
+Only one tool palettes set can be active during an AutoCAD Architecture session, although you can specify different tool palettes for different user profiles. When that profile is used, the collected tool palettes will be combined into one tool palettes set. 
+
+Tool Palettes Group 
+A tool palettes group is a collection of tool palettes. 4 tool palettes groups are available when you start AutoCAD Architecture: Design, Document, Detailing, and Visualization. You can add, rename, remove, export, import, and rearrange tool palettes groups. Tool palettes groups are contained in the tool palettes set. For more information, see “Organize Tool Palettes” and “Save and Share Tool Palettes” in the AutoCAD Help. 
+TIP The quickest way to locate and view an AutoCAD topic referenced in AutoCAD Architecture Help is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+
+Tool Palettes 
+Tool palettes contain collections of tools and represent the individual tabs of a tool palettes group. A number of tool palettes are available from the AutoCAD Architecture Sample Palette catalog. You can create new tool palettes in AutoCAD Architecture or in the Content Browser. Usually you place tools on tool palettes according to tool type or design phase. For example, you could place your wall tools on a tool palette called Walls or your preliminary conceptual tools on a tool palette called Massing Study. When you create a tool palette in the Content Browser, you can link it to AutoCAD Architecture. Whenever the tool palette is updated in the Content Browser, the changes are updated in the tool palette in AutoCAD Architecture too. This is useful for large projects where consistency of styles and tools is necessary. For more information, see Working with Tool Palettes from a Central Location on page 90. 
+
+Tools 
+Tools represent the individual objects you can add to a drawing. A tool contains creation parameters for the object it creates. When you add an object with a specific tool, the object has the settings you defined in the tool. This eases the design process and enhances consistency across a project. 
+For example, you might define a wall tool that contains the style “CMU 8 Furring” and that has automatic cleanup and a baseline offset of 1". Whenever you add a wall with this tool, the wall has the style CMU 8 Furring, it cleans up automatically, and it has an offset of 1". For more information, see Tools on page 93. 
+
+Tool Palettes and the Content Browser 
+When multiple users are working on a large project, consistency of tools is especially important. Typically, the objects for the project and their styles and properties are set up by a CAD manager or system administrator, and then distributed to the team. The administrator can put tools and palettes in a central location in the Content Browser and link them to each user’s computer. Whenever the tools or palettes are updated in the Content Browser, they are updated on the users’ computers too. For more information, see Content Browser Overview on page 137 and Working with Tools from a Central Location on page 109. 
+
+Project Tool Palettes 
+When you are working with an AutoCAD Architecture project, you can design and associate a project tool palette group to the project. The project tool palettes contain the tools used in the project, and can be based on project standards. For detailed information about setting up project tool palettes, see Setting up Standard Tools in a Project on page 608. 
+Opening the Tool Palettes Set 
+To open the tool palettes, set, click Home tab . Build panel . Tools 
+drop-down . Design Tools
+ . 
+
+
+Controlling the Appearance of the Tool Palettes Set 
+Typically, the tool palettes set remains open during the AutoCAD Architecture session. It is the central location from which you add objects to the drawing 
+and start object-related commands. A number of user-definable display options let you optimally integrate the tool palettes with your workspace. 
+
+Docking the Tool Palettes Set 
+Use this procedure to dock the tool palettes set on the left or right side of your workspace. 
+1 In the title bar of the tool palettes set, click 
+, and then click Allow Docking. 
+2 Position the cursor over the title bar, and drag the tool palettes set to one side of the workspace. A preview graphic shows the new position of the tool palettes set. 
+3 Release the tool palettes set when it is in the location you want. 
+
+Hiding the Tool Palettes Set 
+Use this procedure to hide the tool palettes set when it is not in use. The tool palettes set becomes hidden when you move the cursor away from it, leaving only the title bar visible. When you move the cursor over the title bar, the tool palettes set is re-displayed. 
+Tool palettes set hidden (left) and re-displayed (right) 
+
+2 To re-display the tool palettes set, move the cursor over the title bar. 
+
+Adjusting the Transparency of the Tool Palettes Set 
+Use this procedure to adjust the transparency of the tool palettes set. The more transparent the tool palettes set, the more easily you can see objects in your drawing underneath it. 
+NOTE Transparency is not available if hardware acceleration is enabled. 
+1 In the title bar of the tool palettes set, click 
+, and then click Transparency. 
+2 To adjust the transparency of the tool palettes set, move the slider. 
+3 To turn off transparency, select Turn off window transparency. 
+4 Click OK. 
+
+Renaming the Tool Palettes Set 
+Use this procedure to rename the tool palettes set, for example to name it with a project or company name. 
+1 In the title bar of the tool palettes set, click 
+, and then click Rename Palette Set. 
+2 Enter a name for the tool palettes set, and press ENTER. 
+
+Specifying Different Tool Palettes for the Tool Palettes Set 
+Use this procedure to switch between different palette combinations in the tool palettes set. 
+Only one tool palettes set can be active during an AutoCAD Architecture session. You can, however, set different tool palettes for different user profiles. You do this by collecting tool palettes from several locations (paths) in a profile and letting the workspace combine them into one tool palettes set. 
+1 Click 
+. Options. 
+2 Define the tool palettes used for the current session: 
+¦ 
+If you have created a workspace profile containing a tool palettes path, click the Profiles tab, select the desired profile, and click Set Current. 
+
+¦ 
+If you have not created a workspace profile, click the Files tab, and click the Tool Palettes File Location entry. Then click Browse, and browse for a folder containing the desired tool palette. Add paths to all additional tool palettes to be included in the tool palettes set of this profile. 
+
+
+3 Click OK. 
+
+Creating a New Tool Palettes Set 
+Use this procedure to create a new tool palettes set. 
+1 Create a folder in which you will create the new tool palettes set. The default tool palettes set is in \Documents and Settings\<Username>\Application Data\Autodesk\ACA 2011\enu\Support\WorkspaceCatalog (Imperial/Metric). 
+2 Click 
+. Options. 3 Click the Profiles tab. 4 Click Add to List, and create a profile to contain the new tool 
+palettes set; for example Design - Metric Palette Set. 5 Select the new profile, and click Set Current. 6 Click the Files tab. 7 Under Tool Palettes File Locations, select the support path for the 
+previously defined folder in which you will create the new tool palettes set. 
+NOTE If you point to a folder already containing a tool palettes set, a new tool palettes set is not created; instead, the existing tool palettes set is used in the profile. 
+8 Click OK. 
+In the AutoCAD Architecture workspace, an empty tool palettes 
+set is displayed. 
+9 To rename the tool palettes set, click 
+, and then click Rename Palette Set. 10 Add tool palettes and tools to the new set: 
+If you want to… Then… 
+add a new empty tool palette see Creating a New Tool Palette on page 86. 
+add a tool palette from the Content see Adding a Tool Palette from a Browser Tool Catalog in the Content Browser on page 91. 
+add a tool to a palette see Creating a Tool from an Object in the Drawing on page 100. 
+The changes you make are saved to the tool palettes set in the new profile you created. 
+To revert back to your original tool palettes set, select your original profile in the Options dialog. 
+
+
+Creating a New Tool Palettes Group 
+Use this procedure to create a new tool palettes group. 
+1 In the title bar of the tool palettes set, click 
+, and then click 
+Customize Palettes. Alternatively, you can click Manage tab . Customization panel . Tool Palettes. 
+2 Select a palette group, right-click, and click New Group. 
+
+3 Enter a name for the new group, and press ENTER. 
+4 Drag the new group folder to the correct position in the tree structure. 
+5 Select a tool palette from the left pane for the new tool palettes group, and drag it into the new group folder. 
+6 Click Close. 
+TIP The Customize dialog can be very useful for adding palettes to project palette groups. For more information, see Displaying the Project Tool Palette Group on page 623. 
+
+Creating a New Tool Palette 
+Use this procedure to add an empty tool palette to your tool palettes set. 
+After creating the tool palette, you can add tools to it. For more information, see Tools on page 93. 
+1 In the title bar of the tool palettes set, click 
+, and then click New Palette. 
+2 Enter a name for the new tool palette, and press ENTER. 
+
+Defining the Appearance of Tool Palettes 
+Use this procedure to define the appearance of individual tool palettes. 
+The display of the tool palettes depends on the settings you specify for the overall tool palettes set, (as described in Controlling the Appearance of the Tool Palettes Set on page 81), and the settings you specify for individual tool palettes. In the tool palettes set, you specify the transparency, size, position, and auto-hide of the tool palettes set. 
+On the tool palette, you specify the size of tool images and their arrangement on the tool palette. 
+Tool palettes with different sized icons displayed 
+
+When you change tool images to a smaller size, you can display more tools on a tool palette. This might become important if you display different palettes at the same time, such as the Properties palette or the Project Navigator palette. 
+To save space, you can also display tool images without tool text below them. This method is best suited when the icons for your tools are easy to differentiate. If the icon alone proves insufficient to identify a tool, the tooltip for each icon provides additional guidance. 
+Icon-only display on the tool palette 
+
+You can also display tools in a single column on the tool palette. When you are using a single-column list, tool text is always displayed. 
+Tool palette in list view 
+
+To change the Tool palette’s appearance 1 Open the tool palette that you want to change. 2 Right-click the palette, and click View Options. 3 In the View Options worksheet, select the desired View style: 
+
+If you want to… Then… 
+view only tool icons select Icon only for View style. 
+view tool icons and tool text select Icon with text for View style. 
+view tool icons and tool text in a select List view for View style. single column list 
+4 To apply these changes to all palettes in the tool palettes set, select All Palettes for Apply to. 
+5 Click OK. 
+
+
+Adding Text and Separator Lines to Tool Palettes 
+Use this procedure to add separator lines and text to a tool palette. 
+Separator lines can be useful if you want to create subdivisions on a tool palette containing many tools. To annotate a separator line, you can insert a text element. 
+1 Open the tool palette to which you want to add separator lines and text. 
+2 Right-click in the palette between the tools where the separator should go, and click Add Separator. A separator line is inserted between the tools. 
+3 To add text above the separator line, right-click either to the right of the last tool before the separator line, or to the left of the separator line itself, and click Add Text. 
+4 Enter the text you want to display above the separator line, and press ENTER. 
+5 To edit the text, select the text item, right-click, and click Rename. Then, edit the text as necessary. 
+6 To delete a separator line or a text annotation, select the separator line or text, right-click, and click Delete. 
+
+Working with Tool Palettes from a Central Location 
+When multiple users are working on a large project, consistency of tools is especially important. Typically, the objects for the project and their styles and properties are set up by a CAD manager or system administrator, and then distributed to the team. The administrator can put tools and palettes in a central location in the Content Browser and link them to each user’s computer. Whenever the tools or palettes are updated in the Content Browser, they are updated on the users’ computers too. For more information, see Content Browser Overview on page 137. 
+Using tool palettes from the Content Browser 
+
+TIP If you are working with an AutoCAD Architecture project, you can generate a tool catalog based on the standard styles of the project. For more information, see Creating a Tool Catalog for a Project on page 612. 
+
+Adding a Tool Palette from a Tool Catalog in the Content Browser 
+Use this procedure to link a tool palette from a tool catalog in the Content Browser to the tool palettes set in AutoCAD Architecture. 
+For information on creating tool palettes in the Content Browser, see Adding Content to a Tool Catalog on page 165. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 2 Select the tool catalog containing the tool palette you want to 
+copy, right-click, and click Properties. 3 Select Link items when added to workspace, and click OK. 4 Open the tool catalog, and navigate to the tool palette. 5 Move the pointer over the i-drop® icon next to the tool palette 
+so that the pointer image changes to an eyedropper ( 
+). To copy multiple tool palettes, press and hold CTRL while clicking each palette; then position the eyedropper over any of the selected palettes. 
+6 Drag the palette to the tool palettes set in the AutoCAD Architecture workspace. The tool palette is dropped into the tool palettes set. 
+7 Right-click on the palette, and click Properties. 
+
+The text below the check box displays the name of the catalog in the Content Browser from which the palette is updated. 
+If you click that name, it opens the catalog from which the tool palette was linked. 
+8 Select or clear Enable Auto-refresh: 
+If you want to… Then… 
+automatically update the linked tool select Enable Auto-refresh. palette from the Content Browser when starting AutoCAD Architec­ture 
+update the linked tool palette clear Enable Auto-refresh. manually with one of the methods described in Updating a Tool Palette from a Tool Catalog in the Content Browser on page 92 
+The name of the tool palette in the Content Browser (from which the selected tool palette is updated) is displayed under Name. 
+9 Click OK. 
+
+
+Updating a Tool Palette from a Tool Catalog in the Content Browser 
+Use this procedure to update a linked tool palette in the tool palettes set from its source tool catalog in the Content Browser. 
+
+1 Link a tool palette from a catalog in the Content Browser to the tool palettes set, as described in Adding a Tool Palette from a Tool Catalog in the Content Browser on page 91. 
+When a tool palette is linked to the tool palettes set from a catalog in the Content Browser, a Refresh button is displayed at the bottom of the palette. 
+2 Click the Refresh button to update your local tool palette with 
+the latest changes from the catalog in the Content Browser. Alternatively, you can right-click the palette, and click Refresh Palette. 
+NOTE You can also update the whole palette set by clicking 
+in the tool palettes set, and then clicking Refresh Palette Set. This command updates all linked tool palettes in the tool palettes set. 
+
+
+Tools 
+Tools represent the individual objects you can add to a drawing. A tool contains creation parameters for the object it represents. When you add an object with a specific tool, the object has the settings you defined in the tool. The use of tools speeds up the design process and enhances consistency across a project. 
+For example, you might define a wall tool that contains the CMU 8 Furring style and has automatic cleanup and a baseline offset of 1". Whenever you add a wall with this wall tool, the wall has the CMU 8 Furring style, it cleans up automatically, and it has an offset of 1". 
+Standard object tools 
+
+Based on the tool type, you can define general properties such as: 
+¦ Tool name 
+¦ 
+Tool description (also used as the tooltip and as the tool description when the tool is copied to a tool catalog in the Content Browser) 
+
+¦ 
+Description of objects inserted with this tool 
+
+¦ 
+Layer key of objects inserted with this tool 
+
+¦ 
+Layer overrides of objects inserted with this tool 
+
+¦ 
+Object style (if the tool is style-based) 
+
+¦ 
+Location of object style (if the tool is style-based) 
+
+
+In addition, you can define object-specific properties that apply to this tool type. For example, if you create a wall tool, you can set the wall cleanup, width, height, baseline settings, and the roof/floor lines of walls that are inserted with this tool. 
+Style Location 
+Object styles are located in Styles drawings. To assign a style to an object tool, you can either point to a style in the current drawing or to a style in an external drawing. For more information, see Styles and Support Files on page 134. 
+
+Tool Types 
+Tools in AutoCAD Architecture fall into 3 categories. 
+Tool Category Description 
+Object tools An object tool inserts a design object—such as a wall or a window assembly—into a drawing. An object tool has a specific style and specific object properties: for example, a wall tool might be called Brick-4 Brick-4. 
+Command tools Command tools are a graphical represent­ation of an object-related command. For example, the Browse Property Data tool opens a dialog box for browsing the prop­erty data of all objects in a drawing; the Renumber Data tool renumbers property data in selected property sets by increment or by a user-defined number. You can also create your own tools for each command. An AutoCAD general-purpose command 
+
+Tool Category Description 
+tool lets you associate any command or macro. For commands that create an ob­ject, you can also assign basic AutoCAD object properties. For a list of available AutoCAD Architecture command tools, see Using Command Tools on page 104. 
+AEC Content tools You can create tools for frequently used AEC Content items that were created with the AEC Content Wizard. For more inform­ation, see Creating a Tool from AEC Con­
+tent in DesignCenter on page 103. 
+
+
+Project Standard Tools 
+When you are working with an AutoCAD Architecture project, you can set up standard styles that are updated and synchronized throughout the project lifecycle. For more information, see Setting up Standards in a Project on page 593. 
+
+Creating an Object with a Tool 
+Use this procedure to create an object with a tool. 
+
+1 Click Home tab . Build panel . Tools drop-down . Design Tools
+
+ . 
+2 Click the tool palette that contains the tool for the object you want to insert. For example, if you want to insert a bifold double door, click the 
+Doors palette, and navigate to the Bifold Double Door tool. 
+3 Click the tool. 
+4 On the Properties palette, enter any changes you want to make to the default values. 
+NOTE Certain values can be set only when you are inserting the object; for example, the position of a door along the wall into which it is inserted can be defined only when you are inserting the door. You cannot change the position for an existing door later. Values that 
+can be set only during insertion are marked with this symbol 
+on the Properties palette. 
+5 Click in the drawing where you want to insert the object. 
+6 Follow any additional prompts as required to insert one or more objects in the drawing, and then press ENTER. 
+
+Changing the Tool Properties 
+Use this procedure to change the properties of a tool on a tool palette. 
+You can set these general properties for an object tool: 
+¦ 
+Tool name 
+
+¦ 
+Tool description (also used as the tooltip and as the tool description when the copied to a tool catalog in the Content Browser) 
+
+¦ 
+Description of objects inserted with this tool 
+
+¦ 
+Layer key of objects inserted with this tool 
+
+¦ 
+Layer overrides of objects inserted with this tool 
+
+¦ 
+Object style (if the tool is style-based) 
+
+¦ 
+Location of object style (if the tool is style-based) 
+
+
+In addition, you can define object-specific properties that apply to this object type. For example, if you create a wall tool, you can set the wall cleanup, width, height, baseline settings, and the roof/floor lines for all walls inserted with this tool. 
+1 Click Home tab . Build panel . Tools drop-down . Design Tools
+
+ . 2 Click a tool palette. 3 Select the tool, right-click, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. 6 Expand Basic, and expand General. 7 Enter a description of the objects that you can create using this 
+tool. 8 Specify a layer key and any layer key overrides; otherwise, the layer assignments specified in the layer key style in the drawing are used. 9 Click Browse for Style location, if the location is other than the current drawing to select an object style. 10 Add object-specific properties. 
+NOTE When you click a property to enter a value, the value underneath the current property is hidden and the property field is highlighted. Enter a value for the current property in the appropriate location. 
+11 Click OK. 
+
+Changing a Tool Icon 
+Use this procedure to change the icon of a tool. 
+When you add a new tool to a tool palette, it displays either the icon of the tool it was copied from or a default icon. You can change the icon by selecting a new one from an image file or from an object in the drawing. You can also choose to display the icon as simple monochrome linework. 
+Changing the tool icon 
+
+You can use the following image formats for tool icons: 
+¦ 
+PNG 
+
+¦ 
+GIF 
+
+¦ 
+JPG 
+
+¦ 
+BMP 
+
+¦ 
+TIFF 
+
+
+NOTE Icons in the tool palettes can have a maximum size of 64 x 64 pixels. Larger images are scaled when inserted. To change the display size of the tool on the palette, see Defining the Appearance of Tool Palettes on page 87 
+To copy an icon image from a file 1 Click Home tab . Build panel . Tools drop-down . Design Tools
+
+ . 2 Click the tool palette that contains the tool for which you want to select a new icon. 
+3 Select the tool, right-click, and click Properties. 
+4 In the Tool Properties worksheet, right-click the existing icon, and click Specify Image. 
+
+5 In the Select Image File dialog, select the image you want to use as a tool icon, and click Open. 
+6 Click OK. 
+7 To display a tool as simple monochrome linework, in the Tool Properties worksheet, right-click the existing icon, and click Monochrome. 
+The monochrome option is not available for all tools. 
+
+To create an icon from an object in the drawing 
+1 Select the tool on the tool palette, right-click, and click Set Image from Selection. 
+2 Select the object in the drawing you want to use as a tool icon, and press ENTER. 
+The tool icon is created with the last view direction and display configuration used in the viewer of any tool of this type. For example, if the tool viewer of the last-used wall tool is set to Top view and the Medium Detail display configuration, any wall you select in the drawing as a tool icon is displayed in Top view and with the Medium Detail display configuration. 
+You cannot create icons from objects that contain custom blocks, curtain walls, or door/window assemblies with nested styles. If you need to create an icon based on a custom block, specify an external image. 
+
+
+Changing a Tool Icon 
+Use this procedure to change a tool icon after editing the viewer settings of the tool. 
+1 Click Home tab . Build panel . Tools drop-down . Design Tools
+
+ . 2 Click the tool palette that contains the tool icon you want to 
+refresh. 
+3 Select the tool, right-click, and click Properties. 
+4 In the Tool Properties worksheet, change the viewer settings of 
+the tool image. 
+For example, switch from a SW Isometric view to a Top view. 
+5 Right-click the existing icon, and click Refresh Image. 
+
+6 Click OK. 
+
+Creating a Tool from an Object in the Drawing 
+Use this procedure to create a tool from an object in the drawing. 
+You can create only object tools with this method. For information on creating command tools, see Using Command Tools on page 104. 
+Creating a tool from an object in the drawing 
+
+1 Create an object with the appropriate style and properties in the drawing. 
+IMPORTANT The drawing containing the style should be saved to a location where it will be available in the future. Otherwise, the tool will not be able to access the style, and will revert to the Standard style. 
+2 Open the tool palette where you want to create the new tool. 3 Select the object, and drag it onto the tool palette. 4 Define additional properties for the tool, if necessary. 
+For more information, see Changing the Tool Properties on page 97. 
+
+
+Copying a Tool from a Tool Palette 
+Use this procedure to copy a tool from one tool palette to another. 
+1 Open the tool palette that contains the tool you want to copy. 2 Select the tool, right-click, and click Copy. 3 Open the tool palette onto which you want to copy the tool, 
+right-click, and click Paste. 4 Change the properties of the tool, if necessary. For more information, see Changing the Tool Properties on page 97. 
+Creating a Tool from the Style Manager 
+Use this procedure to create a tool from a style in the Style Manager. 
+Creating a tool from the Style Manager 
+
+1 Open the tool palette where you want to create the new tool. 
+2 Click Manage tab . Style & Display panel . Style Manager
+ . 3 Select the style from which you want to create a tool. For example, if you want to create a wall tool with the Stud-3.625 GWB-0.625 Each Side (1 Hour) style, expand Wall Styles, and select the Stud-3.625 GWB-0.625 Each Side (1 Hour) style. 
+4 Drag the style to the tool palette. A new tool with the selected style is inserted in the tool palette. 
+5 Click OK to close the Style Manager. 
+6 Define additional properties for the tool in the tool palette, if necessary. For more information, see Changing the Tool Properties on page 
+97. 
+
+Creating a Tool from AEC Content in DesignCenter 
+Use this procedure to create a tool from an AEC Content item in DesignCenter. 
+NOTE You can also create tools from blocks in DesignCenter, but they have slightly different tool options. 
+You can drag and drop AEC content items from a DesignCenter folder to a tool palette. For more information on creating AEC Content, see Adding AEC Content to Drawings on page 3874. 
+AutoCAD Architecture provides the Design Tool Catalog and the Documentation Tool Catalog in the Content Browser. These catalogs already have tools set up for predefined AEC Content and sample object styles. The catalogs are available for both metric and imperial units. 
+Creating a tool from AEC Content in DesignCenter 
+
+1 Open the tool palette where you want to create the new tool. 
+2 Click Insert tab . Content panel . Content Browser drop-down . Design Center, and navigate to the AEC Content item from which you want to create a tool. 
+3 Drag the item to the tool palette. 
+A new tool is inserted on the tool palette. 
+To change the icon of the new tool, see Changing a Tool Icon on page 98. 
+NOTE An AEC Content tool uses the last-used viewer settings for a tool of this type to generate the tool icon. If the last-used viewer setting is Gouraud 3D view, and the user creates a tool from a 2D AEC Content item, the tool icon will be invisible. In this case, you need to change the viewer setting of the tool to a Top view, and wireframe. 
+4 Define additional properties for the tool, if necessary. For more information, see Changing the Tool Properties on page 97. 
+
+Using Command Tools 
+Command tools are used to execute frequently used commands for tasks other than AEC object creation. For example, the Browse Property Data tool opens a dialog for browsing the property data of all objects in a drawing; the Renumber Data tool renumbers property data in selected property sets. There are a number of preconfigured command tools in the software; you can, however, create a user-defined command tool from any AutoCAD and AutoCAD Architecture command, AutoLISP routines, VBA macros and applications, and scripts. 
+
+Using Predefined Command Tools 
+AutoCAD Architecture provides the following predefined command tools for commonly used tasks in a default US install: 
+Tool Palette Group/Palette Description 
+Horizontal Sec-Design/Design Generates a horizontal section. tion 
+Vertical Section Design/Design Generates a vertical section. 
+Renumber Data Document/Tag Lets you renumber objects that are included in a schedule or linked to schedule tags. 
+
+Tool Palette Group/Palette Description 
+Edit Property Set  Document/Scheduling  Lets you edit the property set data  
+Data  attached to selected objects and  
+their styles.  
+
+Browse Property Document/Scheduling Lets you access and view the data Set Data for all property sets in a drawing. 
+Space Evaluation Document/Scheduling Starts the space evaluation. 
+AEC Entity Refer- Content Browser/Stock Tool  Lets you create a reference copy  
+ence  Catalog/Helper Tools  from one object to another in Auto- 
+CAD Architecture.  
+
+Quick Slice  Content Browser/Stock Tool  Lets you define a cross section  
+Catalog/Helper Tools  through one or more three-dimen­ 
+sional (3D) objects in a drawing (in­ 
+cluding mass groups, AutoCAD  
+blocks, and external references) and  
+extract a polyline outline that can be  
+used to produce a profile shape.  
+
+Hidden Line Pro- Content Browser/Stock Tool  Lets you create flat 2D projections  
+jection  Catalog/Helper Tools  with hidden background lines from  
+a 3D view of objects in your draw­ 
+ing.  
+
+Napkin Sketch Content Browser/Stock Tool Lets you create freehand sketch Catalog/Helper Tools geometry from objects in a drawing. 
+Chamfer Content Browser/Stock Tool Lets you chamfer two walls in a Catalog/Drafting Tools drawing. 
+Hatch and Gradi- Content Browser/Stock Tool  Lets you define the boundaries, pat­ 
+ent  Catalog/Drafting Tools  tern type, pattern properties, and  
+other parameters for hatch and  
+gradient fill objects.  
+
+Shrink Wrap  Content Browser/Stock Tool  Lets you create a profile or shrink- 
+Catalog/Drafting Tools  wrap outline around any collection  
+of contiguous linework entities, in­ 
+cluding architectural objects.  
+
+
+Tool Palette Group/Palette Description 
+Welding Symbols Content Browser/Stock Tool Lets you create and edit welding Catalog/Drafting Tools symbols. 
+Area Content Browser/Stock Tool Lets you measure the area of an ob­Catalog/Measurement Tools ject or a user-defined space. 
+Attribute Extrac- Content Browser/Stock Tool  Lets you extract object data from  
+tion  Catalog/Measurement Tools  drawings and export it to a table or  
+external file.  
+
+Distance Content Browser/Stock Tool Lets you measure the distance Catalog/Measurement Tools between 2 user-selected points. 
+Point ID Content Browser/Stock Tool Lets you display the coordinates of Catalog/Measurement Tools a user-selected location. 
+Region/3D Solid Content Browser/Stock Tool Lets you calculate the mass proper-Mass Properties Catalog/Measurement Tools ties of regions or 3D solids 
+Cell Anchor  Content Browser/Stock Tool  Lets you attach objects to cell posi­ 
+Catalog/Parametric Layout  tions on layout grids and volume  
+& Anchoring Tools  grids.  
+
+Curve Anchor  Content Browser/Stock Tool  Lets you attach AEC objects to the  
+Catalog/Parametric Layout  base curve of other AEC objects or  
+& Anchoring Tools  linework, such as lines, arcs, circles,  
+mass elements, polylines, roofs, or  
+walls.  
+
+Leader Anchor  Content Browser/Stock Tool  Lets you anchor objects to nodes on  
+Catalog/Parametric Layout  layout curves or grids with leaders.  
+& Anchoring Tools  
+
+Node Anchor  Content Browser/Stock Tool  Lets you attach objects to nodes on  
+Catalog/Parametric Layout  layout curves or grids.  
+& Anchoring Tools  
+
+Object Anchor  Content Browser/Stock Tool  Lets you attach an AEC object to the  
+Catalog/Parametric Layout  base curve of another AEC object.  
+& Anchoring Tools  
+
+
+To use a preconfigured command tool 
+. Navigate to the location of the desired command tool in the tool palettes or in Content Browser: 
+¦ 
+If the command tool is located on a tool palette, click it to start the command sequence. 
+
+¦ 
+If the command is located in Content Browser, either drag it to the drawing area to directly start the command, or drag it to a tool palette, and start the command from there. 
+
+
+
+
+Using User-Defined Command Tools 
+AutoCAD Architecture has 2 blank command tools that can be customized for user-defined commands. 
+¦ 
+Command Tool: A simple blank command tool that lets you execute a number of command sequences. Allowed commands include AutoCAD and AutoCAD Architecture commands, VBA macros and applications, AutoLISP routines, and scripts. 
+
+¦ 
+Command Tool with Properties: Use this tool for commands that generate AutoCAD objects like lines, AutoCAD dimensions, or solids. The property settings for color, layer, linetype, and lineweight that you can set in the tool will only be used when creating AutoCAD objects. If you were to create an AEC object with this tool, the layer, color, and linetype settings specified in the display system for this object would take precedence. If you want to create AEC objects with a command tool, the simple Command Tool is recommended. 
+
+
+Command tools are created by copying the blank command tool from Content Browser to a tool palette, and editing the command properties. 
+Creating a Simple Command Tool 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 2 Navigate to Stock Tool Catalog . Helper Tools. 3 Move the cursor over the i-drop icon next to the regular command 
+tool and drag the tool to a tool palette. 4 On the tool palette, select the command tool, right-click, and click Properties. 
+Command tool properties 
+
+5 Change the following tool properties as necessary: 
+
+Property Description 
+Name Lets you replace the generic com­mand tool name with a name that describes the function of the tool. 
+Description Lets you add a more detailed de­scription to the command tool. 
+Layer key Specifies the layer key to define the layer on which objects created with this command will be inserted. 
+Layer overrides Defines overrides for the selected layer key. 
+Command 
+Specifies the command to be ex­ecuted by the tool. The following command types are valid within the Command Tool: 
+¦ 
+AutoCAD and AutoCAD Archi­tecture commands 
+
+¦ 
+AutoLISP routines 
+
+¦ 
+VBA macros and applications 
+
+¦ 
+Scripts 
+
+
+
+Property Description 
+Image By default, the command tool has no associated image. To add an image that illustrates the function of the tool, right-click in the empty image area, and select an image as described in Changing a Tool Icon on page 98. 
+6 Click OK. 
+
+
+Working with Tools from a Central Location 
+You can use the Content Browser to store and organize catalog tools in a central location. A number of stock tools are available in the AutoCAD Architecture Stock Tool Catalog. Additionally, sample catalogs contain tools with styles from the Styles drawings. You can copy these tools to a tool palette and modify them. You can also create your own tool palettes and tools in a catalog in the Content Browser, copy them to a tool palette, and retain the link from the Content Browser to the tool palette. In this case, the tool is refreshed on the tool palette when it is modified in the catalog in the Content Browser. 
+NOTE If you want to link a complete tool palette from the Content Browser to AutoCAD Architecture, see Adding a Tool Palette from a Tool Catalog in the Content Browser on page 91. 
+
+Linking a Tool from a Catalog in the Content Browser 
+Use this procedure to link a tool from a catalog in the Content Browser to a tool palette in AutoCAD Architecture. 
+Linking a tool from a catalog in the Content Browser 
+
+1 Open the tool palette on which you want to place a tool from the Content Browser. 
+2 Click Home tab . Build panel . Tools drop-down . Content 
+Browser 
+, and navigate to the tool palette or category in the 
+tool catalog that contains the tool you want to copy. For more information, see Searching for Items in a Tool Catalog on page 163. 
+3 Move the pointer over the i-drop icon next to the tool, so that 
+the pointer image changes to an eyedropper ( 
+). To copy multiple tools, press and hold CTRL while clicking each tool; then position the eyedropper over any of the selected tools. 
+You can also select all the tools in the current category by 
+right-clicking, and clicking Select All. 
+4 Drag the eyedropper to a tool palette in the tool palettes set. 
+5 To refresh the tool, select it, right-click, and click Refresh Tool. Alternatively, you can select the tool in the tool palette, right-click, and click Properties. Then select Refresh from on the Properties worksheet. 
+Refreshing a tool from the Properties worksheet 
+
+NOTE When you select Refresh from, all tool properties on the worksheet are set to read-only. Properties for this tool must be changed in the Content Browser. 
+6 Click OK. 
+
+Updating a Tool in AutoCAD Architecture from the Content Browser 
+Use this procedure to update a tool in a tool palette when the tool is linked to the Content Browser. 
+NOTE You cannot change and update tools from the Stock Tool Catalog in the Content Browser. Those tools are read-only. 
+1 Open the tool palette that contains the tool you want to update. 2 Select the tool, right-click, and click Refresh Tool. 
+
+Updating a Tool in the Content Browser from a Linked Tool in AutoCAD Architecture 
+Use this procedure to update a tool in a catalog in the Content Browser with the properties of a linked tool from AutoCAD Architecture. 
+For example, perhaps you have a tool in the Content Browser that adds a Box mass element of 3 x 3 x 3 meters. You want to change the tool so that it adds a Box mass element of 4 x 4 x 4 meters. You would first link the mass element tool from the Content Browser to a tool palette in AutoCAD Architecture. Then, temporarily deactivate the link and change the dimension properties of the tool to 4 x 4 x 4 meters. Next, copy the tool back to the Content Browser. The Content Browser catalog is updated with the new tool properties. Finally, reactivate the link from the Content Browser tool to the AutoCAD Architecture palette. 
+1 Link a tool from a catalog in the Content Browser to a tool palette as described in Linking a Tool from a Catalog in the Content Browser on page 109. 
+2 Select the tool in the tool palette, right-click, and click Properties. 3 On the Tool Properties worksheet, clear Refresh from. The tool properties can now be edited. 
+4 Make the necessary changes to the tool properties. 5 Click OK. 6 Select the tool in the tool palette, and copy it to its original 
+location in the Content Browser catalog. 
+NOTE You can copy a tool to a catalog in the Content Browser using the Copy and Paste commands from the context menu, or by dragging the tool onto the Content Browser icon in the Windows task bar. To select multiple tools in a tool palette, use CTRL-A to select all or drag while holding the CTRL key to create a selection window. 
+7 Click Yes when prompted to overwrite the previous version of the tool. 
+8 If you want to refresh the tool in the AutoCAD Architecture tool palette from the new version stored in the Content Browser, re-open the tool properties for the tool on the tool palette, and select Refresh from. 
+
+Removing the Link of a Tool to a Catalog in the Content Browser 
+Use this procedure to permanently remove the link between a tool and its source tool in the Content Browser. 
+NOTE This action cannot be undone. 
+1 Open the tool palette that contains the tool you want to unlink from a catalog in the Content Browser. 
+2 Select the tool, right-click, and click Remove Catalog Link. 
+
+Applying the Properties of a Tool to an Existing Object 
+Use this procedure to apply the properties of a tool to an existing object. 
+You can apply the properties of a tool to an existing object in two ways: 
+¦ 
+Apply the properties of a tool to an object of the same type: For example, apply the properties of a wall tool to an existing wall. All object tools have this functionality. 
+
+¦ 
+Apply the properties of a tool to a different object type: Using this method, you convert the object to an object of the same type as the tool. For example, when you apply the properties of a wall tool to a polyline, the polyline is converted to a wall with the settings defined in the wall tool. Depending on their type, various object tool types may have commands for converting other objects. For detailed information, see the chapters for the individual objects. 
+
+
+1 Open the tool palette that contains the tool with the properties you want to apply to a different object. 
+2 Select the tool, and right-click. 
+3 Define the object type to which to apply the tool properties: 
+if you want to… Then… 
+apply the properties of the tool to  click Apply Tool Properties to <Ob­ 
+an object of the same type  ject>. For example, to apply the  
+tool properties of a door tool to an  
+existing door, click Apply Tool  
+Properties to Door.  
+
+apply the properties of the tool to  click Apply Tool Properties  
+an object of a different type  to . <Object>. For example, to  
+apply the tool properties of a door  
+tool to an opening, click Apply Tool  
+Properties to . Door/Window As­ 
+sembly, Opening, Window.  
+
+4 Select the object to which to apply the tool properties, and press ENTER. 
+
+Re-Importing Styles for a Tool 
+Use this procedure to re-import the style of a tool that uses a style from an external Styles drawing. 
+When you create a tool, you can assign a style from the current drawing or from an external Styles drawing. Usually you assign a style from an external Styles drawing because you can then use that the tool in other drawings as well. 
+When the style in the external Styles drawing is changed, you need to update the tool to reflect these changes. 
+NOTE When you update the style of a tool, all existing objects inserted with this tool are also updated. 
+1 Open the tool palette that contains the tool for which you want to update the style. 
+2 Select the tool, right-click, and click Import <Style Name> <Object Name> Style. 
+For example, if you want to update the Brick-4 Furring-4 style of a wall tool, click Import ‘Brick-4 Furring-4’ Wall Style. 
+
+Deleting a Tool 
+Use this procedure to delete a tool from a tool palette. 
+When you delete a tool from a tool palette, objects in the drawing that were inserted with this tool are not deleted. 
+NOTE If you linked a tool palette from the Content Browser to the tool palettes set as described in Adding a Tool Palette from a Tool Catalog in the Content Browser on page 91, you cannot delete individual tools from it. To delete the tool, delete it from the palette in the Content Browser, and then update the palette in AutoCAD Architecture as described in Updating a Tool Palette from a Tool Catalog in the Content Browser on page 92. 
+1 Open the tool palette that contains the tool you want to delete. 2 Select the tool, right-click, and click Delete Tool. 
+
+
+The Properties Palette 
+The Properties palette provides a central location to view and modify both the physical and graphical properties of an object you are about to draw, or of objects that are selected in the drawing area. Using the Extended Data tab of the Properties palette, you can also attach other kinds of information to an object, such as classifications, notes, reference documents, hyperlinks, and property set data. You typically keep the Properties palette open during an AutoCAD Architecture session. 
+
+Opening the Properties Palette 
+Use any of the following methods to open the Properties palette: 
+¦ 
+Click Home tab . Build panel . Tools drop-down . Properties. ¦ Press CTRL+1. 
+
+¦ 
+Double-click an object in the drawing. 
+
+
+
+Setting the Appearance of the Properties Palette 
+The Properties palette is usually kept open during an AutoCAD Architecture session, because it is the central location from which you add and change properties of an object. 
+
+Docking the Properties Palette 
+Use this procedure to dock the Properties palette on the left or right side of your workspace. 
+1 In the title bar of the Properties palette, click 
+, and then click Allow Docking. 
+2 Position the cursor over the title bar, and drag the Properties palette to one side of your workspace. A preview graphic shows the new position of the Properties palette. 
+3 Release the Properties palette at the correct location. 
+
+Hiding the Properties Palette 
+Use this procedure to hide the Properties palette when it is not in use. The Properties palette can be configured to hide when you move the cursor away from it, leaving only the title bar visible. When you move the cursor over the title bar, the Properties palette is re-displayed. 
+Properties palette hidden (left) and re-displayed (right) 
+
+1 In the title bar of the Properties palette, click 
+(Auto-hide). The Properties palette is hidden, except for the title bar. 
+2 To re-display the Properties palette, move the cursor over the title bar. 
+
+Adjusting the Transparency of the Properties Palette 
+Use this procedure to adjust the transparency of the Properties palette. The more transparent the Properties palette, the better you can see objects in your drawing underneath it. 
+NOTE Transparency is not available if hardware acceleration is enabled. 
+1 In the title bar of the Properties palette, click 
+and then click Transparency. 
+2 To adjust the transparency of the Properties palette, drag the slider towards Less or More. 
+3 To turn off transparency, select Turn off window transparency. 
+4 Click OK. 
+
+The Design Tab 
+Most properties of an object are entered on the Design tab of the Properties palette. 
+Design tab of a wall 
+
+Based on the object, some general object properties you can enter may include: 
+¦ 
+Description of the object 
+
+¦ 
+Layer key of the object 
+
+¦ 
+Layer overrides of the object 
+
+¦ 
+Object style 
+
+¦ 
+Location of object style 
+
+
+These properties are defined by the properties set in the tool used to create the object. You can change these properties for an individual object instance. For more information, see Changing the Tool Properties on page 97. 
+On the Design tab, you also enter object-specific design properties. The properties that are available depend on the object you are editing. 
+¦ Dimensions: Most objects in AutoCAD Architecture have dimension settings for width, height, and other basic features. Many objects have additional settings and the option to use AutoCAD QuickCalc. A wall, for example, has additional length and baseline justification settings, and you can use 
+QuickCalc to calculate and apply a new rotation. For more information, 
+see “Use the QuickCalc Calculator” in AutoCAD Help. 
+¦ Location: Most objects in AutoCAD Architecture have settings for the object location. Anchored objects like windows and doors also have Anchor properties. 
+For detailed information about entering properties for a specific object, see the individual object sections. 
+
+The Display Tab 
+Just as the Design tab of the Properties palette lets you control the physical properties of an object, the Display tab lets you control the graphical properties of an object by adjusting the settings for its individual display components, such as boundaries and hatches. The changes you make on this tab are immediately visible in the display representation currently in effect, such as Plan or Model, and you have the option of applying your changes to other display representations as well. Also, while Design tab settings apply only to the currently selected object(s), you can specify whether a change you make to a Display tab property will apply to the selected component for all objects of that type, all objects of that style, or only the selected object. If the display component is controlled by material, your changes will apply to any object that uses that material. For detailed information on how to set up and manage the display of objects in AutoCAD Architecture, see Display System on page 777. 
+NOTE To hide the Display tab (or show it if it is currently hidden), enter the following command on the command line: AecChangeDisplayTabStatus. 
+Display properties on the Display tab 
+
+
+The Extended Data Tab 
+The Extended Data tab of the Properties palette contains the following object properties: 
+¦ 
+Hyperlink: You can add a hyperlink to an object. For more information, see “Add Hyperlinks to a Drawing” in AutoCAD Help. 
+
+¦ 
+Text Notes and Reference Files: You can add a note or an associated reference file to an object. 
+
+¦ 
+Property Sets: You can add, edit, and remove property set data for an object. For more information, see Attaching Property Set Data to Objects on page 3773. 
+
+¦ 
+Property Sets From Style: You can add, edit, and remove property set data for the object style. For more information, see Property Set Data on page 3772. 
+
+¦ 
+Detail Component Data: You can add, edit, and remove detail component data for an object. For more information, see Editing Detail Components in a Drawing on page 3501. 
+
+
+Property set data on the Extended Data tab 
+
+
+Worksheets 
+The properties of an object are entered and changed on the Properties palette. Most properties are directly entered and immediately updated on screen. Some objects have complex properties that are entered on worksheets accessed from the Properties palette. 
+Worksheets are designed to focus on a particular object-specific task. They display only when they are launched from a palette or from an object. 
+Opening the Anchor worksheet 
+
+A worksheet is a modal dialog that must be closed before continuing to work in the drawing. 
+
+
+Direct Editing with Grips and Dynamic Dimensions 
+You can make design changes in the workspace without using dialogs. With a single click, you can perform design changes such as adjusting door width and window height, modifying a wall roofline, or reversing the wall direction. For some grips, the CTRL key gives you additional manipulation options, which are identified in the grip tips. For example, the Width grip of a wall can maintain either the wall baseline or the opposite face of the wall when dragged. To switch between these options, you use the CTRL key. As you make design changes, dynamic dimensions display, ensuring that your changes are precise and accurate. 
+Window dimension grips in Plan view and Model view 
+
+Different grips are available, depending on the object type. For example, a wall or a freestanding railing has a direction (arrow) grip to change the direction of the object. A railing that is attached to a stair or a structural member does not have a direction grip. 
+Objects can also have different grips depending on the current view. For example, a structural beam has an additional Roll grip in Model views that is not visible in Plan views. Because rolling a beam is a 3D operation that you can perform only in an isometric view, it makes no sense to display the Roll grip in Plan views. Similarly, roof and floor line grips are useful only in a 3D view; therefore, they are displayed only in Model views. 
+Curtain wall grips in Plan view and Model view 
+
+For detailed information about the grips for AutoCAD Architecture objects, refer to the illustrations and descriptions in the grip-editing sections of the individual object topics. 
+Grip Tips 
+For a quick description of the function of a specific grip, you can pause the cursor over the grip to display its grip tip. Each grip has its name displayed in the grip tip, for example, Flip or Lengthen. In some cases, the grip tip contains additional information about the grip’s function. 
+
+
+Grip Color 
+The color of a grip specifies whether the grip modifies a selected object or other objects in a drawing. Typically, a grip is used to change a property of a selected object. However, some grips might change the properties of all other objects in a drawing with the same style as the selected object. Other grips do not change the selected object at all, but are used to change the grip-editing mode of the object. 
+Grip Type and Default Color Function 
+Object (Cyan) changes a property of a selected object 
+Style (Magenta) changes a property of a selected object and all other objects with the same style in the current drawing 
+Auxiliary (Gray) does not change any property of any object 
+
+You can change the color of these grips on the AEC Editor tab in the Options dialog which is accessed from the application menu. For more information, see Changing the AEC Editor Settings on page 203. 
+
+
+Using the CTRL Key with Grips 
+Some object grips have multiple functions. For example, a face grip on a free form mass element has these possible grip modes: 
+¦ 
+Move ortho 
+
+¦ 
+Move 
+
+¦ 
+Move plane 
+
+¦ 
+Pull ortho 
+
+¦ 
+Pull 
+
+¦ 
+Push ortho 
+
+
+When a grip has multiple modes, this information is displayed in the grip tip. To switch between the different grip modes, use the CTRL key. 1 Select the object. 2 Pause the cursor over the grip, to see what grip modes are 
+available. The first mode listed is the mode that will be started when you select the grip without using the CTRL key. 
+3 Select the grip. 4 Press CTRL to switch to the next editing mode. 
+NOTE You need to press the CTRL key only once, and then release it. This switches the grip to the next editing mode. After releasing the CTRL key, you can start editing the grip. Do not keep pressing CTRL while editing the grip. 
+
+Trigger Grips 
+Selecting a trigger grip immediately performs an action on an object, as opposed to a normal drag grip, which you must drag to change a dimension property. You can use trigger grips to set discrete properties of an object, such as the swing direction of a door or the justification of a wall. You can also use trigger grips to change the grip-edit mode of an object. For example, selecting the Edit Grid grip in a curtain wall opens an edit in place session for the curtain wall grid. Selecting the Edit In Place grip in an AEC dimension activates additional grips for the individual dimension chains, text strings, and extension lines. A trigger grip typically displays with a circle or an arrow. 
+AEC dimension before and after activating edit-in-place grip 
+
+In some cases, such as with the AEC Dimension edit-in-place grip, the grip-edit mode is exited when the object is no longer selected. In other cases, you must click the grip again to exit the grip-edit mode. 
+
+
+
+Dynamic Dimensions 
+When you use grips to change the dimension or angle of an object, temporary dimension objects show you the changes you are making. Use Dynamic Input to enter a precise value instead of moving a grip. This is active by default, and selecting a grip displays a text box in which you can enter the desired value 
+for the associated dimension or angle. Click 
+(Dynamic Input) on the application status bar to toggle this off. For more information, see “Use Dynamic Input” in AutoCAD Help. 
+Using dynamic dimensions to change window width 
+
+These dynamic dimensions give you instant feedback about your changes. You can also use the dynamic dimensions to enter new dimension values directly on screen. 
+
+Three types of dynamic dimensions display on grips: 
+¦ 
+Focal dimensions, which display highlighted in a white rectangular box. If you type a value while a dynamic dimension is focused, the edit box is displayed at the dimension text location. 
+
+¦ 
+Editable dimensions, which display based on the drafting settings you specify. If you press TAB while a dynamic dimension is focused, the dimension focus shifts forward to the next editable dimension. You can continue pressing TAB to cycle forward through all editable dimensions, or press SHIFT+TAB to cycle backward through all editable dimensions. 
+
+¦ 
+Non-editable dimensions, which display in black text. These dimensions typically display the current value of a property that you can modify with a grip. 
+
+
+You can apply different settings, such as the color of the dynamic dimension text box, on the Dynamic Input tab in the Drafting Settings dialog box. For more information, see “Use Dynamic Input” in AutoCAD Help. 
+You can select the color of grips and the dynamic dimension linetype on the AEC Editor tab in Options. For more information, see Changing the AEC Editor Settings on page 203. 
+NOTE When a dimension edit box is displayed, pressing ENTER sets the value of the property that you are editing and ends the grip operation. Pressing TAB sets the value, changes the focused dimension, and continues the same grip-editing operation. 
+NOTE When one or more editable dimensions are displayed, you can always press TAB to a state where no dimension has focus, during which you can use normal entry on the command line. You can always reach this non-focused state by pressing SHIFT+TAB immediately after selecting a grip. 
+To enter dynamic dimensions 
+1 Select the grip representing the dimension you want to change. For example, to change the length of a curtain wall, select one of its Lengthen grips. 
+2 Enter the new value on screen. 
+
+
+Grip Constraints 
+When you select and drag a grip, its final position might not be the same as the current cursor position, which might be constrained. For example, for the Lengthen grip on a linear wall, the cursor position is projected to the nearest point on the wall. Whenever the constrained position of a grip differs from the current cursor position, dotted lines or arcs display between the cursor and the grip to indicate how the grip was constrained. 
+A square-shaped grip typically indicates that the cursor movement is constrained to a plane. An isosceles triangle-shaped grip indicates that the cursor movement is constrained to a line or curve. 
+
+Temporary Grip Coordinate Systems 
+When you drag a grip, the current cursor position is typically projected to the XY plane of the current User Coordinate System (UCS). Some grip-editing operations are not possible in the current coordinate system. For example, if the current UCS is in plan, you cannot change the height of a wall while in an isometric view. For this reason, some grips have their own coordinate 
+system that is temporarily set while the grip is active. Once the grip-editing operation is complete, the UCS is set back to its previous state. To identify whether a grip is setting a temporary coordinate system, set the UCSICON system variable to On on the command line, and display the icon at the origin. 
+
+
+Aligning the UCS to an Object Face 
+Use this procedure to align the currently active UCS to the face of an object. 
+You can align the UCS to the face of an AEC object or to the face of an AutoCAD solid. For detailed information about the UCS, see “Use Coordinates and Coordinate Systems“ in AutoCAD Help. For more information about working with objects in a temporary section, elevation, or plan view with the UCS correctly aligned, see Editing Objects in Temporary Views on page 1121. 
+Aligning the UCS to a pyramid face 
+
+1 Click View tab . Coordinates panel . Face
+ . 2 Select an object face to align to the UCS. You can select the face of an AEC object or an AutoCAD solid here. When you move the cursor over a face, it is highlighted with a temporary hatch. 
+3 Select the UCS origin point on the selected face. 4 Enter a rotation value for the new UCS. The UCS is aligned to the object face. 
+
+Matching Object Properties 
+AutoCAD users are likely to be familiar with the Match Properties command (MATCHPROP), which allows you to quickly copy properties such as layer, color, and linetype from one AutoCAD entity and apply them to another. Beginning with the 2009 releases of AutoCAD Architecture and AutoCAD MEP, you can also use this command to match style and object display properties between AEC objects of the same type (for example, 2 different sizes of door) or between AutoCAD MEP objects of the same type. For AEC objects of different types (for example, a door and a window) you can use the command to match basic AutoCAD properties. Likewise, you can match basic AutoCAD properties between an AutoCAD entity and an AEC object. 
+When you match properties between style-based AEC objects, both the style properties and the display properties of the selected source object are applied to one or more selected destination objects. For non-style-based objects, only display properties are matched. In either case, the display properties are applied to all display representations of the destination object. 
+Object Types for Which Both Style Object Types for Which Only Display and Display Properties Are Matched Properties Are Matched 
+2D Section  3D Grid  
+AEC Dimension  Ceiling Grid  
+AEC Polygon  Column Grid  
+Curtain Wall  Elevation Label  
+Curtain Wall Unit  Layout Curve  
+Display Theme  Layout Grid  
+Door  Opening Roof  
+Door Window Assembly  
+Mask Block  
+Mass Element  
+Multi-View Block  
+Railing  
+Roof Slab  
+Schedule Table  
+Slab  
+Space  
+Stair  
+Structural Members  
+Wall  
+Window  
+Zone  
+
+Overrides 
+When you use the Match Properties command, any style or object overrides in effect for the source object are applied to all display representations of the 
+destination object. Overrides currently in effect for the destination object will be removed if they conflict with corresponding settings for the source object. If you want to change a setting for a particular display property in a particular display representation, the recommended method is to use the Display tab of the Properties palette. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+To run the Match Properties command: 
+1 Click Home tab . Modify panel . Match Properties
+ . The cursor changes to a paintbrush symbol. 
+2 Select the source object whose properties you want to copy. 
+3 Select one or more destination objects to which you want to apply the properties of the source object. Source object properties are applied to each destination object as 
+it is selected. 
+4 When finished selecting destination objects, press ENTER. 
+
+
+
+Styles and Support Files 
+Styles are contained in Styles drawings from which you select a style to add to your drawing. This ensures smaller templates and a clearer structure of your drawings. The following table shows the location of the Styles drawings and other support files. 
+Files Location 
+Plotter Configurations C:\ProgramData\Autodesk\ACA 2011\enu\Plotters 
+Plot Styles C:\ProgramData\Autodesk\ACA 2011\enu\Plotters\Plot Styles 
+DesignCenter Content C:\ProgramData\Autodesk\ACA 2011\enu\AEC Content 
+Details C:\ProgramData\Autodesk\ACA 2011\enu\Details 
+Layer Standards drawing C:\ProgramData\Autodesk\ACA 2011\enu\Layers 
+Styles drawings C:\ProgramData\Autodesk\ACA 2011\enu\Styles 
+
+Files Location 
+Material Definitions C:\ProgramData\Autodesk\ACA 2011\enu\Styles\<Imperial or Metric>\Material Definitions.dwg 
+Schedule Tables C:\ProgramData\Autodesk\ACA 2011\enu\Styles\<Imperial or Metric>\Schedule Tables.dwg 
+Drawing templates C:\ProgramData\Autodesk\ACA 2011\enu\Template 
+Area Evaluation templates C:\ProgramData\Autodesk\ACA 2011\enu\Template\Evaluation Templates 
+Sample Tool Palette C:\Program Files\AutoCAD Architecture 2011\Sample\Sample Catalogs Palette Catalog (Imperial/Metric) 
+Stock Tool Catalog C:\Program Files\AutoCAD Architecture 2011\Catalogs\Stock-ToolCatalog 
+Structural Member Cata-C:\Program Files\AutoCAD Architecture 2011\Catalogs\Struc­log tural 
+Sample Drawing Manage-C:\My Documents\Autodesk\My Projects\Sample Project 2011 ment Project 
+Default User Workspace  C:\Documents and Settings\<Username>\Application  
+Catalog  Data\Autodesk\ACA 2011\enu\Support\WorkspaceCatalog  
+(Imperial/Metric)  
+
+
+
+Integration of AutoCAD Architecture and AutoCAD 
+AutoCAD Architecture is integrated with the AutoCAD design platform. The commands and features of both applications are blended within the user interface. There are some differences between working in a pure AutoCAD environment and accessing AutoCAD commands from within AutoCAD Architecture. These differences are listed in this section. 
+AutoCAD Tools 
+¦ The Properties palette is not invoked when AutoCAD tools are used to add objects to a drawing. 
+¦ 
+AutoCAD tools do not have the same tool properties as AutoCAD Architecture tools; for example, the layer key. 
+
+¦ 
+AutoCAD Hatch tools and Block tools cannot have a user-defined tool image. 
+
+¦ 
+The tool properties of AutoCAD tools cannot be applied to an existing AutoCAD object in the drawing. 
+
+
+
+AutoCAD Tool Palettes 
+¦ 
+When working in AutoCAD, you cannot create and link AutoCAD tool palettes from the Content Browser. 
+
+¦ 
+AutoCAD tool palettes do not support palette properties. 
+
+
+
+Other Differences 
+¦ 
+Properties Palette: When working in AutoCAD, you cannot set the Properties palette to be transparent. 
+
+¦ 
+Revision clouds: The Revision cloud feature in AutoCAD is not identical to the Revision cloud feature in AutoCAD Architecture. Revision clouds in AutoCAD Architecture have additional scaling and layer key functionality, as well as the option of adding a Delta symbol. 
+
+¦ 
+Units: Running the UNITS command from the command line opens the AutoCAD Architecture Drawing Setup dialog. If you want to open the AutoCAD Units dialog, enter ddunits on the command line. 
+
+
+WARNING To change the drawing setup of AutoCAD Architecture, you must use the Drawing Setup command of AutoCAD Architecture. If you change the units in the AutoCAD Units dialog, AutoCAD Architecture drawing units are not affected. 
+
+
+
+Content Browser 
+3 
+The Content Browser lets you store, share, and exchange AutoCAD Architecture content, tools, and tool palettes. The Content Browser runs independently of the software, allowing you to exchange tools and tool palettes with other Autodesk applications. 
+Content Browser Overview 
+The Content Browser is a library of tool catalogs containing tools, tool palettes, and tool packages. You can publish catalogs so that multiple users have access to standard tools for projects. 
+Tool Catalogs and Websites 
+AutoCAD Architecture 2011 tools and content are shared in the Content Browser using tool catalogs and websites. A tool catalog can contain one or more of the following items: 
+¦ 
+Tools: For example, you might select a tool to create a customized wall used throughout a building project. 
+
+¦ 
+Tool palettes: These contain tools used to support a particular workflow or task. For example, a tool palette may contain a set of annotation tools used in a project, or a set of tools to draw each type of door used in a project. A tool palette is treated as a single object. 
+
+¦ 
+Tool packages: These are collections of tools that users can select and use. For example, a tool package may contain a set of productivity tools and utilities. 
+
+
+A single copy of a tool catalog can be shared among users on your local area network. If tools in the catalog are updated, you have immediate access to the latest version of the tools. 
+Websites containing AutoCAD Architecture tools, and content that you can download using i-drop® technology, can also function as tool catalogs. 
+Several tool catalogs are provided with AutoCAD Architecture, and you can create additional catalogs of your own. 
+
+Catalog Libraries 
+Tool catalogs are organized into catalog libraries, and each AutoCAD Architecture user has a personal catalog library. 
+Tool catalog data is not stored in the catalog library. Rather, the catalog library contains pointers to the physical tool catalogs. It is like the card catalog in a real library—it tells you where to find a book, but it does not contain the book itself. 
+You can sort the catalogs in the library by Last Used, Publisher, Title, or Type. You can filter the list of catalogs by Type. 
+You cannot create additional catalog libraries, but you can open the personal catalog library of another user if you are authorized to do so. 
+
+Tool Catalogs Supplied with AutoCAD Architecture 
+The following tool catalogs are supplied with your personal catalog library: 
+Catalog Name Contents 
+Design Tool Catalog - Imperial Content tools in imperial units for design and documentation of multi-view blocks and symbols. 
+Design Tool Catalog - Metric Content tools in metric units for design and documentation of multi-view blocks and symbols. 
+Documentation Tool Catalog - Imperial Content tools in imperial units for annota­tion and documentation. 
+Documentation Tool Catalog - Metric Content tools in metric units for annotation and documentation. 
+My Tool Catalog An empty tool catalog provided so that you can create your own tool set. 
+Visualization Catalog A tool catalog containing render materials, lights, cameras and visual styles. 
+
+Catalog Name Contents 
+Sample Palette Catalog - Imperial A sampling of tools in imperial units for objects such as doors, walls, and windows. 
+Sample Palette Catalog - Metric A sampling of tools in metric units for ob­jects such as doors, walls, and windows. 
+Stock Tool Catalog A catalog that contains the standard stock tools in AutoCAD Architecture. 
+You cannot add or remove items from the Autodesk-supplied tool catalogs, but you can create your own tool catalogs. You can also copy other tool catalogs and website links into your catalog library using the Publish catalog feature. 
+
+
+
+Exploring the Content Browser 
+. Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+
+The Content Browser window usually is divided into two panes (web pages displayed in the Content Browser occupy the entire window). Tool catalogs and their contents are displayed in the right pane. When you start the Content Browser, your personal catalog library, named <user_name>’s Catalog Library, displays in the right pane. The left pane is used for navigation, searching for tools, sorting catalogs, and filtering catalog display. The buttons at the top of the left pane work much like the equivalent controls in a web browser. Click
+
+ to display the top level of the catalog library in the right pane. This view is either all the catalogs in the library, or a group of catalogs filtered by type. 
+You can have more than one instance of the Content Browser open at a time. To open an additional Content Browser window, press CTRL+N. For more information, see Working with Multiple Content Browser Windows on page 181. 
+Viewing a Tool Catalog 
+To view a tool catalog, click the catalog in the catalog library. For example, click the Stock Tool catalog to display a window like the following illustration: 
+View of the Stock Tool catalog 
+
+When you open the Stock Tool catalog, a cover page describing the catalog is displayed in the right pane. If no cover page is defined for a tool catalog, items contained in the tool catalog are displayed in the right pane. For information about specifying a cover page, see Editing Tool Catalog Properties on page 158. 
+To continue past the cover page to the contents of the tool catalog, click the catalog name in the left pane of the Content Browser window. 
+The contents of a tool catalog can be organized into categories. When a tool catalog is open in the right pane, any categories are listed in the left pane. For example, the Stock Tool catalog is organized into the categories shown in the previous illustration. 
+Categories can be subdivided into one or more levels. If subcategories exist, a list of subcategories appears when you move the pointer over the category name in the left pane. For example, in the Stock Tool catalog, move the pointer over Modeling Tools to see the Mass Element Tools and 3D Solids subcategories. 
+Displaying subcategories in a category 
+
+To open a category or subcategory, click it. For example, click Mass Element Tools to display the following window: 
+Mass Element Tools category of the Stock Tool catalog 
+
+Associated with each item in the tool catalog is the following i-drop® icon:
+
+ . 
+You click the i-drop icon to drag a tool or other tool catalog item into the AutoCAD Architecture 2011 workspace or into another catalog, tool palette, or tool package. 
+You can modify the contents and properties of a tool catalog if you are authorized to do so, unless the catalog is read-only. Read-only tool catalogs are identified in the Content Browser title bar when you open the catalog. 
+A tool catalog category may contain more items than can fit on a page. If multiple pages are needed, navigation controls appear at the top and bottom of each page. The Mass Element Tools category shown earlier requires two pages to display its contents. You can specify the page to be displayed by clicking the page number or by clicking Next or Prev. (Note that these controls appear at the bottom of the page too.) You can also change the number of items that display on a Content Browser page. 
+
+
+Specifying the Number of Rows on a Content Browser Page 
+Use this procedure to specify the number of rows that display on a Content Browser page. 
+1 Click Home tab . Build panel . Tools drop-down . Content Browser
+ . 2 Click 
+ to display the catalog library. 
+3 Click 
+to display the Content Browser Preferences dialog box. 
+4 In the Content Browser Preferences dialog box, enter the number of rows to be displayed on each page. You can specify up to 100 rows, and you must specify at least 5. 
+5 Click OK. 
+
+Using the Items in a Tool Catalog 
+To use a tool catalog item in AutoCAD Architecture 2011, drag the item into the software’s workspace. Dragging a tool palette into the workspace adds the tool palette to the default tool palette set. 
+AutoCAD Architecture 2011 tool palette set, with added tool palette 
+
+Once added to the tool palette set, the palette remains a part of the set and is available each time you start AutoCAD Architecture. 
+You can drag a tool directly into the drawing area from the Content Browser. For example, with the Mass Element Tools category open in the Stock Tool Catalog, drag the Arch tool into the drawing area with the i-drop® icon to begin adding an Arch mass element to your drawing. 
+If you use a tool frequently, you will save time if you add the tool to a palette in the tool palette set, where you can access it without using the Content Browser. 
+
+
+Managing Your Catalog Library 
+You manage your catalog library by adding and deleting tool catalogs and website links and by setting catalog properties as needed. You can create a new catalog or customize existing ones to meet your needs. You can reorganize tool catalogs by moving and copying items among them. 
+

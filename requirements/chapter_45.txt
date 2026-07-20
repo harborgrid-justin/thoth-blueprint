@@ -1,0 +1,1381 @@
+[MIGRATED TO RTM_PART_67.md - FIELDS]
+
+If you want to… Then… 
+and press Enter. Then, select the insertion point. 
+Date field inserted in drawing 
+
+Inserting Fields in Property Set Definitions 
+Use this procedure to insert a field in a property set definition. 
+When you insert a field in a property set definition, the field will appear in the properties of any object or object style that has the property set attached. 
+NOTE Fields are always contained in manual properties. 
+Wall properties with keynote, date, and sheet number fields 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 In the Style Manager, expand Documentation Objects, and then expand Property Set Definitions. 
+3 Either click an existing property set definition, or right-click, and click New. 
+4 Click the Definition tab. 
+
+Click 
+ to create a manual property. Enter a name for the manual property, such as Keynote. Verify that DEFAULT is selected for Start With. Click OK. Verify that Text is selected for Type. Right-click in the Default field, and select Insert Field. 
+
+11 Define and insert the field and its format. 
+If you want to insert a … Then… 
+date/time, document, hyper- see “Use Fields in Text” in AutoCAD  
+link, object, system variable,  help.  
+Diesel expression, or plot field  
+
+project field see Selecting a Project Field on page 3468. 
+sheet set field see Selecting a Sheet Set Field on page 3472. 
+keynote field see Selecting a Keynote Field on page 3475. 
+database field see Selecting a Database Field on page 3478. 
+Inserting Field Placeholders in Object Properties 
+Use this procedure to insert a field placeholder in the properties of an individual object. 
+You can add a field to the properties of an individual object by creating a manual property as a placeholder for the field, to be filled when necessary. This would be useful if you want to add information that is different for each object and needs to be updatable. 
+Creating the placeholder 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 In the Style Manager, expand Documentation Objects, and then expand Property Set Definitions. 
+3 Either click an existing property set definition, or right-click, and click New. 
+4 Click the Definition tab. 
+5 Click 
+ to create a manual property. 6 Enter a name for the manual property, such as LinkedFile. 7 Verify that DEFAULT is selected for Start With. 8 Click OK. 9 Verify that Text is selected for Type. 
+NOTE Do not enter any text in the Default field. 
+10 Click OK. Inserting a field in the placeholder 
+11 Double-click the object in the drawing, and on the Extended Data 
+tab of the Properties palette, click 
+. 
+12 Select the property set containing the manual property, and click OK. 
+13 Right-click in the empty manual property, and click Insert Field. 
+
+14 Define and insert the field and its format. 
+If you want to insert a… Then… 
+date/time, document, hyper- see “Use Fields in Text” in AutoCAD  
+link, object, system variable,  help.  
+Diesel expression, or plot field  
+
+project field see Selecting a Project Field on page 3468. 
+sheet set field see Selecting a Sheet Set Field on page 3472. 
+keynote field see Selecting a Keynote Field on page 3475. 
+database field see Selecting a Database Field on page 3478. 
+15 Define and insert the field and its format. 
+If you want to… Then… If you want to… Then… 
+insert a date/time, document,  see “Use Fields in Text” in AutoCAD  
+hyperlink, object, system vari­ help.  
+able, Diesel expression, or plot  
+field,  
+
+insert a project field see Selecting a Project Field on page 3468. 
+insert a sheet set field see Selecting a Sheet Set Field on page 3472. 
+insert a keynote field see Selecting a Keynote Field on page 3475. 
+insert a database field see Selecting a Database Field on page 3478. 
+In this example, you would likely insert a hyperlink to another file. selecting Linked for Field category and then selecting a file as the hyperlink. 
+Adding Fields to Object Style Properties 
+Use this procedure to add fields to object style properties. 
+Once a field has been inserted into a property set, you can add the field to an object style by attaching the property set to the style. All objects of that style will then have the property set attached. 
+1 Create a property set definition containing the necessary fields, as described in Inserting Fields in Property Set Definitions on page 3453. 
+2 Click Manage tab . Style & Display panel . Style Manager
+ . 3 In the Style Manager, expand Architectural Objects, and expand 
+the object type for which you want to add a field. 
+4 Click an existing object style. 
+5 Click the General tab, and click Property Sets. 
+6 Click click 
+. 7 Select the property set that contains the field. 8 Click OK three times. 
+NOTE You can view and edit the style property set data on the object’s Properties palette, just like the object property set data. To edit property set data from a style on the Properties palette, click the 
+worksheet button ( 
+). 
+Inserting Fields in AutoCAD Text Elements 
+You can insert fields in the following types of AutoCAD text elements: 
+¦ 
+Text 
+
+¦ 
+Multiline text (mtext) 
+
+¦ 
+Attributes 
+
+¦ 
+Table cells 
+
+
+Inserting Fields in AutoCAD Text 
+Use this procedure to insert fields into AutoCAD text elements. For information on creating text elements, see “Create Single-Line Text” in AutoCAD help. 1 Select the AutoCAD text in which you want to insert a field. 2 Right-click, and click Text Edit. 3 Right-click at the point within the text where you want to insert a field, and click Insert Field. 4 Define the field and its format. 
+If you want to insert a … Then… 
+date/time, document, hyper- see “Use Fields in Text” in AutoCAD  
+link, object, system variable,  help.  
+Diesel expression, or plot field  
+
+project field see Selecting a Project Field on page 3468. 
+sheet set field see Selecting a Sheet Set Field on page 3472. 
+If you want to insert a … Then… 
+keynote field see Selecting a Keynote Field on page 3475. 
+database field see Selecting a Database Field on page 3478. 
+5 Click OK. 
+Inserting Fields in AutoCAD Multiline Text 
+Use this procedure to insert fields into AutoCAD multiline text. 
+For information on creating Multiline text elements, see “Create Multiline Text” in AutoCAD help. 
+1 Select the AutoCAD multiline text in which you want to insert a field. 
+2 Right-click, and click Mtext Edit. 
+3 In the Multiline Text Editor, right-click within the Text at the point where you want to insert the field, and click Insert Field. 
+NOTE Alternativly, click within the Text at the point where you want to insert the field, and click Text Editor tab . Insert panel . Field. 
+4 Define the field and its format. 
+If you want to insert a … Then… 
+date/time, document, hyper- see “Use Fields in Text” in AutoCAD  
+link, object, system variable,  help.  
+Diesel expression, or plot field  
+
+project field see Selecting a Project Field on page 3468. 
+sheet set field see Selecting a Sheet Set Field on page 3472. 
+keynote field see Selecting a Keynote Field on page 3475. 
+If you want to insert a … Then… 
+database field see Selecting a Database Field on page 3478. 
+5 Click OK. 
+Inserting Fields in AutoCAD Attributes 
+Use this procedure to insert fields into AutoCAD attributes. 
+Attributes are often used to provide design and documentation content for tools. When combined with graphics, they can be used as annotation symbols. 
+Field attributes in callout symbol 
+
+1 Click Insert tab . Attributes panel . Define Attributes. 2 Enter a name in the Tag field. 
+3 Under Value, click 
+
+
+4 Define the field and its format. 
+If you want to insert a … Then… 
+date/time, document, hyper- see “Use Fields in Text” in AutoCAD  
+link, object, system variable,  help.  
+Diesel expression, or plot field  
+
+project field see Selecting a Project Field on page 3468. 
+sheet set field see Selecting a Sheet Set Field on page 3472. 
+keynote field see Selecting a Keynote Field on page 3475. 
+database field see Selecting a Database Field on page 3478. 
+5 Click OK. 
+Inserting Fields in AutoCAD Table Cells 
+Use this procedure to insert fields into AutoCAD table cells. For information on creating AutoCAD tables, see “Create and Modify Tables” in AutoCAD help. 1 Select the AutoCAD table cell in which you want to insert a field, and double-click it. 2 Right-click, and click Insert Field. 
+NOTE Alternatively, click Table Cell tab . Insert panel . Field. 
+3 Define the field and its format. 
+If you want to insert a… Then… 
+date/time, document, hyper- see “Use Fields in Text” in AutoCAD  
+link, object, system variable,  help.  
+Diesel expression, or plot field  
+
+project field see Selecting a Project Field on page 3468. 
+sheet set field see Selecting a Sheet Set Field on page 3472. 
+keynote field see Selecting a Keynote Field on page 3475. 
+database field see Selecting a Database Field on page 3478. 
+4 Click OK. 
+Editing Fields 
+Use this procedure to edit a field. 
+Fields can be contained in AutoCAD text, multiline text (mtext), table cells, attributes, property set definitions, object properties, and object styles. For information on inserting fields, see Inserting Fields on page 3451. 
+When you edit a field, you can change the field value, the field category, and the field format. 
+1 Navigate to the field you want to edit. 
+If you want to… Then… 
+edit a field in AutoCAD  select the text element, right-click, and click  
+text  Text Edit. Then, select the field, right-click,  
+and click Edit Field.  
+
+edit a field in multiline  select the multiline text element, right-click,  
+text  and click MText Edit. In the Multiline Text  
+Editor, select the field, right-click, and click  
+Edit Attribute.  
+
+edit a field in an attribute select the tool or block containing the attrib­ute field, right-click, and click Edit Attributes. In the Enhanced Attribute Editor, select the field value, right-click, and click Edit Field. 
+edit a field in a table cell select the table cell, and double-click it. Then, right-click the field, and click Edit Field. 
+edit a field in a property  open the property set definition in Style  
+set definition  Manager, and click the Definition tab. Select  
+the field property. Right-click the field value  
+in the Default field, and click Edit field.  
+
+edit a field in an object  open Style Manager and open the style. On  
+style  the General tab, click Property Sets. In the  
+Edit Property Set Data worksheet, select the  
+field value you want to change, right-click,  
+and click Edit Field.  
+
+edit a field in the proper-select the object and double-click it. In the ties of an object Properties palette, click the Extended Data 
+If you want to… Then… 
+tab. Select the field value you want to change, right-click, and click Edit field. 
+
+2 Change the field as necessary. The editable parameters of a field vary depending on the type of field. In date related fields, for example, you can change the date format of the field. 
+If you want to… Then… 
+change the field category select a new the category under Field category, and then select a new field under Field name. 
+change the field select a new field under Field name. 
+change the field formatting select a different format under Format. 
+3 Click OK. 
+Editing the Field Display 
+You can choose if you want to display a field in your drawing with a grey background rectangle or with a transparent background. A grey background helps you identify field values within your drawings easily. In some cases however when you want to display the field value just like other text or attribute values, you can turn off the grey background. 
+Field display with grey background (left) and transparent (right) 
+
+1 On the command line, enter FIELDDISPLAY. 2 Select a value for the display of field backgrounds. 
+¦ 
+To display the background of a field value in grey, enter 1. 
+
+¦ 
+To display the background of a field value as transparent, enter 0. 
+
+
+TIP By default the field display value is set to 1. 
+Updating Fields 
+Use this procedure to update a field manually. 
+By default fields are updated automatically when the drawing is opened, saved, plotted, regenerated, or sent via e-transmit. For more information, see “Update Fields” in AutoCAD help. 
+If you have changed that default, or want to update a field without performing any of the operations listed above, you can do so by updating the field manually. 
+1 Navigate to the field you want to update. Fields can be contained in AutoCAD text, multiline text (mtext), table cells, attributes, property set definitions, object properties, object styles., and project details. For information about inserting fields in text components, see Inserting Fields on page 3451. 
+2 Select the field, and double-click the text. Then, select the text, right-click, and click Update Field. 
+TIP To update all fields in the drawing, click Annotate tab . Text 
+panel .
+. Update Fields. Then, select the fields to update and press ENTER. 
+Converting Fields to Text 
+Use this procedure to convert a field to text. 
+NOTE This procedure cannot be reversed. 
+1 Navigate to the field you want to convert to text. Fields can be contained in AutoCAD text, multiline text (mtext), table cells, attributes, property set definitions, object properties, object styles, and project details. For information about inserting fields in text components, see Inserting Fields on page 3451. 
+2 Select the field, right-click, and click Convert Field to Text. 
+AutoCAD Architecture Field Types 
+There are a number of field types that have been created specifically for AutoCAD Architecture users. These fields are generated by information from AutoCAD Architecture projects, keynotes, and databases connected to an AutoCAD Architecture drawing. 
+Project Fields 
+AutoCAD Architecture has a number of fields for project-specific information. You could use project fields for example in title blocks on plotting sheets. 
+The following project-specific fields are available in AutoCAD Architecture: 
+¦ 
+Project Name 
+
+¦ 
+Project Number 
+
+¦ 
+Project Description 
+
+
+¦ 
+Project Location 
+
+¦ 
+Project Details: When you create a project, you can create user-defined detail categories and details relevant to the project. These details can be inserted as fields into the drawing. For information on creating project details, see Adding Detailed Information to Project Properties on page 322. 
+
+¦ 
+Number of Levels 
+
+¦ 
+Number of Divisions 
+
+
+Selecting a Project Field 
+Use this procedure to select a project field to insert into a drawing. 1 Open the Field dialog box from one of the following components: 
+If you want to… Then… 
+insert a project field into a see Inserting Fields in AutoCAD Text Ele­
+text element ments on page 3459. 
+insert a project field into a  see Inserting Fields in AutoCAD Multiline  
+multiline text (mtext) ele- Text on page 3460.  
+ment  
+
+insert a project field into an see Inserting Fields in AutoCAD Table Cells AutoCAD table cell on page 3463. 
+
+insert a project field into an see Inserting Fields in AutoCAD Attributes attribute definition on page 3461. 
+insert a project field into a see Inserting Fields in Property Set Defini­
+property set definition tions on page 3453. 
+insert a project field into an see Inserting Field Placeholders in Object object property Properties on page 3456. 
+insert a project field into an see Adding Fields to Object Style Properties object style on page 3458. 
+2 Under Field Category, select AEC Project. 
+
+Under Field Names, all project-related fields are displayed. 
+3 Select the field you want to insert. 
+4 If you have selected Project Details, you need to select the detail from the categories listed under Project Information. 
+5 Under Format, select a text format for the field. You can choose between Uppercase, Lowercase, First Capital, and Title case. 
+6 Click OK. 
+Sheet Set Fields 
+AutoCAD Architecture has a number of fields for sheet set information. 
+NOTE Sheet set fields can be used for AutoCAD Architecture project sheet sets and for AutoCAD sheet sets. For information about AutoCAD Architecture project sheet sets, see Sheets on page 467. For information about AutoCAD sheet sets, see “Work with Sheets in a Sheet Set” in AutoCAD help. 
+The following sheet set fields are available: 
+¦ Current Sheet Custom: You can select an AutoCAD custom property defined for the current sheet here. 
+NOTE When you are working with an AutoCAD Architecture project sheet set, you will in most cases use Project Details instead of Custom Properties. 
+¦ 
+Current Sheet Description 
+
+¦ 
+Current Sheet Number 
+
+¦ 
+Current Sheet Number and Title 
+
+¦ 
+Current Sheet Set 
+
+¦ 
+Current Sheet Set Custom: You can select an AutoCAD custom property defined for the current sheet here. 
+
+¦ 
+Current Sheet Set Description 
+
+¦ 
+Current Sheet Subset 
+
+¦ 
+Current Sheet Title 
+
+¦ 
+Sheet Set: You can select any sheet from a sheet set as the field content here. Available sheet properties for display are the sheet title, sheet number and sheet description. 
+
+¦ 
+Sheet Set Placeholder: In the Sheet Set Placeholder field category, you can define a field as a placeholder for sheets and sheet views. You often use that functionality in callouts referenced to model space views, that are later referenced into sheets. The field placeholder in the callout is resolved when the model space view is linked into a sheet. For more information, see Creating New Callout Tools on page 3694. The following fields are available as placeholders: 
+
+¦ 
+Sheet Number and Title 
+
+¦ 
+Sheet Title 
+
+¦ 
+Sheet Number 
+
+¦ 
+Sheet Description 
+
+¦ 
+Sheet custom: You can select an AutoCAD custom property defined for the referenced sheet here. 
+
+¦ 
+(Model Space) View Number and Title 
+
+
+
+
+¦ 
+(Model Space) View Title 
+
+¦ 
+(Model Space) View Number 
+
+¦ 
+(Model Space) Viewport Scale 
+
+
+NOTE The fields for sheet title, sheet number, sheet description, view title, and view number can be associated with a hyperlink that jumps to the sheet or model space view referenced. 
+Callout symbol with sheet set placeholder 
+
+Resolved sheet set placeholders 
+
+Selecting a Sheet Set Field 
+Use this procedure to select a sheet set field to insert into a drawing. 1 Open the Field dialog box from one of the following components: 
+If you want to… Then… 
+insert a sheet set field into see Inserting Fields in AutoCAD Text Ele­
+a text element ments on page 3459. 
+insert a sheet set field into  see Inserting Fields in AutoCAD Multiline  
+a multiline text (mtext) ele- Text on page 3460.  
+ment  
+
+insert a sheet set field into see Inserting Fields in AutoCAD Table Cells an AutoCAD table cell on page 3463. 
+insert a sheet set field into see Inserting Fields in AutoCAD Attributes an attribute definition on page 3461. 
+insert a sheet set field into see Inserting Fields in Property Set Defini­
+a property set definition tions on page 3453. 
+insert a sheet set field into see Inserting Field Placeholders in Object an object property Properties on page 3456. 
+insert a sheet set field into see Adding Fields to Object Style Properties an object style on page 3458. 
+2 Under Field Category, select SheetSet. Under Field Names, all sheet set-related fields are displayed. 
+
+3 Select the field you want to insert. 
+4 If you have selected CurrentSheetSetCustom or CurrentSheetCustom, select the desired property under Custom property name. 
+5 If you have selected SheetSet, you can select any sheet set and any sheet to be displayed in the field. You can insert the sheet set 
+or sheet field as a hyperlink, so that clicking on the field in the drawing will open the sheet or sheet set associated to the field. If necessary, browse to a different sheet set. 
+6 If you have selected SheetSetPlaceholder, select the correct placeholder under Placeholder Type. 
+NOTE The fields for sheet title, sheet number, sheet description, view title, and view number can be created as a hyperlink that jumps to the sheet or model space view referenced. 
+7 Under Format, select a text format or data format for the field. 8 Click OK. 
+Keynote Fields 
+Keynoting is a consistent way of annotating the different types of drawings in a set of construction documents to identify building materials or to provide special instructions or explanations. AutoCAD Architecture provides a flexible tool-based method of inserting keynotes that are linked to a keynote database and thus can be modified globally as well as individually. This method supports both reference keynoting (where the keynote key corresponds to a section in an accompanying specification and may appear on different drawings) and sheet keynoting (where keynote keys are sequentially numbered for each drawing). AutoCAD Architecture supplies pre-specified keynotes for its size-specific default detail components and for architectural objects that represent assemblies with multiple components (for example, 8” CMU wall). In cases where no keynotes are pre-specified, you can configure a keynote insertion tool containing a keynote field. 
+Keynotes with field 
+
+The following keynote fields are available in AutoCAD Architecture: 
+¦ 
+Reference Key only 
+
+¦ 
+Reference Note only 
+
+¦ 
+Reference Key and Note 
+
+¦ 
+Sheet Key only 
+
+¦ 
+Sheet Note only 
+
+¦ 
+Sheet Key and Note 
+
+
+You can also insert keynote fields as placeholders that are filled in when they are connected to a building object. 
+For detailed information on keynotes, see Keynoting Tools on page 3570. 
+Selecting a Keynote Field 
+Use this procedure to select a keynote field into a drawing. 1 Open the Field dialog box from one of the following components: 
+If you want to… Then… 
+insert a keynote field into a see Inserting Fields in AutoCAD Text Ele­
+text element ments on page 3459. 
+insert a keynote field into a  see Inserting Fields in AutoCAD Multiline  
+multiline text (mtext) ele- Text on page 3460.  
+ment  
+
+insert a keynote field into see Inserting Fields in AutoCAD Table Cells an AutoCAD table cell on page 3463. 
+insert a keynote field into see Inserting Fields in AutoCAD Attributes an attribute definition on page 3461. 
+insert a keynote field into a see Inserting Fields in Property Set Defini­
+property set definition tions on page 3453. 
+insert a keynote field into see Inserting Field Placeholders in Object an object property Properties on page 3456. 
+insert a keynote field into see Adding Fields to Object Style Properties an object style on page 3458. 
+2 Under Field Category, select AEC Keynotes. 
+
+Under Field Names, all keynote-related fields are displayed. 
+3 Under Field Names, select the type of keynote field you want to insert. 
+4 Click Select Keynote to select a keynote from a database. 
+5 If you want to insert pre-specified keynotes or prompt for manual keynote selection when the keynote is inserted, select Insert as placeholder. 
+6 If you have selected Reference Key and Note or Sheet key and Note, select a keynote format. 
+7 Under Format, select a text format for the keynote field. 
+8 Click OK. 
+Database Fields 
+Database fields allow the user to insert a formatted cell from a database into a drawing. A database field consists of a single field of a query or table in a database. This enables users to work with data in a full database environment, creating reports, queries, links to other databases, and link that data into any drawing. 
+Supported Data Types 
+The following data types are supported in AutoCAD Architecture database fields: 
+¦ 
+Text 
+
+¦ 
+Memo 
+
+¦ 
+Date/Time 
+
+¦ 
+Integer 
+
+¦ 
+Real 
+
+¦ 
+Boolean 
+
+
+All other data types are ignored and will not display in the drawing. 
+Supported Database Providers and Data Sources 
+The following database providers are supported in AutoCAD Architecture: 
+¦ 
+Microsoft Jet 4.0 OLE DB Provider (Access) 
+
+¦ 
+Microsoft OLE DB Provider for ODBC Drivers 
+
+These database providers let you link to the following data sources: 
+
+¦ 
+Microsoft Access database (MDB) 
+
+¦ 
+Microsoft Excel file (XLS) 
+
+¦ 
+Microsoft Text file (TXT, CSV) 
+
+
+The database fields support secure databases in as far at the Microsoft Data Link feature supports them. They may need to encrypt the connection information so as to prevent the wrong users from inadvertently gaining knowledge of the passwords. 
+The database fields support multi-user access. 
+Creating a Database Link to a 64-bit Data Source 
+If you are using a computer with 64-bit architecture, you can create a link to a database source using the 64-bit model. You can also link to any legacy 32-bit data sources. 
+Selecting a Database Field 
+Use this procedure to select a database field to insert into a drawing. 1 Open the Field dialog box from one of the following components: 
+If you want to… Then… 
+insert a database field into see Inserting Fields in AutoCAD Text Ele­
+a text element ments on page 3459. 
+insert a database field into  see Inserting Fields in AutoCAD Multiline  
+an multiline text (mtext)  Text on page 3460.  
+element  
+
+insert a database field into see Inserting Fields in AutoCAD Table Cells an AutoCAD table cell on page 3463. 
+insert a database field into see Inserting Fields in AutoCAD Attributes an attribute definition on page 3461. 
+insert a database field into see Inserting Fields in Property Set Defini­
+a property set definition tions on page 3453. 
+insert a database field into see Inserting Field Placeholders in Object an object property Properties on page 3456. 
+insert a database field into see Adding Fields to Object Style Properties an object style on page 3458. 
+2 Under Field Category, select AEC Database. 
+
+3 Under Field Names, select DatabaseField. 
+4 To select an existing database link file (UDL), click 
+. In the Select Data Link dialog box, browse for the required UDL file. 
+5 To create a new database link file (UDL), click one of the following buttons: 
+Button Description 
+
+Use this button if you want to create a new UDL link on a 32-bit computer. 
+
+Use this button if you are working on a 64­bit computer, but want to create a link to a 32-bit data source. 
+
+Use this button if you are working on a 64­bit computer, and want to create a link to a 64-bit data source. 
+For more information, see Creating a Data Link to an ODBC Source on page 3481. 
+6 Under Path Type, specify whether you want a full path to the database or a relative path. 
+7 Under Select a table or query from the database, select a table or query. 
+¦ 
+To select a database table, expand Tables and click on the desired table entry. 
+
+¦ 
+To select a database query, expand Queries and click on the desired query. 
+
+
+8 Under Select a record and a field from the table, select the database field you want to insert in the drawing. 
+NOTE You can preview the database field value in the static text field on the top right of the Field dialog. You can preview the field expression under Field expression at the bottom of the dialog. 
+Formatting the field or query 
+9 Under Format, select a text format. If you have selected a field or query that does not retrieve a text string, you can format the value with an existing property data format. 10 Click Set From Property Data format. 
+
+11 Select a property data format, and click OK. The settings of the selected property data format are copied to the format codes in the field. 12 Click OK to insert the database field in the drawing. 
+Creating a Data Link to an ODBC Source 
+You can link data from a number of data sources to an AutoCAD Architecture drawing. You can use the following database providers for linking to data sources: 
+¦ 
+Microsoft Jet 4.0 OLE DB Provider (Access) 
+
+¦ 
+Microsoft OLE DB Provider for ODBC Drivers 
+
+These database providers let you link to the following data sources: 
+
+¦ 
+Microsoft Access database (MDB) 
+
+¦ 
+Microsoft Excel file (XLS) 
+
+¦ 
+Microsoft Text file (TXT, CSV) 
+
+
+NOTE The instruction below describes the process of creating a link to a data source from a Microsoft Excel file. In the same way, can create data links to Microsoft Access databases, plain ASCII text files, and comma-separated files. 
+1 Open the Field dialog box from one of the following components: 
+If you want to… Then… 
+insert a database field into see Inserting Fields in AutoCAD Text Ele­
+a text element ments on page 3459. 
+insert a database field into  see Inserting Fields in AutoCAD Multiline  
+an multiline text (mtext)  Text on page 3460.  
+element  
+
+insert a database field into see Inserting Fields in AutoCAD Table Cells an AutoCAD table cell on page 3463. 
+insert a database field into see Inserting Fields in AutoCAD Attributes an attribute definition on page 3461. 
+insert a database field into see Inserting Fields in Property Set Defini­
+a property set definition tions on page 3453. 
+insert a database field into see Inserting Field Placeholders in Object an object property Properties on page 3456. 
+If you want to… Then… 
+insert a database field into see Adding Fields to Object Style Properties an object style on page 3458. 
+2 Under Field Category, select AEC Database. 
+
+3 Under Field Names, select DatabaseField. 4 Click one of the following buttons: 
+Button Description 
+
+Use this button if you want to create a new UDL link on a 32-bit computer. 
+
+Use this button if you are working on a 64­bit computer, but want to create a link to a 32-bit data source. 
+
+Use this button if you are working on a 64­bit computer, and want to create a link to a 64-bit data source. 
+5 Click the Provider tab. 
+
+Creating a data link to a Microsoft Excel file 
+6 Select Microsoft OLE DB Provider for ODBC Drivers, and click Next. 
+7 In the Connection tab, click Use connection string. 
+
+8 Click Build. 
+
+9 Click New to build to a new DSN file. 
+
+10 In the Create New Data Source dialog box, select the Microsoft Excel Driver (*.xls). 
+NOTE The other supported drivers here are Microsoft Access Driver (*.mdb) and Microsoft Text Driver (*.txt, *.csv). You can use these to create a link to an Access database, a plain ASCII text file, or a comma-separated file. 
+11 Click Next. 
+
+12 Enter a name for the new DSN file, and click Next. 13 Confirm that your data source settings are correct, and click Finish. 
+
+14 In the ODBC Microsoft Excel Setup dialog box, select the version of Microsoft Excel that the DSN file should support. 
+15 Click Select Workbook. 
+
+16 Select an XLS file that should be used as your data source, and click OK three times until you are back in the Connection tab of the Data Link Properties dialog box. 
+
+The Microsoft Excel file you have selected as your data source is 
+displayed under Connection String. 
+17 To verify that the connection to the data source is working correctly, click Test Connection. 
+18 Enter a user name and optionally a password for the database connection. 
+19 Under Enter the initial catalog to use, select the Excel file from the drop-down list. 
+20 Optionally, you can click the Advanced tab to define network and permission settings. 
+21 If you have selected a data source on a network server, you can define the network settings. 
+22 Define the access permissions for the data source. 
+23 Optionally, you can click the All tab to view and edit the OLE DB initialization properties available for the selected OLE DB provider. 
+24 Click OK. 
+25 In the Field dialog box, the selected Excel file is displayed as the data source. 
+You can select data tables and entries as described in Selecting a Database Field on page 3478. 
+Detail Components 
+46 
+AutoCAD Architecture uses a tool-based system for managing the components that make up detail drawings. In addition to the wide selection of pre-configured detail component insertion tools provided on the sample tool palettes and in the Sample Palette Catalog, an extensive database of components can be accessed through the Detail Component Manager. These components can be inserted directly into a drawing, or dragged and dropped onto tool palettes. All tools can be customized and are fully integrated with the keynoting feature. You can also use your own databases. 
+Understanding Detail Components 
+Detail components represent specific building materials and products, and are made up of simple two-dimensional (2D) linework entities such as lines, polylines, arcs, circles, and hatches. In most cases, the detail component is a collection of such entities grouped as a block, which can be easily copied or moved like a single entity. The following are examples of detail components that are inserted as blocks: 
+¦ 
+Bolt heads 
+
+¦ 
+Fixed-length nails 
+
+¦ 
+Section views of beams and columns 
+
+¦ 
+Most section views of framing members 
+
+¦ 
+Units such as CMUs, bricks, and pavers 
+
+¦ 
+Connectors 
+
+¦ 
+Materials with views generated from interrelating parameters; for example, trusses, precast concrete, and hollow metal frames 
+
+
+Other detail components are inserted as loose linework entities if they represent material of variable length, amorphous shape, or something that would likely be cut or otherwise modified in the field. This is the case for views showing the length of a material, such as framing members, sheathing material, or fasteners, for which the detail component database does not include a fixed-length table. 
+Detail components are inserted into drawings parametrically, using a tool that prompts you for the information needed to perform the drawing routine associated with a particular component. Once inserted into a drawing, the components are largely static: although they can be rescaled or repositioned using Properties palette settings, they do not have object-like intelligence that allows for parameter modifications to the extent that architectural objects do. You can, however, perform various editing operations on detail components using the tools available on the ribbon and the context menu. 
+The Detail Component Manager provides a centralized location for storing and accessing detail components. Its filter mechanism lets you quickly locate a particular component in a database. You can then insert the component directly into a drawing, or, if you are likely to use it frequently, you can drag and drop it onto a tool palette for even more convenient access. 
+Many detail components are also available as tools on the default Detailing tool palettes, which can be transferred to the workspace from the Sample Palette Catalog. You can also create a tool by dragging a detail component from a drawing and dropping it onto a tool palette. Because detail component tools can be moved between tool palettes and tool catalogs, or copied over the Internet using i-drop® functionality, they are easily shared by project team members. Tools can be modified using the associated Tool Properties worksheet. You can also apply detail component tool properties to any linework within a drawing so that it can be reference-keynoted according to the organizational system you are using. 
+In addition to the database supplied with the software (based on the CSI MasterFormat™ 2004) you can add and access your own detail component databases as needed (see Configuring Detail Component Database Availability on page 3545). The Detail Component Manager includes a wizard that lets advanced users define the drawing routines and other parameters required to add new component tables to a database. 
+Inserting Detail Components 
+All detail components are inserted into drawings using the same basic tool, which performs the insertion routine associated with a selected component. 
+Each detail component tool provided on the sample tool palettes represents a different configuration of the basic tool. You can activate the detail component insertion tool in five different ways: 
+¦ 
+Select a component in the Detail Component Manager, and click Insert Component (or double-click the component). 
+
+¦ 
+Click a detail component tool icon on a tool palette. 
+
+¦ 
+Drag and drop a detail component tool from a Content Browser tool catalog directly into a drawing. 
+
+¦ 
+Select a component in a drawing, right-click, and click Add Selected. This reruns the tool with the same property settings used to insert the existing component, so that you can quickly insert additional copies of the same component. 
+
+¦ 
+Select a component in a drawing, right-click, and click Replace Selected. This erases the selected component and reruns the tool with the same property settings used to insert the erased component; however, you can modify the tool to insert a different component by changing the Component properties (Category, Type, Description, or View) on the Properties palette. 
+
+
+Once the tool is activated, the procedure for inserting the detail component varies according to the type of material or product the component represents and the viewing direction. Some components are available only in one viewing direction. For example, a backfill component, such as gravel, is always oriented for a section view. On the other hand, a steel beam component is available in elevation view, section view, and plan view. The different drawing routines involve different prompts for user input. When depicting a variable-length material with a repeating pattern, such as corrugated sheet metal, you need to specify the start point and endpoint. In the case of bricks, you have the option of specifying a number of courses. For other products, such as screws or bolts, you may want to flip or rotate the component to change its orientation. The procedures described in the following sections offer examples of the basic insertion routines and options for detail components. 
+Stamp Components 
+Use this procedure to insert detail components that may need to be depicted multiple times at a particular orientation, such as nails or screws. In this example, the tool for inserting a steel beam has the View property set to Section. 
+1 Activate the detail component insertion tool for the component using any of the methods described under Inserting Detail Components on page 3490. 
+2 Click an insertion point in the drawing area to insert the component at the default orientation, or select one of the following options: 
+If you want to… Then… 
+specify a different  enter b (for Base point), select the new base point,  
+base point  and press ENTER to insert the component using  
+the new base point.  
+
+change the default orientation angle of the component enter r (for Rotate), and then either enter the number of degrees to rotate the component in a counterclockwise direction, or manually rotate the component to the desired angle and click to set the new orientation. Click again to insert the component at the specified angle. 
+flip the component enter x (for Xflip), and click to insert the compon­along its X axis ent. 
+flip the component enter y (for Yflip), and click to insert the compon­along its Y axis ent. 
+3 Click elsewhere in the drawing area to “stamp” additional copies of the component, either at the default orientation or as specified in Step 2. 
+Steel beam component inserted at default orientation 
+
+Linear Array Components 
+Use this procedure to insert detail components that consist of a pattern repeated as a linear array, such as shingles or corrugated sheet metal. In this example, the tool for inserting corrugated sheet metal has the View property set to End, but the same user prompts are displayed if the View setting is Side. 
+1 Activate the detail component insertion tool for the component using any of the methods described under Inserting Detail Components on page 3490. 
+2 Click a start point in the drawing area to insert the component at the default orientation, or select one of the following options: 
+If you want to… Then… 
+flip the component enter x (for Xflip), and then click to specify the along its X axis starting point for the component. 
+flip the component enter y (for Yflip), and then click to specify the along its Y axis starting point for the component. 
+position the compon­ enter l (for Left), and then click to specify the  
+ent to the left of the  starting point for the component.  
+baseline when drawn  
+vertically  
+
+position the compon­ enter r (for Right), and then click to specify the  
+ent to the right of the  starting point for the component.  
+baseline when drawn  
+vertically  
+
+center the component  enter c (for Center), and then click to specify the  
+on the baseline when  starting point for the component.  
+drawn in any direction  
+
+3 Click the desired endpoint to insert the component. 
+Corrugated sheet metal in end view 
+
+Backfill Components 
+Use this procedure to insert backfill detail components, such as gravel or soil, that are positioned within a boundary provided by existing linework or an existing object. In this example, the tool for inserting Undisturbed Soil has the View property set to Section, which is the only view available for this type of component. 
+1 Activate the detail component insertion tool for the component using any of the methods described under Inserting Detail Components on page 3490. 
+2 Select the object you want to be the boundary for the backfill. 
+3 Click within the boundary of the selected object to insert the backfill component. 
+Backfill component inserted within polyline boundary 
+
+Bookends Components 
+Use this procedure to insert detail components, such as louvers and vents, that consist of a pattern repeated as a linear array but bounded by unique items at each end. In this example, the tool for inserting louvers has the View property set to Section, which is the only view available for this type of component. 
+1 Activate the detail component insertion tool for a particular component. 
+2 Click a start point in the drawing area to insert the component at the default orientation, or select one of the following options: 
+If you want to… Then… 
+flip the component enter x (for Xflip), and then click to specify the along its X axis starting point for the component. 
+flip the component enter y (for Yflip), and then click to specify the along its Y axis starting point for the component. 
+3 Specify the desired endpoint to insert the component. 
+Bookends component inserted in section view 
+
+Countable Linear Array Components 
+Use this procedure to insert detail components that need to be depicted multiple times in a linear array, such as bricks. In this example, the tool for inserting bricks has the View property set to Section. The same prompts are displayed if the View setting is Plan. If the setting is Elevation, the prompts described under Stamp Components on page 3491 are used. If the setting is Elevation (Pattern), the prompts described under Backfill Components on page 3494 are used. 
+1 Activate the detail component insertion tool for the component using any of the methods described under Inserting Detail Components on page 3490. 
+2 Click an insertion point in the drawing area. 
+3 Orient the component image, and then click to insert it, or select one of the following options: 
+If you want to… Then… 
+flip the component enter x (for Xflip), and then click to specify the along its X axis insertion point for the component. 
+flip the component enter y (for Yflip), and then click to specify the along its Y axis insertion point for the component. 
+insert a specific num­ enter c (for Count), enter the number of units to  
+ber of components  insert, and click to specify the starting point for  
+the array. Note that the x and y options are still  
+available at this point.  
+
+4 Orient the component or the array of components, and then click to complete the insertion. 
+Course of bricks inserted in section view 
+
+Surface Components 
+Use this procedure to insert rectangular detail components of a specific depth that have a hatch, such as base courses. In this example, the tool for inserting the base course has the View property set to Section, which is the only view available for this type of component. 
+1 Activate the detail component insertion tool for the component using any of the methods described under Inserting Detail Components on page 3490. 
+2 Specify a start point in the drawing area to insert the component at the default orientation, or select one of the following options: 
+If you want to… Then… 
+flip the component enter x (for Xflip), and then click to specify the along its X axis starting point for the component. 
+flip the component enter y (for Yflip), and then click to specify the along its Y axis starting point for the component. 
+position the compon­ enter l (for Left), and then click to specify the  
+ent to the left of the  starting point for the component.  
+baseline when drawn  
+vertically  
+
+position the compon­ enter r (for Right), and then click to specify the  
+ent to the right of the  starting point for the component.  
+baseline when drawn  
+vertically  
+
+center the component  enter c (for Center), and then click to specify the  
+on the baseline when  starting point for the component.  
+drawn in any direction  
+
+3 Click the desired endpoint to insert the component. 
+Base course inserted in section view 
+
+Dynamically Sized Surface Components 
+Use this procedure to insert rectangular detail components, such as concrete joists or slabs with metal decking, for which you determine the dimensions. In this example, the tool for inserting a concrete slab with metal decking has the View property set to Plan. If the setting is Section or Elevation, the prompts described under Linear Array Components on page 3493 are used. 
+1 Activate the detail component insertion tool for the component using any of the methods described under Inserting Detail Components on page 3490. 
+2 Specify the first corner of the rectangle. 3 Specify the opposite corner to insert the component. 
+Concrete slab in plan view 
+
+Bolt Components 
+Use this procedure to insert bolt components when you need to specify the distance between the bolt head and the nut. In this example, the tool for inserting the bolt has the View property set to Side. If the setting is Head or Nut, you are not prompted to perform the first two steps. 
+1 Activate the detail component insertion tool for the component using any of the methods described under Inserting Detail Components on page 3490. 
+2 Specify the center bearing point for the bolt head. 
+3 Orient the component image, and then specify the center bearing point for the nut to insert the component. 
+4 If desired, you can “stamp” additional components into the drawing at the same orientation, or you can change the orientation for subsequent insertions: 
+If you want to… Then… 
+specify a different base  enter b (for Base point), select the new base  
+point  point, and press ENTER to insert the compon­ 
+ent using the new base point.  
+
+change the default orient­ation angle of the com­ponent enter r (for Rotate), and then either enter the number of degrees to rotate the component in a counterclockwise direction, or manually rotate the component to the desired angle and click to set the new orientation. Click again to insert the component at the specified angle. 
+flip the component along enter x (for Xflip), and click to insert the its X axis component. 
+flip the component along enter y (for Yflip), and click to insert the its Y axis component. 
+Bolt inserted in side view 
+
+Editing Detail Components in a Drawing 
+Once a detail component has been inserted into a drawing, you can edit the component using the tools found on the Modify panel of the Home tab, or the AEC Modify Tools option on the detail component’s context menu. (For detailed instructions on using these tools, see Detail Drafting Tools on page 2793.) Using these tools on block-based detail components creates unique block definitions for edited inserts, so that the edits will not affect inserts of the same block in other locations. However, if you use the context menu option Edit Block in-place to edit a block definition used in multiple locations, you can use the Copy Block Definition and Assign option (also on the context menu) to create a unique block definition for the block insert you want to edit. 
+You can view and modify certain properties of a detail component by clicking 
+Home tab . Build panel . Tools drop-down . Properties
+ . The following illustrations show examples of the Design and Extended Data tabs of the Properties palette for a detail component. You can modify many of the settings on the Design tab by inserting text or through an associated drop-down list. On the Extended Data tab, you can specify hyperlinks, insert text notes, or set references using the worksheet icons under Documentation. The Component data is read-only, as it displays live data from the detail components database. 
+NOTE When either the Add Selected or Replace Selected context menu option is selected, the Component data is displayed on the Design tab of the Properties palette (instead of the Extended Data tab) and is modifiable. For more information on these two options, see Inserting Detail Components on page 3490. 
+The following image shows the Design tab of the Properties palette for a concrete masonry unit detail block. 
+
+The following image shows the Extended Data tab of the Properties palette for a concrete masonry unit detail block. 
+
+Using Detail Component Tools 
+Like other AutoCAD Architecture tools, the tools for inserting detail components offer great flexibility in the ways you can create, customize, store, and apply them. This section includes topics that pertain to the configuration and management of these tools. For descriptions of the various ways to insert detail components using these tools, refer to Inserting Detail Components on page 3490. 
+Adding Detail Component Tools to a Tool Palette 
+Tools for inserting specific detail components can be added to a tool palette from three main sources: the Detail Component Manager, the Content Browser, and linework in a drawing. 
+Creating Tools from the Detail Component Manager 
+Use this procedure to drag and drop a selected detail component from the Detail Component Manager to a tool palette in the workspace, thus instantiating the basic detail component insertion tool for that component). 
+1 Open the tool palette to which you which you want to add a detail component tool. 
+2 Click Home tab . Details panel . Detail Components 
+. 
+NOTE Alternatively, you can right-click any detail component tool, and click Detail Component Manager. 
+The Detail Component Manager 
+
+3 Navigate the tree view or use the Filter mechanism to display the desired detail component in the table at the bottom of the dialog box. (To view the entire contents of large component tables, you can use the vertical scroll bar to the right of the table.) 
+4 Click the selector column to the left of the desired table row, and 
+drag the selected component to the tool palette. You can now use the tool to insert the component into a drawing. For more information, see Inserting Detail Components on page 3490. 
+Copying Tools from the Content Browser 
+Use this procedure to copy a detail component insertion tool or a palette of tools from the Sample Palette Catalog in the Content Browser to your tool palettes set in the workspace. Most of these palettes are also included on the sample tool palettes set available in the workspace, but this catalog in the Content Browser serves as a backup tool repository and a source of tools you can customize without changing tools that are already on a workspace palette. Generally these tools are preset to insert a particular type and size of component, but once they are on a palette in the workspace, they can be customized to insert a different size of component, or even a component in a different category. For more information, see Modifying Detail Component Tools on page 3507. The same basic procedure can be used to copy tools or palettes from catalogs you create to hold tools that are preconfigured and grouped for particular projects. 
+Content Browser showing Details palettes in Sample Palette Catalog 
+
+1 Confirm that your tool palettes set is open in the workspace. If you want to copy a particular tool to a particular palette, make sure that palette is open. 
+2 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+3 Double-click the Sample Palette Catalog in your catalog library. 
+4 Double-click the Detailing folder. 
+5 Click the i-drop® icon for the palette (or double-click the palette, 
+and click the i-drop icon for a tool on that palette), and then drag 
+the palette or tool onto the open palette in the workspace. If you are copying an entire palette from the Content Browser, a new palette is added to the set. 
+Creating Tools from Linework in a Drawing 
+You can create a detail component insertion tool from linework in a drawing simply by dragging and dropping the linework onto a tool palette. The linework can be a detail you have drawn using two-dimensional (2D) AutoCAD commands, or it can be a detail component inserted from a tool or from the Detail Component Manager. Once added to the tool palette, the new tool can be renamed or otherwise modified through its Tool Properties worksheet. For more information, see Modifying Detail Component Tools on page 3507. 
+Modifying Detail Component Tools 
+Detail component tools on a tool palette in the workspace can be modified through the Tool Properties worksheet. You access the Tool Properties worksheet by right-clicking the tool and clicking Properties. To modify a tool in a catalog in the Content Browser, you must first copy the tool to a palette in the workspace. 
+The appearance of the Tool Properties worksheet varies depending on the type of component and the current configuration of property settings. The following illustrations show two configurations of the Tool Properties worksheet for the 04 - Masonry tool that is included on the sample Basic tool palette. The tool is set to add standard 3/8” joint brick in both cases, but the first configuration has the View property set to Section, while the second has this property set to Elevation (Pattern). For detail components that can be oriented differently in different views, the View setting determines the particular drawing routine used to insert the image into the drawing. Note that the different View settings result in different orientation illustrations on the worksheet. Note also that the Mortar specifications are not applicable for the Elevation (Pattern) setting and are not displayed for that configuration. The properties displayed under Specifications may also vary depending on other settings. For example, if the Show Mortar property is No when the View setting is Section, no other Mortar properties are displayed. For some detail components, no Specifications apply, and the heading is not displayed. 
+Detail component Tool Properties worksheet configurations 
+
+The following table describes the Tool Properties worksheet categories and settings that are common to most detail component insertion tools. 
+Property/Category Description Name 
+Image Displays the image specified for the component in its table in the database. If no image is specified, then the image for the table is displayed. You can right-click the image and click Refresh Image to recall the stock image for the tool from the database, or you can right-click and click Specify Image to browse for a different image. 
+Property/Category Description Name 
+Name The name of the tool. This may be the name originally as­signed to one of the tools on the sample palettes, or, if you have copied the tool from the Detail Component Manager, it is the name specified in the Description column of its parent size table. Note that the name is not updated if you change the Category, Type, or Size properties under Component. However, you can edit the name. 
+Description This is the tool description used if the tool is published to a catalog. You can change this description by clicking the worksheet icon to open a Description editing box. 
+Component Clicking the worksheet icon on this line accesses the Detail Component Manager through the Select Component dialog box and allows you to change the settings for the Description, Description and Type, or Description, Type, and Category. Note that if you change the Category set­ting, the Name, Description, and Image properties are not updated automatically. 
+Category Specifies the group or subgroup that is the parent of the table containing the component specified by the Descrip­tion property. If other groups or subgroups exist at the same hierarchical level within the same parent group, they are selectable from a drop-down list. 
+Type Specifies the table containing the particular component specified by the Description property. A drop-down list lets you select other tables within the same parent group or subgroup. 
+Description Specifies a particular component of the specified Type and Category. Other components within the same table can be selected from the drop-down list. 
+View Specifies the type of view for which the component is ori­ented. Possible values are Section, Plan, Elevation, and El­evation (Pattern). For components such as bolts, compon­ent-specific terminology is used, such as Head, Side, Bolt, or Nut. A drop-down list is present if more than one view 
+Property/Category Description Name 
+Specifications 
+is applicable for the specified component. This setting de­termines the drawing routine and the command line prompts for the insertion process. For more information, see Inserting Detail Components on page 3490. 
+Clicking the icon on this line displays of an image depicting the orientation at which the detail component will be in­serted (determined by the View property). Other properties displayed here provide the top-level parameters required to insert the component with the specified View setting. For components with only one possible View setting, no Specification properties are displayed. 
+Applying Detail Component Properties to Linework 
+Linework that you have drawn using two-dimensional (2D) AutoCAD commands can be keynoted using a keynoting tool to select a keynote from the database. If you have multiple occurrences of the linework, and you want them to have the same keynote, you can specify a keynote by applying the properties of the detail component for which the desired keynote is already specified. If a tool for inserting the component already exists, you can apply the tool properties to the linework. If no such tool exists, you can use the DtlComp command to select a component from the Detail Component Manager, and its ASsign id command line option to assign its properties to the linework. 
+Applying Detail Component Properties to Linework from a Tool 
+Use this procedure to apply the properties of a detail component insertion tool to linework in a drawing so that the linework can be keynoted with the keynote of the component the selected tool inserts. 
+1 Draw the linework. 
+2 Right-click a tool on a tool palette, and click Apply Detail Component Data to Linework. 
+3 Select the linework, and press ENTER. The linework can now be keynoted just as if it were a component inserted using the selected tool. 
+Applying Detail Component Properties to Linework from the Detail Component Manager 
+Use this procedure to apply the properties of a selected detail component to linework in a drawing so that the linework can be keynoted with the keynote for that component. 
+1 Draw the linework. 2 On the command line, enter DtlComp. 3 Enter as (for ASsign). 4 Select the linework, and press ENTER. 5 In the Select Component dialog box, select the component whose 
+properties you want to assign to the linework, and click Select Component. For more information, see Locating a Detail Component on page 3512. 
+The linework can now be keynoted just as if it were a component inserted directly from the Detail Component Manager. 
+Using the Detail Component Manager 
+Using the Detail Component Manager dialog box, you can navigate among different detail component databases. A hierarchical tree view and a filter feature make it easy to locate individual components within a database. Once you find the component you need, you can insert it into a drawing, or you can drag and drop it onto a tool palette for repeated use. Note that the five buttons arranged vertically in the middle of the dialog box are unavailable unless you have edit privileges for the selected database. For more information, see Creating and Modifying Detail Component Databases on page 3515. 
+You can access the Detail Component Manager in the following ways: 
+¦ Click Home tab . Details panel . Detail Components
+ . 
+¦ 
+Right-click any detail component insertion tool on a tool palette in the workspace, and then click Detail Component Manager. 
+
+¦ 
+On the Tool Properties worksheet for a detail component tool, click the Select a Component icon on the Component line. 
+
+
+NOTE When accessed from the Tool Properties worksheet, the Detail Component Manager is displayed in read-only mode, and the dialog box is titled “Select Component.” The hierarchical tree view is expanded to highlight the component currently specified for the tool, and the component table is open at the bottom of the dialog box. Note also that the Insert Component button is replaced by a Select Component button. 
+The Detail Component Manager dialog 
+
+Locating a Detail Component 
+Use this procedure to locate a detail component. 
+1 Use any of these methods to open the Detail Component Manager (sometimes also called the Select Component dialog box): 
+To start the command Then... from... 
+the ribbon click Home tab . Details panel . Detail Components
+ . 
+To start the command Then... from... 
+a tool on a tool palette right-click the tool, and choose Detail Com­ponent Manager. 
+a tool properties work- open the Tool Properties worksheet for a tool,  
+sheet  and click the Select a Component icon on the  
+Component title bar.  
+
+the command line enter DtlComp and then enter as (for ASsign). 
+2 For Current detail component database, select a database from the drop-down list. The database provided with the software is the AEC Detail Component database (AecDtlComponents(US).mdb), which is based on the CSI MasterFormat 2004 standard. You may also access other locally installed databases. For more information, see Configuring Detail Component Database Availability on page 3545. 
+3 Navigate to the detail component table level of the hierarchy for the selected database using either of the following methods: 
+¦ Expand nodes in the hierarchical tree view until you reach the table level, then select a table name to display its contents in the grid at the bottom of the dialog box. 
+The Detail Component Manager dialog with concrete mansonry table displayed 
+
+¦ Type a word or character string in the Filter box, and then 
+click 
+, or press Tab, or press ENTER. This expands all nodes under any node whose name includes the string you entered, and displays the component table for the first table name that contains that string. This is a quick way to navigate to a component whose name you know, but it may expand multiple groups or subgroups in multiple divisions. If you know the division or group containing the component table you want, it is faster to expand the nodes yourself. 
+Using the Detail Component Manager filter 
+
+4 Once the components for the selected table are displayed in the bottom panel of the dialog box, you can use the vertical scroll bar or your mouse scroll wheel to locate a particular component. Clicking anywhere on a row selects that component. Note that the number of column headings varies from one component table to another. For some tables, you need to expand the window or use the horizontal scroll bar to view all columns. 
+Creating and Modifying Detail Component Databases 
+AutoCAD Architecture uses Microsoft® Access for its detail component databases. You can create and modify detail component databases using Microsoft Access directly if you are familiar with that product and with the structure of detail component databases. (For more information, see Customizing and Adding New Content for Detail Components on page 3907.) If you have edit privileges, you can also create and modify detail component databases through the Detail Component Manager, without using Microsoft Access. Nonetheless, before attempting advanced edits using the Detail Component Manager, you should be familiar with the schema for detail component databases, as described in the above-referenced topic. 
+NOTE If you are working in a multi-user environment, it is recommended that you modify a keynote database only when no other users are accessing it. 
+Editing Detail Component Database Properties 
+Use this procedure to edit a component in a detail component database. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 Right-click the root node in the tree view, and click Edit. The Details Database Properties dialog box is displayed for the selected database. 
+
+5 Edit the following database properties as applicable. 
+Property Name Description/Instructions 
+Image Right-click the Image box, and click Specify Im­age to browse images available for the selected group in the location specified by its Path Key value. The image you select will be displayed 
+Property Name Description/Instructions 
+on the Image tab of the Detail Component Manager when the database node is selected. This is an optional field. 
+Display Name The name from the database Fingerprint table. 
+Description The description displayed for this database on the Information tab in the Detail Component Manager. This is an optional field. 
+Author/Manufacturer The name of the person or other entity respons­ible for this database. This is an optional field. 
+Web Address The URL for the author/manufacturer. This is an optional field. 
+6 Click OK. 
+Editing Groups in a Detail Component Database 
+Use this procedure to edit a component group in a detail component database. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 Expand the root node and group/subgroup nodes as necessary to locate the group you want to edit. 
+5 Right-click the group, and click Edit. 
+The Group Properties dialog box is displayed. 
+
+6 Edit the following properties as applicable: 
+Property Name Description/Instructions 
+Image The image displayed on the Image tab of the Detail Component Manager when this group is selected. To change the image, right-click the Image box, and click Specify Image to browse images available for the selected group in the location specified by its Path Key value. This is an optional field. 
+Group Name The name from the database Groups table dis­played for this group in the Detail Component Manager. 
+Path Key An entry from the database DirKeys table, this value is a shortcut alias identifying the location of drawing and image files external to the database for this group. 
+Filter Keywords A comma-delimited list of keywords to be used when searching for components within this group in the Detail Component Manager. This is an optional field. 
+7 Click OK. 
+Editing Components in a Detail Component Database 
+Use this procedure to edit the properties of individual components within a detail component database. The properties on the General and Parameters tabs of the Component Properties dialog box are the basis for one or more recipes the software uses to draw the component in different views. Each recipe specifies the type of jig, or drawing routine, for placing the component in a specific view. The recipe may also contain information pertaining to layer and hatch pattern (for more information, see Recipe Specifications on page 3916). You can also use this procedure to customize components in the default imperial and metric detail component databases supplied with the software, or to edit components in databases that you create. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 Expand the root node and group/subgroup nodes as necessary to locate the component you want to edit. 
+5 Right-click the component, and click Edit. The Component Properties dialog box is displayed. The read-only ID field shows the database identifier for the group to which the component belongs. In most cases, you can edit values on the General tab and the Parameters tab within this dialog box. For components that use a jig other than one of the six supported types (Stamp, Bookends, Linear Array, Surface, Surface Linetype, and Surface Top), no parameters are displayed on the Parameters tab. For information on editing this type of component, see 
+Customizing and Adding New Content for Detail Components 
+on page 3907. 
+
+6 On the General tab, edit the following values as applicable: 
+Property Name Description/Instructions 
+Image The image displayed on the Image tab of the Detail Component Manager when this compon­ent is selected. To change the image, right-click the Image box, and click Specify Image to browse images available for the selected group in the location specified by its Path Key value. This is an optional field. 
+Display Name The name displayed for this component in the Detail Component Manager. 
+Table Name The name of the size table for this component, as specified in the TableName field in the data­base Components table. 
+Units The unit of measurement for this component. 
+Property Name Description/Instructions 
+Recipe The name of the RecipeSpec XML file containing the recipes for drawing this components. 
+Description The description displayed for this component on the Information tab in the Detail Component Manager. 
+Keynote The default keynote key for this component. Click Select Keynote to browse for or create a different keynote. This is an optional field. 
+Filter Keywords A comma-delimited list of keywords to be used in searching for this component. This is an op­tional field. 
+Author/Manufacturer The name of the person or other entity respons­ible for this component, as specified in the Au­thor field in the database Fingerprint table. This is an optional field. 
+Web Address The address specified in the URL field in the Fingerprint table for the database containing this component. This is an optional field. 
+Date Created This read-only property shows the creation date for the component if it was created using the Detail Component Manager. 
+Date Modified This read-only property shows the date of the last modification for this component if it was modified using the Detail Component Manager. 
+7 If the Parameters tab is available for the selected component, you can change the jig type, if desired, and then edit parameter values according to the instructions following the illustration below. 
+You can also change the specified view by renaming it (click 
+
+), or you can create additional views by clicking 
+. Any views you create or rename are then available from the drop-down list. 
+NOTE You can specify only one jig type for each view. 
+
+To define a recipe See... using this jig type... 
+Stamp Parameters for Recipes Using Stamp Jigs on page 3535. 
+Bookends Parameters for Recipes Using Bookends Jigs on page 3536. 
+Linear Array Parameters for Recipes Using Linear Array Jigs on page 3539. 
+Surface Parameters for Recipes Using Surface Jigs on page 3541. 
+Surface Linetype Parameters for Recipes Using Surface Linetype Jigs on page 3543. 
+Surface Top Parameters for Recipes Using Surface Top Jigs on page 3544. 
+8 Click OK. 
+Deleting Groups or Components from a Detail Component Database 
+Use this procedure to delete a group, subgroup, or component from a detail component database. Note that deleting a group also deletes any subgroups and components within that group. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 In the tree view, select the node representing the group, subgroup, or component you want to delete. 
+5 Click 
+. The selected node and all its children are deleted from the hierarchical tree view in the Detail Component Manager. 
+Moving Groups or Components in a Detail Component Database 
+Use this procedure to move a group, subgroup, or component to a different group or level within the database hierarchy. Note that moving a group also moves any subgroups and components within that group. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 Select the node (group, subgroup, or component) to move, and drag it to the desired location in the hierarchical tree view. 
+Editing Component Size Tables 
+A component size table is displayed in the pane at the bottom of the Detail Component Manager whenever a component is selected in the tree view. If you have edit privileges for the currently selected database, you can add rows to the table, remove rows, or edit individual cells. You can also add or remove columns and change column names. 
+Adding a Row to a Component Size Table 
+Use this procedure to add a row to the size table for a selected component in the Detail Component Manager. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 In the hierarchical tree view, expand the root node and group/subgroup nodes as necessary to locate the component you want to edit. 
+5 If necessary, scroll to the bottom of the table, and then click anywhere in the blank row that has an asterisk (*) in the first column. 
+
+The row is selected. 
+
+6 Enter text as required for cells in the row. As you begin to edit a cell, an edit symbol appears in the first column, and the blank row is displayed again below the row you are editing. 
+
+NOTE The Keynote column is not directly editable. Right-click in the cell, and click Edit to open the Select Keynote dialog box. For more information, see Specifying Keynotes for Detail Components on page 3595. 
+7 Click 
+to leave edit mode (or click Close), and then click OK when prompted to save the changes to the table. If you forgot to enter a required value, you are prompted to go back and enter it. 
+Removing a Row from a Component Size Table 
+Use this procedure to remove a row from the size table for a selected component in the Detail Component Manager. 
+
+1 Click Home tab . Details panel . Detail Components 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 In the hierarchical tree view, expand the root node and group/subgroup nodes as necessary to locate the component you want to edit. 
+5 If necessary, resize the window or use the vertical scroll bar to find the row that you want to remove from the table. Then click the gray cell in the first column of the row, and click DELETE to remove the row. 
+6 Click 
+to leave edit mode (or click Close), and then click OK when prompted to save the changes to the table. 
+Editing Values Within a Component Size Table Row 
+Use this procedure to edit individual cells in the size table for a selected component in the Detail Component Manager. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 In the hierarchical tree view, expand the root node and group/subgroup nodes as necessary to locate the component you want to edit. 
+5 If necessary, resize the window or use the scroll bars to find the cell that you want to edit in the table. You can add or change existing text within a cell, or you can click a cell and press Delete to clear the cell and then add new text. 
+NOTE To edit the Keynote column, right-click in the cell, and click Edit to open the Select Keynote dialog box. For more information, see Specifying Keynotes for Detail Components on page 3595. 
+6 Click 
+to leave edit mode (or click Close), and then click OK when prompted to save the changes to the table. If you forgot to enter a required value, you are prompted to go back and enter it. 
+Adding a Column to a Component Size Table 
+Use this procedure to add a column to the size table for a selected component in the Detail Component Manager. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 In the hierarchical tree view, expand the root node and group/subgroup nodes as necessary to locate the component you 
+want to edit. 
+5 In the table, right-click any column title, and click Add Column. 
+6 In the Add New Column dialog box, enter a name for Field Name. 
+If the name you enter matches one of the GlobalName values in the ColumnDisplay table for this database, the LocalName value associated with that global name will be displayed when you click in the Display Name field. You can use this as the display name for the new column, or you can enter a different name, in which case a new entry will be added to the ColumnDisplay table to reflect the new LocalName value you have created for an existing GlobalName value. (A new ColumnDisplay table entry will also be created if the name you enter for Field Name does not match an existing GlobalName value.) 
+7 Select a data type (String, Memo, Integer, or Real), specify a length 
+(up to 255 characters), and click OK. The specified column is added to the right of any existing columns. 
+Removing a Column from a Component Size Table 
+Use this procedure to remove a column from the size table for a selected component in the Detail Component Manager. 
+
+1 Click Home tab . Details panel . Detail Components 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 In the hierarchical tree view, expand the root node and group/subgroup nodes as necessary to locate the component you want to edit. 
+5 In the table, right-click the title of the column you want to remove, and click Delete Column. 
+6 Click OK when prompted to confirm that you want to delete the column. 
+Editing a Column in a Component Size Table 
+Use this procedure to edit the name of a column in the size table for a selected component in the Detail Component Manager. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Select a database from the Current detail component database list. 
+3 Click 
+to enter edit mode. 
+4 In the hierarchical tree view, expand the root node and group/subgroup nodes as necessary to locate the component you want to edit. 
+5 In the table, right-click the title of the column you want to edit, and click Rename Column. 
+6 In the Rename Column dialog box, enter a new name for the column in the Display Name field, and click OK. Note that the Field Name displays the GlobalName value for this column from the ColumnDisplay table for this database. When you change the display name, a new entry is added to the ColumnDisplay table to reflect the new display name you have created for an existing GlobalName value. 
+Creating a Detail Component Database 
+Using the Detail Component Manager to create a new detail component database requires the following basic steps: 
+1 Create a blank Microsoft® Access database by copying and renaming the detail component database template (AecDtlComponents-Template.mdb) located in C:\ProgramData\Autodesk\ACA 2011\enu\Template\Details and Keynotes. 
+2 Add the renamed database to the list of available databases. (For detailed instructions, see Adding a Detail Component Database to Available Databases on page 3545.) 
+3 Using the Detail Component Manager, add groups and subgroups to reflect the major and minor divisions within the detailing scheme. (For detailed instructions, see Adding Groups to a Detail Component Database on page 3530.) 
+4 Add individual components within groups and subgroups as applicable. (For detailed instructions, see Adding Components to a Detail Component Database on page 3531.) 
+5 Add rows to the size tables as applicable for each group/subgroup, editing table columns as desired. (For detailed instructions, see Adding a Row to a Component Size Table on page 3524.) 
+When you exit the Detail Component Manager, the new database is available to other users with access privileges. 
+Creating a Blank Detail Component Database 
+Use this procedure to create a blank Microsoft® Access database with all required tables and queries for detail component storage and retrieval. This is the first step in the process of creating a new detail component database using the Detail Component Manager. 
+1 Navigate toC:\ProgramData\Autodesk\ACA 2011\enu\Template\Details and Keynotes. 
+2 Copy the file AecDtlComponents-Template.mdb and rename it as desired. 
+3 Add the new blank database to the list of active databases, as described under Adding a Detail Component Database to Available Databases on page 3545. 
+Adding Groups to a Detail Component Database 
+Use this procedure to add a group to a detail component database. You can use the same basic procedure to add various subgroups within a group. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Click 
+to enter edit mode. 
+3 Select a database from the Current detail component database list. 
+4 Select the root node for the selected database if you want to add a top-level group, or expand the root node and group/subgroup nodes as necessary until you can select the node to which you want to add a subgroup. 
+5 Click 
+. The Add Component Group dialog box is displayed with the read-only ID field showing the value assigned to this group in the Groups table in the database. 
+
+6 For Group Name, enter the name you want displayed in the Detail Component Manager for this group. This value will be added to the database Groups table entry. 
+7 If you are using the standard database, select a Path Key from the drop-down list to specify a shortcut alias identifying the location of drawing and image files for this group. Path Key values are retrieved from the database DirKeys table. You can add new key values to this table manually using Microsoft® Access. If you are creating a new database from the template file, no Path Key values will be available for selection in this dialog box unless you have first populated the DirKeys table using Microsoft® Access. For 
+more information, see Customizing and Adding New Content for Detail Components on page 3907. 
+8 For Filter Keywords, enter a comma-delimited list of keywords to be used when searching for components in this group. 
+9 Click OK. The group or subgroup you have defined is displayed as a new node in the hierarchical tree view. 
+Adding Components to a Detail Component Database 
+Use this procedure to add a component to a detail component database and create a blank size table to which you can then add rows representing the sizes in which the component is available. When you add a component, the values you specify on the General and Parameters tabs of the New Component dialog box are used to create one or more recipes for drawing the component in different views. Each recipe specifies the type of jig, or drawing routine, for placing the component in a specific view. The recipe may also contain information pertaining to layer and hatch pattern (for more information, see Recipe Specifications on page 3916). Note that this procedure can be used to add components to the default imperial and metric detail component databases supplied with the software, or to populate databases that you create. 
+1 Click Home tab . Details panel . Detail Components
+ . 
+2 Click 
+to enter edit mode. 
+3 Select a database from the Current detail component database list. 
+4 Expand the root node and group/subgroup nodes as necessary until you can select the node to which you want to add a component table. 
+5 Click 
+. 
+The New Component dialog box is displayed. 
+
+6 On the General tab, specify the following values as applicable for the component you are adding: 
+Value Name Description/Instructions 
+Image Right-click the Image box, and click Specify Im­age to browse images available for the selected group in the location specified by its Path Key value. The image you select will be displayed on the Image tab of the Detail Component Manager when this component is selected. 
+Display Name Enter the name you want displayed for this component in Detail Component Manager. 
+Table Name Enter the name of the size table for this compon­ent. 
+Units Select a unit from the drop-down list. 
+Value Name Description/Instructions 
+Recipe Enter a name for the RecipeSpec XML file to contain the recipes you specify for drawing this component. 
+Description Enter the description you want to display for this component on the Information tab in the Detail Component Manager. 
+Keynote Click Select Keynote to browse for or create a keynote to be the default for this component. 
+Filter Keywords Enter a comma-delimited list of keywords to be used in searching for this component. 
+Author/Manufacturer Enter the name of the person or other entity responsible for this component. 
+Web Address Enter the URL for the author/manufacturer. 
+NOTE The ID property on the General tab is a read-only value identifying a particular Groups table in the selected database. These values are assigned automatically as groups are added to a database. 
+7 On the Parameters tab, if desired, select a jig type other than the default (Stamp) for the default Section view, and then specify parameter values to define the component according to instructions referenced in the table following the illustration below. You can also change the default view by renaming it (click
+
+ ), or you can create additional views by clicking 
+. Any views you create or rename are then available from the drop-down list. 
+NOTE You can specify only one jig type for each view. 
+
+To define a recipe See... using this jig type... 
+Stamp Parameters for Recipes Using Stamp Jigs on page 3535. 
+Bookends Parameters for Recipes Using Bookends Jigs on page 3536. 
+Linear Array Parameters for Recipes Using Linear Array Jigs on page 3539. 
+Surface Parameters for Recipes Using Surface Jigs on page 3541. 
+Surface Linetype Parameters for Recipes Using Surface Linetype Jigs on page 3543. 
+To define a recipe See... using this jig type... 
+Surface Top Parameters for Recipes Using Surface Top Jigs on page 3544. 
+8 Click OK. You can now add a table row for each available component size. You can also add, edit, or delete columns as needed. For detailed instructions, see Editing Component Size Tables on page 3524. 
+Parameters for Recipes Using Stamp Jigs 
+Stamp jigs are used to insert components that consist of a single block. Refer to the following table if you are adding a new detail component (or editing one that was created using the New Component option) and you want to define a recipe that uses a stamp jig to insert the component in the specified view. 
+Parameter Name Description/Instructions 
+Layer key Specifies the layer key for the layer to which the compon­ent will be assigned in the specified view. To specify a layer key or change the existing one, click the worksheet 
+icon ( 
+) to access the Select Layer Key dialog box. 
+Block drawing location The name of the drawing file (a DWG, DWT or DWS file) containing the blocks for the component table. 
+Block type A drop-down list lets you specify either Fixed value or Database. If you select Fixed value, the value you enter will apply to every row in the size table for this compon­ent. If you select Database, a column will be added to the table allowing values to be entered for individual sizes. 
+Block Displayed only if Block type is Fixed value, this parameter specifies the block definition to be inserted for this com­ponent. 
+Parameter Name Description/Instructions 
+Block field Displayed only if Block type is Database, this parameter specifies the name of the component table column in which the block to be inserted is specified for each size. 
+Scaling type A drop-down list lets you specify either Fixed value or Database. If you select Fixed value, the value you supply will apply to every row in the size table for this compon­ent. If you select Database, a column will be added to the table allowing values to be entered for individual sizes. 
+Scale Displayed only if Scaling type is Fixed value, this parameter specifies the scaling value for the block. 
+Scale field Displayed only if Scaling type is Database, this parameter specifies the name of the component table column in which the scaling value for the block is specified for each size. 
+Allow scaling Specifies whether the command-line option for specifying scaling is displayed for this component. 
+Allow Rotation Specifies whether the command-line option for specifying rotation is displayed for this component. 
+Allow X flip Specifies whether the command-line option for flipping the block on its X axis is displayed for this component. 
+Allow Y flip Specifies whether the command-line option for flipping the block on its Y axis is displayed for this component. 
+Allow Base point Specifies whether the command-line option for specifying an alternate base point is displayed for this component. 
+Parameters for Recipes Using Bookends Jigs 
+Bookends jigs are used to insert components that consist of a pattern repeated as a linear array but bounded by unique items at each end. Thus, the recipe must define a start block, a repeat block, and an end block. Refer to the following table if you are adding a new detail component (or editing one that was created using the New Component option) and you want to define a recipe that uses a bookends jig to insert the component in the specified view. 
+NOTE Parameters preceded by an asterisk (*) are specified separately for the start block, the repeat block, and the end block. 
+Parameter Name Description/Instructions 
+Layer key Specifies the layer key for the layer to which the compon­ent will be assigned in the specified view. To specify a layer key or change the existing one, click the worksheet 
+icon ( 
+) to access the Select Layer Key dialog box. 
+Block entire component Specifies whether the blocks comprising the component are inserted as a single block. 
+Block drawing location Specifies the drawing file (a DWG, DWT, or DWS file) containing the blocks for the component table. 
+*Block type A drop-down list lets you specify either Fixed value or Database. If you select Fixed value, the value you enter for the corresponding Block parameter will apply to every row in this component’s size table. If you select Database, a column (with the name specified for the corresponding Block field parameter) will be added to the component table, allowing different block definitions to be specified for individual sizes. 
+*Block Displayed only if Block type is Fixed value, this parameter specifies the block definition to be used for all sizes. 
+*Block field Displayed only if Block type is Database, this parameter specifies the name of the component table column in which the block definition is specified for each size. 
+*Layer key Specifies the layer key for the layer to which the block will be assigned in the specified view. To specify a layer key 
+or change the existing one, click the worksheet icon ( ) to access the Select Layer Key dialog box. 
+
+*Scaling type A drop-down list lets you specify either Fixed value or Database. If you select Fixed value, the value you enter 
+Parameter Name Description/Instructions 
+for the corresponding Scale parameter will apply to every row in this component’s size table. If you select Database, a column (with the name specified for the corresponding Scale field parameter) will be added to the component table, allowing values to be entered for individual sizes. 
+*Scale Displayed only if Scaling type is Fixed value, this parameter specifies the scaling value for the block. 
+*Scale field Displayed only if Scaling type is Database, this parameter specifies the name of the component table column in which the scaling value for the block is specified for each size. 
+*Width type 
+A drop-down list lets you specify Fixed value, Database, or Block extents. If you select Fixed value, the value you enter for the corresponding Width parameter will apply to every row in the size table for this component. If you select Database, a column (with the name specified for the corresponding Width field parameter) will be added to the component table, allowing values to be entered for individual sizes. If you select Block extents, then block width is calculated dynamically as the block is inserted. 
+*Width Displayed only if Width type is Fixed value, this parameter specifies the width for the block. 
+*Width field Displayed only if Width type is Database, this parameter specifies the name of the component table column in which the block width is specified for each size. 
+Gap Specifies the distance between repeat blocks. A negative value causes blocks to overlap. 
+Start prompt Specifies the string to display for the start point prompt. 
+End prompt Specifies the string to display for the endpoint prompt. 
+Block orientation Specifies whether the block is oriented along the X axis or the Y axis. 
+Parameter Name Description/Instructions 
+Jig orientation Specifies whether the jig is oriented along the X axis or the Y axis. 
+Allow X flip Specifies whether the command-line option for flipping the block on its X axis is displayed for this component. 
+Allow Y flip Specifies whether the command-line option for flipping the block on its Y axis is displayed for this component. 
+Parameters for Recipes Using Linear Array Jigs 
+Linear Array jigs are used to insert multiple copies of a block in a line along the X or Y axis. Refer to the following table if you are adding a new detail component (or editing one that was created using the New Component option) and you want to define a recipe that uses a linear array jig to insert the component in the specified view. 
+Parameter Name Description 
+Layer key Specifies the layer key for the layer to which the compon­ent will be assigned in the specified view. To specify a layer key or change the existing one, click the worksheet 
+icon ( 
+) to access the Select Layer Key dialog box. 
+Block entire component Specifies whether the blocks comprising the component are inserted as a single block. 
+Block drawing location Specifies the drawing file (a DWG, DWT, or DWS file) containing the blocks for the component table. 
+Block type 
+A drop-down list lets you specify either Fixed value or Database. If you select Fixed value, the value you enter for the corresponding Block parameter will apply to every row in this component’s size table. If you select Database, a column (with the name specified for the corresponding Block field parameter) will be added to the component table, allowing different block definitions to be specified for individual sizes. 
+Parameter Name Description 
+Block Displayed only if Block type is Fixed value, this parameter specifies the block definition to be used for all sizes. 
+Block field Displayed only if Block type is Database, this parameter specifies the name of the component table column in which the block definition is specified for each size. 
+Scaling type 
+A drop-down list lets you specify either Fixed value or Database. If you select Fixed value, the value you enter for the corresponding Scale parameter will apply to every row in this component’s size table. If you select Database, a column (with the name specified for the corresponding Scale field parameter) will be added to the component table, allowing values to be entered for individual sizes. 
+Scale Displayed only if Scaling type is Fixed value, this parameter specifies the scaling value for the block for all sizes. 
+Scale field Displayed only if Scaling type is Database, this parameter specifies the name of the component table column in which the scaling value for the block is specified for each size. 
+Width type 
+A drop-down list lets you specify Fixed value, Database, or Block extents. If you select Fixed value, the value you enter for the corresponding Width parameter will apply to every row in the size table for this component. If you select Database, a column (with the name specified for the corresponding Width field parameter) will be added to the component table, allowing values to be entered for individual sizes. If you select Block extents, then block width is calculated dynamically as the block is inserted. 
+Width Displayed only if Width type is Fixed value, this parameter specifies the width for the block for all sizes. 
+Width field Displayed only if Width type is Database, this parameter specifies the name of the component table column in which the block width is specified for each size. 
+Parameter Name Description 
+Gap Specifies the distance between repeat blocks. A negative value causes blocks to overlap. 
+Start prompt Specifies the string to display for the start point prompt. 
+End prompt Specifies the string to display for the endpoint prompt. 
+Display count option Specifies whether the command-line options for specifying a count are displayed (see Count prompt parameter be­low). 
+Count prompt Displayed only if the Display count option parameter is Yes, this parameter specifies the command-line prompt to be displayed. 
+Block orientation Specifies whether the block is oriented along the X axis or the Y axis. 
+Jig orientation Specifies whether the jig is oriented along the X axis or the Y axis. 
+Allow X flip Specifies whether the command-line option for flipping the block on its X axis is displayed for this component. 
+Allow Y flip Specifies whether the command-line option for flipping the block on its Y axis is displayed for this component. 
+Parameters for Recipes Using Surface Jigs 
+Surface jigs are used to insert components that have a specified depth and a hatch-filled rectangular boundary with user-specified start points and endpoints. Refer to the following table if you are adding a new detail component (or editing one that was created using the New Component option) and you want to define a recipe that uses a surface jig to insert the component in the specified view. 
+Parameter Name Description 
+Layer key Specifies the layer key for the layer to which the compon­ent boundary will be assigned in the specified view. To specify a layer key or change the existing one, click the 
+Parameter Name Description 
+worksheet icon ( 
+) to access the Select Layer Key dialog box. 
+Layer key (for hatching) Specifies the layer key for the layer to which the compon­ent hatch infill will be assigned in the specified view. To specify a layer key or change the existing one, click the 
+worksheet icon ( 
+) to access the Select Layer Key dialog box. 
+Hatching type 
+A drop-down list lets you specify either Fixed value or Database. If you select Fixed value, the value you enter for the corresponding Hatch alias parameter will apply to every row in this component’s size table. If you select Database, a column (with the name specified for the cor­responding Hatching parameter) will be added to the component table, allowing values to be entered for indi­vidual sizes. 
+Hatch alias Displayed only if Hatching type is Fixed value, this para­meter specifies the hatch alias (from the Hatches table for this database) for all sizes of the component. 
+Hatching Displayed only if Hatching type is Database, this parameter specifies the name of the component table column in which the hatch is specified for each size. 
+Start prompt Specifies the string to display for the start point prompt. 
+End prompt Specifies the string to display for the endpoint prompt. 
+Allow X flip Specifies whether the command-line option for flipping the block on its X axis is displayed for this component. 
+Allow Y flip Specifies whether the command-line option for flipping the block on its Y axis is displayed for this component. 
+Parameters for Recipes Using Surface Linetype Jigs 
+Surface linetype jigs are similar to surface jigs in that they are used to insert components that have a specified depth and a rectangular boundary with user-specified start points and endpoints. Instead of a hatch-filled boundary, however, the surface linetype jig fills the boundary with a wide polyline of a specified linetype. Refer to the following table if you are adding a new detail component (or editing one that was created using the New Component option) and you want to define a recipe that uses a surface linetype jig to insert the component in the specified view. 
+Parameter Name Description 
+Layer key Specifies the layer key for the layer to which the compon­ent boundary will be assigned in the specified view. To specify a layer key or change the existing one, click the 
+worksheet icon ( 
+) to access the Select Layer Key dialog box. 
+Linetype/Layer key Specifies the layer key for the layer to which the compon­ent infill will be assigned in the specified view. To specify a layer key or change the existing one, click the worksheet 
+icon ( 
+) to access the Select Layer Key dialog box. 
+Linetype type 
+A drop-down list lets you specify either Fixed value or Database. If you select Fixed value, the value you enter for the corresponding Linetype parameter will apply to every row in this component’s size table. If you select Database, a column (with the name specified for the cor­responding Linetype field parameter) will be added to the component table, allowing values to be entered for indi­vidual sizes. 
+Linetype Displayed only if Linetype type is Fixed value, this para­meter specifies the linetype alias for all sizes of the com­ponent. 
+Linetype field Displayed only if Linetype type is Database, this parameter specifies the name of the component table column in which the linetype is specified for each size. 
+Start prompt Specifies the string to display for the start point prompt. 
+Parameter Name Description 
+End prompt Specifies the string to display for the endpoint prompt. 
+Allow X flip Specifies whether the command-line option for flipping the block on its X axis is displayed for this component. 
+Allow Y flip Specifies whether the command-line option for flipping the block on its Y axis is displayed for this component. 
+Parameters for Recipes Using Surface Top Jigs 
+Surface top jigs are similar to surface jigs in that they are used to insert components with a specified depth and a hatch-filled rectangular boundary. However, the surface top jig is designed for components such as concrete topping that are poured onto or bounded by another entity, which provides the bottom edge of the rectangle. Thus, the surface top jig draws only the top and side edges of the rectangle. Refer to the following table if you are adding a new detail component (or editing one that was created using the New Component option) and you want to define a recipe that uses a surface top jig to insert the component in the specified view. 
+Parameter Name Description 
+Layer key Specifies the layer key for the layer to which the compon­ent boundary will be assigned in the specified view. To specify a layer key or change the existing one, click the 
+worksheet icon ( 
+) to access the Select Layer Key dialog box. 
+Layer key (for hatching) Specifies the layer key for the layer to which the compon­ent hatch infill will be assigned in the specified view. To specify a layer key or change the existing one, click the 
+worksheet icon ( 
+) to access the Select Layer Key dialog box. 
+Hatching type A drop-down list lets you specify either Fixed value or Database. If you select Fixed value, the value you enter for the corresponding Hatch alias parameter will apply to every row in this component’s size table. If you select Database, a column (with the name specified for the cor­
+Parameter Name Description 
+responding Hatching parameter) will be added to the component table, allowing values to be entered for indi­vidual sizes. 
+Hatch alias Displayed only if Hatching type is Fixed value, this para­meter specifies the hatch alias (from the Hatches table for this database) for all sizes of the component. 
+Hatching Displayed only if Hatching type is Database, this parameter specifies the name of the component table column in which the hatch is specified for each size. 
+Start prompt Specifies the string to display for the start point prompt. 
+End prompt Specifies the string to display for the endpoint prompt. 
+Allow X flip Specifies whether the command-line option for flipping the block on its X axis is displayed for this component. 
+Allow Y flip Specifies whether the command-line option for flipping the block on its Y axis is displayed for this component. 
+Configuring Detail Component Database Availability 
+AutoCAD Architecture provides a detail component database (AecDtlComponents.mdb), which is based on the CSI MasterFormat 2004 standard. You can add other detail component databases to accommodate your office standards or other project-specific requirements. You can also remove databases from the active list, depending on whether you want them available to a particular project. For a given project, you can also control whether users can see and access all detail component databases or only those associated with the project. For more information, see Specifying the Project Detail Component Databases for a Project on page 328. 
+Adding a Detail Component Database to Available Databases 
+Use this procedure to add a database to the list of active detail component databases from which components can be selected for insertion, copied to a tool palette, or used to modify an existing tool. 
+1 Click 
+. Options. 2 In the Options dialog box, click the AEC Content tab. 3 On the AEC Content page, click the Add/Remove button for Detail 
+Component Databases. 
+4 In the Configure Detail Component Databases dialog box, click Add. 
+
+5 In the Select Component Database browser window, locate the database you want to add, and click Open. 
+
+The selected database is added to the bottom of the list in the Configure Detail Component Databases dialog box. 
+6 Click OK twice. 
+Removing a Detail Component Database from Available Databases 
+Use this procedure to remove a database from the list of active detail component databases. 
+1 Click 
+. Options. 2 In the Options dialog box, click the AEC Content tab. 3 On the AEC Content page, click the Add/Remove button for Detail 
+Component Databases. 4 In the Configure Detail Component Databases dialog box, select the database you want to remove from the list, and click Remove. 
+
+5 Click OK twice. Note that if you remove the top database in the list, the next database listed becomes the current selection in the Detail Component Manager dialog box. 
+Setting Detail Component Database Permissions in a Multi-User Environment 
+If you are working in a multi-user network environment with keynote and detail content on a remote server, you may want to allow some users to edit databases and others to have read-only access. For this to work properly, all users must have write permission to the folder where the databases are installed. Without write permission to the folder, a user will not be able to open any database within the folder, because the necessary lock file cannot be generated on that user’s behalf, regardless of whether the user has write permission to the database itself. Once all users have write permission to the 
+folder, permissions for individual databases (*.mdb files) can then be set on a per-user basis. Note, however, that this arrangement allows users to access and edit other content within the folder, such as drawing, image, and XML recipe files, unless you set permissions on these files individually to prevent it. For this reason, you may want to keep the folders containing keynote and detail content separate from other content installed with AutoCAD Architecture so that write permission is not available to all users for all content. 
+Merging Old and New Detail Component Databases 
+If you have modified one of the default detail component databases supplied with a previous release of AutoCAD Architecture, and you want to migrate your modifications to the corresponding database in the current release, you can do so using the Detail Component/Keynote Database Migration utility. For detailed instructions, see Migrating Detail Component and Keynote Databases on page 3963. 
+IMPORTANT Beginning with AutoCAD Architecture 2011, the US detail component and keynote databases supplied with the software use the CSI MasterFormat 2004 standard. Using the Detail Component/Keynote Database Migration utility to migrate your customizations from a database that uses the CSI MasterFormat 95 standard (as in Autodesk Architectural Desktop 2007 and previous releases) is not supported. The utility will not properly migrate custom records from the older database and may errantly overwrite records in the new database with MasterFormat 95 data. If you want to use a MasterFormat 95 database with the current release of AutoCAD Architecture, you can load it as described under Adding a Detail Component Database to Available Databases on page 3545 or Adding a Keynote Database on page 3597. Note that the older database must be located with the previous release content and must maintain that content folder structure to function properly. An older detail component database will not function with 2008 or later US details content. Likewise, an older keynote database will not automatically keynote 2008 or later US details content; it will only keynote detail components inserted using previous version details or details in previous version drawings. The Detail Component/Keynote Database Migration utility can still be used to migrate records from one CSI MasterFormat 95 database to another. 
+Annotation and Keynoting Tools 
+47 
+Annotation tools let you easily insert multiline text annotations with or without leaders, keynotes that scale and layer key automatically, and cut lines with single or double breaks that can mask or trim underlying objects. You can edit multiline attributes used in multi-view blocks. You can create and manipulate many kinds of multiline leaders. Annotation scaling allows you to plot annotation at the same height or size at different specified annotation scales. You can link display configurations to specific annotation scales as well, and carry participating annotation scales from one AEC object to another. The keynote tools support both reference keynoting and sheet keynoting. You can manually select keynotes to insert, or you can apply pre-specified keynotes at various levels: object, object component, two-dimensional (2D) section/elevation linework, or detail component. 
+The Basic Annotation Tool 
+AutoCAD Architecture uses the same basic customizable tool for adding the following types of annotations to drawings: 
+¦ 
+Multiline text notes with single or multiline leaders 
+
+¦ 
+Symbol-based notes with attributes 
+
+¦ 
+Reference keynotes 
+
+¦ 
+Sheet keynotes 
+
+¦ 
+Break marks 
+
+
+The specific type of annotation, its appearance, and other characteristics are determined by editable values on the Tool Properties worksheet, which is accessed from the context menu of the tool. Annotation objects are created at a scale based on the specified annotation scale. 
+Several default versions of this annotation tool are provided with the software, each representing a different configuration of the Tool Properties worksheet. Depending on how your system is set up, you may find one or more of these tools (or locally customized versions of them) on the sample Annotation tool palette in the workspace. These tools are also available from the Stock Tools Catalog and the Documentation Tool Catalog in the Content Browser. Using the i-drop® feature, you can copy any of these tools to a tool palette in the workspace and customize it to meet your needs. 
+The basic annotation tool lets you insert either text-based or block-based annotations. In both cases, the annotation can be created with or without a leader that connects it visually to a particular object or point in the drawing. The annotation tool also supports keynoting, where a predefined keynote is retrieved from a database, either through direct selection or automatically, based on a selected object within the drawing. Generally, text-based annotations are used for reference keynoting, and block-based annotations are used for sheet keynoting. However, the annotation tool accommodates many different styles of drawing annotation, such as break marks. 
+Annotation Tool Properties 
+The following illustrations show the Tool Properties worksheet settings for two of the default versions of the annotation tool: the text-based Text (Straight Leader) tool and the block-based Square (Straight Leader) tool. Note the different values for Content type under the General category. When the content type is multiline text (Mtext), additional settings are displayed under the Text category. Likewise, when the content type is Block, settings are displayed for Symbol and Symbol location. The settings available under the Leader category also vary based on the current value for Leader type. 
+MText annotation tool properties 
+
+Block annotation tool properties 
+
+The following table lists and describes the annotation tool properties that can be configured through the Tool Properties worksheet. Once an annotation is inserted into a drawing, properties of the annotation or its leader can be modified using the associated Properties palette. For more information on modifying the text of an existing annotation, see Editing a Text-Based Annotation on page 3568. 
+Property Cat-Description egory/Name 
+General/Layer key Specifies the layer key for the layer to which annotation is assigned. To change, click the current value (default is ANNOBJ) to access the Select Layer Key dialog box. 
+General/Layer override Specifies one or more layer key overrides. Click the work­sheet icon to access the Select Layer Overrides dialog box. 
+Multileader style Specifies the multileader style for the annotation. Possible styles include Text, Block, and Standard. 
+General/Content type Possible values are Mtext (for basic multiline text notes and reference keynotes) or Block (for symbols with attrib­utes and sheet keynotes). When inserting an Mtext object using default settings, you are prompted to specify text width. 
+General/Symbol 
+Displayed only if Content type is Block, this property specifies the block-based symbol to be used for the an­notation. For sheet keynotes, the block contains an auto­matically updatable field value that determines keynote format and either specifies a particular keynote or serves as a placeholder. The placeholder value is then replaced by whatever keynote is associated with the selected object or component or by a keynote selected manually during the insertion process. For more information, see Configur­
+ing the Annotation Tool for Keynoting on page 3571. 
+General/Symbol location The location of the drawing file containing the specified symbol. Click the property and use the Browse option from the drop-down list to locate and enter the path to the file. If this property is unspecified (--), then only those blocks in the current drawing file are listed. 
+Leaders/Leader type Possible values are None, Straight, or Spline. 
+Property Cat-Description egory/Name 
+Leaders/Leader dimension  By default, this property is unspecified (--), and the dimen­ 
+style  sion style for the current drawing is used. Or you can click  
+the property and select a style from the drop-down list.  
+The style controls the leader arrow head as well as the  
+text options as set on the Text tab of the style.  
+
+Leaders/Leader dimension style location 
+Specifies the location of the dimension style if different from the current drawing dimension style. Click the property and use the Browse option from the drop-down list to locate and enter the path to the selected style. If this property is unspecified (--), then only those styles in the current drawing are used. 
+Leaders/Limit points Displayed only if a leader type is specified, this property indicates whether there is a limit to the number of points in the leader. If unspecified (--), the corresponding leader setting for the current drawing is used. 
+Leaders/Maximum points Displayed only if the Limit points setting is yes, this property specifies the maximum number of points allowed in the leader before the text or symbol is inserted. If un­specified, the corresponding leader setting for the current drawing is used, if applicable. 
+Text/Default text 
+Displayed only if Content type is Mtext. For basic text notes, this value is unspecified (--), and you enter the text upon insertion. For reference keynotes, the value should be a placeholder keynote field. The placeholder value is then replaced by whatever keynote is associated with the selected object or component, or by a keynote selected manually during the insertion process. For more informa­tion, see Configuring the Annotation Tool for Keynoting on page 3571. 
+Text/Angle Specifies the angle for multiline text or attribute text. The default is Force horizontal. Other drop-down list options are As inserted (which sets text rotation at the angle of the last leader segment) and Right reading (which keeps the text right-side up regardless of rotation angle). 
+Property Cat-Description egory/Name 
+Text/Attribute style Displayed only if Content type is Block, this property specifies whether attribute text within the symbol uses the target drawing text style or the style defined by the attribute tag. 
+Text/Prompt for width Indicates whether you are prompted to specify a width for the annotation. If unspecified (--), the corresponding leader setting for the current drawing is used. 
+Text/Always left justify Displayed only if Content type is Mtext and Leader type is other than None, this property specifies whether each word in the annotation text is always left-justified. If un­specified (--), the corresponding leader setting for the current drawing is used. 
+Text/Left side attachment Displayed only if Content type is Mtext and Leader type is other than None, this property specifies where text at­taches to a leader positioned to its left. This setting can be selected from a drop-down list. If unspecified (--), the corresponding leader setting for the current drawing is used. 
+Text/Right side attachment Displayed only if Content type is Mtext and Leader type is other than None, this property specifies where text at­taches to a leader positioned to its right. Setting can be selected from drop-down list. If unspecified (--), the cor­responding setting for the current drawing is used. 
+Text/Underline bottom line Displayed only if Content type is Mtext and Leader type is other than None, this property specifies whether a leader attaches to text as an underline below the bottom line of text. If unspecified (--), the corresponding leader setting for the current drawing is used. 
+Text/Frame Displayed only if Content type is Mtext and Leader type is other than None, this property specifies whether text is enclosed in a frame. If unspecified (--), the correspond­ing leader setting for the current drawing is used. 
+Property Cat-Description egory/Name 
+Text/Mask background Displayed only if Content type is Mtext, this property specifies whether text has an opaque background to mask out objects below it. The default setting is No. 
+Editing Multiline Attributes in Multi-View Blocks 
+You can edit multiline attributes in multi-view blocks using grips to reposition or reconfigure text. Change the width and justification of multiline attributes to refine your annotation text layout on your drawings. For example, you can edit a Room tag’s attributes to fit text inside a room boundary. 
+Displaying Edit Attribute Justification Grips 
+Follow this procedure to display a multiline attribute’s width and justification grips, as well as its standard location, rotation, and exit edit grips. 
+1 Select an existing tag. The attribute Location and Edit Attributes grips are displayed. 
+2 Select the Edit Attributes grip. Alternatively, you can click Tag tab . Modify panel . Edit 
+Attributes
+ . 
+The attribute Rotation, Width, Edit attribute justification, and Exit Edit Attribute grips are displayed. 
+3 Select the Edit attribute justification grip. 
+The eight available text box justification and Exit attribute 
+justification grips are displayed. 
+4 After you edit the attribute width or justification, select Exit attribute justification, and then select Exit Edit Attributes to save your changes. 
+
+The following illustration shows the attribute Location and Width grips, and well as the multiline attribute’s bounding box. By default, the attribution width is 0 (zero). You specify a width value to resize the extents of the bounding box. 
+
+The following illustration shows the available bounding box justification and Exit edit attribute justification grips. By default, the Bottom Middle justification is current. 
+
+The following illustration shows the results of specifying the 3 top grips as the current multiline attribute justification. The text in green shows how the multiline attribute would be repositioned. 
+
+The following illustration shows the results of specifying the 3 middle grips as the current multiline attribute justification. The text in green shows how the multiline attribute would be repositioned. 
+
+The following illustration shows the results of specifying the 3 bottom grips as the current multiline attribute justification. The text in green shows how the multiline attribute would be repositioned. 
+
+Editing the Width of a Multiline Attribute 
+Use this procedure to change the width of a multiline attribute. 1 Select the room tag. 
+

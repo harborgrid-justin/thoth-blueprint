@@ -1,0 +1,1840 @@
+[MIGRATED TO RTM_PART_61.md - STRUCTURAL MEMBERS]
+2 Create the tool: 
+If you want to… Then… 
+create a tool from a structural  click Manage tab . Style & Display  
+member style in the Style Manager  panel . Style Manager  . Locate  
+the style you want to copy, and  
+drag it to the tool palette. Click OK  
+to close the Style Manager.  
+
+create a tool from a brace in the select the brace, and drag it to the drawing tool palette. 
+copy a tool in the current palette right-click the tool, and click Copy. Right-click, and click Paste. 
+copy a tool from another palette open the other tool palette, right-click the tool, and click Copy. Re­open the palette where you want to add the tool, right-click, and click Paste. 
+copy a tool from the Content  open the Content Browser, and  
+Browser  locate the tool you want to copy.  
+Position the cursor over the i-drop  
+handle, and drag the tool to the  
+tool palette.  
+
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. The description displays in the tooltip when you select the tool from the tool palette, and describes the tool if you store it in a tool catalog in the Content Browser. 
+6 Expand Basic, and expand General. 
+7 Enter a description of the braces that you can create using this brace tool. 
+8 If you do not want to use the layer assignments specified in the layer key style used in the drawing, specify a layer key and any layer key overrides. 
+9 Select a structural member style, and select a style location, if not the current drawing. The style provides the shape of the brace. 10 Specify a value for Bound spaces: 
+If you want to… Then… 
+allow the brace to be used as a select Yes. bounding object for associative spaces 
+prevent the brace from being used select No. as a bounding object for associative spaces 
+use the bounding setting from the select By Style. brace style 
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+11 Specify a value for Trim automatically: 
+If you want… Then… 
+the geometry of the brace to be select Yes. automatically trimmed to any other structural members, other architec­tural objects, or linework to which it is logically connected 
+prevent the geometry of the brace select No. from being trimmed automatically 
+use the trim setting from the brace select By Style. style 
+NOTE This setting affects only the structural member being added. Adding a new structural member will not change the geometry of an existing structural member, regardless of the setting for Trim automatically. 
+12 Expand Dimensions. 
+13 Specify offsets: 
+If you want to… Then… 
+offset the brace on its extruded axis enter a value for Start offset. A pos­
+at the start point of the brace itive value shortens the brace on its axis, while a negative value lengthens the brace on its axis. 
+offset the brace on its extruded axis enter a value for End offset. A posit-
+at the endpoint of the brace ive value lengthens the brace on its axis, while a negative value shortens the brace on its axis. 
+14 Enter a value for Roll. This value specifies the orientation of the brace relative to its extruded axis in terms of degrees of roll. A positive value rolls the brace counterclockwise when viewed from its end to its start. 
+15 Specify the brace justification, which positions the brace shape in relation to its extruded axis when you draw the brace: 
+If you want to… Then… 
+position the axis of the brace along  select Baseline for Justify.  
+the centroid of the brace shape  
+ 
+NOTE This applies to members  
+created with styles from the  
+Structural Member Catalog  
+only.  
+
+position the axis of the brace along  select one of the 9 positions for  
+one of 9 positions on the brace  Justify.  
+shape  NOTE These positions are defined at a roll of zero, viewing the beam from the end to the  
+start.  
+
+Justification options for a brace 
+
+16 To specify the justification of braces with multiple shapes and segments created with this tool, select a setting for Justify using overall extents: 
+If you want to… Then… 
+justify the brace based on the  select Yes. The justification is ap­ 
+largest cross-sectional extent of the  plied ONLY to the lowest priority  
+member’s lowest priority shapes  shape definitions, and is calculated  
+based on the node (vertex) of the  
+member with the greatest cross  
+section.  
+
+justify the brace at each node,  select No. The justification is calcu­ 
+based on all shapes  lated based on the cross-sectional  
+extents at each node, and is applied  
+to all the shapes without regard to  
+priority.  
+
+For more information about members with multiple shapes and segments, see Creating Custom Structural Members on page 2619. 
+17 Specify the rise, which is the vertical distance between the start point and endpoint of the brace: 
+If you want to… Then… 
+specify the rise of the brace before you draw it 
+select No for Specify Rise on Screen. For Method, select either Angle, Distance, or Height. If you select Angle, enter a value for Distance along first member (measured from the point where the two members are connected to the point on the first member where you want the brace to start) and a value for Angle from first member. If you select Distance, enter values for both Dis­tance along first member and Dis­tance along second member. If you select Height, enter a value for Rise. 
+specify the rise of the brace by spe-select Yes for Specify Rise on Screen. cifying a 3D endpoint for the end of the brace 
+18 Click OK. 
+Creating a Column Tool 
+Use this procedure to create a structural column tool and add it to a tool palette. 
+1 Open the tool palette on which you want to add a tool. 2 Create the tool: 
+If you want to… Then… If you want to… Then… 
+create a tool from a structural  click Manage tab . Style & Display  
+member style in the Style Manager  panel . Style Manager  . Locate  
+the style you want to copy, and  
+drag it to the tool palette. Click OK  
+to close the Style Manager.  
+
+create a tool from a column in the select the column, and drag it to drawing the tool palette. 
+copy a tool in the current palette right-click the tool, and click Copy. Right-click, and click Paste. 
+copy a tool from another palette open the other tool palette, right-click the tool, and click Copy. Re­open the palette where you want to add the tool, right-click, and click Paste. 
+copy a tool from the Content  open the Content Browser, and  
+Browser  locate the tool you want to copy.  
+Position the cursor over the i-drop  
+handle, and drag the tool to the  
+tool palette.  
+
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. The description displays in the tooltip when you select the tool from the tool palette, and describes the tool if you store it in a tool catalog in the Content Browser. 
+6 Expand Basic, and expand General. 
+7 Enter a description of the columns that you can create using this column tool. 
+8 If you do not want to use the layer assignments specified in the layer key style used in the drawing, specify a layer key and any layer key overrides. 
+9 Select a structural member style, and select a style location, if not the current drawing. The style provides the shape of the column. 
+10 Specify a value for Bound spaces: 
+If you want to… Then… 
+allow the column to be used as a select Yes. bounding object for associative spaces 
+prevent the column from being select No. used as a bounding object for asso­ciative spaces 
+use the bounding setting from the select By Style. column style 
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+11 Specify a value for Trim automatically: 
+If you want… Then… 
+the geometry of the column to be select Yes. automatically trimmed to any other structural members, other architec­tural objects, or linework to which it is logically connected 
+prevent the geometry of the select No. column from being trimmed auto­matically 
+use the trim setting from the select By Style. column style 
+NOTE This setting affects only the structural member being added. Adding a new structural member will not change the geometry of an existing structural member, regardless of the setting for Trim automatically. 
+12 Expand Dimensions. 
+13 Specify offsets: 
+If you want to… Then… 
+offset the column on its extruded enter a value for Start offset. A pos­
+axis at the start point of the column itive value shortens the column on its axis, while a negative value lengthens the column on its axis. 
+offset the column on its extruded enter a value for End offset. A posit-
+axis at the endpoint of the column ive value lengthens the column on its axis, while a negative value shortens the column on its axis. 
+14 Specify the roll of the column (how it is oriented relative to its extruded axis): 
+If you want to… Then… 
+specify the roll of the column before select No for Specify on Screen, and you insert it enter a value for Roll. 
+specify the roll of the column when select Yes for Specify on Screen. you insert it 
+This value specifies the orientation of the column relative to its extruded axis in terms of degrees of roll. A positive value rolls the column counterclockwise when viewed from the end (top) to the start (bottom) of the column. 
+15 Specify the column justification, which positions the column shape in relation to its extruded axis when you draw the column: 
+If you want to… Then… 
+position the axis of the column select Baseline for Justify. 
+along the centroid of the column 
+shape NOTE This applies to members created with styles from the Structural Member Catalog only. 
+If you want to… Then… 
+position the axis of the column  select one of the 9 positions for  
+along one of 9 positions on the  Justify.  
+column shape  
+NOTE These positions are  
+defined at a roll of zero, viewing  
+the column from the top to the  
+bottom.  
+
+16 To specify the justification of members with multiple shapes and segments created with this tool, select a setting for Justify using overall extents: 
+If you want to… Then… 
+justify the member based on the  select Yes. The justification is ap­ 
+largest cross-sectional extent of the  plied ONLY to the lowest priority  
+member’s lowest priority shapes  shape definitions, and is calculated  
+based on the node (vertex) of the  
+member with the greatest cross  
+section.  
+
+justify the member at each node,  select No. The justification is calcu­ 
+based on all shapes.  lated based on the cross-sectional  
+extents at each node, and is applied  
+to all the shapes without regard to  
+priority.  
+
+For more information about members with multiple shapes and segments, see Creating Custom Structural Members on page 2619. 
+17 Click OK. 
+Using Structural Member Tools to Create Structural Members 
+Tool palettes in AutoCAD Architecture let you quickly place beams, braces, and columns by selecting a structural member tool with a specific style and other predefined properties. You can also use structural member tools to convert linework to structural members and to apply the settings of a structural member tool to existing structural members. 
+Custom palettes created by you or your CAD manager may contain structural member tools from styles created in the Structural Member Catalog or Structural Member Style wizard. These palettes may be customized for your projects or office standards. 
+The default tool palettes in the workspace contain sample structural member tools that you can use and customize as needed. In addition, the following catalogs provided with the software contain structural member tools that you can add to your tool palettes: 
+¦ 
+Stock Tool catalog 
+
+¦ 
+Sample Palette catalog 
+
+¦ 
+My Tool catalog 
+
+
+When you create structural members using structural member tools, you can use the default settings of the tool, or you can specify settings for any structural member properties that are not controlled by the style. 
+IMPORTANT Columns grids that have numerous columns attached to them can take longer than expected to display on screen. This is because structural members carry additional information that may be used for structural analysis. 
+Creating a Beam 
+Use this procedure to add one or more new beams that have the property settings specified in the structural beam tool that you select. You can add a beam anywhere in the drawing area by specifying a start point and an endpoint, or you can position and size a beam in relation to an edge of an existing object. The style specified in the tool provides the beam shape, which is extruded along the path you define in the drawing area. 
+To specify settings when you add a beam, see Creating Beams with User-Specified Settings on page 2530. 
+Creating a beam 
+
+1 Open the tool palette that contains the structural beam tool you want to use, and select the tool. 
+TIP You may have to scroll to display the desired tool. After selecting it, you can move or hide the Properties palette to expose more of the drawing area. 
+NOTE Alternatively, you can click Home tab . Build panel . Column Grid drop-down . Beam
+ . 
+2 If you want to offset the new beam(s) from the elevation of the current level, double-click the Elevation value on the application status bar at the bottom of the workspace, enter an elevation value (or specify a point on an existing object in the drawing area), click OK, and then click the Z-snap button to the right of the Elevation Value. 
+3 Position the new beam(s) in the drawing area: 
+If you want to… Then… 
+create a single beam independent specify a start point and an end-of other objects point for the beam, and then press ENTER. 
+create multiple beams independent specify a start point and an end-of other objects but connected to point, and then specify additional each other using the endpoint of endpoints as required. Press ENTER one beam as the start point of the to end the command. next beam 
+create a beam that is connected to  specify a start point and an end- 
+an existing structural member  point, one of which must be on the  
+axis or the endpoint of the existing  
+member. Press ENTER to end the  
+command.  
+
+add beams along one or more edges of a slab, roof slab, or wall move the cursor over an edge of the object to display a preview of the beam, and then click to add a beam along that edge, or press Ctrl and click to add beams along all edges of the object. Press ENTER to end the command. 
+If you want to… Then… 
+add beams along one or more seg­ments of a column grid 
+move the cursor over a segment of the grid to display a preview of the beam, and then click to add a beam along that segment; or press Ctrl and click to add beams along all segments in that grid line; or press Ctrl twice and click to add beams along all segments in the grid. Press ENTER to end the command. 
+NOTE If you want to add a beam that spans an object from edge to edge rather than lying along one of its edges, you can change the Layout type setting from Edge to Fill on the Properties palette. For more information on property settings for beam tools, see Creating Beams with User-Specified Settings on page 2530. 
+Creating Beams with User-Specified Settings 
+Use this procedure to add one or more new beams with property settings that you specify. You can add a beam anywhere in the drawing area by specifying a start point and an endpoint, or you can position and size a beam in relation to an existing object. You can also create multiple beams, either one at a time (connected endpoint to start point) or arrayed within boundaries defined by other beams or by column grids, slabs, roof slabs, or walls. The style specified in the tool provides the beam shape, which is extruded along the paths you define in the drawing area. 
+Creating a beam 
+
+Optionally, offset the beam from its start point or endpoint. 
+Offsetting a beam 
+
+1 Open the tool palette that contains the structural beam tool you want to use, and select the tool. (You may have to scroll to display the desired tool). 
+NOTE Alternatively, you can click Home tab . Build panel . Column Grid drop-down . Beam
+ . 
+2 On the Properties palette, under General, click Style, and select a structural beam style. 
+3 Specify a value for Bound spaces: 
+If you want to… Then… 
+allow the beam to be used as a select Yes. bounding object for associative spaces 
+prevent the beam from being used select No. as a bounding object for associative spaces 
+use the bounding setting from the select By Style. beam style 
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+4 Specify a value for Trim automatically: 
+If you want… Then… 
+the geometry of the beam to be select Yes. automatically trimmed to any other 
+If you want… Then… 
+structural members, other architec­tural objects, or linework to which it is logically connected 
+prevent the geometry of the beam select No. from being trimmed automatically 
+use the trim setting from the beam select By Style. style 
+NOTE This setting affects only the structural member being added. Adding a new structural member will not change the geometry of an existing structural member, regardless of the setting for Trim automatically. 
+5 Specify a value for On object: 
+If you want… Then… 
+layout structural members on a select Yes. column grid, slab, wall, or polyline 
+layout structural members independ-select No. ent from a column grid, slab, wall, or polyline 
+NOTE On object is an Add Only property. You may not specify a value for On object when editing a structural member. 
+6 Expand Dimensions. 7 Specify offsets: 
+If you want to… Then… 
+offset the beam on its extruded axis enter a value for Start offset. A pos­
+at the start point of the beam itive value shortens the beam on its axis, while a negative value lengthens the beam on its axis. 
+offset the beam on its extruded axis  enter a value for End offset. A posit- 
+at the endpoint of the beam  ive value lengthens the beam on its  
+
+If you want to… Then… 
+axis, while a negative value shortens the beam on its axis. 
+8 Enter a value for Roll. This value specifies the orientation of the beam relative to its extruded axis in terms of degrees of roll. A positive value rolls the beam counterclockwise when viewed from its end to its start. 
+9 Specify the beam justification, which positions the beam shape in relation to its extruded axis when you draw the beam: 
+If you want to… Then… 
+position the axis of the beam along  select Baseline for Justify.  
+the centroid of the beam shape  
+ 
+NOTE This applies to members  
+created with styles from the  
+Structural Member Catalog  
+only.  
+
+position the axis of the beam along  select one of the 9 positions for  
+one of 9 positions on the beam  Justify.  
+shape  NOTE These positions are defined at a roll of zero, viewing the beam from the end to the  
+start.  
+
+Justification options for a beam 
+
+10 Select a Layout type to specify how a beam is positioned in relation to a highlighted edge of a column grid, slab, roof slab, or wall: 
+If you want to position the Then… beam… 
+along the highlighted edge of the select Edge for Layout type. object 
+within the boundaries of the object select Fill for Layout type. (from one edge to an opposite edge or edges) 
+11 If Layout type is Fill, and you want to array multiple beams between 2 existing beams or within a column grid, slab, roof slab, or wall, expand Layout and select Yes for Array. 
+12 Specify the layout method for the array: 
+If you want to array beams… Then… 
+so that they create a specific num-select Space evenly for Layout ber of equal-sized bays method, and enter a value for Number of bays. 
+at a specific distance from each select Repeat for Layout method, other and enter a value for Bay size. 
+TIP After specifying the desired settings, you can move or hide the Properties palette to expose more of the drawing area. 
+13 If you want to offset the new beams from the elevation of the current level, double-click the Elevation value on the application status bar at the bottom of the workspace, enter an elevation value (or specify a point on an existing object in the drawing area), click OK, and then click the Z-snap button to the right of the Elevation value. 
+Adding a beam to a single segment 
+
+Adding beams to one grid line 
+
+Adding beams to all grid lines 
+
+Adding a beam to a specified point Adding a beam array to a single cell 
+
+
+Adding a beam array to all cells 
+
+14 Position the new beams in the drawing area: 
+If you want to… Then… 
+create a single beam independent specify a start point and an end-of other objects point for the beam, and then press ENTER. 
+create multiple beams independent specify a start point and an end-of other objects but connected to point, and then specify additional each other using the endpoint of endpoints as required. Press ENTER one beam as the start point of the to end the command. next beam 
+create a beam that is connected to specify a start point and an end-an existing structural member point, one of which must be on the axis or the endpoint of the existing 
+If you want to… Then… 
+add a beam along one or more edges of a slab, roof slab, or wall (assuming Layout type is Edge) member. Press ENTER to end the command. 
+move the cursor over an edge of the object until a preview of the beam is displayed, and then click to add a beam along that edge, or press Ctrl and click to add beams along all edges of the object. Press ENTER to end the command. 
+add a beam along one or more segments of a column grid (assum­ing Layout type is Edge) move the cursor over a segment of the grid until a preview of the beam is displayed, and then click to add a beam along that segment; or press Ctrl and click to add beams along all segments in that grid line; or press Ctrl twice and click to add beams along all segments in the grid. Press ENTER to end the com­mand. 
+add a beam that spans a slab, roof move the cursor over the object slab, wall, or column grid cell from edge or column grid segment until edge to edge at an angle of 90 de-a preview of the beam is displayed grees (assuming Layout type is Fill) in the desired position perpendicu­
+lar to the edge/segment, and then click. Press ENTER to end the com­mand. 
+add a beam that spans a slab, roof move the cursor over the object slab, wall, or column grid cell from edge or column grid segment until edge to edge at an angle other than a preview of the beam is displayed, 90 degrees (assuming Layout type enter a value for the desired angle, is Fill) press ENTER, and then click. Press 
+ENTER to end the command. 
+array beams between 2 structural move the cursor over one of the 
+members (assuming Array is Yes) structural members until its baseline is displayed, click that member, specify a point on the second 
+If you want to… Then… 
+member, and press ENTER. New beams are arrayed according to the Layout Method selected on the Properties palette and at an angle determined by the point you specify on the second member. Press ENTER to end the command. 
+array beams perpendicularly within  move the cursor over an edge until  
+a slab, roof slab, wall, or one or  a preview of the array is displayed,  
+more cells of a column grid (assum­ and click. New beams are arrayed  
+ing Array is Yes)  perpendicular to the selected edge  
+according to the Layout Method  
+selected on the Properties palette.  
+If you want to add the array to all  
+cells of a column grid, press Ctrl  
+before clicking. Press ENTER to end  
+the command.  
+
+array beams at an angle other than  move the cursor over an edge until  
+90 degrees within a slab, roof slab,  a preview of the array is displayed,  
+wall, or one or more cells of a  enter a value for the desired angle,  
+column grid (assuming Array is Yes)  press ENTER, and then click. New  
+beams are arrayed at the specified  
+angle according to the Layout  
+Method selected on the Properties  
+palette. If you want to add the array  
+to all cells of a column grid, press  
+Ctrl before clicking. Press ENTER to  
+end the command.  
+
+Creating a Brace 
+Use this procedure to add a new brace that has the properties specified in the structural brace tool that you select. The style specified in the tool provides the brace shape, which is extruded along the path you define by specifying a start point and an endpoint. 
+To specify your own settings when you add a brace, see Creating a Brace with User-Specified Settings on page 2540. 
+Creating a brace 
+
+1 Open the tool palette that contains the structural brace tool you want to use, and select the tool. 
+TIP You may have to scroll to display the desired tool. After selecting it, you can move or hide the Properties palette to expose more of the drawing area. 
+NOTE Alternatively, you can click Home tab . Build panel . Column Grid drop-down . Brace
+ . 
+2 Specify the start point of the brace. 3 Specify an endpoint: 
+If you want to… Then… 
+create a single brace specify the endpoint of the brace, and press ENTER. 
+create additional braces continue to specify brace start points and endpoints, and press ENTER. 
+Creating a Brace with User-Specified Settings 
+Use this procedure to add a new brace with property settings that you specify. The style specified in the tool provides the brace shape, which is extruded along the path you define by specifying a start point and an endpoint. 
+Creating a brace 
+
+Optionally, offset the brace from its start point or endpoint. 
+Offsetting a brace 
+
+1 Open the tool palette that contains the structural brace tool you want to use, and select the tool. (You may have to scroll to display the desired tool). 
+NOTE Alternatively, you can click Home tab . Build panel . Column Grid drop-down . Brace
+ . 
+2 On the Properties palette, under General, click Style, and select a structural brace style. 
+3 Specify a value for Bound spaces: 
+If you want to… Then… 
+allow the brace to be used as a select Yes. bounding object for associative spaces 
+prevent the brace from being used select No. as a bounding object for associative spaces 
+use the bounding setting from the select By Style. brace style 
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+4 Specify a value for Trim automatically: 
+If you want… Then… 
+the geometry of the brace to be select Yes. automatically trimmed to any other structural members, other architec­tural objects, or linework to which it is logically connected 
+prevent the geometry of the brace select No. from being trimmed automatically 
+use the trim setting from the brace select By Style. style 
+NOTE This setting affects only the structural member being added. Adding a new structural member will not change the geometry of an existing structural member, regardless of the setting for Trim automatically. 
+5 Expand Dimensions. 
+6 Specify offsets: 
+If you want to… Then… 
+offset the brace on its extruded axis enter a value for Start offset. A pos­
+at the start point of the brace itive value shortens the brace on its axis, while a negative value lengthens the brace on its axis. 
+offset the brace on its extruded axis enter a value for End offset. A posit-
+at the endpoint of the brace ive value lengthens the brace on its axis, while a negative value shortens the brace on its axis. 
+7 Enter a value for Roll. This value specifies the orientation of the brace relative to its extruded axis in terms of degrees of roll. A positive value rolls the brace counterclockwise when viewed from its end to its start. 
+8 Specify the brace justification, which positions the brace shape in relation to its extruded axis when you draw the brace: 
+If you want to… Then… 
+position the axis of the brace along  select Baseline for Justify.  
+the centroid of the brace shape  
+ 
+NOTE This applies to members  
+created with styles from the  
+Structural Member Catalog  
+only.  
+
+position the axis of the brace along  select one of the 9 positions for  
+one of 9 positions on the brace  Justify.  
+shape  NOTE These positions are defined at a roll of zero, viewing the beam from the end to the  
+start.  
+
+Justification options for a brace 
+
+9 Specify the rise, which is the vertical distance between the start point and endpoint of the brace: 
+If you want to… Then… 
+specify the rise of the brace be­fore you draw it 
+select No for Specify rise on screen. For Method, select either Angle, Distance, or Height. If you select Angle, enter a value for Distance along first member (measured from the point where the two members are connected to the point on the first member where you want the brace to start) and a value for Angle from first member. If you se­
+If you want to… Then… 
+lect Distance, enter values for both Distance along first member and Dis­tance along second member. If you select Height, enter a value for Rise. 
+specify the rise of the brace by select Yes for Specify Rise on Screen. specifying a 3D endpoint for the end of the brace. 
+TIP After specifying the desired settings, you can move or hide the Properties palette to expose more of the drawing area. 
+10 In the drawing area, specify the start point of the brace. 11 Specify an endpoint for the brace: 
+¦ 
+If you entered a value for Rise in step 9, then the endpoint of the brace is the X and Y coordinates of the endpoint that you selected. The Z coordinate equals the Z coordinate of the start point plus the value for the rise. 
+
+¦ 
+If you selected Specify rise on screen in step 9, the endpoint of the brace is the 3D point that you selected. 
+
+
+12 Continue adding braces, and press ENTER. 
+Creating a Freestanding Column 
+Use this procedure to add a new freestanding column that has the property settings specified in the structural column tool that you select. The style specified in the tool provides the column shape. When you specify an insert point for the column, the shape is extruded in a positive direction along the current UCS Z-axis to a height determined by the Start offset, End offset, and Logical length properties of the tool. 
+To specify settings when you add a column, see Creating a Freestanding Column with User-Specified Settings on page 2546. 
+Creating a column 
+
+1 Open the tool palette that contains the structural column tool you want to use, and select the tool. 
+TIP You may have to scroll to display the desired tool. After selecting it, you can move or hide the Properties palette to expose more of the drawing area. 
+NOTE Alternatively, you can click Home tab . Build panel . Column Grid drop-down . Column
+ . 
+2 Specify the insert point for the column. 
+3 If the Properties palette value for Specify roll on screen is Yes, move the cursor to roll the column around its extruded axis as 
+desired, and then click; or enter a value for the roll angle, and press ENTER. A positive value rolls the column counterclockwise around its 
+extruded axis when viewed from its end (top) to its start (bottom). 
+4 Specify an insert point for another column, or press ENTER to end the command. 
+Creating a Freestanding Column with User-Specified Settings 
+Use this procedure to create a new freestanding column with property settings that you specify. The style specified in the tool provides the column shape. When you specify an insert point for the column, the shape is extruded in a positive direction along the current UCS Z-axis to a height determined by the Start offset, End offset, and Logical length properties you specify. 
+Creating a free-standing column 
+
+Optionally, offset the column from its start point or endpoint. 
+Offsetting a column 
+
+1 Open the tool palette that contains the structural column tool you want to use, and select the tool. (You may have to scroll to display the desired tool). 
+NOTE Alternatively, you can click Home tab . Build panel . Column Grid drop-down . Column
+ . 
+2 On the Properties palette, under General, click Style, and select a structural column style. 
+3 Specify a value for Bound spaces: 
+If you want to… Then… 
+allow the column to be used as a select Yes. bounding object for associative spaces 
+prevent the column from being select No. used as a bounding object for asso­ciative spaces 
+use the bounding setting from the select By Style. column style 
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+4 Specify a value for Trim automatically: 
+If you want… Then… 
+the geometry of the column to be select Yes. automatically trimmed to any other structural members, other architec­tural objects, or linework to which it is logically connected 
+prevent the geometry of the select No. column from being trimmed auto­matically 
+use the trim setting from the select By Style. column style 
+NOTE This setting affects only the structural member being added. Adding a new structural member will not change the geometry of an existing structural member, regardless of the setting for Trim automatically. 
+5 Expand Dimensions. 
+6 Specify offsets: 
+If you want to… Then… 
+offset the column on its extruded enter a value for Start offset. A pos­
+axis at the start point of the column itive value shortens the column on its axis, while a negative value lengthens the column on its axis. 
+offset the column on its extruded enter a value for End offset. A neg-
+axis at the endpoint of the column ative value lengthens the column on its axis, while a positive value shortens the column on its axis. 
+7 Enter a value for Logical length. The logical length of the column is the length (height) of the column before offsets are applied. 8 Select Yes or No for Specify roll on screen: 
+If you want to… Then… 
+specify the roll of the column before select No for Specify Roll on Screen, you insert it and enter a value for Roll. 
+specify the roll of the column when select Yes for Specify Roll on Screen, you insert it and specify the roll as explained in step 10. 
+A positive value rolls the column counterclockwise around its extruded axis when viewed from its end (top) to its start (bottom). 
+9 Specify the column justification, which positions the column shape in relation to its extruded axis when you draw the column: 
+If you want to… Then… 
+position the extruded axis of the select Baseline for Justify. 
+column at the centroid of the 
+column shape NOTE This applies to members created with styles from the Structural Member Catalog only. 
+If you want to… Then… 
+position the extruded axis of the  select one of the 9 positions for  
+column along one of 9 positions on  Justify.  
+the column shape  
+NOTE These positions are  
+defined at a roll of zero, viewing  
+the column from the top to the  
+bottom.  
+
+TIP After specifying the desired settings, you can move or hide the Properties palette to expose more of the drawing area. 
+10 In the drawing area, specify the insert point for the column. 11 If you selected Yes for Specify roll on screen, move the cursor to roll the column around its extruded axis as desired, and then click; or enter a value for degrees of roll, and press ENTER. 12 Specify an insert point for another column, or press ENTER to end the command. 
+Creating Columns with User-Defined Profiles 
+If you need a custom shape for a column which does not exist in the tool palettes or structural member catalog of your application, you can create a column with a user-defined linework profile. You can use the following closed and non-self intersecting linework objects as column profiles: 
+¦ 
+circles and rectangles 
+
+¦ 
+ellipses and splines 
+
+¦ 
+closed polylines 
+
+
+TIP You can insert a profile definition as a polyline into the drawing and use it as the column profile. For more information, see Converting Profiles to Polylines on page 2828. 
+
+1 Draw the linework for the profile of the customized column. 2 Click Home tab . Build panel . Column Grid 
+drop-down . Custom Column . 
+3 Select the linework. 
+4 Define the insertion (base) point of the column. 
+5 In the Convert to Column dialog, enter a name for the column 
+style. 
+6 If you want to remove the source linework for the new style, select Erase layout geometry. 
+7 Click OK. The column is inserted into the drawing. At the same time, a new column style is created in Style Manager. 
+8 Use the Properties palette to change dimension, location, and other properties of the column instance, and use Style Manager to change design rules, materials, and display properties for the new style, if necessary. 
+Creating Grid-Anchored Columns 
+Use this procedure to create a column that is anchored to a grid and has the property settings specified in the structural column tool that you select. The style specified in the tool provides the column shape. When you specify an insert point on the grid, the shape is extruded in a positive direction along the current UCS Z-axis to a height determined by the Start offset, End offset, and Logical length properties of the tool. To specify your own settings when you anchor a column to a grid, see Creating Grid-Anchored Columns with User-Specified Settings on page 2553. 
+To create a column grid with pre-anchored columns, see Creating a Column Grid. 
+Creating a column grid with specified column shapes 
+
+1 Open the tool palette that contains the structural column tool you want to use, and select the tool. 
+TIP You may have to scroll to display the desired tool. After selecting it, you can move or hide the Properties palette to expose more of the drawing area. 
+NOTE Alternatively, you can click Home tab . Build panel . Column Grid drop-down . Column
+ . 
+2 Move the cursor over the grid so that the grid is highlighted and the list of column-add options is displayed. (You press Ctrl to cycle through the options.) 
+3 Specify the insert point for the column on the grid. 
+If you want to… Then… 
+add a column at a particular node move the cursor over the node (or in the grid near it), and click. A column is ad­
+If you want to… Then… 
+ded to the node nearest to the cursor position. 
+add a column to all nodes in the press Ctrl, and click. grid 
+add a column at a particular point on or within the grid 
+press Ctrl twice, move the cursor to the point where you want to add the column, and click. If the Proper­ties palette value for Specify roll on screen is Yes, move the cursor to roll the column around its extruded axis as desired, and then click; or enter a value for the roll angle, and press ENTER. A positive value rolls the column counterclockwise around its ex­truded axis when viewed from its end (top) to its start (bottom). 
+4 When you are finished adding columns to the grid, press ENTER to end the command. 
+IMPORTANT Column grids that have numerous columns attached to them can take longer than expected to display on screen. This is because structural members carry additional information that may be used for structural analysis. 
+Creating Grid-Anchored Columns with User-Specified Settings 
+Use this procedure to anchor a column to a grid as you create it, with property settings that you specify. The style specified in the tool provides the column shape. When you specify an insert point on the grid, the shape is extruded in a positive direction along the current UCS Z-axis to a height determined by the Start offset, End offset, and Logical length properties of the tool. 
+To create a column grid with pre-anchored columns, see Creating a Column Grid. 
+Add a column to a single node of a column grid 
+
+Add columns to all nodes of a column grid 
+
+Add a column to a single point on a column grid 
+
+1 Open the tool palette that contains the structural column tool you want to use, and select the tool. (You may have to scroll to display the desired tool). 
+NOTE Alternatively, you can click Home tab . Build panel . Column Grid drop-down . Column
+ . 
+2 Select the grid. 
+3 On the Properties palette, under General, click Style, and select a structural column style. 
+4 Specify a value for Bound spaces: 
+If you want to… Then… 
+allow the column to be used as a select Yes. bounding object for associative spaces 
+prevent the column from being select No. used as a bounding object for asso­ciative spaces 
+use the bounding setting from the select By Style. column style 
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+5 Specify a value for Trim automatically: 
+If you want… Then… 
+the geometry of the column to be select Yes. automatically trimmed to any other structural members, other architec­tural objects, or linework to which it is logically connected 
+prevent the geometry of the select No. column from being trimmed auto­matically 
+use the trim setting from the select By Style. column style 
+NOTE This setting affects only the structural member being added. Adding a new structural member will not change the geometry of an existing structural member, regardless of the setting for Trim automatically. 
+6 Expand Dimensions. 7 Specify offsets: 
+If you want to… Then… 
+offset the column on its extruded enter a value for Start offset. A pos­
+axis at the start point of the column itive value shortens the column on its axis, while a negative value lengthens the column on its axis. 
+offset the column on its extruded enter a value for End offset. A neg-
+axis at the endpoint of the column ative value lengthens the column on its axis, while a positive value shortens the column on its axis. 
+8 Enter a value for Logical length. The logical length of the column is the length (height) of the column before offsets are applied. 9 Select Yes or No for Specify roll on screen: 
+If you want to… Then… 
+specify the roll of the column before select No for Specify Roll on Screen, you insert it and enter a value for Roll. 
+specify the roll of the column when select Yes for Specify Roll on Screen, you insert it and specify the roll as explained in step 12. 
+A positive value rolls the column counterclockwise around its extruded axis when viewed from its end (top) to its start (bottom). 
+10 Specify the column justification, which positions the column shape in relation to its extruded axis when you draw the column: 
+If you want to… Then… 
+position the axis of the column select Baseline for Justify. 
+along the centroid of the column 
+shape NOTE This applies to members created with styles from the Structural Member Catalog only. 
+position the axis of the column select one of the 9 positions for along one of 9 positions on the Justify. column shape 
+TIP After specifying the desired settings, you can move or hide the Properties palette to expose more of the drawing area. 
+11 Move the cursor over the grid so that the grid is highlighted and the list of column-add options is displayed. (You press Ctrl to cycle through the options.) 
+12 Specify the insert point for the column on the grid. 
+If you want to… Then… 
+add a column at a particular node move the cursor over the node (or 
+in the grid near it), and click. A column is ad­ded to the node nearest to the cursor position. 
+add a column to all nodes in the press Ctrl, and click. grid 
+add a column at a particular point  press Ctrl twice, move the cursor to  
+on or within the grid  the point where you want to add  
+the column, and click. If the Proper­ 
+ties palette value for Specify roll on  
+screen is Yes, move the cursor to  
+roll the column around its extruded  
+axis as desired, and then click; or  
+enter a value for the roll angle, and  
+press ENTER.  
+
+If you want to… Then… 
+A positive value rolls the column counterclockwise around its ex­truded axis when viewed from its end (top) to its start (bottom). 
+13 When you are finished adding columns to the grid, press enter to end the command. 
+NOTE Column grids that have numerous columns attached to them can take longer than expected to display on screen. This is because structural members carry additional information that may be used for structural analysis. 
+Creating a Structural Member from Linework 
+Use this procedure to convert any of the following objects to structural members with structural member tools: 
+¦ 
+Arcs 
+
+¦ 
+Lines 
+
+¦ 
+Open polylines 
+
+¦ 
+Open polylines with arc segments 
+
+
+NOTE Converting an arc to a structural member is the only method of creating a curved structural member. For more information about curved structural members, see About Curved Structural Members on page 2572. 
+When you use a tool to convert linework to a structural member, the style specified in the tool provides the shape of the member. The linework defines the extrusion path for the shape. You can convert multiple lines to create multiple members, convert curved lines to create curved members, and convert multi-segmented lines to create multi-segmented members. 
+1 Open the tool palette that contains the structural member tool 
+you want to use. 
+(You may have to scroll to display the desired tool). 
+2 Right-click a structural member tool, and click Apply Tool Properties to . Linework. 
+3 Select the linework to convert, and press ENTER. 
+NOTE You cannot convert a closed polyline (a polyline with a start node that coincides with its end node) to a structural member. 
+A worksheet opens appropriate to the tool you selected. 
+
+4 Clear One Member Per Polyline Segment to create a structural member for each segment. 
+5 Select Erase Layout Geometry to erase the linework, and click OK. If you created a structural member by converting a polyline, the initial orientation of the structural member is set to the UCS that was current when you drew the polyline. You can change the orientation by adjusting the Roll property of the member. 
+Editing Structural Members 
+After you create a structural member, you can change any properties of the member that you specified when you created it and make additional modifications. You can change the start and end offsets of a member, or add or remove them. You can change the length, justification, and location of a member, specifying whether its connections with other structural members are maintained. For a curved structural member, you can change the radius. 
+You can change the geometry of a structural member by trimming it. By changing the structural member type, you can change a brace to beam, or a column to a brace. By changing the style of a structural member, you can change its shape. 
+AutoCAD Architecture offers several methods for editing structural members: 
+¦ You can directly edit structural members using grips for dimensions and other physical characteristics. 
+¦ 
+For grip edit operations where you are changing a dimension or an angle, the Dynamic Input feature lets you enter a precise value instead of moving a grip. When this feature is active (click DYN on the application status bar), selecting a grip displays a text box in which you can enter the desired value for the associated dimension or angle. For more information, see “Use Dynamic Input” in AutoCAD Help. 
+
+¦ 
+You can change structural member settings on the Properties palette. You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+
+¦ 
+You can use the tools available on the Modify panel of the Structural Member tab. 
+
+¦ 
+You can select editing commands from the context menu for a selected structural member. 
+
+
+Using Grips To Edit Structural Members 
+Refer to the illustrations and steps in this topic to use grips to edit structural members. 
+NOTE If the value of Trim automatically (on the Properties palette) is Yes for each of 2 connected structural members, then any kind of grip edit to either member will result in a mitered joint between them. 
+Editing Structural Member Dimensions 1 Select the structural member. 2 Select the grip for the dimension you want to change. 
+Grips for length, start offset, and end offset of a straight beam or brace 
+
+Grips for length, start offset, and end offset of a straight column 
+
+Grips for start and end angles, radius, and start and end offsets of a curved beam or brace 
+
+Grips for start and end angles, radius, and start and end offsets of a curved column 
+
+3 Move the grip until the dimension value you want is displayed, and click once; or enter a value. 
+Changing the Location of a Structural Member 
+1 Select the structural member. Select the Location grip to change the location of the structural member, or the Roll grip to change its roll (the rotation of the member around its extruded axis). 
+Location and roll grips for a straight beam or brace 
+
+Location and roll grips for a straight column 
+
+Location and roll grips for a curved beam or brace Location and roll grips for a curved column 
+
+
+In Model view, the Location grip has six edit options you can cycle through by pressing CTRL. For each plane in which you can move the member (XY, YZ, or XZ), you have the option of maintaining or breaking connections with other structural members. 
+When you choose to maintain connections, all connections are not necessarily maintained for every type of move. Maintenance of connections depends on whether the move is in or out of plane, how the members are connected, and which type of members are involved. Generally, columns take precedence over beams and braces in determining how connected members behave when one is moved. This behavior is summarized in the following table: 
+If you spe-Then … cify Main­tain Connec­tions when moving … 
+a column other columns, beams, and braces connected to an end­point of the column will also move, changing length and orientation as necessary to maintain the connection. (This is also true for any other members connected along the length of a member that is endpoint-connected to the column.) Structural members connected along the length of the column will only extend or shorten to remain connected; they will not change orientation unless the column is moved out of plane. For example, if a column 
+If you spe-Then … cify Main­tain Connec­tions when moving … 
+a beam or a brace is moved in the XY plane, beams or braces connected along its length will stay connected, even though their orientation changes. 
+other beams and braces connected to an endpoint of the beam or brace will also move, changing length and ori­entation as necessary to maintain the connection. Struc­tural members connected along the length of the beam or brace will only extend or shorten to remain connected; they will not change orientation unless the beam is moved out of plane. For example, if a ridge beam is moved ver­tically, rafters connected along its length will stay connec­ted, even though their orientation changes. 
+The default edit mode is to maintain connections for moves along the XY plane. In Plan view, the Location grip is restricted to movement in one plane, but you still have the option to maintain or break connections. 
+2 Move the grip until the dimension value you want is displayed, 
+and click once; or enter a value and press ENTER. If you want to enter a specific value for the second direction in any edit mode (for example, in the Y direction when editing along the XY plane), press TAB to cycle to the second direction. 
+You can also lock the movement of the structural member along a specific direction. If you enter a value for either of the dimension directions in the current edit mode and then press TAB, the movement of the structural member is constrained to the second dimension direction. When editing along the XY plane, for example, you can enter a value for X dimension, and then press TAB. The X dimension is locked at that value, and movement of the structural member is constrained to the Y dimension direction. 
+3 Right-click, and click Deselect All to turn off grips. 
+NOTE When you shift-select the Location grips of end-connected beams, the common endpoint moves approximately twice as far as the grip you move. In the example shown below, if you shift-select the two vertical beams in the structure on the left, and then move a grip toward the right, the result is a configuration like the one at the top right. To get a configuration like the one at the bottom right, you would select all five beams using a crossing selection or a crossing polygon, and then use the Stretch command. (For more information, see “STRETCH Command” and “SELECT Command” in AutoCAD Help.) Beams may also move twice as far as you might expect when they are attached to columns on a column grid, and the grid, columns, and beams are all selected. If you select and move only the grid, the columns and beams will move with it, maintaining their same relative positions. For instructions on selecting one object when other objects are superimposed on it, see “Select Objects Individually” in AutoCAD Help. 
+
+Changing the Structural Member Length 
+Use this procedure to change the length of a structural member. You can also change the structural member length on the Properties palette. 
+1 Select the structural member. 
+2 Select a Lengthen grip, move the grip until the length value you want is displayed, and click once. 
+Changing the length of a beam structural member with grips 
+
+After selecting a grip, you can also enter a value to increase or decrease the length of the structural member. 
+Changing the Structural Member Start and End Offsets 
+Use this procedure to offset a structural member from the start point or endpoint of its path. You can remove or change existing offsets, or add new offsets to the start point or endpoint of a structural member. You can also change the structural member start and end offsets on the Properties palette. 
+1 Select the structural member. 
+2 Select a Start Offset grip, move the grip until the start offset value you want is displayed, and click once. A positive start offset value shortens the member on its axis (path), 
+while a negative start offset value lengthens the member on its axis. 
+Change the end offset of a beam structural member with grips 
+
+3 Select an End Offset grip, move the grip until the end offset value 
+you want is displayed, and click once. A positive end offset lengthens the member on its axis, while a negative end offset shortens the member on its axis. 
+After selecting a grip, you can also enter a value to increase or decrease the start or end offset of the structural member. 
+Changing the Structural Member Start Point and Endpoint 
+Use this procedure to change a structural member start point or endpoint. You can also change the structural member start and endpoints on the Properties palette. 
+1 Select the structural member. 
+2 Select a Start or End grip, move the grip until the length value you want is displayed, and click once. Moving the Start grip in the positive direction shortens the 
+member on its axis (path), while moving the Start grip in the 
+negative direction lengthens the member on its axis. 
+Moving the End grip in the positive direction lengthens the member on its axis (path), while moving the End grip in the negative direction shortens the member on its axis. 
+Change the end of a beam structural member with grips 
+
+3 Select a Start or End grip, move the grip until the length value 
+you want is displayed, and click once. After selecting a grip, you can also enter a value to increase or decrease the length of the structural member. 
+Changing the Structural Member Roll 
+Use this procedure to change the orientation of a structural member relative to its extruded axis by specifying a number of degrees to roll it. A positive value rolls the member counterclockwise when viewed from its end to its start. 
+1 Select the structural member. 
+2 Select the Roll grip, move it until the desired number of degrees 
+is displayed, and click once; or enter a value, and press ENTER. A positive value rolls the member about its axis in a counterclockwise direction when viewed from its end to its start. 
+Changing beam orientation with the Roll grip 
+
+Changing the Radius of a Curved Structural Member 
+Use this procedure to change the radius of a curved structural member. You can also change the structural member radius on the Properties palette. For more information about curved structural members, see About Curved Structural Members on page 2572. 
+1 Select the structural member. 
+2 Select a Curve Radius grip, move the grip until the radius value you want is displayed, and click once. 
+Change the curve radius of a curved beam structural member with grips 
+
+About Curved Structural Members 
+The smoothness (tessellation) of curved edges is controlled by the FACETDEV variable. This variable sets the number of facets to display on curved AEC objects. The default value is 1/2'' for drawings created from imperial templates and is 12.7 mm for drawings created from metric templates. 
+The number you specify for facet deviation defines the maximum distance from the chord to the arc—the chord being an edge that is created from faceting the curve to the true mathematical arc. The facet deviation has a range of greater than zero (0) and no upper limit. 
+The minimum number of facets is 8. For example, if you create a cylinder mass element to have a 1' radius, and specify 1' for FACETDEV, the cylinder has 8 faces. 
+The plan representation of individual curved components of columns uses the true curved representation of the member shapes. The above and below cut components will always be faceted. 
+The maximum number of facets is controlled by the FACETMAX variable. This variable can be set from 100 to 10,000. Note that using a small value for FACETDEV and a large value for FACETMAX will adversely affect drawing performance. 
+To specify the facet deviation values for the current drawing, see Specifying the Display Resolution of Objects with Facets on page 208. The settings apply to all curved objects in the drawing, including curved structural members. 
+Changing the Structural Member Justification 
+Use this procedure to change the justification of a structural member. Justification positions the shape of a structural member in relation to its extruded axis. Changing the justification of an existing member moves the member and can affect how the member relates to other objects, such as how a column is positioned in relation to a column grid when it is anchored to the grid. 
+Justification options for a beam 
+
+You can also specify the justification of structural members with multiple shapes and segments. For more information about these members, see Creating Custom Structural Members on page 2619. 
+1 Select the structural member to change, and double-click it. 2 On the Properties palette, expand Basic, and expand Dimensions. 
+3 Select a setting for Justification: 
+If you want to… Then… 
+position the axis of the member select Baseline for Justify. 
+along the centroid of the member 
+shape NOTE This applies to members created with styles from the Structural Member Catalog only. 
+position the axis of the member select one of the 9 positions for along one of 9 positions on the Justify. member shape 
+4 To specify the justification of members with multiple shapes and segments created with this tool, select a setting for Justify using overall extents: 
+If you want to… Then… 
+justify the member based on the  select Yes. The justification is ap­ 
+largest cross-sectional extent of the  plied ONLY to the lowest priority  
+member’s lowest priority shapes  shape definitions, and is calculated  
+based on the node (vertex) of the  
+member with the greatest cross  
+section.  
+
+justify the member at each node,  select No. The justification is calcu­ 
+based on all shapes.  lated based on the cross-sectional  
+extents at each node, and is applied  
+to all the shapes without regard to  
+priority.  
+
+Changing the Structural Member Type 
+Use this procedure to change the type of one or more structural members. Because beams, braces, and columns are sub-types of a single structural member object, you can change a beam to a brace, a column to beam, or a brace to a beam. 
+1 Select the structural members to change, and double-click one of them. 
+2 On the Properties palette, expand Basic, and expand General. 3 Select a setting for Member type: Beam, Brace, or Column. 
+Trimming Structural Members 
+Structural members can be trimmed using 2-dimensional objects called trim planes. You can manually add a trim plane for a structural member either by defining its position in relation to the member itself (using the Trim Planes worksheet available from the Properties palette), or by selecting a plane defined (or implied) by another structural member, an architectural object of another type, or linework. You can also configure structural member styles and insertion tools so that a trim plane is created automatically when an endpoint of a new structural member is logically connected to an existing structural member or other object (see Creating a Structural Member Style in the Style Manager on page 2603). 
+You can add multiple trim planes to individual structural members, allowing you to clean up joints between multiple structural members. For example, use multiple trim planes to angle both ends of a brace in a diagonally braced frame. 
+Trim planes can be edited using the Trim Planes worksheet or grip-edited. You can remove trim planes from a structural member to restore it to its original dimensions. 
+NOTE Although trim planes are depicted as square grids when selected for editing, they are actually infinite planes; thus you cannot use them to notch, cope, or cut holes in structural members. 
+Trimming a structural member with a trim plane 
+
+Adding a Trim Plane to a Structural Member 
+You can add any number of trim planes to a structural member. When you add a trim plane to one or more structural members, you define the position of the trim plane relative to the structural member that you are trimming. 
+When defining trim planes, you can: 
+¦ 
+Define the position of the trim plane relative to the start or end of the extruded axis of the member. 
+
+¦ 
+Offset the trim plane in the X direction to move the origin of the trim plane along the extruded axis of the member. 
+
+
+Offsetting a trim plane in the X direction 
+
+¦ 
+Offset the trim plane in the Y and Z directions to move the origin of the trim plane perpendicular to the extruded axis of the member in the Y and/or Z direction. 
+
+¦ 
+Rotate the trim plane around its Y axis to specify a cutting plane angle. 
+
+
+Rotating a trim plane about its Y axis 
+
+¦ Rotate the trim plane around its Z axis to specify a cutting plane angle. 
+Rotating a trim plane about its Z axis 
+
+1 Select the structural member you want to change. 2 Click Structural Member tab . Modify panel . Trim Planes
+ . 3 Click Add 
+. 4 Specify settings to position the trim plane: 
+If you want to… Then… 
+offset the trim plane from the start select Start or End under Offset. point or endpoint of the member 
+If you want to… Then… 
+offset the trim plane in the X direc-enter an X value for Offset. tion along the extruded axis of the member 
+offset the trim plane in the Y and Z enter Y and Z values for Offset. directions to position the trim plane perpendicular to the extruded axis of the member 
+rotate the trim plane around its Y enter Y and Z values for Rotation. or Z axis 
+5 To copy a trim plane, select the trim plane, and click Copy 
+. 6 Continue adding trim planes, and click OK. 
+Adding a Trim Plane Based on Another Object or Linework 
+Use this procedure to generate trim planes for one or more structural members based on a plane defined (or implied) by another structural member, an architectural object of another type, linework, or any 2 points you specify. The edge, face, or line that defines the trim plane does not have to intersect the members selected for trimming. The trim plane is projected perpendicular to the current UCS XY plane. Selected members are extended or trimmed to the trim plane, depending on whether they intersect it. 
+Extending a structural member to another structural member 
+
+1 Select the structural member(s) you want to extend or trim. 
+2 Click Structural Member tab . Modify panel . Add Trim Plane . 3 Define the trim plane: 
+
+If you want to… Then… 
+define a trim plane independent of press ENTER, specify the start point 
+any existing objects and endpoint of the trim plane, and then click the side on which you want to remove members. 
+use the edge or face of an existing  select the object or linework, and  
+object or linework as the trim plane  then click the side on which you  
+want members removed. If you  
+want to trim to the face of an ob­ 
+ject rather than its edge, press Ctrl  
+before selecting the object.  
+
+Mitering Structural Members with Trim Planes 
+Use this procedure to generate trim planes that produce a mitered joint between 2 structural members that are connected at their endpoints. 
+NOTE If the value of Trim automatically (on the Properties palette) is Yes for each of the connected structural members, then any kind of grip edit to either member will result in a mitered joint between them. 
+Mitering two structural members with coincident endpoints 
+
+1 Select one of the structural member(s) you want to miter. 
+2 Click Structural Member tab . Modify panel . Miter 3 Select the other structural member. 
+Changing a Structural Member Trim Plane 
+After you add one or more trim planes to a structural member, you can change the orientation of the trim planes. You can also grip-edit trim planes to move and rotate them. 
+1 Select the structural member you want to change. 
+2 Click Structural Member tab . Modify panel . Trim Planes
+ . 3 Change any of the trim plane settings: 
+
+If you want to… Then… 
+change the start or end offset of the select Start or End under Offset. trim plane 
+change the trim plane offset in the change the X value for Offset. X direction along the extruded axis of the member 
+change the trim plane offset in the change the Y and Z values for Off-Y and Z directions to position the set. trim plane perpendicular to the ex­truded axis of the member 
+change the rotation of the trim change Y and Z values for Rotation. plane around the Y or Z axis 
+NOTE If you rotate a trim plane between 90 and 270 degrees, the opposite end of the structural member is completely removed. 
+4 Click OK. 
+Removing a Trim Plane from a Structural Member 
+Use this procedure to remove a trim plane from a structural member. When you remove all trim planes from a structural member, the structural member is restored to its original dimensions. 
+1 Select the structural member you want to change. 
+2 Click Structural Member tab . Modify panel . Trim Planes
+ . 3 Select the trim plane that you want to remove. 
+4 Click Remove 
+. 5 Click OK. 
+Changing the Style of a Structural Member 
+Use this procedure to select a different structural member style for one or more structural members. The style of a structural member provides its shape, so changing the style of a member changes its shape. 
+1 Select the structural members to change, and double-click one of them. 
+2 Expand Basic, and expand General. 
+3 Select a different style. 
+Applying Tool Properties to a Structural Member 
+Use this procedure to apply the properties of a structural member tool to one or more members of the same tool type (beam, brace, or column) in a drawing. The properties include any settings specified in the tool you select. 
+1 Open the tool palette that you want to use. (You may have to scroll to display the desired tool.) 
+2 Right-click a structural member tool, and click Apply Tool Properties to . <Beam, Brace, or Column>. 
+3 Select the structural members that coincide with the tool, and press ENTER. 
+4 Edit the properties of the structural member on the Properties palette, if needed. 
+Specifying the Cut Plane Display of a Structural Member 
+Use this procedure to specify the properties of one or more cut planes for an individual structural member. Cut plane display properties apply only to 
+display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Double-click the structural member you want to change. 
+2 On the Display tab of the Properties palette, under General, for Display component, verify that *NONE* is selected. 
+3 For Display controlled by, select This object. 
+NOTE To apply your changes to all structural members in the drawing, select Drawing default setting. To apply changes to all structural members of this style, select Structural Member Style:<style name>. For more information on styles, see Structural Member Styles on page 2602. 
+4 If necessary, expand Object Display Properties . Cut Plane. 
+5 For Override cut plane, specify whether you want to override the global cut plane defined for the current display configuration. 6 If you selected Yes for Override cut plane, enter a value for Height 
+to define the cut plane for this object. (Alternatively, you can click 
+the value, click 
+, and specify 2 points in the drawing area to define the new height.) 
+7 Specify whether to display the true cut body of the structural member. 
+8 Specify whether to display object components both above and below the cut plane. 
+You can also access and modify these same cut plane settings through the structural member’s context menu, as follows: 
+1 Select the structural member you want to change, right-click, and click Edit Object Display. 
+2 In the Object Display dialog, click the Display Properties tab. 
+3 Select the display representation where you want the changes to 
+appear, and select Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 
+5 In the Display Properties dialog, click the Cut Plane tab, and then change the settings as needed. 
+6 Click OK twice. 
+Specifying the Display of Custom Block Components of a Structural Member 
+Use this procedure to specify the display of custom block components for an individual structural member in a particular display representation. If you are going to use custom graphics for a new component, draw the component and save it as a block before you start this procedure. 
+1 Double-click the structural member. 
+2 On the Display tab of the Properties palette, under General, for Display component, verify that *NONE* is selected. 
+3 For Display controlled by, select This object. 
+NOTE To apply your changes to all structural members in the drawing, select Drawing default setting. To apply changes to all structural members of this style, select Structural Member Style:<style name>. For more information on styles, see Structural Member Styles on page 2602. 
+4 For Display representation, verify that the desired display representation is selected. 
+5 If necessary, expand Object Display Properties . Advanced, and 
+for Custom block display, click 
+(the number in parentheses indicates the number of blocks currently attached to the structural member). 
+6 If you want to turn off the display of custom blocks for this structural member without removing them, select Disable Custom Blocks. 
+7 Specify whether to add, edit, or remove a block component: 
+If you want to… Then… 
+add a new block component click Add, and then click Select Block, select the block, and click OK. 
+edit an existing block component select the component to edit, and click Edit. 
+If you want to… Then… 
+remove an existing block compon-select the block, click Remove, and ent click OK. 
+8 Select a setting for Position Along (x) to position the block in a location along the X-axis of the member. 9 Specify an insertion offset of the block in the X, Y, and Z directions. 10 Specify whether you want repeat the block display along the X-axis of the member: 
+If you want to… Then… 
+repeat the display of the block select Repeat Block Display. along the X-axis of the member 
+offset the repeated blocks from the enter values for Start Offset and End start or endpoint of the member Offset. 
+specify the space between the re-enter a value for Space Between. peated blocks 
+increase the spacing between re-select Fit, and select Space Evenly. peated blocks so the insertion point of the last block is at the end offset distance from the end of the mem­ber 
+scale the block so the extents of all select Fit, and select Scale to Fit. the blocks fit between the start and end offset distances 
+11 Specify whether to mirror the block in the X,Y, or Z direction: 
+If you want to… Then… 
+create a mirror of the block in the select Mirror X. X direction 
+create a mirror of the block in the select Mirror Y. Y direction 
+create a mirror of the block in the select Mirror Z. Z direction 
+12 Click OK twice. 
+You can also add offsets between members to display them as you typically would in a top view framing plan. Note that the Use Member Offsets check box applies only to the start and end offsets. The Offset value below the check box applies only to structural braces, and allows you to offset them horizontally so that they are visible even when positioned directly underneath a beam. 
+Specifying the Offsets for a Structural Member in Plan Low Detail 
+Use this procedure to specify offset values for a selected structural member in the Plan Low Detail display representation. 
+Adding offsets between members lets you display them as you typically would in a top view framing plan. Note that the Use Member Offsets check box applies only to the start and end offsets. 
+1 Double-click the structural member. 2 On the Display tab of the Properties palette, under General, for Display component, verify that *NONE* is selected. 3 For Display controlled by, select This object. 
+NOTE To apply your changes to all structural members in the drawing, select Drawing default setting. To apply changes to all structural members of this style, select Structural Member Style:<style name>. For more information on styles, see Structural Member Styles on page 2602. 
+4 For Display representation, select Plan Low Detail. 
+5 If necessary, expand Object Display Properties . Advanced, and click 
+Offsets. 
+6 For Use Member Offsets, specify whether you want to use the start and end offsets of the member. 
+7 If you did not select Use Member Offsets, enter values for Start Offset and End Offset. 
+8 For Offset, enter the horizontal offset distance you want to use to make structural braces visible even when positioned directly underneath a beam. 
+9 Click OK. 
+Attaching Hyperlinks, Notes, and Files to a Structural Member 
+Use this procedure to enter notes and attach hyperlinks and reference files to a structural member. You can also edit notes and edit or detach reference files from a structural member. 
+1 Double-click the structural member. 2 In the Properties palette, click the Extended Data tab. 3 Click the setting for Hyperlink. 4 Specify the link, and click OK. 5 Click the setting for Notes. 6 Enter the note, and click OK. 7 Click the setting for Reference documents, and attach, edit, or 
+detach a reference file: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter your comments under Descrip­file tion for the document you are de­scribing. 
+edit a reference file double-click the reference file name to start the application needed to edit it. 
+detach a reference file select the file name, and click De­lete. 
+8 Click OK. 
+Working with Structural Member Body Modifiers 
+Body modifiers use the three-dimensional (3D) geometry of an object, such as a mass element or a mass group, to add to or subtract from a structural member. You can also use a body modifier to replace a structural member. 
+After you create a body modifier from an object, you can delete the original object. However, if you have created a complex object, such as a mass group comprising many mass elements, you may want to retain the object in the drawing until you are sure you have the results you want for the structural member. 
+Adding a Body Modifier to a Structural Member 
+Use this procedure to create a body modifier and add it to a structural member. 
+You can create a three-dimensional (3D) body modifier from a mass element, a mass group, or any other AEC object with mass. You can also create body modifiers from ACIS solids or blocks that form 3D bodies. You must place the object in the location you want in the drawing before defining the object as a body modifier. 
+The following illustration shows you how to use an angle as a body modifier to add to a beam. 
+Adding a body modifier to a structural member 
+
+1 Place the object in the location where you want to add the body modifier to the structural member. 
+2 Select the structural member you want to change with the body modifier. 
+3 Click Structural Member tab . Modify panel . Body Modifiers 
+drop-down . Add
+ . 4 Select the object to add to the structural member. 
+5 In the Add Body Modifier dialog box, select Additive for Operation. 
+
+6 Enter a description for the body modifier. 
+7 Select Erase Selected Object(s) if you do not want to keep the original object, or clear this option to keep the object in the drawing. 
+8 Click OK. 
+Subtracting a Body Modifier from a Structural Member 
+Use this procedure to create a three-dimensional (3D) body modifier and subtract it from a structural member. 
+You can create a three-dimensional (3D) body modifier from a mass element, a mass group, or any other AEC object with mass. You can also create body modifiers from ACIS solids or blocks that form 3D bodies. You must place the object in the location you want in the drawing before defining the object as a body modifier. 
+The following illustration shows you how to use a box mass element as a body modifier to cope a beam. 
+Subtracting a body modifier from a structural member 
+
+1 Place the object in the location where you want to subtract the body modifier from the structural member. 
+2 Select the structural member you want to change with the body modifier. 
+3 Click Structural Member tab . Modify panel . Body Modifiers 
+drop-down . Add
+ . 
+4 Select the object to subtract from the structural member. 
+5 In the Add Body Modifier dialog box, select Subtractive for 
+Operation. 
+
+6 Enter a description for the body modifier. 
+7 Select Erase Selected Object(s) if you do not want to keep the original object, or clear this option to keep the object in the drawing. 
+8 Click OK. 
+Replacing a Structural Member with a Body Modifier 
+Use this procedure to create a three-dimensional (3D) body modifier and replace a structural member with the modifier. 
+You can create a three-dimensional (3D) body modifier from a mass element, a mass group, or any other AEC object with mass. You can also create body modifiers from ACIS solids or blocks that form 3D bodies. You must place the object in the location you want in the drawing before defining the object as a body modifier. 
+The following illustration shows you how to use a mass group as a body modifier to replace a beam. 
+Replacing a structural member with a body modifier 
+
+1 Place the object in the location where you want to replace the structural member with the body modifier. 
+2 Select the structural member you want to change with the body modifier. 
+3 Click Structural Member tab . Modify panel . Body Modifiers 
+drop-down . Add
+ . 4 Select the object to replace the structural member. 
+5 In the Add Body Modifier dialog box, select Replace for Operation. 
+
+6 Enter a description for the body modifier. 
+7 Select Erase Selected Object(s) if you do not want to keep the original object, or clear this option to keep the object in the drawing. 
+8 Click OK. 
+Editing the Geometry of a Body Modifier 
+Use this procedure to edit the shape of a body modifier that is attached to a structural member. You can edit the body using grips to edit faces, using Boolean commands to add or remove other objects from the body modifier, and other editing commands to change its shape. 
+1 Select the structural member that has the body modifier you want to change. 
+2 Click Structural Member tab . Modify panel . Body Modifiers 
+drop-down . Edit In Place
+ . A temporary mass element is created for you to edit the geometry of the body modifier. If the wall contains multiple body modifiers, a mass element is created for each body modifier. If object was not originally a mass element (for example, if you used a slab as a body modifier), the object becomes a temporary Free Form mass element with faces that you can edit. 
+NOTE After you perform an editing task, you may need to select a profile again to perform another editing task. 
+3 Edit the body modifier: 
+If you want to … Then … 
+change the shape of a body modifi­ select the body modifier. Select a  
+er that is a Free Form mass element  Face grip to activate edge grips for  
+the face. Move the grips to the de­ 
+sired locations. Continue editing  
+other faces in the same manner.  
+
+change the shape of a body modifi­er that is a conventional mass ele­ment select the body modifier. Select grips and move them to change the shape of the body modifier. The grips that are available depend on the type of mass element used as a body modifier and the current view direction. 
+add an object to a body modifier 
+place the object in the location where it is needed. Select the body modifier, and click Edit In Place tab . Modify panel . Boolean 
+drop-down . Union
+ . Select the object, and press ENTER. Enter y (Yes) to keep the object in the drawing, or press ENTER to erase it. 
+subtract an object from a body modifier 
+place the object in the location where it is needed. Select the body modifier, and click Edit In Place tab . Modify panel . Boolean 
+drop-down . Subtract
+ . Select the object, and press ENTER. Enter y (Yes) to keep the object in the drawing, or press ENTER to erase it. 
+create a body modifier that is the place the object in the location intersection of the original body where it is needed. Select the body modifier with another object modifier, and click Edit In Place 
+tab . Modify panel . Boolean 
+drop-down . Intersect
+ . Select 
+If you want to … Then … 
+trim a body modifier 
+the object, and press ENTER. Enter y (Yes) to keep the object in the drawing, or press ENTER to erase it. 
+select the body modifier, and click Edit In Place tab . Modify pan­
+el . Trim By Plane
+ . Specify the points that define the trim plane, and select the side of the body modifier to be trimmed. The trimmed body modifier is converted to a Free Form mass element. 
+divide the face of a body modifier  select the body modifier, and click  
+into two faces  Edit In Place tab . Modify pan­ 
+el . Split Face  . Specify the  
+points that define the edge created  
+by splitting the faces.  
+
+join two faces that are on the same select the body modifier and click plane into a single face Edit In Place tab . Modify pan­
+el . Join Faces
+ . Select the edge that separates the coplanar faces. 
+remove a body modifier select the object that forms the body modifier, and press DELETE. 
+4 Save or discard the changes: 
+If you want to … Then … 
+restore the body modifier to its ori-click Edit In Place tab . Edits pan­ginal shape 
+el . Cancel
+ . 
+save the changes to the body click Edit In Place tab . Edits pan-modifier 
+el . Finish
+ . The body modifier uses the edited mass element to define its geometry. 
+Managing Body Modifiers 
+Use this procedure to edit or remove three-dimensional (3D) body modifiers from a structural member. You can select a different operation, or you can enter or edit the descriptions of body modifiers. 
+NOTE To remove a body modifier from a structural member and restore the modifier as a mass element that you can edit or apply to other structural members, see Restoring a Body Modifier to a Mass Element on page 2598. 
+1 Select the structural member you want to change. 
+2 Click Structural Member tab . Modify panel . Body Modifiers drop-down . Body Modifier
+ . 3 Select a body modifier, and change its settings: 
+If you want to … Then … 
+apply the body modifier to a differ-select a different structural member. ent structural member 
+change the operation used to apply the body modifier to the structural member 
+select a different operation for Op­eration: 
+¦ 
+Select Additive to add the body modifier to the structural member 
+
+¦ 
+Select Subtractive to subtract the shape of the body modifier from the structural member 
+
+¦ 
+Select Replace to replace the structural member with the body modifier. 
+
+
+delete the body modifier from the select the body modifier, and click structural member
+
+ . 
+enter a description of the body click Description, enter text, and modifier press ENTER. 
+4 Click OK. 
+Restoring a Body Modifier to a Mass Element 
+Use this procedure to remove a body modifier from a structural member and add it to the drawing as a mass element. Restoring a body modifier to a mass element enables you to modify the shape as a mass element and then add it to the structural member again as a body modifier. You can also restore the body modifier to a mass element while leaving the body modifier still applied to the structural member. This is useful if you want to create other structural members with the same shape. 
+If the object used to create the body modifier was a conventional mass element, it is restored to that mass element. For example, a cylinder mass element is restored as a cylinder mass element. However, if the body modifier was created from another object, such as a slab, or was edited using Boolean operations or face editing commands, the body modifier is restored as a Free Form mass element. 
+1 Select the structural member you want to change. 2 Click Structural Member tab . Modify panel . Body Modifiers 
+drop-down . Restore
+ . 
+3 NOTE This procedure restores all body modifiers attached to a structural member. 
+Create mass elements from the body modifiers: 
+If you want to … Then … 
+create mass elements from the body press ENTER. modifiers while keeping the body modifiers attached to the structural member 
+remove all body modifiers from the enter y (Yes), and press ENTER. structural member, and create mass elements from their shapes 
+Working with Structural Member Interference Conditions 
+You can modify the geometry of a Structural Member by using another object to create an interference condition within the structural member. For example, you can create a hole in a structural member. Unlike the object used to add a hole, which has no connection to the structural member and can be erased after the hole is added, the object used to create an interference condition remains partially or wholly embedded in the structural member, cutting out and replacing a part of its geometry. All interference conditions are subtractive in this sense, but the option you use to create the interference condition (Add or Subtract) determines whether the outline of the interference condition is included or excluded from the shrink wrap outline of the structural member in plan view. 
+Creating Structural Member Interference Conditions 
+Use the following procedure to create structural member interference conditions. Typically, after creating interference conditions for a structural member, you freeze the layer where the interfering objects are placed. If you move or edit the objects, the structural member updates accordingly. 
+NOTE Objects used as interference conditions are not included for the Area in the LIST command or in a Schedule Query result. 
+To create interference conditions for a structural member: 1 Create one or more objects in the actual location where you want the interference condition positioned in relation to the structural member. 2 Select the structural member. 3 Click Structural Member tab . Modify panel . Interference Condition drop-down . Add
+ . 
+4 Select the objects to use as interference conditions, and press ENTER. 
+
+NOTE AEC objects from externally referenced (xref) files can be added to a structural member as interference conditions so long as the following conditions are met: 
+¦ 
+The object is a three-dimensional (3D) body 
+
+¦ 
+The xref is found 
+
+¦ 
+The xref is read/write 
+
+¦ 
+The xref is not locked or opened by another user 
+
+¦ 
+The xref is loaded 
+
+
+Removing Structural Member Interference Conditions 
+Use this procedure to remove an interference condition from a structural member. Note that only the interference condition is removed; the object from which the interference condition was created remains in the drawing. 
+1 Select the structural member. 2 Click Structural Member tab . Modify panel . Interference 
+Condition drop-down . Remove
+ . 
+3 Select the objects to remove as interference conditions, and press ENTER. 
+NOTE You can also remove interference conditions through the Interference Conditions worksheet. For more information, see Editing Structural Member Interference Conditions on page 2601. 
+Editing Structural Member Interference Conditions 
+Objects applied as interference conditions in structural members be edited like any other objects, using grips, tools on the Structural Member tab, context menu options, or the Properties palette. If you move or edit the objects, the structural member updates accordingly. You can also change the setting that determines whether an interference condition is added to or subtracted from the shrink wrap outline of the structural member in plan view by using the following procedure. 
+1 Select the structural member. 2 Click Structural Member tab . Modify panel . Interference 
+Condition drop-down . Interference Condition
+ . 
+
+3 On the Interference Conditions worksheet, click the Shrinkwrap Effect value you want to change, and select a different value from the pull-down menu. 
+4 Click OK. 
+NOTE You can also use this worksheet to remove an interference condition by right-clicking its Object or Type value and then clicking Remove. The alternate method is to use the context menu of the structural member. When you remove an interference condition, you remove the association between the structural member and the object that was used to create the interference condition. The object itself is not removed from the drawing. 
+Structural Member Styles 
+A structural member style is a group of properties assigned to a structural member that determines the shape and other characteristics of the structural member. You can use structural member styles to represent standard structural member types for specific jobs and drawings or for office standards. When you create or modify a structural member style, the structural members using the style have the settings and characteristics of the style. 
+Usually you create structural member styles from the Structural Member Catalog or with the Structural Member wizard and drag them from the Style Manager onto a tool palette. You can also create your own structural member styles for custom structural members that you cannot create from the catalog or with the wizard. For more information, see Creating Custom Structural Members on page 2619. 
+Creating Tools from Structural Member Styles 
+You can create a structural member tool from any structural member style. Usually, you want to create structural members tools from styles that you create in the Structural Member Catalog or with the Structural Member Style wizard. However, you can also create a structural member tool from a style that you create in the Style Manager. You can save the style to a drawing file and create a structural member tool with the style. You can then specify default settings for any structural member created with that tool. For more information, see Creating Structural Member Tools on page 2513. 
+Managing Structural Member Styles 
+To create, edit, copy, or purge structural member styles, you access the Style Manager. The Style Manager provides a central location in AutoCAD Architecture where you can work with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+Creating a Structural Member Style in the Style Manager 
+Use this procedure to create a structural member style in the Style Manager. You can create a style using default style properties, by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Expand Architectural Objects, and expand Structural Member Styles. 
+3 Create a structural member style: 
+If you want to… Then… 
+create a style with default properties right-click Structural Member Styles, and click New. 
+create a style from an existing style right-click the structural member style you want to copy, and click Copy. Right-click, and click Paste. 
+4 Enter a name for the new structural member style, and press ENTER. 5 Edit the new structural member style: 
+If you want to… Then… 
+enter a description of the style click the General tab, and enter a description. 
+specify whether a member with this style will automatically trim to exist­ing members when added to a drawing and whether its trim planes will be adjusted automatically if it is grip edited directly, or if its end-click the Design Rules tab, and se­lect or clear Trim Members Automat­ically. This option is selected by de­fault for new styles. The setting can be overridden in the tool or object properties. 
+If you want to… Then… 
+points move in response to grip-editing of a logically connected member 
+change the design rules of the style see Creating Custom Structural to create a custom structural mem-Members on page 2619. ber 
+specify materials for the compon-see Specifying the Materials of a ents of the style Structural Member Style on page 2604. 
+specify hatching, cut plane proper-see Specifying the Display Proper­
+ties, and other display properties of ties of a Structural Member Style on the style page 2607. 
+add classifications to a structural see Specifying Classifications for a member style Structural Member Style on page 2617. 
+add notes and files to the style see Attaching Notes and Files to a Structural Member Style on page 2618. 
+6 Click OK. 
+7 If you want to assign the style to a structural member tool, drag the style from the Style Manager to a tool palette. You can later rename the tool and specify other properties for it 
+as described in Creating Structural Member Tools on page 2513. 
+8 Click OK. 
+Specifying the Materials of a Structural Member Style 
+A structural member consists of a number of components whose display properties can be determined by the materials assigned to each component. When you assign materials to a structural member style, you assign one material to each physical component of the structural member. You assign materials to components in each display representation where you want the materials to be used. 
+If you want to use the display properties of the structural member style, instead of using material display properties, you can turn off the material assignments in the display properties of the structural member style. 
+Material definitions consist of display components that correspond to component types of objects. For example, the Linework component of a material is used for all linework in plan view. The Surface Hatch component of a material is used to hatch all object surfaces in three dimensional (3D) model views and in elevations. 
+Structural Member Materials and Display Components 
+The following table identifies the material component that corresponds to each structural member component: 
+Structural Member Component Material Component 
+Elevation, Elevation High Detail 
+Visible Comp 1-10 Plan Linework 
+Model, Model High Detail, Model Low Detail 
+Component 1 - 10 3D Body 
+Plan, Plan Low Detail, Plan High Detail, Plan Presentation, Plan Screened 
+Visible Comp 1-10 Plan Linework 
+Hatch 1 - 20 Plan Hatch 
+Reflected, Reflected Screened 
+Visible Comp 1-10 Plan Linework 
+Assigning Materials to a Structural Member Style 
+Use this procedure to assign materials to the individual components of a structural member style. When you assign a material to a structural member 
+component, the component uses the display properties of the material instead of the style display properties. 
+You can assign a material to any physical component of the structural member. Custom components and components that are only symbolic graphics do not use materials for their display properties. For example, all structural member components are physical components that you can assign materials. The connection and axis are symbols, and you cannot assign materials to them. 
+NOTE If a material assignment does not determine the display properties of a structural member component, you can change the display properties of the structural member style as described in Specifying the Display Properties of a Structural Member Style on page 2607. 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Structural Member 
+Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+
+appear, and select Style Override. 
+6 If necessary, click 7 Click the Layer/Color/Linetype tab. 8 Select By Material for any component to which you want to assign 
+a material, and click OK. If the setting for By Material is not available, the display of this component cannot be determined by a material. 
+9 Click the Materials tab. 
+10 Select the component you want to change, and select a different material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a 
+component. 
+WARNING Although you can edit a material definition from this dialog box, any changes you make to the material definition apply to all objects that are assigned the material. 
+11 Click OK. 
+Specifying the Display Properties of a Structural Member Style 
+In most cases, you can assign materials to structural member components so that the appearance of structural members that belong to the same style is consistent throughout a drawing and with other structural members and objects that use the same materials. 
+If a component cannot be assigned a material, or if you do not want to use materials but still want consistency among structural members of the same style, you can specify the display properties of the structural member components in the structural member style: 
+¦ 
+Layer, color, and linetype of structural member components 
+
+¦ 
+Hatching used with each component 
+
+¦ 
+Cut plane height and the display of components relative to the cut plane 
+
+¦ 
+Other specific structural member display information, such as whether custom blocks are added to the display of the structural member 
+
+
+You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+About Structural Member Display Representations 
+Structural member geometry is created by a shape contained in the style of the structural member that is extruded along the axis of the member. Each shape can have different levels of detail in its geometry, allowing different displays of the structural member that the shape is defining. If you look at the display representations of a structural member, you see that there may be more than one of the same representation. Each representation displays the structural shape in a different level of detail. 
+For example, you can use the Plan, Plan High Detail, and Plan Low Detail structural member representations to display a plan view of a structural member. 
+Displaying a structural member with the Plan High Detail, Plan Low Detail, and Plan display representations 
+
+The Plan Low Detail display representation displays the member with simple lines and arcs. You can use this display representation to create a top view framing plan where you want a single line representation of a column. The Plan Low Detail display representation includes two display components, Beam Sketch and Brace Sketch. You can change the display properties of these components, such as layer, color, and linetype, to differentiate the display of beams and braces. On the Other tab of the style override dialog box for this display representation, you can also add offsets between members to display them as you typically would in a top view framing plan. Note that the Use Member Offsets check box applies only to the start and end offsets. The Offset value below the check box applies only to structural braces, and allows you to offset them horizontally so that they are visible even when positioned directly underneath a beam. 
+
+The Plan and Plan High Detail display representations display the previous column using closed polylines. Both representations display the column geometry, but the Plan High Detail representation is more detailed, including fillets in the column display. Use the Plan representation to improve performance while modeling, and the Plan High Detail representation to display an added level of detail for detail drawings. 
+The following table lists the structural member display representations and their uses: 
+Use this display representation… To… 
+Elevation display an elevation view of a structural member with simplified geometry for bet­ter performance when modeling. 
+Elevation High Detail display an elevation view of a structural member in full detail. 
+Logical display the extruded axis of a structural member and connections between mem­bers. Connections are automatically estab­lished between members when they touch endpoint to endpoint or endpoint to a 
+Use this display representation… To… 
+point on the extruded axis of another member. 
+Model display a 3D structural member with simpli­fied geometry for better performance when modeling. 
+Model High Detail display a 3D structural member in full detail for large scale details. 
+Plan display a 2D structural member in less de­tail than the Plan High Detail representation to improve performance. Members display as closed polylines, rather than lines and arcs as in the Plan Low Detail representa­tion. 
+Plan High Detail display a 2D structural member in full de­tail. 
+Plan Low Detail display a 2D structural member with simple lines and arcs to create a top view framing plan. Includes a Beam Sketch and Brace Sketch display component to differentiate beams and braces in plan view. 
+Plan Presentation display a 2D structural member with solid hatching (poche) for plan view presenta­tion drawings. 
+Plan Screened display a 2D structural member in the screened portion of a screened floor plan, with components and hatching visibly lighter than some other objects. 
+Reflected display a 2D structural member in a reflec­ted ceiling plan. 
+Reflected Screened display a 2D structural member in the screened portion of a screened reflected ceiling plan with components and hatching visibly lighter than some other objects. 
+Specifying the Layer, Color, and Linetype of a Structural Member Style 
+Use this procedure to change the following display properties of the components of a structural member style: 
+¦ 
+Visibility (component is on or off) 
+
+¦ 
+By material (material assigned to the display component determines its display properties) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+NOTE If a material assignment determines the display properties of components in the structural member style, you can change the properties of the display component by clearing By Material. You can also override the material assignment with a different material. For more information, see Assigning Materials to a Structural Member Style on page 2605. 
+NOTE For multi-component structural members, hidden lines are calculated one component at a time. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Structural Member 
+Styles. 
+3 Select the structural member style that you want to change. 
+4 Click the Display Properties tab. 
+5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select the component to change, and select a different setting for 
+the property. 
+9 Click OK twice. 
+Specifying the Hatching for Components of a Structural Member Style 
+Use this procedure to specify the hatching of the components of a structural member style. Structural member hatching is displayed only in display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Structural Member 
+Styles. 3 Select the structural member style that you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Hatching tab. 8 Select a component, and click the setting for Pattern. 9 Select the hatching for the component: 
+If you want to… Then… 
+select a hatching pattern that is select Predefined for Type, and then available in the software select a pattern. 
+select a custom pattern select Custom for Type, and then enter the name of the custom pat­tern. If necessary, click Browse, and navigate to the folder where the custom pattern file is located. 
+select single hatching select User-defined for Type, and clear Double Hatch. 
+select double hatching select User-defined for Type, and select Double Hatch. 
+select solid fill select Solid Fill for Type. 
+10 Click OK. 11 Click Scale/Spacing, and enter a value that determines how the 
+selected pattern is repeated. 
+12 Click Angle, and enter the angle for the selected pattern. 
+13 Click Orientation, and specify how the hatching is oriented: 
+If you want to… Then… 
+orient the hatching to the object, select Object. regardless of the object rotation 
+orient the hatching to the World select Global. Coordinate System 
+14 Click OK twice. 
+Specifying the Cut Plane Elevation of a Structural Member Style 
+Use this procedure to specify the cut plane elevation of a structural member style. The cut plane settings you specify in the structural member style override the cut plane settings in any display configuration applied to a viewport. 
+NOTE If the cut plane does not intersect the structural member, all visible and hidden components display. If the cut plane does intersect the member, only the cross section of the components of the structural member displays. These are the actual member shapes unless you select True Cut Body. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Structural Member 
+Styles. 3 Select the structural member style that you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Select Override Display Configuration Cut Plane. 9 Enter a value for Cut Plane Height. 
+10 Click OK twice. 
+Using Custom Blocks to Add Graphics to a Structural Member Style 
+You can add custom blocks to the display of a structural member as a component in a display representation. For example, you can add stiffener plates to beams as a custom blocks or add clip angles to members as a custom blocks. 
+Adding stiffener plates to a beam 
+
+Custom blocks can be either 2D or 3D. When you add a custom block, you can specify several rules for positioning and scaling the new component. Each custom block also appears in the display properties component list so that you can control its layer, color, and linetype. For more information, see Adding Custom Blocks as a Display Component in a Structural Member Style on page 2614. 
+Be sure to set the properties of the objects used to create your custom blocks to ByBlock. Otherwise, you cannot control these objects through the display properties. For more information about ByBlock, see “Control the Color and Linetype Properties in Blocks” in AutoCAD help. 
+To change these display properties for all structural members of the same structural member style, see Specifying the Display Properties of a Structural Member Style on page 2607. 
+Adding Custom Blocks as a Display Component in a Structural Member Style 
+Use this procedure to add or edit custom block components in the display representation of a structural member style. 
+1 Create a 2D or 3D block for the component that you want to add 
+to the structural member. Create the block in the same plane as the structural member that you use to represent structural member. For more information 
+about custom blocks, see Using Custom Blocks to Add Graphics to a Structural Member Style on page 2614. 
+2 Click Manage tab . Style & Display panel . Style Manager
+ . 3 Expand Architectural Objects, and expand Structural Member 
+Styles. 4 Select the structural member style that you want to change. 5 Click the Display Properties tab. 
+The display representation in bold is the current display representation. 
+6 Select the display representation where you want the changes to appear, and select Object Override. 
+7 If necessary, click 
+. 8 Click the Other tab. 9 Under Custom Block Display, click Add. 
+10 Click Select Block and select the block you created. 11 Select a setting for Position Along (x) to position the block in a 
+location along the X-axis of the member. 12 Specify an insertion offset of the block in the X, Y, and Z directions. 13 Specify whether you want repeat the block display along the X-axis 
+of the member: 
+If you want to… Then… 
+repeat the display of the block select Repeat Block Display. along the X-axis of the member 
+offset the repeated blocks from the enter values for Start Offset and End start or endpoint of the member Offset. 
+specify the space between the re-enter a value for Space Between. peated blocks 
+increase the spacing between re-select Fit, and select Space Evenly. peated blocks so the insertion point of the last block is at the end offset distance from the end of the mem­ber 
+If you want to… Then… 
+scale the block so the extents of all select Fit, and select Scale to Fit. the blocks fit between the start and end offset distances 
+14 Specify whether to mirror the block in the X,Y, or Z direction: 
+If you want to… Then… 
+create a mirror of the block in the select Mirror X. X direction 
+create a mirror of the block in the select Mirror Y. Y direction 
+create a mirror of the block in the select Mirror Z. Z direction 
+15 Click OK twice. 
+Turning Off Custom Blocks in a Structural Member Style 
+Use this procedure to turn off the display of custom blocks without removing them from the structural member style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Structural Member 
+Styles. 3 Select the structural member style that you want to change. 4 Click the Display Properties tab. 
+The display representation in bold is the current display representation. 
+5 Select the display representation where you want to turn off custom blocks, and select Object Override. 
+6 If necessary, click 7 Click the Other tab. 8 Under Custom Block Display, select Disable Custom Blocks. 9 Click OK twice. 
+
+Removing Custom Blocks from a Structural Member Style 
+Use this procedure to remove custom blocks from the display of a structural member. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Structural Member 
+Styles. 
+3 Select the structural member style that you want to change. 
+4 Click the Display Properties tab. 
+The display representation in bold is the current display 
+representation. 
+5 Select the display representation where you want to turn off custom blocks, and select Object Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Under Custom Block Display, select the block and click Remove. 9 Click OK twice. 
+Specifying Classifications for a Structural Member Style 
+Use this procedure to specify classifications for any classification definition applied to a structural member style. 
+For more information about creating and applying classification definitions, see Classification Definitions on page 3834. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Structural Member 
+Styles. 
+3 Select the style that you want to change. 
+4 Click the Classifications tab. 
+By default, the classification for all classification definitions is Unspecified. If no classification definitions are listed, none are applied to structural member styles. 
+5 For each classification definition, select the classification you want to apply to the current structural member style. 
+6 Click OK. 
+Defining a Structural Member Style as Bounding for Associative Spaces 
+Use this procedure to define a structural member style that can bound associative spaces. 
+When a structural member style is set as bounding, by default all beams, braces, and columns that have the style assigned will be used in the selection set for an associative space. For more information about associative spaces see Generating Associative Spaces on page 2904. 
+You can override the bounding setting from the structural member style in an individual beam, brace, or column, if necessary. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Structural Member 
+Styles. 3 Select a structural member style. 4 Click the General tab. 5 Select the check box for Objects of this style may act as a boundary 
+for associative spaces. 6 Click OK. 
+Attaching Notes and Files to a Structural Member Style 
+Use this procedure to enter notes and attach reference files to a structural member style. You can also edit notes and edit or detach reference files from a structural member style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Structural Member 
+Styles. 3 Select the structural member style you want to change. 4 Click the General tab. 5 To add a description to the structural member style, enter it for 
+Description. 6 Click Notes. 
+7 To add a note, click the Text Notes tab, and enter the note. 8 Click the Reference Docs tab, and attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+9 Click OK. 
+Creating Custom Structural Members 
+You can specify design rules within a structural member style to create a custom structural member. The design rules allow you to specify one or more shapes to extrude along the path (axis) of a structural member. You can assign and position a start and end shape for each segment of a structural member. 
+Creating Single-Segmented Custom Structural Members 
+A single-segment member can start and end with the same shape, or you can specify different start and end shapes. For example, you can create a tapered column by assigning different start and end shapes to a single-segment column. 
+Creating a tapered column 
+
+You can also assign different shapes to the same single-segment member by adding a component to the member. By adding a component in the design rules and assigning different shapes to the same segment, you can create a structural member with overlapping shapes. For example, you can create a concrete encased steel column by adding a component with a steel column shape to a concrete column. 
+Creating a composite steel and concrete column 
+
+Creating Multi-Segmented Custom Structural Members 
+For multi-segmented structural members, you can assign different shapes to each segment of the member as components of the member. A series of nodes (starting at 0 at the start point of the member) correspond to each vertex of the member path. By assigning different shapes to segments between nodes on the member path, you can create a structural member that transforms from one shape to different shapes along the member path. For example, you can use this method to create a rigid frame. 
+Creating the rigid frame 
+
+Creating Custom Shapes for Structural Members 
+When you create custom structural members, you can use the shapes contained in styles that you create from the Structural Member Catalog or Structural Member Style wizard, or you can create your own custom shapes. When you create a custom shape, you can only add it to a structural members in the design rules of the structural member style. 
+Understanding the Design Rules of a Structural Member 
+Use this procedure to access and understand the options in the design rules of a structural member. 
+1 Select a structural member. 2 Click Structural Member tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 3 Click Design Rules. 4 On the Design Rules tab, click Show Details. 
+You can use the following options in the design rules to create custom members: 
+This option… Allows you to… 
+Component add multiple components to a structural member. Each compon­ent includes a name and can in­clude a start and end shape and a priority. You can remove and copy 
+This option… Allows you to… 
+Start Shape and End Shape 
+the components of a structural member. 
+select a shape and a set of paramet­ers to the start and end of a struc­tural member component. The component shapes can be the same shape or a different shape. If End Shape is using the Start Shape, an asterisk (*) displays next to the end shape. To transform the shape of the member along the member path, the end shape must be expli­citly set. 
+Priority assign a priority to a component. Components that start and end at a common node are mitered based on their priorities. Components with the same priority are factored into the miter angle between the components. Components with different priorities are not factored into the miter angle. Components with the lowest priority will affect the justification of the member when Justify Overall Extents is cleared on the Dimensions tab in the properties of the member. 
+Name select shapes that you assign to the start and end of the member or member segment. You can select shapes contained in structural member styles, or custom shapes that you create. 
+Relative to define the position of the shape rel­ative to the start or end of the member. 
+This option… Allows you to… 
+Node place shapes on the member path relative to the start or end of the member. To place shapes on the member path, assign them to nodes on the member path. A single segment member has two nodes; the start point and the end­point of the member. Multi-segmen­ted members have additional nodes located at each vertex of the mem­ber path, allowing you to assign different shapes to the start and end of each segment of the member. If you place shapes on the member path relative to the start of the member, then the start point of the member path is Node 0. The first vertex on the member path is Node 1, and so on until the endpoint of the member path is defined as the final node. If you place shapes on the member path relative to the end of the member, then the end­point of the member is Node 0. 
+Scale scale the shape. 
+Mirror mirror the shape. 
+Rotation rotate the shape. 
+X Offset offset the shape in the X direction along the member path. 
+Y Offset offset the shape in the Y direction perpendicular to the member path. 
+Z Offset offset the shape in the Z direction perpendicular to the member path. 
+5 Click Add to add a component to a structural member. 
+A component with the same values as the preceding component is added to the design rules. 
+6 Click Copy to copy a component. 7 Click Remove to remove a component. 8 Click OK. 
+Changing the Shape in the Style of a Structural Member 
+Use this procedure to change the shape that is extruded along the axis of a structural member created from a single shape. You can create a new shape for the structural member by creating a custom shape, or by creating a new style from the Structural Member Catalog that contains a shape. 
+1 Create a structural member with a single shape. For more information, see Using Structural Member Tools to Create Structural Members on page 2527. 
+2 Create a new shape for the structural member: 
+If you want to create… Then… 
+a custom shape for the member create a custom shape. See Creat­
+ing a Custom Shape for a Structural Member on page 2641. 
+a shape from the Structural Mem­ create a structural member style in  
+ber Catalog  the Structural Member Catalog that  
+contains the shape. See Creating a  
+Style from a Shape in the Structural  
+Member Catalog on page 2507.  
+
+3 Select the structural member. 
+4 Click Structural Member tab . General panel . Edit Style drop-down . Edit Style
+ . 5 Click the Design Rules tab. 
+6 In the Name list under Start Shape, select the shape that you 
+created in step 2. If you created a custom shape in step 2, the name of the shape displays in the Name list. If you created a style from the Structural Member Catalog, the shape displays in the Name list with the name of the shape that you selected in the catalog to create the 
+style, not with the style name that you created. 
+7 Click OK. 
+Adding a Shape to a Structural Member 
+Use this procedure to add one or more shapes to a structural member in the design rules of the structural member style. You can create a new shape to add to the structural member by creating a custom shape, or by creating a new style from the Structural Member Catalog that contains a shape. 
+1 Create a structural member with a single shape. For more information, see Using Structural Member Tools to Create Structural Members on page 2527. 
+2 Create a new shape to add to the structural member: 
+If you want to… Then… 
+create a custom shape for the create a custom shape. See Creat­
+member ing a Custom Shape for a Structural Member on page 2641. 
+create a shape from the Structural  create a structural member style in  
+Member Catalog  the Structural Member Catalog that  
+contains the shape. See Creating a  
+Style from a Shape in the Structural  
+Member Catalog on page 2507.  
+
+3 Select the structural member. 4 Click Structural Member tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 5 Click the Design Rules tab. 6 Click Add. 
+A new component is added to the structural member. 
+7 Type a name for each component under Component. 
+8 For the new component, from the Name list under Start Shape, select the shape that you created in step 2. If you created a custom shape in step 2, the name of the shape is 
+displayed in the Name list. If you created a style from the Structural Member Catalog, the shape is displayed in the Name list with the name of the shape that you selected in the catalog to create the style, not with the style name that you typed. 
+9 Click OK. 
+The structural member is redrawn with the new shape added to its geometry. 
+Process Overview: Creating a Single-Component Structural Member (Tapered Column) 
+Use this example to create a tapered column, a single-component structural member that starts with one shape and ends with another. 
+Creating a tapered column 
+
+The process of creating this tapered column has four steps: 1 Create two structural member styles in the Structural Member Catalog that contain the start and end shapes to taper over the length (height) 
+of the column. 2 Create a Tapered Column tool. 3 Create a column with the tapered column style. 4 Specify design rules in the tapered column style to add the start and end 
+shapes in the styles that you created in step 1 to the tapered column. 
+Creating Start and End Shapes for the Tapered Column 
+Use this procedure to create two styles that contain the start and end shapes for the tapered column. The first style contains the start shape for the column and the second style contains the end shape for the column. 
+1 Click Manage tab . Style & Display panel .
+. Structural 
+Member Catalog
+ . 2 Expand Imperial in the tree view in the left pane of the Structural 
+Member Catalog. 3 Expand Steel, AISC, and then I-Shaped. 4 Select Wn, Wide-Flange Shapes. 5 Right-click W8X31 in the lower right pane of the Structural 
+Member Catalog, and click Generate Member Style. 6 Enter W8X31, and click OK. 7 Select W1n, Wide-Flange Shapes in the tree view in the left pane. 8 Right-click W14X43 in the lower right pane of the Structural 
+Member Catalog, and click Generate Member Style. 9 Enter W14X43 and click OK. 
+10 Click 
+to close the Structural Member Catalog. 
+Creating the Tapered Column Tool 
+Use this procedure to create a tapered column tool. Save the style for the tapered column in the Member Styles (Imperial).dwg located in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Click Open Drawing 
+. 3 Open Member Styles (Imperial).dwg located in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial. 4 Expand Architectural Objects, right-click Structural Member Styles, 
+and click New. 5 Enter Tapered Column for the name, and press ENTER. 6 Click OK to close the Style Manager. 7 Click Yes to save changes to the Member Styles (Imperial).dwg. 
+8 In the title bar of the tool palettes set, click 
+, and then click New Palette. 9 Enter Structural, and press ENTER. 10 Open the Design palette, select the Structural Column tool, right-click, and click Copy. 11 Open the Structural palette, right-click, and click Paste. 12 Select the new tool, right-click, and click Properties. 13 Enter Tapered Column for the Name. 14 Click the setting for Description. 15 Enter Creates a tapered column, and click OK. 16 Expand Basic, and expand General. 17 Click Style location. 
+18 Select Browse, select the Member Styles.dwg located in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial, and click Open. 
+19 Click Style and select Tapered Column. 20 Click OK. 
+Creating a Column with the Tapered Column Tool 
+Use this procedure to create a column with the tapered column tool that you created. 
+1 Select the Tapered Column tool from the tool palette. 2 Press ENTER to create a column that is not anchored to a grid. 3 Specify the insert point of the column. 4 Specify the roll, which is the rotation around the extruded axis 
+of the column, and press ENTER. 
+Adding the Start and End Shapes to the Tapered Column 
+Use this procedure to add the start and end shapes to the tapered column and transform them along the member path. 
+1 Select the column, and click Structural Member tab . General 
+panel . Edit Style drop-down . Edit Style
+ . 2 Click Design Rules. 
+3 Click Show Details. 4 Select Unnamed under Component, and enter Component 1. 5 Under Start Shape, select W8X31 from the Name list. 6 Scroll to the end of the Design Rules dialog box to display the 
+End Shape parameters. 7 Under End Shape, select W14X43 from the Name list. 8 Click OK. 
+The complete tapered column displays in your drawing. 
+Process Overview: Creating a Multi-Component Structural Member (Composite Column) 
+Use this example to create a steel column encased in concrete, a multi-component structural member with a single segment. The steel column shape is one component of the member, the concrete column shape another. 
+Creating a composite steel and concrete column 
+
+The process of creating this composite column has four steps: 
+1 Create two structural member styles: one that contains the shape for the concrete column and one that contains the shape for the steel column. 
+2 Create a Composite Column tool. 
+3 Create a column with the composite column style. 
+4 Specify design rules in the composite column style to add the concrete and steel shapes to the column. 
+Creating the Steel and Concrete Shapes for the Composite Column 
+Use this procedure to create two styles: one that contains the steel shape and one that contains the concrete shape. 
+1 Click Manage tab . Style & Display panel .
+. Structural 
+Member Catalog
+ . 2 Expand Imperial in the tree view in the left pane of the Structural 
+Member Catalog. 3 Expand Steel, AISC, and then I-Shaped. 4 Select Wn, Wide-Flange Shapes. 5 Right-click W8X31 in the lower right pane of the Structural 
+Member Catalog, and click Generate Member Style. 6 Enter W8X31, and click OK. 7 Expand Concrete, and then Pre-Cast. 8 Select Rectangular Columns. 9 Right-click 16X16 in the lower right pane of the Structural Member 
+Catalog, and click Generate Member Style. 10 Enter 16X16 and click OK. 
+11 Click 
+to close the Structural Member Catalog. 
+Creating the Composite Column Tool 
+Use this procedure to create a composite column tool. Save the style for the composite column in the Member Styles (Imperial).dwg located in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial. 
+
+1 Click Manage tab . Style & Display panel . Style Manager 
+2 Click Open Drawing 
+. 3 Open Member Styles (Imperial).dwg located in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial. 4 Expand Architectural Objects, right-click Structural Member Styles, 
+and click New. 5 Enter Composite Column for the name, and press ENTER. 6 Click OK to close the Style Manager. 7 Click Yes to save changes to the Member Styles (Imperial).dwg. 
+8 In the title bar of the tool palettes set, click 
+, and then click New Palette. 9 Enter Structural, and press ENTER. 10 Open the Design palette, select the Structural Column tool, right-click, and click Copy. 11 Open the Structural palette, right-click, and click Paste. 12 Select the new tool, right-click, and click Properties. 13 Enter Composite Column for the Name. 14 Click the setting for Description. 15 Enter Creates a composite column, and click OK. 16 Expand Basic, and expand General. 17 Click Style location. 
+18 Select Browse, select the Member Styles.dwg located in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial, and click Open. 
+19 Click Style and select Composite Column. 20 Click OK. 
+Creating a Column with the Composite Column Tool 
+Use this procedure to create a column with the composite column tool that you created. 
+1 Select the Composite Column tool from the tool palette. 2 Press ENTER to create a column that is not anchored to a grid. 3 Specify the insertion point of the column. 
+4 Specify the roll, or rotation around the extruded axis of the column, and press ENTER. 
+Adding the Steel and Concrete Shapes to the Composite Column 
+Use this procedure to add the steel and concrete shapes to the composite column. 
+1 Select the column, and click Structural Member tab . General 
+panel . Edit Style drop-down . Edit Style
+ . 2 Click Design Rules. 3 Click Show Details. 4 Select Unnamed under Component, and enter Component 1. 5 Under Start Shape, select 16X16 from the Name list. 6 Click Add. 
+A new component is added to the design rules of the column. By default, the start and end shapes are the same as the preceding component. 
+7 Select Unnamed under Component, and enter Component 2. 
+8 Under Start Shape for Component 2, select W8X31 from the Name list. Do not change the other Start Shape parameters. 
+9 Click OK. The composite column displays in your drawing. 
+Process Overview: Creating a Multi-Component Structural Member Using Multiple Segments (Rigid Frame) 
+Use this example to create a rigid frame, a multi-segmented structural member created from multiple shapes that transform at each vertex of the structural member path. 
+To create the rigid frame, you convert a multi-segmented polyline to a structural member and assign different start and end shapes to each segment of the member as components in the design rules of the rigid frame style. A series of nodes correspond to the start point, vertices, and the endpoint of the member path. By assigning different shapes to segments between nodes on the member path, the rigid frame transforms from one shape to several shapes along its path. 
+Assign shapes to the rigid frame member relative to the start of the member. The start point is defined as Node 0. The first vertex of the member is defined as Node 1, the next vertex is Node 2, and so on until the endpoint of the member, which is defined as the end node. 
+NOTE If you assign shapes relative to the end of the member, the endpoint of the member is defined as Node 0. 
+Identifying nodes on the member path 
+
+Creating the rigid frame 
+
+The process of creating this rigid frame has seven steps: 
+1 Create two styles in the Structural Member Catalog that contain the shapes that transform over the path of the rigid frame. 
+2 Create a rigid frame style and tool. 
+3 Draw a multi-segmented polyline path for the rigid frame and use the rigid frame tool to convert the path to a structural member. 
+4 Create the first leg of the rigid frame by assigning start and end shapes to the first segment of the frame. 
+5 Create the first rafter of the rigid frame by assigning start and end shapes to the second segment of the frame. 
+6 Create the second rafter of the rigid frame by assigning start and end shapes to the third segment of the frame. 
+7 Create the second leg of the rigid frame by assigning start and end shapes to the fourth segment of the frame. 
+Creating Shapes for the Rigid Frame 
+Use this procedure to create two styles that contain the two shapes that transform over the path of the rigid frame. 
+1 Click Manage tab . Style & Display panel .
+. Structural 
+Member Catalog
+ . 2 Expand Imperial in the tree view in the left pane of the Structural 
+Member Catalog. 3 Expand Steel, AISC, and then I-Shaped. 4 Select Wn, Wide-Flange Shapes. 5 Right-click W8X31 in the lower right pane of the Structural 
+Member Catalog, and click Generate Member Style. 6 Enter W8X31, and click OK. 7 Select W1n, Wide-Flange Shapes in the tree view in the left pane. 8 Right-click W14X43 in the lower right pane of the Structural 
+Member Catalog, and click Generate Member Style. 9 Enter W14X43 and click OK. 
+10 Click 
+to close the Structural Member Catalog. 
+Creating the Rigid Frame Tool 
+Use this procedure to create a rigid frame tool. Save the style for the rigid frame in the Member Styles (Imperial).dwg located in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Click Open Drawing 
+. 3 Open Member Styles (Imperial).dwg located in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial. 4 Expand Architectural Objects, right-click Structural Member Styles, 
+and click New. 5 Enter Rigid Frame for the name, and press ENTER. 6 Click OK to close the Style Manager. 7 Click OK to save changes to the Member Styles (Imperial).dwg. 
+8 In the title bar of the tool palettes set, click 
+, and then click New Palette. 9 Enter Structural, and press ENTER. 10 Open the Design palette, select the Structural Column tool, right-click, and click Copy. 11 Open the Structural palette, right-click, and click Paste. 12 Select the new tool, right-click, and click Properties. 13 Enter Rigid Frame for the Name. 14 Click the setting for Description. 15 Enter Creates a rigid frame, and click OK. 16 Expand Basic, and expand General. 17 Click Style location. 
+18 Select Browse, select the Member Styles.dwg located in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial, and click Open. 
+19 Click Style and select Rigid Frame. 20 Click OK. 
+Drawing the Rigid Frame Path and Converting it to a Structural 
+Member 
+Use this procedure to draw a polyline path in the shape of the rigid frame, and then convert it with the Rigid Frame tool you created in Step 2. 1 In plan view, draw a polyline path for the rigid frame. Drawing the rigid frame path 
+
+2 On the Structural palette, select the Rigid Frame tool. 3 Right-click, select Apply Tool Properties to . Linework. 4 Select the polyline that you created in step 1. 5 Enter y (Yes) to leave the original polyline in the drawing and 
+press ENTER. 
+Creating the First Leg of the Rigid Frame 
+Use this procedure to create the first leg of the rigid frame by assigning a different start and end shape to the first segment of the rigid frame member. 
+Creating the first leg of the rigid frame 
+
+1 Select the rigid frame. 
+2 Select the column, and click Structural Member tab . General 
+panel . Edit Style drop-down . Edit Style
+ . 3 Click Design Rules. 4 Click Show Details. 5 Select Unnamed under Component, and enter Leg 1. 6 Under Start Shape, in the Name list, select W8X31. 7 Select Start for Relative to. 8 Enter 0 for Node. 
+Node 0 is relative to the start point of the member path. 
+9 Enter 90 for Rotation. 10 Scroll to the end of the Design Rules dialog box to display the 
+End Shape parameters for Leg 1. 11 Under End Shape, in the Name list, select W14X43. 12 Select Start for Relative to. 13 Enter 1 for Node. 
+Node 1 corresponds to the vertex formed by the endpoint of the first segment of the member path and the start point of the second segment of the member path. 
+Creating the First Rafter of the Rigid Frame 
+Use this procedure to create the first rafter of the rigid frame by assigning a different start and end shape to the second segment of the rigid frame member. 
+Creating the first rafter of the rigid frame 
+
+1 Click Add to add a second component to the structural member. 2 Select Unnamed under Component, and enter Rafter 1. 3 Under Start Shape, in the Name list, select W14X43. 4 Select Start for Relative to. 
+5 Enter 1 for Node. 6 Scroll to the end of the Design Rules dialog box to display the 
+End Shape parameters for Rafter 1. 7 Under End Shape, in the Name list, select W8X31. 8 Select Start for Relative to. 9 Enter 2 for Node. 
+Creating the Second Rafter of the Rigid Frame 
+Use this procedure to create the second rafter of the rigid frame by assigning a different start and end shape to the third segment of the rigid frame member. 
+Creating the second rafter of the rigid frame 
+
+1 Click Add to add a third component to the structural member. 2 Select Unnamed under Component, and enter Rafter 2. 3 Under Start Shape, in the Name list, select W8X31. 4 Select Start for Relative to. 5 Enter 2 for Node. 6 Scroll to the end of the Design Rules dialog box to display the 
+End Shape parameters for Rafter 2. 7 Under End Shape, in the Name list, select W14X43. 8 Select Start for Relative to. 9 Enter 3 for Node. 
+Creating the Second Leg of the Rigid Frame 
+Use this procedure to create the second leg of the rigid frame by assigning a different start and end shape to the final segment of the rigid frame member. 
+Creating the second leg of the rigid frame 
+
+1 Click Add to add a fourth component to the structural member. 2 Select Unnamed under Component, and enter Leg 2. 3 Under Start Shape, in the Name list, select W14X43. 4 Select Start for Relative to. 5 Enter 3 for Node. 6 Scroll to the end of the Design Rules dialog box to display the 
+End Shape parameters for Leg 2. 7 Under End Shape, in the Name list, select W8X31. 8 Select Start for Relative to. 9 Enter 4 for Node. 
+10 Click OK. 
+The complete rigid frame displays in your drawing. 
+Creating Custom Shapes for Structural Members 
+If you want to design a member with one or more shapes that are not available from the Structural Member Catalog and cannot be created using the Structural Member Style Wizard, you can use the Style Manager to create custom shapes. 
+When you create a custom shape, you can define three separate geometries (Low Detail, Medium Detail, and High Detail) to accommodate the different levels of detail in different display representations (for example, Plan Low Detail, Plan, and Plan High Detail). The geometries for the new shape can be set entirely from linework in the drawing area, or you can use an existing custom shape definition as a template and edit it to redefine any of its geometries. 
+Hollow core concrete plank display representations example 
+
+Once you have created a custom shape, it is added to the list of Structural Member Shape Definitions in the Style Manager. You can then create a new style from the shape, or you can assign the shape to an existing structural member style by adding it as a component in the design rules of the style. You can also edit, copy, paste, and purge shape definitions just as you can other styles. For more information on these operations, see Style Manager on page 855. 
+Creating a Custom Shape for a Structural Member 
+Use this procedure to create a custom shape for a structural member based on linework you have drawn or otherwise inserted in the drawing area. 
+1 In the drawing area, create three geometries to define the Plan Low Detail, Plan, and Plan High Detail display representations of the shape. You can draw entirely new geometries, or you can insert geometries from existing shape definitions (see Inserting a Custom Shape in a Drawing on page 2643.) 
+For Plan Low Detail, you can use lines, arcs, circles, or polylines. For Plan and Plan High Detail, use closed polylines, splines, ellipses, or circles. Note that these entities must not intersect. 
+2 Select a structural member. 3 Click Structural Member tab . Member Shape panel . Edit Shape 
+Style
+ . The Style Manager is displayed with the Architectural Objects folder open and Structural Member Shape Definitions selected. 
+4 Right-click Structural Member Shape Definitions, and click New 
+5 In the right pane of the Style Manager, click the General tab. 
+
+6 Enter a name and description for the new shape, and then click the Design Rules tab. 
+
+7 For Shape Geometry, select Low Detail, and then click 
+8 In the drawing area, select the line(s), arc(s), circle(s), or polyline(s) to define the Plan Low Detail display representation for the new shape, and then press ENTER. 
+9 Select an insertion point. The low detail shape is displayed in the viewer under the Design Rules tab. 
+
+10 For Shape Geometry, select Medium Detail, and then click 
+11 In the drawing area, select a closed polyline, spline, ellipse, or circle to define the Plan display representation for the selected shape designation. 
+12 Select an insertion point, or enter c (Centroid) or p (Previous Point) to position the selected shape in the viewer. 
+
+13 For Shape Geometry, select High Detail, and then click 
+14 In the drawing area, select a closed polyline, spline, ellipse, or circle to define the Plan High Detail display representation for the shape. 
+15 Select an insertion point, or enter c (Centroid) or p (Previous Point) to position the selected shape in the viewer. 
+16 If you want to create a new structural member style from the 
+shape, click 
+, enter a name for the new style, and click OK. 
+17 Click OK to add the new shape to the list of Structural Member Shape Definitions and dismiss the Style Manager. The new shape can now be added to existing structural member 
+styles. For more information, see Adding a Shape to a Structural Member on page 2626. 
+Inserting a Custom Shape in a Drawing 
+Use this procedure to insert one or more of the geometries defined for a custom shape into a drawing. The geometry can then be edited or used as is to define one of the display representations for another custom member shape you are creating or editing. 
+1 Click Manage tab . Style & Display panel .
+. Member 
+Shape
+ . 
+
+2 In the right pane of the Insert Member Shapes worksheet, select a custom member shape. 
+3 Click one or more of the Shape Geometry check boxes. The geometry for each selected shape designation is highlighted in the viewer. 
+4 Click Insert. 5 Specify an insertion point for each of the selected shape designations in the drawing area. 
+Design Utilities 
+Anchors 
+32 
+Anchors create links between different objects. Anchors are often used to connect an object, such as a column or a structural element, to a grid or layout curve. Anchors can also be used to anchor architectural objects to each other, or to linework objects, like lines and circles. 
+Anchors 
+An anchor links an AEC object to another object or to a layout curve or grid. You can create anchors between objects and also remove anchors from objects. AEC objects can be anchored to each other, to AutoCAD objects like lines and circles, or to layout curves or grids. 
+Automatic and user-defined anchors enable you to use anchors for many different purposes. 
+Automatic and User-Defined Anchors 
+Automatic anchors are set by the program. Certain objects are by default anchored to other objects. For example, doors and windows are usually anchored to walls. Curtain wall units or window assemblies might be anchored to curtain walls. Although these anchors are inserted automatically, when you place the objects their behavior can differ slightly. For example, a door that is anchored to a wall can be moved to an unconnected wall. The door cannot, however, be moved outside a wall and stand alone. To do this, you must remove the anchor between door and wall. The anchor of a column to a column grid behaves differently: you can move the column inside the grid, but you cannot move the column to another grid without first removing the anchor. 
+User-defined anchors are manual links that you can create between two objects. Most anchors are used with layout curves, layout grids, or volumes. You can also attach anchors to other AEC objects or AutoCAD objects. 
+Anchoring objects to a layout curve can be useful for positioning washbasins along a wall or rafters along a roof. Anchoring objects to layout grids can help you to position columns on a column grid, planters on a sidewalk grid, or tile accents on a floor tile grid. For information about layout curves or grids, see Using Layout Curves on page 2678 and Using Layout Grids on page 2693. 
+Types of User-Defined Anchors 
+There are six different types of anchors that you can use to attach objects: 
+If you want to… Then… 
+attach AEC objects to other AEC objects use object anchors. 
+attach AEC objects to the base curve of use curve anchors. other objects, such as lines, arcs, circles, mass elements, polylines, roofs, or walls 
+attach objects to nodes on layout curves use leader anchors. or grids with leaders 
+attach objects to nodes on layout curves use node anchors. or grids 
+attach objects to cell positions on 2D layout use cell anchors. grids and 3D volume grids 
+attach objects to volumes on 3D grids use volume anchors. 
+Working with Object Anchors 
+You can use object anchors to attach an AEC object to the base curve of another AEC object. When an AEC object is anchored to another AEC object, it will be moved together with the anchoring object. When the anchoring object is deleted, the anchored object will be deleted, too. Changes that are made to the anchored object, however, will not be replicated in the anchoring object. 
+When the anchored object is selected, a temporary graphic displays the anchor. The temporary anchor graphic contains a trigger grip to release the object anchor. 
+Mass element anchored to a wall 
+
+Adding Object Anchors 
+Use this procedure to create an object anchor between two AEC objects. 
+Creating an object anchor 
+
+1 Click Home tab . Build panel . Tools drop-down . Content Browser
+ . 
+2 Navigate to Stock Tool Catalog . Parametric Layout & Anchoring Tools. 
+3 Select the Object Anchor tool, and drag it to the workspace. 
+NOTE Alternatively you can enter ObjectAnchorAttach on the command line. 
+4 Select the AEC object that should be anchored to another AEC object, and press ENTER. 
+5 Select the anchoring AEC object. An object anchor is added. When you select the anchored object, you can see the anchoring connection. 
+Releasing Object Anchors 
+Use this procedure to release an object anchor between two AEC objects. 
+Releasing an object anchor 
+
+1 Select the AEC object that is anchored to another AEC object. 
+2 Click the Release Object Anchor grip on the anchor line. 
+The object anchor is removed. 
+Working with Curve Anchors 
+You can use curve anchors to attach AEC objects to the base curve of other AEC objects or linework, such as lines, arcs, circles, mass elements, polylines, roofs, or walls. The movement of an object that is anchored to another object with a curve anchor is constrained by the object to which it is anchored. Curve anchors are best suited for attaching objects to linear objects like lines, arcs, or walls as opposed to grids or layout volumes. 
+Adding Curve Anchors 
+Use this procedure to add a curve anchor to attach objects to the base of other objects. 
+Anchoring an object to a layout curve 
+
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Navigate to Stock Tool Catalog . Parametric Layout & Anchoring Tools. 
+3 Select the Curve Anchor tool, and drag it to the workspace. 
+NOTE Alternatively you can enter CurveAnchor on the command 
+line. 
+4 Enter at (Attach object), and select the object to be anchored. 
+5 Select a point on the curve that you want to anchor the object 
+to. The object is anchored to the curve at the X position. When the object is first placed, the Y and Z positions are 0. 
+6 Press ENTER. 
+Changing the Position of Objects Anchored to Curves 
+Use this procedure to change the position of objects anchored to curves. You can change the position of an anchored object relative to the curve in the X, Y, and Z directions. You can also rotate and flip the object along its axes. 
+Moving an object along a layout curve in the X direction 
+
+Moving an object along a layout curve in the Y direction Moving an object along a layout curve in the Z direction 
+
+
+NOTE The positioning of multi-view blocks assumes that the insertion point of the multi-view block is at its midpoint. 
+1 Double-click the anchored object. 
+2 On the Properties palette, expand Basic, and expand Location on Curve. 
+TIP You can also access commands to change the position of the anchored object from the context menu. Select the anchored object, right-click, and click Curve Anchor. From the submenu, choose the desired command to manipulate the anchored object in relation to its anchoring curve. 
+3 Click Anchor. 4 Change the position along the X axis: 
+If you want to… Then… 
+change the X reference point on select Start of curve, Midpoint of the curve curve, or End of curve for From. 
+specify the X distance between the enter a value for Distance. reference point on the curve and the anchored object 
+select from which point on the select Start edge of object, Center anchored object the X distance to of object, or End edge of object for the curve is measured To. 
+5 Change the position along the Y axis: 
+If you want to… Then… 
+change the Y reference point on the select Left edge of curve width, curve Center of curve width, or Right edge of curve width for From. 
+specify the Y distance between the enter a value for Distance. reference point on the curve and the anchored object 
+select from which point on the select Front of object, Center of anchored object the Y distance to object, or Back of object for To. the curve is measured 
+6 Change the position along the Z axis (vertical): 
+If you want to… Then… 
+change the Z reference point on the select Bottom of curve height, curve Center of curve height, or Top of curve height for From. 
+If you want to… Then… 
+specify the Z distance between the enter a value for Distance. reference point on the curve and the anchored object 
+select from which point on the select Bottom of object, Center of anchored object the Z distance to object, or Top of object for To. the curve is measured 
+7 To change the rotation of the anchored object, enter values for the X and Z rotation. 
+8 To flip the object along one of the axes, select Flip X, Flip Y, or Flip Z. 
+9 Click OK. 
+Anchoring Objects to New Curves 
+Use this procedure to anchor objects to new curves. You can anchor an object to a new object without first releasing the previous anchor. The new anchor is of the same type as the previous one; in this case, it is a curve anchor. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Navigate to Stock Tool Catalog . Parametric Layout & Anchoring Tools. 
+3 Select the Curve Anchor tool, and drag it to the workspace. 
+NOTE Alternatively you can enter CurveAnchor on the command 
+line. 
+4 Enter s (Set curve), and select anchored objects. 
+NOTE You can select only AEC objects here. 
+5 Press ENTER. 6 Select a new object to anchor the object to. 
+NOTE You can select AEC objects and AutoCAD objects here. 
+7 Press ENTER. 
+Working with Leader Anchors 
+You can use leader anchors to anchor objects to nodes on layout curves or grids with leaders. The movement of the anchored object is constrained by the leader on the anchor. 
+For information about creating layout curves or grids and nodes, see Using Layout Curves on page 2678 and Using Layout Grids on page 2693. 
+Adding Leader Anchors 
+Use this procedure to add leader anchors to your drawing. An object can be anchored to only one node at a time. When you try to anchor it to a second node, the object is released from the first node. You can, however, anchor any number of objects to a single layout node. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Navigate to Stock Tool Catalog . Parametric Layout & Anchoring Tools. 
+3 Select the Leader Anchor tool, and drag it to the workspace. 
+NOTE Alternatively you can enter LeaderAnchor on the command line. 
+4 Enter a (Attach object), select the object to be anchored, and then specify a point on or near a node on a layout curve, layout grid, or volume grid. 
+The object is anchored to the node that you selected. By default, the leader anchor is created at a direction of 0 from the node and has first and second extensions of 1 inch (25.4 mm). These extensions are measured from the node to the center of the anchored object. 
+5 Press ENTER. 
+Changing the Position of Objects Anchored to Layout Nodes with Leader Anchors 
+Use this procedure to change the position of objects anchored to layout nodes with leader anchors. You can change the coordinate system, orientation, and rotation of an object anchored to a layout node. You can also define offsets from the node. 
+1 Double-click the object anchored to a layout node. 
+2 On the Properties palette, expand Basic, and expand Location from Node. 
+TIP You can also access commands to change the position of the anchored object from the context menu. Select the anchored object, right-click, and click Leader Anchor. From the submenu, choose the desired command to manipulate the anchored object in relation to its anchoring node and leader. 
+3 Click Anchor. 4 Specify changes in the position or orientation of anchored objects: 
+If you want to… Then… 
+specify an offset from the object to specify insertion offset values for the the node X, Y, or Z position. 
+anchor the object to the center of select Center on Node. the node 
+have the anchored object use the select Use Node Coordinate System. coordinate system of the node 
+not have the anchored object use specify X, Y, or Z normals for the the coordinate system of the node anchored object. 
+change the rotation angle of the specify values for the X, Y, or Z rota-anchored object tion angles. 
+flip the object along the X, Y, or Z select Flip X, Flip Y, or Flip Z. axes 
+change the angle of the leader to specify a value for Angle to Node. the node 
+If you want to… Then… 
+change the offset of the leader start enter an offset value for First Exten­grip from the center of the base sion. curve of the layout node 
+change the offset of the leader end  enter an offset value for Second Ex- 
+grip from the center of the base  tension.  
+curve of the anchored object  
+ 
+NOTE By default the leader ex­ 
+tensions are slightly offset so as  
+not to overlap the leader grip  
+with the object location grip.  
+
+5 Click OK. 
+Grip-Editing Leaders 
+Use this procedure to grip-edit leaders. A leader anchor connects an object to a layout node with a leader between the two. You can change the length and shape of the leader. 
+A leader consists of one segment or several segments. You can change the leader shape by grip-editing the object. 
+You can use grips to add segments to existing leaders. 
+1 Select the anchored object. 
+2 Move the leader grip to move the leader in the appropriate direction. 
+3 After you release the leader, select the anchored object again. An additional leader grip is added at the point from which the leader originally started. 
+4 Move the leader grip at the start of the leader line to add another segment to the leader. 
+5 Repeat this procedure until the leader has all the segments you 
+need. You can later edit the leader in the same way you edit an AutoCAD polyline. 
+Extending Leaders 
+Use this procedure to extend the leader line beyond the first and last grip points on the leader line. 
+1 Double-click the anchored object. 2 On the Properties palette, expand Basic, and expand Location 
+from Node. 3 Click Anchor. 4 Edit the leader line: 
+If you want to extend… Then… 
+the start point of the leader line in the First Extension field, enter the extension value. 
+the endpoint of the leader line in the Second Extension field, enter the extension value. 
+5 Click OK. 
+Copying Objects to All Layout Nodes 
+Use this procedure to copy objects to all layout nodes. You can select an AEC object and, instead of manually anchoring it to a layout node, you can copy the object and anchor one copy to each node on a layout curve or grid. 
+TIP If you want the leader to be displayed in the same way at every node, first anchor the object to a single node. Adjust the leader attributes (direction, extension, or properties), and then use the Copy to Nodes option. Next, select the object that is anchored to the single node, and select the layout curve or grid. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Navigate to Stock Tool Catalog . Parametric Layout & Anchoring Tools. 
+3 Select the Leader Anchor tool, and drag it to the workspace. 
+NOTE Alternatively you can enter LeaderAnchor on the command line. 
+4 To copy the anchored object to every node on the layout curve or grid, enter c (Copy to Nodes). 
+5 Select the object that you want to copy and anchor to every node on the layout curve or grid. 
+6 Select the layout curve or grid. If an existing object is anchored to any of the nodes, you are prompted to specify whether you want to skip nodes that already have something anchored to them. Enter y to avoid duplicate anchored objects on those nodes. 
+Working with Node Anchors 
+You can use node anchors to attach objects to nodes on layout curves or grids. Anchoring objects to a layout curve might be useful for positioning washbasins along a wall or rafters along a roof. Anchoring objects to layout grids might help you to position columns on a column grid, planters on a sidewalk grid, or tile accents on a floor tile grid. 
+WARNING When you change the position of an object that is anchored to a curve, the anchored object needs to stay on the curve. Keeping the association between the object and the node prevents all objects that are being moved from attaching to the same node. 
+Adding Node Anchors 
+Use this procedure to add node anchors. You can add as many node anchors in your drawing as you have layout nodes. An individual object can be anchored to only one layout node. If you try to anchor an object to a second node, the first anchor is released. You can, however, anchor several objects to the same layout node and edit them individually. 
+Anchoring an object to a layout curve node 
+
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Navigate to Stock Tool Catalog . Parametric Layout & Anchoring Tools. 
+3 Select the Node Anchor tool, and drag it to the workspace. 
+NOTE Alternatively you can enter NodeAnchor on the command 
+line. 
+4 Enter a (Attach object), and select the object to be anchored. 5 Specify a point on or near a node on a layout curve or grid. 6 Press ENTER. 
+Changing the Position of Objects Anchored to Layout Nodes with Node Anchors 
+Use this procedure to change the position of objects anchored to layout nodes with node anchors. You can change the coordinate system and orientation of an object anchored to a layout node. You can also define offsets from the node. 
+1 Double-click the anchored object. 
+2 On the Properties palette, expand Basic, and expand Location from Node. 
+

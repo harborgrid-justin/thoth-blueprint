@@ -1,0 +1,1557 @@
+[MIGRATED TO RTM_PART_27.md - CONCEPTUAL SITE & MASSING]
+You can draw more than one polyline within the outermost polyline to create voids in the resulting mass element. Polylines cannot intersect or overlap. 
+1 Draw one or more closed polylines in the shape you want to extrude or revolve. 
+2 Select the polyline, right-click, and click Convert To . Profile Definition. 
+3 Enter c (Centroid) for the insertion point of the profile. The insertion point of the profile is aligned with the centroid of the mass element. 
+4 Press ENTER to specify a new profile definition. 
+5 Enter a name for the profile, and click OK. You can now use the profile as an Extrusion or Revolution mass element. For more information, see Creating a Mass Element by Extruding a Profile on page 1005 or Creating a Mass Element by Revolving a Profile on page 1006. 
+Creating a Mass Element by Extruding a Profile 
+Use this procedure to create a custom-shaped mass element by using a profile as the basis of its shape. The extrusion projects the shape of the profile to create the mass element. 
+The width and depth of the Extrusion mass element are based on the original width and depth of the profile. You can specify different width and depth values, if necessary. 
+The insertion point is at the centroid of the bottom face of the Extrusion mass element. 
+Creating an Extrusion mass element from a profile 
+
+1 Create the profile to use as the basis of the mass element. For more information, see Creating Profiles for Extrusion and Revolution Mass Elements on page 1004. 
+2 On the Massing tool palette, select the Extrusion tool. 3 On the Properties palette, expand Basic and expand General. 4 Select the profile you created in step 1 for Profile. 5 Specify the insertion point in the drawing. 6 Specify the height of the Extrusion mass element. 7 Specify a rotation angle, or press ENTER for a rotation angle of zero 
+degrees. 8 Press ENTER. 
+Creating a Mass Element by Revolving a Profile 
+Use this procedure to create a mass element by defining a profile as the basis of its shape, and then revolving the profile about an axis. The axis of revolution is along the X axis of the profile as it is drawn. The insertion point is at the centroid of the bottom face of the Revolution mass element. 
+Creating a Revolution mass element from a profile 
+
+1 Create a profile to use as the basis of the mass element. For more information, see Creating Profiles for Extrusion and Revolution Mass Elements on page 1004. 
+2 On the Massing tool palette, select the Revolution tool. 3 On the Properties palette, expand Basic and expand General. 4 Select the profile you created in step 1 for Profile. 5 Specify the insertion point in the drawing. 6 Specify a rotation angle, or press ENTER for a rotation angle of zero 
+degrees. 7 Press ENTER. 
+Creating a Mass Element from a 3D Solid 
+Use this procedure to create a Free Form mass element from an AutoCAD ACIS solid that has the properties of the mass element tool you select. You can edit these properties after creating the mass element. 
+The resulting Free Form mass element is a faceted approximation of the 3D solid. The smoothness of curved edges is controlled by the FACETDEV variable. This variable specifies the number of facets to display on curved AEC objects. For more information, see Specifying the Display Resolution of Objects with Facets on page 208. 
+1 Open the tool palette that you want to use. If necessary, scroll to display the tool that you want to use. 
+2 Right-click a mass element tool, and click Apply Tool Properties to . 3D Solid. 
+3 Select the 3D solids to convert. 
+4 When prompted to erase the original geometry, press ENTER to keep the 3D solid, or enter y (Yes) to erase it. 
+5 Enter n (Name) to give a description to the mass element, and press ENTER. 
+6 Enter a name, and press ENTER twice. 
+7 Edit the properties of the mass element in the Properties palette, if needed. 
+NOTE Due to the topological structure of the free form mass element, its facet deviation cannot be changed. The FACETDEV command will have no effect on an existing free form mass element. 
+Creating a Mass Element Tool 
+Use this procedure to create a mass element tool and add it to a tool palette. You may want to create your own tools if you frequently place multiple mass elements of specific styles that have the same properties. 
+1 Open the tool palette on which you want to create a tool. 
+2 Create the tool: 
+If you want to… Then… 
+create a tool from a mass element select the object, and drag it to the in the drawing tool palette. 
+create a tool from a mass element  click Manage tab . Style & Display  
+style in the Style Manager  panel . Style Manager  . Locate  
+the style you want to copy, and  
+drag it to the tool palette. Click OK  
+to close the Style Manager.  
+
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another palette right-click the tool, and click Copy. Open the other palette, and click Paste. 
+copy a tool from a tool catalog click Home tab . Build pan­el . Tools drop-down . Content 
+Browser 
+, and locate the tool you want to copy. Position the cursor over the i-drop handle, and drag the tool to the tool palette. 
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. 6 On the Properties palette, expand Basic, and expand General. 7 Click the setting for Description, enter a description of the mass 
+element created from this tool, and click OK. 8 Specify a layer key and any layer overrides if you do not want to use the layer assignments specified in the layer key style used in the drawing. 9 Select a mass element style. 10 Select the drawing file containing the style used for this mass element. 
+11 Under Bound Spaces, define if this mass element tool can be used as a bounding object for associative spaces. You can select three options here: 
+¦ 
+Yes: this mass element tool can be used as bounding object for associative spaces. 
+
+¦ 
+No: this mass element tool cannot be used as bounding object for associative spaces. 
+
+¦ 
+By style: this mass element tool will use the bounding settings from the mass element style. 
+
+
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+12 Select a shape. 13 Expand Dimensions. The options that display under Dimensions depend on the mass element tool you copied to create the new tool. 
+14 Specify the dimensions of the mass element: 
+If you want to… Then… 
+specify the width of the mass ele-enter a value for Width. ment in its relative X direction 
+specify the depth of the mass ele-enter a value for Depth. ment in its relative Y direction 
+specify the height of the mass ele-enter a value for Height. ment in its relative Z direction 
+specify the radius of the mass ele-enter a value for Radius. ment 
+specify the rise of the mass element enter a value for Rise. 
+15 Click OK. 
+Editing Mass Elements 
+After you create mass elements, you can edit and reposition them to generate the form of your building mass model. 
+You can use grips to manipulate mass elements. The grip editing features available depend upon the shape of the selected mass element. Because mass elements are parametric, each shape has a specific behavior when you modify it. For example, if you select and drag the corner grip point of a Box mass element, the width and depth of the mass element are modified. 
+AutoCAD Architecture offers several methods for editing mass elements: 
+¦ 
+You can directly edit mass elements using grips for dimensions and other physical characteristics. 
+
+¦ 
+You can change mass element settings on the Properties palette. 
+
+¦ 
+You can select editing commands from the shortcut menu for a selected mass element. 
+
+¦ 
+For grip edit operations where you are changing a dimension or an angle, the Dynamic Input feature lets you enter a precise value instead of moving a grip. When this feature is active (click DYN on the application status bar), selecting a grip displays a text box in which you can enter the desired value for the associated dimension or angle. For more information, see “Use Dynamic Input” in AutoCAD Help. 
+
+
+Using Grips to Edit Mass Elements 
+Use the following procedures to edit mass elements using grips. 
+Editing Mass Element Dimensions 
+1 Select the mass element. 2 Select the grip for the dimension you want to change. 
+Viewing mass element grips and dimensions 
+
+3 Move the grip until the dimension value you want is displayed, and click once; or enter a value. 
+Changing the Location or Position of a Mass Element 1 Select the mass element. 2 Select the Location grip. 
+
+In model view, the Location grip has three edit modes: Edit Along Object’s XY Plane, Edit Along Object’s YZ Plane, and Edit Along Object’s XZ Plane. Press CTRL to cycle among modes until you are in the desired mode. The default edit mode is along the XY plane. In plan view, the Location grip is restricted to movement in one plane. 
+3 Move the mass element to the desired location, and click; or enter 
+a value, and press ENTER. If you want to enter a specific value for the second direction in any edit mode (for example, in the Y direction when editing along the XY plane), press TAB to cycle to the second direction. 
+You can also lock the movement of the mass element along a 
+specific direction. If you enter a value for either dimension 
+direction in the current edit mode, and then press TAB, the movement of the mass element is constrained to the second dimension direction. When editing along the XY plane, for example, you can enter a value for X dimension, and then press TAB. The X dimension is locked at that value, and movement of the mass element is constrained to the Y dimension direction. 
+
+4 Right-click, and click Deselect All to turn off grips. 
+Changing the Area of a Rectangular Mass Element 
+Use this procedure to change the area of a rectangular mass element using grips. A rectangular mass element is any element that has four lines at its base, such as an Arch, Barrel Vault, Box, Gable, Pyramid, Isosceles Triangle, or Right Triangle. 
+For more information about mass element grips, see Using Grips to Edit Mass Elements on page 1010. 
+You can also change mass element area dimensions on the Properties palette. 
+Editing a Box mass element with its corner grip 
+
+Using Corner grips to change area 
+1 Select the rectangular mass element to display its grips. 
+2 Click a corner (Width and Depth) grip, and move it to the new location, or enter a value and press ENTER. The location of the opposite corner remains fixed while you move 
+the mass element corner. 
+If you want to enter a specific value for the second direction in the Width and Depth edit mode, press TAB to cycle to the second direction value. 
+Changing the Edge of an Extrusion Mass Element 
+Use this procedure to change the area of an extrusion mass element using the Edge grip. 
+The Edge grip has three edit modes: Offset, Add Vertex, and Convert to Arc. The default mode is Offset, which offsets the selected edge in a direction that is perpendicular to the midpoint of the edge. Depending on the shape of the mass element and the edge you choose to modify, neighboring lines are extended or trimmed, and new lines are added as necessary. 
+Use the Add Vertex edit mode to add a vertex to the selected edge, and create a new edge. If the selected edge is an arc, the new edge is an arc, as well. 
+Convert to Arc changes the selected edge to an arc and stretches the midpoint of the edge. The edge grip for an arc also has a Stretch mode, so that you can stretch the midpoint of the edge after it has been converted to an arc. 
+For more information about mass element grips, see Using Grips to Edit Mass Elements on page 1010. 
+You can also change the mass element area dimensions on the Properties palette. 
+1 Select the extrusion mass element. 2 Select an Edge grip. 
+
+3 Specify the new edge location: 
+If you want to… Then… 
+offset the edge move the edge to the desired location and click; or enter a value and press ENTER. 
+add a vertex and create  press CTRL to switch to the Add Vertex edit  
+an edge  mode. Move the edge to the desired location  
+and click; or enter a value and press ENTER.  
+
+change the selected edge  press CTRL twice to switch to the Convert to  
+to an arc  Arc edit mode. Stretch the midpoint to the  
+desired location and click; or enter a value  
+and press ENTER.  
+
+You can press CTRL to toggle among the edit modes. 
+4 Right-click, and click Deselect All to turn off grips. 
+Changing the Height of a Mass Element 
+Use this procedure to change the height of a mass element using grips. 
+For more information about mass element grips, see Using Grips to Edit Mass Elements on page 1010. You can also change the mass element height on the Properties palette. 
+Editing a Pyramid mass element with its Height grip 
+
+1 Switch to a 3D view. 2 Select the mass element to display its grips. 3 Click the Height grip at the top of the mass element, and move 
+it to the new location. 
+The height of the mass element changes as you move the grip. 
+Changing the Arch Radius of an Arch Mass Element 
+Use this procedure to change the radius of the arch within an Arch mass element using grips. 
+For more information about mass element grips, see Using Grips to Edit Mass Elements on page 1010. 
+You can also change the arch radius on the Properties palette. 
+Editing an Arch mass element with its Arch Radius grip 
+
+1 Select the Arch mass element to display its grips. 
+2 Click the Arch Radius grip, and move it to the new location. The radius of the arch changes as you move the grip. 
+Changing the Roof Height of a Gable Mass Element 
+Use this procedure to change the roof height of a Gable mass element using grips. 
+For more information about mass element grips, see Using Grips to Edit Mass Elements on page 1010. 
+You can also change the Gable roof height on the Properties palette. 
+Editing a Gable mass element with its Height grip 
+
+1 Switch to a 3D view. 2 Select the Gable mass element to display its grips. 3 Click the Height grip at the midpoint of the roof ridgeline. 4 Move the grip to change the height of the roof. 
+The height of the roof ridgeline and the walls change as you move the grip, leaving the roof slope and gable configuration unchanged. 
+Changing the Rise of a Gable Mass Element 
+Use this procedure to change the wall height of a Gable mass element using grips. 
+For more information about mass element grips, see Using Grips to Edit Mass Elements on page 1010. 
+You can also change the gable rise on the Properties palette. 
+Editing a Gable mass element with its Rise grip 
+
+1 Switch to a 3D view. 2 Select the Gable mass element to display its grips. 3 Click the Rise grip at the top of the wall. 4 Move the grip to change the height of the wall. 
+The height of the wall changes as you move the grip, while the roof ridgeline position remains fixed. This changes the roof slope and gable configuration. 
+Changing the Radius of a Circular Mass Element 
+Use this procedure to change the radius of a circular mass element using grips. Circular mass elements include Cones, Cylinders, Domes, Doric Columns, Spheres, and Revolutions. 
+For more information about mass element grips, see Using Grips to Edit Mass Elements on page 1010. 
+You can also change the mass element radius on the Properties palette. 
+Editing a Dome mass element with its Radius grip 
+
+1 Select the circular mass element to display its grips. 2 Click the Radius grip on the mass element. You can select any one of the radius grips on the same circle to change the size. 
+3 Move the grip in or out. The mass element becomes larger or smaller depending on the direction you move the grip. 
+Changing the Shape, Size, and Mass Group of a Mass Element 
+Use this procedure to change one mass element into another, add it to a mass group, and change its size. 
+1 Double-click a mass element. 2 On the Properties palette, expand Basic, and expand General. 3 Select a new basic shape for Shape. 
+4 To attach the mass element to a mass group, select a mass group for Attached to. 
+5 Expand Dimensions. 
+6 Enter new dimension values for the mass element. 
+NOTE When you change the size of a mass element, the center point remains constant and the change is applied to both sides of the element. 
+Editing the Profile of a Mass Element 
+Use this procedure to edit the geometry of a mass element. 
+NOTE If you want to replace the geometry of the mass element with newly drawn polylines, ellipses, or circles, draw them before you start this procedure. 
+1 Select the mass element that you want to change, right-click, and click Edit Profile In Place. 
+2 If prompted that the profile is not drawn to size, click Yes. A temporary profile is created for you to edit the geometry of the mask block. 
+3 NOTE After you perform an editing task from the context menu, you may need to select the profile again to perform another editing task. If you do not see the editing commands that you expect on the context menu, select the profile, and right-click to display the context menu. 
+Edit the profile: 
+If you want to… Then… If you want to… Then… 
+change the shape of the perimeter  select the profile, and use edge or  
+of the profile or its rings  vertex grips to adjust the shape.  
+The Edge grip has two edit modes:  
+Stretch and Move. The default  
+mode is Stretch, and the direction  
+of the stretch depends on the orient­ 
+ation of edges connected to the  
+selected edge. For example, if the  
+edges at both ends of the selected  
+edge are parallel, the grip edit  
+
+mode is Stretch (Parallel) and the stretch direction is limited to the direction of the parallel edges. If the connected edges are not parallel, the grip edit mode is Stretch (Off­set) and the stretch direction is perpendicular to the direction of the selected edge. The Move edit mode allows an unconstrained move of the selected edge. 
+add vertices to the profile select the profile, right-click, and click Add Vertex. Select a point for each new vertex, and press ENTER. 
+remove vertices from the profile select the profile, right-click, and click Remove Vertex. Select each vertex to remove, and press ENTER. 
+replace an existing ring of the pro- select the profile, right-click, and  
+file with new geometry  click Replace Ring. Select the ring  
+to replace, and select the new geo­ 
+metry. Press ENTER to keep the  
+geometry, or enter n (No) to erase  
+it.  
+
+add a ring to the profile select the profile, right-click, and click Add Ring. Select the geometry to define the ring. Press ENTER to keep the geometry, or enter n (No) to erase it. 
+remove a ring from the profile select the profile, right-click, and click Remove Ring. Select the ring to remove, and press ENTER. 
+4 Save or discard the changes: 
+If you want to… Then… 
+restore the mass element to its ori-right-click and click Discard All ginal shape Changes 
+If you want to… Then… 
+save the changes to the current  right-click, and click Save Changes.  
+mass element  The mass element uses the edited  
+profile to define its geometry. Any  
+other objects or styles that use this  
+profile are also updated with the  
+edited geometry.  
+
+Combining Mass Elements Using Boolean Operations 
+Use this procedure to combine mass elements using Boolean operations. 1 Select the mass element to which you want to join another mass element. 2 Selected the desired Boolean operation: 
+If you want to… Then… 
+combine the total volume of two click Mass Element tab . Modify or more mass elements into a com-panel . Boolean drop­posite object 
+down . Union 
+
+remove the common area of one click Mass Element tab . Modify mass element from another panel . Boolean drop-
+down . Subtract 
+
+remove non-overlapping portions click Mass Element tab . Modify and create a composite solid from panel . Boolean drop-down . In-the common volume 
+tersect
+ . 
+3 Select the objects you want to combine, and press ENTER. 
+4 Enter y (Yes) to erase the original geometry, or enter n (No) to keep the original geometry in the drawing. 
+NOTE A boolean operation creates a free form mass element. Due to the topological structure of the free form mass element, its facet deviation cannot be changed. The FACETDEV command will have no effect on an existing free form mass element. 
+Dividing a Mass Element 
+Use this procedure to divide a mass element. The divide plane you specify splits the original mass element into two separate mass elements. 
+1 Select the mass element you want to divide. 
+2 Click Mass Element tab . Modify panel . Split By Plane
+ . 3 Specify the divide plane start point. 4 Specify the divide plane endpoint. 
+Dividing a mass element 
+
+The original mass element is split along the divide plane, creating two mass elements. 
+NOTE Dividing a mass element creates free form mass elements. Due to the topological structure of the free form mass element, its facet deviation cannot be changed. The FACETDEV command will have no effect on an existing free form mass element. 
+Trimming a Mass Element 
+Use this procedure to trim a mass element. The divide plane you specify acts as the trim line, and you specify which side of the mass element to remove. 
+1 Select the mass element you want to trim. 
+2 Click Mass Element tab . Modify panel . Trim By Plane
+ . 3 Specify the divide plane start point. 4 Specify the divide plane endpoint. 5 Select the side of the mass element to remove. 
+Trimming a mass element 
+
+
+NOTE Trimming a mass element creates a free form mass element. Due to the topological structure of the free form mass element, its facet deviation cannot be changed. The FACETDEV command will have no effect on an existing free form mass element. 
+Converting a Mass Element to a Free Form Mass Element 
+Use this procedure to convert mass elements to Free Form mass elements. 1 Double-click the mass element to convert. 2 On the Properties palette, expand Basic, and expand General. 3 Select Freeform for Shape. 
+4 Press ESC, or right-click and click Deselect All to exit the editing session. 
+NOTE Due to the topological structure of the free form mass element, its facet deviation cannot be changed. The FACETDEV command will have no effect on an existing free form mass element. 
+Converting a Mass Element to a 3D Solid 
+Use this procedure to convert mass elements to 3D solids. Most objects create 2D geometry in plan view; therefore, select a 3D view first for best results. 
+1 Select the mass element to convert. 2 Click Mass Element tab . Convert To panel . Convert To 3D 
+Solid
+ . 3 When prompted to erase the original geometry, press ENTER to keep the mass element, or enter y (Yes) to erase it. 
+Converting a Mass Element to a Wall 
+Use this procedure to convert mass elements to walls. 
+1 Select the mass element to convert. 
+2 Click Mass Element tab . Convert To panel . Wall
+ . 3 When prompted to erase the original geometry, press ENTER to 
+keep the mass element, or enter y (Yes) to erase it. 4 Specify a point to start the baseline. 5 Specify a point to end the baseline. 
+The Wall Styles worksheet displays the wall styles that exist in your current drawing. 
+6 Select a wall style and click OK. 
+Converting a Mass Element to a Slab or Roof Slab 
+Use this procedure to convert mass elements to slabs or roof slabs. 
+1 Select the mass element to convert. 
+
+2 Click Mass Element tab . Convert To panel . Roof Slab 
+3 When prompted to erase the original geometry, press ENTER to keep the mass element, or enter y (Yes) to erase it. The Slab Styles or Roof Slab Styles worksheet displays the slab or 
+roof slab styles that exist in your current drawing. 
+4 Select a style and click OK. 
+Converting a Mass Element to a Space 
+Use this procedure to convert mass elements to spaces. Depending on whether the converted mass element shape is an extrusion- type shape (box, cylinder, extrusion) or a non-extrusion-type shape (pyramid, gable, freeform, etc.), either an extruded 3D space or a 3D freeform space is generated by the conversion. 
+1 Select the mass element to convert. 
+2 Click Mass Element tab . Convert To panel . Space
+ . 
+3 When prompted to erase the original geometry, press ENTER to keep the mass element, or enter y (Yes) to erase it. 
+Converting an Object to a Mass Element 
+Use this procedure to convert objects to Free Form mass elements. The resulting Free Form mass element is a faceted approximation of the object. The smoothness of curved edges is controlled by the FACETDEV variable. 
+This variable specifies the number of facets to display on curved AEC objects. For more information, see Specifying the Display Resolution of Objects with Facets on page 208. 
+1 Open a tool palette that has the Convert to Mass Element tool and select the tool. 
+Alternatively, you can click Home tab . Modify panel . 
+
+. Convert To Mass Element
+ . 
+2 Select the object(s) that you want to convert to a Free Form mass element, and press ENTER. 
+The Convert to Mass Element worksheet opens. 
+
+3 Enter text for Description. 
+4 To convert all of the selected objects into one mass element, select Convert to single boolean mass element. 
+5 Alternatively, to convert the objects within your selection to separate mass elements, select Convert to individual mass elements. 
+6 To erase the original geometry of the objects, select Erase layout geometry. 
+7 Click OK. 
+Dividing the Face of a Mass Element 
+Use this procedure to divide the face of a mass element. In order for the face to split, the mass element is converted to a Free Form mass element. 
+1 Select the mass element whose face you want to divide. 
+2 Click Mass Element tab . Modify panel . Split Face
+ . 3 Select the first point on the face. 4 Select the second point on the same face, and press ENTER. 
+The original mass element is converted to a Free Form mass element, and the selected face is divided along the line you specified. 
+Joining the Faces of a Mass Element 
+Use this procedure to join previously split faces of a mass element. After the faces are joined, the mass element is converted to its original shape. 
+1 Select the mass element whose faces you want to join. 
+2 Click Mass Element tab . Modify panel . Join Faces
+ . 
+3 Select the edge of the coplanar faces, and press ENTER. The mass element is converted to its original shape, and the selected faces are joined into a single face. 
+Editing the Faces of a Free Form Mass Element 
+Use this procedure to edit individual faces of a Free Form mass element. You must convert the mass element to a Free Form mass element in order to edit its faces. 
+The following illustration shows how Initial and Free Form mass element grips are displayed. 
+Initial and Free Form mass element grips 
+
+When you select a Free Form mass element Face grip, the following tooltip is displayed. 
+Free Form mass element Face grip tool tip 
+
+You have six choices while editing a face of a Free Form mass element. A tooltip displays to indicate which option is current. 
+If you want to… Then… Tooltip Displayed 
+move the face orthogon­ click and drag the Face grip to  Move face orthogonally,  
+ally while stretching adja­ the new Face location.  stretch adjacent faces  
+cent faces  
+
+move the face freely while  click and hold the Face grip,  Move face freely, stretch  
+stretching adjacent faces  press CTRL once, and specify  adjacent faces  
+the new Face location.  
+
+move the face orthogon­ click and hold the Face grip,  Move face plane, main- 
+ally while maintaining the  press CTRL twice, and specify  tain plane of adjacent  
+planes of adjacent faces  the new Face location.  faces  
+
+pull the face orthogonally  click and hold the Face grip,  Pull face orthogonally,  
+while adding adjacent  press CTRL three times, and  add adjacent faces  
+faces  specify the new Face location.  
+
+pull the face freely while  click and hold the Face grip,  Pull face freely, add adja­ 
+adding adjacent faces  press CTRL four times, and  cent faces  
+specify the new Face location.  
+
+pull or push the face ortho­ click and hold the Face grip,  Push face orthogonally,  
+gonally while either adding  press CTRL five times, and  add adjacent faces, pos­ 
+adjacent faces or creating  specify the new Face location.  sibly create a hole  
+a hole  
+
+As you cycle through the options by pressing CTRL, the tooltip advances sequentially to indicate the current option. Pressing CTRL more than five times returns you to the first option, allowing you to continue cycling through the edit choices. 
+The cursor is constrained when you choose an orthogonal option and unconstrained when you choose a free option. 
+Moving a Mass Element Face Orthogonally While Stretching Adjacent Faces 
+1 Select the mass element you want to edit. 2 On the Properties palette, expand Basic, and expand General. 3 Select Freeform for Shape. 
+The mass element is in in-place edit mode. Each face of the Free Form mass element is available to edit in this mode. 
+4 Select the Face grip for the face of the mass element to edit. Depending on the original shape of the mass element, Edge and Vertex grips are displayed. 
+5 Click and drag the Face grip to specify the new location. 6 Press ESC, or right-click and click Deselect All to exit the editing session. 
+NOTE You cannot pull the mass element face at such an angle, either horizontally or vertically, that the adjacent faces become non-planar. If this distorted condition occurs, the mass element face automatically returns to its original position and an error message is displayed on the command line. 
+Moving a mass element orthogonally while stretching adjacent faces 
+
+The face of the Free Form mass element is moved orthogonally and its geometry remains unchanged, while its adjacent faces are stretched and tilted. 
+Moving a Mass Element Face Freely While Stretching Adjacent Faces 
+1 Select the mass element you want to edit. 
+2 On the Properties palette, expand Basic, and expand General. 3 Select Freeform for Shape. The mass element is in in-place edit mode. Each face of the Free Form mass element is available to edit in this mode. 
+4 Select the Face grip for the face of the mass element to edit. Depending on the original shape of the mass element, Edge and Vertex grips are displayed. 
+5 Click and hold the Face grip, press CTRL once, and specify the new location. 6 Press ESC; or right-click, and click Deselect All to exit the editing session. 
+NOTE You cannot pull the mass element face at such an angle, either horizontally or vertically, that the adjacent faces become non-planar. If this distorted condition occurs, the mass element face automatically returns to its original position and an error message is displayed on the command line. 
+Moving a mass element freely while stretching adjacent faces 
+
+The face of the Free Form mass element is moved freely and its geometry remains unchanged, while its adjacent faces are stretched and tilted. 
+NOTE The location of the current UCS is temporarily moved to coincide with the original position of the Face grip that you select when you are working with this option. Only the UCS origin is changed, not its orientation. 
+Moving a Mass Element Face Orthogonally While Maintaining the Planes of Adjacent Faces 
+1 Select the mass element you want to edit. 2 On the Properties palette, expand Basic, and expand General. 3 Select Freeform for Shape. 
+The mass element is in in-place edit mode. Each face of the Free Form mass element is available to edit in this mode. 
+4 Select the Face grip for the face of the mass element to edit. Depending on the original shape of the mass element, Edge and Vertex grips are displayed. 
+5 Click and hold the Face grip, press CTRL twice, and specify the new location. 
+6 Press ESC, or right-click and click Deselect All to exit the editing session. 
+NOTE You cannot pull the mass element face at such an angle, either horizontally or vertically, that the adjacent faces become non-planar. If this distorted condition occurs, the mass element face automatically returns to its original position and an error message is displayed on the command line. 
+Moving a mass element face orthogonally while maintaining the planes of adjacent faces 
+
+The face of the Free Form mass element is moved orthogonally and its geometry is changed, while the planes of its adjacent faces are maintained. 
+Pulling a Mass Element Face Orthogonally While Adding Adjacent Faces 
+1 Select the mass element you want to edit. 2 On the Properties palette, expand Basic, and expand General. 3 Select Freeform for Shape. 
+The mass element is in in-place edit mode. Each face of the Free Form mass element is available to edit in this mode. 
+4 Select the Face grip for the face of the mass element to edit. Depending on the original shape of the mass element, Edge and Vertex grips are displayed. 
+5 Click and hold the Face grip, press CTRL three times, and specify the new location. 
+6 Press ESC, or right-click and click Deselect All to exit the editing session. 
+Pulling a mass element face orthogonally while adding adjacent faces 
+
+The face of the Free Form mass element is moved orthogonally and its geometry remains unchanged, while adjacent faces between the original geometry and the moved face are added. 
+Pulling a Mass Element Face Freely While Adding Adjacent Faces 
+1 Select the mass element you want to edit. 2 On the Properties palette, expand Basic, and expand General. 3 Select Freeform for Shape. 
+The mass element is in in-place edit mode. Each face of the Free Form mass element is available to edit in this mode. 
+4 Select the Face grip for the face of the mass element to edit. Depending on the original shape of the mass element, Edge and Vertex grips are displayed. 
+5 Click and hold the Face grip, press CTRL four times, and specify the new location. 
+6 Press ESC, or right-click and click Deselect All to exit the editing session. 
+NOTE You cannot pull the mass element face at such an angle, either horizontally or vertically, that the adjacent faces become non-planar. If this distorted condition occurs, the mass element face automatically returns to its original position and an error message is displayed on the command line. 
+Pulling a mass element face freely while adding adjacent faces 
+
+The face of the Free Form mass element is moved freely and its geometry remains unchanged, while adjacent faces between the original geometry and the moved face are added. 
+NOTE The location of the current UCS is temporarily moved to coincide with the original position of the Face grip that you select when you are working with this option. Only the UCS origin is changed, not its orientation. 
+Pushing or Pulling a Mass Element Face Orthogonally While either Adding Adjacent Faces or Creating a Hole 
+1 Select the mass element you want to edit. 2 On the Properties palette, expand Basic, and expand General. 3 Select Freeform for Shape. 
+The mass element is in in-place edit mode. Each face of the Free Form mass element is available to edit in this mode. 
+4 Select the Face grip for the face of the mass element to edit. 
+Depending on the original shape of the mass element, Edge and 
+Vertex grips are displayed. 
+5 Click and hold the Face grip, press CTRL five times, and specify 
+the new location. 
+Push into the mass element to create a hole, or pull out of the 
+mass element to add adjacent faces. 
+6 Press ESC, or right-click and click Deselect All to exit the editing session. 
+Pulling a mass element face orthogonally while adding adjacent faces 
+
+The face of the Free Form mass element is pulled orthogonally and its geometry remains unchanged, while adding adjacent faces between the original geometry and the moved face. 
+Pushing a mass element face orthogonally to create a hole 
+
+The face of the Free Form mass element is pushed orthogonally and its geometry remains unchanged, while creating a hole in the mass element. 
+Assigning Materials to a Mass Element 
+Use this procedure to assign materials to the individual components of a mass element. 
+1 Select the mass element to which you want to assign materials, right-click, and click Edit Object Display. 
+2 To verify that the material assignment determines the display properties of the component, click the Display Properties tab, select the display representation where you want the changes to 
+appear, and click 
+. 
+3 Click the Layer/Color/Linetype tab, verify that By Material is selected for the component, and click OK. 
+4 Click the Materials tab. The Component column displays all components of the mass element that can be assigned a material. Components that are only symbolical graphics, like the bounding box, are not listed because they cannot have a material assignment. 
+The Material Definition column displays the currently assigned materials. If no previous material assignments were made, the default material is Standard. 
+5 Select the component you want to change, and select a different material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a component. 
+WARNING Although you can edit a material definition from this dialog box, any changes you make to the material definition apply to all objects that are assigned the material. 
+6 Click OK twice. 
+Specifying the Display Properties of a Mass Element 
+Use this procedure to change the following display properties of the components of a mass element: 
+¦ 
+Visibility (component is on or off) 
+
+¦ 
+By Material (material assigned to the component determines its display properties) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+NOTE If a material assignment determines the properties of a mass element display component, you can change the properties of the display component by clearing By Material or by overriding the material assignment with a different material. For more information, see Assigning Materials to a Mass Element on page 1037. 
+1 Select the mass element you want to change, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the display representation where you want the changes to appear, and select Object Override. The display representation in bold is the current one. 
+
+4 If necessary, click 5 Click the Layer/Color/Linetype tab. 6 Select the component to change, and select a different setting for 
+the property. 7 Click OK twice. 
+Specifying the Hatching of a Mass Element 
+Use this procedure to specify the hatching of components of an individual mass element. Hatching is displayed only in display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+NOTE If a material assignment determines the hatching properties of a mass element display component, you can change the hatching by clearing By Material or by overriding the material assignment with a different material. For more information, see Assigning Materials to a Mass Element on page 1037. 
+1 Select the mass element you want to change, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the display representation where you want the changes to appear, and select Object Override. The display representation in bold is the current one. 
+4 If necessary, click 
+. 5 Click the Hatching tab. 6 Select a display component, and click the setting for Pattern. 7 Select the hatching for the display component: 
+If you want to select… Then… 
+a hatching pattern that is available select Predefined for Type, and then in the software select a pattern. 
+a custom pattern select Custom for Type, and then enter the name of the custom pat­tern. If necessary, click Browse, and navigate to the folder where the custom pattern file is located. 
+If you want to select… Then… 
+single hatching select User-defined for Type, and clear Double Hatch. 
+double hatching select User-defined for Type, and select Double Hatch. 
+solid fill select Solid Fill for Type. 
+8 Click OK. 9 Click Scale/Spacing, and enter a value that determines how the 
+selected pattern is repeated. 
+10 Click Angle, and enter the angle for the selected pattern. 
+11 Click Orientation, and specify how the hatching is oriented: 
+If you want to orient… Then… 
+the hatching to the object, regard-select Object. less of the object rotation 
+the hatching to the World Coordin-select Global. ate System 
+12 Click OK twice. 
+Changing the Location of a Mass Element 
+Use this procedure to relocate a mass element by changing the coordinate values of its insertion point. The mass element also has an orientation with respect to the world coordinate system (WCS) or the current user coordinate system (UCS). For example, if the top and bottom of the mass element are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the mass element by aligning its normal with another axis. You can also rotate the mass element on its plane by changing the rotation angle. 
+For more information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use Coordinates and Coordinate Systems” in AutoCAD Help. 
+1 Select the mass element you want to change. 
+2 On the Properties palette, expand Basic, and expand Location. 3 Select Additional information. 4 Specify the location of the mass element: 
+If you want to… Then… 
+relocate the mass element enter new coordinate values under Insertion Point. 
+locate the mass element on the XY make the normal of the mass ele­
+plane ment parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the mass element on the YZ make the normal of the mass ele­
+plane ment parallel to the X axis: under Normal, enter 1 for X, and enter 0 for Y and Z. 
+locate the mass element on the XZ make the normal of the mass ele­
+plane ment parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the mass enter a new value for Rotation element Angle. 
+5 Click OK twice. 
+Specifying the Cut Plane Display of a Mass Element 
+Use this procedure to specify the properties of one or more cut planes for a mass element. Cut plane display properties apply only to display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Double-click the mass element you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all mass elements in the drawing, select Drawing default setting. To apply changes to all mass elements of this style, select Mass Element Style:<style name>. For more information on styles, see Mass Element Styles on page 1043. 
+5 If necessary, expand Object Display Properties . Cut Plane. 
+6 For Override cut plane, specify whether you want to override the global cut plane defined for the current display configuration. 7 If you selected Yes for Override cut plane, enter a value for Height 
+to define the cut plane for this object. (Alternatively, you can click
+
+ and specify 2 points in the drawing area to set the new size.) 
+You can also access and modify these same cut plane settings through the mass element’s context menu, as follows 
+1 Select the mass element, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. 3 Select the display representation where you want the changes to 
+appear, and select Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 5 In the Display Properties dialog, click the Other tab, and then change the settings as needed. 6 Click OK twice. 
+Attaching Hyperlinks, Notes, or Files to a Mass Element 
+Use this procedure to attach hyperlinks, notes, or files to a mass element. You can also edit hyperlinks and notes, and edit or detach reference files from a mass element. 
+1 Select the mass element to which you want to attach information. 2 On the Properties palette, click the Extended Data tab. 3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. 4 Click OK. 5 To add a note, click the setting for Notes, and enter the note. 
+6 Click OK. 
+7 To add a reference file, click the setting for Reference documents, and attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file click Add, and select a file. Click open, and click OK. 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+8 Click OK twice. 
+Mass Element Styles 
+A mass element style is a collection of settings for variables associated with a mass element. Depending on the scope of the drawing, you could create different mass element styles to represent different types of mass elements. 
+Properties Controlled by Mass Element Styles 
+The mass element style determines the properties of mass elements you create. When you edit the display properties of a mass element style, those changes are applied to existing mass elements of that style throughout the current drawing. 
+Creating Mass Element Styles 
+Typically, you create mass element styles that represent the basic building blocks of the drawing. When you name a mass element style, mass elements are grouped and can generate reports based on the first part of the mass element style name. 
+Editing Mass Element Styles 
+The changes you make to a mass element style take effect the next time you use that style. Mass elements already created with that style are not updated unless you change the display properties of the mass element style. 
+Managing Mass Element Styles 
+When you create, import, export, or edit styles, you access the Style Manager. The Style Manager provides a central location in AutoCAD Architecture where you can work with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+Creating a Mass Element Style 
+Use this procedure to create a mass element style. You can create a style using default style properties or by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Multi-Purpose Objects, and expand Mass Element Styles. 3 Create a mass element style: 
+If you want to… Then… 
+create a style with default properties right-click Mass Element Styles, and click New. 
+create a style from an existing style right-click the mass element style you want to copy, and click Copy. Right-click, and click Paste. 
+4 Enter a name for the new mass element style, and press ENTER. 5 Edit the new mass element style: 
+If you want to… Then… 
+specify materials for mass element see Assigning Materials to a Mass components Element Style on page 1046. 
+specify the display properties of the see Specifying the Display Proper-style ties of a Mass Element Style on page 1047. 
+If you want to… Then… 
+specify hatching for components of see Specifying the Hatching for the style Components of a Mass Element Style on page 1048. 
+add notes and files to the style see Attaching Notes and Files to a Mass Element Style on page 1050. 
+6 When you finish specifying the properties of the mass element style, click OK. 
+Specifying the Materials of a Mass Element Style 
+A mass element consists of a number of components whose display properties can be determined by the materials assigned to each component. 
+You assign one material to each physical component of the mass element. You assign materials to components in each display representation where you want the materials to be used. 
+If you want to use the display properties of the mass element style, instead of using material display properties, you can turn off the material assignments in the display properties of the style. 
+Material definitions consist of display components that correspond to component types of objects. For example, the Linework component of a material is used for all linework in plan view. The Surface Hatch component of a material is used to hatch all object surfaces in three-dimensional (3D) model views and in elevations. 
+Mass Element Materials and Display Components 
+The following table lists mass element components and the material components that determine them in specific views. 
+Mass Element Component Material Component 
+Plan, Plan High Detail, Plan Low Detail, Plan Presentation, Plan Screened 
+Above Cut Plane Plan Linework 
+Mass Element Component Material Component 
+Below Cut Plane Plan Linework 
+Hatch Plan Hatch 
+Cut Plane No Material 
+Model 
+Entity 3D Body 
+Bounding Box No Material 
+Reflected, Reflected Screened 
+Entity 3D Body 
+Bounding Box No Material 
+Hatch Plan Hatch 
+Assigning Materials to a Mass Element Style 
+Use this procedure to assign materials to the individual components of a mass element style. The component uses the display properties of the material instead of the style display properties. 
+You can assign a material to any physical component of the mass element. Custom components and components that are only symbolic graphics do not use materials for their display properties. For example, the hatch is a physical component. The cut plane is a symbolic component. 
+NOTE If a material assignment does not determine the display properties of a mass element component, you can change the display properties of the mass element style as described in Specifying the Display Properties of a Mass Element Style on page 1047. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Multi-Purpose Objects, and expand Mass Element Styles. 3 Select the style you want to edit. 
+4 Click the Display Properties tab. 5 Select the display representation where you want the changes to appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select By Material for any component to which you want to assign 
+a material, and click OK. If the setting for By Material is not available, the display of this component cannot be determined by a material. 
+9 Click the Materials tab. 
+10 Select the component you want to change, and select a different material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a 
+component. 
+WARNING Although you can edit a material definition from this dialog box, any changes you make to the material definition apply to all objects that are assigned the material. 
+11 Click OK. 
+Specifying the Display Properties of a Mass Element Style 
+Use this procedure to change the following display properties of the display components of a mass element style: 
+¦ 
+Visibility (component is on or off) 
+
+¦ 
+By Material (material assigned to the component determines its display properties) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+To change these display properties for an individual mass element, see Specifying the Display Properties of a Mass Element on page 1038. 
+NOTE If a material assignment determines the display properties of components in the mass element style, you can change the properties of the display component by clearing By Material. You can also override the material assignment with a different material. For more information, see Assigning Materials to a Mass Element Style on page 1046. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Multi-Purpose Objects, and expand Mass Element Styles. 3 Select the mass element style you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 6 Click the Layer/Color/Linetype tab. 7 Select the component to change, and select a different setting for 
+the property. 8 Click OK. 
+Specifying the Hatching for Components of a Mass Element Style 
+Use this procedure to specify the hatching of components of a mass element style. Mass element hatching is displayed only in display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Multi-Purpose Objects, and expand Mass Element Styles. 3 Select the mass element style to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and click Style Override. The display representation in bold is the current one. 
+6 Click the Hatching tab. 7 Select a display component, and click the setting for Pattern. 
+8 Select the hatching for the display component: 
+If you want to… Then… 
+select a hatching pattern that is select Predefined for Type, and then available in the software select a pattern. 
+select a custom pattern select Custom for Type, and then enter the name of the custom pat­tern. If necessary, click Browse, and navigate to the folder where the custom pattern file is located. 
+select single hatching select User-defined for Type, and clear Double Hatch. 
+select double hatching select User-defined for Type, and select Double Hatch. 
+select solid fill select Solid Fill for Type. 
+9 Click OK. 10 Click Scale/Spacing, and enter a value that determines how the 
+selected pattern is repeated. 
+11 Click Angle, and enter the angle for the selected pattern. 
+12 Click Orientation, and specify how the hatching is oriented: 
+If you want to… Then… 
+orient the hatching to the object, select Object. regardless of the object rotation 
+orient the hatching to the World select Global. Coordinate System 
+13 Click OK. 
+Defining a Mass Element Style as Bounding for Associative Spaces 
+Use this procedure to define a mass element style that can bound associative spaces. 
+When a mass element style is set as bounding, by default all mass element that have the style assigned will be used in the selection set for an associative space. For more information about associative spaces see Generating Associative Spaces on page 2904. 
+You can override the bounding settings from the mass element style in an individual mass element, if necessary. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Multi-Purpose Objects, and expand Mass Element Styles. 3 Select a mass element style. 4 Click the General tab. 5 Select the check box for Objects of this style may act as a boundary 
+for associative spaces. 6 Click OK. 
+Attaching Notes and Files to a Mass Element Style 
+Use this procedure to enter notes and attach reference files to a mass element style. You can also edit notes and edit or detach reference files from a mass element style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Multi-Purpose Objects, and expand Mass Element Styles. 3 Select the mass element style you want to change. 4 Click the General tab. 5 To add a description to the mass element style, enter it for 
+Description. 6 Click Notes. 7 To add a note, click the Notes tab, and enter the note. 8 Click the Reference Docs tab, and attach, edit, or detach a 
+reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+If you want to… Then… 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+9 Click OK twice. 
+Using Massing Tools to Create Mass Groups 
+Tools provided with AutoCAD Architecture let you quickly place mass groups by selecting a tool from the Massing tool palette. The mass group tool has predefined properties. You can use the default settings of the tool, or you can change settings for the mass group properties. 
+Tool palette containing mass group tools 
+
+The default tool palettes in the workspace contain sample mass group tools that you can use and customize as needed. In addition, the following catalogs provided with the software contain mass group tools that you can add to your tool palettes: 
+¦ 
+Stock Tool catalog 
+
+¦ 
+Sample Palette catalog 
+
+
+For more information on accessing tools in these catalogs, see Content Browser on page 137. 
+Custom palettes created by your CAD manager or other users may also contain mass group tools with mass group properties that are customized for your projects or office standards. 
+Creating a Mass Group 
+Use this procedure to add a new mass group that has the properties specified in a selected mass group tool. 
+A mass group is a display object that allows you to visualize and manipulate combinations of mass elements. After you create mass elements, you can combine their shapes through Boolean operations (addition, subtraction, and intersection) in a mass group. The resulting complex shape of the mass group represents your mass model. 
+Mass Groups and Mass Group Markers 
+You use a mass group tool to attach mass elements, other AEC objects, or AutoCAD objects to a mass group, which you place in a convenient area of your drawing. The mass elements and other objects that you attach form the body of the mass group. The mass group is created on a different layer than the mass elements that form it. 
+A mass group marker is displayed in the drawing if you create a mass group and then detach all mass elements from it, or if you release the anchor of objects attached to the group. If you attach elements to the group, or if you anchor attached objects to the group, the mass group marker is no longer displayed. 
+Using Boolean Operations to Create a Mass Group 
+You can combine the shapes of mass elements in the mass group—adding, subtracting, and intersecting them in a specific order. 
+¦ 
+An additive operation combines the total volume of two or more solids or two or more regions into a composite object. 
+
+¦ 
+A subtractive operation removes the common area of one set of solids from another. 
+
+¦ 
+An intersection removes non-overlapping portions and creates a composite solid from the common volume. 
+
+
+You can attach any closed, solid shape to a mass group. For example, a line has no solid properties and cannot be added to the shape of the mass group. However, an AutoCAD 3D solid does contribute to the final shape. 
+You can also create and work with mass groups in the Model Explorer. For more information, see Using the Model Explorer to Create Mass Models on page 1073. 
+To further refine the building model, you can edit individual mass elements that are attached to a mass group. 
+Materials in Mass Groups 
+In AutoCAD Architecture, you can assign materials to a mass group. These materials are displayed in wireframe or rendered views. Materials have specific settings for individual components of a mass group. 
+Mass groups with assigned materials in rendered view 
+
+AutoCAD Architecture provides predefined materials for common design purposes, which contain settings for mass groups. You can use these predefined materials, or modify them to your special designs. You can also create your own materials. 
+For more information, see Using Materials for Mass Elements and Mass Groups on page 1068. 
+1 Open the tool palette that you want to use, and select a mass group tool. If necessary, scroll to display the tool that you want to use. 
+2 Select the elements to attach to the group, and press ENTER. 
+3 Specify the insertion point of the mass group. You can move or hide the Properties palette to expose more of the drawing area. 
+Assigning Materials to a Mass Group 
+Use this procedure to assign materials to the individual components of a mass group. 
+1 Select the mass group to which you want to assign materials, right-click, and click Edit Object Display. 
+2 To verify that the material assignment determines the display properties of the component, click the Display Properties tab, select the display representation where you want the changes to 
+appear, and click 
+
+3 Click the Layer/Color/Linetype tab, verify that By Material is selected for the component, and click OK. 
+4 Click the Materials tab. The Component column displays all components of the mass group that can be assigned a material. Components that are only symbolical graphics, like the bounding box, are not listed because they cannot have a material assignment. 
+The Material Definition column displays the currently assigned materials. If no previous material assignments have been made, the default material is Standard. 
+5 Select the component you want to change, and select a different material definition. 
+You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a component. 
+WARNING Although you can edit a material definition from this dialog box, any changes you make to the material definition apply to all objects that are assigned the material. 
+6 Click OK twice. 
+Changing the Size of the Mass Group Marker 
+Use this procedure to change the size of the mass group marker by editing its display properties. 
+1 Double-click the mass group you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all mass groups in the drawing, select Drawing default setting. 
+5 If necessary, expand Object Display Properties . Advanced. 6 Click the value for Marker size, and enter a new value. 
+(Alternatively, you can click 
+and specify 2 points in the drawing area to set the new size.) 
+You can also access and modify the marker size property through the mass group’s context menu, as follows 
+1 Select the mass group, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. 3 Select the display representation where you want the changes to 
+appear, and select Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 
+5 In the Display Properties dialog, click the Other tab, and then change the size as needed. 6 Click OK twice. 
+Adding a New Mass Element to a Mass Group 
+Use this procedure to add a new mass element to a mass group after you have placed a mass group in the drawing. 
+1 Select an existing mass group or mass group marker. 2 Click Mass Group tab . Modify panel . Add New Element. 3 On the Properties palette, select a shape for the mass element. 4 Select Add, Subtract, or Intersect for Operation. 5 Specify an insertion point in the drawing. 6 Specify additional parameters for the mass element. 
+Depending on the shape of the mass element, you need to specify a second corner, the radius, or the height. 
+7 Specify a rotation angle, and press ENTER. 
+The newly created mass element is now part of the selected mass group. 
+Attaching an Existing Mass Element to a Group 
+Use this procedure to add existing mass elements to a mass group. When an element is attached to a mass group, the element display is turned off and the group display is turned on. 
+While it is possible to attach any number of objects to a single mass group, performance improves if this group is subdivided into a series of nested groups. Your design is also more manageable if a group is broken into logical divisions. In addition, if one of the subgroups fails to display as expected, it is easier to track down the problem. In most cases, you can adjust the order of the objects in the group to get the correct appearance. 
+1 Select the mass group. 2 Select the Attach Elements grip. Alternatively, you can click Mass Group tab . Modify 
+panel . Attach Elements
+ . 
+
+3 Select one or more mass elements to attach to the mass group, and press ENTER. 
+Detaching a Mass Element from a Group 
+Use this procedure to detach a mass element from a mass group. After you have defined a mass group and added mass elements to it, you may decide that one or more elements do not fit your model. You can detach these from the mass group and use them elsewhere or delete them. 
+When an element is detached from a mass group, the element display is turned on because it is an individual entity and is no longer part of the group. 
+1 Select the mass group. 
+2 Select the Detach Elements grip. Alternatively, you can click Mass Group tab . Modify 
+panel . Detach Elements
+ . 
+
+3 Select one or more mass elements to detach from the mass group. If there is only one element attached to the mass group, you are not prompted to select elements. The single element is detached without further input. 
+4 Press ENTER. 
+Using Boolean Operations for Mass Groups 
+You can change a mass group by using boolean operations on the mass elements contained within. 
+Making a Mass Element Additive 
+Use this procedure to change the operation of a mass element. All objects are additive when they are created. When two mass elements are grouped together, they form one mass containing both objects. 
+1 Select the mass group that contains the mass element you want to change. 
+2 Select the Edit In Place grip. Alternatively, you can click Mass Group tab . Modify panel . Edit 
+In Place
+ . 
+
+3 Select the mass element you want to make additive. 4 Click Edit in Place tab . Modify panel . Mass Group Operation 
+drop-down . Additive
+ . 
+5 Click Edit in Place tab . Edits panel . Finish This saves the changes to the mass element and ends the in-place edit session. 
+Making a Mass Element Subtractive 
+Use this procedure to change the operation of a mass element. When a mass element in a group operates by subtraction, the mass element subtracts its mass where it overlaps another object. 
+1 Select the mass group that contains the mass element you want to change. 2 Select the Edit In Place grip. Alternatively, you can click Mass Group tab . Modify panel . Edit 
+In Place
+ . 
+
+
+3 Select the mass element you want to make subtractive. 4 Click Edit in Place tab . Modify panel . Mass Group Operation 
+drop-down . Subtractive
+ . 5 On the Properties palette, expand Basic, and expand General. 6 Select Subtract for Operation. 
+7 Click Edit in Place tab . Edits panel . Finish
+ . This saves the changes to the mass element and ends the in-place edit session. 
+Creating an Intersection from Mass Elements 
+Use this procedure to create a new mass shape using the intersection of two mass elements. 1 Select the mass group that contains the mass element you want to change. 2 Select the Edit In Place grip. Alternatively, you can click Mass Group tab . Modify panel . Edit In Place
+ . 
+
+3 Select the mass element you want to make intersecting. 4 Click Edit in Place tab . Modify panel . Mass Group Operation 
+drop-down . Intersect
+ . 5 On the Properties palette, expand Basic, and expand General. 6 Select Intersect for Operation. 
+7 Click Edit in Place tab . Edits panel . Finish
+ . This saves the changes to the mass element and ends the in-place edit session. 
+Creating a Nested Mass Group 
+Use this procedure to attach a mass group to another mass group. This action nests the current mass group within the mass group that you select. 
+You may find it easier to nest mass groups using the Model Explorer. For more information, see Moving a Mass Element or Group from One Mass Group to Another on page 1087. 
+1 Select the mass group that you want to nest within another mass group. 
+2 On the Properties palette, expand Basic, and expand General. 
+3 Click the mass group where you want to nest the current mass group for Attached to. 
+4 Specify Add, Subtract, or Intersect for Operation. This option determines how the mass group is nested within the mass group you selected. 
+Removing a Nested Mass Group from a Mass Group 
+Use this procedure to remove a mass group from a mass group in which the first mass group is nested. The mass group you remove remains in the drawing. 
+1 Select the mass group you want to remove. 2 On the Properties palette, expand Basic, and expand General. 3 Select None for Group. 4 Right-click, and click Deselect All to turn off grips. 
+Changing the Location of a Mass Group Using Grips 
+Use this procedure to relocate a mass group using the Location grip. In Model view, the Location grip has three edit modes: Edit Along XY Plane, Edit Along YZ Plane, and Edit Along ZX Plane. The default edit mode is along the XY plane. In Plan view, the Location grip is restricted to movement in one plane. 
+If the mass elements that are attached to the mass group are anchored, they move when you move the Location grip. If the anchor of objects has been released, only the mass group marker moves when you move the Location grip. For more information, see Working with Mass Group Anchors on page 1063. 
+You can also change the location of a mass group using the Properties palette. 
+1 Select the mass group you want to change. 2 Select the Location grip. 
+
+3 Move the mass group to the desired location, and click once; or 
+enter a value and press ENTER. If you want to enter a specific value for the second direction in any edit mode (for example, in the Y direction when editing along the XY plane), press TAB to cycle to the second direction. 
+You can also lock the movement of the mass group along a specific direction. If you enter a value for either dimension direction in the current edit mode, and then press TAB, the movement of the mass group is constrained to the second dimension direction. When editing along the XY plane, for example, you can enter a value for X dimension, and then press TAB. The X dimension is locked at that value, and movement of the mass group is constrained to the Y dimension direction. 
+
+4 Right-click, and click Deselect All to turn off grips. 
+Working with Mass Group Anchors 
+Use these procedures to release anchors of objects attached to a mass group, or anchor elements to a mass group. 
+Releasing object anchors from a mass group 1 Select the mass group with objects anchored to it. 2 Click Mass Group tab . Modify panel . Release Anchor
+ . 
+
+All anchors are released, and the mass group marker is displayed. The display of attached elements is turned on. 
+Anchoring objects to a mass group 
+1 Select the mass group or the mass group marker that has no objects 
+anchored to it. The mass group must have mass elements attached to it in order to anchor them to the group. 
+2 Right-click, and click Anchor Attached Objects. All objects are anchored to the mass group, and the mass group marker is no longer displayed. The display of attached elements is turned off. 
+Working with Mass Groups 
+Use these procedures to place an entity reference of a mass group in a drawing, or to reposition the insertion point of a mass group. 
+You can place a mass group in the drawing multiple times for modeling. Using an entity reference helps to simplify the modeling process. 
+You can adjust the insertion point of a mass group by selecting a new location and a new rotation. 
+Placing an entity reference of a mass group 1 Select a mass group. 
+2 Click Mass Group tab . Modify panel . Place Reference
+ . 3 Move the cursor to the desired location for the entity reference, and click once to place the reference in the drawing. 4 Specify the rotation angle, and press ENTER. 
+
+An entity reference of the selected mass group is placed in the drawing, as specified. The entity reference is distinguished from the mass group by its location marker. 
+Repositioning the insertion point of a mass group 
+1 Select a mass group. 
+
+2 Click Mass Group tab . Modify panel . Reposition Insertion 
+Point
+ . 
+3 Specify the new insertion point. 
+4 Enter a rotation angle, and press ENTER; or move the cursor, and 
+click to specify the rotation. 
+
+If the mass group has an entity reference connected to it, repositioning the insertion point of the mass group affects the rotation of the entity reference. 
+Specifying the Cut Plane Display of a Mass Group 
+Use this procedure to specify the properties of one or more cut planes for a mass group. Cut plane display properties apply only to display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Double-click the mass group you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all mass groups in the drawing, select Drawing default setting. 
+5 If necessary, expand Object Display Properties . Cut Plane. 
+6 For Override cut plane, specify whether you want to override the global cut plane defined for the current display configuration. 
+7 If you selected Yes for Override cut plane, enter a value for Height to define the cut plane for this object. (Alternatively, you can click
+
+ and specify 2 points in the drawing area to set the new size.) 
+You can also access and modify these same cut plane settings through the mass group’s context menu, as follows 
+1 Select the mass group, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. 3 Select the display representation where you want the changes to 
+appear, and select Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 
+5 In the Display Properties dialog, click the Other tab, and then change the settings as needed. 
+6 Click OK twice. 
+Attaching Hyperlinks, Notes, or Files to a Mass Group 
+Use this procedure to attach hyperlinks, notes, or files to a mass group. You can also edit hyperlinks and notes, and edit or detach reference files from a mass group. 
+1 Double-click the mass group to which you want to attach information. 
+2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click the setting for Hyperlink, and specify the link. 
+4 To add a note, click 
+next to Notes, enter text, and click OK. 
+5 To attach, detach, or edit a reference file, click 
+next to Reference documents, and then do any of the following: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+If you want to… Then… 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+6 Click OK twice. 
+Creating a Mass Group Tool 
+Use this procedure to create a mass group tool and add it to a tool palette. You may want to create your own mass group tools if you are placing multiple mass groups with the same mass group properties. 
+1 Open the tool palette where you want to create a tool. 2 Create the tool: 
+If you want to… Then… 
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool right-click the tool, and click Copy. palette Open the other palette, and click Paste. 
+copy a tool from a tool catalog click Home tab . Build pan­el . Tools drop-down . Content 
+Browser 
+, and locate the tool you want to copy. Position the cursor over the i-drop handle, and drag the tool to the tool palette. 
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 
+5 Click the setting for Description, enter a description of the tool, and click OK. 
+6 To add keywords to the tool, click More Info. 
+7 Enter the keywords, and click OK twice. 
+Using Materials for Mass Elements and Mass Groups 
+Using materials simplifies defining the display of objects. You define the display of a material, such as brick or glass, only once in the drawing or the drawing template, and then assign it to any object component or object style. For example, you can define a material “Glass” and assign it to any number of windows, glass door insets, or cubicle walls. 
+Using a common set of materials provides centralized control across the display of objects in a drawing or throughout the whole project. When the particulars of a material change, you change them just once in the material definition, and all objects are updated. 
+For more information, see Materials on page 871. 
+Rendered building with different materials 
+
+Predefined Materials 
+AutoCAD Architecture provides predefined materials for common design purposes. You can use these predefined materials, or modify them to your special designs. You can also create your own materials. 
+Surface Hatching 
+Surface hatches can display in both model views and section/elevation views. Placement and orientation of the hatch can be precisely controlled and specified for each object face individually. 
+For detailed information about surface hatches, see Working with Surface Hatches on page 890. 
+Mass Element and Mass Group Display Components and Materials 
+A mass element or a mass group consists of a number of display components that can be determined by materials. 
+Workflow 
+You assign one material to each display component of the mass element or mass group. For example, you assign a dark wood material to the mass element body and a light brown material to the mass element hatch. When you assign a material to a mass group, the display properties of the attached mass elements are overridden with the mass group settings. 
+If you want to use the display properties of the mass element instead of the material display properties, you can deactivate the material assignments in the display properties of the mass element. 
+Display Representations 
+The display properties of an object are specified for each display representation individually. Mass elements and mass groups have display representations for plan, model, reflected, and sketch views. You can create new display representations for mass elements and mass groups by copying an existing representation. For example, you can create a new display representation “Plan 1:25” to create a plan view optimized for display in a view scaled to 1:25. This new display representation has the same display components as the one from which it was copied. The copied components will be influenced by the same material components as the original components. 
+Material Component Assignments 
+Material definitions consist of display components that correspond to component types of objects. For example, the Linework component of a material is used for all linework in Plan view. The Surface Hatch component 
+of a material is used to hatch all object surfaces in 3D model views and elevations. 
+For a complete list of material components and their descriptions, see Material Components and Display Properties on page 884. 
+The following table lists mass element components and the material components that determine them. 
+Mass Element Component Material Component 
+Plan High Detail, Plan Low Detail, Plan Presentation, Plan Screened 
+Hatch Plan Hatch 
+Cut Plane No Material 
+Model 
+Entity 3D Body 
+Bounding Box No Material 
+Reflected, Reflected Screened, Sketch 
+Entity Plan Linework 
+Bounding Box No Material 
+Hatch Plan Hatch 
+The following table lists mass group components and the material components that determine them. 
+Mass Group Component Material Component 
+Plan High Detail, Plan Low Detail 
+Marker No Material 
+Cut Plane No Material 
+Hatch No Material 
+Mass Group Component Material Component 
+Plan, Plan Presentation, Plan Screened 
+Entity Plan Linework 
+Marker No Material 
+Model 
+Entity 3D Body 
+Marker No Material 
+Reflected, Reflected Screened 
+Entity Plan Linework 
+Marker No Material 
+Process Overview: Creating and Applying a Material for a Mass Element or Mass Group 
+If you create a material, you can apply it to all types of objects that support materials. For example, a concrete material could be used for a wall and for a structural element. Mass elements and mass groups are often used for columns, elevator shafts, or chimneys. If you want to create a material to use only for mass elements or mass groups, you should name it accordingly. For example, if the materials have specific names, such as “Mass Element - Concrete Column” or “Mass Group - Cable Shaft,” you can simplify the organization of your material definitions. 
+1 Create a new material definition or edit an existing material definition. For more information, see Creating and Editing Material Definitions on page 905. 
+2 In the material definition, define the settings that affect the display of materials in mass elements and mass groups: 
+If you want to… Then… 
+display a surface hatch for a mass ele­ment or a mass group in 3D model views turn on the Surface Hatch component, and specify its display properties. For more information, see Defining the Layer, Color and Linetype of a Material Definition on page 906 and Specifying the Surface Hatch Pattern of a Material Definition on page 909. 
+display a section hatch for a mass ele­ment or mass group in a 2D section, 3D section, or live section turn on the Section Hatch component, and specify its display properties. For more information, see Defining the Layer, Color and Linetype of a Material Definition on page 906 and Specifying the Plan and Section Hatch Patterns of a Material Definition on page 907. 
+display the sectioned boundary and sectioned body of a mass element or mass group in a live section turn on the Sectioned Boundary and Sectioned Body components, and spe­cify their display properties. For more information, see Defining the Layer, Color and Linetype of a Material Defini­
+tion on page 906. 
+add special rendering materials for mass select rendering materials. For more in-elements or mass groups in live sections formation, see Assigning Render Mater­
+ials on page 911. 
+exclude mass element or mass group specify this setting in the material components from a 2D section shrink-definition. For more information, see wrap hatch Excluding a Material Definition from 2D 
+Section Shrinkwrap on page 914. 
+3 Turn on the assigned materials in the individual display representations, and then assign materials to the mass elements and mass groups in your building model. 
+For more information about assigning materials to mass elements, see 
+Assigning Materials to a Mass Element on page 1037. 
+For information about assigning materials to mass groups, see Assigning Materials to a Mass Group on page 1054. 
+Using the Model Explorer to Create Mass Models 
+The Model Explorer is a window in which you create, view, and manipulate mass elements and mass groups. You can create your entire conceptual model by using the Model Explorer. The main window is similar to the 3D orbit view. You can attach objects and mass elements to mass groups and view them in the Model Explorer. You can simultaneously view the conceptual and the hierarchical structure of mass groups and mass elements that make up the model. 
+The Model Explorer is divided into three areas: the tree view in the left pane, the graphics area in the right pane, and the menu bar and toolbar across the top. 
+Viewing a mass group in the Model Explorer 
+
+Left Pane of the Model Explorer 
+The tree view lists all open drawings as Projects. Any mass groups are displayed under their associated drawing in the tree view. If you expand a mass group, the mass elements attached to it are displayed. One of the following icons is displayed next to each mass element in the mass group, indicating which Boolean operation is used to combine mass elements: 
+Icon Boolean Operation Used 
+
+If both circles are blue, the operation is union. 
+
+If the left portion of the 2 circles is blue, the operation is subtractive. 
+
+If the intersection of the 2 circles is blue, the operation is intersection. 
+An additive operation in the Model Explorer combines the total volume of two or more solids or two or more regions into a composite object. A subtractive operation removes the common area of one set of solids from another. An intersection removes non-overlapping portions and creates a composite solid from the common volume. 
+The order of objects and mass elements in the tree view dictates the outcome of the group when mass elements are combined. You can drag and drop the mass elements within the mass group to change the order in which they are combined. 
+You can also drag and drop mass groups to nest them within other mass groups. For example, if you are modeling a building with multiple wings, each wing can be a mass group containing multiple mass elements. You can then add these groups to a mass group of the entire building. 
+Right Pane of the Model Explorer 
+The right pane of the Model Explorer displays a graphical view of the mass elements or mass groups that you select in the left pane. 
+Model Explorer Menu Bar and Toolbar 
+The top of the Model Explorer includes a menu bar and toolbar that allow you to access menu commands. If you position your pointing device over a toolbar icon, a tooltip displays an explanation of the icon. For more information, see Using Toolbar Commands in the Model Explorer on page 1080. 
+If you turn off the Model Explorer toolbars using commands on the View menu, the tree view and viewer are blank the next time you display the Model Explorer. Click any pull-down menu heading to restore the proper display. 
+Displaying the Model Explorer 
+Use this procedure to open the Model Explorer. Any mass groups in the current drawing are displayed in the right pane. The tree view in the left pane lists the mass groups in open drawings. 
+Viewing a mass group in the Model Explorer 
+
+1 Select a mass group. 
+2 Click Mass Group tab . Modify panel . Show Model Explorer . 3 You can move, resize, or close the Model Explorer: 
+
+If you want to… Then… 
+move the Model Explorer drag the Model Explorer title bar to the desired location. 
+resize the Model Explorer click the edge of the Model Explorer and drag to the desired size. 
+close the Model Explorer click the “X” in the upper right corner of the Model Explorer. 
+Defining the View in the Model Explorer 
+The Model Explorer lets you display mass groups in different view directions, display configurations, and visual styles. You can also define parallel or perspective views. 
+1 Select a visual style from the drop-down menu on the top left: 
+¦ 
+3D Hidden: Displays the objects using 3D wireframe representation and hides lines representing back faces. 
+
+¦ 
+3D Wireframe: Displays the objects using lines and curves to represent the boundaries. 
+
+¦ 
+Conceptual: Shades the objects and smooths the edges between polygon faces. Shading uses a transition between cool and warm colors. The effect is less realistic, but it can make the details of the model easier to see. 
+
+¦ 
+Realistic: Shades the objects and smooths the edges between polygon faces. Materials that you have attached to the objects are displayed. 
+
+
+Alternatively, right-click in the preview area, click Visual Style, and select the desired style. 
+2 Click the 
+button to select a display configuration. Display configurations are collections of object display representations, determining which objects are visible, and how the objects are displayed per view. For more information, see Display Configurations on page 796. 
+3 Select a view direction from the drop-down menu on the top 
+right. Alternatively, right-click in the preview area, click Preset Views, and select the desired view direction. 
+4 Select the projection type of the mass groups in the preview: 
+¦ 
+To select a parallel projection, right-click in the preview area, and click Projection . Parallel. 
+
+¦ 
+To select a perspective projection, right-click in the preview area, and click Projection . Perspective. 
+
+
+Navigating the View in the Model Explorer 
+In the Model Explorer, you have a number of options for navigating through the model view. 
+1 Use these basic navigation tools as needed: 
+¦ To move the view in the drawing area, click 
+(Pan Realtime.) Alternatively, right-click in the preview area, and click Pan. 
+2 To zoom in and out of the drawing area, click 
+(Zoom 
+Realtime.) Alternatively, right-click in the preview area, and click Zoom. For further Zoom options, right-click in the drawing area, click More, and select the desired Zoom option. 
+3 To orbit the model in 3D, click 
+(Constrained 3D Orbit.) Alternatively, right-click in the preview drawing area, and click Orbit. 
+4 To move closer to or farther away from the model, click (Adjust Distance.) 
+
+This command works only when you are in perspective projection. Alternatively, right-click in the preview drawing area, and click More . Adjust Distance. 
+Navigating the View with the ViewCube 
+The ViewCube is a 3D navigation tool that appears when the 3D graphics system is enabled and allows you to switch between standard and isometric views. 
+In Model Explorer the ViewCube is always visible. When you position the cursor over the ViewCube, it becomes active. You can switch to one of the available preset views, roll the current view, or change to the Home view of the model. 
+
+For detailed information about the ViewCube, see “ViewCube” in the AutoCAD Help. 
+Navigating the View with SteeringWheels 
+SteeringWheels are tracking menus that are divided into different sections known as wedges. Each wedge on a wheel represents a single navigation tool. You can pan, zoom, or manipulate the current view of a model in different ways. 
+SteeringWheels can save you time and clicks by combining many of the common navigation tools into a single interface. Wheels are specific to the context that a model is being viewed in. 
+
+1 Click the 
+button. Alternatively, you can right-click in the preview area, and click Steering Wheel. 
+2 To close the SteeringWheel, right-click, and click Close Wheel, or click the 
+button again. For detailed information, see “SteeringWheels” in the AutoCAD 
+Help. 
+Viewing Objects on a Nonvisible Layer 
+Use this procedure to change the settings in the Model Explorer to view all objects, regardless of the visibility of the layer on which they reside. Any object on a layer that is frozen or turned off is not displayed initially. 
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer . 3 On the Model Explorer View menu, click Show All Layers. The check mark on the menu next to Show All Layers indicates that all objects are displayed in the Model Explorer. 
+
+Maintaining Zoom Percentage and Position of an Object 
+Use this procedure to select an object in the Model Explorer tree view. The zoom percentage and location of the object are maintained. This is useful when you want to examine how the object relates to the rest of the drawing. 
+In the Model Explorer, you can specify to display the selected object only, and display it at maximum size. 
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer
+
+ . 
+3 On the Model Explorer View menu, click Auto Zoom Extents. 
+4 Select the object to view from the tree view. 
+The Model Explorer graphics window displays only the selected object, zoomed to fit the window. 
+Using Toolbar Commands in the Model Explorer 
+The following toolbar commands allow you to work with mass elements and mass groups in the Model Explorer: 
+Icon 
+
+New Grouping: Creates a new mass group in the drawing. 
+
+New Element: Creates a new mass element in the drawing. 
+
+Cut: Cuts the selected item in the tree view to the Clip­board. 
+
+Copy: Copies the selected item from the tree view to the Clipboard. 
+
+Paste: Pastes the item on the Clipboard into the tree view at the selected location. 
+
+Delete Item: Deletes an item from the tree view and from the drawing. 
+Icon 
+
+Attach Items: Attaches existing mass elements or objects to the selected mass group. Select one or more elements or objects in the drawing. This option is available only when a mass group is selected in the tree view. 
+
+Detach Items: Detaches the selected mass elements or objects from the mass group. This option is available only when a mass group is selected in the tree view. 
+
+Properties: Opens the properties dialog box for the selected mass element, object, or mass group. 
+
+Display Configuration: Changes the display configuration of the objects in the Model Explorer. You select a display configuration from the list. 
+Creating a Mass Element with the Model Explorer 
+Use this procedure to create a mass element in the Model Explorer. For detailed information about specifying the shape and dimensions of a mass element, see Creating a Mass Element on page 993. 
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer
+
+ . 
+3 In the left pane, select the level at which to create the mass element. If you select the drawing name, the new mass element is created 
+at the next hierarchical level. If you select a mass group name with a drawing, the new mass element is attached to the selected mass group. 
+4 On the Model Explorer File menu, click Create Element, or click
+
+ . 5 On the command line, specify a shape. 6 Specify the insertion point for the mass element. 
+Depending on the shape you specified, you need to specify a second corner, the radius, or the height. 
+7 Specify the rotation angle. 8 Press ENTER. 
+Creating a Mass Group 
+Use this procedure to create a mass group in the Model Explorer. 
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer
+
+ . 
+3 In the left pane, select the level at which you want to create the mass group. If you select the drawing name, the new mass group is created at 
+the next hierarchical level. If you select a mass group name with a drawing, the new mass group is nested within the existing mass group. 
+4 On the Model Explorer File menu, click Create Group, or click
+
+ . 5 Specify a location for the mass marker. The location does not represent the location of mass elements added to the marker. Therefore, you can locate the mass marker in any convenient area. 
+6 Specify the rotation angle. 
+The new mass group is added to the project tree in the Model Explorer. 
+Attaching a Mass Element to a Mass Group 
+Use this procedure to attach existing mass elements to the group after a mass group is created. 
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer
+
+ . 3 In the left pane, select a mass group, right-click, and click Attach Elements. 4 Select the mass elements to add to the group, and press ENTER. 
+Attaching Objects to a Mass Group 
+Use this procedure to attach objects such as doors, walls, and curtain walls to the group after a mass group is created. 
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer
+
+ . 3 In the left pane, select a mass group, right-click, and click Attach Elements. 4 Select the objects to add to the group, and press ENTER. 
+Changing a Mass Element Operation to Additive 
+Use this procedure to change a mass element operation to additive. Mass elements are additive when you create them. After a mass element is added to a mass group, its operation can be changed to produce different results. 
+Adding a mass element to a mass group 
+
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer
+
+ . 3 In the left pane, select a mass element, right-click, and click Operation . Additive. 4 In the left pane, click Project to update the display. 
+The display changes to indicate the new operation property of the mass element. 
+Changing a Mass Element Operation to Subtractive 
+Use this procedure to change a mass element operation to subtractive. Mass elements are additive when you create them. After a mass element is added to a mass group, its operation can be changed to produce different results. If the mass element is subtractive, its shape is removed from the mass group. 
+Subtracting a mass element from a mass group 
+
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer
+
+ . 3 In the left pane, select a mass element, right-click, and select Operation . Subtractive. 4 In the left pane, click Project to update the display. 
+The display changes to indicate the new subtractive operation of the mass element. 
+Changing a Mass Element Operation to Intersection 
+Use this procedure to change a mass element operation to intersection. Mass elements are additive when you create them. After a mass element is added to a mass group, its operation can be changed to produce different results. The intersect operation creates a shape that is defined by the overlap where the mass element intersects with another mass element. 
+Creating an intersection mass group from mass elements 
+
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer
+
+ . 3 In the left pane, select a mass element, right-click, and select Operation . Intersect. 4 In the left pane, click Project to update the display. 
+The display changes to indicate the new intersection operation of the mass element. 
+Specifying the Order of Mass Elements 
+Use this procedure to specify the order of mass elements. The operation (additive, subtractive, intersection) of each mass element in a mass group is based on the hierarchy of mass elements in the project tree. You can drag and drop mass elements within mass groups in the project tree. By default, mass elements are listed in the left pane of the Model Explorer in the order they are created in the Model Explorer or selected for the mass group. 
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer
+
+ . 3 Select the mass element you want to move, and drag it to the target location in the project tree. 
+Moving a Mass Element or Group from One Mass Group to Another 
+Use this procedure to move a mass element or a mass group from one mass group to another in the Model Explorer project tree. 
+1 Select a mass group. 2 Click Mass Group tab . Modify panel . Show Model Explorer
+
+ . 
+3 In the left pane, select the mass element or mass group you want to move, and drag it to another mass group. When you move a mass group within another mass group, it is 
+known as a nested mass group. 
+Creating Slice Floorplates from a Conceptual Model 
+A slice can be thought of as a representation of a theoretical floor level. Slice floorplates provide a way to translate the 3D geometry of a mass group into something that can be used to generate the individual floors of a building. Slices can be converted to space boundaries or polylines, and then to walls. 
+Slices and Mass Models 
+Like mass groups, slices are chosen and manipulated by an associated marker, the slice marker. When you attach mass groups to the slice marker, the slice marker creates the perimeter geometry of the building, known as a floorplate. Anytime you change the mass groups attached to the slice marker, the floorplate is updated. 
+If you attach mass elements instead of mass groups to the slice, the operational aspects (additive, subtractive, and intersection) of the mass elements are not recognized by the slice. To have these aspects recorded by the slice, attach the mass group. For more information about additive, subtractive, and intersection operations, see Creating a Mass Group on page 1082. 
+From Slice Floorplate to Walls 
+After you create floorplates, you can convert slices to space boundaries or polylines, and then generate walls. You cannot create walls directly from a slice. The slice is simply a way to mark each floor level of the mass group. 
+Generating a Slice 
+Use this procedure to generate a slice. The slice object is defined by a small crossed box. Like the mass group marker, the slice marker can be located in a convenient place in your drawing. For more information about the mass group marker, see Creating a Mass Group on page 1082. 
+You can create multiple slices at regular height intervals. A slice marker is created for each slice. 
+Generating slice objects 
+
+1 Open the tool palette that you want to use, and select a slice tool. 
+If necessary, scroll to display the tool that you want to use. 
+2 Specify the number of slices you want to create. 
+3 Specify the lower-left and upper-right corners for the slice marker. 
+TIP Keep the slice marker small so as not to clutter your drawing. 
+4 Specify a rotation for the slice marker. 5 Enter the starting height of the slice. 6 Enter the distance between slices, and press ENTER. 7 Press ENTER. 
+Specifying the Slice Elevation 
+Use this procedure to change the elevation of a slice. 
+1 Select the slice marker. 
+2 Click Slice tab . Modify panel . Set Elevation
+ . 
+3 Enter a new slice elevation. If multiple slices were created together, only the elevation of the selected slice changes. The distance between slices remains constant. 
+Attaching Objects to a Slice 
+Use this procedure to attach mass elements or mass groups to a slice to create the building floorplate. You can freeze the layer(s) containing the mass elements and mass groups to display only the slices. 
+Attaching a mass group to slice objects 
+
+1 Select the slice marker. 
+2 Click Slice tab . Modify panel . Attach Objects
+ . 
+3 Select the mass elements or mass groups you want to include in the slice. 
+4 Press ENTER. 
+Detaching Objects from a Slice 
+Use this procedure to detach mass elements or mass groups from a slice to change a floorplate. 
+1 Select the slice marker. 
+2 Click Slice tab . Modify panel . Detach Objects
+ . 
+3 Select the mass elements or mass groups you want to remove from the slice. 
+4 Press ENTER. 
+Converting a Slice to a Polyline 
+Use this procedure to convert a slice to a polyline after objects have been attached to a slice marker. You can then convert polylines to spaces, walls, or profiles. 
+¦ 
+Select the slice marker. 
+
+¦ Click Slice tab . Modify panel . Convert To Polyline
+ . The outlines of the objects attached to the slice marker are converted to polylines. 
+
+Changing the Location of a Slice 
+Use this procedure to relocate a slice by changing the coordinate values of its insertion point. The slice also has an orientation with respect to the world coordinate system (WCS) or the current user coordinate system (UCS). For example, if the top and bottom of the slice are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the slice by aligning its normal with another axis. You can also rotate the slice on its plane by changing the rotation angle. 
+For more information about the WCS and the UCS, see “Use Coordinates and Coordinate Systems” in AutoCAD Help. 
+1 Double-click the slice you want to modify. 2 On the Properties palette, expand Basic, and expand Location. 3 Click Additional information. 4 Specify the location of the slice: 
+If you want to… Then… 
+relocate the slice enter new coordinate values under Insertion Point. 
+If you want to… Then… 
+locate the slice on the XY plane make the normal of the slice parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the slice on the YZ plane make the normal of the slice parallel to the X axis: under Normal, enter 1 for X, and enter 0 for Y and Z. 
+locate the slice on the XZ plane make the normal of the slice parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the slice enter a new value for Rotation Angle. 
+5 Click OK. 
+Attaching Hyperlinks, Notes, or Files to a Slice 
+Use this procedure to attach hyperlinks, notes, or files to a slice. You can also edit hyperlinks and notes, and edit or detach reference files from a slice. 
+1 Double-click the slice to which you want to attach information. 2 On the Properties palette, click the Extended Data tab. 3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. 4 To add a note, click the setting for Notes, and enter the note. 5 Click OK. 6 To add a reference file, click the setting for Reference documents, 
+and attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+If you want to… Then… 
+detach a reference file select the file name, and click De­lete. 
+7 Click OK. 
+Quick Slice 
+16 
+The Quick Slice tool lets you “slice” through one or more objects in a drawing and extract a polyline outline that you can use to create profile shapes. 
+Quick Slice 
+The Quick Slice tool lets you “slice” through one or more three-dimensional (3D) objects in a drawing (including mass groups, AutoCAD® blocks, and external references) and extract a polyline outline that can be used to produce a profile shape, such as a roof truss. If you have a 3D model of stairs in your drawing, you can use the Quick Slice tool to create a polyline outline of the stair object in a section view, instead of using a section tool. For more information about section views, see Sections on page 3213. 
+Unlike the Horizontal Section, Vertical Section, and Slice tools, which produce multiple polyline segments, the Quick Slice tool produces a single polyline. When you slice through the selected object(s), any overlapping parts of the outline are combined in a boolean operation and converted into a polyline that is inserted on the current layer. The Quick Slice tool also differs from the Slice tool in that it does not create a slice marker. For more information about the Slice tool, see Generating a Slice on page 1088. 
+Creating a Quick Slice 
+Use this procedure to extract a polyline outline of a “slice” through one or more 3D objects. 
+1 Click Home tab . Section & Elevation panel .
+. Quick Slice
+
+ . 
+NOTE The Quick Slice tool is also provided with the Helper Tools in the Stock Tool Catalog. You can add this tool to any tool palette. For more information, see Content Browser Overview on page 137. 
+2 Select the object(s) that you want to slice through, and press ENTER. 
+3 Specify a starting point for the slice plane. 
+4 Specify a second point to complete a slice plane through the 
+object(s) and generate the polyline outline. You can now select the polyline outline and view it using the Object Viewer. 
+Object Viewer 
+17 
+The Object Viewer lets you preview objects in your drawing with different visual styles, view directions, and display configurations without changing the display of the drawing area. 
+Object Viewer 
+The Object Viewer lets you preview objects in your drawing with different visual styles, view directions, and display configurations without changing the display of the drawing area. 
+The Object Viewer can be started from different locations in the software. Depending on where the Object viewer is located the viewing and navigation options can vary. For example, if you use Object Viewer to preview an object from the drawing area, a compass is displayed. If you use the object viewer to preview a style in Style Manager, the compass is not displayed, since the style is not an object located in WCS or UCS. 
+Previewing Objects from the Drawing Area 
+You can select one or more objects in the drawing area, and preview them in the Object Viewer. 
+1 Select the objects in the drawing area for which you want to see a preview. 
+2 Click <Object> tab . General panel . Object Viewer
+ . 
+
+Previewing Object Styles in the Style Manager 
+You can preview the effects of a style that you are creating in the Object Viewer (Floating Viewer) provided with Style Manager. 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Select the style you want to preview. 
+3 Click the 
+ (Floating Viewer) button at the bottom left of Style Manager. 
+Alternatively, you can click the 
+ button (Inline Edit Toggle) to display the Object Viewer embedded inside Style Manager. 
+Previewing Mass Models in Model Explorer 
+The Model Explorer is a window in which you create, view, and manipulate mass elements and mass groups. The Model Explorer uses the Object Viewer to let you preview the mass element and mass group operations you perform. 
+For more information about Model Explorer, see Using the Model Explorer to Create Mass Models on page 1073. 
+1 Select a mass group. 
+2 Click Mass Group tab . Modify panel . Show Model Explorer
+ . 
+
+Embedded Object Viewers 
+A number of dialogs have embedded object viewers in order to let you preview components of a style, a definition, or a tool. See below for a couple of examples of embedded Object Viewers. 
+Embedded Object Viewer in Roof Slab style tab Embedded Object Viewer in tool properties 
+
+
+Defining the View in the Object Viewer 
+The Object Viewer lets you display selected objects, styles, or tools in different view directions, display configurations, and visual styles. You can also define parallel or perspective views. 
+1 Open the Object Viewer from one of these locations: 
+¦ 
+Select an object in the drawing area, and click <Object> tab . General panel . Object Viewer
+ . 
+
+¦ 
+Click Manage tab . Style & Display panel . Style Manager
+
+
+
+ , and click the 
+button. 
+Alternatively, you can click the 
+ button (Inline Edit Toggle) to display the Object Viewer embedded inside Style Manager. 
+¦ Select a mass group, and click Mass Group tab . Modify 
+panel . Show Model Explorer
+ . 
+2 Select a visual style from the drop-down menu on the top left: 
+¦ 
+3D Hidden: Displays the objects using 3D wireframe representation and hides lines representing back faces. 
+
+¦ 
+3D Wireframe: Displays the objects using lines and curves to represent the boundaries. 
+
+¦ 
+Conceptual: Shades the objects and smooths the edges between polygon faces. Shading uses a transition between cool and warm colors. The effect is less realistic, but it can make the details of the model easier to see. 
+
+¦ 
+Realistic: Shades the objects and smooths the edges between polygon faces. Materials that you have attached to the objects are displayed. 
+
+
+Alternatively, right-click in the preview area, click Visual Style, and select the desired style. 
+3 Select a display configuration from the drop-down list below the 
+Visual Styles drop-down list. Display configurations are collections of object display representations, determining which objects are visible, and how the objects are displayed per view. For more information, see Display Configurations on page 796. 
+NOTE Display configurations are not available in some embedded Object Viewers. 
+4 Select a view direction from the drop-down menu on the top 
+right. Alternatively, right-click in the preview area, click Preset Views, and select the desired view direction. 
+5 Select the projection type of the objects in the preview: 
+¦ Click 
+to display the objects in a parallel projection. 
+¦ 
+Click to display the objects in a perspective projection. Perspective views require a distance between a theoretical 
+
+
+camera and target point. in order to change the lens length of the camera, click 
+and enter the desired value. Alternatively, right-click in the preview area, click Projection, and select the desired view projection. 
+NOTE In embedded Object Viewers, only the context menu options of these commands are available. 
+Navigating the View in the Object Viewer 
+In the Object Viewer, you have a number of options for navigating through the model view. 
+1 Open the Object Viewer from one of these locations: 
+¦ 
+Select an object in the drawing area, and click <Object> tab . General panel . Object Viewer
+ . 
+
+¦ 
+Click Manage tab . Style & Display panel . Style Manager
+
+
+
+ , and click the 
+button. 
+Alternatively, you can click the 
+ button (Inline Edit Toggle) to display the Object Viewer embedded inside Style Manager. 
+¦ Select a mass group, and click Mass Group tab . Modify panel . Show Model Explorer
+ . 
+2 Use these basic navigation tools as needed: 
+¦ To move the view in the drawing area, click 
+(Pan Realtime.) Alternatively, right-click in the preview area, and click Pan. 
+3 To zoom in and out of the drawing area, click 
+(Zoom 
+Realtime.) Alternatively, right-click in the preview area, and click Zoom. For further Zoom options, right-click in the drawing area, click More, and select the desired Zoom option. 
+4 To orbit the objects in 3D, click 
+(Constrained 3D Orbit.) 
+Alternatively, right-click in the preview drawing area, and click 
+Orbit. 
+5 To move closer to or farther away from the object, click 
+(Adjust Distance.) This command works only when you are in perspective projection. Alternatively, right-click in the preview drawing area, and click More . Adjust Distance. 
+NOTE In embedded Object Viewers, only the context menu option is available for all commands. 
+Navigating the View with the ViewCube 
+The ViewCube is a 3D navigation tool that appears when the 3D graphics system is enabled and allows you to switch between standard and isometric views. 
+In Object Viewers, the ViewCube is always visible. When you position the cursor over the ViewCube, it becomes active. You can switch to one of the available preset views, roll the current view, or change to the Home view of the model. 
+
+NOTE When you access the ViewCube from Style Manager or from an embedded Object Viewer, no UCS option and no compass are available. 
+For detailed information about the ViewCube, see “ViewCube” in the AutoCAD Help. 
+Navigating the View with SteeringWheels 
+SteeringWheels are tracking menus that are divided into different sections known as wedges. Each wedge on a wheel represents a single navigation tool. You can pan, zoom, or manipulate the current view of a model in different ways. 
+SteeringWheels can save you time and clicks by combining many of the common navigation tools into a single interface. Wheels are specific to the context that a model is being viewed in. 
+NOTE SteeringWheels are not available in embedded Object Viewers. 
+
+1 Open the Object Viewer from one of these locations: 
+¦ 
+Select an object in the drawing area, and click <Object> tab . General panel . Object Viewer
+ . 
+
+¦ 
+Click Manage tab . Style & Display panel . Style Manager
+
+
+
+ , and click the 
+button. 
+Alternatively, you can click the 
+ button (Inline Edit Toggle) to display the Object Viewer embedded inside Style Manager. 
+¦ Select a mass group, and click Mass Group tab . Modify panel . Show Model Explorer
+ . 
+2 Click the 
+button. Alternatively, you can right-click in the preview area, and click Steering Wheel. 
+3 To close the SteeringWheel, right-click, and click Close Wheel, or click the 
+button again. For detailed information, see “SteeringWheels” in the AutoCAD 
+Help. 
+Setting the View Direction of the Object Viewer to the Drawing Area 
+You can set the view direction you have specified in the Object Viewer back to the drawing area. 
+NOTE This command is available only for the Object Viewer when it is started from an object in the drawing area. 
+1 Select an object in the drawing area, and click <Object> 
+tab . General panel . Object Viewer
+ . 2 Change the view direction as desired. 
+3 Click 
+. Alternatively, you can right-click in the preview area, and click Set View. 
+Saving a Preview Image from the Object Viewer 
+You can save the view in the Object Viewer to a graphic file. File formats supported are PNG, JPEG, BMP, and TIFF. 
+1 Open the Object Viewer from one of these locations: 
+¦ 
+Select an object in the drawing area, and click <Object> tab . General panel . Object Viewer
+ . 
+
+¦ 
+Click Manage tab . Style & Display panel . Style Manager
+
+
+
+ , and click the 
+button. 
+Alternatively, you can click the 
+ button (Inline Edit Toggle) to display the Object Viewer embedded inside Style Manager. 
+¦ Select a mass group, and click Mass Group tab . Modify panel . Show Model Explorer
+ . 
+
+2 Click 
+. Alternatively, you can right-click in the preview area, and click Save Image. 
+NOTE In embedded Object Viewers, only the context menu option is available. 
+3 In the Save Image File dialog, enter a file name and select a file format. Then, click Save. 
+Napkin Sketch 
+18 
+Use Napkin Sketch to create freehand sketch geometry from objects in a drawing. You can create a napkin sketch to reflect ambiguity in a work-in-progress design or to present a more artistically pleasing version of a drawing. You can also generate a napkin sketch of a portion of a drawing and designate it as still in the design stage. 
+Napkin Sketch 
+Use Napkin Sketch to create freehand sketch geometry from objects in a drawing. You can create a napkin sketch to reflect ambiguity in a work-in-progress design or to present a more artistically pleasing version of a drawing. You can also generate a napkin sketch of a portion of a drawing and designate it as still in the design stage. 
+You can create a napkin sketch from an entire drawing or from a portion of a drawing. You can select both AutoCAD® and AEC objects to include in your napkin sketch. 
+How Objects Appear in a Napkin Sketch 
+When you generate a napkin sketch, random bumpy line segments are created along objects that you select to include in your sketch. The bumpy lines are short segments that emulate the freehand strokes of a traditional sketch. Lines where segments cross each other are extended in the napkin sketch. 
+Generating a napkin sketch 
+
+Line Formats for Napkin Sketches 
+When you generate the napkin sketch, you choose from three line formats that control the appearance of the sketch: 
+¦ 
+Tight line format: Traces the selected geometry once to create the appearance of a more accurate sketch. 
+
+¦ 
+Loose line format: Traces the selected geometry twice. (This is the default setting.) 
+
+¦ 
+Messy line format: Traces the selected geometry three times. 
+
+
+Line format options 
+
+Each pass at tracing the geometry adds more artistic flare to the sketch. 
+Managing Napkin Sketches 
+When you create a napkin sketch, the geometry is packaged in a named block and placed on top of the original objects in model space. This means that you can move the original drawing and the sketch drawing independently of each other. You can also edit the napkin sketch as you do with other referenced blocks. Each sketch segment retains the layer and color of the geometry from which it is generated. 
+Depending on the line format you select for the napkin sketch, up to three complex polylines are generated for each selected object in your drawing. This can significantly increase the drawing size. To keep your drawing size as small as possible, cut and paste your napkin sketches into new drawings. 
+When you are working with three-dimensional (3D) drawings or complex models, first create a hidden line projection, two-dimensional (2D) section, or 2D elevation object. Unless your drawing is very simple, generating the napkin sketch from these 2D objects saves linework and time. 
+When you are working with external references, double-click on the napkin sketch and edit it like any other block. For more information about editing external references, see “Edit Referenced Drawings” in the AutoCAD Help. 
+Napkin Sketch and Intended Plot Scale 
+You can specify the intended plot scale to control the size of the sketch segments and extensions. Select a larger scale to increase the size of the sketch segments and extensions in the final sketch. 
+Specifying a plot scale 
+
+Creating a Napkin Sketch 
+Use this procedure to produce a napkin sketch in a plan, isometric, or elevation view. When you are working with three-dimensional (3D) drawings, unless your drawing is very simple, generate the napkin sketch from a two-dimensional (2D) hidden line projection, section, or elevation. For more information, see Creating a Hidden Line Projection on page 3347, Sections on page 3213, and Working With Elevations on page 3283. 
+1 Open a tool palette that contains a napkin sketch tool. 
+A napkin sketch tool is located with the Helper Tools in the Stock Tool catalog. For more information, see Content Browser Overview on page 137. 
+2 Select a napkin sketch tool. 3 Select the objects to include in the napkin sketch, and press ENTER. 4 Enter a name for the block created of the napkin sketch. 5 Specify a line format for generating the napkin sketch geometry: 
+If you want to… Then… 
+trace over objects once to create select Tight. the appearance of a more accurate sketch 
+trace over objects twice to create a select Loose. looser sketch 
+trace over objects three times to select Messy. create a very loose sketch 
+6 Clear Extend Sketch Lines At Corners if you do not want the extended lines to appear on the napkin sketch. 
+Extending sketch lines at corners 
+
+7 Under Intended Plot Scale, select the scale at which you intend to plot the sketch, or select Other and enter a custom scale. 
+8 Click OK. The napkin sketch geometry is generated and placed as a block reference over the drawing objects that you selected. Use the Move command to relocate the sketch block reference in the drawing, or cut and paste it into a new drawing. 
+Editing a Napkin Sketch 
+Use this procedure to edit the block reference generated when you create a napkin sketch. For more information about editing external references, see “Edit Selected Objects in Referenced Drawings and Blocks” in AutoCAD Help. 
+TIP The quickest way to locate and view an AutoCAD topic is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+1 Select the napkin sketch that you want to edit, right-click, and 
+click Edit Block in-place. The Reference Edit dialog box opens. For more information, see “Reference Edit Dialog Box” in AutoCAD Help. 
+2 Select the reference to edit, if necessary. 3 Specify how nested objects in the napkin sketch are selected: 
+If you want to… Then… 
+make changes to the sketch lines or select Automatically select all nested any component of the object from objects. which the sketch was drawn 
+work with specific nested objects select Prompt to select nested ob-within a napkin sketch, such as a jects. hatch pattern 
+4 Specify lock settings for the napkin sketch: 
+If you want to… Then… 
+allow changes to be made to ob-select the Settings tab, and clear jects other than those selected as Lock objects not in working set. your working set 
+prevent changes from being made select the Settings tab, and select to objects other than those selected Lock objects not in working set. as your working set 
+For information about the Settings tab, see “Reference Edit Dialog Box” in AutoCAD Help. 
+5 Click OK. 
+The block reference that represents the napkin sketch is 
+highlighted in your drawing. 
+6 Make changes to the block reference as you would to any drawing object. 
+7 Click Insert tab . Edit Reference panel . Save. 
+8 Click OK. 
+Designing with Architectural Objects 
+General Object Tools 
+19 
+The following topics describe commands that are common for most object types. 
+The General Panel 
+The General panel on each object’s contextual tabs contains commands that are common for most object types. 
+Selecting Similar Objects 
+You can select all objects in a drawing that have the same object type, style, and layer as one or more preselected objects. If the objects selected are of different types, the selection is based on shared properties. 
+For example, you can select all walls in the drawing that use the CMU-Rigid style and are placed on the A-Walls layer. 
+NOTE Block references are selected based on their layer and block definition. Style-based objects are selected on their style. 
+1 Select the object on which to base the preselection criteria. 
+2 Click <Object> tab . General panel . Select Similar
+ . All objects that match the type, style, and layer of the object are added to the selection set. You can now make changes to the selection set, for example on the Properties palette. 
+The Object Viewer 
+The Object Viewer lets you preview objects in your drawing with different visual styles, view directions, and display configurations without changing the display of the drawing area. 
+1 Select the object you want to display in Object Viewer. 
+2 Click <Object> tab . General panel . Object Viewer 
+. For more information, see Object Viewer on page 1097. 
+Isolating and Hiding Objects 
+You can create a temporary drawing view where only selected (isolated) objects appear. When you are finished, you can dismiss the view, or save the drawing in that view. 
+There are 2 basic ways of creating a view with only selected objects: 
+¦ Select the objects to display: you can select (isolate) objects and display only those 
+Isolate chair and cabinet 
+
+¦ Hide objects: you can hide those objects that you do not want included in the current view 
+Hiding chair and cabinet 
+
+Isolating Objects 
+You can select (isolate) objects and create a temporary view that includes only these objects. 1 Select the objects that you want to display, for example a wall. 2 Click <Object> tab . General panel . Isolate Objects drop-down . Isolate Objects
+ . 
+3 TIP You can also use the  icon in the drawing window status to  
+isolate objects. A red icon (  ) means that there are already objects  
+isolated.  
+
+4 If you need to refine the selection set, select the desired objects, and click <Object> tab . General panel . Isolate Objects 
+drop-down . Isolate Objects
+ again. 
+When you end the object isolation, as described in Ending the Object Isolation View in a Drawing on page 1120, all objects are redisplayed. 
+Hiding Objects 
+You can temporarily hide objects in the drawing. 1 Select the objects that you want to hide. 
+2 Click <Object> tab . General panel . Isolate Objects drop-down . Hide Objects
+ . 
+3 TIP You can also use the  icon in the drawing window status to  
+hide objects. A red icon (  ) means that there are already objects  
+hidden.  
+
+4 If you need to refine the selection set, select the desired objects, and click <Object> tab . General panel . Isolate Objects 
+drop-down . Hide Objects
+ again. 
+Ending the Object Isolation View in a Drawing 
+To redisplay all objects in the drawing, the object isolation view must be dismissed. 
+Restoring all objects in a drawing 
+
+1 Select any object in the current view. 
+2 Click <Object> tab . General panel . Isolate Objects drop-down . End Isolation
+ . 
+TIP You can also use the 
+icon in the drawing window status to end the object isolation view. 
+Saving Isolated Objects 
+You can save a drawing in which object isolation is currently active. The next time you open the drawing, it displays with the isolation settings you defined. 
+

@@ -1,0 +1,1663 @@
+[MIGRATED TO RTM_PART_75.md - LAYER KEY STYLES & OVERRIDES]
+[MIGRATED TO RTM_PART_39.md - LAYER STANDARDS & OVERRIDES]
+return to particular settings for all layers during different stages in completing a drawing or for plotting. 
+Layer settings include layer states, such as on or locked, and layer properties, such as color or linetype. In a saved layer state, you can choose which layer states and layer properties you want to restore later. For example, you can choose to restore only the Frozen/Thawed setting of the layers in a drawing, ignoring all other settings. When you restore that named layer state, all settings remain as they are currently set except whether each layer is frozen or thawed. 
+Restoring a saved layer state 
+
+
+Viewport Layer Overrides 
+You can now apply overrides for color, linetype, lineweight, and plot style to layers in individual layout viewports. This is an efficient way to display objects with different property settings in individual viewports without changing their ByLayer or ByBlock properties. Because layer property overrides do not change the layer’s global properties, you can have objects display differently in various viewports without having to create duplicate geometry or use xrefs that have different layer settings. When the Layer Properties Manager is accessed from a layout tab, 4 additional columns for viewport-specific layer property overrides are displayed for VP Color, VP Lineweight, VP Linetype, and VP Plot Style. 
+Overriding layer properties for a viewport 
+
+
+New Layer Notification 
+You can be notified when new layers are added to the current drawing or one of its attached xrefs before certain tasks, such as plotting, saving, or restoring a layer state. This way you can avoid potential problems such as plotting objects that were added to the drawing by the addition of a new layer. You can control when a drawing is evaluated for new layers, if at all. You can specify which commands, such as SAVE or PLOT, trigger the software to check the layer list and alert you of new layers. This can be limited to new layers that have been added to attached xrefs or include layers in the current drawing and attached xrefs. 
+
+
+Layer Standards 
+Layer standards establish naming conventions for layers in your drawings. A layer standard contains a set of rules that determines the structure of the layer names in a drawing. When you install the software, you can select from a number of layer standards that you can use. You can change or edit each of the layer standards later, if needed. 
+Defining a layer standard 
+
+
+Layer Keys and Layer Key Styles 
+Each layer standard has a corresponding layer key style. The layer keys in the layer key style assign objects to predefined layers with names that conform to the layer standard. When you add an object, the object is automatically drawn on the layer assigned to it in the current layer key style. This process is called layer keying. 
+Viewing a layer key style 
+
+You can change any part of the layer name structure using layer key overrides within the layer key style. You can override the layer names for all the layer keys in a layer key style, or you can override individual layer key styles. 
+
+
+Managing Drawing Layers 
+The Layer Properties Manager helps you organize, sort, and group layers, as well as save and coordinate layer states. You can also use layer standards with the Layer Properties Manager to better name the layers in multiple drawings. 
+When you open the Layer Properties Manager, all the layers in the current drawing are displayed in the right pane. You can work with individual layers to: 
+¦ 
+Create, rename, and delete layers 
+
+¦ 
+Change layer properties 
+
+¦ 
+Make a layer current 
+
+¦ 
+Add and remove viewport layer overrides 
+
+¦ 
+Get notified of new layers and reconcile them in the drawing 
+
+¦ 
+Filter and group layers 
+
+
+NOTE Additional AutoCAD layer functionalities are available on the Home tab . Layers panel. For more information about AutoCAD layer functionalities, see “Work with Layers” in the AutoCAD help. 
+Opening the Layer Properties Manager 
+Use this procedure to open the Layer Properties Manager. When you open the Layer Properties Manager, all the layers in the current drawing are displayed in the right pane while the layer groups are displayed in the left pane. 
+. Click Home tab . Layers panel . Layer Properties
+ . 
+
+
+Making a Layer Current 
+Use this procedure to make a specific layer the current layer in the drawing. You must select an individual layer to make current. You cannot make multiple layers or layer groups current. 
+When you make a layer current, new objects you create are drawn on that layer, unless they have their own layer assignment. For example, if you make A-Wall the current layer, any lines, polylines, and other linework objects without layer assignment will be drawn on that layer until you select another layer to be current. 
+NOTE AutoCAD Architecture objects have their own layer assignment through layer key styles and layer standard, so they are not affected by the current layer setting. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 In the right pane, double-click the layer that you want to make current. You can also select the layer that you want to make current and 
+click 
+. 
+The selected layer is now the current layer and is marked with a green check in the Layer Properties Manager. The layer name is displayed next to Current Layer: at the top of the Layer Properties Manager. 
+
+Creating a Layer with a Layer Standard 
+Use this procedure to create a layer that conforms to the layer standard selected for the drawing. Layer standards define the naming of new layers according to the structure defined in the standard. AutoCAD Architecture creates layers as needed according to the current layer standard. For example, when you add a wall to a drawing, the software creates the necessary wall layers if they do not yet exist. 
+Layer standards can be based on architectural standards like AIA or BS1192, or they can be user-defined and represent a company or other standard. AutoCAD Architecture ships with a number of predefined layer standards and matching layer key styles. 
+For information on selecting a layer standard and layer key style for a drawing, see Specifying a Layer Standard and a Layer Key Style on page 198. For information about creating your own layer standard, see Creating a Layer Standard on page 769. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+. 
+
+3 Select the layer standard that you want to use for Layer Standard. 4 Specify the layer standard information. Depending on the layer standard you are using, different fields are available here. 
+To select a value for one of the available fields, click the [...] button, and select one of the values. 
+You can also enter a new value, provided you follow the parameters specified for the layer standard components. 
+When you are finished, the Layer Name and Description fields display the combination of values you have selected. If you have, for example, created a new layer for storage shelves according to the BS1192 layer standard, it is named A746G. 
+NOTE If the name of the new layer is the same as an existing layer in the current layer key style, the properties of the new layer are automatically updated with the properties of the existing layer. 
+5 Select Make Current if you want to make the new layer the current immediately. 
+6 Select a color for the layer from the list. If the desired color is not available on the list, select Select Color, and select a color from the Color Picker. 
+7 Select a linetype. If the desired linetype is not available on the list, select Other, and select a linetype from the Select Linetype dialog box. 
+8 Select a lineweight. 9 Select a Plot Style. Clear Plot if you do not want the new layer to be plotted. 
+10 Click OK. 
+
+Creating a Nonstandard Layer 
+Use this procedure to create a nonstandard layer. A nonstandard layer is a layer that does not need to conform to the layer standard. You might want to use nonstandard layers for elements like architect’s comments or construction lines, blocks you do not want to insert on their original layer, or walls that you want to display partially. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+. 
+3 Select Non Standard for Layer Standard. 4 Enter a name for the new layer. 5 Select Make Current if you want to make the layer the current 
+layer. 6 Enter a description for the new layer. 7 Select a color for the layer from the list. 
+If the desired color is not available on the list, select Select Color, and select a color from the Color Picker. 
+8 Select a linetype. If the desired linetype is not available on the list, select Other, and select a linetype from the Select Linetype dialog box. 
+9 Select a lineweight. 10 Select a Plot Style. Clear Plot if you do not want the new layer to be plotted. 
+11 When you finish specifying the properties of the layer, click OK. 
+
+Renaming a Layer 
+Use this procedure to specify a new name for a layer. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 2 Select the layer that you want to rename, and click the layer name. 3 Enter a new name for the layer, and press ENTER. 
+Deleting a Layer 
+Use this procedure to delete a layer from a drawing. 
+Keep the following points in mind when you delete layers: 
+¦ 
+If you try to delete a layer that still has objects on it, you receive an error message. To delete this layer, you must first erase all objects on it in the drawing. 
+
+¦ 
+If the layer you try to delete is the current layer, you receive an error message. To delete this layer, make another layer current and then delete the layer. 
+
+
+¦ Some layers may be assigned to the components of another object, or even to other object styles. These layers cannot be deleted. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Right-click the layer that you want to delete, and click Delete Layer. Alternatively, you can select the layer that you want to delete and 
+click 
+. 
+
+Changing the Layer Standard of a Layer 
+Use this procedure to assign a specific layer to a different layer standard. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Right-click the layer that you want to change, and click Change Layer Standard. 
+3 Select the layer standard that you want to use for Layer Standard. The layer you selected is now assigned to the specified layer standard. 
+NOTE If a layer standard is unavailable on the shortcut menu, the layer that you selected is not valid for that standard. 
+
+Defining the Properties of a Layer 
+A layer has a number of states and properties that define its display and behavior in the drawing. 
+A state is a condition of a layer that can have one of two values, like On/Off or Freeze/Thaw. The following layer states can be set in the Layer Properties Manager: 
+Icon Layer state Description value 
+
+On Objects on the layer are displayed, plotted, and regenerated and hide other objects when you use HIDE. 
+
+Off Objects on the layer are not displayed and not plotted but do hide other objects when you use HIDE. The drawing is not regenerated when you turn the layer on. 
+
+Thawed Objects on the layer are displayed and plotted and hide other objects when you use HIDE. 
+
+Frozen Objects on the layer are not displayed and not plotted but do hide other objects when you use HIDE. The drawing is regenerated when you thaw the layer. 
+
+Unlocked Objects on the layer can be modified. 
+
+Locked Objects on the layer cannot be modified. You can still apply object snaps to objects on a locked layer and perform other operations that do not modify those objects. 
+
+Plot The selected layer is plotted. 
+
+Non Plot The selected layer is not plotted. If you turn off plotting for a layer, the objects on that layer are still displayed. Layers that are off or frozen are not plotted, regardless of the Plot/Non Plot setting. 
+
+New Viewport Thaws the selected layer in new layout viewports. Thawed 
+
+Icon Layer state Description value 
+
+New Viewport Freeze (New VP Freeze) Freezes selected layers in new layout viewports. For example, freezing the DIMENSIONS layer in all new viewports restricts the display of dimen­sions on that layer in any newly created layout viewports but does not affect the DIMENSIONS layer in existing viewports. If you later create a viewport that requires dimensions, you can over­ride the default setting by changing the Current Viewport Freeze/Thaw setting. 
+
+Current View-Thaws the selected layer in the current layout port Thawed viewport. 
+
+Current View-port Freeze (VP Freeze) Freezes selected layers in the current layout view-port. You can freeze or thaw layers in the current viewport without affecting layer visibility in other viewports. Current Viewport Freeze is an override to the Thaw setting in the overall drawing. You can freeze a layer in the current viewport if it is thawed in the drawing, but you cannot thaw a layer in the current viewport if it is frozen or off in the drawing. A layer is not visible when it is set to Off or Frozen in the drawing. 
+Layer properties are settings that can have a list of different values for a display characteristic. The following properties can be set for a layer in the Layer Properties Manager: 
+¦ 
+Color: Changes the color of objects on the layer. Clicking the color name displays the Select Color dialog box. 
+
+¦ 
+Linetype: Changes the linetype of objects on the layer. Clicking the linetype name displays the Select Linetype dialog box. 
+
+¦ 
+Lineweight: Changes the lineweight of objects on the layer. Clicking the lineweight name displays the Lineweight dialog box. 
+
+¦ 
+Plot style: If you are working with color-dependent plot styles (PSTYLEPOLICY = 1), you cannot change the plot style associated with a layer. Clicking the plot style displays the Select Plot Style dialog box. 
+
+
+¦ Description: You can add a description to the layer. if your layers are created with a layer standard, the description is filled in automatically. In that case, it is recommended to not overwrite it. 
+NOTE You can override layer properties for individual viewports. For more information, see Overriding Layer Properties in Layout Viewports on page 715. 
+
+Changing the Visibility of Object Subcomponents 
+You can place different components of an AEC object on different layers. This is accomplished via the object’s display properties. For example, the current layer key style might place a wall on the layer named A-Wall, while the wall’s material definitions might place its internal boundaries on the layer named A-Wall-Comp. Turning off the layer A-Wall would typically make the entire wall (including its internal boundaries) invisible, even though those components were assigned to a different layer. You can define that the subcomponents of an object remain visible, even though the primary object’s layer (A-Wall in this case) is turned off. For information on setting this option, see Specifying a Layer Standard and a Layer Key Style on page 198. 
+NOTE Freezing the primary object’s layer would make the entire object including its internal subcomponents invisible regardless of the value of this setting. You must turn the layer off if you want subcomponents to be visible without the main component. 
+You must keep layer 0 (zero) on and thawed in order to work with AEC object OSNAPs. When layer 0 is off, AEC object OSNAP points are not visible or active. 
+
+To change the properties of a layer 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 To change one of the layer states On/Off, Freeze/Thaw, Lock/Unlock, Plot/Non Plot, Current Viewport Freeze/Thaw, or New Viewport Freeze/Thaw, click the layer state icon for the state to switch its value. 
+3 To change one of the layer properties Color, Linetype, Lineweight, Plot Style, or Description, click the current setting for the property. Then, use the subsequent dialog box to select a different value. 
+NOTE You can also access these many of these settings directly from the Layer drop-down on Home tab . Layers panel. 
+
+
+Overriding Layer Properties in Layout Viewports 
+You can now apply overrides for color, linetype, lineweight, and plot style to layers in individual layout viewports. This is an efficient way to display objects with different property settings in individual viewports without changing their ByLayer or ByBlock properties. Because layer property overrides do not change the layer’s global properties, you can have objects display differently in various viewports without having to create duplicate geometry or use xrefs that have different layer settings. When the Layer Properties Manager is accessed from a layout tab, 4 additional columns for viewport-specific layer property overrides are displayed for VP Color, VP Lineweight, VP Linetype, and VP Plot Style (available only in named-plot style drawings; PSTYLEMODE=1.) 
+Viewport layer overrides in Layer Properties Manager 
+
+If you want to temporarily not display or plot property overrides, set VPLAYEROVERRIDESMODE to 0. Objects will display and plot with their global layer properties. Property overrides can still be set even when VPLAYEROVERRIDESMODE is set to 0. 
+NOTE Property overrides that are on xref layers are not retained when VISRETAIN system variable is set to 0. 
+Layer Property Overrides in Previous Releases 
+When a drawing containing layer overrides is opened in a previous release of the software, overrides are not visible and the layer displays its global properties. The override settings are retained however when the drawing is saved in a previous release, and are visible again when the drawing is re-opened in the current release. 
+If a viewport containing layer overrides is deleted when the drawing is opened in a previous release, the override settings are not retained and are not available when the drawing is re-opened in the current release. 
+When VISRETAIN is set to 0 when the drawing is opened in a previous release, viewport overrides in xref layers are not retained. 
+To override layer properties in a layout viewport 
+1 Make the layout viewport active for which you want to create viewport layer overrides. 
+2 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+3 Scroll until you have the viewport overrides columns visible in the Layer Properties Manager. The following viewport overrides are available for layout viewports: 
+¦ 
+VP Color 
+
+¦ 
+VP Linetype 
+
+¦ 
+VP Lineweight 
+
+¦ 
+VP Plot Style 
+
+
+4 Click the desired setting to change the property value. A layer value that is overridden in the viewport is marked by a different background color (light blue by default) on the override property, the global property, and the layer name. 
+Identifying Viewport Layer Overrides 
+There are a number of ways to identify layers containing overrides. 
+
+In the Layer Properties Manager: 
+¦ A background color displays for each override and for each corresponding global property setting. By default, it is set to light blue, but you can change that to another color. For information on changing the background color, see “Override Layer Properties in Viewports” in the AutoCAD help. 
+¦ A different icon ( 
+ ) displays in the Status column of the layer. 
+¦ 
+A tooltip displays property override information when the cursor is placed over the Status icon for the layer containing overrides. 
+
+¦ 
+A predefined filter named Viewport Overrides is displayed in the tree view where all layers with viewport overrides are listed. 
+
+
+
+
+In the drawing workspace: 
+¦ On the command line, enter VPLAYEROVERRIDES to check if the current viewport contains layer property overrides. When VPLAYEROVERRIDES is equal to 1, the viewport contains overrides. 
+
+
+
+Removing Viewport Layer Overrides 
+You can remove layer overrides from layout viewports. 
+There are different options to make removing viewport overrides efficient and intuitive: 
+¦ 
+You can remove overrides in the active viewport only, or for all viewports. 
+
+¦ 
+You can remove overrides for selected layers only, or for all layers. 
+
+¦ 
+You can remove individual overrides from a selected layer. 
+
+
+To remove a single override from a selected layer 
+1 Make the layout viewport active that has viewport layer override you want to remove. 
+2 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+3 In the list of layers, right-click the overridden setting you want to remove (for information about identifying overrides, see 
+Identifying Viewport Layer Overrides on page 716), and click Remove Viewport Overrides for. Depending on the setting you have right-clicked, a submenu 
+displays for the setting: 
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Plot Style 
+
+
+4 Click the desired submenu, and click one of these commands: 
+¦ In Current Viewport only: This will remove the override from the selected layer in the current viewport only. For example if you have clicked Remove Viewport Overrides for 
+. Color . In Current Viewport only, then only the overridden color in the currently active viewport for the selected layer will be reset to the global color. 
+¦ In All Viewports: This will remove the selected override from the selected layer in all layout viewports. For example if you have clicked Remove Viewport Overrides for . Color . In All Viewports, then any color overrides for the selected layer in any layout viewport in the drawing will be reset to the global color. 
+
+To remove all overrides from a selected layer 
+5 Make the layout viewport active in which you want to remove all viewport overrides from a layer. 
+6 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+7 In the list of layers, right-click the layer name or status icon from which you want to remove all overrides, and click Remove Viewport Overrides for . Selected Layers. 
+8 Click one of these two commands: 
+¦ 
+In Current Viewport only: This will remove all overrides from the selected layer in the current viewport only. 
+
+¦ 
+In All Viewports: This will remove all overrides from the selected layer in all layout viewports, and reset them to their global properties. 
+
+
+
+To remove all overrides from all overridden layers 
+9 Make the layout viewport active in which you want to remove all viewport layer overrides. 10 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+11 In the list of layers, right-click any layer name or status icon, and click Remove Viewport Overrides for . All Layers. 
+12 Click one of these two commands: 
+¦ 
+In Current Viewport only: This will remove all overrides from all layers in the current viewport only. 
+
+¦ 
+In All Viewports: This will remove all overrides from all layers in all layout viewports, and reset them to their global properties. 
+
+
+
+
+
+Working with Layer Groups 
+With the Layer Properties Manager, you can create different layer groups to produce working views and backgrounds from large building data sets. Layer groups help you work more efficiently in drawings that have many layers. You can change the settings of a layer group to apply the changes to all layers in the group at one time. For example, you can lock a layer group to lock all the layers in the filter. 
+Types of Layer Groups 
+There are five types of layer groups: 
+Type Description 
+All Is always present and lists all the layers and other layer groups in the drawing. 
+Xref Lists any layers in external reference files linked with the current drawing. This group is automatically created when you xref a drawing into the current drawing. 
+group filters Contain layers that you have assigned to them. 
+property filters Contain layers based on a filter that you specify. You can base filters on layer names and other layer properties. 
+layer standards filters Contain layers associated with a specified standards category. 
+
+
+Rules for Layer Groups 
+The following group rules apply when you are creating and working with layer groups: 
+¦ 
+You can list a layer in more than one layer group. 
+
+¦ 
+Multiple listings of the same layer must always have identical property settings. For example, a layer that is a member of two groups cannot be a different color in each group. 
+
+¦ 
+You cannot list a layer twice in a group. 
+
+¦ 
+You can delete layer groups without affecting the layers in the group. 
+
+¦ 
+Changing one of the properties of a layer group changes that property for all the layers in that group, except where the change would be invalid. For example, it is not possible to freeze the current layer. 
+
+¦ 
+Layer group names need not be unique. 
+
+
+¦ 
+There is no naming convention for layer groups. Group names can include spaces, non-alphanumeric characters, and both uppercase and lowercase letters. 
+
+¦ 
+Xref layer groups cannot contain other filter groups. 
+
+
+
+Managing Layer Groups 
+You can add and subtract layers from layer groups. You can change the standard AutoCAD properties for the layers in groups, rename layer groups, delete layer groups, and change the filters in filter groups. 
+
+Types of Layer Filters 
+With the Layer Properties Manager, you can create three types of layer filters: group filters, property filters, and layer standards filters. 
+Group filters can contain any layers in the current drawing. You can manually add layers to, and remove layers from, group filters by dragging layers within the Layer Properties Manager into the group filter or by selecting an object in the drawing on the layer that you want to add to the group filter. 
+Group filters are considered static because they are not automatically updated. They include only the layers that were assigned when the group was created. You can manually add layers to, and remove layers from, group filters. 
+Property filters contain layers that meet filter criteria that you specify for the group. Filter criteria can select layers according to layer states (on/off, frozen/thawed, locked/unlocked), properties, or names. For example, you can create a property filter that includes all of the red layers in the current drawing. 
+Property groups are considered dynamic because they are automatically updated when you change the properties of layers that are part of the group. Property filters are also updated when you add or modify layers that meet the criteria specified in the filter. You cannot manually add layers to, or remove layers from property filters. 
+The layer groups named Xrefs and All are created automatically. 
+
+Creating a Group Filter 
+Use this procedure to create a group filter. Group filters can contain any layers currently listed in the Layer Properties Manager. You can manually add layers to, and remove layers from, group filters by dragging layers within the Layer 
+Properties Manager into the group filter or by selecting an object in the drawing on the layer that you want to add to the group filter. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 In the left pane of the Layer Properties Manager, select a layer group that you want to create the new group under, right-click, 
+and select New Group Filter, or click 
+in the Layer Properties Manager. 
+3 Enter a name for the new group filter, and press ENTER. 
+4 Edit the new group filter: 
+If you want to… Then… 
+add layers to the group filter see Adding Layers to Layer Groups on page 728. 
+specify properties for the group fil-see Changing the Properties of a ter Layer Group on page 729. 
+
+
+Creating a Property Filter 
+A property filter contains layers that meet filter criteria that you specify for the group. Filter criteria can include layers according to layer states (on/off, frozen/thawed, locked/unlocked), properties, or names. For example, you can create a property filter that includes all of the red layers in the current drawing. 
+
+Creating Property Filters 
+Use this procedure to create property filters. You can specify more than one filter for a group. For example, you can filter by both layer name and status in order to group all frozen walls layers. 
+You can also specify more than one set of criteria for a property filter. For example, you can create a filter that will include all frozen red layers and all frozen blue layers. Boolean AND/OR logic is applied to the filter definitions to determine which layers to include. A layer must meet all the criteria in a single row in order to be included in the filter. Continuing with the example, a layer must be frozen and red to be in the filter. Multiple rows offer alternative 
+criteria. In the example below, a layer must be overridden with the color 30 or it must be overridden with the color 31. 
+Example of a property filter with multiple criteria 
+
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 In the left pane of the Layer Properties Manager, select a layer group that you want to create the new group under, right-click, 
+and select New Property Filter, or click 
+in the Layer Properties Manager. 
+3 Enter a name for Filter Name. 
+4 Specify the filter criteria: 
+If you want to… Then… 
+filter layers by visibility state see Specifying a Filter for Layer State on page 724. 
+filter layers by layer color see Specifying a Filter for Layer Color on page 725. 
+filter layers by layer linetype see Specifying a Filter for Layer Linetype or Lineweight on page 726. 
+filter layers by wildcard characters see Specifying a Filter for Layer Name on page 726. 
+5 Once a row of criteria is configured, you can copy or delete the row: 
+
+If you want to… Then… 
+copy a row of criteria right-click in the row you want to copy, and select Duplicate Row. 
+delete a row right-click in the row, and select Delete Row. 
+6 Click OK. 
+
+
+Specifying a Filter for Layer State 
+Use this procedure to specify a filter that includes layers based on the following layer states: 
+¦ 
+In use/not in use 
+
+¦ 
+On/off 
+
+¦ 
+Frozen/thawed 
+
+¦ 
+Locked/unlocked 
+
+
+A layer must meet all the specified filter criteria to be included. For example, if you select Off and Frozen for the filter, a layer that is turned off but is not frozen will not be included. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 2 In the left pane of the Layer Properties Manager, select a layer group that you want to create the new group under, right-click, 
+and select New Property Filter. 3 Enter a name for Filter Name. 4 Specify the In use/not in use layer criteria for the filter: 
+If you want to… Then… 
+include all the layers in the drawing click in the Status field, and select that are in use
+ . 
+include all the layers in the drawing click in the Status field, and select that are not in use
+
+ . 
+5 Specify the On/Off layer state criteria for the filter: 
+
+If you want to… Then… 
+include all the layers in the drawing 
+click in the On field, and select
+that are turned on 
+. 
+
+include all the layers in the drawing 
+click in the On field, and select
+that are turned off 
+. 
+
+6 Specify the Freeze/Thaw layer state criteria for the filter: 
+
+If you want to… Then… 
+include all the layers in the drawing click in the Freeze field, and select that are thawed
+
+ . 
+include all the layers in the drawing click in the Freeze field, and select that are frozen
+
+ . 
+7 Specify the Locked/Unlocked layer state criteria for the filter: 
+
+If you want to… Then… 
+include all the layers in the drawing click in the Lock field, and select that are unlocked
+
+ . 
+include all the layers in the drawing 
+select Locked. 
+.
+that are locked 
+8 Click OK. 
+
+
+Specifying a Filter for Layer Color 
+Use this procedure to specify a filter that includes layers based on layer colors. 1 If necessary, open the Layer Properties Manager by clicking Home tab . Layers panel . Layer Properties
+ . 
+2 In the left pane of the Layer Properties Manager, select a layer group that you want to create the new group under, right-click, and click New Property Filter. 
+3 Enter a name for Filter Name. 4 Under Filter definition, click the Color field. 5 Click the [...] button. 6 Select a color from the Select Color dialog box. 7 Click OK. 
+
+Specifying a Filter for Layer Linetype or Lineweight 
+Use this procedure to specify a filter that includes layers based on linetype or lineweight. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 2 In the left pane of the Layer Properties Manager, select a layer group that you want to create the new group under, right-click, 
+and click New Property Filter. 3 Enter a name for Filter Name. 4 Specify the filter criteria for linetypes or lineweights: 
+If you want to… then… 
+specify a linetype to include in  click in the Linetype field, and click the  
+the filter  [...] button. Select a linetype from the  
+Select Linetype dialog box.  
+
+specify a lineweight to include  click in the Lineweight field, and click  
+in the filter  the [...] button. Select a lineweight from  
+the Lineweight dialog box.  
+
+5 Click OK. 
+
+Specifying a Filter for Layer Name 
+Use this procedure to specify a filter that includes layers based on wildcard strings in a layer name. The wildcard string is not case sensitive. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 2 In the left pane of the Layer Properties Manager, select a layer 
+group, right-click, and click New Property Filter. 3 Enter a name for Filter Name. 4 Under Filter definitions, click the Name field. 5 Specify the wildcard filter criteria: 
+If you want to… Then… 
+include all layers that start with a enter a wildcard string and an aster-particular string isk (*) for Name. Example: wall* 
+include all layers that end with a enter an asterisk (*) and the wild-particular string card string for Name. Example: 
+*view 
+include all layers where a particular enter an asterisk (*), the wildcard string can occur anywhere within string, then another (*) for Name. the layer name Example: *anno* 
+For more information about working with wildcards, see “Filter 
+Selection Sets” in AutoCAD help. 
+6 Click OK. 
+
+
+Creating a Layer Standards Filter 
+A layer standards filter contains layers that are associated with a particular category of a standard. For example, if you create a layer standards filter for the AIA 2nd Edition standard, and you specify the Major category as the one to include in the filter, you create a filter that contains all of the drawing annotation layers. 
+
+Creating Layer Standards Filters 
+Use this procedure to create standards filters. You can specify more than one standard category for a filter. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 In the left pane of the Layer Properties Manager, select a layer group that you want to create the new group under, right-click, 
+and select New Standards Filter, or click 
+in the Layer Properties Manager. 
+3 Enter a name for Filter Names. 
+4 Select a standard for Layering Standard. 
+5 The categories in the Available Category(s) column will differ depending on the standard being used. Select a category to include in the filter, and click the Add >> button to move it to the Selected Category(s) column. 
+You can include multiple categories in one standards filter. All layers associated with the Selected Category(s) will be included in the filter. 
+6 Click OK. 
+
+Adding Layers to Layer Groups 
+Use this procedure to add layers to a layer group. You can manually add layers to a group filter. You can either drag them from the list of layers in the right pane of the Layer Properties Manager to the group in the left pane or add the layer to the group by selecting an object in the current drawing that is on the layer that you want to add. 
+You can also replace all layers in an existing group by selecting objects in the current drawing that are on the layers that you want to use as replacements for the existing layers. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 2 Add layers to a layer group: 
+If you want to… Then… 
+add layers to a layer group by  in the left pane of the Layer Proper- 
+dragging  ties Manager, select the All layer  
+group. In the right pane of the  
+Layer Properties Manager, drag a  
+layer to the user layer group or  
+static filter group in the left pane.  
+
+If you want to… Then… 
+add layers to a layer group by select- select the layer group, right-click,  
+ing drawing objects  and click Select Layers . Add. In  
+the current drawing, select an ob­ 
+ject on each layer that you want to  
+add to the group. Press ENTER to  
+return to the Layer Properties Man­ 
+ager.  
+
+replace layers from groups by select­ing drawing objects 
+select the layer group whose layers you want to replace, right-click, and click Select Layers . Replace. Select an object on each layer that you want to replace the layers in the group. Press ENTER to return to the Layer Properties Manager. 
+3 Click OK. 
+
+
+Changing the Properties of a Layer Group 
+Use this procedure to change the properties of all layers in a layer group. If a layer is in more than one group, the changes apply to that layer in all groups in which it is included. For example, if you freeze a group that includes the layer A-Wall, that layer is frozen in any other group in which A-Wall appears. 
+NOTE Because you cannot freeze the current layer, you do not have the option to freeze a group in the active viewport if the current layer is included in the group. You also cannot freeze the active viewport on the Model layout tab. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click the layer group whose properties you want to change, and specify properties: 
+If you want to… Then… 
+specify whether the group is locked right-click, select Lock, and select Lock or Unlock Off. 
+
+If you want to… Then… 
+specify whether the group is frozen right-click, select Visibility, and se­lect Thawed or Frozen. 
+specify the visibility of the group right-click, select Visibility, and se­lect On or Off. 
+freeze all layers in the drawing ex-right-click, select Isolate Group, and cept those in the selected layer select All Viewports or Active View-group port Only. 
+
+
+Renaming and Deleting Layer Groups 
+Use this procedure to rename or delete layer groups. The layer group is deleted from the Layer Properties Manager, but the layers listed in the group are not deleted. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 2 Rename or delete a layer group: 
+If you want to… Then… 
+rename the layer group right-click the layer group, and click Rename. Enter a new name, and press ENTER. 
+delete the layer group right-click the layer group, and click Delete. 
+
+
+Converting a Property Filter to a Group Filter 
+Use this procedure to convert property filters to group filters. Note that dynamic property filters are converted to static group filters. You manually add, replace, and delete layers from group filters. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 On the left pane, select the property filter you want to convert. 3 Right-click, and select Convert to Group Filter. 
+
+
+New Layer Notification 
+You can be notified when new layers are added to the drawing before certain tasks, such as plotting, saving, or restoring a layer state. It is important to be aware of new layers that have been added to a drawing or to an attached xref without your knowledge. You can avoid potential problems such as plotting objects that were added to the drawing by the addition of a new layer. 
+You can control when a drawing is evaluated for new layers, if at all. You can specify which commands, such as SAVE or PLOT, trigger the program to check the layer list and alert you of new layers. This can include new layers that have been added to attached xrefs. 
+Setting up the Notification for New Layers 
+Use this procedure to be notified when new layers are introduced into the drawing or any xrefs referenced to it. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+(Settings). 
+
+3 To set up the new layers notification in the drawing, select Evaluate new layers added to the drawing. 
+4 Determine if you want to be notified only of new layers added to xrefed drawings, or of new layers in xrefed drawings and in the current drawing: 
+To be notified only of new layers in xref drawings, click Evaluate new xref layers only. 
+To be notified of new layers in xref drawings and in the current 
+drawing, click Evaluate all new layers. 
+5 Click Notify when new layers are present to define the actions that should trigger an evaluation for new layers. Each time one of the specified actions is performed in the drawing, a comparison is made between the last time a specified action was performed (the layer baseline) and the present time. If new layers have been added in the meantime, the new layers notification is displayed. 
+In new drawings, the layer baseline is created when the drawing is saved or plotted for the first time. For example, when layers are added to a new drawing, and then it is saved, the layer baseline is created. Layers that have been added since the drawing was saved are considered new unreconciled layers. 
+¦ 
+Open: Checks for new layers on opening the drawing. 
+
+¦ 
+Attach/Reload Xrefs: Checks for new layers when an xref is attached or reloaded. 
+
+¦ 
+Restore Layer state: Checks for new layers when you restore a saved layer state. For more information, see Working with Layer States on page 735. 
+
+¦ 
+Save: Checks for new layers when the drawing is saved. 
+
+¦ 
+Insert: Checks for new layers when a block is inserted. 
+
+
+6 Click Display alert for plot when new layers are present to check for new layers when plotting a drawing. 
+
+Identifying New Layers in the Drawing 
+When notification is turned on, a New Layer Notification bubble displays on the status bar every time one of the specified actions is performed, and new layers are detected in the process. You can choose to view the new layers by clicking the View Unreconciled New Layers link. 
+
+When you click the link, the Layer Properties Manager opens, and the Unreconciled New Layers filter is automatically selected. All new layers that have been added to the drawing or attached xrefs are displayed in the list view. 
+
+You can turn off layer notification but still have the layer list evaluated for new layers. Although the notification bubble does not display, you can still 
+check for new layers by right-clicking the alert icon ( 
+ ) on the status bar. 
+
+Reconciling New Layers in the Drawing 
+Unreconciled layers are layers that have been added to the drawing or to attached xrefs since the layer list was last evaluated. The layer list is checked for new layers when one of the commands selected in Setting up the Notification for New Layers on page 731 is used. 
+To reconcile a layer in the drawing you have to manually select it and mark it as reconciled. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 In the tree view on the left, select the Unreconciled Layers group. All layers that have been added to the drawing or its xrefs since the last user-specified action (for example reloading an xref), are listed. 
+3 To reconcile a new layer, select the layer name or status, 
+right-click, and click Reconcile Layer. This will add the layer to the layer baseline and not display it as new anymore in the drawing. 
+
+
+Working with Layer States 
+NOTE In AutoCAD Architecture 2011 the Layer Snapshot functionality is discontinued in favor of the Layer State functionality. Existing layer snapshots (LAY) files are automatically converted to layer states (LAS) when the Layer States Manager is invoked in a legacy drawing with layer snapshots. The layer snapshot is deleted after the conversion. 
+You can save the current layer settings in a drawing as a saved layer state and restore them later. Saving layer states is convenient if you need to return to particular settings for all layers during different stages in completing a drawing or for plotting. 
+For example, a facilities manager might save a layer state of individual floor plans and furniture, cable, and HVAC layouts to separate this information from a complete building layout. 
+Layer settings you can save and restore include layer states, such as on or locked, and layer properties, such as color or linetype. You can choose which layer states and layer properties you want to restore later. 
+You can modify the properties of a saved layer state. All layer properties other than the layer name can be edited. You can also add new layers to a layer state if new layers were added since the later state was saved. 
+NOTE To be notified when new layers are added to the drawing, see Setting up the Notification for New Layers on page 731. 
+Layer States in Xrefs 
+When an xref containing saved layer states is inserted in the host drawing, the xref layer states are listed by name and can be viewed in the Layer States Manager. Although they can be restored, they cannot be edited. Xref layer states are identifiable because the layer state name is preceded by the xref drawing’s name and separated by a double underscore symbol. (Example: Xref Name__Layer State Name.) When the xref is bound to the host drawing, layer states are identifiable by $0$ that displays between the xref name and layer state name. (Example: Xref Name$0$Layer State Name.) 
+Layer states from nested xrefs are also included. Layer states from xrefs are removed from the host drawing when the xref is detached or unloaded. 
+
+Creating a Saved Layer State 
+You can save any set of currently existing layers and their properties as a layer state, with the purpose of either restoring that layer state later in the current drawing or exporting it to another drawing and restore it there. 
+The following lists the layer states and properties that are saved in a layer state: 
+Saving a Layer State in Model Space: 
+¦ 
+Layer name 
+
+¦ 
+On/Off 
+
+¦ 
+Freeze/Thaw 
+
+¦ 
+Lock/Unlock 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Plot style 
+
+
+IMPORTANT When a layer state is saved from the model space, the global layer properties for color, linetype, lineweight, and plot style are saved in the layer state. When the layer state is restored to the model space, the global layer properties will be restored as the global layer properties of the drawing. If the layer state is restored to a layout viewport, you can choose if the settings from the saved layer state are restored either as the global layer properties for the drawing, or as viewport overrides for that specific viewport. 
+¦ 
+Plot/Non Plot 
+
+¦ 
+New VP Freeze 
+
+
+
+Saving a Layer State in a Layout Viewport: 
+¦ 
+Layer name 
+
+¦ 
+On/Off 
+
+¦ 
+Freeze/Thaw 
+
+¦ 
+Lock 
+
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Plot style 
+
+
+IMPORTANT When a layer state is saved from a layout viewport, and the viewport has overrides for color, linetype, lineweight, or plot style, the override settings are saved as the viewport properties. When the layer state is restored to a layout viewport, you can choose if the settings from the saved layer state are restored either as the global layer properties for the drawing, or as viewport overrides for that specific viewport. When the layer state is restored to the model space of a drawing, the saved layer settings will be restored as global layer properties to the model space. 
+¦ 
+Plot/Non Plot 
+
+¦ 
+New VP Freeze 
+
+
+1 Verify that you are in the viewport - either model space or a layout 
+-which you want to save as a layer state. 2 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+3 Verify that all layers have the desired states and properties you want to save in a layer state. If necessary, make adjustments. 
+4 Click 
+ to open the Layer States Manager. 
+NOTE Alternatively, you can click Home tab . Layers panel . Layer States drop-down . New Layer State. 
+Saving a layer state 
+
+5 Click New, and enter a name and description for the layer state. 
+Then, click OK. The current settings in Layer Properties Manager are saved in the layer state. 
+When a layer state has been created, the following information about the layer state is displayed in the Layer States Manager: 
+¦ 
+Name: name of the layer state. 
+
+¦ 
+Space: displays whether the layer state has been saved from the model space or from a layout viewport. 
+
+¦ 
+Same as DWG: If the layer configuration in the drawing is identical to the one saved in the layer state, it is listed as Yes. Otherwise, it is No. Typically, the layer state should be identical to the drawing layer configuration when it is created and when it just has been restored. 
+
+
+NOTE The layer state will also be reported to be Same as DWG=Yes if the drawing contains new layers not in the layer state, but these layers are turned off in the drawing. 
+¦ Description: optional description of the layer state. 
+TIP To view the saved layer state settings, click Edit. 
+6 To define which layer settings should be restored when later 
+restoring the layer state, click 
+, and select the appropriate properties under Layer properties to restore. 
+NOTE Selecting settings to restore has no influence over which settings are saved. All settings listed in the Edit window are saved; but you can control which of these settings to restore. 
+You cannot change the settings for On/Off and Freeze/Thaw if you are restoring a layer state to a layout viewport. When a layer state is restored to a layout viewport, the layers in it will be On and Thawed. 
+You cannot change the setting for Visibility in Current VP if you are restoring a layer state to the model space. In model space, you can only control the global visibility of the layer. 
+7 Click Save. 
+8 If new layers have been added to the drawing since the layer state was saved, and you have not added these layers to the layer state you can turn them off in the drawing when restoring the layer state. To do so, click Turn off layers not found in layer state. 
+9 If you want to restore the saved layer state to a layout viewport, determine if the saved layer properties for color, linetype, 
+lineweight, and plot style should be restored to the viewport as global layer properties or as viewport overrides: Select Apply properties as viewport overrides if you want to restore 
+the saved layer state properties as viewport overrides. 
+Clear Apply properties as viewport overrides if you want to restore the saved layer state properties as global layer properties. 
+NOTE If you restore a saved layer state to the model space, the saved properties are always restored as global layer properties. 
+
+
+Editing a Saved Layer State 
+When a layer state is saved, it uses the current viewport layer settings. You can make changes to the saved layer state. 
+Changes to a saved layer state can be these 3 change types: 
+¦ 
+adding layers that have been added to the drawing since the layer state was saved 
+
+¦ 
+removing layers from the layer state 
+
+¦ 
+modifying layer settings 
+
+
+1 Do any of the following to open Layer States Manager: 
+¦ 
+Click Home tab . Layers panel . Layer States drop-down . Manage Layer State. 
+
+¦ 
+Open the Layer Properties Manager by clicking Home 
+
+
+tab . Layers panel . Layer Properties
+ , and then click 
+
+2 Select the layer state that you want to edit, and click Edit. 3 Edit the selected layer state: 
+If you want to… Then… 
+add layers from the drawing to the 
+click 
+, select the layer that you
+layer state 
+want to add, and click OK. 
+delete a layer from the layer state select the layer that you want to delete, and click 
+
+edit the settings of the individual  click the appropriate state or prop- 
+layers in the layer state  erty icon and make the desired  
+change. This affects only the layer  
+state. The layers in the drawing are  
+not affected until you restore the  
+layer state.  
+
+4 Click OK, and then click Close to close the Layer States Manager. 
+
+
+Restoring a Layer State 
+You can restore a saved layer state in a drawing. When you restore a layer state, you can specify which of the saved settings you want to restore. The layer settings you have not selected remain unchanged in the drawing. For example, if you select only the Color property to be restored from the layer state, then the linetype, lineweight, and plot style of the drawing remain unchanged, even if they are different in the layer state than in the drawing. If the drawing contains layers that were added since the layer state was saved, those layers are not deleted when restoring the layer state. You can, however, select to turn them off when restoring a layer state that does not have these layers. For more information, see Creating a Saved Layer State on page 736. 
+When restoring a layer state, the layer that was current when the layer state was saved is made current. If that layer no longer exists, the current layer does not change. 
+IMPORTANT When you save a layer state in the current drawing and then delete any layers in the drawing that are in the layer state, these layers are deleted from the layer state without notification. To retain layers in a layer state that are deleted in the drawing, you must export the layer state before deleting the layers in the drawing. Later, you can re-import the exported LAS file and restore the deleted layers. 
+
+Restore Options for Different Viewports 
+In most cases it is recommended to restore layer states that have been saved from a layout viewport to a layout viewport and layer states that have been saved from the model space to the model space of the drawing. If you want to restore layer states between different workspaces, note the following behaviors: 
+When a layer state is saved from the model space, the global layer properties for color, linetype, lineweight, and plot style are saved to the state. When the layer state is later restored to the model space, the global layer properties will be restored as the global layer properties of the drawing. If the layer state is restored to a layout viewport, you can choose if the settings from the saved layer state are restored either as the global layer properties for the drawing, or as viewport overrides for that specific viewport. 
+NOTE Layers that were turned off or frozen in model space are set to VP Freeze in the Layer Properties Manager if they are restored to a layout viewport. 
+When a layer state is saved from a layout viewport, and the viewport has overrides for color, linetype, lineweight, or plot style, the override settings are saved as the viewport properties. When the layer state is later restored to the model space of a drawing, the saved layer settings will be restored as global layer properties to the model space. If the layer state is later restored to a layout viewport, you can choose if the settings from the saved layer state are restored either as the global layer properties for the drawing, or as viewport overrides for that specific viewport. 
+1 Verify that the viewport in which you want to restore a saved layer state is active. 2 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+3 Click 
+ to open the Layer States Manager. 4 Select the saved layer state to restore. If the setting for Same as DWG is set to Yes, the layer configuration in the drawing is already identical to the one saved in the layer state, or the drawing contains new layers not in the layer state, but these layers are turned off in the drawing. In this case, the layer state will also be reported to be Same as DWG. 
+5 Expand the Layer States Manager by clicking 
+6 To define which layer settings should be restored, select the appropriate properties under Layer properties to restore. You cannot change the settings for On/Off and Freeze/Thaw if 
+you are restoring a layer state to a layout viewport. When a layer state is restored to a layout viewport, the layers in it will be On and Thawed. 
+You cannot change the setting for Visibility in Current VP if you are restoring a layer state to the model space. In model space, you can only control the global visibility of the layer. 
+7 Click Save. 8 If new layers have been added to the drawing since the layer state was saved, and you have not added these layers to the layer state, you can turn them off in the drawing when restoring the layer state. To do so, click Turn off layers not found in layer state. 9 If you want to restore the saved layer state to a layout viewport, determine if the saved layer properties for color, linetype, 
+
+lineweight, and plot style should be restored to the viewport as 
+global layer properties or as viewport overrides: Select Apply properties as viewport overrides if you want to restore the saved layer state properties as viewport overrides. 
+Clear Apply properties as viewport overrides if you want to restore the saved layer state properties as global layer properties. 
+NOTE If you restore a saved layer state to the model space, the saved properties are always restored as global layer properties. 
+10 Click Restore. 
+
+Deleting a Layer State 
+When you delete a saved layer state, you do not delete the layers from the drawing. You delete only the layer state. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+ to open the Layer States Manager. 3 Select the saved layer state to delete. 4 Click Delete, and click Yes in the subsequent dialog. 5 Click Close. 
+
+Importing Layer States to the Current Drawing 
+You can import layer states that are saved in drawing files (DWG, DWS, and DWT) or directly in a layer state (LAS) file. 
+If the layer state is imported from a drawing that contains layers not present in the current drawing, these layers are imported into the current drawing. 
+If the layer state is imported from a drawing and it contains a layer property, such as a linetype or plot style that is not loaded or available in the current drawing, that property is automatically imported from the source drawing. 
+If the layer state is imported from a LAS file, and it contains linetype or plot style properties that do not exist in the current drawing, that property cannot be restored. 
+When importing a layer state that is a duplicate of a layer state in the current drawing, you can choose to overwrite the existing layer state or not import 
+it. 1 If necessary, open the Layer Properties Manager by clicking Home tab . Layers panel . Layer Properties
+ . 
+2 Click 
+ to open the Layer States Manager. 3 Click Import. 4 In the Import layer state dialog box, select the file format of the 
+file from which you want to import a layer state: 
+¦ 
+DWG: Imports layer states from a drawing file 
+
+¦ 
+DWS: Imports layer states from a drawing standards file 
+
+¦ 
+DWT: imports layer states from a drawing template 
+
+¦ 
+LAS: Imports a saved and exported layer state directly 
+
+
+5 Select the desired file, and click Open. 6 If you have selected a DWG, DWS, or DWT file with multiple saved layer states, select the desired state in the Select Layer States dialog, and click OK. 
+
+7 If you have selected a LAS file, you are prompted upon successful import whether you want to immediately restore the layer state in the current drawing. Click Yes to restore or No to import without restoring. 
+
+Exporting a Layer State from the Current Drawing 
+You can export a saved layer state from the current drawing. Saved layer states are saved as LAS files and can be imported into drawing files. 
+When you export a layer state, all layers and their settings are saved in an external file and can be re-imported into a drawing. Exporting a layer state is useful for saving layer configurations you need across multiple drawings. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+ to open the Layer States Manager. 3 Select the layer state you want to export, and click Export. 4 In the Export Layer State dialog, select a name and location for 
+the LAS file, and click Save. 5 Click Close. 
+
+
+Working with Layer Keys 
+A layer key maps an object that you draw to a defined layer. Layer keys also specify the default properties of each layer. 
+Layer Keys and Layer Keying 
+When you create an object, the layer key that is associated with the object automatically places that object on the layer to which it is mapped. Using layer keys to automatically place objects on predefined layers is called layer keying. Usually, you key objects to layers that conform to a layer standard. Each layer standard names layers according to a set of rules that you can modify. For more information, see Creating and Editing Layer Standards on page 760. 
+
+Layer Key Styles 
+You can create different sets of layer keys, called layer key styles, that you can use to place objects on defined layers in your drawings. Each layer key style contains a set of layer keys. Both the AIA and BS1192 layer key styles contain layer keys and layer properties, including layer name, description, color, linetype, lineweight, plot style, and plot settings for all of the AEC objects. You can import the AIA and BS1192 layer standards and layer key styles that are provided with AutoCAD Architecture 2011 from the AecLayerStd.dwg in the C:\ProgramData\Autodesk\ACA 2011\enu\Layers folder. You can modify these styles, if needed, or create new layer key styles. You can also create layer key styles from LY files. 
+
+Properties of Layer Key Styles 
+You can add and remove layer keys from layer key styles. Default layer keys cannot be removed. The properties of any layer in an existing layer key style can also be edited. You can change the layer name, description, color, linetype, lineweight, plot style, and plot settings for the layer that each layer key maps to. If the layer key style is based on a layer standard, you can use overrides on all or some of the layer keys within the layer key style. For more information about overrides, see Layer Key Overrides on page 757. 
+NOTE The default Standard layer key style is not based on a layer standard. It contains the default set of layer keys. 
+
+LY Files and Layer Key Styles 
+If you have LY files from S8 or Release 1 of Architectural Desktop that you want to use, you can create a new layer key style from an LY file. For more information see Creating a Layer Key Style from an LY File on page 753. 
+
+Overrides to Layer Key Styles 
+Whether you create an original layer key style or one from an existing LY file, if you want to use overrides, you must base the layer key style on a layer standard in the current drawing. If you create a nonstandard layer key style, the Overrides On/Off command is unavailable. If you copy a layer key style, you can use layer key overrides only if the layer key style that you copied is based on a layer standard. For more information about using layer key overrides, see Layer Key Overrides on page 757. 
+
+Managing Layer Key Styles 
+To create, edit, copy, or purge layer key styles, you access the Style Manager. The Style Manager provides a central location in AutoCAD Architecture, where you can work with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager on page 855. 
+
+Default Layer Keys 
+AutoCAD Architecture uses the following default layer keys when you create AEC objects. 
+Default layer keys for creating AEC objects 
+Layer Key Description 
+ANNDTOBJ Detail marks 
+ANNELKEY Elevation marks 
+ANNELOBJ Elevation objects 
+ANNMASK AutoCAD Architecture masking objects 
+ANNMATCH Match lines 
+ANNOBJ Notes, leaders, etc. 
+ANNREV Revisions 
+ANNSXKEY Section marks 
+ANNSXOBJ Section lines 
+ANNSYMOBJ Annotation marks 
+APPL Appliances 
+CAMERA Cameras 
+CASE Casework 
+CASENO Casework tags 
+CEILGRID Ceiling grids 
+CEILOBJ Ceiling objects 
+CHASE Chases 
+
+Default layer keys for creating AEC objects 
+COGO Control points 
+COLUMN Columns 
+COMMUN Communication 
+CONTROL Control systems 
+CWLAYOUT Curtain walls 
+CWUNIT Curtain wall units 
+DIMLINE Dimensions 
+DIMMAN Dimensions (AutoCAD points) 
+DOOR Doors 
+DOORNO Door tags 
+DRAINAGE Drainage 
+ELEC Electric 
+ELECNO Electrical tags 
+ELEV Elevations 
+ELEVAT Elevators 
+ELEVHIDE Elevations (2D) 
+EQUIP Equipment 
+EQUIPNO Equipment tags 
+FINCEIL Ceiling tags 
+FINE Details - fine lines 
+
+Default layer keys for creating AEC objects 
+FINFLOOR Finish tags 
+FIRE Fire system equipment 
+FURN Furniture 
+FURNNO Furniture tags 
+GRIDBUB Plan grid bubbles 
+GRIDLINE Column grids 
+HATCH Details - hatching 
+HIDDEN Hidden lines 
+LAYGRID Layout grids 
+LIGHTCLG Ceiling lighting 
+LIGHTW Wall lighting 
+MASSELEM Massing elements 
+MASSGRPS Massing groups 
+MASSSLCE Massing slices 
+MED Details - medium lines 
+OPENING Wall openings 
+PEOPLE People 
+PFIXT Plumbing fixtures 
+PLANTS Plants - outdoor 
+PLANTSI Plants - indoor 
+
+Default layer keys for creating AEC objects 
+POLYGON AEC Polygons 
+POWER Electrical power 
+PRCL Property 
+PRK-SYM Parking symbols 
+ROOF Rooflines 
+ROOFSLAB Roof slabs 
+ROOMNO Room tags 
+SCHEDOBJ Schedule tables 
+SEATNO Seating tags 
+SECT Miscellaneous sections 
+SECTHIDE Sections (2D) 
+SITE Site 
+SLAB Slabs 
+SPACENO Space tags 
+SPACEOBJ Space objects 
+STAIR Stairs 
+STAIRH Stair handrails 
+STRUCTBEAM Structural beams 
+STRUCTBEAMIDEN Structural beam tags 
+STRUCTBRACE Structural braces 
+
+Default layer keys for creating AEC objects 
+STRUCTBRACEIDEN Structural brace tags 
+STRUCTCOLS Structural columns 
+STRUCTCOLSIDEN Structural column tags 
+SWITCH Electrical switches 
+THIN Details - thin lines 
+TINN Triangulated irregular network 
+TITSCALE Graphical Scales 
+TITTEXT Border and title block 
+TITTEXT-DWG Drawing title text 
+TOILACC Architectural specialties 
+TOILNO Toilet tags 
+TOPO Topography 
+UTIL Site utilities 
+VEHICLES Vehicles 
+VIEWPORT Sheet View viewports 
+WALL Walls 
+WALLFIRE Fire wall patterning 
+WALLNO Wall tags 
+WIDE Details - wide lines 
+WIND Windows 
+
+Default layer keys for creating AEC objects 
+WINDASSEM Window assemblies 
+WINDNO Window tags 
+XLINE Construction line 
+ZONE Zones 
+ZONENO Zone tags 
+
+
+Default Layer Key Values 
+The following default values are assigned to new layer keys. 
+Default values for layer keys 
+Layer name Same as layer key name. Assigned to appro­priate layer root name. 
+Description Blank 
+Color 7 (white/black) 
+Linetype Continuous 
+Lineweight Default 
+Plot style Normal 
+Plot Yes 
+
+
+Creating a Layer Key Style 
+Use this procedure to create a layer key style. You can create a layer key style by using default style properties or by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+If you want to use layer key overrides, you must base the layer key style you create on a layer standard in the current drawing. If you create a nonstandard layer key style, you cannot attach layer key overrides to that layer key style. 
+1 Click Home tab . Layers panel .
+. Layer Key Styles
+ . 
+Alternatively, in the Layer Properties Manager palette, click 
+. 
+The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Create a new layer key style: 
+If you want to… Then… 
+create a style with default properties right-click Layer Key Styles, and click New. 
+create a style from an existing style right-click the layer key style you want to copy, and click Copy. Right-click Layer Key Styles, and click Paste. 
+3 Right-click the new layer key style and click Rename. 4 Enter a name for the new layer key style, and press ENTER. 5 Edit the new layer key style: 
+
+If you want to… Then… 
+specify properties for layer keys see Editing Layer Key Styles on page 754. 
+add notes and files to the style see Attaching Notes and Files to a Layer Key Style on page 756. 
+6 When you finish specifying the properties of the layer key style, click OK. 
+
+
+Creating a Layer Key Style from an LY File 
+Use this procedure to create a new layer key style from an existing LY file from S8 or Release 1 of Architectural Desktop. If the LY file that you are using does not contain the default layer keys required by the software, they are added to the new layer key style by default and mapped to default layers based on the key name. For example, the layer key ANNOBJ maps to the layer ANNOBJ. 
+If you want to use layer key overrides, you must base the new layer key style on a layer standard. If you create a nonstandard layer key style, you cannot attach layer key overrides to that layer key style. When you create an original layer key style from an existing LY file, you can choose which sections of the LY file you want to include in your layer key style. 
+You must first import an existing LY file. 
+1 On the command line, enter -AECLYImport. 2 Enter the file name to import, or enter ? and browse for a file. 3 Select a file, and click Open. 4 Enter the name for the new layer key style. 5 Select the sections of the LY file you want to include in the new 
+layer key style. 6 Click OK. 
+A new layer key style is created. It is not associated with a layer standard until you assign the new layer key style to a layer standard. For more information about changing style properties, see Editing Layer Key Styles on page 754. 
+
+Editing Layer Key Styles 
+Use this procedure to edit a layer key style. 
+¦ 
+You can change the layer standard that a layer key style is based on, or you can specify a layer standard for a nonstandard layer key style. 
+
+¦ 
+You can add layer keys to the layer key style. 
+
+¦ 
+You can remove any layer keys except the default layer keys. 
+
+¦ 
+You can edit the layer properties of the layers to which the layer keys map. 
+
+¦ 
+You can specify whether layer key overrides can be used with the layer key style. 
+
+
+1 Click Home tab . Layers panel .
+. Layer Key Styles
+ . 
+Alternatively, you can click 
+ in the Layer Properties Manager. The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Select the layer key style that you want to change. 3 Click the Keys tab. 4 Specify the layer standard: 
+If you want to… Then… 
+specify a different layer standard on select a new layer standard for which to base the layer key style Standard. 
+specify that the layer key style is not select Non Standard for Standard. based on a layer standard 
+NOTE You can base more than one layer key style on the same layer standard so that each layer key style can be used with different color, linetype, and override settings. 
+5 To add a new layer key, click Add. New keys are added with default values. 6 To delete a layer key, select a layer key, and click Remove. You cannot delete the default layer keys. 
+TIP To change the properties of more than one layer key at a time, hold down CTRL and select the additional layer keys. 
+7 Select a layer key, and specify the layer key properties: 
+
+If you want to… Then… 
+modify the description for a layer double-click the text that you want key to change for Description, and enter new text. 
+modify the layer name under Layer, click the [...] button. Specify the appropriate values for layer fields, and click OK. 
+modify the color for a layer key under Color, click the current value. Select a new color, and click OK. 
+modify the linetype for a layer key under Linetype, click the current value. Select a new linetype, and click OK. 
+
+If you want to… Then… 
+modify the lineweight for a layer under Lineweight, click the current key value. Select a new lineweight, and click OK. 
+specify whether a layer key will plot under Plot, click the printer icon to turn plotting on or off. 
+specify whether to allow layer field overrides 
+under Allow Overrides, clear the options for which overrides are not allowed. 
+TIP When you first add a new layer key by default the name generated for the layer is not yet based on the layer standard used. This is why the layer overrides are inactive. Modify first the layer name associated to the key by clicking the [...] button. Once the name is based on the layer standard, you can allow overrides to the standard. 
+8 Click OK. 
+
+
+Attaching Notes and Files to a Layer Key Style 
+Use this procedure to enter notes and attach reference files to a layer key style. You can also edit notes and edit or detach reference files from a layer key style. 
+1 Click Home tab . Layers panel .
+. Layer Key Styles
+ . 
+Alternatively, you can click 
+ in the Layer Properties Manager. The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Select the layer key style that you want to change. 3 Click the General tab. 4 To add a description to the layer key style, enter it for Description. 
+5 Click Notes. 6 To add a note, click the Notes tab, and enter the note. 7 Click the Reference Docs tab, and attach, edit, or detach a 
+reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+8 Click OK two times. 
+
+
+Layer Key Overrides 
+A layer key override enables you to change the default layer names specified by one or more layer keys. The structure of layer names is determined by the descriptive fields in the layer standard definition. You can allow overrides on all the layer keys within a layer key style, or you can select individual layer keys that you want to override. You can override all descriptive fields that make up the layer name, or you can specify which descriptive fields to override. You can apply overrides to any layer keys in a layer key style that is based on a layer standard. 
+For example, in the AIA 2nd Edition layer standard definition, the Discipline Designator field assigns a description and the Major field assigns a name by default. By using layer key overrides, you can change the values specified in these fields and add values in the unused fields, Minor Code and Status. 
+The information that you enter to create layer key overrides must conform to the field width and value types specified by the layer standard definition. For example, you cannot specify a four-letter override in the Discipline Designator field in the AIA 2nd Edition Layer Standard, because the maximum width for the Discipline Designator field as specified in the AIA layer standard definition is 1. To modify the descriptive fields, you must edit the layer standard definition. For more information, see Creating and Editing Layer Standards on page 760. 
+After you add overrides to a layer key style, you can turn the overrides on and off in your current drawing. When the layer key overrides are on, objects that you create are placed on layers defined by the layer standard definitions and overridden with the values that you specify. When the layer key overrides are off, objects that you create are placed on the layers defined only by the layer keys. You can start using the layer key overrides immediately after you specify them, or you can use the Overrides On/Off command to switch them on later. 
+Layer key overrides do not change the layer assignments of existing objects. Only objects added after an override is enabled are affected by the override. 
+
+Specifying Layer Key Overrides 
+Use this procedure to specify layer key overrides. The layer key overrides that you specify apply only to the layer keys that have any or all descriptive field overrides selected in the Layer Key Properties dialog box. For more information, see Editing Layer Key Styles on page 754. 
+To specify layer key overrides, you must have a layer key style that is based on a layer standard. If you base your layer key standard on a nonstandard style, you cannot specify layer key overrides. 
+If you do not have all overrides enabled in the Layer Key Overrides dialog box, objects that you draw after you exit the dialog box are placed on the layer defined by the layer standard. You can use the Overrides On/Off command to turn on the layer overrides later. 
+NOTE Individual layer keys that do not allow overrides as specified in the Layer Key Properties dialog box are not overridden when you select Enable All Overrides. 
+1 Click Home tab . Layers panel .
+. Layer Key Overrides 
+. Alternatively, in the Layer Properties Manager palette, click . 
+
+2 Under Current Layer Key Style, select the layer key style that you 
+want to override. The layer standard that the layer key style is based on is displayed under Based on Standard and is not editable. 
+3 Enter values for Override or click the [...] button to specify values to override the information in the descriptive fields. 
+The fields in this dialog box depend on the layer standard your layer key style is based on. For example, if you are using the AIA 2nd Edition layer standard, you can enter override values for the Discipline Designator, Major, Minor 1, Minor 2, and Status descriptive fields. 
+4 To begin using the layer overrides immediately, select Enable All Overrides. 
+5 Click OK. If you turned on the layer key overrides, any objects that you create now use the layer key overrides according to the override values that you have specified and whether you allowed overrides for the layer keys in the layer key style. If you did not turn on the layer key overrides, objects that you create are placed on layers defined by the layer standard. 
+
+Turning Layer Key Overrides On and Off 
+You can use the Overrides On/Off command to turn layer key overrides on and off for the current layer key style in your drawing. This command is available only if your current layer key style is based on a layer standard and if you have specified layer key overrides. If the layer key overrides are on in the current drawing, a check mark is displayed next to the command name on the menu. 
+¦ At the command prompt, enter AecToggleLKeyOverridesMnu. 
+If you turned the layer key overrides on, objects that you create are placed on layers defined by the layer standard definitions and are overridden with the values that you specified. If you turned the layer key overrides off, objects that you create are placed on layers defined by the layer standard. 
+
+Remapping Objects to Different Layers 
+Use this procedure to change the layer an object is drawn on by remapping it from the current layer key to a different layer key. 
+1 Click Home tab . Layers panel .
+. Remap Object Layers
+
+ . 
+2 Select the object or objects that you want to change, and press ENTER. 
+3 To view the list of available layer keys, enter ?. 
+4 Press F2 to view the list of layer keys. 
+5 Select the layer key that you want to map the object to, right-click, and click Paste To CmdLine. 
+6 Press F2 to close the text window, and press ENTER. 
+The object is mapped to a different layer in your drawing, respecting any current layer key overrides. 
+
+Restoring Objects to Default Layer Key Layers 
+Use this procedure to restore the default layer key assignment to an object after you remap the object to a different layer by assigning it to a different layer key. 
+1 Click Home tab . Layers panel .
+. Remap Object Layers
+
+ . 2 Select the object or objects that you want to change, and press ENTER. 3 Enter o (byObject). This applies the layer assigned to the default layer key of each object in the selection set, respecting any current layer key overrides. 
+4 Press ENTER. 
+
+
+Creating and Editing Layer Standards 
+A layer standard contains predefined layer names and a set of rules that determines the names of new layers that you create using that layer standard. You can use layer standards to establish individual, project, or office layering conventions that provide consistent and informative layer names. AutoCAD Architecture provides a number of layer standards that you can use in drawings. You can also create your own layer standards by customizing an existing layer standard. 
+How Layer Standards Determine Layer Name 
+When you create a new layer using a layer standard, the layer name has a number of parts separated by delimiters (for example, hyphens). Each part of the layer name is determined by rules specified in a corresponding field of the layer standard. 
+For example, the AIA 2nd Edition layer standard includes five fields that form each new layer name: Discipline Designator, Major, Minor 1, Minor 2, and Status. Each field is separated by a hyphen (?) delimiter, as in the following example: 
+(Discipline Designator) - (Major) - (Minor 1) - (Minor 2) - (Status) 
+A layer in your drawing with a Discipline value of “A,” a Major value of “Wall,” a Minor 1 value of “Full,” a Minor 2 value of “Abov” and a Status value of “D,” to denote a demolition layer, would be named A-WALL-FULL-ABOV-D. 
+You can edit the layer standard definition to change these rules. For more information, see Editing Component Fields on page 770. 
+You can override the information in each field to change the way a layer standard creates a layer name by specifying layer key overrides. For more information, see Layer Key Overrides on page 757. 
+
+Layer Standards Included with the Layer Properties Manager 
+AutoCAD Architecture provides industry-standard layering conventions including: AIA 2nd Edition, BS1192 Descriptive, and BS1192 - AUG Version 2. Additional international layer conventions are also provided including: DIN 276, ISYBAU Long Format, ISYBAU Short Format, and STLB. Each layer standard contains specific information organized in fields. You can specify how the information appears in each field by changing the values in the layer standard fields. For more information, see Editing Component Fields on page 770. 
+
+Component Fields in Layer Standards 
+Each layer standard defines the number of component fields that make up a layer name and specifies the rules for the content allowed in each field. If you 
+create or edit a layer standard, you access the layer standard properties to edit the component fields. 
+
+
+Component Field Descriptions 
+Each layer standard contains the following component fields. 
+Value Description 
+Field Name Identifies the field. Field names should be as consistent as possible across layering systems to aid in translation. 
+Optional When Yes, allows the field to be omitted from the end of the layer name. Optional layer fields cannot precede a required layer field unless the match option is Yes so that the fields can be identified according to a match against specific descriptions. 
+Max Width Represents the maximum width in charac­ters that can be used. 
+Fixed Width When Yes, prevents a field from being shortened from the max width setting. 
+
+Value Description 
+Wildcard An AutoCAD wildcard pattern that the field must match. 
+Match Description 
+When Yes, recognizes the field only if it exactly matches a description. You can omit fields from the middle of layer names. For example, an AIA layer may be made up of <discipline> <major> <minor>, or <dis­cipline> <major> <status>, or <discipline> <major> <minor> <status>, as the <minor> field may not precede the <status> field and can be determined only by matching the field value against valid <minor> field descriptions. 
+NOTE When omitting fields from layer names, verify that the omitted field Match Description property is No. This ensures that the layer name specified can be cre­ated. 
+Delimiter Specifies the character used to separate fields with no fixed width. Delimiters are often also used in fixed-width fields for clarity. 
+Default A predefined value for those field names that are not optional within the layer. 
+For more information about the content of specific layer standards, see AIA Long Format Layer Standard on page 764 and Editing Component Fields on page 770. 
+
+
+AIA Long Format Layer Standard 
+The AIA Long Format Standard contains the following fields: 
+Field Name Description 
+Discipline Designator Shows divisions of manageable sections. For example, A for architectural, M for mechanical. This field is required. 
+Major Designates assemblies or construction sys­tems such as walls and doors. This field is required. 
+Minor 1 Further differentiates major groups into minor groups such as full-height walls and partial-height walls. This field is optional and user-defined. 
+Minor 2 Additional information, like title or unit in­formation. 
+Status Differentiates phases of work. For example, New indicates new, Demo indicates to be demolished. This field is optional. 
+The following table lists the rules for the AIA Long Format Layer Standard: 
+AIA Long Format 
+
+Field Option-Width Fixed Wild-Match Delimiter Default al card 
+Discipline No 1 Yes “@” No None A Designat­or 
+Major No 4 Yes “@@@@” No “-“ Wall 
+Minor Yes 4 No “*” No “-“ 
+Status Yes 4 No “*” No “-“ 
+
+
+BS1192 - AUG Version 2 Layer Standard 
+The BS1192 - AUG Version 2 layer standard contains the following fields: 
+Field Description 
+Discipline Identifies the author of the layer by using a single character. For example, A for archi­tect, S for structural engineer. This field is required. 
+Category Identifies the building element by using three digits and uses CISfB as a common referencing system. For example, 210 for wall, 315 for door. This field is required. 
+Graphics Indicates information that is associated with the category by using a single character. For example, D for dimension, G for graphics, T for text. This field is required. 
+Grade 
+Expresses as a single digit the recommen­ded line thickness, where 1 is the thinnest and 9 is the thickest. This field applies mostly when using text where ISO standard pen thicknesses correlate with ISO standard text heights. For example, text that is 2.5mm high that is drawn with a 0.25mm pen is given a pen grade of 2. This field is required. 
+Level Differentiates viewing planes in plan, sec­tion, or elevation view by using a two-digit alphanumeric character. For example, 01 would be Level/Floor 1, EA the elevation, and SA Section A. This field is optional. 
+Status Indicates the state of work by using a single character. For example, N indicates new, R indicates to be removed. This field is op­tional. 
+Scale Indicates the level of detail to be shown by using a single character. For example, P 
+
+Field Description 
+indicates a planning level, D indicates a detail. This field is optional. 
+Phase/Time Indicates phasing or alternatives by using a single character. 
+User Specifies the user. It is not a fixed width field but is separated from the rest of the layer name with an underscore. For ex­ample, A210G701_WALL_L1. This field is optional. 
+The following table lists the rules for the BS1192 - AUG Version 2 Layer Standard: 
+BS1192 -AUG Ver­sion 2 
+
+Field Option-Width Fixed Wild-Match Delim-De­al card iter fault 
+Dis-No 1 Yes [0A-Z] No None A cip­line 
+CSIfB CISfB-No 1 Yes # No None 1 A 
+CISfB-No 1 Yes # No None 0 B 
+CISfB-No 1 Yes # No None 0 C 
+Graph-No 1 Yes [0ACDGHTZ] No None G ics 
+Grade No 1 Yes # No None 7 
+BS1192 -AUG Ver­sion 2 
+
+Field Option-Width Fixed Wild-Match Delim-De­al card iter fault 
+Level Yes 2 Yes [0-9A-No None 00 Z][0-9A­Z] 
+Status Yes 1 Yes [0NXR] No None 0 
+Scale Yes 1 Yes [0ASPD] No None 0 
+Phase Yes 1 Yes [0-9A-Z] No None 0 
+
+
+BS1192 - Descriptive Layer Standard 
+The BS1192 - Descriptive layer standard contains the following fields: 
+Field Name Description 
+Discipline Identifies the author of the layer by using a single character. For example, A for archi­tect, S for structural engineer. This field is required. 
+Element Identifies the building element by using a descriptive name for it. For example, pos­sible choices for this field are “Equipment” or “Room.” This field is required. 
+Graphics Indicates information that is associated with the category by using a single character. For example, D for dimension, G for graphics, T for text. This field is required. 
+Level Differentiates viewing planes in plan, sec­tion, or elevation view by using a two-digit alphanumeric character. For example, 01 
+
+Field Name Description 
+would be Level/Floor 1, EA the elevation, and SA Section A. This field is optional. 
+Status Indicates the state of work by using a single character. For example, N indicates new, R indicates to be removed. This field is op­tional. 
+Scale Indicates the level of detail to be shown by using a single character. For example, P indicates a planning level, D indicates a detail. This field is optional. 
+Phase Indicates phasing or alternatives by using a single character. 
+User Specifies the user. It is not a fixed width field but is separated from the rest of the layer name with an underscore. For ex­ample, A210G701_WALL_L1. This field is optional. 
+The following table lists the rules for the BS1192 - Descriptive Layer Standard: 
+BS1192 -Descript­ive 
+
+Field Optional Width Fixed Wildcard Match Delim-Default iter 
+Discip-No 1 Yes [0A-Z] No None A line 
+Element No 15 No * No -Wall 
+Graphics No 1 Yes [0ACDGHTZ] No -G 
+Level Yes 2 Yes [0-9A-No None 00 Z][0-9A­Z] 
+Status Yes 1 Yes [0NXR] No None 0 
+BS1192 -Descript­ive 
+
+Field Optional Width Fixed Wildcard Match Delim-Default iter 
+Scale Yes 1 Yes [0ASPD] No None 0 
+Phase Yes 1 Yes [0-9A-Z] No None 0 
+
+
+Creating a Layer Standard 
+Use this procedure to create a layer standard, with default settings or based on an existing standard, that specifies naming conventions for layers in drawings. 
+If your drawing does not contain a layer standard, you can import a layer standard from another drawing or an AutoCAD Architecture template. For more information, see Importing Layer Standards on page 774. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+. 3 Click New. 4 To base the new layer standard on an existing standard, select 
+Based On, and select a standard. 5 Enter a name for the new layer standard, and click OK. 6 Edit the new layer standard: 
+If you want to… Then… 
+specify component fields of the see Editing Component Fields on layer standard page 770. 
+specify descriptive fields of the layer see Editing Descriptive Fields on standard page 771. 
+specify the descriptions for the layer see Editing Descriptions on page standard 772. 
+
+If you want to… Then… 
+specify the descriptive specifications see Editing Description Specifica­
+of the layer standard tions on page 773. 
+7 Click OK. 
+
+
+Editing Component Fields 
+Use this procedure to specify how you want to set up the fields within the layer standard that determine the different parts of the layer names created with that standard. You can add and delete fields here. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+. 3 Select the layer standard that you want to edit, and click Edit. 4 Click the Component Fields tab. 5 Modify the component fields: 
+If you want to… Then… 
+delete a component field 
+select the field, and click 
+. 
+add a component field above an existing field select the field, click 
+, and enter a name for the new compon­ent field. 
+add a component field below an existing field select the field, click 
+, and enter a name for the new compon­ent field. 
+edit a field name double-click the name of the field, and enter a new name over the ex­isting name. 
+
+If you want to… Then… 
+change the values of individual select the values that you want to 
+components of the fields change, and select a new value. For more information, see Component Field Descriptions on page 762. 
+6 Click OK two times. 
+
+
+Editing Descriptive Fields 
+Use this procedure to add a description that is applied to each component field in the layer name. You can add a single description to a group of layer name component fields. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 3 Select the layer standard that you want to edit, and click Edit. 4 Click the Edit Descriptive Fields tab. 5 Modify the descriptive fields: 
+
+If you want to… Then… 
+delete a descriptive field 
+select the field, and click 
+. 
+add a descriptive field above an ex­isting field select the field, click 
+, and enter a name for the new descript­ive field. 
+add a descriptive field below an existing field select the field, click 
+, and enter a name for the new descript­ive field. 
+edit a field name double-click the name of the field, and enter a new name over the ex­isting name. 
+
+If you want to… Then… 
+delete a component from a descript-select the component, and click ive field Delete. 
+6 Click OK two times. 
+
+
+Editing Descriptions 
+Use this procedure to map longer or different descriptions to the component fields of the layer name. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+. 3 Select the layer standard that you want to edit, and click Edit. 4 Click the Edit Descriptions tab. 5 Modify the descriptions: 
+If you want to… Then… 
+delete a description select the field description, and click . 
+
+edit a description select the field description, click
+
+ . Make changes to the descrip­tion, and click OK. 
+add a field with a value and a de­scription click 
+. Enter a value and a description for the field, and click OK. To add multiple fields, click Apply after each individual field, and click OK to finish. 
+6 Click OK two times. 
+
+
+Editing Description Specifications 
+Use this procedure to specify how all the fields in the layer standard determine the layer description that is displayed in the Layer Properties Manager. You can change the field that is used in the description and the order of the fields, and you can add text to the beginning of the layer description. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+. 3 Select the layer standard that you want to edit, and click Edit. 4 Click the Description Specification tab. 5 Specify how the fields determine the layer description: 
+If you want to… Then… 
+delete a layer standard field 
+select the field, and click 
+. 
+add a field above an existing field 
+select the field, click 
+, and enter a name for the new field. 
+add a field below an existing field 
+select the field, click 
+, and enter a name for the new field. 
+edit text double-click the text for Prior Text, and enter a new name. 
+change a field value select the current value for Field, and click a new value. 
+6 Click OK two times. 
+
+
+Purging Layer Standards 
+Use this procedure to remove standards that are not in use. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+. 3 Select the layer standards that you want to purge, and click Purge. 4 Click OK. 
+NOTE To purge all layer standards and layer key styles in a drawing, enter AecPurgeLayerStyles. This is beneficial to use when creating custom templates or when importing new layer standards and layer key styles. 
+
+Importing Layer Standards 
+Use this procedure to import layer standards from other drawings or from the AecLayerStd.dwg drawing in C:\ProgramData\Autodesk\ACA 2011\enu\Layers folder. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+. 3 Click Import/Export. 4 Click Open. 5 Select the drawing with the layer standards that you want to 
+import, and click Open. All the layer standards in the drawing are displayed in the External File list. 
+6 Under External File, select the layer standard that you want to 
+import, and click Import. You can select more than one layer standard in a list by holding down CTRL while you select the additional layer standards. 
+If you import a layer standard that already exists in the target drawing, a message is displayed asking if you wish to overwrite the existing layer standard. Click Yes to overwrite the existing layer standard, or click No to cancel. 
+7 Click OK. 
+The layer standards that you imported are displayed in the Layer Standards dialog box. 
+
+Exporting Layer Standards 
+Use this procedure to export layer standards from the current drawing to a 
+new drawing or to an existing drawing. 
+1 If necessary, open the Layer Properties Manager by clicking Home 
+tab . Layers panel . Layer Properties
+ . 
+2 Click 
+. 3 Click Import/Export. 4 Export the layer standards: 
+If you want to… Then… 
+export layer standards to a new click New, enter a name for the drawing new drawing, and click Save. 
+export layer standards to an exist-click Open, select a drawing, and ing drawing click Open. 
+5 Select the layer standards that you want to export, and click 
+Export. You can select more than one item in a list by holding down CTRL while you select the additional items. If you export a layer standard that already exists in the target drawing, a message is displayed asking if you wish to overwrite the existing layer standard. Click Yes to overwrite the existing layer standard, or click No to cancel. 
+6 Click OK two times. 
+
+
+
+Appendix: LISP Changes for Layer Snapshots and Layer States 
+NOTE In AutoCAD Architecture 2011 the Layer Snapshot functionality is discontinued in favor of the Layer State functionality. Existing layer snapshots (LAY) files are automatically converted to layer states (LAS) when the Layer States Manager is invoked in a legacy drawing with layer snapshots. The layer snapshot is deleted after the conversion. 
+If you have accessed layer snapshots via LISP routines in the past, these LISP functions are the equivalents of the discontinued layer snapshot functions and must be exchanged in your scripts: 
+Defunct Layer Snapshot Function New Layer States Function 
+AecLayerAddToSnapshot layerstate-addlayers 
+AecLayerExportSnapshot layerstate-export 
+AecLayerGetSnapshot layerstate-getlayers 
+AecLayerImportSnapshot layerstate-import 
+AecLayerRestoreSnapshot layerstate-retore 
+For more information about these functions, see the AutoLISP Reference in the AutoCAD Help. 
+
+
+
+Display System 
+11 
+The display system in AutoCAD Architecture controls how AEC objects are presented in a designated viewport. By specifying the display configuration in a viewport and the direction from which to view the objects, you can produce different architectural representations. The display system lets you produce floor plans, reflected plans, elevations, 3D models, or schematic displays without redrawing objects. 
+Introduction to the Display System 
+The display system in AutoCAD Architecture is designed so that you only have to draw an architectural object once. The appearance of that object then changes automatically to meet the display requirements of different types of drawings, view directions, or levels of detail. 
+Display Properties and Display Components 
+The view-dependent display of objects in AutoCAD Architecture is made possible by a hierarchical system of display settings that specify display properties (visibility, layer, color, linetype, and so on) for individual display components of all the different types of architectural objects under all the different viewing scenarios. 
+For example, a door object has 5 display components by default: Door Panel, Frame, Stop, Swing, and Glass. (Many display components correspond directly to the physical components of the object, but some, like Swing, do not.) For each of these display components, the drawing default settings specify the relevant display properties as appropriate for the drawing type. In the case of doors, the default settings specify that the Swing component is visible in plan and elevation views, but not in 3D views. 
+
+Overrides 
+The drawing default settings for a particular type of object apply to all such objects in the drawing, except those for which an override is in effect. For example, you can change a setting for all doors of a particular style (a style override) or for an individual door (an object override). 
+
+Establishing and Modifying Default Display Settings 
+If you are a CAD manager, you will want to fully understand the Display System Structure on page 787 and The Display Manager on page 800 topics so that you can modify and organize default settings as necessary to implement your own display standards. But any user can quickly change the appearance of an object in a particular view by modifying values on the Display tab of the Properties palette. 
+NOTE To hide the Display Tab (or show it if it is currently hidden), enter the following command at the command line: AecChangeDisplayTabStatus. 
+Display tab when display component is selected 
+
+To change the display using this tab, click 
+(Select Components), select an object display component (like a hatch or a boundary), and then select or enter a new value for the display property you want to change (such as color, visibility, or lineweight). 
+The results are immediately visible in the drawing area for the current display representation and can be applied to other display representations that use the same component. You can also apply style or object overrides by changing the value of Display controlled by. For detailed instructions, see Using the Properties Palette to Change Display Properties on page 779. 
+
+
+Using the Properties Palette to Change Display Properties 
+You can use the Display tab of the Properties palette to change the display property settings for a selected object in the current display representation. You can change settings for properties that apply to the object as a whole (such as Cut plane height), as well as settings for the object’s individual display components (such as Color, Layer, and Linetype for a hatch component). 
+You can also specify whether your changes will apply to: 
+¦ 
+all objects of the selected type (drawing default) 
+
+¦ 
+all objects of the same style as the one to which the component belongs (a style override) 
+
+
+¦ only the selected object (an object override) 
+You can also apply your changes to other display representations that use the same display component to draw the selected object. 
+NOTE To hide the Display Tab (or show it if it is currently hidden), enter the following command at the command line: AecChangeDisplayTabStatus. 
+1 If necessary, open the Properties palette using any of the following methods: 
+¦ 
+Click Home tab . Build panel . Tools drop-down . Properties
+
+
+ . ¦ Press CTRL+1. 
+
+¦ 
+Select an object in the drawing, right-click, and click Properties. 
+
+¦ 
+Double-click an object in the drawing. 
+
+
+2 On the Properties palette, click the Display tab. 
+Display tab with no object selected 
+
+3 Select an object in the drawing area. Note that the current display representation is identified under the General category on the Display tab 
+Display tab with one object selected 
+
+4 Under the General category, for Display controlled by, select the level at which you want your changes applied, as described in the following table 
+
+If the value of Display Then your changes will apply to … controlled by is … 
+Drawing default setting all objects of the same type for which no overrides are in effect (for example, all doors in the drawing). 
+<object type>Style:<style  all objects with the specified style for which  
+name> (for example: Door  no object overrides are in effect. This is called  
+Style: Hinged - Single)  a style override; it takes precedence over the  
+drawing default setting.  
+
+This object the selected object only. This is called an object override; it takes precedence over either the drawing default setting or the style. 
+5 Do one of the following: 
+
+If you want to … Then … 
+change one or more dis-proceed to step 6. play property settings for a particular object display component (or change the visibility setting for multiple components) 
+view or modify display properties that apply to the entire object at the level currently specified by the value of Display con­trolled by for Display component, select *NONE*, then under the Object Display Properties category, change the value or click the worksheet but­
+ton 
+for whichever property or set of properties you want to modify. The proper­ties shown under this category depend on the type of object selected. For detailed in­formation about modifying display properties for a specific object type, see the relevant Help topic, such as Walls or Doors. Each of these object topics contains subtopics for each category of display property. For ex­ample, for instructions on changing settings 
+
+If you want to … Then … 
+on the Other tab for a wall object, see Spe­
+cifying the Display of Other Characteristics of a Wall on page 1230. 
+6 To change one or more display property settings for a particular object display component, first use one of the following methods to select it: 
+¦ If an object is already selected, under the General category on the Display tab, select a component from the Display component drop-down list. 
+
+The color of the light bulb icon preceding each component name indicates whether the component is visible (yellow) or not (blue) in the current display representation. When the list is open, you can click one or more of these icons to change the visibility setting for the associated component(s). Your changes take effect in the drawing when you close the drop-down list by clicking a component name, pressing Enter, or clicking anywhere outside the list. Pressing Esc closes the list and cancels any visibility setting changes you have made while the list was open. 
+TIP A hatch may obscure other components, which can be selected inadvertently when you click on the hatch in the drawing area.Therefore, the drop-down list is the preferred method for selecting solid hatch components. Note also that the drop-down list contains only components whose appearance is controlled by the display system. Clicking in the drawing area may result in the selection of an object or component whose display cannot be modified through the Display tab (such as MV blocks, custom blocks, AutoCAD objects, and other entities). In such cases, an error message will identify why the selection is invalid. 
+¦ 
+If no object is selected, at the bottom of the Display tab, click
+
+
+ , and then click the display component in the drawing area. 
+
+¦ 
+Regardless of whether an object is selected, you can right-click in the drawing area, click Select Component, and then click the display component you want to modify. 
+
+
+Display tab with object display component selected 
+
+NOTE The property settings shown on the Display tab for a selected component are specific to the display system. In most cases these settings will not be the same as the settings (either default or override) for associated layers in the Layer Properties Manager. 
+7 Enter or select a new value for any display properties you want to change. The results of your changes are immediately visible in the drawing area. Note that the properties shown on the Display tab vary depending on the object and component selected. Most are self-explanatory. For detailed information about modifying display properties for a specific object type, see the relevant Help topic, such as Walls or Doors. Each of these object topics contains subtopics for the applicable categories of display properties. For example, the Walls topic includes separate subtopics for Specifying the Layer, Color, and Linetype of a Wall on page 1225 and Specifying the Hatching for Components of a Wall on page 1226. 
+NOTE If the value of By Material is Yes, then your changes will apply to all objects with display components controlled by the material definition identified by the Name property, regardless of the value of Display controlled by. This is called a material definition override. When By material is Yes, you can access the drop-down list of material display components and change their visibility settings using the same technique described for display components in the previous step. 
+
+In this case, the Display tab also includes an Advanced category under 
+which the Additional Properties worksheet button 
+accesses a dialog where you can view and modify display properties associated with the material definition, such as surface hatch placement and surface rendering, as shown below. For detailed instructions, see Creating and Editing Material Definitions on page 905. 
+
+Other tab for material definition override 
+
+8 If you want to apply your changes to other display representations at the same level indicated by the Display controlled by value, 
+click the worksheet button 
+on the title bar of the General category. (Note that the worksheet button is available only when a display component is selected, and the worksheet lists only those display representations that can be applied to that component.) 
+Worksheet for applying changes to other display representations 
+
+9 On the worksheet, select the display representations to which you want your changes to apply, and click OK. 
+NOTE If the value of By material is Yes, only that setting and the Component visible setting will be applied to the selected display representations. If the value of By material is No, all of the display property settings for the component will be applied to the selected display representations. 
+
+
+Display System Structure 
+You use the display system to manage display properties and view assignments for objects in your project. You can also create new groupings for display purposes. 
+Elements of the Display System 
+The display system has 3 major elements: 
+¦ 
+A display representation, which controls how an individual object, such as a door or a wall, is displayed 
+
+¦ 
+A display set, which is a group of display representations of objects 
+
+¦ 
+A display configuration, which is a collection of display sets assigned to particular view directions 
+
+
+These 3 elements are hierarchical: each display configuration contains a number of display sets, and each display set contains a number of display representations. To use a display configuration, you assign it to a viewport. The objects in the viewport then use the display properties specified in the display configuration. 
+
+Predefined Display Configurations in Templates 
+You use different display configurations for different tasks, such as sketching and plotting. You also use different display configurations for different types of drawings, such as floor plans, 3D models, and elevations. 
+AutoCAD Architecture includes templates with predefined display configurations applied to viewports. These configurations are created for typical architectural tasks and drawing types. You can use the configurations and viewports supplied by the templates, or you can modify the display system settings to suit your office standards. If you want to create your own display configurations, you can start a drawing from scratch or from a template that does not contain predefined display configurations. 
+
+Materials and the Display System 
+A material definition is a group of settings for the display properties of a real-world material, such as glass, brick, or wood. The settings define how the components assigned to the material appear in every view. 
+The materials feature works with the display system to simplify the process of customizing the display of drawings. Rather than specifying individual properties, you can control the display of objects according to the materials assigned to the physical components of the objects. 
+For example, you can assign brick as the material for all walls whose components consist of this material. The display properties of the bricks are customized to look like a typical brick wall. By assigning the material to walls, you avoid the need to customize the display properties for each wall that uses brick material. In addition, if the materials change during the project, you can reassign components to the new material. 
+Wall components with assigned brick and concrete materials 
+
+Sample styles in AutoCAD Architecture catalogs contain predefined materials assigned to their components. Use these materials in your drawings, customize them, or create your own materials. For more information, see Creating and Editing Material Definitions on page 905. 
+
+Display Settings in External References 
+You cannot change a display setting in an external reference while refediting it from its host drawing. You can open Display Manager and make changes, but they will not be saved when the external reference is saved and closed in the host drawing. To make changes to display settings in external references, you need to open the external reference drawing directly, make the changes there, and save it. The external reference should then be reloaded to update the changes 
+
+
+Display Representations 
+A display representation defines how the components that make up an object are drawn. In traditional CAD and manual drafting, a single object, such as a door, is typically drawn multiple times in different drawings. In these drawings, each instance of a door is a separate collection of linework. In AutoCAD Architecture, you can create an object that changes the way it draws itself depending on the display representation used to represent that object. 
+Display Components of AEC Objects 
+Most AEC objects are made up of individual components. For example, a door has the following components: door panel, frame, stop, swing, glass, and threshold. A door may also have muntins. 
+Each component of an object has both physical and graphical properties that help to determine the display representation of that object. 
+¦ 
+The physical properties of an object control width, height, shape, and location of the object in the drawing. 
+
+¦ 
+The graphical properties control visibility (on/off), layer, color, and linetype. 
+
+
+You typically decide the physical properties of an object when you create it. For example, you specify the size of a door and its location in a wall. You control the graphical properties of an object in its display representation. You can define multiple display representations for the same object. 
+
+Display Representations and View Directions 
+A display representation is not dependent on view direction, although it usually is designed with a specific view in mind. 
+Objects displayed from different view directions that use different display representations 
+
+
+Why Most Objects Have Multiple Display Representations 
+All objects have predefined display representations. Most objects have Plan, Model, and Reflected display representations, because these are the most common design situations. Some objects, such as cameras and reference AEC objects, have only a General representation, because the display of these objects does not change in different views. 
+A single object can be drawn in various ways, depending on the needs of different drawing types. For example, the Plan display representation draws the door panel, frame, stop, and swing components. The Nominal display representation draws the door panel, frame, and swing components. Although both representations draw the door panel, each draws it differently. The Plan representation draws a door panel as a rectangle, while the Nominal representation draws it as a single line. 
+Door shown in the Plan and Nominal display representations 
+
+The Plan display representation is appropriate for two-dimensional (2D) views when components are to be displayed from a plan (Top) view. The Nominal display representation is appropriate for 2D views when a limited amount of detail is needed in plan view. For example, display configurations intended for plotting at small scales, where details of objects might be obscured, often use the Nominal display representation. 
+
+Default Display Representations 
+The display representations available for an object and the names of those representations are based on the ways that you might need to view the object. Display representations can include different components of an object or additional display options. 
+For example, the display properties of stairs in the Plan display representation include settings for break marks and other stair symbols. Break marks appear only in 2D Top view drawings, so other display representations, such as Model and Elevation, do not contain settings for break marks. Similarly, objects that never display break marks do not have settings for them in their Plan display representations. 
+Plan display representation for stairs includes options for break marks 
+
+
+Customizing the Display of an Object 
+If you do not use materials to control display, you customize the appearance of an object by changing its display properties for the display representation. For example, you can turn off the door swing in the Plan display representation; specify whether the swing is straight or an arc; specify the percent open; or change the layer, color, and linetype of the swing. 
+To change the display of an object, you specify how changes are applied to the instances of the object in the drawing. You do this by specifying the source of the display properties for the selected display representation. 
+¦ To apply the changes to the default display properties of the object, you customize the drawing default settings. The changes affect all instances of the object in the drawing. 
+Drawing default display properties affect all instances of an object 
+
+¦ To apply the changes to all instances of the object that have the same style, you override the drawing default settings with the display properties of the object style. 
+Changes to the display properties of a style affect all objects of that style 
+
+¦ To apply the changes only to the selected object, you override the drawing default settings or style display properties with the display properties of the object. 
+Display properties of an object apply only to that object 
+
+Objects use the default display properties unless the properties are overridden by the display properties of an object style or an individual object. Generally, you customize the display properties of object styles so that the appearance of different types of the same object is consistent throughout a drawing. You may need to override the display properties of the style for an individual object in order to achieve certain results. 
+
+
+
+Display Sets 
+Display sets are collections of object display representations. A display set determines which objects are visible, and how the objects, such as wall assemblies that include doors and windows, are displayed in different views. 
+Display Representations Included in a Display Set 
+A display set usually contains display representations that are appropriate for specific tasks or drawing types. For example, the Reflected display set contains display representations for objects typically included in a reflected ceiling plan. This display set uses the Reflected display representation for most of 
+
+

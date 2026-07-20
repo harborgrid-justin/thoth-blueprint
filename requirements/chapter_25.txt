@@ -1,0 +1,1075 @@
+[MIGRATED TO RTM_PART_57.md - WINDOWS]
+Grip Description 
+Additional information 
+A series of tick marks indicates the standard sizes for the selected dimension. As you move the grip, it snaps to each tick mark and displays the measurement at that mark. The size and color of the grip tick marks indicate whether setting a standard value for the dimension will result in a standard window size. For example, if the height of the window is set to a non­standard value, then even if you set the window width to a stand­ard value for that window’s style, the window is still not a standard size. Long grey tick marks indic­ate that a standard size is pos­sible; short red marks indicate that another dimension is already set to a non-standard value. 
+
+Lets you change the Height of a win­
+/ 
+(Sill dow. you can choose if you want to Height/Head change the sill height or the head Height) height. 
+
+(Location) 
+Lets you move a window within a wall 
+More options for moving a win­dow 
+¦ 
+Moving a Window Along a Wall on page 1959 
+
+¦ 
+Moving a Window Within a Wall on page 1962 
+
+¦ 
+Moving a Window to a Different Wall on page 1968 
+
+¦ 
+Releasing a Window from a Wall on page 1968 
+
+
+Grip Description 
+
+Lets you change the hinge side of the window
+(Flip Hinge) 
+
+Lets you change the swing direction of the window
+(Flip Swing Direction) 
+
+Rise Rise applies to Peak Pentagon, Arch, and Gothic window shapes. For more information, see Specifying the Design Rules of a Window Style on page 1986. 
+Changing the Window Style 
+Use this procedure to change the style for a window or group of windows. 
+1 Select one or more windows, and double-click one of them. 2 On the Properties palette, expand Basic, and expand General. 3 Select a window style. 
+Changing How Window Width is Measured 
+Use this procedure to change how the width of a window or windows is measured. 
+1 Select the windows you want to change, and double-click one of them. 
+2 On the Properties palette, expand Basic, and expand Dimensions. 
+Specifying window frame measurement 
+
+3 Specify the location to which window width is measured: 
+If you want to size the win-Then… dows… 
+to the inside frame select Inside of frame for Measure to. 
+to the outside frame select Outside of frame for Measure to. 
+Changing the Window Swing Angle or Opening Percent 
+Use this procedure to change the swing angle or opening percent of a window or group of windows. 
+A window with an opening percent of zero is closed. 
+NOTE Defining the opening percent in display properties overrides this setting on the Properties palette. For more information, see Specifying the Display Properties of a Window Style on page 1993. 
+1 Select the windows you want to change, and double-click one of them. 
+2 On the Properties palette, expand Basic, and expand Dimensions. 
+3 Enter a value for Swing angle or Opening percent. Changing a window swing angle 
+
+Changing the Vertical Alignment of a Window 
+Use this procedure to change the vertical alignment of a window or group of windows. 
+1 Select the windows you want to change, and double-click one of them. 
+2 On the Properties palette, expand Basic, and expand Location. 
+3 Specify whether you want the window aligned vertically by sill height or by head height: 
+If you want to align the win-Then… dows… 
+by sill height select Sill for Vertical alignment, and enter a value for Sill height. 
+by head height select Head for Vertical alignment, and enter a value for Head height. 
+Moving a Window Along a Wall 
+Use this procedure to change the location of one or more windows along a wall by offsetting the windows from a reference location. 
+This feature is useful when you want to position a window at a specified distance from another object. For example, you may want to specify an exact distance between a series of windows along a wall. 
+NOTE If the defect marker appears in the wall after you move a window, the window is too close to other objects in the wall or to the end of the wall for the endcaps to fit. Adjust the position of the window until the defect marker disappears. 
+1 Select the window you want to move. 
+2 Click Window tab . Anchor panel . Reposition Along Wall 
+
+. 
+A marker indicates the current location within the opening. 
+3 Specify where to measure the offset from: 
+If you want to measure the Then… offset… 
+from the center of the window select a point near the center of the window. 
+from an end of the window select a point on the end of the window you want to measure from. 
+4 Select a point to measure to (the reference point). You can select a point along the wall. 
+5 Specify the distance between the points you selected: 
+If you want to… Then… 
+move the window to the reference enter 0. point 
+move the window a specified dis-enter a value for the offset distance. tance from the reference point 
+specify the distance as a measure-select the two points measuring the ment between two points, such as distance. the distance between the centers 
+If you want to… Then… 
+of two windows that are correctly positioned 
+Repositioning a window along a wall 
+Moving a Window Within a Wall 
+Use this procedure to move one or more windows within a wall by offsetting the windows from a reference location. 
+This feature allows you to align windows within the thickness of a wall. You can set an offset distance from any point within a wall, or center the windows between the faces of a wall. You can select doors, windows, and openings and reposition them at the same time. If you select more than one object, you can select only one side to offset. 
+1 Select the windows you want to move. 
+2 Click Window tab . Anchor panel . Reposition Within Wall 
+
+. A marker indicates the current location within the opening. This may be the center of the frame, the interior face of the frame, or the exterior face of the frame. 
+3 Specify where to measure the offset from: 
+If you want to… Then… 
+center the windows between the select a point near the center of the faces of the wall window. 
+offset the windows from the interior select a point on the side of the face or exterior face you want to measure from. 
+4 Select a point to measure to. 5 Specify the offset distance from the selected point: 
+If you want to… Then… 
+center the windows between the use the Midpoint osnap to select faces of the wall the midpoint of the end of the wall. 
+move the windows to the reference enter 0. point 
+move the windows a specified dis-enter a value for the offset distance. tance 
+If you want to… Then… 
+specify the distance as a measure-select the two points measuring the ment between two points distance. 
+Repositioning a window within a wall 
+
+Using Anchors to Change the Horizontal Position of a Window 
+Use this procedure to change the horizontal position of windows along a wall to which the windows are anchored. 
+Window position along the X axis parameters 
+
+1 Select the windows you want to change, and double-click one of them. 
+2 On the Properties palette, expand Basic, and expand Location. 
+3 Click Anchor. 
+4 Select the reference point for the anchor along the X axis: 
+If you want to… Then… 
+use the start of the wall as the refer-under Position Along (X), select ence point Start of wall for From. 
+use the midpoint of the wall as the under Position Along (X), select reference point Midpoint of wall for From. 
+use the end of the wall as the refer-under Position Along (X), select End ence point of wall for From. 
+5 Enter the distance from the reference point at which to place the windows. Use a negative value to measure from endpoint to start point. 
+6 Select the position of the windows to measure to: 
+If you want to measure to… Then… 
+the start edge of the windows select Start Edge of object for To. 
+the center of the windows select Center of object for To. 
+the end edge of the windows select End Edge of object for To. 
+7 Click OK. 
+Using Anchors to Change the Vertical Position of a Window 
+Use this procedure to change the vertical position of windows in a wall to which the windows are anchored. 
+Window position along the Z axis parameters 
+
+1 Select the windows you want to change, and double-click one of them. 
+2 On the Properties palette, expand Basic, and expand Location. 
+3 Click Anchor. 4 Select the reference point for the anchor along the Z axis: 
+If you want to… Then… 
+use the bottom of the wall height under Position Along (Z), select as the reference point Bottom of wall height for From. 
+use the center of the wall height as under Position Along (Z), select the reference point Center of wall height for From. 
+use the top of the wall height as the under Position Along (Z), select Top reference point of wall height for From. 
+5 Enter the distance from the reference point at which to place the windows. Use a negative value to measure from endpoint to start point. 6 Select the position of the windows to measure to: 
+If you want to measure to… Then… 
+the bottom of the windows select Sill (Bottom) of object for To. 
+the center of the windows select Center of object for To. 
+the top of the windows select Head (Top) of object for To. 
+7 Click OK. 
+Using Anchors to Change the Position of a Window Within a Wall 
+Use this procedure to change the position of windows horizontally within a wall to which the windows are anchored. 
+Window position along the Y axis parameters 
+
+1 Select the windows you want to change, and double-click one of them. 
+2 On the Properties palette, expand Basic, and expand Location. 
+3 Click Anchor. 
+4 Select the reference point for the anchor along the Y axis: 
+If you want to… Then… 
+use the left edge of the wall as your select Left edge of wall width for reference point From. 
+use the center of the wall as your select Center of wall width for reference point From. 
+use the right edge of the wall as select Right edge of wall width for your reference point From. 
+5 Enter the distance from the reference point at which to place the windows. Use a negative value to measure from endpoint to start point. 6 Select the position of the windows to measure to: 
+If you want to measure to… Then… 
+the front of the windows select Front of object for To. 
+the center of the windows select Center of object for To. 
+the back of the windows select Back of object for To. 
+7 Click OK. 
+Changing the Orientation of a Window to a Wall 
+Use this procedure to change the vertical orientation of windows in a wall to which the windows are anchored. 
+1 Select the windows you want to change, and double-click one of them. 
+2 On the Properties palette, expand Basic, and expand Location. 
+3 Click Anchor. 
+4 Enter the X and Z rotation angles of the windows. 
+5 Indicate if you want to reverse the flip direction of the windows in the X, Y, and Z axes: 
+If you want to reverse… Then… 
+the direction the windows open to select Flip X. 
+the side of the wall the windows select Flip Y. open to 
+the top and bottom of the windows select Flip Z. 
+6 Click OK. 
+Moving a Window to a Different Wall 
+Use this procedure to move a window from one wall to another. 
+1 Select the window you want to move. 
+2 Click Window tab . Anchor panel . Set
+ . 
+3 Select the wall to move the window to. 
+Releasing a Window from a Wall 
+Use this procedure to release windows from the wall to which they are anchored. 
+1 Select the windows you want to release. 
+2 Click Window tab . Anchor panel . Release
+ . 
+Center a Window Using Modify Tools 
+Use this procedure to center a window on a specified axis or between any two specified points. 
+1 Select the window to center. 
+2 Click Window tab . Modify panel . Center
+ . 
+3 Select an existing axis line on which to center the window, or press ENTER and then specify two points between which to center the window. 
+Create a Window Array Using Modify Tools 
+Use this procedure to create an array of identical windows along a wall. 
+1 Select the window to array. 
+2 Click Window tab . Modify panel . Array
+ . 
+3 Select an edge from which to start the array that is perpendicular to the array axis, then drag along your wall in the direction of the array. Do one of the following: 
+¦ 
+Offset: start the window array a specified offset distance from the edge. 
+
+¦ 
+Clear Distance: specify a clear distance between each arrayed window. 
+
+¦ 
+Pick Array Distance: specify a distance between arrayed windows. 
+
+¦ 
+Enter Count: specify the number of windows to appear in the array. 
+
+
+Alternatively, you can press ENTER and then specify two points between which to array the window. 
+Repositioning a Window with Modify Tools 
+Use this procedure to reposition a window. 
+1 Select the window to reposition. 
+2 Click Window tab . Modify panel . Reposition From
+ . 
+3 Select an existing wall edge from which to reposition the window, or specify two points to define a reference edge. 
+Spacing Windows Evenly with Modify Tools 
+Use this procedure to space windows evenly along a wall. 
+1 Select the window to space evenly. 
+2 Click Window tab . Modify panel . Space Evenly
+ . 
+3 Select an edge as the axis along which to space all the windows evenly, and specify a start point and an endpoint along the edge. Alternatively, press ENTER and specify two points between which 
+the windows will be spaced evenly from each other. 
+Changing the Opening Endcap Assigned to a Window 
+Use this procedure to change the opening endcap style assigned to windows. 
+NOTE Each opening endcap style is generally created for use with a specific wall style. Changing the opening endcap style used for individual windows may cause the wall to display a defect marker. 
+For more information, see Working with Wall Endcaps and Opening Endcaps on page 1359. 
+1 Select the windows whose endcaps you want to change, and double-click one of them. 
+2 On the Properties palette, expand Basic, and expand Location. 
+3 Click Window tab . Endcap panel . Opening Endcap drop-down. 
+4 Select the opening endcap style. 
+Changing the Location of a Freestanding Window 
+Use this procedure to relocate a freestanding window by changing the coordinate values of its insertion point. The window also has an orientation with respect to the WCS or the current UCS. For example, if the top and bottom of the window are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the window by aligning its normal with another axis. You can also rotate the window on its plane by changing the rotation angle. 
+For information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use Coordinates and Coordinate Systems” in AutoCAD Help. 
+1 Double-click the window you want to move. 2 On the Properties palette, expand Basic, expand Location, and click Additional Information. 3 In the Location dialog box, specify the window location: 
+If you want to… Then… 
+relocate the window enter new coordinate values under Insertion Point. 
+locate the window on the XY plane make the normal of the window parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the window on the YZ plane make the normal of the window parallel to the X axis: under Normal, enter 1 for X and enter 0 for Y and Z. 
+locate the window on the XZ plane make the normal of the window parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the window enter a new value for Rotation Angle. 
+4 Click OK. 
+Changing the Cut Plane Setting for a Window 
+Use this procedure to specify whether a selected window will use the cut plane of the containing object when anchored to that object in the current display representation. Note that cut plane display properties apply only to display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Double-click the window. 2 Click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all windows in the drawing, select Drawing default setting. To apply changes to all windows of this style, select Window Style:<style name>. For more information on styles, see Window Styles on page 1980. 
+5 For Display representation, verify that the desired display representation is selected. 
+6 If necessary, expand Object Display Properties . Cut Plane. 7 For Use cut plane of containing object when anchored, select Yes or No. 
+Specifying the Display of Muntins Blocks for a Window 
+Use this procedure to specify the display of muntins for an individual window in model and elevation views. 
+1 Double-click the window. 2 Click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all windows in the drawing, select Drawing default setting. To apply changes to all windows of this style, select Window Style:<style name>. For more information on styles, see Window Styles on page 1980. 
+5 For Display representation, verify that the desired display representation is selected. 
+6 If necessary, expand Object Display Properties . Advanced, and 
+for Muntins, click 
+(the number in parentheses indicates the number of muntins blocks currently attached to the window). 
+7 If you want to turn off the display of muntins blocks for this window without removing them, select Disable Muntins Blocks. 
+8 Specify whether to add, edit, or remove a block: 
+If you want to… Then… 
+add a new muntins block click Add. 
+edit an existing muntins block select the block to edit, and click Edit. 
+remove an existing muntins block select the block, click Remove, and click OK. 
+9 For Name, enter a name for the new block or edit the existing one as applicable. 
+10 The rest of the parameters on the Muntins Block worksheet vary according to the type of window and type of pattern selected for the lights. For detailed instructions on specifying these parameters for a particular pattern, refer to the pattern-specific topic as listed under Creating Muntins in a Window Style on page 2002. When the worksheet parameters are set as desired, click OK. 
+11 If you want your changes to apply only to the current display representation, clear Automatically Apply to Other Display Representations. (If this option is not selected, you will be prompted to identify the other display representations to which you want your changes applied. 
+12 Click OK. 
+Specifying the Display of Sills for a Window 
+Use this procedure to change the sill dimensions for a window in the Sill Plan display representation. 
+1 Double-click the window. 2 Click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 
+4 For Display controlled by, select This object. 
+NOTE To apply your changes to all windows in the drawing, select Drawing default setting. To apply changes to all windows of this style, select Window Style:<style name>. For more information on styles, see Window Styles on page 1980. 
+5 For Display representation, select Sill Plan. 6 If necessary, expand Object Display Properties . Advanced, and 
+click 
+Sill dimensions. 
+7 On the Sill Dimensions worksheet, enter the sill extension and depth dimensions. Sill components A and B are for the outside of the opening. Sill 
+components C and D are for the interior side. 
+8 Click OK. 9 On the Display component drop-down list, click the light bulb icons for individual sill components to turn visibility on or off as desired. 
+You can also access and modify sill dimensions and visibility settings through the window’s context menu, as follows: 
+1 Select the window you want to change, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the display representation where you want the changes to 
+appear, and select Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 5 Click the Other tab. 
+Window sill dimensions 
+
+6 Under Sill Dimensions, enter the sill extension and depth dimensions. 
+7 On the Layer/Color/Linetype tab, under Visible, click the icons to turn on visibility for individual sill display components as necessary. 
+8 Click OK twice. 
+Reversing the Handing for a Window in an Elevation View 
+Use this procedure to specify whether to reverse the current handing of a selected window in the Elevation display representation. 
+1 Double-click the window. 2 Click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all windows in the drawing, select Drawing default setting. To apply changes to all windows of this style, select Window Style:<style name>. For more information on styles, see Window Styles on page 1980. 
+5 For Display representation, verify that the desired display representation is selected. 6 If necessary, expand Object Display Properties . Advanced. 7 For Reverse handing, select Yes or No. 
+Specifying the Display of Frames for a Window 
+Use this procedure to change the frame display for a window in the Plan High Detail display representation. 
+1 Double-click the window. 2 Click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all windows in the drawing, select Drawing default setting. To apply changes to all windows of this style, select Window Style:<style name>. For more information on styles, see Window Styles on page 1980. 
+5 For Display representation, select Plan High Detail. 6 If necessary, expand Object Display Properties . Advanced, and 
+click 
+ Frame display. 7 On the Frame Display worksheet, under Type, select either Standard or Offset. 8 For A-Extension, enter a value to indicate the distance you want the frame to extend. 9 Click OK. 
+You can also access and modify frame display settings through the window’s context menu, as follows: 
+1 Select the window you want to change, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the Plan High Detail display representation, and select 
+Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 5 Click the Frame Display tab. 6 Adjust the settings as desired, and click OK twice. 
+Specifying the Display of Custom Block Components of a Window 
+Use this procedure to specify the display of custom block components for an individual window in a particular display representation. If you are going to use custom graphics for a new component, draw the component and save it as a block before you start this procedure. 
+1 Double-click the window. 2 Click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all windows in the drawing, select Drawing default setting. To apply changes to all windows of this style, select Window Style:<style name>. For more information on styles, see Window Styles on page 1980. 
+5 For Display representation, verify that the desired display representation is selected. 
+6 If necessary, expand Object Display Properties . Advanced, and 
+for Custom block display, click 
+(the number in parentheses indicates the number of blocks currently attached to the window). 7 If you want to turn off the display of custom blocks for this window without removing them, select Disable Custom Blocks. 8 Specify whether to add, edit, or remove a block component: 
+If you want to… Then… 
+add a new block component click Add, and then click Select Block, select the block, and click OK. 
+edit an existing block component select the component to edit, and click Edit. 
+remove an existing block compon-select the block, click Remove, and ent click OK. 
+9 Specify whether you want to scale to fit the block component to the object by width, depth, and height, or to lock the XY ratio: 
+If you want to… Then… 
+set the block scale to the width of select Width. the object 
+set the block scale to the depth of select Depth. the object 
+set the block scale to the height of select Height. the object 
+scale the whole block equally, so select Lock to XY Ratio. that one direction is scaled to fit another of the scale criteria 
+scale the block to its original size clear all options under Scale to Fit. 
+10 Specify whether to mirror the block in the X,Y, or Z direction: 
+If you want to create a mirror Then… of the block… 
+in the X direction select Mirror X. 
+in the Y direction select Mirror Y. 
+in the Z direction select Mirror Z. 
+11 Specify the X, Y, and Z location of the insertion point. 12 Specify an insertion offset of the block in the X, Y, and Z directions. 13 Specify whether the component is for the window frame or 
+window glass component: 
+NOTE Both frame and glass components are not available in all display representations. 
+If you want to add the block… Then… 
+to the inside or outside of the frame select Frame Component, and se­lect either Outside or Inside. 
+If you want to add the block… Then… 
+to all window glass components or a single window glass component click Window Component, and click either All or Single. If you select Single, enter the component num­ber. 
+NOTE If you specified Depth for Scale to Fit, the depth is scaled to the glass thickness. You can scale to the window panel thickness instead by select­ing Scale Depth to Panel Thick­ness. 
+14 Click OK twice. 
+Attaching Hyperlinks, Notes, and Files to a Window 
+Use this procedure to enter notes and attach reference files to a window. You can also edit notes and edit or detach reference files from a window. 
+1 Double-click the window you want to attach notes or files to. 2 On the Properties palette, click the Extended Data tab. 3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. 
+4 To add a note, click 
+next to Notes, enter text, and click OK. 
+5 Click 
+next to Reference documents, and then attach, detach, or edit a reference file: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+If you want to… Then… 
+detach a reference file 
+select the file name, and click . 
+
+6 Click OK. 
+Window Styles 
+A window style is a group of properties assigned to a window that determines the appearance and other characteristics of the window. 
+You can use window styles to represent standard window types for specific jobs and drawings or for office standards. When you create or modify a window style, the windows using the style have the settings and characteristics of the style. Templates provided with AutoCAD Architecture contain window styles for many standard windows. You can create your own window styles and window types for custom windows. 
+Each window you create has a window style associated with it. The window style controls window properties such as dimensions, design rules, and standard sizes for windows. Style control means that when you change a window style, the windows in the current drawing that use that style change globally. 
+The design rules are window-style properties that determine the predefined or custom shape and window type. Window shapes such as Arch, Gothic, Rectangular, and Round are the geometric configurations of the window. Custom shapes, such as Hinged-Single-Full Lite, are available for particular window types, for example a Single Casement window type. Window types, such as Awning, Pass Through, or Casement, describe window opening characteristics of closure, swing, and hinging. 
+You can create a style using default style properties or by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+Creating Tools from Window Styles 
+You can create a window tool from any window style. You can drag the style from the Style Manager onto a tool palette. You can then specify default settings for any window created with that tool. For more information, see Using Window Tools to Create Windows on page 1943. 
+Creating a Window Style 
+Use this procedure to create a window style. 
+You can create a new style with default style properties, or you can create a new style by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Create a window style: 
+If you want to create a new Then… style… 
+with default properties right-click Window Styles, and click New. 
+from an existing style right-click the window style you want to copy, and click Copy. Right-click, and click Paste. 
+4 Enter a name for the new window style, and press ENTER. 5 Edit the style properties of your new window style: 
+If you want to… Then… 
+enter a description of the style click the General tab, and enter a description. 
+change dimension properties of the see Specifying the Dimensions of a style Window Style on page 1983. 
+change the design rules of the style see Specifying the Design Rules of a Window Style on page 1986. 
+change the standard window sizes see Specifying the Standard Sizes of the style of a Window Style on page 1983. 
+assign materials to the components see Assigning Materials to a Win-
+of the window style, dow Style on page 1992 and Turning on Materials for a Window Style on page 1994. 
+If you want to… Then… 
+add classifications to a window style see Adding Classifications to a Win­
+dow Style on page 1993. 
+specify the display properties of the see Specifying the Display Proper-style ties of a Window Style on page 1993. 
+change the appearance of the dis-see Changing the Layer, Color, and play components in the style Linetype of Window Components on page 1994. 
+add custom block components to see Adding Components to a Win-the style dow Style on page 1996. 
+turn off components in the style see Turning Off Components in a Window Style on page 1998. 
+remove components from the style see Removing Components from a Window Style on page 1998. 
+override the opening percentage see Specifying the Opening Percent-from the style age for a Window Style on page 1999. 
+change the sill from the style see Specifying the Display of Win­
+dow Sills in a Window Style on page 2000. 
+add muntins to the style see Creating Muntins in a Window Style on page 2002. 
+add notes, files, or documents to see Attaching Notes and Files to a the style Window Style on page 2001. 
+6 If you want to assign the style to a window tool, drag the style 
+from the Style Manager to a tool palette. You can later rename the tool and specify other properties for it as described in Creating a Window Tool on page 1950. 
+7 Click OK. 
+Specifying the Dimensions of a Window Style 
+Use this procedure to change the default dimensions of a window style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Dimensions tab. 
+
+5 Change dimension values: 
+If you want to… Then… 
+change the frame width and depth under Frame, enter values for Width and Depth. 
+set the frame width to the wall under Frame, select Auto-Adjust to thickness Width of Wall. 
+change the sash dimensions under Sash, enter values for Width and Depth. 
+
+change the window thickness enter a value for Glass Thickness. 
+6 Click OK. 
+Specifying the Standard Sizes of a Window Style 
+Use this procedure to create the standard window sizes in a window style. 
+Standard sizes ensure consistency by allowing designers to select sizes from a predefined list specific to the window style. You can also enter custom sizes when you add or modify individual windows. 
+1 Click Manage tab . Style & Display panel . Style Manager 2 Expand Architectural Objects, and expand Window Styles. 3 Select the window style you want to edit. 4 Click the Standard Sizes tab, and add, change, or remove 
+window-size values: 
+
+If you want to… Then… 
+create standard sizes 
+click Add 
+. Under Standard Sizes, enter values for Description, Width and Height; if applicable, enter values for Rise and Bottom Sash. 
+change a size select the size, and click Edit 
+. Enter new values as needed. 
+delete a size select a size, and click Remove . 
+
+Description can be used to identify standard window sizes in window schedules. For example, you can specify a manufacturer’s size or model code for Description. 
+Rise applies to Arch, Gothic, and Peak Pentagon window shapes. Bottom Sash applies to Uneven Single Hung and Uneven Double Hung windows. For more information on window types and shapes, see Specifying the Design Rules of a Window Style on page 1986. 
+5 Click OK. 
+Creating a Custom Window Shape 
+Use this procedure to create a profile for a custom window shape. You can make custom shapes for windows and apply them to window styles. 
+The profile is made up of two concentric, closed polylines. The outer polyline, or ring, becomes the window shape, and the inner polyline creates a void for the inside shape of the window frame. You can create multiple voids by adding more inner polylines. The inner polyline must be entirely within the polyline representing the outer shape of the window frame. The polylines are proportional in size and shape to each other and also to the windows created from the window style. 
+You can draw these polylines anywhere in the drawing and use any convenient scale relative to your final window frame size. One method for sizing the polylines relative to the window is to draw them by snapping to an existing window, and then moving the completed polylines to the side. 
+Adding a profile-based window to a wall 
+
+1 Draw concentric, closed polylines representing the outer and inner lines of the window frame. 
+2 Select the outer polyline, right-click, and click Convert To . Profile Definition. 
+3 Enter a (Add ring). 
+4 Select the inner polyline. 
+5 Specify the insertion point of the profile. The insertion point is typically the lower-left corner. 
+6 Enter a name for the profile, and click OK. 
+To add the profile to a window style, see Specifying the Design Rules of a Window Style on page 1986. 
+Specifying the Design Rules of a Window Style 
+Use this procedure to specify the shape and the type of window for a window style. 
+Window shapes are named geometrical descriptions of a window. You can select predefined and custom window shapes, or create your own shape from profiles. For more information, see Creating a Custom Window Shape on page 1984. 
+The window type describes the method for opening the window. For example, you can use the Rectangular or Half Round predefined shapes for the Double Casement or Single Hopper window types. Or, you can use a custom Hinged-Single-Full Lite shape for a Single Casement with Muntins. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the window style you want to edit. 4 Click the Design Rules tab. 5 Select a window shape: 
+If you want to… Then… 
+use a predefined window shape under Shape, click Predefined, and select a shape. 
+use a custom window shape under Shape, click Use Profile, and select a profile. 
+6 Select a window type. 7 Click OK. 
+Replacing the Window Shape in a Window Style 
+Use this procedure to replace a predefined shape in a window style with a custom shape created from a profile. 
+1 Select a window that uses the style you want to modify. 
+2 Click Window tab . Profile panel . Add Profile
+ . 3 Specify the profile to use for the custom shape: 
+If you want to… Then… 
+use a predefined window shape select a profile for Profile Definition, and click OK. For information about creating a profile, see Creating a Custom Window Shape on page 1984. 
+use a predefined window shape,  select a profile for Profile Definition,  
+but modify it  select Continue Editing, and click  
+OK. For information about modify­ 
+ing the shape, see Editing the Geo­
+ 
+metry of a Window Style on page  
+1987.  
+
+create a custom shape select Start from scratch for Profile Definition, enter a name for the new profile, and click OK. For in­formation about modifying the de­fault shape, see Editing the Geo­
+metry of a Window Style on page 1987. 
+Editing the Geometry of a Window Style 
+Use this procedure to edit the geometry of the profile used to define a window style. You can also add a profile to a window style that does not currently use a profile to define its shape. 
+1 Add a window that has the style you want to change. 2 Add or edit a profile: 
+If you want to… Then… 
+add an existing profile to the style select the window, click Window tab . Profile panel . Add Profile
+
+ . Select the name of the profile, and click OK. 
+create a profile and add it to the style 
+select the window, click Window tab . Profile panel . Add Profile
+
+ . Select Start from scratch for Profile Definition, enter a name for new profile, and click OK. A rectan­gular profile is created for you to edit to define the required geo­metry. 
+edit the existing profile for the style select the window, click Window tab . Profile panel . Edit In Place
+
+ . 
+3 If prompted that the profile is not drawn to size, click Yes. 
+The area of the window defined by the profile is selected and 
+hatched in the drawing. 
+NOTE After you perform an editing task, you may need to select the profile again to perform another editing task. 
+4 Edit the profile: 
+If you want to… Then… 
+change the shape of the perimeter of the profile or its ring 
+select the profile, and use edge and vertex grips to adjust the shape. The Edge grip has three edit modes: Offset, Add Vertex, and Convert to Arc. The default mode is Offset, which offsets the selected edge in a direction that is perpendicular to the midpoint of the edge. Depend­
+If you want to… Then… 
+ing on the shape of the profile and the edge you choose to modify, neighboring lines are extended or trimmed, and new lines are added, as necessary. Use the Add Vertex edit mode to add a vertex to the selected edge, and create a new edge. If the selec­ted edge is an arc, the new edge is an arc, as well. Convert to Arc changes the selected edge to an arc and stretches the midpoint of the edge. The edge grip for an arc also has a Stretch mode, so that you can stretch the midpoint of the edge after it has been converted to an arc. 
+add vertices to the profile select an Edge grip, and press CTRL to switch to the Add Vertex edit mode. Move the edge to the de­sired location and click, or enter a value and press ENTER. 
+remove vertices from the profile select the Vertex grip for the vertex you want to remove, and press CTRL to switch to the Remove edit mode. Move the cursor off the se­lected vertex, and click. 
+replace an existing ring of the pro- select the profile, click Edit In Place  
+file with new geometry tab . Profile panel . Replace Ring  
+. Select the ring to replace, and  
+select the new geometry. Press  
+ENTER to keep the geometry, or  
+enter n (No) to erase it.  
+
+5 Save or discard the changes: 
+If you want to… Then… 
+restore the profile to its original select the profile and click Edit In shape Place tab . Edits panel . Cancel
+
+ . 
+save the changes to the current  select the profile, and clickEdit In  
+profile  Place tab . Edits panel . Finish  
+. The window style uses the edited  
+profile to define its geometry. Any  
+other objects or styles that use this  
+profile are also updated with the  
+edited geometry.  
+
+save the changes to a new profile definition 
+select the profile, and click Edit In Place tab . Edits panel . Save As
+
+ . Enter a name for the new profile definition, and click OK. The window uses the new profile to define its geometry. Any windows of this style are updated with the new geometry. Other styles or ob­jects that use the original profile are not affected. 
+About Window Display Components and Materials 
+A window object consists of a number of components whose display properties can be determined by a material assigned to each component. 
+When you assign materials to a window, you assign one material to each display component of the window. For example, you assign a wood material to the frame and a glass material to the window glass. 
+If you want to use the display properties of the window object or window style instead of using material display properties, you can turn off the material assignments in the display properties of the window or the window style. 
+Material definitions consist of display components that correspond to component types of objects. For example, the Linework component of a material is used for all linework in Plan view. The Surface Hatch component of a material is used to hatch all object surfaces in 3D model views and elevations. 
+For a complete list of material components and their description, see Material Components and Display Properties on page 884. 
+The following table lists all window components that can be displayed using materials assigned to them, and identifies the material component of each window component. 
+Window Component Material Component 
+Plan, Plan High Detail, Reflected 
+Frame LInework 
+Sash LInework 
+Glass Linework 
+Plan Low Detail 
+Window Linework 
+Model 
+Frame 3D Body 
+Sash 3D Body 
+Glass 3D Body 
+Elevation 
+Frame 2D Section/Elevation Linework 
+Sash 2D Section/Elevation Linework 
+Glass 2D Section/Elevation Linework 
+Assigning Materials to a Window Style 
+Use this procedure to assign materials to the individual components of a window style. When you assign materials to window components, the components use the display properties of the material. For more information, see About Window Display Components and Materials on page 1990. 
+You can specify the materials used to display the following components of a window style: 
+¦ 
+Frame 
+
+¦ 
+Sash 
+
+¦ 
+Glass 
+
+¦ 
+Muntin 
+
+
+NOTE If a material assignment does not determine the display properties of a window component, you can change the display properties of the window style as described in Specifying the Display Properties of a Window Style on page 1993. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which you want changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select By Material for any component to which you want to assign 
+a material, and click OK. If the setting for By Material is not available, the display of this component cannot be determined by a material. 
+9 Click the Materials tab. 
+10 Click the component you want to change, and select a different material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a component. 
+WARNING Although you can edit a material definition from this dialog box, any changes you make to the material definition apply to all objects that are assigned the material. 
+11 Click OK. 
+Adding Classifications to a Window Style 
+Use this procedure to specify classifications for any classification definition applied to a window style. 
+For more information about creating and applying classification definitions, see Classification Definitions on page 3834. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style that you want to change. 4 Click the Classifications tab. 
+By default, the classification for all classification definitions is Unspecified. If no classification definitions are listed, none are applied to window styles. 
+5 For each classification definition, select the classification you want to apply to the current window style. 6 Click OK. 
+Specifying the Display Properties of a Window Style 
+In most cases, you want the appearance of windows that belong to the same style to be consistent throughout a drawing. To achieve this, you specify the display properties of the windows in each window style: 
+¦ 
+The layer, color, and linetype of window components 
+
+¦ 
+The hatching used with each component 
+
+¦ 
+The cut plane height and the display of components relative to the cut plane 
+
+¦ 
+Other specific window display information, such as window rise 
+
+
+Changing the Layer, Color, and Linetype of Window Components 
+Use this procedure to change the display properties of the window style: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+By material (material assigned to the display component determines its layer properties) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+NOTE If a material assignment determines the properties of components in the window style, you can change the properties of the display component by clearing By Material or by overriding the material assignment with a different material. For more information, see Assigning Materials to a Window Style on page 1992. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which you want changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select the component to change, and select a different setting for 
+the property. 9 Click OK. 
+Turning on Materials for a Window Style 
+Use this procedure to turn on material assignments for individual display representations in a window style. 
+For information on creating and assigning materials, see About Window Display Components and Materials on page 1990. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which you want changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select By Material for each component you want to be controlled 
+by the material. The ByMaterial checkbox is unavailable for 
+components that cannot be assigned a material. When you select By Material for a display component, all other settings in the dialog are greyed out. The display properties are now taken from the material definition, so you can no longer set them directly in the display properties of the window style. 
+9 Click OK. 
+Using Custom Blocks to Create Window Components 
+You can add custom blocks for components, such as window hardware, to the display components or to replace the default display components. For example, you can replace a simple window frame with a custom window frame containing shutters in which you want the custom component to appear. You can have a different custom block for each display representation. 
+When you add a custom block, you can specify several rules for positioning and scaling the new component. Each custom block also appears in the display properties component list so that you can control its layer, color, and linetype. For more information on adding custom blocks, see Adding Components to a Window Style on page 1996. 
+If you create a custom block from mass elements, you can use the material assignments of the mass elements to determine the display properties of the custom block. 
+Be sure to set the properties of the objects used to create your custom blocks to ByBlock. Otherwise, you cannot control these objects through the display 
+properties. For more information about ByBlock, see “Work with Layers” in AutoCAD Help. 
+Adding Components to a Window Style 
+Use this procedure to add or edit custom block components in the display representation of window styles. 
+1 Create a block for the component to add to the window style. Create the block in the same plane as the window that you use to represent the style. For more information about custom blocks, see Using Custom Blocks to Create Window Components on page 1995. 
+2 Click Manage tab . Style & Display panel . Style Manager
+ . 3 Expand Architectural Objects, and expand Window Styles. 4 Select the style you want to edit. 5 Click the Display Properties tab. 6 Select the display representation in which you want changes to 
+appear, and select Style Override. 
+7 If necessary, click 
+. 8 Click the Other tab. 9 Specify whether to add or edit a block component: 
+If you want to… Then… 
+add a new block component click Add, and then click Select Block. 
+edit an existing block component select the component to edit, and click Edit. 
+10 Select the block to use, and click OK. 
+11 Specify whether you want to scale to fit the block component to the object by width, depth, and height, or to lock the XY ratio: 
+If you want to… Then… 
+set the block scale to the width of select Width. the object 
+If you want to… Then… 
+set the block scale to the depth of select Depth. the object 
+set the block scale to the height of select Height. the object 
+scale the whole block equally, so select Lock to XY Ratio. that one direction is scaled to fit another of the scale criteria 
+scale the block to its original size clear all options under Scale to Fit. 
+12 Specify whether to mirror the block in the X,Y, or Z direction: 
+If you want to create a mirror Then… of the block… 
+in the X direction select Mirror X. 
+in the Y direction select Mirror Y. 
+in the Z direction select Mirror Z. 
+13 Specify the X, Y, and Z location of the insertion point. 14 Specify an insertion offset of the block in the X, Y, and Z directions. 15 Specify whether the component is for the window frame or 
+window glass component: 
+If you want to add the block… Then… 
+to the inside or outside of the frame click Frame Component, and click either Outside or Inside. 
+to all window glass components or click Window Component, and click 
+a single window glass component either All or Single. If you select Single, enter the component num­ber. 
+If you want to add the block… Then… 
+NOTE If you specified Depth for Scale to Fit, the depth is scaled to the glass thickness. You can scale to the window panel thickness instead by select­ing Scale Depth to Panel Thick­ness. 
+16 Frame and Glass components are not available in some display representations. 
+Click OK three times. 
+Turning Off Components in a Window Style 
+Use this procedure to turn off custom blocks in a window style. 
+You can turn off the display of component blocks without removing them from the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which you want to turn off 
+the display of the window component, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Select Disable Custom Blocks. 9 Click OK. 
+Removing Components from a Window Style 
+Use this procedure to remove components from a window style. 
+Removing component blocks from a window style deletes them from the style. 
+1 Click Manage tab . Style & Display panel . Style Manager 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which you want to remove 
+the window component, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Select the component to remove, and click Remove. 9 Click OK. 
+Specifying the Opening Percentage for a Window Style 
+Use this procedure to override the opening percentage in the display representation of a window style. For example, you can specify that a window is displayed closed in model and elevation representations, but open in plan representations. 
+NOTE This setting overrides other window opening percent settings. If the opening percent is specified here, the opening percent entered on the Properties palette when you add or modify windows is ignored. 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which you want to override 
+the opening percent, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Select Override Open Percent. 9 Enter a value for the opening percent. 
+10 Click OK. 
+Specifying the Display of Window Sills in a Window Style 
+Use this procedure to change the window sill dimensions in the Sill Plan display representation. 
+You must use a display representation for a window that has a sill. You can turn on the Sill Plan display representation in addition to the Plan display representation. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select Sill Plan for Display Representations, and select Style 
+Override. 
+6 If necessary, click 
+. 7 Click the Other tab. Window Sill Dimensions 
+
+8 Under Sill Dimensions, enter the sill extension and depth 
+dimensions. Sill components A and B are for the swing or outside of the window. Sill components C and D are for the interior side. 
+9 If you want to use the cut plane of the wall for anchored windows, instead of using the cut plane of the window, select Use Cut Plane of Containing Object when Anchored. 
+10 Click the Layer/Color/Linetype tab. 11 Under Visible, click the icons to turn on visibility. 12 Click OK twice. 
+Defining a Window Style as Bounding for Associative Spaces 
+Use this procedure to define a window style that can bound associative spaces. 
+When a window style is set as bounding, by default all windows that have the style assigned will be used in the selection set for an associative space. For more information about associative spaces see Generating Associative Spaces on page 2904. 
+You can override the bounding settings from the window style in an individual window, if necessary. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select a window style. 4 Click the General tab. 5 Select the checkbox for Objects of this style may act as a boundary 
+for associative spaces. 6 Click OK. 
+Attaching Notes and Files to a Window Style 
+Use this procedure to enter notes and attach reference files to a window style. You can also edit reference files attached to the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the General tab. 5 To add a description to the window, enter the description under 
+Description. 6 Click Notes. 7 To add or edit a note, click the Notes tab, and enter the note. 8 To attach, edit, or detach a reference file, click the Reference Docs 
+tab: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+If you want to… Then… 
+edit the description of a reference select the file, and click Edit. Edit file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. Click OK. 
+detach a reference file select the file name, click Delete, and click OK. 
+9 Click OK. 
+Creating Muntins in a Window Style 
+Window muntins are secondary framing members that hold multiple panes of glass in a window sash. AutoCAD Architecture provides an easy way to create muntins with different layout patterns. 
+Window muntins are available in several patterns that you can customize into many different styles: 
+¦ 
+Rectangular 
+
+¦ 
+Diamond 
+
+¦ 
+Prairie 9 Lights 
+
+¦ 
+Prairie 12 Lights 
+
+¦ 
+Starburst 
+
+¦ 
+Sunburst 
+
+¦ 
+Gothic 
+
+
+Starburst and Sunburst patterns are a combined-rectangular pattern with a half-round or quarter-round spoked top and can be used for half- and quarter-round as well as rectangular muntins. Gothic is similar but has a gothic muntin pattern. The other patterns are primarily rectangular but fit into half-round window sash. 
+You can make custom shapes for window muntins by creating profiles from polylines and adding them to a new window style. For information about 
+creating profiles and adding them to a window style, see Creating a Custom Window Shape on page 1984. 
+Window muntin components 
+
+Adding Rectangular Muntins to a Window Style 
+Use this procedure to add rectangular muntins to a window style. 
+You add the muntins by editing the display properties of the window style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and automatically apply the muntins to all display representations of that window style. You add the muntins block to the window style in the display properties. Each muntins block becomes a display component of the window style. 
+You can apply the rectangular pattern to all window shapes and window types except Pass Through. 
+Specifying rectangular pattern muntins 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 
+5 Select the display representation where you want the changes to appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Muntins tab. 8 Click Add. 9 Enter a name for the muntins block. 
+10 If the window style contains multiple sash, specify whether you want muntins applied to the Top, All, or a Single sash component in the window: 
+If you want to attach muntins Then… to… 
+the top sash only under Window Pane, select Top. Top also applies to single sash. 
+all sash under Window Pane, select Other, and select All. 
+an individual sash component under Window Pane, select Other. Select Single, and specify the index number for window sash. Sash is indexed counterclockwise, starting from the lower left corner. 
+Specifying rectangular muntins for top sash 
+
+Specifying rectangular muntins for an individual sash component 
+
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 13 Clean up the muntin intersections: 
+If you want to convert… Then… 
+the muntin intersections to corners under Muntin, select Clean Up Joints. 
+all the muntins to one body with under Muntin, select Convert to the joints cleaned up Body. 
+Specifying rectangular muntin cleanup joints 
+
+14 Under Lights, select Rectangular for Pattern. 
+15 Enter a value for Lights High to specify the number of light rows in the vertical direction. 
+16 Enter a value for Lights Wide to specify the number of light 
+columns in the horizontal direction. 
+17 Click OK. 
+18 Add additional muntins: 
+If you want to add muntins Then… to… 
+another window sash in the win-repeat this procedure from step 8. dow style 
+another display representation click OK, and repeat this procedure from step 5. 
+all display representations of the select Automatically Apply to Other selected window style Display Representations and Object Overrides. 
+19 Click OK three times. 
+After you add a muntins block to a window style, you can assign a material, such as wood, and specify display properties, such as color and linetype, for the muntins. For more information, see About Window Display Components and Materials on page 1990, Specifying the Display Properties of a Window Style on page 1993, and Creating and Editing Material Definitions on page 905 respectively. 
+Adding Diamond Muntins to a Window Style 
+Use this procedure to add diamond muntins to a window style. 
+You add the muntins by editing the display properties of the window style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and automatically apply the muntins to all display representations of that window style. You add the muntins block to the window style in the display properties. Each muntins block becomes a display component of the window style. 
+You can apply the diamond pattern to all window shapes and window types except Pass Through. 
+Specifying diamond pattern muntins 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Muntins tab. 8 Click Add. 9 Enter a name for the muntins block. 
+10 If the window style contains multiple sash, specify whether you want muntins applied to the Top, All, or a Single sash component in the window: 
+If you want to attach muntins Then… to… 
+the top sash only under Window Pane, select Top. Top also applies to single sash. 
+all sash under Window Pane, select Other, and select All. 
+an individual sash component under Window Pane, select Other. Select Single, and specify the index number for window sash. Sash is indexed counterclockwise, starting from the lower left corner. 
+Specifying diamond muntins for top sash Specifying diamond muntins to an individual sash component 
+
+
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 13 Clean up the muntin intersections: 
+If you want to… Then… 
+convert the muntin intersections to under Muntin, select Clean Up corners Joints. 
+convert all the muntins to one body under Muntin, select Convert to with the joints cleaned up Body. 
+Specifying diamond muntin cleanup joints 
+
+14 Under Lights, select Diamond for Pattern. 
+15 Enter a value for Lights High to specify the number of light rows in the vertical direction. 
+16 Enter a value for Lights Wide to specify the number of light columns in the horizontal direction. 
+17 Click OK. 
+18 Add additional muntins: 
+If you want to add muntins to Then… … 
+another window sash in the win-repeat this procedure from step 8. dow style 
+another display representation click OK, and repeat this procedure from step 5. 
+all display representations of the select Automatically Apply to Other selected window style Display Representations and Object Overrides. 
+19 Click OK three times. 
+After you add a muntins block to a window style, you can assign a material, such as wood, and specify display properties, such as color and linetype, for the muntins. For more information, see About Window Display Components and Materials on page 1990, Specifying the Display Properties of a Window Style on page 1993, and Creating and Editing Material Definitions on page 905 respectively. 
+Adding Prairie-9 Lights Muntins to a Window Style 
+Use this procedure to add prairie-9 lights muntins to a window style. 
+You add the muntins by editing the display properties of the window style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and automatically apply the muntins to all display representations of that window style. You add the muntins block to the window style in the display properties. Each muntins block becomes a display component of the window style. 
+You can apply the prairie-9 lights pattern to all window shapes and window types except Pass Through. 
+Specifying prairie-9 lights pattern muntins 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Muntins tab. 8 Click Add. 9 Enter a name for the muntins block. 
+10 If the window style contains multiple sash, specify whether you want muntins applied to the Top, All, or a Single sash component in the window: 
+If you want to attach muntins Then… to… 
+the top sash only under Window Pane, select Top. Top also applies to single sash. 
+all sash under Window Pane, select Other, and select All. 
+an individual sash component under Window Pane, select Other. Select Single, and specify the index number for window sash. Sash is indexed counterclockwise, starting from the lower left corner. 
+Specifying prairie-9 lights muntins for top sash 
+
+Specifying prairie-9 lights muntins to an individual sash component 
+
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 13 Clean up the muntin intersections: 
+If you want to… Then… 
+convert the muntin intersections to under Muntin, select Clean Up corners Joints. 
+convert all the muntins to one body under Muntin, select Convert to with the joints cleaned up Body. 
+Specifying prairie-9 lights muntin cleanup joints 
+
+14 Under Lights, select Prairie-9 Lights for Pattern. 
+15 Enter a value for Edge X Offset to specify the horizontal distance of the muntins from the edges of the pane. 
+16 Enter a value for Edge Y Offset to specify the vertical distance of the muntins from the edges of the pane. 
+Specifying prairie-9 lights pattern muntin edge X and Y offsets 
+
+17 Click OK. 18 Add additional muntins: 
+If you want to add muntins Then… to… 
+another window sash in the win-repeat this procedure from step 8. dow style 
+another display representation click OK, and repeat this procedure from step 5. 
+If you want to add muntins Then… to… 
+all display representations of the select Automatically Apply to Other selected window style Display Representations and Object Overrides. 
+19 Click OK three times. 
+After you add a muntins block to a window style, you can assign a material, such as wood, and specify display properties, such as color and linetype, for the muntins. For more information, see About Window Display Components and Materials on page 1990, Specifying the Display Properties of a Window Style on page 1993, and Creating and Editing Material Definitions on page 905 respectively. 
+Adding Prairie-12 Lights Muntins to a Window Style 
+Use this procedure to add prairie-12 lights muntins to a window style. 
+You add the muntins by editing the display properties of the window style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and automatically apply the muntins to all display representations of that window style. You add the muntins block to the window style in the display properties. Each muntins block becomes a display component of the window style. 
+You can apply the prairie-12 lights pattern to all window shapes and window types except Pass Through. 
+Specifying prairie-12 lights pattern muntins 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Muntins tab. 8 Click Add. 9 Enter a name for the muntins block. 
+10 If the window style contains multiple sash, specify whether you want muntins applied to the Top, All, or a Single sash component in the window: 
+If you want to attach muntins Then… to… 
+the top sash only under Window Pane, select Top. Top also applies to single sash. 
+all sash under Window Pane, select Other, and select All. 
+an individual sash component under Window Pane, select Other. Select Single, and specify the index number for window sash. Sash is indexed counterclockwise, starting from the lower left corner. 
+Specifying prairie-12 lights muntins for top sash 
+
+Specifying muntins to an individual sash component 
+
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 13 Clean up the muntin intersections: 
+If you want to… Then… 
+convert the muntin intersections to under Muntin, select Clean Up corners Joints. 
+convert all the muntins to one body under Muntin, select Convert to with the joints cleaned up Body. 
+Specifying muntin cleanup joints 
+
+14 Under Lights, select Prairie-12 Lights for Pattern. 
+15 Enter a value for Edge X Offset to specify the horizontal distance of the muntins from the edges of the pane. 
+16 Enter a value for Edge Y Offset to specify the vertical distance of the muntins from the edges of the pane. 
+Specifying prairie-12 lights pattern muntin edge X and Y offsets 
+
+17 Click OK. 18 Add additional muntins: 
+If you want to add muntins Then… to… 
+another window sash in the win-repeat this procedure from step 8. dow style 
+another display representation click OK, and repeat this procedure from step 5. 
+If you want to add muntins Then… to… 
+all display representations of the select Automatically Apply to Other selected window style Display Representations and Object Overrides. 
+19 Click OK three times. 
+After you add a muntins block to a window style, you can assign a material, such as wood, and specify display properties, such as color and linetype, for the muntins. For more information, see About Window Display Components and Materials on page 1990, Specifying the Display Properties of a Window Style on page 1993, and Creating and Editing Material Definitions on page 905 respectively. 
+Adding Starburst Muntins to a Window Style 
+Use this procedure to add starburst muntins to a window style. 
+You add the muntins by editing the display properties of the window style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and automatically apply the muntins to all display representations of that window style. You add the muntins block to the window style in the display properties. Each muntins block becomes a display component of the window style. 
+You can add the starburst pattern only to the top window sash. You can apply the starburst pattern to window shapes with a round, half round, or quarter round top. 
+You can apply the starburst pattern to the following window types: awning, single hopper, single transom, vertical pivot, horizontal pivot, double hung, glider, single hung, single casement, and picture. 
+Specifying starburst pattern muntins 
+
+1 Click Manage tab . Style & Display panel . Style Manager 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Muntins tab. 8 Click Add. 9 Enter a name for the muntins block. 
+10 Under Window Pane, select Top. 
+
+NOTE The Starburst pattern is available only when Top is selected for Window Pane. 
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 13 Clean up the muntin intersections: 
+If you want to… Then… 
+convert the muntin intersections to under Muntin, select Clean Up corners Joints. 
+convert all the muntins to one body under Muntin, select Convert to with the joints cleaned up Body. 
+Specifying starburst muntin cleanup joints 
+
+14 Under Lights, select Starburst for pattern. 
+15 Enter a value for Lights High to specify the number of light rows in a vertical direction. 
+16 Enter a value for Lights Wide to specify the number of panes in the radial direction. 
+17 Enter a value for Spokes to specify the number of radial muntin spokes. 
+Specifying number of spokes for starburst muntins 
+
+18 Click OK. 19 Add additional muntins: 
+If you want to add muntins Then… to… 
+another window sash in the win-repeat this procedure from step 8. dow style 
+If you want to add muntins Then… to… 
+another display representation click OK, and repeat this procedure from step 5. 
+all display representations of the select Automatically Apply to Other selected window style Display Representations and Object Overrides. 
+20 Click OK three times. 
+After you add a muntins block to a window style, you can assign a material, such as wood, and specify display properties, such as color and linetype, for the muntins. For more information, see About Window Display Components and Materials on page 1990, Specifying the Display Properties of a Window Style on page 1993, and Creating and Editing Material Definitions on page 905 respectively. 
+Adding Sunburst Pattern Muntins to a Window Style 
+Use this procedure to add sunburst muntins to a window style. 
+You add the muntins by editing the display properties of the window style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and automatically apply the muntins to all display representations of that window style. You add the muntins block to the window style in the display properties. Each muntins block becomes a display component of the window style. 
+You can add the sunburst pattern only to the top window sash. You can apply the sunburst pattern to window shapes with a round, half round, or quarter round top. 
+You can apply the sunburst pattern to the following window types: awning, single hopper, single transom, vertical pivot, horizontal pivot, double hung, glider, single hung, single casement, and picture. 
+Specifying sunburst pattern muntins 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Muntins tab. 8 Click Add. 9 Enter a name for the muntins block. 
+10 Under Window Pane, select Top. 
+NOTE The Sunburst pattern is available only when Top is selected 
+for Window Pane. 
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 13 Clean up the muntin intersections: 
+If you want to… Then… 
+convert the muntin intersections to under Muntin, select Clean Up corners Joints. 
+convert all the muntins to one body under Muntin, select Convert to with the joints cleaned up Body. 
+Specifying sunburst muntin cleanup joints 
+
+14 Under Lights, select Sunburst for Pattern. 
+15 Enter a value for Lights High to specify the number of light rows in a vertical direction. 
+16 Enter a value for Lights Wide to specify the number of panes in the radial direction. 
+17 Enter a value for Spokes to specify the number of radial muntin spokes. 
+Specifying number of spokes for sunburst muntins 
+
+18 Under Hub Style, select Closed for no hub pane, or select Open for a hub pane. 
+Specifying sunburst muntin open and closed hubs 
+
+19 Enter a value for Radius to specify the radius for the hub. Specifying sunburst muntin hub radius 
+
+20 Click OK. 21 Add additional muntins: 
+If you want to add muntins Then… to… 
+another window sash in the win-repeat this procedure from step 8. dow style 
+another display representation click OK, and repeat this procedure from step 5. 
+all display representations of the select Automatically Apply to Other selected window style Display Representations and Object Overrides. 
+22 Click OK three times. 
+After you add a muntins block to a window style, you can assign a material, such as wood, and specify display properties, such as color and linetype, for the muntins. For more information, see About Window Display Components and Materials on page 1990, Specifying the Display Properties of a Window Style on page 1993, and Creating and Editing Material Definitions on page 905 respectively. 
+Adding Gothic Muntins to a Window Style 
+Use this procedure to add gothic muntins to a window style. 
+You add the muntins by editing the display properties of the window style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and automatically apply the muntins to all display representations of that window style. You add the muntins block to the window style in the display properties. Each muntins block becomes a display component of the window style. 
+You can add the gothic pattern only to the top window sash. You can apply the gothic pattern to the following window shapes: round, half round, gothic, peak pentagon, or arch. 
+You can apply the gothic pattern to the following window types: awning, single hopper, single transom, vertical pivot, horizontal pivot, double hung, glider, single hung, single casement, and picture. 
+Specifying gothic pattern muntins 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Muntins tab. 8 Click Add. 9 Enter a name for the muntins block. 
+10 Under Window Pane, select Top. 
+NOTE The Gothic pattern is available only when Top is selected for Window Pane. 
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 
+13 Clean up the muntin intersections: 
+If you want to… Then… 
+convert the muntin intersections to under Muntin, select Clean Up corners Joints. 
+convert all the muntins to one body under Muntin, select Convert to with the joints cleaned up Body. 
+Specifying gothic muntin cleanup joints 
+
+14 Under Lights, select Gothic for Pattern. 
+15 Enter a value for Lights High to specify the number of light rows in the vertical direction. 
+16 Enter a value for Lights Wide to specify the number of panes in the horizontal direction. Count the panes across the bottom row. 
+17 Click OK. 18 Add additional muntins: 
+If you want to add muntins Then… to… 
+another window sash in the win-repeat this procedure from step 8. dow style 
+If you want to add muntins Then… to… 
+another display representation click OK, and repeat this procedure from step 5. 
+all display representations of the select Automatically Apply to Other selected window style Display Representations and Object Overrides. 
+19 Click OK three times. 
+After you add a muntins block to a window style, you can assign a material, such as wood, and specify display properties, such as color and linetype, for the muntins. For more information, see About Window Display Components and Materials on page 1990, Specifying the Display Properties of a Window Style on page 1993, and Creating and Editing Material Definitions on page 905 
+Editing a Window Muntins Block in a Window Style 
+Use this procedure to edit the muntins settings for a window style. 
+After you create a muntins block, you can change any of its settings by editing the display properties of the window style for each display representation, such as Model or Elevation. You can edit the muntins for display representations individually. You can also edit the muntins for a single display representation and automatically apply the changes to all display representations of that window style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and click 
+. 6 Click the Muntins tab. 7 Select the muntins block to edit. 8 Click Edit. 9 Edit any of the settings. 
+For more information on the settings, see the window muntins type in Creating Muntins in a Window Style on page 2002. 
+10 Select Automatically Apply to Other Display Representations and Object Overrides to apply the changes to all display representations of the selected window style. 
+Clear this setting to apply the changes to only the selected display representation. 
+11 When you finish editing the window muntins block in the window style, click OK three times. 
+After you add a muntins block to a window style, you can assign a material, such as wood, and specify display properties, such as color and linetype, for the muntins. For more information, see About Window Display Components and Materials on page 1990, Specifying the Display Properties of a Window Style on page 1993, and Creating and Editing Material Definitions on page 905 respectively. 
+Turning Off the Display of Muntins in a Window Style 
+Use this procedure to turn off the display of muntins in a window style. You can turn off the display of window muntins without removing them from the window. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want to turn off the 
+display of window muntins, and click 
+. 6 Click the Muntins tab. 7 Select Disable Muntins Blocks. 8 Select Automatically Apply to Other Display Representations and 
+Object Overrides to apply the changes to all display 
+representations of the selected window style. Clear this setting to apply the changes to only the selected display representation. 
+9 Click OK twice. 
+Removing a Window Muntins Block from a Window Style 
+Use this procedure to remove muntins from a window style. When you remove existing muntins blocks from the window style, they are deleted. 
+To turn off muntins without deleting them, see Turning Off the Display of Muntins in a Window Style on page 2028. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Window Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want to remove 
+window muntins, and click 
+. 6 Click the Muntins tab. 7 Select the muntins block to remove. 8 Click Remove. 9 Repeat steps 7 and 8 to remove multiple muntins blocks. 
+10 Select Automatically Apply to Other Display Representations and Object Overrides to apply the changes to all display representations of the selected window style. 
+Clear this setting to apply the changes to only the selected display representation. 
+11 When you finish removing muntins blocks from the window style, click OK twice. 
+Openings 
+26 
+An opening is an AEC object that interacts with walls to represent an opening of any size at any elevation. You can also add openings as freestanding objects. 
+Openings 
+An opening is an AEC object that interacts with walls to represent an opening of any size at any elevation. You can also add openings as freestanding objects. 
+Opening Shapes 
+When you add an opening to a drawing, you can select from a number of predefined shapes, such as rectangular, half-round, oval, or arch. You can also create openings with custom shapes using profiles to define the geometry of the opening. 
+Examples of predefined shapes for openings 
+
+Anchoring Openings 
+After you place an opening in a wall, the opening is constrained to the object and cannot move outside it. 
+Openings can also be anchored to specific locations in walls, so that when the wall moves or changes size, the location of the opening in that object remains constant. 
+Opening Endcaps 
+Openings that are anchored in a wall can have endcap styles applied to them. The endcap shapes for wall openings are defined in the wall style and are a property of the wall. For information on setting an opening endcap style in a wall, see Working with Wall Endcaps and Opening Endcaps on page 1359. 
+Opening Dimensions 
+All openings have height and width. The rise dimension depends on the opening shape. Rise is the height from the top of the rectangular portion of an opening to the peak of the opening for gothic, arch, peak pentagon, and trapezoid shapes. 
+Vertical Alignment of Openings 
+Use the vertical alignment settings to control how to place an opening in the wall, the location of the working point vertically in the wall, and how the opening responds to modifications in height. Use the sill and head height settings to determine the working point on the opening. You can place the working point at the sill or at the head. For example, if you specify the vertical alignment as 0'' and the opening height as 7'–0'', the opening height is 7’–0''. If you next specify the height of the opening as 6'–8'', the sill remains at 0'' and the opening height becomes 6’–8''. 
+For the opening head working point, if you specify the vertical alignment as 7'–0'' and the opening height as 7'–0'', the opening height is 7–0''. If you specify the opening height as 6'–8'', the head remains at 7'–0'' and the sill becomes 4''. 
+Using Opening Tools to Create Openings 
+Tools provided with AutoCAD Architecture let you quickly place openings by selecting an opening tool with a specific opening style and other predefined properties. You can use the tool with all of its default settings, or you can change any properties that are not controlled by the style. You can also use 
+

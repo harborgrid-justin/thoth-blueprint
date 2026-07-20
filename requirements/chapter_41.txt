@@ -1,0 +1,786 @@
+[MIGRATED TO RTM_PART_66.md - ELEVATIONS]
+6 Turn the visibility on or off, and change the layer, color, linetype, lineweight, or linetype scale as needed for each subdivision component. 
+7 Click the Other tab to add a custom display component to the 
+display of the 2D elevation. For more information about adding custom display components, see Adding a Display Component to a 2D Elevation Style on page 3335. 
+8 Click OK twice. 
+Changing the Display of Graphic Subdivisions in a 3D Elevation 
+Use this procedure to change the display of subdivisions in a 3D elevation by changing its display properties. 
+You create the subdivisions by adding them to the elevation line. You can then change their length using grips or by editing the values in the elevation line properties. For more information, see Creating Graphic Subdivisions for 2D and 3D Elevations on page 3299. 
+Each subdivision in a 3D elevation is assigned to a numbered subdivision display component in the display properties of the elevation. You can control the visibility, layer, color, linetype, lineweight, and linetype scale of each subdivision by changing the display properties of each component. You can apply these changes to the selected 3D elevation or to all 3D elevations in the drawing. 
+1 Select the 3D elevation in the drawing, right-click, and click Edit Object Display. 
+2 Click the Display Properties tab. 
+3 Select the Subdivisions display representation. 
+4 Select the property source to edit: 
+If you want to edit graphic Then… subdivisions… 
+for all 3D elevations in the current select Drawing Default. drawing 
+for the selected 3D elevation select Bldg Section, and click Object Override. 
+
+5 If necessary, click 
+6 Click the Layer/Color/Linetype tab to list all the components that contribute to the display of the object. The defining line represents the cutting plane of the elevation 
+line. The numbered subdivision components correspond to subdivisions added to the elevation line. For example, the display component Subdivision 1 corresponds to the subdivision closest to, but not on, the cutting plane of the elevation line. 
+7 Turn the visibility on or off, and change the layer, color, linetype, lineweight, or lineweight scale as needed for each subdivision component. 
+8 Click OK twice. 
+Reversing a 2D or 3D Elevation 
+Use this procedure to reverse the direction of an elevation by reversing the elevation line and updating the elevation. 
+The direction of the elevation is determined by the direction in which you drew the elevation line. You can select the elevation line in plan view to see the bounding box that defines the area of the model included in the elevation. If the box does not include the area of the model that you intended, you can reverse the elevation line. If you have already created an elevation from the elevation line, update the elevation after reversing the elevation line. 
+1 Select the elevation line that you used to create the elevation. 
+2 Click Building Elevation Line tab . Modify panel . Reverse 
+
+. The elevation line is mirrored about its own axis, as is the bounding box with its original parameters. 
+3 Select the existing elevation. 4 Click 2D or 3D Section/Elevation tab . Modify panel . Regenerate
+
+ . 
+NOTE For a 2D elevation, if you do not need to respecify the objects to include in the elevation, you can click 2D Section/Elevation 
+tab . Modify panel . Refresh
+ instead of Regenerate. This 
+immediately updates the elevation. 
+5 If you need to include different objects in the updated elevation, 
+click 
+(Reselect Objects), select the objects, and press ENTER. 6 Click OK. 
+Changing the Style of a 2D Elevation 
+Use this procedure to select a different style for a 2D elevation. A 2D section/elevation style controls the appearance of any 2D elevation object to which the style is applied. 
+1 Double-click the elevation you want to change. 2 On the Properties palette, expand Basic, and expand General. 3 Select a new style for the elevation. 
+Adding and Removing Custom Components for an Elevation 
+Use this procedure to add or remove custom display components for an elevation. 
+1 Double-click the elevation. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all elevations in the drawing, select Drawing default setting. To apply changes to all elevations of this style, select Elevation Style:<style name>. For more information on styles, see 2D Elevation Styles on page 3331. 
+5 If necessary, expand Object Display Properties . Advanced. 6 Click 
+Additional Properties. 
+
+7 Add or remove components or edit component names: 
+If you want to… Then… 
+add a new component click Add, double-click the Un­named entry, and enter a name for the new component. 
+remove an existing component select the component, and click Remove. 
+edit the name of an existing com-double-click the component name, ponent and edit it as needed. 
+8 When you are finished working with the Custom Display Components list, click OK. To specify display properties for a component you have added, click the value (*NONE*) for Display component, select the component, and then adjust the default settings under Component Display Properties as needed. 
+You can also access and modify these same additional settings through the elevation’s context menu, as follows: 
+1 Select the elevation, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. 3 Select the display representation where you want the changes to 
+appear, and select Object Override. The display representation in bold is the current display representation. 
+
+4 If necessary, click 
+5 In the Display Properties dialog, click the Other tab, and then change the settings as needed. 
+6 To specify display properties for any component you add, click the Layer/Color/Linetype tab, select the component, and change the column values as needed. 
+7 Click OK twice. 
+Specifying the Display of Surface Hatching for an Elevation Subdivision 
+Use this procedure to specify whether the surface hatching for an elevation subdivision is determined by the display properties of the subdivision component or those of the Surface Hatch Linework component. 
+1 Double-click the elevation. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all elevations in the drawing, select Drawing default setting. To apply changes to all elevations of this style, select Elevation Style:<style name>. For more information on styles, see 2D Elevation Styles on page 3331. 
+5 If necessary, expand Object Display Properties . Advanced. 6 Click 
+Additional properties. 
+
+7 Specify which properties to use for surface hatching: 
+If you want to use the display Then… properties of… 
+the subdivision component select Use Subdivision properties for surface hatching. 
+the Surface Hatching Linework clear Use Subdivision properties for component surface hatching. 
+8 Click OK. 
+9 If you cleared the Use Subdivision properties for surface hatching option, the display is now controlled by the By material property of the Surface Hatching Linework component. To change this setting, click the value (*NONE*) for Display component, select the Surface Hatching Linework component, and then select a different value for By material. 
+You can also access the Use Subdivision properties for surface hatching option through the elevation’s context menu, as follows: 
+1 Select the elevation, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. 3 For the General display representation, select Object Override. 
+4 If necessary, click 
+. 
+5 In the Display Properties dialog, click the Other tab, and then select or deselect this option as desired. 
+6 Click OK twice. 
+Specifying the Display of 2D Linework for an Elevation 
+Use this procedure to specify whether to use the 3D Body display component of a material for the linework in a 2D elevation. 
+1 Double-click the elevation. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all elevations in the drawing, select Drawing default setting. To apply changes to all elevations of this style, select Elevation Style:<style name>. For more information on styles, see 2D Elevation Styles on page 3331. 
+5 If necessary, expand Object Display Properties . Advanced. 6 Click 
+Additional properties. 
+
+7 Select or deselect Use 3D Body display component for By Material linework. 8 Click OK. 
+You can also access this option through the elevation’s context menu, as follows: 
+1 Select the elevation, right-click, and click Edit Object Display. 
+2 In the Object Display dialog, click the Display Properties tab. 3 For the General display representation, select Object Override. 
+4 If necessary, click 
+. 5 In the Display Properties dialog, click the Other tab, and then select or deselect this option as desired. 6 Click OK twice. 
+Creating a Material Boundary in a 2D Elevation 
+Use this procedure to create a material boundary in a 2D elevation. 
+1 Draw a polyline around the area in the elevation that you want to mask or to highlight. 2 Select the elevation. 3 Click 2D Section/Elevation tab . Material Boundary panel . Add
+
+ . 4 Select the polyline. 5 Enter y (Yes) to erase the polyline, or n (No) to keep the polyline 
+in the drawing. 6 Specify the settings of the material boundary: 
+If you want to… Then… 
+highlight the area inside the poly-select Limit for Purpose. line 
+mask (erase) the area inside the select Erase for Purpose. polyline 
+apply the highlight or mask only to select the appropriate parts for Ap­
+specific parts of the elevation ply to. You can choose Surface Hatch, Edge Linework, and All Linework. 
+apply the material boundary to all select All Materials for Material Se-materials used in the elevation lection. 
+apply the material boundary only select Specific Materials for Material to selected materials Selection and then select the appro­priate materials in the list below. 
+7 Click OK. 
+Editing a Material Boundary 
+You can edit existing material boundaries in two ways: 
+¦ 
+Change the content within the material boundary. For example, you can determine of you want to see only brick hatching, or both brick and glass hatching. 
+
+¦ 
+Change the shape of the material boundary. For example, you can make the boundary bigger or smaller, or add additional rings and vertex points to it. 
+
+
+Editing the Content of a Material Boundary 
+Use this procedure to change the content of a material boundary. The content includes such settings as materials displayed, hatch types, and boundary type. 
+1 Select a 2D elevation. 2 Click 2D Section/Elevation tab . Material Boundary panel . Edit 
+In Place
+ . The material boundary is highlighted and edit-in-place grips are displayed. 
+3 Click Edit In Place tab . Profile panel . Edit Material Boundary
+
+ . 4 Specify the content of the material boundary: 
+If you want to… Then… 
+highlight the area inside the select Limit for Purpose. boundary 
+mask (erase) the area inside the select Erase for Purpose. boundary 
+apply the highlight or mask only to select the appropriate parts for Ap­
+specific parts of the elevation ply to. You can choose Surface Hatch, Edge Linework, and All Linework. 
+If you want to… Then… 
+apply the material boundary to all select All Materials for Material Se-materials used in the elevation lection. 
+apply the material boundary only select Specific Materials for Material to selected materials Selection, and then select the appro­priate materials from the list below. 
+5 Click OK. 6 Click Edit In Place tab . Edits panel . Finish
+ to save the changes you made, or click Edit In Place tab . Edits panel . Cancel
+ to undo them. 
+Adding a Vertex to a Material Boundary 
+Use this procedure to add a vertex to a material boundary. 1 Select the elevation to which the material boundary has been assigned. 2 Click 2D Section/Elevation tab . Material Boundary panel . Edit In Place
+ . The material boundary is highlighted and edit-in-place grips are displayed. 3 Right-click, and click Add Vertex. 4 Specify the point at which to add a vertex. 5 Specify additional vertex points. 6 Press ENTER. 7 Select the material boundary again, right-click, and click Save Changes to save the changes you made, or click Discard All Changes to undo the changes to the material boundary. 
+Removing a Vertex from a Material Boundary 
+Use this procedure to remove a vertex from a material boundary. 
+1 Select the elevation to which the material boundary has been assigned. 
+2 Click 2D Section/Elevation tab . Material Boundary panel . Edit 
+In Place
+ . The material boundary is highlighted and edit-in-place grips are displayed. 
+3 Right-click, and click Remove Vertex. 4 Specify the vertex points to remove. 5 Remove additional vertex points as needed. 6 Press ENTER. 7 Select the material boundary again, right-click, and click Save 
+Changes to save the changes you made, or click Discard All Changes to undo the changes to the material boundary. 
+Adding a Ring to a Material Boundary 
+Use this procedure to add a ring to a material boundary. 
+A material boundary can consist of more than one closed polyline. For example, you could use one polyline to highlight a wall detail, and another polyline to highlight a window detail in another location. 
+1 Draw a polyline for the new material boundary ring. 2 Select a 2D elevation. 3 Click 2D Section/Elevation tab . Material Boundary panel . Edit 
+In Place
+ . The material boundary is highlighted and edit-in-place grips are displayed. 
+4 Click Edit In Place tab . Profile panel . Edit Material Boundary
+
+ . 
+5 Click Edit In Place tab . Profile panel . Add Ring
+ . 6 Select the polyline you drew in step 1. 7 Enter y (Yes) to erase the polyline, or n (No) to keep the polyline 
+in the drawing. 
+8 Click Edit In Place tab . Edits panel . Finish
+ to save the changes you made, or click Edit In Place tab . Edits 
+panel . Cancel
+ to undo the changes to the material boundary. 
+Removing a Ring from a Material Boundary 
+Use this procedure to remove a ring from a material boundary. 
+A material boundary can consist of more than one closed ring. You can individually remove each ring. 
+NOTE You cannot remove the last ring from a material boundary. 
+1 Select a 2D elevation. 
+2 Click 2D Section/Elevation tab . Material Boundary panel . Edit In Place
+ . The material boundary is highlighted and edit-in-place grips are 
+displayed. 3 Click Edit In Place tab . Profile panel . Edit Material Boundary . 
+
+4 Click Edit In Place tab . Profile panel . Remove Ring
+ . 5 Select the ring you want to remove. 6 Click Edit In Place tab . Edits panel . Finish
+ to save the changes you made, or click Edit In Place tab . Edits panel . Cancel
+ to undo the changes to the material boundary. 
+Replacing a Ring from a Material Boundary with Another 
+Use this procedure to replace a ring from a material boundary with a different ring. 1 Draw the polyline to replace one of the existing material boundary rings. 2 Select a 2D elevation. 3 Click 2D Section/Elevation tab . Material Boundary panel . Edit 
+In Place
+ . The material boundary is highlighted and edit-in-place grips are displayed. 
+4 Click Edit In Place tab . Profile panel . Edit Material Boundary . 
+
+
+5 Click Edit In Place tab . Profile panel . Replace Ring 6 Select the ring to be replaced with another ring. 7 Select the closed polyline you drew in step 1. 8 Enter y (Yes) to erase the polyline, or n (No) to keep the polyline 
+in the drawing. 
+9 Click Edit In Place tab . Edits panel . Finish
+ to save the changes you made, or click Edit In Place tab . Edits 
+panel . Cancel
+ to undo the changes to the material boundary. 
+Editing and Merging Linework in a 2D Elevation 
+After you create a 2D elevation, you can edit the display of individual lines that make up the elevation. For example, you may want to assign linework for small details to a display component with a lighter lineweight, so that the details are not obscured when plotted. 
+You can also merge existing geometry into the elevation. 
+Editing Linework in a 2D Elevation 
+Use this procedure to edit linework in a 2D elevation. You can also edit individual lines in a 2D elevation by assigning them to display components in the elevation. For information about the Edit Linework grip, see Using Grips to Edit Linework in a 2D Elevation on page 3308. 
+You can assign selected linework to fixed display components that determine the display of every elevation that you generate, or you can assign linework to display components that you have defined. For information about adding custom display components, see Adding a Display Component to a 2D Elevation Style on page 3335. After you assign linework to display components, you can change the display properties (visibility, color, layer, lineweight, linetype, and linetype scale) to change the display of lines. 
+1 Select the elevation to be changed. 
+2 Click 2D Section/Elevation tab . Linework panel . Edit
+ . 3 Select the lines that you want to assign to a display component 4 Click Edit In Place . Linework tab . Profile panel . Modify 
+Component
+ . 
+A list of available display components is displayed. 
+5 Select the component you want to put the lines on. For example, if you want to make the lines invisible, select Erased Vectors for Linework Component. 
+You can also click 
+(Match existing linework), and select linework in the elevation whose display component you want to match. 
+6 Click OK. 
+7 To finish the linework editing process, click Edit In Place tab . Edits panel . Finish
+ to save the changes you made, or click Edit In Place tab . Edits panel . Cancel
+ to undo your 
+linework changes. 
+Merging Linework into a 2D Elevation 
+Use this procedure to merge geometry into a 2D elevation. When you merge linework into an elevation, you assign additional linework to a display component of an elevation. Use this feature when you want to add detail, or add linework that you did not model. 
+1 Draw the geometry that you want to merge into a 2D elevation. 2 Select the 2D elevation to be changed. 
+3 Click 2D Section/Elevation tab . Linework panel . Merge
+ . 4 Select the geometry to merge into the elevation, and press ENTER. 5 Select the display component to which you want to assign the 
+linework. 
+You can also click 
+(Match existing linework) and select linework in the elevation whose display component you want to match. 
+6 Click OK. The linework is merged into the 2D elevation. When you select the elevation, the linework is selected with it. 
+Changing the Location of a 2D or 3D Elevation 
+You can relocate an elevation by changing the coordinate values of its insertion point. The elevation also has an orientation with respect to the WCS or the current UCS. For example, if the top and bottom of the elevation are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the elevation by aligning its normal with another axis. You can also rotate the elevation on its plane by changing the rotation angle. 
+For information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use World and User Coordinate Systems in 3D” in AutoCAD Help. 
+1 Double-click the elevation you want to move. 2 On the Properties palette, expand Basic, and expand Location. 
+3 Click 
+Additional Information. 4 Specify a new location or rotation: 
+If you want to… Then… 
+relocate the elevation enter new coordinate values under Insertion Point. 
+locate the elevation on the XY plane make the normal of the elevation parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the elevation on the YZ plane make the normal of the elevation parallel to the X axis: under Normal, enter 1 for X, and enter 0 for Y and Z. 
+locate the elevation on the XZ plane make the normal of the elevation parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the elevation enter a new value for Rotation Angle. 
+5 Click OK. 
+Attaching Hyperlinks, Notes, and Files to a 2D or 3D Elevation 
+Use this procedure to add hyperlinks, enter notes, and attach reference files to a 2D or 3D elevation. You can also edit notes and edit or detach reference files from a 2D or 3D elevation. 
+1 Double-click the 2D or 3D elevation you want to attach notes or files to. 
+2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. For more information, see “Add Hyperlinks to a Drawing” in AutoCAD Help. 
+4 To add a note, click 
+next to Notes, enter text, and click OK. 
+5 Click 
+next to Reference documents, and then attach, detach, or edit a reference file: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+6 Click OK. 
+Updating a 2D or 3D Elevation 
+Use this procedure to regenerate a 2D or 3D elevation to reflect changes you have made to the building model or to elevation line properties. For 2D elevations, you also update the elevation to show changes made to the 2D elevation style. You can update a 2D or 3D elevation if you have not exploded 
+the elevation, which destroys the link between the elevation and the building 
+model. When you update an elevation, you can add or remove objects from the elevation, change the location of the elevation in the drawing, and change the display set of the elevation. 
+If you do not need to change the elevation definition in any way, you can skip the following procedure. Instead, click 2D Section/Elevation tab . Modify panel . Refresh
+ . 1 Select the elevation you want to update. 2 Click 2D or 3D Section/Elevation tab . Modify panel . Regenerate . 3 Select a result type: 
+
+If the elevation is… Then… 
+a 2D elevation object select 2D Section/Elevation Object with Hidden Line Removal. 
+a 3D elevation object select 3D Section/Elevation Object. 
+4 To change the style of a 2D elevation, select a new style for Style to Generate. 
+5 If you edited linework in the 2D elevation, select a style in which 
+to save the changes you made that cannot be reapplied. Select a style that distinguishes the unapplied changes in the elevation. 
+6 Under Selection Set, specify the objects that you want to include in the elevation: 
+If you want to… Then… 
+use the objects in the selection set proceed to the next step. you specified when you created the elevation or when you previously updated it 
+add new objects to the selection set click Select Additional Objects, se­that you specified when you created lect the new objects in the drawing, the original elevation and press ENTER. 
+If you want to… Then… 
+select a new selection set of objects click Reselect Objects, select a new for the elevation selection set of objects for the elev­ation, and press ENTER. 
+NOTE If you select an object that you do not want to include in the elevation, press and hold SHIFT and select the object again to remove it from the selection set. 
+7 Under Display Set, select a display set for the elevation. 8 Under Placement, locate the elevation in the drawing: 
+If you want to… Then… 
+create a new elevation object select New Object, and either click without overwriting the original object
+ to specify an insertion point in the drawing area, or enter X, Y, and Z coordinates for the new elev­ation. 
+replace the original elevation with select Replace Existing. the updated elevation 
+9 Click OK. 
+Globally Updating 2D Elevations 
+AutoCAD Architecture makes it possible for you to globally update all sections and elevations within a project or a specified folder. 
+Updating Sections and Elevations in a Project 
+AutoCAD Architecture includes the Drawing Management feature that allows users to combine their floor plans, section and elevation views, construction sheets, and reusable components in one building project. A project consists of a number of drawings linked together with a powerful external referencing mechanism. AutoCAD Architecture enables you to open a project and update all 2D sections and elevations included in that project in one comfortable workflow. For information on which project file types can be updated, see Supported Project Drawing Types on page 3329. 
+Updating Sections and Elevations in a Specific Folder 
+When you are working without a project, you can also globally update sections and elevations by specifying a folder and updating all sections and elevations in that folder. When you select a specific folder for updating, you can also include its subfolders in the update. 
+Section of a building project 
+
+For more information about building projects, see Drawing Management on page 289. 
+Supported Project Drawing Types 
+When you are updating a project, you can globally update all 2D sections and elevations within the views and sheets of the project. You cannot globally update elements and constructs, because these project drawings usually contain reusable elements and individual parts of the building project. They normally do not contain sections or elevations. 
+For more information about project drawing types, see Views on page 432 and Sheets on page 467. 
+NOTE When you globally update the sections and elevations in a project drawing, all model and paper space layouts are updated. 
+When you are updating a specified folder within a project, or a folder outside of a project, all sections and elevations in that folder are updated regardless of their type. For example, if you choose to update a specific folder within the Constructs category of a project, the sections and elevations in that folder will be updated, even though they are Construct drawings. If you do not specify a folder, but choose to update the whole project, these construct drawings are not updated. 
+Globally Updating 2D Sections and Elevations in a Project or a Folder 
+Use this procedure to globally update all 2D sections and elevations in a project or a specified folder. 
+NOTE To update all 2D sections and elevations in a project, the project must be defined as current. If no project is current, you receive an error message if you try to globally update 2D sections and elevations. For information on setting a project current, see Setting a Project Current on page 312. 
+1 Click Home tab . Section & Elevation panel .
+. Batch 
+Refresh
+ . 
+2 Select if you want to update the 2D sections and elevations in the current project, or only the 2D sections and elevations in a specific folder. 
+If you want to... Then... 
+update the 2D sections and el-select Current Project. evations in the current project 
+update the 2D sections and el-select Folder. Then click the Browse 
+evations in a specific folder button 
+, select the folder con­taining the files you want to update, and click OK. 
+3 If you have specified a folder, you can specify whether the subfolders of that folder should be updated as well. To update the subfolders, select Process subfolders. 
+NOTE When you are working with a large building project, updating all sections and elevations can be a time-consuming process. In this case, you might consider updating only a selected subfolder of your project and thereby improve system performance. 
+4 Click Start. 
+Globally updating all sections and elevations may take a while. A status window lets you know which drawing is currently being updated. 
+When you start the global update, the Stop button is available. If you want to interrupt the global update, click Stop. When the global update is finished, the Start button is available. 
+Updating Legacy Drawings 
+During the global update of 2D sections and elevations, each drawing in the project or specified folder is opened, updated, and saved again. If you are updating drawings from an earlier version of the software, the drawings are converted to the current version. Before you convert the drawings, a warning message notifies you of the conversion. To update the drawings to the new version, click OK. To cancel the update of all sections and elevations, press CTRL+BREAK. 
+Update Exceptions 
+There are a number of cases in which a 2D section or elevation cannot be updated with the global update. 
+¦ 
+The drawing containing the 2D section or elevation is read-only. 
+
+¦ 
+The 2D section or elevation is placed on a locked layer. 
+
+¦ 
+There have been user edits to a 2D section or elevation that could not be reapplied to the 2D section or elevation. 
+
+
+When a 2D section or elevation cannot be updated, an error message is displayed in the status window. 
+To fix the problem, you can set the drawing to read/write instead of read-only, you can unlock the section layer, or you can undo a specific user edit to a 2D section or elevation. 
+2D Elevation Styles 
+A 2D section/elevation style is a group of properties assigned to a 2D elevation that determines the appearance and other characteristics of that object. 
+Using 2D Elevation Styles 
+A 2D section/elevation style controls the linework in an elevation, using design rules that determine how different parts of the elevation are displayed. You can apply the style to one or more elevations to control their appearance. You can also change the display of individual lines in the elevation, and save the changes in a 2D section/elevation style. 
+Display Components and Design Rules 
+Display components determine the graphical characteristics, such as color and linetype, of linework assigned to each display component. Design rules determine how the linework in an elevation is assigned to display components. 
+When you create a design rule, you specify the part of the 2D elevation to control based on the color of those objects in the building model and their context in the elevation. You then select the display component to use for linework that meets the criteria you specified. You can assign the linework to a default display component or to a custom display component that you have added to the style. For example, you might define a rule that assigns all objects that are color 150 in the model and located along the elevation line to a custom display component named Darker that you created in the style. Or you might hide a staircase behind a wall using a rule that assigns all blue linework to the Hidden display component. 
+Managing 2D Elevation Styles 
+To create, edit, copy, or purge styles, you access the Style Manager. The Style Manager provides a central location in AutoCAD Architecture to work with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+Materials and 2D Elevation Styles 
+Two-dimensional elevation styles offer an easy way to assign materials to 2D elevation objects. You can specify which section components should have its display controlled by materials and which do not. Custom components cannot have any material assignments. 
+Subdivisions in 2D Elevation Styles and Materials 
+When you are creating subdivisions in your style, you usually want the objects in them to be visually distinct from other subdivisions. When you have assigned materials to the objects, you can set the 2D elevation style so that it uses the hatch pattern from the material, but the color and linetype from the subdivision display properties. 
+Elevation subdivisions with assigned surface hatching 
+
+Creating a 2D Elevation Style 
+Use this procedure to create a 2D elevation style. You can create a style using default style properties or by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Expand Documentation Objects, and expand 2D Section/Elevation Styles. 
+3 Create a new 2D elevation style: 
+If you want to create a style… Then… 
+using default properties right-click 2D Section/Elevation Styles, and click New. 
+style from an existing style right-click the 2D elevation style you want to copy, and click Copy. Right-click, and click Paste. 
+4 Enter a name for the new 2D elevation style, and press ENTER. 
+5 Edit the 2D elevation style: 
+If you want to… Then… 
+add display components to the style see Adding a Display Component to a 2D Elevation Style on page 3335. 
+remove display components from see Removing a Display Component the style from a 2D Elevation Style on page 3335. 
+use the subdivision properties of the see Use Subdivision Properties and elevation for the display Materials in 2D Elevation Styles on page 3340. 
+use the 3D Body component of the see Use the 3D Body Component material for the elevation linework of a Material for the 2D Elevation Linework on page 3341. 
+add design rules to the style see Adding a Design Rule to a 2D Elevation Style on page 3341. 
+change design rules in the style see Changing a Design Rule in a 2D Elevation Style on page 3343. 
+add classifications to a style see Adding Classifications to a 2D Elevation Style on page 3344. 
+change the display properties of the see Changing the Layer, Color, and display components in the style Linetype of a 2D Elevation Style on page 3345. 
+add notes, files, or documents to see Attaching Notes and Files to a the style 2D Elevation Style on page 3346. 
+6 Click OK. You can click Apply instead of OK to save the changes and continue working in the Style Manager. 
+Adding a Display Component to a 2D Elevation Style 
+Use this procedure to add a custom display component to a 2D elevation style. After you add a component, you assign linework in the elevation to the new component. To apply these style changes to existing 2D elevations, you must update the elevation. 
+2D elevations include the following default display components: Defining Line, Hidden, Erased, Unknown, and Subdivision. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, expand 2D Section/Elevation 
+Styles, and select the style you want to change. 3 Click the Components tab. 4 Click Add. 5 Enter a name and a description for the new component. 
+To enter a name, click Unnamed and enter a new name. To enter a description, click in the Description column next to the name, and enter a description. 
+6 Click the Display Properties tab. 7 Select 2D Section/Elevation Style for the property source, and 
+click 
+. 8 Click the Layer/Color/Linetype tab. 9 Specify the display properties of the new component. 
+10 Click OK twice. To create a design rule that uses the new display component, see Adding a Design Rule to a 2D Elevation Style on page 3341. To manually assign linework to the display component, see Editing Linework in a 2D Elevation on page 3323. 
+Removing a Display Component from a 2D Elevation Style 
+Use this procedure to remove a custom display component from a 2D elevation style. Removing a display component also removes any design rules that use the component. You cannot remove the default display components. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Expand Documentation Objects, expand 2D Section/Elevation Styles, and select the style you want to change. 
+3 Click the Components tab. 
+4 Select the component that you want to remove, and click Remove. If the component is used in a design rule, the associated design rule is removed as well. 
+5 Click OK. 
+6 Update the elevation to apply the style changes to the elevation. For more information, see Updating a 2D or 3D Elevation on page 3326. 
+About 2D and 3D Elevation Display Components and Materials 
+A 2D or 3D elevation object consists of a number of display components that can be determined by materials. When you assign materials to an object, you assign one material to each display component of the object. For example, you assign a wood material to the frame of a window and a glass component to the glass of a window. 
+When you create a 2D or 3D elevation object from building objects, the material assignments of the source objects are applied to the elevation. You do not assign a material directly to a 2D/3D elevation. The elevation takes its material assignments from the objects. For example, if you create an elevation of a wall with a window, the surface hatches you have defined in the glass, wood, and brick materials of the wall and the window are displayed in the elevation object. 
+
+If you do not want to use the material display properties, but instead use those of the 2D or 3D elevation object or the 2D elevation style, you can deactivate the material assignments in the display properties of the elevation or the elevation style. 
+Material definitions consist of display components that correspond to component types of objects. For example, the Linework component of a material is used for all linework of objects in Plan view. The Surface Hatch component of a material is used to hatch all object surfaces in 3D model views and elevations. 
+For a complete list of material components and their description, see Material Components and Display Properties on page 884. 
+The following table lists elevation components plus information about the material components that determine them. 
+NOTE An elevation is technically the same object as a section, and has the same display components as a section. The following topics describe the display components most relevant to elevations. For a complete list of all section and elevation components, see About 2D and 3D Section Display Components and Materials on page 3268. 
+2D Elevation Component Material Component 
+Surface Hatch Linework Surface Hatch 
+HIdden No Material 
+Erased No Material 
+Subdivision 1-10 2D Section/Elevation Linework or 3D Body. For information on switching between these material components, see Use the 3D Body Component of a Material for the 2D Elevation Linework on page 3341. 
+Surface Hatch Linework in Elevations 
+The Surface Hatch Linework component draws all linework coming from surface hatches of the objects in the elevation. This component is specific to 2D elevations. 
+NOTE Surface hatches you have assigned to objects display in a 3D elevation object. However, you cannot set them separately in a 3D elevation; you can do that only in a 2D elevation object. 
+The surface hatch linework component is controlled by the surface hatch component of the material. For information about the surface hatch component of the material, see Surface Hatch Material Component on page 886. 
+2D elevation with building roof, wall, and foundation surface hatching 
+
+Hidden Component 
+The Hidden component contains all linework that is hidden in the 2D projection because other components are in front of it. By default, this component is turned off. You can use design rules to achieve special effects, such as a see-through effect, using the Hidden component. The Hidden component is specific to 2D elevations. 
+The Hidden component cannot be defined by a material component. You can only set it in the display properties of the 2D elevation. For information on setting the display properties of a 2D elevation, see Changing the Layer, Color, and Linetype of a 2D Elevation Style on page 3345. 
+Erased Component 
+The Erased component contains linework in the elevation object that you do not want to see. For example, if you have an elevation of a window front with three windows, but you want to display only one (for a higher level of abstraction), edit the linework of the elevation and assign the linework of the remaining two windows to the Erased component. Because the Erased component is turned off by default, the two windows do not display. For information on linework editing of an elevation, see Creating a Hidden Line Projection on page 3347. 
+The hidden component is specific to 2D elevations, and cannot be defined by a material component. 
+Subdivision Components 
+The subdivision components partition an elevation object. They are useful to create perspective effects, where parts closer to the viewer are drawn with darker, stronger lines and parts farther from the user are drawn with lighter, thinner lines. Subdivisions can have no individual material assignments. However the display properties of the subdivisions can be used for the surface hatching of the subdivisions by selecting Use Subdivision Properties for Surface Hatching in the Other tab of the 2D elevation display properties. For information on using the subdivision display properties to display the elevation divisions, see Use Subdivision Properties and Materials in 2D Elevation Styles on page 3340. 
+Subdivisions are a display component of both 2D and 3D elevation objects. 
+The subdivision components are either controlled by the 2D Section/Elevation Linework component of the material or by the 3D Body component of a material. For information on how to switch between these component assignments, see Use the 3D Body Component of a Material for the 2D Elevation Linework on page 3341. 
+Use Subdivision Properties and Materials in 2D Elevation Styles 
+Use this procedure to use the display properties of materials together with the display properties of elevation subdivisions. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, expand 2D Section/Elevation 
+Styles, and select the style you want to change. 3 Click the Display Properties tab. 4 Select 2D Section/Elevation Style for the property source, and 
+click Style Override. 
+5 If necessary, click 
+. 6 Click the Layer/Color/Linetype tab. 7 To set a subdivision to use the surface hatch of the material, while 
+using the layer, color, and linetype display properties of the subdivision, clear By Material, and specify the layer, color and linetype settings of the subdivision. 
+For example, the first subdivision could have a darker color and stronger linetype than the second subdivision. 
+8 Click the Other tab. 9 Select Use Subdivison Properties for Surface Hatching. 10 Click OK twice. 
+Use the 3D Body Component of a Material for the 2D Elevation Linework 
+Use this procedure to use the 3D Body component of a material for the linework in a 2D elevation. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, expand 2D Section/Elevation 
+Styles, and select the style you want to change. 3 Click the Display Properties tab. 4 Select 2D Section/Elevation Style for the property source, and 
+click Style Override. 
+5 If necessary, click 
+. 6 Click the Other tab. 7 Specify whether the 3D body component of the selected material 
+should control the display of the linework in the 2D elevation: 
+If you want to control the dis-Then… play… 
+of the 2D elevation linework by the select Use 3D Body Display Com­3D Body component of the material ponent for By Material Linework. 
+of the 2D elevation linework by the deselect Use 3D Body Display 2D Section/Elevation Linework Component for By Material Line-component of the material work. This is the default behavior. 
+8 Click OK twice. 
+Adding a Design Rule to a 2D Elevation Style 
+Use this procedure to add a design rule to a 2D elevation style. A design rule has four fields of information that identify lines in the elevation and determine how to display them: 
+Field Description 
+Color Identifies the color of the objects in the building model presented by the lines in the elevation 
+Field Description 
+Context Identifies the context of the lines in the el­evation, such as in a graphic subdivision 
+Component Identifies the display component to which the lines are assigned 
+Description Contains a description of the design rule 
+For example, a design rule has the color 50, a context of Within Subdivision 2, and a component of New. This rule assigns any lines in the elevation representing objects that have the color 50 in the building model and that are within subdivision 2 in the elevation to the user-defined display component, New. 
+On the Design Rules tab, you can also specify that all hidden linework that is not handled by a specific design rule will be assigned to the Hidden display component. You could use this option if you want to generate an elevation of an object or a set of objects and see all edges, for example, if you are creating foundations and form work. 
+NOTE Alternatively, you can define which hidden linework should be displayed by object material. For more information, see Controlling the Display of Hidden Lines by Material on page 915. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, expand 2D Section/Elevation Styles, and select the style you want to change. 3 Click the Design Rules tab, and click Add. A new design rule is created with default color, context, and component values. 
+4 Specify settings for the new design rule: 
+If you want to… Then… 
+specify the color of objects in the click the default color, select a new building model that are affected by color, and click OK. this rule 
+specify the context in which the click the default context, and select linework for the objects appears in a new context. the elevation 
+If you want to… Then… 
+select the display component for click the default component, and the linework select a new component. 
+enter a description of the rule click the Description field, enter a description, and press ENTER. 
+5 Click OK. 6 Update the elevation to apply the style changes to the elevation. For more information, see Updating a 2D or 3D Elevation on page 3326. 
+Changing a Design Rule in a 2D Elevation Style 
+Use this procedure to change the settings in the fields that define a design rule. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, expand 2D Section/Elevation 
+Styles, and select the style you want to change. 3 Click the Design Rules tab. 4 Specify settings for the design rule you want to change: 
+If you want to… Then… 
+specify the color of objects in the click the current color, select a new building model that are affected by color, and click OK. this rule 
+specify the context in which the click the current context, and select linework for the objects appears in a new context. the elevation 
+select the display component for click the current component, and the linework select a new component. 
+edit the description of the rule click the description, edit the de­scription, and press ENTER. 
+5 Click OK. 
+6 Update the elevation to apply the style changes to the elevation. For more information, see Updating a 2D or 3D Elevation on page 3326. 
+Removing a Design Rule from a 2D Elevation Style 
+Use this procedure to remove a design rule from a 2D elevation style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, expand 2D Section/Elevation 
+Styles, and select the style you want to change. 3 Click the Design Rules tab. 4 Select the rule that you want to remove, and click Remove. 5 Click OK. 6 Update the elevation to apply the style changes to the elevation. 
+For more information, see Updating a 2D or 3D Elevation on page 3326. 
+Adding Classifications to a 2D Elevation Style 
+Use this procedure to specify classifications for any classification definition applied to a 2D elevation style. 
+For more information about creating and applying classification definitions, see Classification Definitions on page 3834. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, expand 2D Section/Elevation Styles, and select the style you want to change. 3 Click the Classifications tab. By default, the classification for all classification definitions is Unspecified. If no classification definitions are listed, none are applied to 2D elevation styles. 
+4 For each classification definition, select the classification you want to apply to the current 2D elevation style. 5 Click OK twice. 
+Changing the Layer, Color, and Linetype of a 2D Elevation Style 
+Use this procedure to change the following display properties of a 2D elevation style: 
+¦ 
+Visibility (component is on or off) 
+
+¦ 
+Display properties by materials 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+NOTE The custom display components in the display properties are identical to those listed on the Components tab of the 2D Section/Elevation Styles dialog box. For more information about custom display components, see Adding a Display Component to a 2D Elevation Style on page 3335. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, expand 2D Section/Elevation 
+Styles, and select the style you want to change. 
+3 Click the Display Properties tab. 
+4 Select 2D Section/Elevation Style for the property source, and 
+click Style Override. 
+5 If necessary, click 
+. 6 Click the Layer/Color/Linetype tab. 7 Select the component to change, and select a different setting for 
+the property. 
+8 Select By Material for any component that you want to use the display properties of the materials assigned to the elevation objects. 
+NOTE Not all display components of a 2D elevation have an associated material definition. For example, Hidden and Erased cannot be set by material. For a list of all display components and their associated material components, see About 2D and 3D Elevation Display Components and Materials on page 3336. 
+9 Click OK twice. 
+Attaching Notes and Files to a 2D Elevation Style 
+Use this procedure to enter notes and attach reference files to a 2D elevation style. You can also edit notes and edit or detach reference files attached to the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, expand 2D Section/Elevation 
+Styles, and select the style you want to change. 3 Click the General tab. 4 To add a description to the 2D elevation, enter the description 
+under Description. 5 Click Notes. 6 To add or edit a note, click the Notes tab, and enter the note. 7 To attach, edit, or detach a reference file, click the Reference Docs 
+tab: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Edit file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. Click OK when you are done editing. 
+detach a reference file select the file name, click Delete, and click OK. 
+8 Click OK twice. 
+Hidden Line Projection 
+42 
+You can create flat 2D projections with hidden background lines from a 3D view of objects in your drawing. The Hidden Line Projection command produces quick sections and elevations of objects in your drawings that are not updated automatically when you make changes to your 3D model. 
+Hidden Line Projection 
+You can create flat 2D projections with hidden background lines from a 3D view of objects in your drawing. The Hidden Line Projection command produces quick sections and elevations of objects in your drawings that are not updated automatically when you make changes to your 3D model. 
+Creating a Hidden Line Projection 
+Use this procedure to create a 2D graphic from a 3D view of one or more objects in your drawing. The 2D graphic that you create is a flattened representation of the objects in the current 3D view, with hidden background lines. Use the Hidden Line Projection command to create quick 2D elevations and sections. 
+After you create an elevation or section hidden line projection, you can hatch or shade the cut areas. You can also use hidden line projections to create detail drawings. For more information about creating elevations and sections, see Working With Elevations on page 3283 and Sections on page 3213. 
+When you create hidden line projections, the 3D objects that you select are copied and collected into an unnamed (also called anonymous) 2D block. The unnamed block can be placed in your drawing in the current 3D view, or placed parallel to the XY plane to be viewed in plan view. You can edit or explode the inserted block. If you want to insert the block in another drawing as a named block, define the block. For more information about inserting blocks, see “Insert Blocks” in AutoCAD help. 
+TIP The quickest way to locate and view an AutoCAD topic is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+NOTE Your 2D hidden line projections are not dynamically linked to the objects in the 3D view. Therefore, if you edit the original object or objects in 3D view, the 2D graphic does not change. You must edit or re-create the 2D hidden line projection to reflect any changes that you make to the original objects. 
+1 Open the tool palette that you want to use, and select a hidden 
+line projection tool. A hidden line projection tool is located with the Helper Tools in the Stock Tool Catalog. For more information, see Content Browser Overview on page 137. 
+Alternatively, you can click Home tab . Section & Elevation 
+panel .
+. Hidden Line Projection
+ . 
+2 In a 3D view select one or more objects that you want to use to create your hidden line projection, and press ENTER. 
+3 Specify an insertion point in your current drawing for the 2D hidden line projection. 
+4 Specify the insertion point for the 2D hidden line projection into your drawing: 
+¦ 
+Press ENTER to insert the 2D block in plan view. 
+
+¦ 
+Enter n (No) to insert the 2D block in the current view. 
+
+
+AEC Dimensions 
+43 
+AEC dimensions are associative annotation objects used to display the relevant measurements of a building object, like the width of a wall or the length of a beam. The appearance of dimensions is controlled through styles and can be adjusted for different drawing views or to accommodate the standards of a particular company or country. 
+AEC Dimensions 
+AutoCAD Architecture offers different ways of dimensioning objects and points in a drawing. AEC dimensions can be associative to objects or be used to dimension user-specified points in the drawing. If you create an associative dimension, the dimension value changes when the object changes its measurements. 
+Components of an AEC dimension 
+
+Using Grips to Modify AEC Dimensions 
+When you select an AEC dimension, various grips are displayed. You can use the grips to add and remove dimension points, move dimension chains, change the offset of extension lines, and override wall component dimensions. 
+AEC dimension grips 
+
+Dimensioning Wall Components 
+When dimensioning wall components, you have the option of using the center of the component or either side as the dimension point. For example, you can dimension a wall component from its center or from one of its edges. You can also dimension wall components according to their structural function. 
+Grips for the individual component dimension points allow you to override style-defined dimension points on walls to accommodate special cases. 
+Wall component dimension grips 
+
+Overriding Dimension Values 
+The dimension values in an AEC dimension are calculated from the actual current dimensions of associated objects. You can override a value with a manually inserted value. For detailed information, see Overriding Dimension Values and Hiding Dimension Segments on page 3405. 
+Overriding dimension text with a new value 
+
+Dimension Options and Uses 
+In AutoCAD Architecture, you can dimension object points specified in the AEC dimension style, points on objects picked in the drawing, or user-specified points in the drawing. AEC dimensions associated with objects update when the object changes. User-specified points are not associative and have to be changed manually, if necessary. In addition to AEC dimensions, you can also use AutoCAD dimensions. The following table lists the differences between the different dimension methods: 
+An AEC dimension can contain both associative and non-associative points. For example, you can create an AEC dimension that dimensions a wall, a multi-view block representing a floor drain, and user-specified points selected anywhere in the drawing. 
+Associative Dimensions from Selecting Objects 
+Associative AEC dimensions are style-based annotation objects that update automatically when the associated object changes. The AEC dimension style defines the dimension points that determine which measurements are displayed for each object that the style can be used to dimension. 
+In the example below, walls lengths, opening widths, and wall intersections are set as the dimensioned points in the style. If a door is made wider, the dimensions update to reflect the new measurements. 
+Associative wall dimensions 
+
+You can define styles for specific object types. For example, one AEC dimension style might specify that for walls, dimensions will be displayed for lengths, 
+maximum opening widths of windows in walls, and wall intersections. Another AEC dimension style for mass elements might specify the mass element edges and center as dimension points. 
+For a complete list of objects for which you can specify dimension points in AEC dimension styles, see Associative Dimensions from Objects on page 3355. 
+NOTE AEC objects can be associatively dimensioned in external references, even when they are nested multiple levels deep. This is useful for large drawing projects, where the parts of the building are distributed over various drawing files. 
+You can also define different dimension points for different views. For example, in Plan Low Detail, you might want to dimension only the outer boundaries of a building, whereas in Plan High Detail you might want to dimension wall lengths and openings in walls as well. 
+In the AEC dimension style, you can define up to ten dimension chains, each with different dimension points. For example, the first chain can dimension wall lengths and openings in walls, while the second chain dimensions structural components of multi-component walls. 
+In the AEC dimension style, you can also specify whether to use superscripting in dimensions, and whether the extension line length is fixed or variable. 
+Associative Dimensions from Picked Points 
+When you use an AEC dimension tool, the Pick points option lets you select the base point and OSNAP points on an AEC object to create an associative dimension. In addition, you can define an offset from a selected point, so that virtually any point on an object can be dimensioned. This option lets you dimension AEC objects for which dimension points cannot be set in the AEC dimension style, like multi-view blocks or 2D building sections, or objects for which the dimension point you need is not settable in the style. For example, you cannot dimension the location of a pilaster in a wall in the AEC dimension style, but you can pick an endpoint on the wall, and then offset it so that becomes a dimension point for the pilaster location. 
+Because a dimension generated by picking points on objects is associative, if you move the object, the dimension points are updated accordingly, observing any offsets you have specified. 
+For a list of objects that can only be dimensioned associatively by picking points on them, see Associative Dimensions From Picked Points on page 3364. 
+Picking associative points to dimension 
+
+Non-Associative Dimensions from Picked Points 
+You can create non-associative dimensions from points you pick anywhere in the drawing. For each point you pick, a location point is generated and dimensioned. If the point is used to dimension an object, and the object is moved, the non-associative point is not updated. You have to manually move the non-associative point to reflect the change. 
+Non-associative grip points on AEC dimension 
+
+You can convert AutoCAD dimensions to non-associative AEC dimensions. The AutoCAD dimension points are converted to location points on the AEC dimension. For more information, see Converting an AutoCAD Dimension to an AEC Dimension on page 3380. 
+AutoCAD Dimensions 
+AutoCAD dimensions can be associated with AutoCAD objects like polylines. Additionally you can create non-associative AutoCAD dimensions. 
+Associative AutoCAD dimensions are turned on by default in AutoCAD Architecture. To work with traditional non-associative AutoCAD dimensions, set the system variable DIMASSOC to 1 (Non-Associative Dimensions). To create AutoCAD object dimensions, set DIMASSOC to 2 (Associative Dimensions). 
+For more information about AutoCAD dimensions, see “Dimensions and Tolerances” in AutoCAD Help. 
+Process Overview: Creating AEC Dimensions 
+An AEC dimension consists of a number of components and settings to make it the optimal tool for dimensioning objects. 
+TIP AutoCAD Architecture ships with predefined dimension tools for many uses. Before you create a new tool or AEC or AutoCAD dimension style, look through the templates to find an existing tool or style that contains most or all of your desired settings. You can then modify it for your purposes, if necessary. 
+The general process for creating AEC dimensions involves the following steps: 
+1 Specify the drawing options for the AEC dimension, as described in 
+Specifying AEC Dimension Preferences on page 3365. Important settings include the dimension unit, superscripting preferences, and the automatic scaling of AutoCAD dimension styles. 
+2 Verify that there is an AutoCAD dimension style that has the settings you need. If necessary, create a new AutoCAD dimension style that defines the color of the dimension lines, size and font of the dimension text, arrows, unit format, and unit precision. 
+For more information, see “Use Dimension Styles” in the AutoCAD help. 
+3 If you are dimensioning walls, create or modify a wall style with 
+dimension settings for wall components. For more information, see Defining the Dimension Settings for Wall Components on page 1295. 
+4 Create an AEC dimension style that specifies the desired values for the following settings: 
+¦ number of dimension chains 
+¦ object types to be dimensioned (for example, walls or mass elements) 
+¦ object points to be dimensioned (for example, wall components and wall intersections) 
+¦ underlying AutoCAD dimension style 
+For more information, see AEC Dimension Styles on page 3415. 
+5 Use a dimension tool and dimension objects and points in the drawing. For more information, see Creating an AEC Dimension with User-Specified Settings on page 3370. 
+Associative Dimensions from Objects 
+The AEC dimension style defines the dimension points that determine which measurements are displayed for each type of object to which the AEC dimension can be applied. You can either create a dimension style that defines dimension points for multiple object types, or you can create separate styles for individual object types. 
+For information about how to define dimension points in AEC dimension styles, see Specifying Object Dimension Points in AEC Dimension Styles on page 3422. 
+Dimension Points for Walls 
+The following wall dimension points can be specified in the AEC dimension style: 
+Wall Dimension Points 
+Selection Description Examples 
+Overall Dimensions the two outer points of all dimensioned walls. 
+
+Length of Wall:  Dimensions the outer boundaries of  
+Outer Boundaries  every selected wall. When wall  
+boundaries overlap, only those fa­ 
+cing the dimension direction are  
+dimensioned.  
+
+
+Length of Wall: Wall Dimensions the length of each wall Length in the selection set. 
+
+Wall Width: Overall Dimensions the overall width of a wall. 
+
+Wall Width: All Dimensions the width of each com-Components ponent in a wall. 
+
+Wall Dimension Points 
+Selection Description Examples 
+Wall Width: Center Dimensions the center line of a single-component or multi-compon­ent wall 
+
+Wall Width: From  Dimensions the wall components  
+Style  according to the settings in the wall  
+style. For more information, see  
+Defining the Dimension Settings for  
+Wall Components on page 1295.  
+
+
+Wall Width: Structur- Dimensions the structural wall  
+al from Style  components according to the set­ 
+tings in the wall style. For more in­ 
+formation, see Defining the Dimen­
+ 
+sion Settings for Wall Components  
+on page 1295.  
+
+
+Wall Intersections Dimensions the intersection points of walls that are connected to the selected walls. 
+
+Dimension Points for Wall Components 
+The dimensioning of wall components can be specified in 2 different locations: in the wall style and in the AEC dimension style. 
+In the wall style, you can set following information that is relevant to the dimension: 
+¦ Component side to dimension: In the wall style, you can define for each wall component whether it should be dimensioned to its positive or negative side, or to the center of the component. The positive and negative sides of a wall are determined by the direction in which the wall is drawn: if you draw a wall from left to right, the positive side is the left (top). If you draw a wall from the right side to the left, then the positive side is the right (bottom). If you determine that a wall component is only dimensioned to one side, you can select either the positive or negative side of the wall. 
+
+¦ 
+Structural function: You can define a wall component as structural or non-structural. When you set up the AEC dimension style you can define that only structural wall components, or all wall components should be dimensioned. 
+
+In the AEC dimension style you can define the following additional or overriding settings for dimensioning wall components: 
+
+¦ 
+By Style: the dimension points selected in the wall style are used to dimension the wall components width. 
+
+¦ 
+Structural by Style: the dimension points specified for the structural components of the wall style are used. 
+
+¦ 
+All Components: each component of the wall is dimensioned. 
+
+¦ 
+Overall: the overall width of the wall is dimensioned. 
+
+¦ 
+Center: the center of the wall is dimensioned. 
+
+
+
+Dimension Points for Wall Openings 
+The following wall opening dimension points can be specified in the AEC dimension style: 
+Window, Door, and Opening Di­mension Points 
+Selection Description Examples 
+Opening Max. Dimensions the maximum width of Width a window, door or opening in a wall. 
+
+Opening Min. Width Dimensions the minimum width of a window, door, or opening in a wall. 
+
+Center of Opening Dimensions the center point of a window, door, or opening in a wall. 
+
+NOTE If you click 
+. Options, and then click AEC Object Settings, there are two options under Wall settings: Dimension to Center of Opening and Dimension to Outer Frame of Opening. These settings have no influence on how openings are dimensioned in AEC dimensions. 
+Dimension Points for Grids 
+You can set dimension points for the following grid types in the AEC dimension style: 
+¦ 
+Column grids 
+
+¦ 
+Ceiling grids 
+
+¦ 
+2D layout grids 
+
+
+NOTE 3D layout volumes have no style-based associative dimension points. 
+The following grid dimension points can be specified in the AEC dimension style: 
+Grid Dimension Points 
+Selection Description Examples 
+Overall Dimensions the two outermost grid lines of all selected grids 
+
+Outer Grid Lines Dimensions the outer grid lines of selected grids 
+
+All Grid Lines Dimensions all grid lines in selected grids 
+
+Dimension Points for Other Object Types 
+The same set of dimension points can be specified individually in the AEC dimension style for these objects: 
+¦ 
+Mass elements/mass groups 
+
+¦ 
+Curtain walls 
+
+¦ 
+Window assemblies 
+
+¦ 
+Structural members (columns/braces/beams) 
+
+¦ 
+Standalone windows/doors/openings 
+
+¦ 
+Others 
+
+¦ 
+Stairs 
+
+¦ 
+Railings 
+
+¦ 
+Spaces 
+
+¦ 
+Roofs/roof slabs/slabs 
+
+
+
+
+TIP If you need different dimension points for individual items from the Other group, it is recommended that you create different dimension styles containing the varying settings. For example, you can create an AEC dimension style for stairs where you dimension the bounding box only, and another dimension style for spaces that dimensions the space edges. 
+The following dimensions points an be specified in the AEC dimension style for the objects in this category: 
+Other Building Ob­ject Dimension Points 
+Selection Description Examples 
+Overall Dimensions the two outer points of selected objects 
+
+Bounding Box Dimensions the bounding box of each object in the selection set 
+
+Edges: All Edges Dimensions all edges in an object 
+
+Edges: Facing Edges Dimensions the edges of the object that are visible from the direction of the dimension line 
+
+Center Dimensions the center point of an object 
+
+AutoCAD Dimension Points 
+You can define points for most AutoCAD linework objects in the AEC dimension style. 
+

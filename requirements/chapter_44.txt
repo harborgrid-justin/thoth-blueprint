@@ -1,0 +1,220 @@
+[MIGRATED TO RTM_PART_36.md - ELEVATION LABELS & SPOT TOPOGRAPHY]
+coordinate system, the Z-value of the elevation label is recalculated accordingly. 
+For example, you have a UCS named “First Floor,” with its Z-origin at 3 m. When you insert an elevation label in WCS and set it to 2 m, and then change the coordinate system to “First Floor” the Z-value of the elevation label is changed to -1 m. 
+6 If necessary, enter a prefix and suffix for the elevation label. 7 Click OK. 
+Creating an Elevation Label Tool 
+Use this procedure to create an elevation label tool and add it to a tool palette. You may want to create your own elevation label tools if you are placing multiple elevation labels of a specific style and they all have the same properties. 
+Elevation labels consist of a multi-view block definition connected to a custom AEC command. Therefore, the process of creating an elevation label tool differs from the process of creating a regular object tool, like a door tool. 
+To create an elevation label tool, you need a multi-view block definition with a custom command that is placed in DesignCenter™. Predefined elevation labels are available in DesignCenter, so check to see if the desired elevation label is already there. 
+If you find no elevation label meeting your needs, create one, as described in Creating User-Defined Elevation Labels on page 3443, and place it into AutoCAD DesignCenter. 
+From AutoCAD DesignCenter, you create an elevation label tool. 
+1 Click Insert tab . Content panel . Content Browser 
+drop-down . Design Center
+ . 
+2 Navigate to the folder containing the elevation label from which you want to create a tool. 
+3 Open the tool palette on which you want to add the elevation label tool. 
+4 Create the tool: 
+If you want to… Then… 
+create a tool from the AutoCAD drag the desired elevation label DesignCenter from the AutoCAD DesignCenter to the tool palette. 
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool right-click the tool, and click Copy. 
+palette Reopen the tool palette where you want to add the tool, right-click, and click Paste. 
+copy a tool from a tool catalog in  Click Home tab . Build pan- 
+the Content Browser  el . Tools drop-down . Content  
+Browser  , open the catalog and  
+locate the tool you want to copy.  
+Position the cursor over the i-drop  
+handle, and drag the tool to the  
+tool palette.  
+
+5 Right-click the new tool, and click Properties. 6 Enter a name for the tool. 7 Click the setting for Description, enter a description of the tool, 
+and click OK. 
+Modifying Elevation Labels 
+You can change the attributes of an elevation label, such as the associated UCS or the scaling factor. 
+¦ 
+You can change elevation label settings on the Properties palette. 
+
+¦ 
+You can select editing commands from the contextual ribbon tab and shortcut menu for a selected elevation label. 
+
+
+Changing the Elevation of an Elevation Label 
+Use this procedure to change the value for the elevation of an elevation label. 
+The value of an elevation label is always calculated in relation to the coordinate system of the label. 
+1 Select the elevation label you want to change, right-click, and click Elevation Label Modify. 
+2 Enter the new elevation value. 
+3 Click OK. 
+Changing the Coordinate System of an Elevation Label 
+Use this procedure to change the coordinate system of an elevation label. 
+For more information on how elevation labels are dependent on coordinate systems, see Elevation Labels on page 3433. 
+1 Select the elevation label you want to change, right-click, and click Elevation Label Modify. 
+2 Select a new coordinate system for the elevation label from the list. 
+3 Click OK. 
+Changing the Associated Multi-View Block Definition 
+Use this procedure to change the multi-view block definition associated to an elevation label. For information about multi-view block definitions and elevation labels, see Creating User-Defined Elevation Labels on page 3443. 
+1 Select the elevation labels you want to change, and click Home 
+tab . Build panel . Tools drop-down . Properties
+ . 
+NOTE Alternatively, right-click and choose Properties. 
+2 On the Properties palette, expand Basic, and expand General. 3 Select a different multi-view block definition for Definition. 
+Changing the Scale Factor of an Elevation Label 
+Use this procedure to change the scale factor of an elevation label. 1 Select the elevation labels you want to change, and click Home tab . Build panel . Tools drop-down . Properties
+ . 
+NOTE Alternatively, right-click and choose Properties. 
+2 On the Properties palette, expand Basic, and expand Scale. 3 Change the scale factor of the elevation label: 
+If you want to… Then… 
+change the X scale factor enter a new value for X. 
+change the Y scale factor enter a new value for Y. 
+change the Z scale factor enter a new value for Z. 
+Changing the Offset of an Elevation Label 
+Use this procedure to change the offset of the elevation label from its insertion point. 
+When you add an elevation label to a drawing, the offset value is set to 0. You can change the position of the elevation label in the drawing by offsetting it from its original insertion point. 
+1 Select the elevation label you want to change and click Home 
+tab . Build panel . Tools drop-down . Properties
+ . 
+NOTE Alternatively, right-click and choose Properties. 
+2 On the Properties palette, expand Advanced. 
+3 Click 
+next to Insertion Offsets. 
+4 Select the view block for the appropriate view. For example, to change the offset in Plan 1:100, select a view block to indicate that it belongs to that view (for example, ElevationLabel100). 
+5 Change the offset of the elevation label from its insertion point: 
+If you want to… Then… 
+change the offset from the X inser-enter a new value for X offset. tion point 
+change the offset from the Y inser-enter a new value for Y offset. tion point 
+change the offset from the Z inser-enter a new value for Z offset. tion point 
+6 Click OK. 
+Display the View Blocks and Attributes of an Elevation Label 
+Use this procedure to display the blocks and attributes contained in an elevation label. 
+An elevation label is created from a multi-view block definition which, in turn, is built from blocks and attributes. You can display the blocks and attributes to understand how the label is structured. 
+1 Select the elevation label for which to display blocks and attributes, and click Home tab . Build panel . Tools 
+drop-down . Properties
+ . 
+NOTE Alternatively, right-click and choose Properties. 
+2 On the Properties palette, expand Advanced. 
+3 Click 
+next to Attributes. In the Multi-view Block Attributes worksheet, the blocks from which your elevation label is composed are displayed. 
+The list on the right shows the attributes of the blocks and their current values. 
+For more information about multi-view blocks, blocks, and attributes, see Creating User-Defined Elevation Labels on page 3443. 
+NOTE Although you can edit the values in the list, those modifications are not applied; your modified values are overwritten by the values the elevation label gets from its coordinate system. 
+4 Click OK. 
+Attaching Hyperlinks, Notes, or Files to an Elevation Label 
+Use this procedure to attach hyperlinks, text notes, and files to an elevation label. 
+1 Select the elevation label to which you want to attach information, and click Home tab . Build panel . Tools drop-down . Properties
+
+ . 
+NOTE Alternatively, right-click and choose Properties. 
+2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click 
+next to Hyperlink, and specify the 
+link. For more information, see “Add Hyperlinks to a Drawing” in AutoCAD help. 
+4 Click 
+next to Notes, add a note, and then click OK. 
+5 Click next to Reference Documents. 6 Attach or detach reference files: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+If you want to… Then… 
+detach a reference file 
+select the file name, and click . 
+
+7 Click OK. 
+Creating User-Defined Elevation Labels 
+The AutoCAD Architecture templates provide a number of predefined elevation labels.You may, however, want to create specific labels that are not included in any of the templates. 
+You can choose attributes for your own elevation labels, combine them into blocks, and create elevation labels from them. 
+Process Overview: Creating User-Defined Elevation Labels 
+Creating a user-defined elevation label consists of these basic steps: 1 Determine the location of the property set definition of the custom label. 2 If necessary, create a new property set definition to use in the custom 
+label. 3 Create a graphic symbol. 4 Add attributes from the property set definition to the drawing. 5 Create a block from the attributes. 6 Create a multi-view block from the block. 7 Add the elevation label to DesignCenter™. 
+Creating a Graphic Symbol 
+Elevation labels usually consist of a graphic symbol and attributes that define elevation height and other information. 
+You can create a graphic symbol with any of the drawing commands in AutoCAD, or you can import a symbol from another drawing or from a symbol library. 
+For information about drawing objects in AutoCAD, see “Create and Use Blocks (Symbols)” in AutoCAD help. 
+Adding Attributes 
+Use this procedure to add attributes to an elevation label. 
+An elevation label usually contains attributes for displaying the elevation, prefixes, and suffixes. 
+Elevation label attributes come from a property set definition. Predefined attributes are available when you start with one of the templates, or when you start from scratch and drag a predefined elevation label from DesignCenter™ into the drawing. 
+Elevation label attributes 
+Attribute/Tag Description 
+ELEVATION Displays the height of an elevation label in relation to the coordinate system chosen. 
+ELEVATION:MM Displays the millimeters of the elevation value in superscript. You need this attribute only when working with metric units. 
+PREFIX To enter a prefix for the elevation label, you must add this attribute. For more in­formation about entering prefixes, see Creating Elevation Labels with User-Spe­
+cified Settings on page 3435. 
+SUFFIX To enter a suffix for the elevation label, you must add this attribute. For more informa­tion about entering suffixes, see Creating Elevation Labels with User-Specified Set­
+tings on page 3435. 
+To use different attributes in elevation labels, create your own Property Set Definition for elevation labels. For more information, see Property Set Definitions on page 3785. 
+1 Click Insert tab . Attributes panel . Define Attributes
+ . 
+2 For Tag, enter one of the attributes from the table. For example, to create an attribute for the height of the elevation, enter -ELEVATION. 
+3 Proceed with creating the attribute. For more information, see “Attach Data to Blocks (Block Attributes)” in AutoCAD help. 4 Repeat steps 1–3 for each attribute you want to add to the elevation label. 
+Creating a Block 
+Use this procedure to create a block from the attributes you have created. 
+1 Click Insert tab . Block panel . Create Block
+ . 2 Enter a name for the block. 3 Click Select Objects, and select the graphic symbol and the 
+attributes to include in the elevation label. 4 For Insert Units, select Unitless. 5 Proceed with creating the block as described in “Block Definition 
+Dialog Box” in AutoCAD help. 
+Creating a Multi-View Block 
+Use this procedure to create a multi-view block for the elevation label. 
+For detailed information about multi-view blocks, see Multi-View Blocks on page 2855. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Multi-Purpose Objects, and expand Multi-View Block 
+Definitions. 3 Right-click Multi-View Block Definitions, and click New. 4 Enter a name for the new multi-view block definition. 5 Select the new multi-view block definition. 6 Click the View Blocks tab. 7 Select a display representation for the elevation label. 8 Click Add. 9 Select the block you defined in Creating a Block on page 3445, and 
+click OK. 
+10 Select the view directions for the block. 
+11 Repeat steps 6–9 for each display representation where you want the elevation label to display. 
+12 Click OK. 
+Adding the Elevation Label to the AutoCAD DesignCenter 
+Use this procedure to add user-defined elevation labels to DesignCenter. 
+To add the elevation label to AutoCAD DesignCenter, you need to create a DWG file in the AEC Content Wizard. For a detailed description of the AEC Content Wizard, see Using the AEC Content Wizard on page 3879. 
+1 On the command line, enter AecCreateContent. 2 Select Custom Command. 3 Select the multi-view block you created in Creating a Multi-View 
+Block on page 3445, and click Add to add it to the Content File. 4 For the Command string, enter AecAnnoScheduleTagAdd, 
+followed by a space and then the name of the multi-view block, and its parameters. The command is built as follows: _AecAnnoScheduleTagAdd <name of the drawing containing the 
+property set definition>.dwg _SYMBOL <name of the multi-view block created> _LEADER _None _DIMSTYLE _Current 
+In our example, the custom command could look like this: 
+_AecAnnoScheduleTagAdd ElevationLabelPropertySetDefs.dwg _SYMBOL ElevationLabelMVBlock _LEADER _None _DIMSTYLE _Current 
+5 Click Next. 6 Select Enable AEC Unit Scaling. 7 Select a layer key for the label. 
+NOTE The default layer key for elevation labels is DIMLINE. 
+8 Click Next. 9 Enter a file name and a folder for the label. 
+NOTE Be sure to save the custom label in a folder one level below the used property set definition drawing. If the property set definition drawing is saved in C:\ProgramData\Autodesk\ACA 2011\enu\AEC Content\Metric\Documentation\Elevation Labels, then the custom label could be saved in C:\ProgramData\Autodesk\ACA 2011\enu\AEC Content\Metric\Documentation\Elevation Labels\Custom Labels. 
+10 Click Finish. 
+Fields 
+45 
+A field is a multiline text object consisting of a field name and a field value which can be automatically updated to show the latest value for data that may change during the lifecycle of the project. Fields enhance the documentation capabilities within a drawing file and add value to the drawing data. 
+Fields Overview 
+Fields are updatable data units within an AutoCAD Architecture drawing. Fields can be entered into the drawing as standalone multi-text elements, as components of AutoCAD text elements or table cells, as attribute values or as part of AutoCAD Architecture property set data. You can choose from a number of field types specific to architectural processes and tasks. For a complete list, see AutoCAD Architecture Field Types on page 3467. 
+You can update field values on demand or specify various automatic update mechanisms, for example updating a field when the drawing is opened or saved. 
+For detailed information about AutoCAD field types, see “Use Fields in Text” in AutoCAD help. 
+TIP The quickest way to locate and view an AutoCAD topic referenced in AutoCAD Architecture Help is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+You can use fields in the following drawing components: 
+AutoCAD Text Elements 
+You can insert fields into AutoCAD text, multi-line text, table cells and attributes. When you insert fields in attributes, you can create interactive annotation that displays sheet numbers, project details, and other important information. For an example, see Creating New Callout Tools on page 3694. 
+Property Set Data 
+Fields can be inserted in property set data. You can insert a field into a property set definition, thereby adding it to any object or object style to which the property set is attached. You can also insert a field in any manual property attached to an object or style, using the manual property as a placeholder for the field. 
+Property set data can be used to create schedule tables of objects and drawings, or to build tags, annotation, and other content. Schedule reports can be placed in an AutoCAD Architecture drawing, or they can be exported to XLS, tab-delimited text, or comma-separated text. 
+Annotation Tools 
+AutoCAD Architecture provides a number of predefined annotation tools that use different kinds of fields. For example, keynote tools use keynote fields, while callout tools use sheet set fields. 
+You can also use fields to create your own annotation tools. For an example, see Creating New Callout Tools on page 3694. 
+Callout tools in AutoCAD Architecture 
+
+Inserting Fields 
+Fields can be inserted directly into drawings, or as components of other elements. When a field is inserted directly, it is entered as a multiline text element. You can also insert it in existing text and multiline text, tables cells, attributes, and property set definitions. 
+Inserting Fields in a Drawing 
+You can create field anywhere in a drawing. When a field is inserted directly, and not within another element, it is created as a multiline text element. 
+1 Click Annotate tab . Text panel .
+. Field. 
+
+2 Select a field category to choose from. 
+3 Select a field, and if necessary, specify additional information regarding this field. For example, if you want to insert a Plot Date field, you need to 
+specify the date format. 
+4 Click OK. 5 Insert the field in the drawing. 
+If you want to… Then… 
+insert the field directly click where the field should be inserted in the drawing area. 
+change the height of the  enter h (Height) on the command line and  
+field  press Enter. Enter the new height and press  
+Enter again. Then, select the insertion  
+point.  
+
+change the orientation of  enter j (Justify) and press Enter. Enter the  
+the preview cursor,  combination for the desired orientation,  
+

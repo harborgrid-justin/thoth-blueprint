@@ -28,7 +28,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { pickFile } from "./fileIo";
+import { pickFile, downloadText, slugify } from "./fileIo";
 import { importPointCloudFile, exportPointCloud, POINT_CLOUD_ACCEPT, POINT_CLOUD_FORMATS } from "./pointCloudIo";
 import { importMeshFile, MESH_ACCEPT } from "./meshIo";
 import { exportPlanPng, exportSiteDae } from "./blueprintExport";
@@ -116,6 +116,32 @@ export function ImportExportMenu() {
     void run("Point-cloud export", () => exportPointCloud(spotsToPointCloud(spots), format, `${s.name}-cloud`));
   }
 
+  async function importDataShortcut() {
+    const file = await pickFile(".json");
+    if (!file) return;
+    await run("Import Data Shortcut", async () => {
+      const text = await file.text();
+      const data = JSON.parse(text);
+      if (data && Array.isArray(data.alignments)) {
+        const s = site();
+        if (!s) return;
+        const workspaceStore = useWorkspaceStore.getState();
+        for (const item of data.alignments) {
+          workspaceStore.addAlignment(item.pis.map((pi: any) => pi.point), item.pis[1]?.radius);
+        }
+      }
+    });
+  }
+
+  function exportDataShortcut() {
+    const s = site();
+    if (!s) return;
+    const shortcuts = {
+      alignments: s.alignments ?? [],
+    };
+    downloadText(`${slugify(s.name)}-shortcuts.json`, JSON.stringify(shortcuts, null, 2));
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -138,7 +164,10 @@ export function ImportExportMenu() {
         <DropdownMenuItem onClick={importUnderlay}>
           <ImageIcon /> Blueprint image <span className="ml-auto text-[10px] text-muted-foreground">png·jpg</span>
         </DropdownMenuItem>
-
+        <DropdownMenuItem onClick={importDataShortcut} className="text-primary font-medium">
+          <Upload className="text-primary" /> Import Data Shortcut <span className="ml-auto text-[10px] text-muted-foreground font-normal">json</span>
+        </DropdownMenuItem>
+ 
         <DropdownMenuSeparator />
         <DropdownMenuLabel>Export</DropdownMenuLabel>
         <DropdownMenuItem onClick={exportPng}>
@@ -147,6 +176,10 @@ export function ImportExportMenu() {
         <DropdownMenuItem onClick={exportDae}>
           <Box /> Model as COLLADA (.dae)
         </DropdownMenuItem>
+        <DropdownMenuItem onClick={exportDataShortcut} className="text-primary font-medium">
+          <Download className="text-primary" /> Export Data Shortcuts <span className="ml-auto text-[10px] text-muted-foreground font-normal">json</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuLabel className="pt-1 text-[10px]">Point cloud (terrain)</DropdownMenuLabel>
         <div className="flex flex-wrap gap-1 px-2 pb-1.5">
           {POINT_CLOUD_FORMATS.map((f) => (

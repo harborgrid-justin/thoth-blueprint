@@ -1,0 +1,1213 @@
+[MIGRATED TO RTM_PART_35.md - AEC DIMENSIONS & PLAT MEASUREMENTS]
+Dimensioning line endpoints and midpoints example 
+
+Dimensioning polyline endpoints and midpoints example 
+
+Dimensioning circle centers and quadrants example 
+
+Use an AEC dimension style to dimension the following AutoCAD linework objects: 
+¦ 
+Lines 
+
+¦ 
+Arcs 
+
+¦ 
+Circles 
+
+¦ 
+Open and closed polylines 
+
+¦ 
+AutoCAD polygons 
+
+¦ 
+Rectangles 
+
+
+The following AutoCAD points can be associatively dimensioned in the AEC dimension style: 
+AutoCAD Line-work Dimension Points 
+Selection Description Examples 
+Extents Dimensions the two overall outer points of all selected objects. 
+
+Endpoints 
+Dimensions the endpoints of selected objects. If you selected a polyline with multiple segments, the end­points of each segment are meas­ured. Endpoints can be measured for all AutoCAD linework objects listed above except circles. 
+
+Midpoints Measures the midpoints of all seg­ments of the selected object that are lying in the direction of the dimen­sions. Midpoints can be measured for all AutoCAD linework objects lis­ted above except circles. 
+
+Center Measures the center of the curve of circular objects. Centers can be measured for circles, arcs, and curved polyline segments. 
+
+Quadrant Measures the quadrants of circles, arcs, and curved polylines segments. 
+
+AutoCAD linework objects include line-based objects, such as lines and open polylines, as well as non-linear geometry, such as closed polylines and circles. The results of using AEC dimensions to dimension these objects can be quite different. For example, for a single line, the options Overall, Bounding Box, All Edges, and Facing Edges return exactly the same dimension points. Some objects, like circles, have no edges to dimension. 
+TIP The best way to handle the different dimension points for AutoCAD linework is to create a number of AEC dimension styles for the individual objects. For example, you can create a style named “Line,” which has only one dimension chain for dimensioning line edges, or a dimension style named “Circle,” which dimensions only circle centers and circle quadrants. For more information on creating AEC dimension styles, see AEC Dimension Styles on page 3415. 
+You cannot define associative dimension points for the following AutoCAD linework objects in the AEC dimension style: 
+¦ 
+Multilines 
+
+¦ 
+Splines 
+
+¦ 
+Ellipses 
+
+¦ 
+Blocks 
+
+¦ 
+AutoCAD dimensions 
+
+¦ 
+Leaders 
+
+¦ 
+Text 
+
+¦ 
+Surfaces 
+
+¦ 
+Images 
+
+¦ 
+OLE frames 
+
+¦ 
+Proxies 
+
+¦ 
+Solids 
+
+
+Associative Dimensions in External References 
+You can associatively dimension objects from external references in the following cases: 
+¦ 
+Attach an external reference drawing to a host drawing, and dimension objects from the external reference and the host drawing in the host drawing. 
+
+¦ 
+Attach a nested external reference drawing to a host drawing, and dimension objects from the external reference, its nested external reference and from the host drawing in the host drawing. 
+
+
+Objects from external references are dimensioned in the same way and with the same dimension points as objects from the host drawing. 
+You can create any level of nesting inside the external reference and still dimension all nested referenced objects. 
+You will need the ability to dimension external references often when you are working in a project environment. For detailed information on using dimensions in a project, see Workflow for Annotating a Project on page 515. 
+Associative Dimensions From Picked Points 
+For AEC objects that cannot have associative dimension points specified in the AEC dimension style, you can pick points on the object in the drawing to generate an associative dimension; points that are picked on the object remain associative to the object. 
+You can pick either the base point of an object to dimension or any of its OSNAP points. For each point, you can additionally define an offset from the picked point to the dimension point, so that you can dimension virtually any point on an object. 
+You can also pick a point on an object that can be set in the dimension style, in case you want to dimension a point that is not included in the style-based points. For example, if you want to dimension a recess in a wall with an individual dimension point, you can pick a point on the desired location on the wall. 
+NOTE You cannot pick associative points on AutoCAD objects. 
+The following AEC objects can be dimensioned associatively only by picking points on them: 
+¦ Multi-view blocks 
+NOTE You cannot dimension multi-view blocks that have Xdata attached to them. 
+¦ 
+Curtain wall units 
+
+¦ 
+AEC polygons 
+
+¦ 
+Mask blocks ¦ 2D Sections/Elevations 
+
+
+¦ 
+Entity references 
+
+¦ 
+Layout curves 
+
+¦ 
+3D layout volumes 
+
+
+Specifying AEC Dimension Preferences 
+Use this procedure to specify dimension preferences before you add AEC dimensions to your drawing. 
+Settings for AEC dimensions include the following: 
+¦ 
+Superscript for millimeters 
+
+¦ 
+Dimension display unit 
+
+¦ 
+Automatic rescale of existing AutoCAD dimension styles 
+
+¦ 
+Update behavior of points added or removed 
+
+
+1 Click 
+. Options. 2 Click the AEC Dimension tab. 
+Settings for AEC dimensions 
+
+3 Specify how dimension chains are updated when you remove or add dimension points: 
+If you want to… Then… 
+update the display after every point select Update Added / Removed you remove from or add to a dimen-Points Immediately. sion chain 
+update the display only after you clear Update Added / Removed have finished removing or adding Points Immediately. dimension points 
+For more information, see Adding Non-Associative Dimensions from Picked Points to an AEC Dimension on page 3390 and Removing Object Points Set in the AEC Dimension Style on page 3391. 
+4 Set the global behavior of manually overridden dimension values: 
+If you want to… Then… 
+have an automatic underline for select Override Display of Under-each manually overridden dimen-lined Text, and then select Under­sion value line All. 
+have no underline for any overrid-select Override Display of Under-den dimension value lined Text, and then select Under­line None. 
+set underlines for each overridden clear Override Display of Underlined dimension value manually Text. 
+For more information, see Overriding Dimension Values and 
+Hiding Dimension Segments on page 3405. 
+5 Under Units, for Dimension in, select the unit in which 
+dimensions are to be displayed. This unit can differ from the drawing unit. For example, you can create a drawing in meters, but have the dimensions displayed in centimeters. 
+6 If meters or centimeters are your drawing units, and you want to display the millimeters as superscripted text, select Use Superscript mm. 
+Millimeters superscripted (left) and millimeters not superscripted (right) 
+
+7 If you do not want zeros at the end of superscripted numbers, 
+select Trailing Zeros Suppression for Superscript. You can select this option only if you have selected Use Superscript mm. 
+Trailing zeros not suppressed (left) and suppressed (right) 
+
+8 Under Automatic Scale of AutoCAD Dimstyles, select the AutoCAD dimension styles to be rescaled when you change the drawing units. 
+For example, you change the drawing units from meters to millimeters. The following settings in your AutoCAD dimension style are rescaled: 
+: 
+Description Variable AutoCAD Dimstyle 
+Meters Millimeters 
+Dimension line spacing DIMDLI 0.5000 500.0000 
+Dimension line exten-DIMDLE 0.1250 125.0000 sion 
+Extension line length DIMEXE 0.1250 125.0000 
+Text offset from dimen-DIMGAP 0.1000 100.0000 sion line 
+Dimension text height DIMTXT 0.2000 200.0000 
+Creating AEC Dimensions Using AEC Dimension Tools 
+Tool palettes provided with AutoCAD Architecture let you quickly place AEC dimensions by selecting an AEC dimension tool with a specific AEC dimension style and other predefined properties. You can also use the AEC dimension tools to convert AutoCAD dimensions to AEC dimensions and to apply the settings of an AEC dimension tool to an existing AEC dimension. 
+Tool palette containing AEC dimension tools 
+
+The default tool palettes in the workspace contain sample AEC dimension tools that you can use and customize as needed. In addition, the following catalogs provided with the software contain AEC dimension tools that you can add to your tool palettes: 
+¦ 
+AutoCAD Architecture Stock Tool catalog 
+
+¦ 
+AutoCAD Architecture Sample Palette catalog 
+
+
+Custom palettes created by your CAD manager or other users may also contain AEC dimension tools with AEC dimension styles and properties that are customized for your projects or office standards. 
+Creating an AEC Dimension 
+Use this procedure to add a new AEC dimension that has the properties specified in the AEC dimension tool that you select. To specify settings when you add an AEC dimension, see Creating an AEC Dimension with User-Specified Settings on page 3370. 
+1 Open the tool palette that you want to use, and select the tool. 
+NOTE Alternatively, you can click Home tab . Annotation 
+panel . Dimension drop-down . AEC Dimension
+ or Annotate tab . Dimensions panel, and select one of the available dimension tools there. 
+2 Select the objects or points you want to dimension, and press ENTER. 
+You can move or hide the Properties palette to expose more of the drawing area. 
+3 Click where you want to insert the AEC dimension. 
+Creating an AEC Dimension with User-Specified Settings 
+Use this procedure to create an AEC dimension with the settings that you specify. 
+TIP To ensure that the Properties palette is displayed before you select a tool, right-click in the drawing area, and click Properties. 
+An AEC dimension can include associative dimensions from objects, associative dimensions from picked points on objects, and non-associative dimensions from points anywhere in the drawing. 
+Associative wall dimensions 
+
+Associative dimension picked on multi-view block 
+
+Non-associative dimension 
+
+1 Open the tool palette that you want to use, and select an AEC dimension tool. 
+NOTE Alternatively, you can click Home tab . Annotation 
+panel . Dimension drop-down . AEC Dimension
+ or Annotate tab . Dimensions panel, and select one of the available dimension tools there. 
+2 On the Properties palette, expand Basic, and expand General. 3 Select a style. 4 Specify which objects or points to dimension: 
+If you want to… Then… 
+dimension objects specified in the select objects in the drawing that AEC dimension style (creates an have been specified in the AEC di­associative dimension) mension style. 
+dimension the base point of ob-select multiple objects of the object jects that cannot be set in the AEC list in Associative Dimensions From dimension style (creates an associ-Picked Points on page 3364. ative dimension) 
+dimension OSNAP points on ob-verify that OSNAP is turned on. Enter jects (creates an associative dimen-p (Pick Points) on the command line, sion) and select points on objects by 
+snapping to them. 
+dimension non-associative points verify that OSNAP is turned off. Enter in the drawing (creates a non-asso-p (Pick Points) on the command line, ciative dimension) and specify points in the drawing. 
+NOTE During adding an AEC dimension, you cannot select objects specified in the style and non-associative points in the same command. You can however, once a dimension is added to the drawing, attach objects and points as necessary. For more information, see Adding Points to an AEC Dimension on page 3385. 
+5 Press ENTER. 
+6 Specify the style, position, rotation, and direction of the new dimension: 
+If you want to… Then… 
+change the style of the AEC  enter s (Style) on the command line,  
+dimension  and press ENTER; then, enter the style  
+name and press ENTER again.  
+
+insert the AEC dimension paral­lel or perpendicular to the di­mensioned object 
+drag the cursor in the desired direction, and click at the desired insertion point. 
+NOTE If your selection set contains objects with different directions, the direction of the first selected object defines the parallel and perpendicu­lar directions. 
+insert the AEC dimension at a specified rotation 
+enter r (Rotation) on the command line, and press ENTER.Then, enter a rotation angle, either by clicking in the drawing or by entering it on the command line. Press ENTER, and click at the desired in­sertion point. Alternatively, pressing the SPACE bar rotates the dimension by 90°. 
+NOTE If your selection set contains objects with different directions, the rotation is calculated with reference to the first selected object. 
+insert the AEC dimension paral­ enter a (Align) on the command line,  
+lel to an object other than the  and press ENTER. Then, select the object  
+dimensioned object in the  to which to align the AEC dimension.  
+drawing  
+
+If you want to… Then… 
+Press ENTER, and click in the drawing at the desired insertion point. 
+NOTE The direction of the AEC di­mension is dependent on the rota­tion of the chosen object. The drawing direction of the object has no influence on the AEC dimension direction. 
+Use Cases for AEC Dimensions 
+AEC dimensions give you the freedom to dimension your model according to your needs. The following sections outline some frequently used use cases for your work with AEC dimensions. 
+Creating an Interior Dimension 
+Use this procedure to create an interior wall dimension. 
+When you are dimensioning a set of interior walls and want to place the dimension inside the walls, you need a dimension without extension lines, as shown in the graphic below. 
+Dimension string without extension lines 
+
+1 Create a single-component wall style for interior walls and define in the wall style that only one side of the wall component should be dimensioned. For detailed information, see Specifying the Components of a Wall Style on page 1285. 
+2 Create an AEC dimension style that has the following settings: 
+¦ 
+Single dimension chain: For detailed information, see Changing the Number of Chains in an AEC Dimension Style on page 3418. 
+
+¦ 
+Wall width dimension “By Style:” This setting ensures that wall components will be dimensioned according to the points you have set in the wall style. For more information, see Dimension Points for Walls on page 3355 and Specifying Object Dimension Points in AEC Dimension Styles on page 3422. 
+
+¦ 
+Extension line length of 0. For detailed information, see Selecting the AutoCAD Dimension Styles and Other Properties of AEC Dimension Styles on page 3424. 
+
+
+3 Use the AEC dimension style to dimension a set of interior walls in your plan, as described in Creating an AEC Dimension with User-Specified Settings on page 3370. 
+Use the preview graphic to place the AEC dimension within the walls as desired. 
+NOTE You can reposition the AEC dimension later with grips. 
+Dimensioning the Overall Building Length for Multiple Walls 
+You can use any of the following methods to dimension the overall length of a building consisting of multiple walls. 
+¦ 
+You can use an AEC dimension style that is designed to create an associative dimension for the overall length of a building. 
+
+¦ 
+You can pick the outside points of the two outermost walls by snapping to them, and create an associative AEC dimension. 
+
+¦ 
+You can manually specify two points representing the outermost extents of the building and create a non-associative dimension to these points. 
+
+
+Dimensioning the outer length of a building with an AEC dimension style 
+1 Create an AEC dimension style that dimensions the outer length of all 
+selected walls. For more information, see Dimension Points for Walls on page 3355 and Specifying Object Dimension Points in AEC Dimension Styles on page 3422. 
+2 Select an AEC dimension tool with the style created in the previous step. 
+3 Select only those walls facing the direction where you want to create the AEC dimension, and insert the dimension in the drawing. 
+
+TIP Do not select any walls that are perpendicular to the dimension. This creates additional unwanted dimension points. 
+Dimensioning the outer length of a building with points picked on the walls 1 Select an AEC dimension tool, and verify that OSNAP is turned on. 2 Enter p (Pick Points) on the command line and press ENTER. 3 Select the two outermost snap points on the building you want to 
+dimension. 4 Place the AEC dimension in the drawing. 
+
+TIP You can select the associative dimension points later and offset them from their original position on the wall. 
+Dimensioning the outer length of a building with non-associative points 
+1 Select an AEC dimension tool, and verify that OSNAP is turned off. 
+2 Enter p (Pick Points) on the command line and press ENTER. 
+3 Specify two points in the drawing you want to dimension, press ENTER, 
+and place the AEC dimension. 
+The points you selected are not associative to the walls in the building. 
+If you move the walls, you have to move the location points accordingly 
+to bring the dimension up to date. 
+
+Dimensioning Wall Components in the Wall Length 
+Wall components are a part of the wall width, not the wall length. To generate an AEC dimension that displays wall components in the wall length, you have to select the walls vertically intersecting the wall for which you want to dimension the components in the length. 
+Dimensioning wall components on wall length 
+
+Creating Dimensions to OSNAP Points 
+When you are using an AEC dimension tool with the OSNAP setting turned on, and select ia point that snaps to an AEC object, you create a dimension point that is associated with the selected point on the object. For example, if you pick an Endpoint, then an associative dimension to the Endpoint of the object is generated. This allows you to create an AEC dimension that dimensions multiple associative points on one object. 
+Example: Dimensioning a 2D Building Section 
+A 2D building section is one of the objects for which dimension points can not be specified in the AEC dimension style. When you start an AEC dimension tool, and select a building section, its base point is the default dimension point. However, because you need at least 2 points to dimension you need to select 2 or more OSNAP points on the 2D section. 
+Dimensioning a 2D building section 
+
+1 Verify that OSNAP is turned on. 2 Select an AEC dimension tool. 3 On the command line, enter P (Pick Points). 4 Select the snap points on the 2D building section you want to dimension. 5 Press ENTER to create the dimension. 
+The OSNAP points you selected on the section object are inserted as associative points on the dimension. 
+Creating Dimensions Associated with the Object Base Point 
+When you create associative dimensions for points on objects for which dimension points cannot be set in the AEC dimension style, one associative point is created for each object you select. The point is placed at the base point of the object. 
+Example: Dimensioning Multi-View Blocks 
+Associative dimensions for multi-view blocks 
+
+1 Verify that OSNAP is turned off. 
+2 Select an AEC dimension tool. 
+3 Select at least 2 multi-view blocks. If you select only one, the dimension will display as a defect marker. 
+4 Insert the dimension in the drawing. For each selected object, an associative dimension point is inserted at the base point of the object. 
+Dimensioning Points in Multi-Chain Dimensions 
+When you create a multi-chain dimension for which you select points in the drawing, the same points are included in every chain on the dimension. 
+This may be the desired behavior in a case where you are dimensioning a point of reference that should appear on every chain. If you need a particular point on one chain only, you can do either of the following: 
+Dimension multi-view blocks with a two-chain dimension 
+
+¦ 
+Delete the superfluous points by clicking their Remove grips. 
+
+¦ 
+Add points to individual dimension chains, as described in Adding Associative Dimensions from Picked Points to an AEC Dimension on page 3388 and Adding Non-Associative Dimensions from Picked Points to an AEC Dimension on page 3390. 
+
+
+Converting an AutoCAD Dimension to an AEC Dimension 
+Use this procedure to create an AEC dimension from an AutoCAD dimension. For each AutoCAD dimension point, a non-associative AEC dimension point is created. The resulting AEC dimension has the properties of the AEC dimension tool you select. You can edit these properties after creating the AEC dimension. 
+For detailed information about non-associative AEC dimension points, see Non-Associative Dimensions from Picked Points on page 3353. 
+Converting an AutoCAD dimension to an AEC dimension 
+
+1 Open the tool palette that you want to use. 
+2 Right-click an AEC dimension tool, and click Apply Tool Properties to . AutoCAD Dimension. 
+3 Select the AutoCAD dimensions, and press ENTER. 
+4 Do one of the following: 
+¦ 
+If you selected one AutoCAD dimension to convert, proceed to Step 7. 
+
+¦ 
+If you selected multiple AutoCAD dimensions to convert, proceed to Step 5. 
+
+
+
+5 Specify the position of the AEC dimension by clicking the desired position in the drawing. The AEC dimension can, for example, be placed above or below the object. 
+6 Do any of the following: 
+¦ 
+Drag the mouse to set the direction of the dimension. The extension lines are drawn into the opposite direction. 
+
+¦ 
+To place the AEC dimension perpendicular to a point in the drawing, enter perp (Perpendicular) on the command line, and specify the point the dimension is perpendicular to. 
+
+¦ 
+To set a user-specified angle for the AEC dimension, enter the desired angle on the command line. 
+
+
+NOTE The angle you specify here is calculated in relation to the UCS, and not to the dimensioned object. 
+7 When prompted to erase the original AutoCAD dimension, press ENTER to keep the AutoCAD dimension, or enter y (Yes) to erase it. 
+The resulting AEC dimension is displayed as follows: 
+If… Then… 
+you selected only one AutoCAD di­ the new AEC dimension is inserted  
+mension  at the same position as the Auto- 
+CAD dimension. If you did not erase  
+the original AutoCAD dimension,  
+the AEC dimension is placed on top  
+of it.  
+
+you selected more than one Auto- the new AEC dimension is inserted  
+CAD dimension  according to your specifications  
+from steps 6 and 7. If you did not  
+erase the original AutoCAD dimen­ 
+sions, they remain in their original  
+positions.  
+
+Copying Properties of AEC Dimensions to AutoCAD Dimensions 
+Use this procedure to copy the display properties of an AEC dimension to an AutoCAD dimension without converting the AutoCAD dimension. In this case, a number of display attributes are changed while the functionality and behavior of the AutoCAD dimension are not changed. 
+NOTE When you copy the properties of an AEC dimension to an AutoCAD object dimension (DIMASSOC = 2), the associativity of the resulting AutoCAD dimension is lost. Therefore, copy properties to an associative AutoCAD dimension only as the last step in your drawing process, or use traditional, non-associative AutoCAD dimensions (DIMASSOC = 1). 
+The following dimension display properties are copied from the AEC dimension to the AutoCAD dimension: 
+¦ AutoCAD dimension style: AEC dimensions have an underlying AutoCAD dimension style, defining settings for the dimension not explicitly set in the AEC dimension style. When you copy the properties of an AEC dimension to an AutoCAD dimension, the underlying AutoCAD dimension style of the AEC dimension is applied to the AutoCAD dimension. 
+For detailed information about the connection between AutoCAD dimension styles and AEC dimension styles, see AEC Dimension Styles and AutoCAD Dimension Styles on page 3415. 
+¦ 
+Superscript settings: If you have specified superscripted millimeters for AEC dimensions, this is applied to the AutoCAD dimension. For more information about superscripts, see Specifying AEC Dimension Preferences on page 3365. 
+
+¦ 
+Extension line length: The extension length you have specified for your AEC dimension is applied to the AutoCAD dimension. When you copy the properties of an AEC dimension to an AutoCAD dimension that has a different extension line length, the definition points of the AutoCAD dimension are adjusted to the new length. 
+
+
+The AutoCAD dimension style and length of the extension lines are view-dependent settings. When you copy the properties of an AEC dimension to an AutoCAD dimension, the settings for the current view are applied. 
+1 On the command line, enter AecDimMatch. 2 Select the AEC dimension to copy properties from. 3 Select the AutoCAD dimensions to copy properties to. 4 Press ENTER. 
+Creating an AEC Dimension Tool 
+Use this procedure to create an AEC dimension tool and add it to a tool palette. You may want to create your own AEC dimension tools if you are placing multiple AEC dimensions of specific styles with additional AEC dimension properties that you want to be the same each time you add an AEC dimension of that type. 
+1 Open the tool palette where you want to create a tool. 2 Create the tool: 
+If you want to… Then… 
+create a tool from an AEC dimen-select the AEC dimension, and drag sion in the drawing it to the tool palette. 
+create a tool from an AEC dimen-click Manage tab . Style & Display sion style in the Style Manager 
+panel . Style Manager
+ . Locate the style you want to copy, and 
+If you want to… Then… 
+drag it to the tool palette. Click OK to close the Style Manager. 
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool right-click the tool, and click Copy. palette Open the other palette, and click Paste. 
+copy a tool from a tool catalog click Home tab . Build pan­el . Tools drop-down . Content 
+Browser
+ . Locate the tool you want to copy. Position the cursor over the i-drop handle, and drag the tool to the tool palette. 
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. 6 Expand Basic, and expand General. 7 Click the setting for Description, enter a description of the AEC 
+dimension created from this tool, and click OK. 8 Specify a layer key and any layer key overrides if you do not want to use the layer assignments specified in the layer key style used in the drawing. 9 Select an AEC dimension style. 10 Select the drawing file containing the style used for this AEC dimension tool. 11 Click OK. 
+Editing AEC Dimensions 
+You can change the attributes of an AEC dimension, such as the objects and points dimensioned or the dimension display. You can add dimension points to an AEC dimension. You can reverse the dimension direction and manually change the length of extension lines. You can also move individual dimension text in crowded plans and override dimension values with “false” values. 
+AutoCAD Architecture offers several methods for editing AEC Dimensions: 
+¦ 
+You can directly edit AEC dimensions using grips. 
+
+¦ 
+You can change AEC dimension settings on the Properties palette. 
+
+¦ 
+You can select editing commands from the context menu for the selected AEC dimension. 
+
+
+Adding Points to an AEC Dimension 
+You can add points to an AEC dimension in the following ways: 
+¦ 
+You can attach a new object to the dimension; if dimension points have been defined for that object type in the dimension style, corresponding associative points are added to the dimension. 
+
+¦ 
+You can add associative points to the dimension by picking base points or OSNAP points on AEC objects. 
+
+¦ 
+You can add non-associative points to the dimension by picking points selected anywhere in the drawing. These points are not connected to objects and are therefore not associative. To change their position, you need to move the location grips generated on the dimension. 
+
+
+When you attach an object for which dimension points have been specified in the AEC dimension style, the points are dimensioned and added to the appropriate dimension chains. For example, if you add a wall to an AEC dimension that has style settings for wall components in 2 chains, component dimensions are added to these 2 chains. 
+If an object is not specified in the AEC dimension style, you can either dimension the base point of the object or pick any of its OSNAP points as dimension points. These dimension points can be manually offset while retaining the associativity to the object. For example, you can dimension the base point of a multi-view block and offset the dimension from the base point. If the multi-view block is moved or rotated, the dimension moves and rotates with it while observing the offset. 
+To add non-associative dimension points in a drawing, you specify points, which are added as location grips, and are dimensioned on the selected dimension chain. When the location grip is moved, the dimension point is updated accordingly. Non-associative dimension points can be useful if you want to dimension a component not represented by an AEC object, like a property line, or AutoCAD objects like blocks. 
+Moving a non-associative location point and updating an AEC dimension 
+
+Adding Associative Dimensions to Objects Defined in the AEC Dimension Style 
+Use this procedure to add associative dimensions by attaching an object for which dimension points have been defined in the AEC dimension style. 
+Attaching objects to an AEC dimension 
+
+You can also attach AEC objects for which dimension points are not specified in the AEC dimension style. In that case, the base point of the selected object is added as a dimension point. 
+1 Select the AEC dimension to which you want to attach objects, and click the Add grip ( 
+ ) or click AEC Dimension tab . Modify panel . Add Objects
+ . 2 Select the objects for which you want dimension points to be added to the AEC dimension, and press ENTER. 
+Any dimension points specified in the style for the selected objects are added to the chains of the AEC dimension. 
+If a selected object has no dimension points specified in the AEC dimension style, a dimension point is added at the base point of the object. 
+3 If you want to offset a dimension point from an object not specified in the AEC dimension style, select its location grip on the dimension, and move it to the desired location. 
+Adding Associative Dimensions from Picked Points to an AEC Dimension 
+Use this procedure to add associative dimensions to an AEC dimension by picking OSNAP points on an AEC object. 
+Adding and offsetting non-style defined dimension point to an AEC dimension 
+
+1 Verify that OSNAP is turned on. 
+2 Select the AEC dimension to which you want to add associative points, and click AEC Dimension tab . Modify panel . Add 
+Extension Lines
+ . 
+3 Select the AEC object OSNAP points you want to dimension. 
+NOTE OSNAP points on AutoCAD objects will be filtered out of the dimension. 
+4 Press ENTER. 
+5 Select the AEC dimension chain to which the points should be added. 
+Adding Non-Associative Dimensions from Picked Points to an AEC Dimension 
+Use this procedure to add non-associative points picked in the drawing to an AEC dimension. 
+1 Select the AEC dimension to which you want to add points, and click AEC Dimension tab . Modify panel . Add Extension Lines
+
+ . 2 Select the points in the drawing that you want to dimension, and press ENTER. 3 Select the dimension chain to which the points should be added. For each added point, a location grip is added at the end of the extension line, and the dimensions on the chain are updated. 
+Detaching Dimension Points from an AEC Dimension 
+You can detach dimension points from an AEC dimension. 
+Detaching Objects from an AEC Dimension 
+Use this procedure to detach objects from an AEC dimension. When you detach the object, all style-specified dimension points for the object are removed from the dimension. 
+Detaching objects from a dimension 
+
+1 Select the AEC dimension from which you want to detach objects, and click AEC Dimension tab . Modify panel . Remove Objects
+
+ . 
+2 Select the objects to detach from the AEC dimension. 
+3 Press ENTER. 
+The dimension points belonging to the selected objects are removed from the AEC dimension. 
+Removing Object Points Set in the AEC Dimension Style 
+Use this procedure to remove object points set in the AEC dimension style from an AEC dimension. 
+Removing these dimension points creates an override to the AEC dimension style. 
+IMPORTANT Removing points from an object dimension is not identical to detaching an object from an AEC dimension. Even if you remove all extension lines pointing to dimensioned points on an object, the object is still invisibly attached to the dimension through the AEC dimension style. If you turn on the display component Removed Points Marker in the AEC dimension style, you can see that the object points still exist and can be restored. If you want to detach an object from an AEC dimension completely, use the procedure in Detaching Objects from an AEC Dimension on page 3390. 
+1 Select the AEC dimension from which you want to remove style-defined points. 
+2 Click the Remove grip ( 
+) on the extension line of the point you want to remove, or click AEC Dimension tab . Modify 
+panel . Remove Ext. Lines
+ . 3 Proceed to remove points. 
+NOTE Make sure to select only extension lines referring to objects that are specified in the AEC dimension style. Only these points can be restored later. 
+If you remove object points using the context menu, the behavior of the removal can differ according to your preference settings: 
+¦ 
+If the Update Added/Removed Points Immediately setting is selected, the selected points are deleted immediately. 
+
+¦ 
+If the Update Added/Removed Points Immediately setting is cleared, the selected points are deleted after you end the command. 
+
+
+For more information, see Specifying AEC Dimension Preferences on page 3365. 
+NOTE If the deleted points are still visible as a crossed circle, the display component Removed Points Marker is turned on. If you do not want the removed points marker to appear, turn off the component. For more information, see Restoring Object Points Set in the AEC Dimension Style on page 3392. 
+When you remove multiple points, some removed points may reappear. This can happen when you have selected the option Update Added/Removed Points Immediately, and the entity display component Removed Points Marker is turned off. The reason for this behavior is that during your current removal operation, you accidentally selected an invisible removed point marker for a dimension point already removed. Removing an already removed point restores it. To avoid this effect, turn on the Removed Points Marker component in the entity display. For more information about turning components on and off, see Changing the AEC Dimension Display Components on page 3419. 
+Restoring Object Points Set in the AEC Dimension Style 
+Use this procedure to restore dimension points that have been removed from an AEC dimension and that are set in the AEC dimension style. Because the object points are set in the AEC dimension style, information about the type and position of the removed point is still present in the AEC dimension style. 
+1 Select the dimension chain on which to restore a removed object point. 
+2 Verify that the removed point is visible: 
+If… Then… 
+the point removed is still visible as proceed to step 9. a crossed circle 
+If… Then… 
+the point removed is not visible as make it visible by following steps 3 a crossed circle through 9. 
+3 Right-click, and click Object Display. 4 Click the Display Properties tab. 5 Select the display representation on which the changes should 
+appear, and select Object Override. 
+The display representation in bold is the current one. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select the Removed Points Marker component, and turn on the 
+setting for Visibility. 9 Click OK twice. The removed dimension point on the dimension chain is now visible as a crossed circle. 
+10 If necessary, select the AEC dimension again, and click AEC 
+Dimension tab . Modify panel . Remove Ext. Lines
+ . 11 Click the center of the circle for the dimension points to restore. 
+¦ 
+If the Update Added/Removed Points Immediately setting is selected, the selected points are deleted immediately. 
+
+¦ 
+If the Update Added/Removed Points Immediately setting is cleared, the selected points are deleted after you end the command. 
+
+
+For more information, see Specifying AEC Dimension Preferences on page 3365. 
+Removing and restoring object points on an AEC dimension 
+
+Removing Non-Style Defined Dimension Points 
+Use this procedure to remove dimension points that are not set in the AEC dimension style from an AEC dimension. These can be points that are generated by picking object OSNAP points or by picking non-object associated points in the drawing. Unlike style-defined dimension points, they cannot be restored once they are deleted, however, you can recreate them if desired. 
+Removing a point from an AEC dimension 
+
+1 Select the AEC dimension from which to remove dimension points. 
+2 Click the Remove grip( 
+) on the extension line of each point to remove, or click AEC Dimension tab . Modify panel . Remove 
+Ext. Lines
+ . 
+Reversing the Direction of an AEC Wall Dimension 
+You can reverse the direction of an AEC dimension that is associated with walls. Reversing the dimension direction can change the points on the wall that are dimensioned. 
+For an AEC dimension to be reversible, these conditions must be met: 
+¦ The dimensioned wall has either two interior or two exterior sides. 
+TIP If you want to reverse the dimensioned points on a wall with an interior and exterior side, you need to reverse the wall direction. 
+¦ Wall components must be dimensioned on only one side, either on the positive or the negative side. 
+For example, if you dimension one side of a wall component of a wall that has two interior or two exterior sides, reversing the dimension direction will dimension the opposite side of the component. For information on defining the dimensioning of wall components, see Defining the Dimension Settings for Wall Components on page 1295 and Specifying Object Dimension Points in AEC Dimension Styles on page 3422. 
+Reversing an AEC dimension 
+
+. Select the dimension for which you want to reverse the direction, 
+and click 
+ , or click AEC Dimension tab . Modify panel . Reverse
+ . 
+Flip Text Position for AEC Dimensions 
+AutoCAD is introducing two new text settings for the AutoCAD dimension style: 
+¦ 
+Vertical text position: controls the vertical placement of text in relation to the dimension line. Possible settings are above the dimension line, below the dimension line, centered between extension lines, outside the dimension line, and according to JIS (Japanese Industrial Standard). 
+
+¦ 
+Text view direction: Specifies the reading direction of dimension text. Possible settings are left-to-right and right-to left. For more information, see “Control the Location of Dimension Text” in the AutoCAD Help. 
+
+
+When vertical AEC dimensions are rotated greater than 90 degrees, the dimension text flips sides. In some cases, when dimensions are part of a series of dimensions this is an undesired result. 
+Using the Text Flip grip addresses this issue by swapping the settings of vertical text position and reading direction so that the dimension displays correctly. In detail, these are the changes that are made: 
+¦ 
+The vertical text setting defined in the AutoCAD dimension style will be overridden, and be set to the Below setting. 
+
+¦ 
+The reading direction will be swapped from left-to-right to right-to-left or vice versa. 
+
+¦ 
+Any dimension texts that have a positional override will flip in place around their location point. 
+
+
+NOTE You can also perform these changes in the underlying AutoCAD dimension style. This will however, affect all AEC dimensions of that style, whether they are rotated or not. In most cases an override on a specific dimension will work better. 
+
+1 Select the rotated dimension. 
+2 Click the Flip text to opposite side of dimension grip 
+. 
+Overriding Associative Wall Component Dimension Points 
+If you have specified wall component dimension points in the AEC dimension style, you can override individual component dimension points on the dimension so that they override their style settings. 
+You can make the following overrides to a wall component dimension point: 
+¦ Move a dimension point from one location on the component to another: For example, you can move a dimension point from the center of the component to the left side or to the right side. 
+Modify an existing wall component dimension 
+
+¦ 
+Move a dimension point from one component to another: For example, you can move a dimension point from the stud component to the gyp board component on the same wall. 
+
+¦ 
+Add a new dimension point for a component: You can add a dimension point to the edges or to the center of the selected component, in a case 
+
+
+where this dimension point is not specified in the AEC dimension style or wall style. 
+Adding wall component dimension point 
+
+¦ Remove overrides and revert back to the component dimension settings specified in the style. 
+Overriding a component dimension 
+1 Select the AEC dimension on which you want to override a wall component dimension point. 
+2 Select the Override grip ( 
+) for the desired component. When you select the Override grip, the associated component is highlighted in the drawing. 
+3 Move the grip to the desired position on the component, or onto another component. A red temporary line shows you the position on the component. 
+Add a new dimension point for a component 
+1 Select the AEC dimension to which you want to add a wall component dimension point. 
+2 While pressing control, click the Override grip ( 
+) for the desired component, and drag the new point to the desired location. 
+You can add a dimension point in 3 locations on a component: 
+the positive edge, the negative edge, and the center. 
+Modifying an overridden component dimension 
+1 Select the AEC dimension on which you want to modify a wall component override. 
+2 Select an overridden component dimension. When a component dimension point is overridden, it is marked with a yellow grip ( 
+). 3 Drag the grip to the desired position. 
+Remove overrides from a component dimension 
+1 Select the AEC dimension from which you want to remove a wall component dimension override. 
+2 Do one of the following: 
+If you want to… Then… 
+move a component back to 
+drag the override grip ( 
+) to the origin-
+its style-defined position 
+al position on the component. When you 
+If you want to… Then… 
+release and re-select the grip its color changes to cyan ( 
+). 
+remove a component you 
+click the Remove Extension line grip (
+have added through an 
+).
+override 
+
+reset all overrides click AEC Dimension tab . Modify pan­el . Remove Override drop-down . All 
+Components
+ . 
+Repositioning Dimension Texts, Extension Lines, and Dimension Chains 
+Use this procedure to reposition individual dimension texts, extension lines, and dimension chains on an AEC dimension. 
+The length of extension lines and the distance between dimension chains are set in the AEC dimension style, and are identical for all chains and all extension lines in the dimension. In some cases, you need to override those settings, and display varying extension lines or chain distances. Also, you might need to move individual dimension texts to a different location. 
+Viewing AEC Dimension Move All Chains and Edit in Place grips 
+
+AEC dimensions offer you the ability to change the display of a dimension with direct editing via grips. 
+NOTE You can only display and move the in-place grips of an AEC dimension if the underlying AutoCAD dimension style has the correct text placement settings. To ensure this, select the AEC dimension, right-click, and click AEC Dimension Style. Then, select the display representation where you want the changes to 
+appear, and select Style Override. If necessary, click 
+, and click the Other tab. Click Edit, and in the Dimension Style Manager click Modify. Click the Fit tab, and select Over the dimension line, without a leader for Text Placement. 
+1 Select the AEC dimension on which to reposition individual texts, extension lines or dimension chains, and click its Edit In Place grip. 
+NOTE Alternatively, you can click AEC Dimension tab . Modify panel . Edit in Place
+ . 
+The dimension now displays grip points for 
+¦ 
+individual texts 
+
+¦ 
+individual extension lines 
+
+¦ 
+individual dimension chains 
+
+
+Viewing AEC Dimension Edit In Place grips 
+
+2 Use the grips to reposition dimension texts, lengthen or shorten extension lines, and reposition dimension chains. 
+Resetting Repositioned Dimension Texts, Extension Lines and Dimension Chains 
+Use this procedure to reset repositioned dimension texts, extension lines and dimension chains. 
+Repositioning text in a dimension 
+
+NOTE You can only reset those dimension texts that you have manually moved to a different place. If dimension texts are offset from their positions because they do not, for example, fit on the appropriate dimension segment, you cannot automatically reset them here. To make sure that your dimension texts are always placed on the dimension segment, set this in the underlying AutoCAD dimension style. Select the AEC dimension, right-click, and click AEC Dimension Style. Then, select the display representation where you want the changes to appear, and select 
+Style Override. If necessary, click 
+, and click the Other tab. Click Edit, and in the Dimension Style Manager click Modify. Click the Fit tab, and select Always keep text between ext lines under Fit Options. 
+1 Select the AEC dimension with repositioned components to be reset. 
+2 Set the components to their original positions: 
+If you want to… Then… 
+set the extension lines to their style click AEC Dimension tab . Modify settings panel . Remove Override drop-
+down . All Extension Lines
+ . 
+set the text strings to their original click AEC Dimension tab . Modify position panel . Remove Override drop-
+down . All Text Positions
+ . 
+NOTE To reset the distance between dimension chains, set the distance between chains to the original value in the AEC dimension style. For information, see Selecting the AutoCAD Dimension Styles and Other Properties of AEC Dimension Styles on page 3424. 
+Overriding Dimension Values and Hiding Dimension Segments 
+The dimension values in an AEC dimension are the real-life calculated values taken from the objects that are dimensioned. When the dimensioned object is updated, the dimension value is updated accordingly. In some cases you might want to override that value and exchange it for a manually inserted value. 
+Overriding dimension text with a new value 
+
+In other cases, you might want to retain the original value, but supplement it with a prefix or suffix. 
+Overriding dimension text with a suffix 
+
+Sometimes, you need to hide a dimension text or a whole dimension segment. 
+Overriding dimension text by hiding text 
+
+Overridden dimension values can be marked in different ways: 
+¦ 
+Each manually overridden value, hidden text, or prefixed/suffixed value, is marked by a short overline. For information on how to hide the overline, see Hiding the Overline of Overridden Dimension Values on page 3409. 
+
+¦ 
+You can add an underline to each overridden value. For information, see Hiding the Overline of Overridden Dimension Values on page 3409. 
+
+¦ 
+You can specify in the drawing setup to underline each override automatically. For information, see Global Underline Options for Overrides on page 3408. 
+
+
+When you manually override a dimension value, the correct automatic value still exists. You can remove the override, and restore the correct value again. 
+Overriding Dimension Values 
+Use this procedure to exchange an automatic dimension value for a manually inserted one, to add prefixes and suffixes to dimension values, and to hide dimension texts and segments. 
+1 Select the dimension on which to override a dimension value, and click AEC Dimension tab . Modify panel . Override Text 
+& Lines
+ . 2 Click the value to override. 3 Specify the value override: 
+If you want to… Then… 
+hide the selected dimension text select Hide Text. 
+hide the selected dimension seg-select Hide Text and Lines. ment 
+override the dimension value enter a value for Text. 
+NOTE You can enter all alpha­numeric characters here. 
+mark an overridden value with an select Underline Text. underline 
+add a prefix to a dimension value enter one for Prefix. 
+add a suffix to a dimension value enter one for Suffix. 
+4 Click OK. 
+Removing Overrides from Dimension Values 
+Use this procedure to remove overrides from dimension values. The results of removing overrides are as follows: 
+¦ 
+Overridden values are reset to their correct value. 
+
+¦ 
+Underlines and overlines are removed. 
+
+¦ 
+Prefixes and suffixes are removed. 
+
+¦ 
+Hidden text and hidden segments are redisplayed. 
+
+
+1 Select the dimension from which to remove an override, and click 
+AEC Dimension tab . Modify panel . Override Text & Lines . 
+
+2 Click the value or segment from which to remove an override. 
+3 Click Remove Override. 
+4 Click OK. 
+Global Underline Options for Overrides 
+Use this procedure to set the underlines of overridden dimension values globally in the drawing. 
+Documentation guidelines of a company or regional office may require underlining all overridden dimension values. It would be cumbersome to underline each overridden value individually. AutoCAD Architecture offers you the ability to set underlining of overridden values as the default behavior. This means that whenever you override a dimension value, it is automatically underlined. 
+Similarly, you might need a quick way to remove all underlines from a plan; for example, to create a preview sheet from a not-yet-finished plan. 
+In this case, you can set global underlining instead of underlining or removing underlines from individual overrides. 
+NOTE The global underline setting is applied to existing overrides and new overrides. 
+1 Click 
+. Options. 2 Click the AEC Dimension tab. 3 Select Override Display of Dimensioned Text. 4 Set the global underline behavior: 
+If you want to… Then… 
+underline all overridden dimension Select Underline All. values in the drawing, regardless of individual settings 
+remove the underline from all Select Underline None. overridden dimension values in the 
+If you want to… Then… 
+drawing, regardless of individual settings 
+Hiding the Overline of Overridden Dimension Values 
+Use this procedure to hide the overline of overridden dimension values. 
+When you create an override for a dimension value—entering a different value, hiding a text or a segment, adding a prefix/suffix—the override is marked by a small overline above the changed value. The overline is useful for seeing at a glance which values have been overridden.It is also useful when you have hidden texts and segments, to select the hidden segment. 
+In some cases, however, you might want to hide the overline. The overline is placed on the DEFPOINTS layer, and by default is not plotted. If you want to hide it in the AutoCAD Architecture session as well, you need to hide the DEFPOINTS layer. 
+1 In the Layer Properties toolbar, select the DEFPOINTS layer. 2 Click the light bulb icon to hide the layer. 
+NOTE Alternatively, you can hide the DEFPOINTS layer in the Layer Manager. 
+Changing the AEC Dimension Style 
+Use this procedure to change the style of an AEC dimension. AEC dimension styles contain information about the objects to dimension, the number of chains, and the display of the dimension. For information about how to define AEC dimension styles, see AEC Dimension Styles on page 3415. 
+1 Select one or more AEC dimensions and double-click one of them. 2 Expand Basic, and expand General. 3 Select an AEC dimension style. 
+Specifying Object Dimension Points for an AEC Dimension 
+Use this procedure to specify the objects and points to be dimensioned associatively for an AEC dimension in a particular display representation. 
+1 Double-click the window. 2 Click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all AEC dimensions in the drawing, select Drawing default setting. To apply changes to all AEC dimensions of this style, select AEC Dimension Style:<style name>. For more information on styles, see AEC Dimension Styles on page 3415. 
+5 For Display representation, verify that the desired display representation is selected. 
+6 If necessary, expand Object Display Properties . Advanced, and 
+click 
+Contents. 7 For Apply To, select the type of object you want to dimension. Example: In the first chain, you want to dimension the length of walls and wall intersections. For Apply To, you select Wall. 
+8 Under Chains, select the chain on which the dimension points 
+appear. Example: In the first chain, you want to dimension the length of walls. In the previous step, you selected Wall. Now, you select Chain 1. 
+NOTE Selecting in this context means highlighting the desired chain, and not selecting the check mark. The check mark is set automatically depending on whether dimension points for this chain are selected. Example: If you clear all possible dimension points for a chain, its check is automatically cleared. 
+9 On the right side, select the points to include in the highlighted chain. Example: In the first chain, you want to dimension the length of walls and wall intersections. In the previous steps, you selected Walls and highlighted Chain1. Now, you select the check box for Length of Wall and choose Wall Length. Then, you select the check mark for Wall Intersections. 
+NOTE Under Wall Width, you have two settings that override the AEC dimension style settings for the dimensioning of wall components: From Style and Structural from Style. If you select From Style, the dimensioning of wall components is done according to the settings in the wall style. If you select Structural from Style, the dimensioning of wall components is done according to the settings in the wall style, but takes into account only components that have been marked as Structural in the wall style. For information on setting the dimensioning of wall components in the wall style, see Defining the Dimension Settings for Wall Components on page 1295. 
+10 Repeat steps 7–9 until your dimension contains all objects and points you want to dimension. 
+11 Click OK. 
+You can also access and modify AEC dimension contents through the AEC dimension’s context menu, as follows: 
+1 Select the AEC dimension you want to change, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 
+3 For the desired display representation, select Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 5 Click the Contents tab. 6 Adjust the settings as desired, and click OK twice. 
+Specifying the AutoCAD Style and Other Properties for an AEC Dimension 
+Use this procedure to specify the AutoCAD dimension style underlying the current AEC dimension style and to specify other display settings for an AEC dimension in a particular display representation. These settings include: 
+¦ 
+Distance between dimension chains 
+
+¦ 
+Length of extension lines 
+
+¦ 
+Dimension layer 
+
+
+¦ Display of height of openings 
+1 Double-click the AEC dimension. 2 Click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all AEC dimensions in the drawing, select Drawing default setting. To apply changes to all AEC dimensions of this style, select AEC Dimension Style:<style name>. For more information on styles, see AEC Dimension Styles on page 3415. 
+5 For Display representation, verify that the desired display representation is selected. 
+6 If necessary, expand Object Display Properties . Advanced, and 
+click 
+Dimension settings. 7 To change the underlying AutoCAD dimension style of the AEC dimension style, select an AutoCAD dimension style. 8 To edit the AutoCAD dimension style, click Edit. For more information about AutoCAD dimension styles, see AEC Dimension Styles and AutoCAD Dimension Styles on page 3415. 
+9 When you are finished editing the selected style, click OK. 10 Under AEC Dimension Settings, for Distance Between Chains, enter the desired distance between the single dimension chains in the AEC dimension. 
+Different distances between dimension chains 
+
+11 Specify whether you want fixed or variable extension lines. 
+Fixed extension lines have the same length. Variable extension lines adapt to the outline of the object they dimension. AutoCAD dimensions use variable extension lines by default. 
+Fixed extension lines (left) and variable extension lines (right) 
+
+12 If you selected Use Fixed Length Extension Lines, enter the length of the extension lines. 
+Different lengths of extension lines 
+
+13 Specify whether to display the height of openings. 
+NOTE This opening dimension is used specifically for European working plans, where you need a detailed description of measurements. 
+14 Click Layer to select the layer on which to place the AEC dimension. 
+15 Click OK twice. 
+You can also access and modify these same settings through the AEC dimension’s context menu, as follows: 
+1 Select the AEC dimension you want to change, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 3 For the desired display representation, select Object Override. 
+The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 5 Click the Other tab. 6 Adjust the settings as desired, and click OK twice. 
+Attaching Hyperlinks, Notes, and Files to an AEC Dimension 
+Use this procedure to attach hyperlinks, text notes, and files to an AEC dimension. 
+1 Double-click the AEC dimension to which to attach information. 2 Click the Extended Data tab. 3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. For more information about adding Hyperlinks, see “Add Hyperlinks to a Drawing” the AutoCAD help. 
+4 Click the setting for Notes, and add a note. Then, click OK. 5 Click the setting for Reference Documents. 6 Attach or detach reference files: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+7 Click OK. 
+AEC Dimension Styles 
+The AEC dimension style defines objects to dimension in the AEC dimension, and the display of the AEC dimension. 
+You can create and edit AEC dimension styles, import and export AEC dimension styles between drawings, and purge AEC dimension styles that are not in use. When you create, purge, import, export, or edit styles, you access the Style Manager. The Style Manager provides a central location in AutoCAD Architecture where you can work with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+You can create an AEC dimension tool from any AEC dimension style. You can drag the style from the Style Manager onto a tool palette. You can then specify default settings for any AEC dimensions created from the tool. For more information, see Creating an AEC Dimension Tool on page 3383. 
+AEC Dimension Styles and AutoCAD Dimension Styles 
+Every AEC dimension style has an underlying AutoCAD dimension style, which controls settings that are not set directly in the AEC dimension style. 
+The AutoCAD dimension style defines the following properties: 
+¦ 
+Color of dimension lines and extension lines 
+
+¦ 
+Lineweight of dimension lines and extension lines 
+
+¦ 
+Shape and size of dimension arrowheads 
+
+¦ 
+Dimension text height and color 
+
+¦ 
+Units, precision, and decimal separator symbol 
+
+The AEC dimension style defines the following properties: 
+
+¦ 
+Number of dimension chains 
+
+¦ 
+Dimensioned objects 
+
+¦ 
+Distance between dimension chains 
+
+¦ 
+Fixed or variable extension lines 
+
+¦ 
+Display of opening height dimensions 
+
+
+The AEC Dimension Style Wizard 
+There are two ways of editing a dimension style: 
+¦ 
+You can edit the dimension style in the Style Manager. The advantage of this method is that you can edit all AEC dimension style settings here. 
+
+¦ 
+You can edit the dimension style with the AEC Dimension Style Wizard. The advantage of this method is that you can edit the most important display settings of the style in a fast and uncomplicated way. However, you can not change all settings here; for example, the number of chains and the objects to dimension can be edited only with the AEC Dimension Styles Properties dialog box. For more information about the AEC Dimension Style Wizard, see Changing Style Properties with the AEC Dimension Style Wizard on page 3426. 
+
+
+Creating AutoCAD Dimension Styles 
+You need to create an underlying AutoCAD dimension style before you create an AEC dimension style. 
+AutoCAD Architecture comes with a number of preset AutoCAD dimension styles specifically designed for use in AEC dimensions. To save time, look at these, to see if you can use them directly or with modifications. 
+To create an AutoCAD dimension style for use with AEC dimension styles, be sure to specify the following settings: 
+¦ 
+Dimension line and extension line settings 
+
+¦ 
+Arrowhead settings 
+
+¦ 
+Text display settings 
+
+¦ 
+Unit settings 
+
+
+1 Click Home tab . Annotation panel .
+. AEC Dimension 
+Style
+ . 2 In the Dimension Style Manager, click New. 3 Follow the instructions for creating a new AutoCAD dimension 
+style, as described in “Use Dimension Styles” in AutoCAD help. 
+For more information about connecting the AutoCAD dimension style to an AEC dimension style, see Selecting the AutoCAD Dimension Styles and Other Properties of AEC Dimension Styles on page 3424. 
+Creating an AEC Dimension Style 
+Use this procedure to create an AEC dimension style. You can create a new style with default style properties, or you can create a new style by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Expand Documentation Objects, and expand AEC Dimension Styles. 
+3 Create a new AEC dimension style: 
+If you want to… Then… 
+create a new style with default right-click AEC Dimension Styles, properties and click New. 
+create a new style from an existing right-click the AEC dimension style style you want to copy, and click Copy. Right-click, and click Paste. 
+4 Enter a name for the new AEC dimension style, and press ENTER. 5 To edit the style properties of your new AEC dimension style, select the style and edit it in the Style Manager tabs: 
+If you want to… Then… 
+change the Layer/Color/Linetype see Changing the AEC Dimension properties Display Components on page 3419. 
+change the number of chains in an see Changing the Number of AEC dimension style Chains in an AEC Dimension Style on page 3418. 
+specify objects and points to dimen-see Specifying Object Dimension sion Points in AEC Dimension Styles on page 3422. 
+If you want to… Then… 
+change the AutoCAD dimension see Selecting the AutoCAD Dimen­
+style and other settings sion Styles and Other Properties of AEC Dimension Styles on page 3424. 
+change an existing AEC dimension see Changing Style Properties with style with the AEC Dimension Style the AEC Dimension Style Wizard on Wizard page 3426. 
+add notes, files, or documents to see Attaching Notes and Files to an the style AEC Dimension Style on page 3429. 
+6 When you have finished changing the AEC dimension style properties, click OK. 7 If you want to assign the style to an AEC dimension tool, drag 
+the style from the Style Manager to a tool palette. You can later rename the tool and specify other properties for it as described in Creating an AEC Dimension Tool on page 3383. 
+8 Click OK. 
+Changing the Number of Chains in an AEC Dimension Style 
+Use this procedure to change the number of dimension chains in an AEC dimension style. 
+To set the contents of chains, see Specifying Object Dimension Points in AEC Dimension Styles on page 3422. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, and expand AEC Dimension 
+Styles. 3 Select the style you want to edit. 4 Click the Chains tab. 5 Enter the number of dimension chains to define for this dimension 
+style. 6 Click OK twice. 
+Changing the AEC Dimension Display Components 
+Use this procedure to change the properties of the display components of an AEC dimension style. 
+The following AEC dimension display components are available: 
+Display components of AEC dimen­sions 
+Component Description 
+AEC Dimension Group 
+Use this component only to turn the visib­ility of an AEC dimension on or off for a specific view. All the other settings, like color, linetype, and lineweight are specified in the underlying AutoCAD dimension style; any changes you enter here are not displayed. 
+Removed Points Marker This component shows removed associative dimension points. Make it visible if you want to restore removed dimension points, as described in Restoring Object Points Set in the AEC Dimension Style on page 3392. 
+AEC Dimension Group Marker Marker of the dimension base point. 
+Override Text & Lines Marker This component is displayed when a dimen­sion segment is hidden or a dimension text hidden or overwritten. For more informa­tion, see Overriding Dimension Values and Hiding Dimension Segments on page 3405. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, and expand AEC Dimension 
+Styles. 
+3 Select the style you want to edit. 
+4 Click the Display Properties tab. 
+5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 
+7 Click the Layer/Color/Linetype tab. 
+8 Select the component to change, and select a different setting for the property. 
+9 Click OK twice. 
+Defining Dimensioned Objects in the AEC Dimension Style 
+In an AEC dimension style, you can define points on objects that are dimensioned associatively with this AEC dimension style. The points that are available for each object are dependent on the object features. For example, in a wall you can dimension length, width, wall components, and openings in the wall. In a window, you can dimension the maximum and minimum opening widths, and the window center. 
+For a complete list of objects that can be specified in the AEC dimension style, see Associative Dimensions from Objects on page 3355. 
+Each AEC dimension can have up to ten dimension chains. Each chain can contain dimension points for the objects specified in the style. For more information, see Changing the Number of Chains in an AEC Dimension Style on page 3418. 
+Example 1: You create an AEC dimension style that contains only one chain. This chain contains wall lengths and wall intersections and the maximum opening width of openings within the wall. 
+Single AEC dimension chain example 
+
+Example 2: You create an AEC dimension style designed exclusively to dimension walls, but the wall dimension points are distributed on four individual chains: 
+¦ 
+Chain 1 dimensions the wall lengths and the wall widths. 
+
+¦ 
+Chain 2 dimensions the wall lengths, wall widths and wall intersections. 
+
+¦ 
+Chain 3 dimensions only the wall lengths. 
+
+¦ 
+Chain 4 dimensions the outer boundaries of all selected walls. 
+
+
+Four AEC dimension chains example 
+
+Example 3: You create an AEC dimension style that dimensions the length of walls in a building on one chain, and a row of structural columns within the building on a second chain. 
+Two AEC dimension chains example 
+
+The following guidelines can help you to create AEC dimension styles: 
+¦ 
+Create a separate dimension style for each use. For example, create a style that dimensions window assemblies and curtain walls, and another one that dimensions walls and openings in walls. 
+
+¦ 
+Do not include too many dimension points in one dimension chain. 
+
+¦ 
+Do not include too many objects within one dimension style. 
+
+
+Specifying Object Dimension Points in AEC Dimension Styles 
+Use this procedure to specify the objects and points to be dimensioned associatively in an AEC dimension style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, and expand AEC Dimension 
+Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Contents tab. 
+Selecting the contents of dimension chains 
+
+Under Apply To, you find the list of objects that can be dimensioned associatively. 
+Refer to Associative Dimensions from Objects on page 3355 for a complete list of objects and their dimension points. 
+Below the Apply To list, you find the list of available chains in this AEC dimension style. 
+For information on changing the number of chains, see Changing the Number of Chains in an AEC Dimension Style on page 3418. 
+8 For Apply To, select a object you want to dimension. Example: In the first chain, you want to dimension the length of walls and wall intersections. For Apply To, you select Wall. 
+9 Under Chains, select the chain on which the dimension points 
+appear. Example: In the first chain, you want to dimension the length of walls. In the previous step, you selected Wall. Now, you select Chain 1. 
+NOTE “Selecting” in this context means highlighting the desired chain, and not selecting the check mark. The check mark is set automatically depending on whether dimension points for this chain are selected. Example: If you clear all possible dimension points for a chain, its check is automatically cleared. 
+10 On the right side, select the points to include in the highlighted chain. Example: In the first chain, you want to dimension the length of walls and wall intersections. In the previous steps, you selected Walls and highlighted Chain1. Now, you select the check box for Length of Wall and choose Wall Length. Then, you select the check mark for Wall Intersections. 
+NOTE Under Wall Width, you have two settings that override the AEC dimension style settings for the dimensioning of wall components: From Style and Structural from Style. If you select From Style, the dimensioning of wall components is done according to the settings in the wall style. If you select Structural from Style, the dimensioning of wall components is done according to the settings in the wall style, but takes into account only components that have been marked as Structural in the wall style. For information on setting the dimensioning of wall components in the wall style, see Defining the Dimension Settings for Wall Components on page 1295. 
+11 Repeat steps 7–9 until your dimension contains all objects and points you want to dimension with this style. 
+12 Click OK three times. 
+Selecting the AutoCAD Dimension Styles and Other Properties of AEC Dimension Styles 
+Use this procedure to select the AutoCAD dimension style underlying the AEC dimension style and these other settings that affect the appearance of the AEC dimension: 
+¦ 
+Distance between dimension chains 
+
+¦ 
+Length of extension lines 
+
+¦ 
+Dimension layer 
+
+¦ 
+Display of height of openings 
+
+
+NOTE Activating the display of the opening height takes effect only if you select dimension points for openings in one or more chains of this dimension style. For information on selecting opening dimension points, see Specifying Object Dimension Points in AEC Dimension Styles on page 3422. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, and expand AEC Dimension 
+Styles. 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 To change the underlying AutoCAD dimension style of the AEC 
+dimension style, select an AutoCAD dimension style. 9 To edit the AutoCAD dimension style, click Edit. 
+For more information about AutoCAD dimension styles, see AEC Dimension Styles and AutoCAD Dimension Styles on page 3415. To return to the Other tab in the Display Properties dialog box, 
+click Close. 
+10 Specify the distance between the single dimension chains in the AEC dimension. 
+Different distances between dimension chains 
+
+11 Specify whether you want fixed or variable extension lines. 
+Fixed extension lines have the same length. Variable extension 
+lines adapt to the outline of the object they dimension. AutoCAD 
+dimensions use variable extension lines by default. 
+Fixed extension lines (left) and variable extension lines (right) 
+
+12 If you select fixed extension lines, enter the length of the extension lines. 
+Different lengths of extension lines 
+
+13 Specify whether to display the height of openings. 
+NOTE This opening dimension is used specifically for European working plans, where you need a detailed description of measurements. 
+14 Click Layer to select the layer on which to place the AEC dimension and click OK. 
+15 Click OK twice. 
+Changing Style Properties with the AEC Dimension Style Wizard 
+Use this procedure to change a number of AEC dimension style properties with the help of a wizard. The AEC Dimension Style Wizard offers you a fast way of changing these properties of a style: 
+¦ 
+Arrowhead shape and size 
+
+¦ 
+Length and color of extension lines 
+
+¦ 
+Color of dimension lines 
+
+¦ 
+Distance between dimension chains 
+
+¦ 
+Dimension text style, size, and color 
+
+¦ 
+Rounding-off value 
+
+¦ 
+Layer assignment 
+
+
+1 Click Manage tab . Style & Display panel .
+. Dimension Style Wizard
+ . 
+
+2 Select the AEC dimension style to edit and click Next. 
+IMPORTANT If you choose a dimension style that has its property source set to System Default, you get a warning message. If you want to edit the style, close the Wizard, open the style in the Style Manager, and set the display property source to a style override. For more information about working with the Style Manager, see Style Manager Overview on page 856. 
+3 Select the display representation to change. 
+NOTE If the AEC dimension style you choose to edit is based on the same AutoCAD dimension style for different display representations, the edits you make apply to all display representations. To avoid this, make sure that the AEC dimension style uses different AutoCAD dimension styles for different display representations. For more information about assigning AutoCAD dimension styles to AEC dimension styles, see Selecting the AutoCAD Dimension Styles and Other Properties of AEC Dimension Styles on page 3424. 
+4 Specify line and arrow settings: 
+¦ 
+Select new arrowhead symbols. 
+
+¦ 
+Change the size of the arrowheads. 
+
+¦ 
+Define a new length for the extension lines. 
+
+¦ 
+Define a new distance between the individual dimension chains. 
+
+
+
+5 Click Next. 6 Specify text settings: 
+¦ 
+Select a new text style. 
+
+¦ 
+Enter a new text height. 
+
+¦ 
+Define a new round-off precision for dimension values. 
+
+
+
+7 Click Next. 
+8 Specify Color and Layer settings: 
+¦ 
+Select a new text color. 
+
+¦ 
+Select a new dimension line color. 
+
+¦ 
+Select a new extension line color. 
+
+¦ 
+Select a new layer for the dimension. 
+
+
+
+9 Click Finish. 
+Attaching Notes and Files to an AEC Dimension Style 
+Use this procedure to attach text notes and files to an AEC dimension style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Documentation Objects, and expand AEC Dimension 
+Styles. 3 Select the style you want to edit. 4 Click the General tab. 5 To add a description to the AEC dimension style, enter the 
+description under Description. 6 Click Notes. 7 To add a note, click the Notes tab, and enter the note. 
+8 Click the Reference Docs tab, and attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Edit file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. Click OK when you are done editing. 
+detach a reference file select the file name, click Delete, and click OK. 
+9 Click OK twice. 
+Q and A for Working with AEC Dimensions 
+This topic contains questions and answers that can help you to achieve the results you want when working with AEC dimensions. 
+Changing Color, Text Size and Arrowheads 
+How do I change the color, text size, and arrowheads of an AEC dimension? 
+Those settings are specified in the AutoCAD dimension style that underlies the AEC dimension style. To access them easily, use the AEC Dimension Style Wizard. For more information, see The AEC Dimension Style Wizard on page 3416. 
+Updating AEC Dimensions On Demand 
+How can I specify that AEC dimensions are updated only on demand? 
+If you freeze the layer on which an AEC dimension is placed, the AEC dimension is updated only when the layer is thawed again or if you execute the REGEN command. 
+When you switch to another view, for example, a three-dimensional (3D) view, and then back to a Plan view, the AEC dimension is not updated. Freezing 
+the dimension layer can enhance drawing performance, especially for big drawings. 
+You can add new AEC dimensions even when the layer is frozen. However, you can edit them only after the layer has been thawed again. 
+Changing the Text Height of Superscripted Numbers 
+How can I change the text height of superscripted numbers in an AEC dimension? 
+By default, the text height of superscripted numbers in AEC dimensions is set to 50 percent of the text height of the underlying AutoCAD dimension style (DIMTXT). To change this default, you must change the corresponding value in the Registry file. 
+WARNING Making changes in the Registry file can have far-reaching consequences for the whole application. Before you change anything here, make sure that this is what you really want to do. If you are not sure, consult your CAD manager or IT department. 
+1 Open the Windows Registry Editor. 
+2 Navigate to 
+HKEY_LOCAL_MACHINE\SOFTWARE\Autodesk\AutoCAD\R18.0\ACAD-8004:409\AEC\6.0\AecArchDACHBase60\ObjectDefaults\AEC Dimension\SuperscriptScaleFactor . 
+3 Enter the desired value. The value here is relative to the AutoCAD dimension text height (DIMTXT ). 
+Fixing the Error Symbol 
+The AEC dimension for a wall 1 meter high is displayed only with an error symbol. How can I get a correct dimension display? 
+The cut plane of the AEC dimension is taken from the cut plane of the dimensioned wall in the current display configuration. If the cut plane is set to a higher value, you must change it to include the lower wall into the dimension. For information on setting the wall cut plane, see Specifying the Cut Plane Display of a Wall Style on page 1305. 
+Finding More Dimension Points than Expected 
+I am dimensioning the intersection points of walls and receive more dimension points than expected on the dimension. How can I check if this dimension is correct? 
+When you receive more wall intersection dimension points than you expect, it is possible that the walls you are dimensioning intersect with other walls that are not included in this dimension chain. To see if this is so, and if your dimension is correct, you can prolong the extension lines so that they actually meet the point they dimension. You can then verify that the dimension points on your chain are placed correctly. 
+Elevation Labels 
+44 
+Elevation labels are used to dimension height values in plan and section views. 
+Elevation Labels 
+Elevation labels are used to dimension height values in plan and section views. 
+Elevation Labels and Coordinate Systems 
+Elevation labels are interactive multi-view blocks used for dimensioning heights in a drawing. They are anchored to either the world coordinate system (WCS) or a named user coordinate system (UCS). Elevation labels are used primarily for measuring the heights of building elements like walls or windows, but they can be used to measure every point in your drawing. You can add elevation labels in plan and section views. AutoCAD Architecture offers a number of predefined blocks for commonly used elevation labels. You can also define your own elevation labels. 
+When elevation labels are moved along the Z-axis, their Z-values change accordingly. Elevation labels can, however, be anchored only to a named UCS or the WCS; not to any building object. If the object height is changed, the value of the elevation label is not updated automatically. 
+An elevation label measures the height of a point with relation to the reference height. The reference height can be taken from the Z-coordinate of the WCS or the Z-coordinate of a named UCS. 
+Elevation labels 
+
+Using Elevation Label Tools to Create Elevation Labels 
+Tools provided with AutoCAD Architecture let you quickly place elevation labels using an elevation label tool with specific predefined properties. You can use the default settings of the tool, or you can change the properties. 
+Tool palette containing elevation label tools 
+
+The default tool palettes in the workspace contain sample elevation label tools that you can use and customize as needed. In addition, the following catalogs 
+provided with the software contain elevation label tools that you can add to your tool palettes: 
+¦ 
+Stock Tool catalog 
+
+¦ 
+AutoCAD Architecture Sample Palette catalog 
+
+¦ 
+My Tool catalog 
+
+
+Custom palettes created by your CAD manager or other users may also contain elevation label tools with multi-view block definitions and properties that are customized for your projects or office standards. 
+Creating an Elevation Label 
+Use this procedure to add a new elevation label that has the properties specified in the elevation label tool that you select. To specify settings when you add an elevation label, see Creating Elevation Labels with User-Specified Settings on page 3435. 
+1 Click Annotate tab . Tools panel . Annotation Tools
+ . 2 Select an elevation label tool. If necessary, scroll to display the tool that you want to use. 
+3 Specify the insertion point of the elevation label. You can move or hide the Properties palette to expose more of the drawing area. 
+4 Click OK. 
+Creating Elevation Labels with User-Specified Settings 
+Use this procedure to add an elevation label with settings that you specify. 
+1 Click Annotate tab . Tools panel . Annotation Tools
+ . 2 Select an elevation label tool. If necessary, scroll to display the tool that you want to use. 
+3 In the drawing area, specify the insertion point of the elevation label. 
+You can move or hide the Properties palette to expose more of the drawing area. 
+The Add Elevation Label dialog is displayed. 
+
+4 Select the coordinate system for the elevation label: 
+If you want to… Then… 
+select an existing coordinate system under UCS, select the coordinate from the drawing system from the list. 
+create a new named user coordin­ate system (UCS) 
+click 
+(Define UCS), and define the new UCS on screen. For more information about creating user coordinate systems, see “Use Co­ordinates and Coordinate Systems” in AutoCAD help. 
+TIP The quickest way to locate and view an AutoCAD topic referenced in AutoCAD Architec­ture Help is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+use the UCS of an existing elevation 
+click 
+(Match UCS) and select
+label 
+the elevation label on screen. 
+5 Enter the elevation value of your label. The value you enter here is always calculated in relation to the coordinate system you have selected. When you redefine the 
+

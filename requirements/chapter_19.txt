@@ -1,0 +1,434 @@
+[MIGRATED TO RTM_PART_51.md - GENERAL OBJECT TOOLS]
+For example, you could save a specific view setting to distribute the file to a contractor who needs to see only a specific part of the drawing. You could also save a specific view setting in a drawing that is used as an external reference within another drawing. 
+1 Isolate and hide objects as needed. (See Isolating Objects on page 1119 and Hiding Objects on page 1119). 2 Save the drawing with the current isolation setting. 
+NOTE If you want to distribute a drawing with isolated objects, make sure that you and the recipient of the drawing are working with the same version of AutoCAD Architecture. A recipient who is working with an earlier version of the software, plain AutoCAD, or Object Enabler is not able to display the hidden objects. In this case, end the object isolation before saving and distributing the drawing. 
+Isolating Objects in External References 
+When working in drawings with external references, note the following points: 
+¦ 
+You can isolate an external reference within a host drawing as a whole by selecting it and isolating at as described in Isolating Objects on page 1119. 
+
+¦ 
+You can isolate individual objects within an external reference by opening the external reference, isolating and hiding objects as needed, saving the external reference drawing, and then reloading the external reference. 
+
+¦ 
+You cannot isolate or hide objects in an external reference while editing it with REFEDIT in the host drawing. You need to use XOPEN and save the desired Hide/Isolate settings within the external reference. 
+
+¦ 
+You cannot redisplay hidden objects in an external reference while editing it with REFEDIT in the host drawing. You need to use XOPEN and save the desired Hide/Isolate settings within the external reference. 
+
+
+Editing Objects in Temporary Views 
+You can specify a selection of objects in a drawing and view and edit them in a temporary section, elevation, or plan view. The UCS will be aligned to the temporary view while you are editing it. 
+For example, if you are working in a design with an angled wall and want to add a body modifier in an elevation view, you can switch to a temporary elevation, add the detail, and exit the elevation. You are returned to your working view, and you must save any modifications at this point. You could also use to look at the endcaps of a wall opening in a temporary section view or add a section line through objects at an angle. 
+The following high-level steps are necessary to view and edit an object in a temporary view: 
+¦ 
+Select objects 
+
+¦ 
+Generate temporary section, elevation, or plan view 
+
+¦ 
+(Optional) Edit objects in view 
+
+¦ 
+Dismiss temporary view 
+
+¦ 
+(Optional) Save changes to objects 
+
+
+Selecting objects for temporary view 
+
+Editing Objects in a Temporary Section View 
+You can select objects to view and edit in a temporary section view. The section view is not persisted after the edits are finished. 
+1 Select the objects you want to view in a section view. 
+2 Click <Object> tab . General panel . Edit In View 
+drop-down . Edit In Section
+ . 3 Specify the first and second points for the section line or press 
+ENTER to change the UCS. 4 Specify the extent of the section. 5 Modify the objects in the section view. 
+6 Click 
+ on the Edit in View toolbar to exit the temporary section. 7 Save the changes to your drawing. 
+Editing Objects in a Temporary Elevation View 
+You can select objects to view and edit in a temporary elevation view. The elevation view is not persisted after the edits are finished. 
+1 Select the objects you want to view in an elevation view. 2 Click <Object> tab . General panel . Edit In View 
+drop-down . Edit In Elevation
+ . 3 Select linework, the face of an object, or a reference point for the 
+view direction. 4 Specify the extents of the elevation. 5 Modify the objects in the elevation view. 
+6 Click 
+ on the Edit in View toolbar to exit the temporary elevation. 7 Save the changes to your drawing. 
+Editing Objects in a Temporary Plan View 
+You can select objects to view and edit in a temporary plan view. The plan view is not persisted after the edits are finished. 
+1 Select the objects you want to view in a temporary plan view. 2 Click <Object> tab . General panel . Edit In View 
+drop-down . Edit In Plan
+ . 
+3 Select linework, the face of an object, or a reference point for the view direction. 
+4 Modify the objects in the plan view. 
+5 Click 
+ on the Edit in View toolbar to exit the temporary plan. 
+6 Save the changes to your drawing. 
+Adding Objects of the Same Type as the Selected Object 
+When you have an object in the drawing, you can select it and create new objects of the same type based on the selection. This saves you the time needed for navigating to the tools palette, and re-selecting the correct tool. 
+1 Select the object of which you want more instances. 
+2 Click <Object> tab . General panel . Add Selected
+ . 3 Proceed to create new objects of the same type. 
+Editing Object Styles 
+When you have selected an object the contextual tab gives you access to editing the style of the object. 
+Editing the style of the selected object 
+1 Select the object. 
+2 Click <Object> tab . General panel . Edit Style. The style properties of the selected object are displayed. You can edit them as necessary. 
+The ribbon also lets you access other styles of the same type. 
+Editing other styles of the same type 
+1 Select the object. 
+2 Click <Object> tab . General panel . Edit Style drop-down . <Object> Styles. 
+This opens Style Manager with only styles for that object type displayed, for example, only wall styles or door styles. You can edit them as necessary. 
+Depending on the object you have selected, you may be able to access not only styles for that object, but also styles of objects that act as supporting objects. For example, when you have selected a space, you can access space styles, zone styles, zone templates, and display theme styles. 
+
+Accessing supporting style types from the ribbon 1 Select the object. 2 Click <Object> tab . General panel . Edit Style drop-down, and select 
+the desired style type. 
+Copying and Assigning an Object Style 
+The General panel of the contextual tab of an object lets you create a copy of the currently used style and assign that to the object. 
+1 Select the object for which you want to create a new style. 
+2 Click <Object> tab . General panel . Copy Style
+ . For more information, see Creating a Style from an Object on page 861. 
+Dimensioning an Object 
+From the contextual tab of an object, you can add an AEC dimension to the object. 
+1 Select the object you want to dimension. 
+2 Click <Object> tab . General panel . Dimension
+ . 
+For more information, see AEC Dimensions on page 3349. 
+Tagging an Object 
+For some objects, you can add a tag from their contextual tab. 
+NOTE More tags are available under Annotate tab . Scheduling panel, on the Tags tool palette, and in Content Browser. 
+1 Select the object you want to tag. 
+2 Click <Object> tab . General panel . Tag 
+. For more information about tagging objects, see Schedule Tags on page 3716. 
+Editing Object Components In Place 
+Edit in place is a special editing mode where polyline- or profile based object components can be edited directly on screen, while other editing capabilities in the drawing are limited. For example when you are in edit-in place mode, you can change a wall endcap, but you cannot save and close the drawing. Upon exiting the edit-in-place mode you can choose if the changes should be discarded, overwrite the existing component definition, or be saved as a new definition. 
+When you enter the edit-in-place mode, a temporary profile is drawn around the object or component being edited. 
+In-place edit profile of extruded mass element 
+
+The edit-in-place mode is characterized by the following user interface changes: 
+¦ On the ribbon, the contextual Edit in Place tab for the selected component is displayed. 
+Edit in Place tab for Wall Endcaps 
+
+¦ 
+Right-clicking an editable object component displays a context menu that has commands for editing the component, and for exiting the edit in place mode. 
+
+¦ 
+Editable object components are displayed with a different color and hatching. You can change the display of the components by changing the color, lineweight, and hatching. For more information, see Changing the Display of Object Components in Edit-in-Place Mode on page 1132. 
+
+¦ 
+A number of commands, like closing or saving the drawing are deactivated while the edit-in-place mode is active. In order to access them, you must exit the edit-in-place mode first. 
+
+
+
+Sometimes, multiple edit-in-place entities are created in a single session. This is the case for walls that have multiple sweeps or modifiers, or for roof slabs and slabs that have both a fascia and a soffit profile. You can make changes to all of them during the session. When you exit the edit-in-place mode, all of the changes are either saved or discarded. 
+Editing Polyline-based Components in Place 
+The following objects in AutoCAD Architecture can have custom components based on polylines: 
+¦ 
+Walls: wall endcaps and opening endcaps 
+
+¦ 
+Wall/curtain walls: roof and floor lines 
+
+¦ 
+Walls: plan modifiers 
+
+
+Polyline-based components of an object can be edited in place. During the edit-in-place session, the selected polyline is isolated for editing so that you can perform changes on its shape, such as grip-editing or adding and removing vertex points. 
+Viewing Edit in Place wall endcap grips 
+
+You can modify the polyline-based components of a wall either in two-dimensional (2D) plan views or in three-dimensional (3D) model views. 
+When you edit a component in a 3D view, the UCS is aligned to the component, so that you can easily add or remove vertices and grip-edit the component. 
+The commands for editing polyline-based objects vary, depending on the component type. For example, a wall endcap has commands for adding and removing vertices and hiding and replacing endcap components; a wall roof line or floor line has commands for adding gables and steps and projecting the roof and floor lines to a polyline. For instructions on how to assign and edit a polyline-based object component in place, see the following locations: 
+¦ 
+Working with Wall Endcaps and Opening Endcaps on page 1359 
+
+¦ 
+Working with Wall Modifiers on page 1254 
+
+
+¦ 
+Editing the Roof Line or the Floor Line of a Wall on page 1215 
+
+¦ 
+Editing the Roof Line or the Floor Line of a Curtain Wall on page 1545 
+
+
+Editing Profile-based Object Components in Place 
+You can edit profile-based objects and object components in place. You can change the shape of the profile, add and remove rings and, for some profiles, move the insertion point. 
+The following objects are either profile-based or can have profile-based components that can be edited in place: 
+¦ 
+extruded mass elements 
+
+¦ 
+revolution mass elements 
+
+¦ 
+slab and roof slab edges (fascia and soffits) 
+
+¦ 
+door frames 
+
+¦ 
+window frames ¦ opening frames 
+
+¦ 
+door/window muntins 
+
+¦ 
+railing guardrails, handrails, bottom rails, and posts 
+
+¦ 
+curtain wall/curtain wall unit frames and mullions 
+
+¦ 
+door/window assembly frames and mullions 
+
+¦ 
+wall sweeps 
+
+
+NOTE The edit-in-place feature for the objects in the list is available only if one or more components of the object are based on profiles. 
+Example 1: profile based curtain wall frames Example 2: mass element extruded from a profile 
+
+
+Example 3: profile-based roof slab fascia and soffit 
+
+For instructions for editing profiles in place, see Editing a Profile In Place on page 2824. 
+Editing in Place: Special Cases 
+There are a number of special cases where you can use the edit-in-place mode. 
+3D Wall Body Modifiers 
+You can add a 3D modifier to a wall body, and then edit it in place. Body modifiers use the 3-dimensional (3D) geometry of an object, such as a mass element or a mass group, to add to, subtract from, or completely replace one component in a wall. 
+While you edit the body modifier in place, you can change the modifier shape with grips and use Boolean commands to add or remove other objects from the body modifier. 
+Editing a body modifier in place 
+
+For instructions on adding and editing a body modifier, see Working with Body Modifiers on page 1270. 
+Editing Material Hatches in Place 
+You can make changes to the surface hatch of an object with the edit-in-place mode, if the surface hatch is coming from a material. Unlike the other edit-in-place modes, you do not change the shape of an object but the display of the hatch on a specific object face. 
+Changing the hatch rotation with in-place editing 
+
+For detailed instructions, see Overriding the Surface Hatch on Individual Objects on page 895. 
+Changing the Display of Object Components in Edit-in-Place Mode 
+When you enter the edit-in-place session, a temporary profile is created that allows you to edit a polyline or profile-based component of an object. That profile has different sub-components of which you can change the display. 
+
+Changing the edge and boundary properties 
+1 Enter an edit-in-place session, as described in Editing a Profile In Place on page 2824, Working with Body Modifiers on page 1270 and Overriding the Surface Hatch on Individual Objects on page 895. 
+2 Select the temporary profile, right-click, and click Edit Object Display. 
+3 Depending on whether the display changes should be valid for all edit-in-place profiles in the drawing, or only the selected profile, choose one of these options: 
+¦ 
+To make display changes globally in the drawing for all profiles, verify that Drawing Default is selected for Display Property source, and that the Object override check box is not selected. 
+
+¦ 
+To make changes only to the currently selected profile, select the Object Override check box. 
+
+
+4 Click 
+. 
+5 On the Layer/Color/Linetype tab, change the properties of the following components: 
+¦ 
+Entity: this component controls the display of the object on which you edit a component in place. For example, if you edit a wall endcap in place, this display component controls the wall boundary. 
+
+¦ 
+Hatch: this display component controls the layer/color/linetype properties of the hatch of the temporary profile. This is independent on any hatches assigned to the object itself, and will be displayed only in edit-in-place mode. By default this component is turned off. 
+
+¦ 
+Modifiable edge: this display component controls the display of the active edges of the profile that can be modified. 
+
+¦ 
+Hidden Edge: controls the display of object edges that are hidden from view. When you hide an edge, and exit the edit-in-place mode, it will not be displayed. When you are in the edit-in-place mode it is displayed as a red line. 
+
+
+Changing the color of edit in place grips 
+1 Click 
+. Options. 2 Click the AEC Editor tab. 3 Under Unselected Grip Colors, change the color for Style to the 
+desired color. 
+AEC Object Constraints 
+In AutoCAD Architecture, dimensional and geometric constraints can be applied to AEC objects when you are working in a 2D plan view. AEC object constraints are enhanced versions of the AutoCAD constraints, providing you with additional functionality in the interaction between AEC objects. In general, AEC object constraints support initial object entity selection rather than point selection. 
+The following AEC objects support constraints: 
+¦ 
+Walls 
+
+¦ 
+Column grids 
+
+¦ 
+Columns 
+
+¦ 
+Beams 
+
+¦ 
+Curtain walls 
+
+¦ 
+Mass elements 
+
+¦ 
+Multi-view blocks 
+
+
+Examples of the use of constraints for AEC objects include constraining exterior walls to a column grid using Fix and Horizontal constraints, aligning the centerline of a curtain wall with a column grid using the Aligned constraint, and anchoring 2 column grids together with the Coincident constraint. 
+The following AEC object constraints can be applied to the appropriate AEC objects: 
+Geometric Constraints Dimensional Constraints 
+Coincident Aligned 
+Geometric Constraints Dimensional Constraints 
+Vertical Angular 
+Collinear Radial 
+Horizontal Distance 
+Fix Diameter 
+Parallel 
+Perpendicular 
+Concentric 
+Symmetric 
+Tangent 
+Equal 
+Smooth 
+All of the AutoCAD constraints are supported by the appropriate AEC objects, but the AUTOCONSTRAINT and Infer Constraints features are not. 
+When you select one of the AEC objects that support constraints, the Parametric panel on the contextual ribbon tab displays the constraints available for the selected object. 
+Parametric panel 
+
+NOTE Constraints that have a limited application to the selected AEC object do not display on the Parametric panel. 
+Different AEC objects have different selection options when working with AEC object constraints. The Coincident and Fix constraints are point constraints only, but the other AEC object constraints allow you to select various object entities to constrain. 
+For example, you can pick 
+¦ 
+either edge or the centerline of a wall segment to constrain. 
+
+¦ 
+the object edge, X or Y axis, or bounding box edge of a mass element to constrain. 
+
+¦ 
+the object edge, centroid, or bounding box edge of a structural member to constrain. 
+
+
+As you select the AEC object to constrain, press TAB to cycle through your options. Valid selectable object entities are highlighted with a red line. 
+Working with the Coincident constraint 
+The Coincident constraint constrains 2 points to coincide. The constrained points can lie directly on an AEC object, or the extension of an AEC object. The Coincident constraint also works between appropriate AEC objects and AutoCAD objects, such as a wall segment and a line. 
+Use a Coincident constraint to anchor 2 column grids together. 
+1 Select a column grid. 
+2 Click Column Grid tab . Parametric panel . Coincident 
+. 
+3 Select a corner point on the first column grid to constrain. 
+The selected point is shown with a red circle and X through its 
+center. 
+4 Select a corresponding corner point on the second column grid to constrain. 
+
+When you move one of the column grids, the other one moves with it. You can also rotate one of the column grids about the Coincident constraint point. To fully constrain both grids, add another Coincident constraint to the other column grid corner. 
+Working with the Vertical Constraint 
+The Vertical constraint constrains lines or pairs of points on AEC objects to lie parallel to the Y-axis of the current UCS. When you specify 2 points to vertically constrain, the second point is made vertical to the first point. 
+Use a Vertical constraint to realign a curtain wall segment vertically. 
+1 Select the curtain wall segment. 
+
+2 Click Curtain Wall tab . Parametric panel . Vertical 
+3 Specify a point on the curtain wall segment near the end that you want to remain fixed. The curtain wall segment end closest to the specified point 
+becomes the pivot point. 
+
+Working with the Collinear Constraint 
+The Collinear constraint aligns one AEC object with another. The second selected AEC object is made collinear with the first selected AEC object. You can align edges or centerlines of AEC objects as necessary. The Collinear constraint also works between appropriate AEC objects and AutoCAD objects, such as a column grid and a line. 
+Use a Collinear constraint to align the centerline of a wall with a column grid line. 
+1 Select the column grid. 
+2 Click Column Grid tab . Parametric panel . Collinear 
+. 
+3 Hover your cursor over the column grid line. 
+The grid line is highlighted with a red line. 
+4 Select the red grid line. 
+5 Hover your cursor over the edge of the wall segment. 
+The wall segment edge is highlighted with a red line. 
+6 Press TAB to highlight the wall centerline. 
+The wall segment centerline is highlighted with a red line. 7 Select the wall segment. 
+
+Use a Collinear constraint to align the edge of a mass element with the edge of a wall segment. 
+1 Select the mass element. 
+2 Click Mass Element tab . Parametric panel . Collinear 
+. 3 Hover your cursor over the edge of the mass element. The top edge of the mass element is highlighted with a red line. 
+4 Press TAB to highlight the mass element X and Y axes. The X axis is highlighted with a red line. 
+5 Press TAB to highlight the mass element bounding box. The right bounding box line is highlighted with a red line. 
+6 Select the top bounding box line of the mass element. 7 Select the bottom edge of the wall segment. 
+
+Working with the Horizontal Constraint 
+The Horizontal constraint constrains lines or pairs of points on AEC objects to lie parallel to the X-axis of the current UCS. When you specify 2 points to horizontally constrain, the second point is made horizontal to the first point. 
+Use a Horizontal constraint to realign a wall segment horizontally. 
+1 Select the wall segment. 
+2 Click Wall tab . Parametric panel . Horizontal 
+. 3 Specify a point on the wall segment near the end that you want to remain fixed. 
+The wall segment end closest to the specified point becomes the pivot point. 
+
+Working with the Fix Constraint 
+The Fix constraint is a point constraint that maintains the position of an AEC object in your drawing. Use a Fix constraint to maintain the position of a structural member. 
+1 Select the column. 
+2 Click Structural Member tab . Parametric panel . Fix 
+. 
+3 Select the column to constrain. 
+The column is fixed in place and cannot be moved or rotated. 
+Working with the Aligned Constraint 
+The Aligned constraint maintains the distance between 2 parallel elements on 2 different AEC objects. 
+Use an Aligned constraint to maintain a specific distance between a wall segment and a multi-view block. 
+1 Select the multi-view block. 
+2 Click Multi-View Block tab . Parametric panel . Aligned 
+. 3 Select the edge of the multi-view block. 4 Select the edge of the wall segment. 5 Specify the dimension location. 
+6 Enter a new dimension value. 
+
+When you move either AEC object, the specified distance between them is maintained. 
+Working with the Angular Constraint 
+The Angular constraint maintains a specific angle between 2 AEC objects. The Angular constraint also works between appropriate AEC objects and AutoCAD objects, such as a wall segment and a line. 
+Use an Angular constraint to maintain an angle between 2 attached wall segments. 
+1 Select the wall segment. 
+2 Click Wall tab . Parametric panel . Angular 
+. 3 Select the first wall segment edge as the angle baseline. 4 Select the second wall segment edge to constrain. 5 Specify an angle location. 6 Enter a new angle value. 
+
+When you move either AEC object, the specified angle between them is maintained. 
+Working with the Radial Constraint 
+The Radial constraint maintains a specific radius of an AEC object. The Radial constraint also works between appropriate AEC objects and AutoCAD objects, such as a wall segment and a line. 
+Use a Radial constraint to maintain the radius of an arc wall segment. 
+1 Select the arc wall segment. 
+2 Click Wall tab . Parametric panel . Radial 
+. 3 Select the arc wall segment edge. 4 Specify the radius location. 5 Enter a new radius value. 
+
+Walls 
+20 
+A wall is an AEC object that represents the real-world features of an interior or exterior wall. The wall object contains all the geometry needed to represent a wall in 2-dimensional (2D) and 3-dimensional (3D) views. 
+
+Walls are the basic components of any building plan. You can create very simple wall types that rely on standard settings, and add them on the fly. You can also create complex walls with different components, materials, and 2D and 3D endcaps assigned, have detailed cleanup information, and contain interferences with other objects like mass elements. 
+
+A wall has one or more components, which are the materials used to construct the wall. Some components include brick, CMU, concrete, studs, air gaps, and insulation. The components of walls can also have modifiers, which change the shape of the component or its surface. 
+Wall styles control the appearance of wall objects. Using wall styles, you can specify components, endcaps, materials, and other characteristics to create new types of walls, such as concrete walls, masonry walls, and brick cavity walls. Catalogs provided with AutoCAD Architecture include sample wall styles for common wall types, such as concrete walls with footings or furring, CMU and brick cavity walls, and various stud partition walls. 
+
+You can also work with casework wall styles that include counters, base units, and upper units. 
+
+When you add a wall to a drawing, you select a wall tool and then specify the points that define each wall segment. A wall can have both straight and curved segments. 
+
+Wall direction is significant for some modifications to walls. Sample wall styles provided with AutoCAD Architecture were created with the intent that you place perimeter walls in clockwise fashion. After placing a wall, you can determine the wall direction by selecting the wall. The wall direction grip indicates the wall direction. You can also reverse the direction of a wall. 
+
+When you add doors, windows, door/window assemblies, and openings to a wall, the wall automatically adjusts to accommodate the object and adds endcaps where needed. By default, these objects are anchored to the wall and remain with the wall if you move it. If you remove an object from a wall, the wall repairs itself in the space where the object was located. 
+
+Workflow for Adding Walls 
+
+Use a wall tool on page 95 to add a wall or to convert linework on page 1159 (lines, arcs, circles, or polylines) to walls. 
+
+Fix wall intersections that did not clean up on page 1309 properly. 
+
+Toggle the wall justification line to display on page 1319 the justification line graphics and the cleanup radius circle when cleanup radius override is present. Changing  on page 1193the justification of an existing wall moves the wall and can affect how the wall cleans up with other walls. 
+Select the wall to see the wall direction grip on page 1177. Wall direction is significant for some modifications on page 1208 to walls. 
+Move a wall based on an offset on page 1195 or add copies on page 1193 of a wall by offsetting them a distance from an existing wall component. 
+Add a special condition on page 1241, such as a sweep, modifier, or interference to the wall. 
+Specify how the wall displays on page 1302. 
+Drawing Walls 
+Draw straight or arc wall segments, change the orientation or justification of a wall segment while you are drawing it, or reposition a wall segment based on an offset from a wall component. 
+To Draw a Straight Wall Segment 
+1 Select a wall tool. 
+NOTE Alternatively, you can click Home tab . Build panel . Wall drop-down . Wall
+ . 
+2 Specify the wall segment start point. 3 Specify the wall segment endpoint. 
+
+To Draw an Arc Wall Segment 1 Select a wall tool. 
+NOTE Alternatively, you can click Home tab . Build panel . Wall drop-down . Wall
+ . 
+2 Specify the wall segment start point. 3 On the command line, enter A for Arc. 4 Specify the wall segment midpoint. 
+NOTE If you have Dynamic Input activated on the application window status bar (DYN), you can use dynamic dimensions to specify the wall length and angle. After clicking the start point of the wall, dynamic input fields for wall length and wall angle appear around the wall preview. Enter values as desired, and use the TAB key to switch between input fields. 
+5 Specify the wall segment endpoint. 
+
+To Change the Wall Orientation 1 Select a wall tool. 
+NOTE Alternatively, you can click Home tab . Build panel . Wall drop-down . Wall
+ . 
+2 Specify the wall segment start point. 3 Press CTRL to flip the wall segment orientation. 
+

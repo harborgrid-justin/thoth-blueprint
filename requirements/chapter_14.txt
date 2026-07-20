@@ -1,0 +1,1123 @@
+[MIGRATED TO RTM_PART_50.md - CONTENT CREATION GUIDELINES]
+Architectural objects frequently include hatch pattern parameters as part of their display control. You should make sure that the hatch pattern scale and type is appropriate for the level of detail a given display representation is meant to address. Also remember to address hatch pattern scale and type in your material definitions, as it is a best practice to assign material definitions to style-based components. Hatch patterns that represent annotation standards (diagonal lines that represent brick in plan, for example), should be scaled appropriately for your level of detail. Hatch patterns that represent geometry (bricks in elevation, for example), should be given a scale of 1 unit. 
+Style-Based Content 
+Style-based content in AutoCAD Architecture is classified under one of three general groups. 
+¦ 
+Architectural Objects: Traditional architectural object geometry. 
+
+¦ 
+Documentation Objects: Any style-based object that is specifically and uniquely used for annotation and documentation purposes. 
+
+¦ 
+Multi-Purpose Objects: Any style-based object that could be used to help define either a documentation object style or an architectural object style. 
+
+
+Many styles can be used to create style-based tools on a palette. Others are used as nested styles or substyles. All styles and definitions can be edited in the Style Manager and stored in a central style library drawing. 
+TIP You can assign a pre-defined keynote from your keynote database to any style that you create on the General tab of the style definition. 
+Architectural Objects 
+When referring to styles, the term architectural object refers to any object style that will result in the creation of a specific type of architectural geometry, such as a wall, door, stair, roof slab, etc. It also refers to sub-styles that are related to those object types, such as wall endcaps and slab edge styles. 
+Walls 
+Walls are more complex objects and affected by a variety of styles and substyles. When a wall style that references a specific substyle is imported into a drawing, it will import all necessary substyles with it. 
+Wall Styles 
+Naming Conventions 
+You should provide as much information about the wall structure in the name itself as practical. This makes it easier to discriminate between wall styles in a long list without having to refer to the wall style description. The first component listed is the major structural component. The last component listed is usually a finish component. 
+<Component name>-<Size in decimal units> <Component name>-<Size in decimal units>... 
+Example Wall Style Names: 
+Wall Style Description Example Name 
+Wall structure: 5/8” gypboard interior fin-Stud-3.5 Brick-3.625 Sheathing-0.5 Air-1 ish, 3 1/2” wood stud, 1/2” sheathing, 1” GWB-0.625 air gap and 3 5/8” brick veneer. 
+Wall structure: 5/8” Gypboard interior fin-Stud-3.5 GWB-0.625 Both Sides ish on both sides of a 3 1/2” wood stud. 
+Wall structure: 5/8” Gypboard interior fin-Stud-X GWB-0.625 Both Sides ish on both sides of a variable width wood stud. 
+Best practices for wall styles 
+¦ Walls are directional and should be considered as having an exterior and interior side. The exterior, or positive side of the wall, is at the top of a wall running left to right. Wall components should be defined so that the index order is from exterior to interior. The component furthest to the exterior side of the wall should have an index assignment of 1, while the most interior component will have the highest index assignment. 
+
+¦ 
+When specifying the edge offset of a component, the value should always be to the most interior edge of the component. 
+
+¦ 
+The width of components is always a positive value. 
+
+¦ 
+Wall priorities should be standardized and based on the existing AutoCAD Architecture convention, which is documented in the AutoCAD Architecture User Guide. 
+
+¦ 
+Materials should be assigned to all wall components. 
+
+¦ 
+Plan display of wall components should normally be set to observe the drawing default settings. Best practice is to assign materials to wall components and set their linework and hatch pattern parameters to By Material in the plan display settings. 
+
+
+NOTE Prior to the introduction of material definitions in Architectural Desktop 2004 it was common and recommended practice to assign wall style components to nested layers and set their color, line type, line weight, and plot style settings to BYLAYER. While this is still technically valid in AutoCAD Architecture 2011, it is not recommended except for a very few exceptions (such as the Plan Screened display representation, which is frequently used to export plan displays to consultants using AutoCAD, who desire the items to be on a prescribed layer and assigned colors appropriate for background drawings). 
+¦ Model display of wall components should be set to the drawing defaults to allow for material assignments to control the color and hatching of walls when viewed in non-orthogonal views. 
+¦ Wall styles should be classified. This allows for more flexible scheduling and tagging in the future, as well as more display control options. 
+NOTE The Uniformat II classification definition is supplied in the Uniformat II Classifications (1997 ed).dwg file located in the AEC Content\Styles path. This classification definition is fairly comprehensive and in many cases serves well in classifying all types of AutoCAD Architecture object styles according to a uniform standard. 
+¦ 
+Walls that have one or more obvious internal dimension points (such as the outside of a structural component) should have those specified in the wall style Components tab under the Dimensions column. This allows for more accurate application of AEC dimensions. 
+
+¦ 
+Wall components should be assigned a “Structural” or “Non-Structural” designation under the “Type” column in the “Components” tab, again to allow for more effective use of AEC dimensions. 
+
+¦ 
+Walls should have an interior and exterior side specified as part of the wall style definition to ensure more accurate AEC Dimensioning. 
+
+
+To ensure accurate dimensioning with AEC dimensions, the wall in the following image has had its components assigned to either “Structural” or “Non-Structural” types. Dimension points and the exterior/interior sides of the wall are also specified. 
+
+Wall Endcap Styles 
+Wall endcap styles are intended to be used with specific wall styles. They can be used to define actual end conditions as well as opening conditions as part of a Wall Opening Endcap Style. 
+Naming Conventions: 
+Wall endcap styles should be named according to the wall style to which they apply, with an indication of the condition they are meant to address: 
+<Associated wall styles> (<End condition><Index>) 
+Example Wall Endcap Style Names: 
+Wall Endcap Style Description Example Name 
+For wall style Stud-3.5 Brick-3.625 Sheath-Stud-3.5 Brick-3.625 Sheathing-0.5 Air-1 ing-0.5 Air-1 GWB-0.625 to define the first GWB-0.625 (End1) end condition. 
+For wall style Stud-3.5 Brick-3.625 Sheath-Stud-3.5 Brick-3.625 Sheathing-0.5 Air-1 ing-0.5 Air-1 GWB-0.625 to define a pos-GWB-0.625 (End2) sible second end condition. 
+or wall style Stud-3.5 Brick-3.625 Sheathing-Stud-3.5 Brick-3.625 Sheathing-0.5 Air-1 
+0.5 Air-1 GWB-0.625 to define a jamb con-GWB-0.625 (Jamb1) dition. 
+Best Practices for Wall Endcaps: 
+¦ 
+Endcaps are drawn for each component. Components for which there is no endcap defined will terminate as soon as another component’s endcap is encountered. For that reason, you need to draw a complete endcap for each component except for those that are intended to terminate at the location on the wall where the endcap is applied. 
+
+¦ 
+Endcaps are applied perpendicular to the direction of the wall. The endpoints of each endcap are normally drawn so that an imaginary line connecting them would be perpendicular to the wall edges, except in the case where an endcap is intentionally skewed. 
+
+¦ 
+It is typically not recommended to define endcaps for walls with variable width components. As a component’s width is changed, its associated endcap will adjust to accommodate the change in width, however the endcap will maintain its proportions, causing distortions to occur to the end effect. 
+
+
+Wall Opening Endcap Styles 
+Wall Opening Endcap Styles apply to door, window, opening and door/window assemblies that are inserted into a wall. They consist of a collection of wall endcap styles that are applied to the head, jamb and sill conditions of the opening. 
+Wall Opening Endcap Style Naming Conventions: 
+The naming convention for a wall opening endcap style is similar to that for a wall endcap style: 
+<Associated wall style> (Opening<Index>) 
+Example Wall Opening Endcap Style Names: 
+Wall Opening Endcap Style Descrip-Example Name tion 
+Wall opening endcap style for a wall style Stud-3.5 Brick-3.625 Sheathing-0.5 Air-1 named Stud-3.5 Brick-3.625 Sheathing-0.5 GWB-0.625 (Opening1) Air-1 GWB-0.625. 
+Wall Cleanup Group Definitions 
+Wall Cleanup Group definitions should allow objects anchored to walls in other cleanup groups to be moved or copied to walls of the current cleanup group unless there is a compelling reason to not allow it. Cleanup between host and xref drawings should be turned on by default unless performance issues arise. There are no naming conventions for wall cleanup group definitions. 
+Wall Modifier Styles 
+Wall modifiers are typically best created “on the fly” by first creating a 2D polyline and converting it to a wall modifier. During the process you are prompted for a name to assign to a new modifier style, which is created from your geometry. Modifier styles define minimal information about the shape of the modifier itself. There are no current conventions for naming or application of wall modifier styles. 
+NOTE Wall modifiers can vary widely in shape and size from one instance to the next, even if they belong to the same style. To ensure that the modifier you wish to apply to a wall represents the shape that you want, first draw a 2D polyline and then convert the polyline to a wall modifier. You will be prompted for a new wall modifier style name during the process; each converted polyline must define a different modifier style. For these reasons, you may find it more effective in many cases to use body modifiers instead, which are not style-based. 
+Palette-Based Wall Tools 
+The only wall-based style that can be assigned to a palette-based tool is the wall style itself. However when the wall style is used, any substyles that it uses, such as wall endcap styles and wall opening endcap styles, will be imported with it automatically. Additionally there are some tool properties that you may want to consider setting as defaults before saving the tool to a catalog: 
+¦ 
+Justification: In the case of exterior walls, the baseline is usually defined at a critical dimensional location within the wall structure. In these cases it is a good idea to pre-set the justification property of the tool to “Baseline”. 
+
+¦ 
+Cleanup Group Definition: If you have defined a wall that should not clean up with other walls that are not of the same type, you can pre-set the cleanup group definition that it is inserted with. 
+
+
+IMPORTANT To pre-set the wall cleanup group definition, you must first specify the library drawing in which the cleanup group definition exists, then define the cleanup group to use. Even if the cleanup group already exists in the current drawing, it will not be used unless you specify the definition location. 
+Wall tool pre-sets to establish the default cleanup group definition and the justification. 
+
+Doors and Windows 
+Doors and windows comprise three primary AutoCAD Architecture object styles: doors, windows and door/window assemblies. 
+Door Styles 
+Naming Conventions: 
+As with wall styles, the name for a door style should provide as much information about the door as possible. The format is: 
+<Door Operation> - <Door Type> - <Optional Door Shape> <Optional Case Type>... 
+NOTE Doors with no shape specified are assumed to be rectangular. 
+Example Door Style Names: 
+Door Style Description Example Name 
+A single hinge, flush rectangular door. Hinged - Single 
+A single hinge, flush rectangular door, ex-Hinged - Single - Exterior plicitly for exterior use. 
+A double hinge, paneled arched door. Hinged - Double -Arched - Paneled 
+A single overhead door, paneled, for exter-Overhead - Single - Paneled - Exterior ior use. 
+A single hinge, full glazed door, for use in Hinged - Single - Full Glazed - Assy a door/window assembly. 
+IMPORTANT It is important to indicate those doors that are intended explicitly for assemblies. They will frequently have conditions defined that will not look correct when inserted into a wall independently from the assembly for which they were defined. 
+Best Practices for Door Styles: 
+¦ 
+All door components should have materials assigned to them. 
+
+¦ 
+Door styles should be classified for more control with scheduling and display control. As with walls, the Uniformat II Classification definition contains a ready-made list of classifications, including basic door classifications. 
+
+¦ 
+In the “Model display representations of doors components should follow “By Material” settings. 
+
+¦ 
+In the “Elevation” display representations components should be assigned colors with the display rules of your 2D Section/Elevation styles in mind. Using colors that are coordinated with those styles can be used to automate linework properties in section and elevation objects. 
+
+
+Window Styles 
+Naming Conventions: 
+The naming convention for window styles is similar to that for doors, however is a bit more relaxed with more items becoming optional: 
+<Optional Window Operation> - <Window Type> - <Optional Window Shape> <Optional Case Type>... 
+NOTE Windows with no window shape specified are assumed to be rectangular. Windows with no operation specified are assumed to be fixed. 
+Example Window Style Names: 
+Window Style Description Example Name 
+A rectangular Picture Window. Picture 
+An arched double casement window. Casement - Double - Archtop 
+An awning window, to be used explicitly Awning - Assy in a door/window assembly. 
+IMPORTANT It is important to indicate those windows that are intended explicitly for assemblies. They will frequently have conditions defined that will not look correct when inserted into a wall independently from the assembly for which they were defined. 
+Best Practices for Window Styles: 
+¦ 
+All window components should have materials assigned to them. 
+
+¦ 
+Window styles should be classified for more control with scheduling and display control. As with walls, the Uniformat II Classification definition contains a ready-made list of classifications, including basic window classifications. 
+
+¦ 
+In the Model display representations of window components should follow “By Material” settings. 
+
+¦ 
+In the “Elevation” display representations components should be assigned colors with the display rules of your 2D Section/Elevation styles in mind. Using colors that are coordinated with those styles can be used to automate linework properties in section and elevation objects. 
+
+
+Door/Window Assembly Styles 
+Naming Conventions: 
+The naming convention for door/window assemblies should reflect as much as possible the infill elements that they include, any cell adjustment parameters and where appropriate, the general position of infills in the assembly. In addition, if certain infills have a fixed size, it is helpful to indicate these as well. Different infill types are separated with a “+” symbol. These are loose guidelines at best; the very flexibility of door/window assembly styles and virtually unlimited combination of infills and grids makes it impossible to develop a fixed naming convention that will apply to all conditions: 
+<Infill Type> <Optional Infill Size> <Optional Infill Position> <Optional Cell Adjustment Parameter> + <Next Infill Type>....<Optional Door/Window Assembly Shape> 
+NOTE Door/Window Assemblies with no shape specified are assumed to be rectangular. In the case of a very complex door/window assembly, you may choose to omit some of the less prominent infill types and parameters, choosing instead to include them in a more complete style description. 
+Example Door/Window Assembly Style Names: 
+Door/Window Assembly Style Descrip-Example Name tion 
+An arched assembly with 4’ windows and  Windows4-0 Ctr Grow + Transom 2-0 Ctr  
+a two foot tall arched transoms, centered,  Arched  
+with both side cells configured to grow as  
+the assembly width is changed until the 4’  
+size can be accommodated  
+
+Hinged double door with variable width Hinged Double 6-0x6-8 + Sidelights + sidelights on each side and a transom. Transom 
+A hinged single door on the right side with Hinged Single 3-9x6-8 Right + Sidelight a single sidelight and a transom. + Transom 
+Best Practices for Door/Window Assembly Styles: 
+¦ 
+All assembly components should have materials assigned to them. 
+
+¦ 
+Door/Window Assembly styles should be classified for more control with scheduling and display control. This is especially important with assemblies that are explicitly intended to be included in a window or door schedule as a mulled unit. 
+
+
+NOTE In cases where an assembly includes a door or window infill and the assembly is to be included in a door or window schedule, you can choose not to classify the door or window infill. This will help you to make sure that the infill is not included in the schedule as a separate item from the assembly of which is a part. 
+¦ 
+The Model display representations of assembly components should follow “By Material” settings. 
+
+¦ 
+The “Elevation” display representations components should be assigned colors with the display rules of your 2D Section/Elevation styles in mind. Using colors that are coordinated with those styles can be used to automate linework properties in section and elevation objects. 
+
+¦ 
+Naming of assembly components: In order to minimize confusion when editing door/window assembly styles, you should be descriptive and consistent when naming the components of the style. In general, each name should end with the type of assembly element it refers to. For example, an infill name might be “Entry Door Infill.” In particular, care should be taken to name grids and the divisions they are based on. A grid using a division named “Sidelight Vertical Division” should be named “Sidelight Vertical Grid.” 
+
+
+Curtain Walls 
+Curtain walls comprise two primary AutoCAD Architecture objects: Curtain wall styles and curtain wall unit styles. Curtain walls can also use door, window and door/window assembly styles as infills. 
+Curtain Wall Styles 
+Naming Conventions: 
+As with other style types, the naming for curtain walls should be as descriptive as possible, but because curtain walls can be even more varied and complex in their structure than door/window assemblies, you should not expect to fully describe the details of the style in the name: 
+<Major Element (Descriptive) + <Major Element (Descriptive)>... 
+Example Curtain Wall Style Names: 
+Curtain Wall Style Example Name Definition 
+A curtain wall whose first floor cell assignment consists of wide mullions meant to simulate wall panels, with a 4’ x 4’ pat­tern of standard window mullions and glazing panels above. 
+Mass Base + 4x4 Grid Above 
+First floor with stone panels, revolving doors and glazing above in variable pattern (perhaps with nested assemblies or curtain wall unit styles as infills). 
+Stone Base + Revolving Doors + Variable Grid Above 
+Best Practices for Curtain Wall Styles: 
+¦ 
+All curtain wall components should have materials assigned to them. 
+
+¦ 
+The “Model display representations of curtain wall components should follow “By Material” settings. 
+
+¦ 
+The “Elevation” display representations components should be assigned colors with the display rules of your 2D Section/Elevation styles in mind. Using colors that are coordinated with those styles can be used to automate linework properties in section and elevation objects. 
+
+¦ 
+Naming of curtain wall components: In order to minimize confusion when editing curtain wall styles, you should be descriptive and consistent when naming the components of the style. In general, each name should end with the type of curtain wall element it refers to. For example, an infill name might be “Stone Panel Infill.” In particular, care should be taken to name grids and the divisions they are based on. A grid using a division named “First Floor Vertical Division” should be named “First Floor Vertical Grid.” 
+
+
+Curtain Wall Unit Styles 
+Naming Conventions: 
+Curtain wall units, while similar in many respects to door/window assemblies and curtain walls, are limited to simple panel infill definitions. The naming conventions are similar to those for curtain walls, but you can also include indicators of cell adjustment parameters as well: 
+<Major Element (Descriptive) + <Major Element (Descriptive)>...<Optional Cell Adjustment Parameter) 
+Example Curtain Wall Unit Style Names: 
+Curtain Wall Unit Style Definition Example Name 
+A curtain wall unit with 2 x 2 glazing pan-2 x 2 Glazing els: 
+A curtain wall unit with 4’ wide glazing Glazing 4-0 Grow + Pointed Mullions panels, mullions coming to a point at the top, with the side cells set to grow until a new 4’ panel can be added: 
+Best Practices for Curtain Wall Unit Styles: 
+¦ 
+All curtain wall Unit components should have materials assigned to them. 
+
+¦ 
+Unless a curtain wall unit is to be scheduled as a separate item, you should not classify curtain wall unit styles. 
+
+¦ 
+The Model display representations of curtain wall unit components should follow “By Material” settings. 
+
+¦ 
+The “Elevation” display representations components should be assigned colors with the display rules of your 2D Section/Elevation styles in mind. Using colors that are coordinated with those styles can be used to automate linework properties in section and elevation objects. 
+
+¦ 
+Naming of curtain wall unit components: In order to minimize confusion when editing curtain wall styles, you should be descriptive and consistent when naming the components of the style. In general, each name should end with the type of curtain wall element it refers to. For example, an infill name might be “Stone Panel Infill.” In particular, care should be taken to name grids and the divisions they are based on. A grid using a division named “First Floor Vertical Division” should be named “First Floor Vertical Grid.” 
+
+
+Roofs and Slabs 
+Roof slab styles can contain more than one component, similar to wall styles; many of the conventions are therefore the same or similar. Roof slabs can also use roof slab edge styles. 
+Roof Slab Styles 
+Naming Convention: 
+Roof slab styles, like wall styles, include multiple components. The name should indicate the structure of the roof and the dimensions of the major components (minor components such as roofing felt can have the dimension omitted). The first component listed should be the major structural component. The last component should be the finish component (if any): 
+<Component name>-<Size in decimal units> + <Component name>-<Size in decimal units>... 
+Example Roof Slab Style Names: 
+Roof Slab Style Definition Example Name 
+Roof Structure: 2x8 Rafter, roofing felt, as-Rafter-7.25 + Shingles phalt shingles. 
+Best Practices for Roof Slab Styles: 
+¦ 
+Materials should be assigned to all roof slab components. 
+
+¦ 
+Roof slabs should be defined with the baseline at the bottom of the major structural component. 
+
+¦ 
+The index order of roof slab components should be indexed from top to bottom, with the top component having index 1. 
+
+¦ 
+Thicknesses of components should always be positive. The thickness offset from the baseline should always be to the bottom edge of the component. 
+
+¦ 
+You should consider classifying all roof slab styles to allow for more display control options. 
+
+
+Roof Slab Edge Styles 
+Roof slab edge styles are fairly simple and can contain a maximum of only two components: the fascia and the soffit. Unlike wall endcaps, roof slab edge 
+styles are not applied to individual roof slab components, but to the roof slab as a whole. 
+Naming Conventions: 
+Roof slab edge styles should be named according to the fascia and/or soffit condition they define: 
+<Optional nominal fascia size> <Optional fascia> + <Optional nominal soffit size> <Optional soffit> - <Optional default edge cut condition> - <Optional edge overhang> 
+Example Roof Slab Edge Style Names: 
+Roof Slab Edge Style Description Example Name 
+1x4 Fascia, no soffit, plumb cut, no over-1x4 Fascia - Plumb hang. 
+1x8 Fascia, 5/8” soffit, plumb cut, 1’ over-1x8 Fascia + 5-8 Soffit - Plumb - Over­hang. hang 12 
+4x4 Cant strip edge style (for built-up roof). 4x4 Cant 
+Best Practices for Roof Slab Edge Styles: 
+¦ 
+When creating the profiles for the edge, draw them for the right side of the roof when drawn in section. 
+
+¦ 
+Exercise discretion when turning on “Auto-Adjust to Edge Height”. While this will cause the fascia to adjust to a variable width component in a roof slab as it changes thickness, the adjustment is proportional. The fascia will adjust both vertically and horizontally. The same consideration should be taken into account when turning on the option to adjust the soffit to the overhang depth. 
+
+
+NOTE Roof slab edge styles can not be applied as a part of the roof slab style definition; instead you can apply them as a palette-based tool property. Many of the roof slab styles included in the sample content files that ship with AutoCAD Architecture indicate in their names a specific roof slab edge style and when a tool is created from those styles, the slab style is already assigned to the tool properties. These styles originated in an earlier version of the software in which default roof slab edge styles could be assigned to a roof slab style. This capability was removed from the User Interface of the roof slab style editor, however the style properties were left in those sample styles. 
+Slab Styles 
+Naming Convention: 
+Slab styles, like wall styles, include multiple components. The name should indicate the structure of the slab and the dimensions of the major components (minor components such as vapor barriers, linoleum floor finishes, etc., can have the dimension omitted). The first component listed should be the major structural component. The last component should be the finish component (if any): 
+<Component name>-<Size in decimal units> + <Component name>-<Size in decimal units>... 
+Example Slab Style Names: 
+Slab Style Description Example Name 
+Slab Structure: 6” Concrete, ceramic tile Concrete-6 + Tile-Ceramic flooring. 
+Best Practices for Slab Styles: 
+¦ 
+Materials should be assigned to all slab components. 
+
+¦ 
+Slabs should be defined with the baseline at the bottom of the major structural component. 
+
+¦ 
+The index order of slab components should be indexed from top to bottom, with the top component having index 1. 
+
+¦ 
+Thicknesses of components should always be positive. The thickness offset from the baseline should always be to the bottom edge of the component. 
+
+¦ 
+You should consider classifying all slab styles to allow for more display control options. 
+
+
+Slab Edge Styles 
+Slab edge styles are fairly simple and can contain a maximum of only two components: termed “fascia” and “soffit”. As with roof slab edge styles, slab edge styles are not applied to individual slab components, but to the slab as a whole. 
+Naming Conventions: 
+Slab edge styles should be named according to the fascia and/or soffit condition they define: 
+<Optional fascia size> <Optional fascia> + <Optional nominal soffit size> <Optional soffit> - <Optional default edge cut condition> - <Optional edge overhang> 
+Example Slab Edge Style Names: 
+Slab Edge Style Description Example Name 
+6” Curb. Curb 
+36” x 18” grade beam with brick lug. 36x18 Grade Beam + Brick Lug 
+Best Practices for Slab Edge Styles: 
+¦ 
+When creating the profiles for the edge, draw them for the right side of the slab when drawn in section. 
+
+¦ 
+Exercise discretion when turning on “Auto-Adjust to Edge Height”. While this will cause the fascia to adjust to a variable width component in a slab as it changes thickness, the adjustment is proportional. The fascia will adjust both vertically and horizontally. The same consideration should be taken into account when turning on the option to adjust the soffit to the overhang depth. 
+
+
+NOTE Slab edge styles can not be applied as a part of the slab style definition; instead you can apply them as a palette-based tool property. Many of the slab styles included in the sample content files that ship with AutoCAD Architecture indicate in their names a specific slab edge style and when a tool is created from those styles, the slab style is already assigned to the tool properties. These styles originated in an earlier version of the software in which default slab edge styles could be assigned to a slab style. This capability was removed from the User Interface of the slab style editor, however the style properties were left in those sample styles. 
+Palette-Based Roof Slab and Slab Tools 
+To apply a slab edge or roof slab edge style at the time of creation, you can specify them as default properties of a palette-based tool along with other properties: 
+¦ 
+You may want to consider “Top”, “Bottom” or “Baseline” justification, depending upon the type of slab and its intended purpose. 
+
+¦ 
+The Vertical Offset can be set to pre-determine an elevation for the slab. 
+
+¦ 
+You can establish an edge style as a default. 
+
+
+IMPORTANT To pre-set the edge style, you must first specify the library drawing in which the edge style exists, then define the edge style to use. Even if the edge style already exists in the current drawing, it will not be used unless you specify the style location. 
+Slab tool properties, with a slab edge style set as the default. 
+
+Stairs and Railings 
+Stairs can be created using a parametric object or from a 2D sketch. In both cases, the resulting object will be based on a stair style definition. 
+Stair Styles 
+There are no naming conventions for stair styles. In general the name should simply indicate the overall purpose or stair type and possibly include the primary structure, material or construction of the stair. 
+Example Stair Style Names: 
+Stair Style Description Example Name 
+Steel stairs with a housed stringer. Steel - Housed 
+Stair style configured to act as a concrete Ramp - Concrete + Curb ramp with stringers configured to act as curbs. 
+Best Practices for Stair Styles: 
+¦ 
+Consider carefully the ramifications, pro and con, of allowing the landing extension settings and stair component settings to vary amongst stairs of the same style. Turning these options off makes them “hard coded” to the style. Turning them on makes them merely defaults to be applied during the creation of a stair, but able to be overridden. 
+
+¦ 
+When a style is assigned to a custom stair created from linework, the stringer offsets specified in the style definition will be calculated from the lines that you select for the stringer locations. 
+
+¦ 
+Landing extensions that are defined in the stair style will be ignored when creating a custom stair from linework. 
+
+
+Stair Winder Styles 
+Winder styles can be applied to stairs with the “Turn type” set to either “1/4 Turn” or 1/2 Turn. 
+Stair Winder Styles Naming Conventions: 
+The stair style name should indicate the Winder type, followed by specifics as to any tread or riser controls: 
+<Winder type> - <Optional control parameter>... 
+Example Stair Winder Style Names: 
+Stair Winder Style Description Example Name 
+Manual winder type, “Use Riser Line” Manual - Riser toggled on under “Settings”. 
+Single Point winder type, “Adjust Winder Single Point - 2 Tread Turn” checked on under “Tread Settings in Turn Area”, with 2 treads per turn. 
+Best Practices for Stair Winder Styles: 
+¦ 
+Before defining a new stair winder style, check the existing style content library files. Most of the typical winder conditions have already been defined. 
+
+¦ 
+When using the single point type, it is important to clear “Use Riser Line” if the turn point will be on the edge or corner of the stair. Otherwise, the treads will overlap and the stair will be defective. 
+
+
+Palette-Based Stair Tools 
+When creating a tool for a stair style you may want to consider the following optional pre-sets: 
+¦ 
+Stair shape: although many properties of a stair can be changed after the stair has been placed, the stair shape can only be set at the time of creation. You may want to consider having the stair shape (multi-landing, U-shaped, spiral or straight) be a default setting for your stair tools. 
+
+¦ 
+Turn type: you can specify either landings or turns. This is also a setting that cannot be changed after the stair has been placed. 
+
+¦ 
+Winder style and winder style location: If you specify a turn as the turn type, you can set the winder style to use on the turn. If you specify the winder style, you can also specify a different drawing from which to import the winder style. 
+
+¦ 
+Stair termination: You can pre-determine whether the stair should end with a riser, tread or landing. This setting can be changed after the stair has been placed as well. 
+
+
+The stair tool properties 
+
+Railing Styles 
+Railing style names should be as descriptive as possible, listing the major components of the railing. 
+Railing Styles Naming Conventions: 
+<Rail type> - <Rail Shape> + <Additional component> + <Additional component>... 
+Example Railing Style Names: 
+Railing Style Description Example Name 
+Guardrail, circular with a handrail and rod Guardrail - Pipe + Handrail + Rod Bal­balusters. usters 
+Railing Style Description Example Name 
+Guardrail, circular with a handrail and re-Guardrail - Pipe _+ Handrail + Return turns: 
+NOTE If a custom display block applied as a style-level display override defines a component, such as a return, it should be listed as an additional component in the railing style name. 
+Spaces 
+Spaces have a multitude of uses, spanning the conceptual design through construction documents phases of a project. Among other things, spaces can begin to define the layout of a building’s internal rooms and areas. They can also define rooms and areas for scheduling purposes and for area calculations and evaluations. They can also contain information valuable to users of AutoCAD MEP who need to process the geometry for analysis. 
+Space Styles 
+Space style names should be indicative of the type of room or area that the space style is meant to address. 
+Space Style Naming Conventions: 
+<Room/Area use> - <Optional relative size> - <Optional building type> 
+Example Space Style Names: 
+Space Style Descrip-Example Name tion 
+Large commercial kit-Kitchen - Large - Com­chen. mercial 
+Dining room for a restaur-Dining_Room - Restaur­ant. ant 
+Residential Bedroom. Bedroom 
+Bedroom for a hotel suite. Bedroom - Hotel 
+Best Practices for Space Styles: 
+¦ 
+Spaces can have a “Name” property assigned. These are derived from a List Definition. The List Definition should be assigned to the style so that you have a valid list of names to select from when establishing the space object’s properties. 
+
+¦ 
+Space styles should have materials assigned to their “Floor” and “Ceiling” components. 
+
+¦ 
+Because space styles can work in conjunction with Zone Definitions you may want to store them in the same library file to make it easier to make changes later. 
+
+
+Structural Members 
+Structural Member Shape Definitions 
+Structural Member Shape Definitions should be named according to the structural member style(s) for which they are intended to be a part of. For example, if you are defining a steel bar joist member style and you’ve defined a structural member shape definition on which you plan to base the bottom chord component of the joist, you would name it simply “Steel Joist Bottom Chord”. 
+Structural Member Styles 
+Structural members should be named according to the specific structural object type that they are to represent, including dimensional information. 
+Structural Member Style Naming Conventions: 
+<Structural member type> <Size> 
+NOTE Frequently standard structural shape designations include the size of the member. In these cases, the structural name can simply be the structural designation. 
+Example Structural Member Style Names: 
+Structural Member Style Description Example Name 
+Wide flange steel shape (W8x40). W8x40 
+10” K Series Bar Joist. Bar Joist 10K1 
+Structural Member Style Description Example Name 
+Decorative square tapered square column Decorative Square Column - Tapered (specific use). 12”-8” 
+10” Plywood Web Wood Joist. Plywood Web Joist - 10 
+NOTE Naming conventions for structural member styles are not fixed. In the case of structural member styles defined as a result of the Structural Member Catalog, it is acceptable and more efficient in many cases to use the default name that is provided by the catalog. As an example the “Plywood Web Joist - 10” style name listed above would be “10in Plywood Web Wood Joist”. 
+Best Practices for Structural Member Styles: 
+¦ 
+When naming a structural member style, consider whether it can be used for more than one purpose. For example, wide flange shapes can be used for either columns, bracing or beams. In the case of such an element, you should not indicate a specific use in the member style name. 
+
+¦ 
+When defining custom display blocks for the Model display of structural member styles, you should use other structural members to define the blocks where possible, in lieu of mass elements. An example of this is seen in the example Bar Joist styles that are provided with AutoCAD Architecture. The custom display blocks that define the webbing are made from a structural member style called “Steel Joist Webbing”. 
+
+¦ 
+Materials should be assigned to structural member style components. 
+
+
+Documentation Objects 
+AutoCAD Architecture documentation objects are object types that are explicitly for use as annotation tools. Rather than define 3D geometry, they define data structures and 2D annotation graphics. 
+NOTE Since documentation objects do not define geometry, it is not necessary to classify their styles for scheduling purposes, however you may want to consider it if you need more display control than that provided by the normal display set controls. 
+Sections and Elevations 
+2D sections and elevations define the 2D representation of orthogonal views of a 3D building model. They are not geometric objects in and of themselves, but are more of a “report” of the model. 
+2D Section/Elevation Styles 
+The purpose of a 2D Section/Elevation style is to automate the display characteristics of linework in the section/elevation object. 
+IMPORTANT It is important to have a standardized display system established before creating custom 2D Section/Elevation styles. The Design Rules of a Section/Elevation style are wholly dependent upon the colors assigned to objects in the display representation used by the section/elevation object. By default, this is usually an object’s “Model” or “Elevation” display representation. To find out which specific display representation is used by section/elevations for each object type, you can refer to Display Manager and review the Display Representation Control for the “Section_Elev” display set, or whatever other display set is specified as part of the section/elevation’s properties. 
+2D Section/Elevation Style Naming Conventions: 
+<2D Section purpose or use> - <Optional scale> 
+Example 2D Section/Elevation Style Names: 
+2D Section/Elevation Example Name Style Description 
+A section/elevation style Bldg Section-Elevation ­to be used for elevations 48 and sections plotted at 1/4”=1’-0”. 
+A section/elevation style Detail Background for use as a background for a detail view. 
+Best Practices for 2D Section/Elevation Styles 
+¦ If you define custom components and design rules in your section/elevation style, you should always include a description. The description for the design rules should explain what action each rule takes in the display properties of the style. For example, you might have a display component named “Swing Lines”. The component description would be simply “Door and Window swing lines”. The design rule accompanying the component might have a description of “Make window and door swings a fine line weight and dashed”. 
+¦ 
+For a section/elevation style intended to be used as a detail background, you should place all display components on a no-plot layer. 
+
+¦ 
+Section/elevation styles cannot, by themselves, be made into a palette-based tool. Instead you refer to them in a callout tool’s properties. You can specify the library file containing the section/elevation style, and the specific section/elevation style to be used with the callout. 
+
+
+Callout tool properties including the 2D Section/Elevation Style to use, the style library from which to import the style, the default scale and display set to use. 
+
+Dimensions 
+In addition to traditional AutoCAD dimensioning, AutoCAD Architecture provides more intelligent and automated AEC Dimension objects. Thoughtful creation of AEC Dimension Styles can greatly improve productivity during the construction documents phase of a project. Another benefit of AEC Dimension styles is that as AEC objects, they can be controlled with the AutoCAD Architecture Display System, and can be scale-dependent; the same AEC Dimension can be used for any number of scales in the drawing. 
+AEC Dimension Styles 
+AEC Dimension Style Naming Conventions: 
+<Maximum number of chains> - <Optional unique purpose> 
+Example AEC Dimension Style Names: 
+AEC Dimension Style Description Example Name 
+Dimension style with maximum 3 chains, 3 Chain for use in normal construction documents dimensioning. 
+Dimension style with maximum 2 chains, 2 Chain - Alternate Metric to display metric units in a drawing con­figured for imperial units. 
+Best Practices for AEC Dimension Styles: 
+¦ 
+Make your dimension styles scale dependent where possible, by using different AutoCAD dimension styles with different settings for “Overall Scale”. By changing display configurations, you can use a different display representation for dimension styles that adjusts to different scales and detail levels. 
+
+¦ 
+It is not necessary to store AEC Dimension styles, or the AutoCAD dimension styles on which they are dependent upon for display in the template drawing. Instead you can use the tool properties to import them as needed from a style library. Necessary AutoCAD dimension styles will also be imported. 
+
+¦ 
+If you have configured the “Dimension” and “Type” parameters of your wall style components, you can and should take advantage of this in the 
+
+
+AEC Dimension’s “Content” settings for the “Wall Width” dimension 
+parameters by specifying “From Style” or “Structural from Style”. 
+Schedules and Property Sets 
+Schedules, property set definitions, property data format styles and display themes are all tightly interrelated. Because of that, you should take the time to plan out carefully your system of property data usage. 
+Property Set Definitions 
+In addition to defining data fields for schedules, property set definitions can also be used to create “smart” object tags and can be used to override display settings for objects. Because of their myriad uses, you should plan them carefully. Of utmost importance, you need to carefully consider what specific object type(s) your property set definition will apply to and whether or not it will be style-based or object-based. 
+NOTE Because Property Set Definitions, Property Data Format Styles, Schedule Table Styles and Display Theme Styles are so inter-dependent you may want to consider storing them in the same style library to make it easier to make modifications later on. 
+Property Set Definition Naming Conventions: 
+<Object type><Optional additional description><Attachment (style or object> 
+Example Property Set Definition Names: 
+Property Set Definition Description Example Name 
+Property set definition for doors, object-DoorObjects based. 
+Property set definition for window frame WindowFrameStyles information, attached to window styles. 
+Best Practices for Property Set Definitions: 
+¦ Do not include spaces in property set definition names or property names. In the event that you want to have a property displayed in an object tag, it will need to be referenced by an AutoCAD attribute definition by name when the “Define Schedule Tag” tool is used. Attribute definition tags cannot include spaces. 
+¦ 
+When a property is selected for use in a schedule table column, the property’s description is the default column header. While this can easily be overridden at any time, if you keep it in mind when you are defining your properties you can streamline the task of creating schedule tables somewhat. 
+
+¦ 
+If you have legacy property set definitions for anchored objects that include formula-based properties that extract information based on the host object’s properties, you should consider replacing them with the “Anchor Property” in AutoCAD Architecture. An example of this would be a door’s fire-rating property where you want to make sure it is set to match the fire-rating of the wall it is anchored to. 
+
+¦ 
+Take advantage of AutoCAD Architecture’s new ability to hide properties. This is useful if you have a property that is not actually directly edited by a user. By disabling its visibility you can minimize confusion when viewing and editing properties in the “Extended Data” tab of the object properties palette. 
+
+¦ 
+If you have classified your object styles, consider strongly using classifications to further filter the object and style types that your property sets apply to. This is much more reliable than using layer filters. 
+
+
+Property Data Formats 
+Property Data Formats control the appearance and character/numeric formatting of property set values when they appear in a schedule table. 
+Property Data Format Naming Conventions: 
+Naming conventions for property data formats is fairly relaxed and descriptive: 
+<Data type/purpose> - <Optional description> 
+Example Property Data Format Names: 
+Property Data Format Description Example Name 
+Property data format to display the area of Area an object. 
+Property data format to display a numerical Length - Short 1-16 value as a length to 1/16” precision. 
+NOTE In cases of numerical values formatted for a specific precision, you can choose to leave the actual precision value out of the data format style name, however you should indicate it in the description. 
+Best Practices for Data Format Styles: 
+¦ Before creating a new data format style, check to make sure there isn’t already an existing one that you can re-use. There are a large number of pre-configured data format styles in the existing “Schedule Tables (Imperial).dwg” or “Schedule Tables (Metric).dwg” files in your AutoCAD Architecture content folder. 
+Schedule Table Styles 
+Schedule Table Style Naming Conventions: 
+<Object type> Schedule <Optional additional qualifier> 
+Example Schedule Table Style Names: 
+Schedule Table Style Description Example Name 
+Door schedule, using standard door num-Door Schedule ber property (not project-based). 
+Door schedule, using project-based door Door Schedule Project Based number. 
+Best Practices for Schedule Table Styles: 
+¦ 
+If you have classified your object styles, consider strongly using classifications to further filter the object and style types that your schedule applies to. This is much more reliable than using layer filters. 
+
+¦ 
+Pay special attention to the “Applies to” property of your schedule table style. It must match exactly the “Applies to” property of any property set definitions whose properties you intend to use for schedule table columns. 
+
+
+Display Theme Styles 
+Aside from making sure that your style names are descriptive, there are no conventions or standards for Display Theme Styles. 
+Zones 
+Zones allow you to group your spaces together for use in area calculation schemas and presentations (showing spaces color-coded by department, for example). Additionally, engineers who are using AutoCAD MEP can use zones to perform complex analysis calculations and reporting. 
+Zone Styles 
+Beyond being as descriptive as possible there are no naming conventions for Zone Styles. 
+Best Practices for Zone Styles: 
+¦ 
+If you are using Zone Templates to automate the organization of your zones, then you must store the zone styles in the same drawing as the zone template styles. 
+
+¦ 
+You may want to use a style-level display override for your zone styles for presentation displays to control hatching and color. 
+
+
+NOTE In addition to using style display overrides to control the display of zones, you might also consider using a Display Theme Style configured to display Spaces based on a property value. 
+Calculation Modifier Styles 
+Calculation Modifier Style Naming Conventions: 
+<Calculation description> <Purpose> 
+Example Calculation Modifier Style Names: 
+Calculation Modifier Style Description Example Name 
+Modifier to add ten percent to a calculated 10 Percent Commons Factor area to account for a commons factor add on in a commercial office building. 
+Zone Template Styles 
+Zone Templates allow you to automate the organization of your zones into a tree structure. Aside from being as descriptive as reasonably possible there are no naming conventions. 
+Best Practices for Zone Template Styles: 
+¦ 
+When it is appropriate to do so, don’t forget to attach a calculation modifier style to the styles that you include in your zone template. This can further automate the process of zone organization. 
+
+¦ 
+Zone template styles must be stored in the same drawing as the zone styles that they include. They also must be stored in the same drawing as any calculation modifiers that they use. 
+
+
+IMPORTANT Related zone styles, zone template styles and calculation modifier styles must exist in the same drawing. For this reason, you should consider storing all zone styles, zone template styles and calculation modifier styles in the same library drawing. In addition, you should store list definitions in the library drawings containing the zone styles, space styles and property set definitions that they are intended to be used with. 
+Multi-Purpose Objects 
+Object styles found under the “Multi-Purpose Objects” category are usually “helper” objects that are used to help define or enhance other object styles, or symbol objects, such as masking blocks or multi-view blocks. 
+AEC Polygons 
+AEC Polygons are useful in defining infills for curtain walls and curtain wall units, defining 2-dimensional areas and other annotation tasks. For example, they are also used on the “Cut Line” tool found on the “Annotation” tool palette. 
+AEC Polygon Naming Conventions: 
+AEC Polygon naming format will depend upon what their purpose is. An AEC Polygon style meant to define a curtain wall infill, for example, will have a much more rigid naming convention than one meant to merely define an area: 
+<AEC Polygon purpose> - <Optional description> 
+Example AEC Polygon Style Names: 
+AEC Polygon Style Description Example Name 
+AEC Polygon style to serve as banding in a Stone Infill + Revolving Doors - Stone stone infill with a revolving door in a cur-Infill Dark Band tain wall. 
+Classification Definitions 
+Classifications are a way of further defining a more generic object type. For example, wall styles can be used to define objects that aren’t walls, such as cabinetry, countertops, soffits, etc. By classifying objects, you can control whether or not they are scheduled or displayed with other similar object types. 
+Classification Definition Naming Conventions: 
+Classification definitions are merely a list. Frequently this list is based on some other documented list or data structure. In other cases they may pertain to a specific object type and qualities about that object type. The naming format can vary depending upon these conditions. 
+Classification Definition Purpose Naming Convention 
+Classification definitions based on an exist-<Data structure name or description> ing list or data structure. 
+Classification definitions for a specific object <Object type> <Purpose> type and purpose. 
+Example Classification Definition Names: 
+Classification Defini-Example Name tion Description 
+Classification definition, Uniformat II applying to all object types, based on the Uni-format II structure. 
+Classification definition Doors-Windows Phase for doors, windows and assemblies, to classify based on construction phase. 
+NOTE The second example above is exactly that, an example. In reality, a classification definition to classify objects based on phasing might better be defined to apply to all object types. 
+Best Practices for Classification Definitions: 
+¦ 
+While it is possible to classify objects on a “per instance” basis, it is better in most cases to classify object styles. All object styles that define geometry (anything that would be considered an “Architectural Object” rather than a “Documentation Object”) should be classified. 
+
+¦ 
+Be careful not to be too restrictive when specifying the “Applies to:” parameter for a classification definition. In many cases you may find that your classification definition, depending upon what is actually included in its list of classifications, might apply best for several different object types, if not all of them. 
+
+¦ 
+If you have a long classification definition you may want to consider arranging the classifications in a hierarchical manner. For example, if you were developing a classification definition to encompass the MasterSpec II format, you might have at the top level the major division numbers, then have the sections within those divisions defined within each one at a lower level. 
+
+¦ 
+Store commonly used classifications in your template drawings, especially those that might be used to classify individual objects. 
+
+
+Layer Key Styles 
+Layer Key Styles are the heart of an automated layer standard. There are several pre-defined Layer Key Styles provided with AutoCAD Architecture that are based on existing widely accepted industry standards. You can also define your own Layer Key Style. 
+Layer Key Style Naming Conventions: 
+<Optional company name or other unique identifier> <Optional standard name> <Optional descriptive element> 
+Example Layer Key Style Names: 
+Layer Key Style Description Example Name 
+Layer Key Style based on the British BS1192 BS1192 standard. 
+Layer Key Style Description Example Name 
+Layer Key Style based on the AIA Layer AIA v3 Guidelines version 3, with provisions for deviation from Tri-Services plotting guidelines (using named plot styles). 
+Layer Key Style created by “Company X” Company X Health Care for use with their internal layer standard, which is specifically used on medical pro­jects. 
+Best Practices for Layer Key Styles: 
+¦ 
+Base your Layer Key Style on a structured AutoCAD ArchitectureLayer Standard, which defines the actual layer naming format for your layers. Layer keys that are not based on a Layer Standard cannot take advantage of layer key overrides. 
+
+¦ 
+Since Layer Key Styles define the color, line weight, line type and plot style for each layer they define, they should work in conjunction with your display system. Before defining your own Layer Key Style, you should have a display system in effect that has been tested and you should be very familiar with it. 
+
+¦ 
+Remember that several existing Layer Key Styles are already provided with AutoCAD Architecture. You may want to start with these instead of creating a new one from scratch, modifying and adding layer keys as necessary to suit your needs. 
+
+¦ 
+Don’t forget to specify, as part of your drawing settings the Layer Standard and Layer Key Style to automatically load in any new drawing. Additionally you should specify that the Layer Key Style be reloaded in any existing drawings if the “master” Layer Key Style in the library drawing has been edited recently. (Refer to “Template Drawings” under the “Content Resources” section of this chapter). 
+
+
+List Definitions 
+There are no naming or “Best Practices” tips for List Definitions. 
+NOTE Store list definitions in the library drawings containing the zone styles, space styles and property set definitions that they are intended to be used with. 
+Mask Block Definitions 
+Mask blocks are symbol-based style definitions that consist of a shape definition to serve as a masking object along with optional additional graphics. 
+NOTE Mask blocks only affect AEC Objects and cannot mask generic AutoCAD objects such as lines, arcs, circles, etc. 
+Mask Block Definition Naming Conventions: 
+Because Mask Block Definitions are symbolic objects, naming conventions are similar to those used for standard block definitions. Since mask block definitions are best stored as AEC Content, you may also want the name to indicate the category of AEC Content in which the mask block definition belongs: 
+Descriptive field>_<Optional descriptive field>_...<Optional size indication> 
+Example Mask Block Definition Names: 
+Mask Block Definition Description Example Name 
+2’x2’ fluorescent lighting fixture for use in I_Elec_Lighting_Fluor_2x2 an imperial Architectural project. 
+Custom conference table created by/for Company X_I_Furn_Table_Conf “Company X” for use in imperial projects. 
+Best Practices for Mask Block Definitions: 
+¦ When creating geometry to serve as additional graphics for the mask block definition, create it on the layer “0” with color, line weight, line type and plot style set to “BYBLOCK”, unless you have a specific reason to override any of these values with an explicit value. 
+NOTE Only the objects selected as “Additional Graphics” can be assigned a unique property for color, line weight, line type and plot style prior to being defined as a mask block. The objects that make up the masking shape will ignore any of those overrides once made part of a mask block definition, following the assignments given to their display representations instead. 
+¦ Store mask blocks as AEC Content. This way they can be easily accessed through the Design Center. Additionally, a palette-based tool can be used to allow users to find them without navigating the AEC Content folder structure. 
+Mass Element Styles 
+Unlike many other types of AutoCAD Architecture object types, mass elements do not have to exist on a specific mass element style to be effectively used. Many mass elements can be created on the style “Standard” with no adverse effects whatsoever. However you can define mass element styles to predefine material assignments, classification assignments and display representation overrides. 
+Mass Element Style Naming Conventions: 
+Mass - <Optional classification assignment> - <Material assignment> 
+NOTE Classification and material assignments can be abbreviated in the mass element style name. 
+Example Mass Element Style Names: 
+Mass Element Style Description Example Name 
+Mass element for use as a decorative Mass - Exterior Wall - Brown Stucco column and classified as “B2010 - Exterior Walls” from the “Uniformat II” classification definition and assigned a material of “Fin-ishes.Plaster and Gypsum Board.Plaster.Stucco.Fine.Brown”. 
+Unclassified mass element for non-specific Mass - Deep Green Marble Tile use assigned a material of “Finishes.Floor­ing.Tile.Marble.Deep Green”. 
+Best Practices for Mass Element Styles: 
+¦ Use tools and tool palettes to provide access to your mass element styles. You can accomplish several things with a tool referencing a mass element style: 
+1 You can create a tool that pre-assigns a specific mass shape as well as a mass style to a mass element. 
+2 You can create a tool that pre-assigns a mass style but leaves the shape undefined. This is useful for assigning a mass style to an existing object with the “Assign Tool Properties To...” right-click tool menu option without changing its shape. 
+3 Mass elements by default are created on a generic “MASSELEM” layer key, since they do not, by definition, define a specific type of architectural object. By using a tool, you can override this and place them on a key that is more appropriate for the object type that they are to represent. 
+Tool properties for a mass element style tool. Note that the name of the tool has been changed to be more descriptive. Additionally, since the mass element that this tool creates is meant to define a decorative column classified as an exterior wall, the tool’s creator has decided to put the mass element on the layer defined by the “WALL” key in the current layer key style. In the example the mass element shape has also been pre-defined to be a cylinder, again, since it is meant to define a specific object type, not just a particular material assignment. 
+
+Material Definitions 
+Material Definitions are integral to the display system in AutoCAD Architecture and are a powerful tool to use with style and object definitions to automate displays in plan, section and elevation. Additionally, you can use a “Material” automatic property definition to tie material assignments (and the properties of those materials) into a schedule table of objects that have the materials assigned to them. 
+Material Definition Naming Conventions: 
+<General material category>.<Additional descriptive field>.<Optional additional descriptive field>...<Optional color> 
+Example Material Definition Names: 
+Material Definition Description Example Name 
+Cast in place concrete, exposed aggregate, Concrete.Cast-in-Place.Exposed Aggreg­medium texture. ate.Medium 
+Dark green marble flooring tile. Finishes.Flooring.Tile.Marble.Deep Green 
+Best Practices for Material Definitions: 
+¦ 
+Take every step to standardize your materials. You may want to consider storing your main material library drawing as a read-only file, accessible to only a few authorized people in your office to ensure that standard material definitions do not get inadvertently modified. 
+
+¦ 
+Take advantage of Project Standards to make sure your project drawings are consistent with your office and project standard materials. 
+
+¦ 
+Avoid using the “Edit Material” or “New Material” buttons on the “Materials” tab of your style editor. While these may seem like efficient ways of editing and creating new materials “on the fly”, they can be dangerous, as they make it easy to accidentally edit a material that has been applied to a multitude of different object styles, having an unintended and potentially drastic effect on the graphic quality of your drawing, as well as creating a material that deviates from your standard material definitions. 
+
+
+The “Edit Material” and “New Material” buttons available in the style editor. These may seem like efficient and handy ways of creating materials on the fly, but their use should be discouraged as they make it easy to accidentally create non-standard materials. 
+
+¦ 
+Assign commonly used standard materials to palette-based tools so that users can access them quickly and easily without having to browse for your material library file in Style Manager. 
+
+¦ 
+Material Definitions are essentially nothing more than a collection of display representations. Therefore, every material definition you create should have style overrides placed on every display representation. 
+
+¦ 
+When defining and editing materials, keep level of detail in mind, especially when you are defining hatch patterns and hatch pattern scale. In the default template drawings there are three display representations for material definitions that are meant to address scale dependency. You can, of course, create additional display configurations and associated display representations for additional scale dependency. The existing display representations for scale dependency are: 
+
+
+Display Configuration Material Display Representation 
+General HIgh Detail High Detail 
+General Medium Detail Medium Detail 
+General Low Detail Low Detail 
+¦ When editing a material definition’s “General Screened” or “General Reflected Screened” you should assign the components to a layer that has a color or plot style assigned to it that will plot screened with color and line type set to “BYLAYER”. These display representations are meant for use with consultants who need a screened background drawing. You can set one of the screened display configurations current and export your AutoCAD Architecture drawing to an AutoCAD format. By assigning the components to screened layers you provide your consultants and collaborators the ability to control their display via traditional AutoCAD layer control. 
+NOTE By default, the screened display representations in the Imperial and Metric templates for use in the United States assign material display components to the layer “A-Anno-Scrn” in accordance with the AIA layering guidelines. 
+IMPORTANT If you want to use material definitions to control the display of object components in a 2D Section/Elevation object on the cut line you must first set the “Defining Line” component in the 2D Section/Elevation’s “General” display representation to “By Material”. Next, edit the material definitions being used in the section and set the “2D Section/Elevation Linework” component to the color, line type, line weight and plot style you would like to see in the Section/Elevation. You will also need to make sure the setting “Maintain layer, color, linetype properties form the Display Set used during generation” is toggled off. 
+Multi-View Block Definitions 
+Multi-View Block Definitions can be used for both geometric symbols and annotation symbols (primarily chases and column grid bubbles). 
+Multi-View Block Naming Conventions 
+Geometry-defining Multi-View Blocks. <Optional system of measure>_<General object category>_<Specific object type>_<Optional descriptive field>_<Optional descriptive field> 
+Annotation-defining Multi-View Blocks. <Optional system of measure>_<Annotation purpose/type>_<Optional descriptive field> 
+Example Multi-View Block Definition Names: 
+Multi-View Block Definition Descrip-Example Name tion 
+Multi-View Block Definition for a queen size I_Furn_Bed_Queen bed for use in an imperial project. 
+Multi-View Block Definition for a wall-M_Plumb_WC_Flush - Wall mounted flush WC for use in a metric pro­ject. 
+Multi-View Block Definition for a Chase. Chase 
+Multi-View Block Definition for a column I_ColGrid_Bubble_Square grid bubble, with a square bubble. 
+Block definitions for view block components of Multi-View blocks should also be named consistently and appropriately. 
+View Block Naming Conventions: 
+View Blocks for Geometry-defining <Optional system of measure>_<General 
+Multi-View Blocks. object category>_<Specific object type>_<Optional descriptive field>_<View direction indicator> 
+View Blocks for Annotation-defining <Optional system of measure>_<Annotation Multi-View Blocks. purpose/type>_<Qualifier (“2D”, “Scale-De­pendent”, etc.)> 
+Example View Block Names: 
+View Block Description Example Names 
+2D plan view for a queen size bed multi-I_Furn_Bed_Queen_P view block. 
+2D front view for a queen size bed multi-I_Furn_Bed_Queen_F view block. 
+3D model for a queen size bed multi-view I_Furn_Bed_Queen_M block. 
+View Block Description Example Names 
+2D grid bubble block with attribute for grid I_GridBubble_2D bubble multi-view block. 
+Best Practices for Multi-View Block Definitions: 
+¦ 
+Limit the use of multi-view blocks for annotation purposes to grid bubbles, chases, and schedule tags. To define a multi-view block for use as a schedule tag, use the Create Tag tool, accessed by clicking Annotate tab . Scheduling 
+
+panel .
+. Create Tag
+ . 
+
+¦ 
+There are two possible display representations by default for multi-view blocks. Typically, “General” is used for most plan views. If you need to define a scale-dependent multi-view block, you can use “Plan” instead, along with “Plan High Detail” and “Plan Low Detail,” and any other display representations you might create for different scale plan views. In these cases do not use the “General” display representation. 
+
+¦ 
+Use the Create AEC Content Wizard to store your multi-view block definitions, rather than store them in the template. The only exception to this is a custom column grid bubble multi-view block definition. 
+
+
+Profiles 
+Profiles are general purpose 2D definitions that assist in defining geometry that is included in other styles. For example, a 2D shape can be converted to a profile to define a handrail shape. The profile is then extruded the length of the railing whose style the profile is used in to define the handrail. 
+Profile Definition Naming Conventions: 
+<Profile purpose>_<Descriptive field>_<Optional additional descriptive field>_<Optional size indication> 
+Example Profile Definition Names: 
+Profile Definition Description Example Name 
+Profile to define a handrail grip for a railing HR_Grip style 
+Profile to define a glazed door panel. Door (SingleHinge)_Glazed 
+Profile Definition Description Example Name 
+Profile to define a 1x4 base for a wall sweep WallBase_1x4 definition. 
+Profile to define a 2x10 fascia for a roof slab Fascia_2x10 edge style. 
+Symbol & Tool-Based Content 
+The terms “Symbols” and “Tools” in the context of this chapter refer mainly to delivery mechanisms for the various types of content that is external to the drawing template: styles, multi-view blocks, masking blocks, and command-based content. 
+AEC Content 
+Any symbol-based content with the exception of leaders, callouts and title marks should be created using the AEC Content Wizard and stored as AEC Content so that it can be made accessible either through the “AEC Content” tab in Design Center or through a palette-based tool. 
+NOTE Custom blocks do not scale correctly if you copy objects to which they are attached (such as doors with door hardware) and paste them in a drawing that has drawing units specified differently. 
+Best Practices for AEC Content: 
+¦ Store your custom AEC Content files in a folder that is separate from the default “Imperial” and “Metric” folders. The path to your AEC Content can be accessed in the OPTIONS dialog box in the “AEC Content” tab. You can create as many subfolders as you like in the location indicated as the “AEC Design Center Content Path”. They will be accessible from the “AEC Content” tab in the AutoCAD Design Center, and will act like any other type of AEC Content. 
+
+¦ If you have existing 2D and 3D AutoCAD blocks, you can convert them directly to AEC Content using the AEC Content Wizard and choosing “Block” as the content type. 
+
+¦ When creating AEC Content, remember that the resulting file is a new drawing that takes its content and other settings from the drawing in which you are running the AEC Content Wizard. With this in mind, there are some critical steps you should take before launching the Wizard: 
+1 Start in a clean drawing. Instead of using the QNEW command, which loads a template, use the NEW command and choose “Open with No Template - Imperial” from the “Open” drop down list. 
+
+IMPORTANT Make sure you have set your drawing setup parameters to automatically load your layer key style into any new drawing. This is critical in order to assign your content to a layer key. 
+2 Make sure your drawing window background color is set to white. The resulting content file will have an associated icon with it. The icon background color will be the same color as your AutoCAD drawing window background. 
+3 Make sure you have all of the items necessary for your content in the current drawing. In the case of a multi-view block that you may have defined in another drawing, if you simply copy that block into the current drawing, all necessary view blocks will import with it. 
+4 Create the graphics for your content file’s Design Center icon. 
+IMPORTANT Remember that the Design Center icon is nothing more than a thumbnail. Keep the graphics simple. The default Design Center icon will be created from all geometry that exists in the drawing window at the time you save the content file. 
+¦ 
+Always assign a layer key to your AEC Content file. 
+
+¦ 
+Always provide a description for the AEC Content file. 
+
+¦ 
+When saving the AEC Content file, make sure you save it to a folder underneath the AEC Content path setting in your OPTIONS dialog box. This is not done by default. You should select the “Browse” button next to the file name field in the AEC Content Wizard to make sure your file is being saved in the right location. 
+
+¦ 
+Most design content files, since they define actual architectural geometry, should be made up of blocks, multi-view blocks and mask blocks. 
+
+¦ 
+Documentation content files, regardless of whether they are based on blocks or multi-view blocks have the additional requirement that they be inserted at a scale relative to your anticipated plot scale, and taking into account the “Annotation Plot Size” setting in the drawing setup dialog box. As a baseline, you can use one AutoCAD unit (either an inch or a millimeter, depending upon whether your working in imperial or metric units). Anything in the content file that is one unit in size will be the annotation plot size when plotted at the drawing scale specified at the 
+
+
+time it was inserted. Items that are not meant to be plotted at the annotation plot size can be sized proportionally. 
+
+Palette-Based and Miscellaneous Annotation Tool Content 
+Palette-based tools, combined with tool catalogs, offer an effective means of distributing and standardizing content, as well as automating insertion and creation parameters. 
+General Best Practices for Palette-Based Tools 
+¦ 
+All annotation content should be created to take advantage of the annotation plot size. 
+
+¦ 
+Tools should normally be saved in a catalog. That way, if the palette on which they exist in the user’s workspace gets inadvertently deleted, the tool can be restored from the original palette. 
+
+¦ 
+When creating palette based tools, make it a habit to look for automation opportunities. With the exception of tools for AEC content, there are a variety of properties that can be pre-configured to further automate and standardize object creation. 
+
+
+¦ 
+If you have a need for callouts that use different graphic qualities, you can limit the number of actual tools that you create by taking advantage of dynamic blocks. The disadvantage to doing this, however, is that you may lose some standardization, as the same callout tool could have multiple bubbles in the same drawing by simply changing the view state parameter of the callouts after they’ve been inserted. 
+
+¦ 
+Store schedule tags in the same file as your schedules and property set definitions. While this is not technically necessary in order for them to work properly, it makes editing them easier. 
+
+¦ 
+Text and labels in schedule tags should be MTEXT objects. MTEXT that links to a property definition will automatically be converted to a properly formatted attribute definition. 
+
+¦ 
+Carefully consider the tool properties for leaders. There are several pre-sets that can make creating a simple leader much less time consuming and more standardized. 
+
+¦ 
+If you create tools for standard AutoCAD dimensions, use the AEC Content Wizard to do so. That way you can use the Custom Command option and use layer keys to make sure that the dimensions go to the correct layer. 
+
+¦ 
+Break line tools should have supporting elements stored in the same drawing as the break line symbol. As with other multi-component tools, such as schedule tags, it makes them easier to modify in the future. All of the properties for break marks are set in the tool properties, including whether or not the break mark masks or trims objects. 
+
+
+
+¦ 
+Title blocks should be stored in a sheet template drawing rather than as a separate drawing. 
+
+¦ 
+Use MTEXT objects instead of attribute definitions in your title blocks. When you include fields in an MTEXT object, it will word-wrap where necessary. 
+
+
+
+
+
+TIP The title blocks that are provided in the AutoCAD Architecture sheet templates are NCS compliant. You may want to consider beginning with them and making modifications to suit if you are planning to comply with that standard. 
+Conceptual Design 
+Creating Conceptual Models 
+15 
+A conceptual model, which represents the idea for a building design, comprises a variety of building blocks. In AutoCAD Architecture, the building blocks include mass elements, mass groups, spaces, and slices. Combined, they produce a three-dimensional (3D) model. 
+Mass Elements and Mass Groups 
+Mass elements are primitive parametric objects that have specific shapes, such as arch, box, cylinder, and gable. They function as the building blocks of conceptual design (also schematic design) in AutoCAD Architecture. You can create preliminary studies, or mass models, by grouping mass elements together in mass groups. 
+Mass Groups and Mass Models 
+When you create a mass group, you can combine the shapes of mass elements in the mass group by adding, subtracting, and intersecting them in a specific order. The resulting complex shape of the mass group forms your conceptual building design, or mass model. The mass model defines the basic structure and proportion of a building model. 
+Developing Mass Models 
+As you continue developing your mass model, you can combine mass elements into mass groups and create complex building shapes by adding, subtracting, and intersecting the mass elements. 
+You can change mass elements in the mass group as necessary to reflect the building design. You can edit individual mass elements that are attached to a mass group to further refine the building model. You can also nest mass groups within other mass groups. For more information, see Creating a Mass Group on page 1052. 
+Using the Model Explorer 
+You can use the Model Explorer to create your entire mass model, or you can create your mass model in the current drawing. You can also modify your mass model or change the relationships of mass elements in the Model Explorer. In addition to a graphics area that displays the mass model, the Model Explorer has a tree view in which you can drag and drop mass elements and mass groups to arrange and view the building blocks of your model in a hierarchical structure. For more information, see Using the Model Explorer to Create Mass Models on page 1073. 
+When creating massing studies, you can create mass groups with any AutoCAD three-dimensional (3D) object, including AutoCAD ACIS solids. These can be combined with mass elements in the Model Explorer to allow more complex studies of potential designs. However, only objects that have volume affect the appearance of the mass group. For example, a polyline, even with thickness, does not contribute to the mass group. 
+Continuing Building Design from a Mass Model 
+The mass model that you create is a refinement of your original idea that you carry into the next phase of the project, where you can slice floorplates from the mass model. You can convert the floorplates to space boundaries to start space planning, or you can convert them to polylines and then to walls to begin your building design. 
+Display Configurations and Layouts for Mass Modeling 
+Drawings created from templates provided with AutoCAD Architecture contain display configurations and layouts that enable you to work effectively with mass elements and mass groups. For example, a layout has two viewports: one is assigned a display configuration that displays only mass groups and the other is assigned a display configuration that displays only mass elements. 
+Materials in Mass Elements 
+In AutoCAD Architecture, you can assign materials to a mass element. These materials are displayed in wireframe and working shade views, or when rendered. Materials have specific settings for individual components of a mass element, such as linework or surface hatches. 
+Mass elements with assigned materials in rendered view 
+
+AutoCAD Architecture provides predefined materials for all common design purposes. These materials contain settings for roof slabs. You can use these predefined materials, or modify them to your special designs. You can also create your own materials from scratch. 
+For more information, see Using Materials for Mass Elements and Mass Groups on page 1068. 
+Other Uses of Mass Elements and Mass Groups 
+You can use mass elements and mass groups to create 3D body pieces of the building model. For example, you can apply them to walls as 3D body modifiers. 
+Using Massing Tools to Create Mass Elements 
+Tools provided with AutoCAD Architecture let you quickly place mass elements by selecting a massing tool with a specific style and other predefined properties. You can use the tool with its default settings, or you can change any properties that are not controlled by the style. You can also use massing tools to create new mass elements by applying tool properties to existing 3D solids. 
+Tool palette containing massing tools 
+
+The default tool palettes in the workspace contain massing tools that you can use and customize as needed. In addition, the following catalogs provided with the software contain massing tools that you can add to your tool palettes: 
+¦ 
+Stock Tool catalog 
+
+¦ 
+Sample Palette catalog 
+
+¦ 
+My Tool catalog 
+
+
+For more information on accessing tools in these catalogs, see Content Browser on page 137. 
+Custom palettes created by your CAD manager or other users may also contain massing tools with mass element styles and properties that are customized for your projects or office standards. 
+Creating a Mass Element 
+Use this procedure to add a new mass element that has the properties specified in a selected massing tool. To specify settings when you add a mass element, see Creating a Mass Element with User-Specified Settings on page 994. 
+Shapes of Mass Elements 
+To create mass elements, you start with basic shapes and manipulate them for the desired result. The twelve basic mass element shapes are Arch, Barrel Vault, Box, Pyramid, Isosceles Triangle, Right Triangle, Cone, Cylinder, Dome, Sphere, Gable, and Drape. You can also create custom mass elements by extruding and revolving profiles and by creating free form mass elements. 
+You can modify a mass element based on its shape. For example, you can specify the width, depth, and height of a Box mass element, and the radius and height of a Cylinder mass element. For more information, see Editing Mass Elements on page 1010. 
+Specifying the Size of Mass Elements 
+You can graphically specify size parameters of mass elements. 
+¦ 
+A rectangular mass element is any element that has four lines at its base, such as an Arch, Barrel Vault, Box, Gable, Pyramid, Isosceles Triangle, or Right Triangle. You can graphically specify the width, depth, and height of rectangular mass elements. 
+
+¦ 
+When you create a circular mass element, you graphically specify all the valid size parameters. Circular mass elements are Cone, Cylinder, Dome, and Sphere. 
+
+
+Some parameters are fixed during input; for example, the radius of an arch is one quarter of the width, and the rise of a gable is half the height. These parameters can be edited after the mass elements are placed in the drawing. 
+1 Open the tool palette that you want to use, and select a massing tool. 
+Alternatively, you can click Home tab . Build panel, and select 
+a mass element there. 
+2 Specify the insertion point of the mass element. You can move or hide the Properties palette to expose more of the drawing area. 
+3 Specify the next point. This point can be the second corner (for a rectangular mass element), or the radius (for a circular mass element). 
+4 Specify the height, if prompted. 5 Specify the rotation of the mass element. 6 Continue adding mass elements, and press ENTER. 
+Creating a Mass Element with User-Specified Settings 
+Use this procedure to add a mass element with settings that you specify. 
+1 Open the tool palette that you want to use, and select a massing tool. 
+Alternatively, you can click Home tab . Build panel, and select a mass element there. 
+2 On the Properties palette, expand Basic, and expand General. 3 Select a style. 4 Under Bound Spaces, define if this mass element can be used as 
+a bounding object for associative spaces. You can select three options here: 
+¦ 
+Yes: this mass element can be used as bounding object for associative spaces. 
+
+¦ 
+No: this mass element cannot be used as bounding object for associative spaces. 
+
+¦ 
+By style: this mass element will use the bounding settings from the mass element style. 
+
+
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+5 Select a shape. 6 Specify the mass group to which to attach the mass element. 7 Expand Dimensions. 
+The options that display under Dimensions depend on the shape you selected for the mass element. 
+8 Specify the dimensions of the mass element: 
+If you want to… Then… 
+specify the width of the mass ele-enter a value for Width. ment in its relative X direction 
+specify the depth of the mass ele-enter a value for Depth. ment in its relative Y direction 
+specify the height of the mass ele-enter a value for Height. ment in its relative Z direction 
+specify the radius of the mass ele-enter a value for Radius. ment 
+specify the rise of the mass element enter a value for Rise. 
+9 In the drawing area, specify the insertion point of the mass 
+element. You can move or hide the Properties palette to expose more of the drawing area. 
+10 Continue adding mass elements, and press ENTER. 
+Creating an Arch Mass Element 
+Use this procedure to dynamically create an Arch mass element. The insertion point of an Arch mass element is at the centroid of its bottom face. 
+Arch mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Arch tool. Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Arch
+ . 2 Specify the first corner of the Arch. 3 Drag the cursor and specify the second corner of the Arch. 
+4 Drag the cursor and specify the height of the Arch. 
+5 Enter a rotation angle, or press ENTER to accept the default angle of 0. 
+6 Continue adding Arch mass elements, and press ENTER. 
+Creating a Barrel Vault Mass Element 
+Use this procedure to create a Barrel Vault mass element. The insertion point of the Barrel Vault mass element is at the centroid of its bottom face. 
+Barrel Vault mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Barrel Vault tool. Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Barrel Vault
+ . 
+2 Specify the first corner of the Barrel Vault. 3 Drag the cursor and specify the second corner of the Barrel Vault. 4 Enter a rotation angle, or press ENTER to accept the default angle 
+of 0. 5 Continue adding Barrel Vault mass elements, and press ENTER. 
+Creating a Box Mass Element 
+Use this procedure to create a Box mass element. The insertion point of the Box mass element is at the centroid of its bottom face. 
+Box mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Box tool. Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Box
+ . 
+2 Specify the first corner of the Box. 3 Drag the cursor and specify the second corner of the Box. 4 Drag the cursor and specify the height of the Box. 5 Enter a rotation angle, or press ENTER to accept the default angle 
+of 0. 6 Continue adding Box mass elements, and press ENTER. 
+Creating a Pyramid Mass Element 
+Use this procedure to create a Pyramid mass element. The insertion point of a Pyramid mass element is at the centroid of its bottom face. 
+Pyramid mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Pyramid tool. Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Pyramid
+ . 
+2 Specify the first corner of the Pyramid. 3 Drag the cursor and specify the second corner of the Pyramid. 4 Drag the cursor and specify the height of the Pyramid. 5 Enter a rotation angle, or press ENTER to accept the default angle 
+of 0. 6 Continue adding Pyramid mass elements, and press ENTER. 
+Creating an Isosceles Triangle Mass Element 
+Use this procedure to create an Isosceles Triangle mass element. The insertion point of an Isosceles Triangle mass element is at the centroid of its bottom face. 
+Isosceles Triangle mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Isosceles Triangle tool. Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Isosceles Triangle
+ . 
+2 Specify the first corner of the Isosceles Triangle. 3 Drag the cursor and specify the second corner of the Isosceles 
+Triangle. 4 Drag the cursor and specify the height of the Isosceles Triangle. 5 Enter a rotation angle, or press ENTER to accept the default angle 
+of 0. 6 Continue adding Isosceles Triangle mass elements, and press ENTER. 
+Creating a Right Triangle Mass Element 
+Use this procedure to create a Right Triangle mass element. The insertion point of a Right Triangle mass element is at the centroid of its bottom face. 
+Right Triangle mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Right Triangle tool. 
+Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Right Triangle
+ . 
+2 Specify the first corner of the Right Triangle. 3 Drag the cursor and specify the second corner of the Right 
+Triangle. 4 Drag the cursor and specify the height of the Right Triangle. 5 Enter a rotation angle, or press ENTER to accept the default angle 
+of 0. 6 Continue adding Right Triangle mass elements, and press ENTER. 
+Creating a Cone Mass Element 
+Use this procedure to create a Cone mass element. The insertion point of the Cone mass element is at the centroid of its bottom face. 
+Cone mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Cone tool. Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Cone
+ . 
+2 Specify the insertion point of the Cone. 3 Drag the cursor and specify the radius of the Cone. 4 Drag the cursor and specify the height of the Cone. 5 Enter a rotation angle, or press ENTER to accept the default angle 
+of 0. 6 Continue adding Cone mass elements, and press ENTER. 
+Creating a Cylinder Mass Element 
+Use this procedure to create a Cylinder mass element. The insertion point of the Cylinder mass element is at the centroid of its bottom face. 
+Cylinder mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Cylinder tool. Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Cylinder
+ . 
+2 Specify the insertion point of the Cylinder. 3 Drag the cursor and specify the radius of the Cylinder. 4 Drag the cursor and specify the height of the Cylinder. 5 Enter a rotation angle, or press ENTER to accept the default angle 
+of 0. 6 Continue adding Cylinder mass elements, and press ENTER. 
+Creating a Dome Mass Element 
+Use this procedure to create a Dome mass element. The insertion point of the Dome mass element is at the centroid of its bottom face. 
+Dome mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Dome tool. Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Dome
+ . 
+2 Specify the insertion point of the Dome. 3 Drag the cursor and specify the radius of the Dome. 4 Enter a rotation angle, or press ENTER to accept the default angle 
+of 0. 
+5 Continue adding Dome mass elements, and press ENTER. 
+Creating a Sphere Mass Element 
+Use this procedure to create a Sphere mass element. The insertion point of a Sphere mass element is at its centroid. 
+Sphere mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Sphere tool. Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Sphere 
+. 
+2 Specify the insertion point of the Sphere. 3 Drag the cursor and specify the radius of the Sphere. 4 Enter a rotation angle, or press ENTER to accept the default angle 
+of 0. 5 Continue adding Sphere mass elements, and press ENTER. 
+Creating a Gable Mass Element 
+Use this procedure to create a Gable mass element. The insertion point of a Gable mass element is at the centroid of its bottom face. 
+Gable mass element in 3D and plan views 
+
+1 On the Massing tool palette, select the Gable tool. 
+Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Gable
+ . 
+2 Specify the first corner of the Gable. 3 Drag the cursor and specify the second corner of the Gable. 4 Drag the cursor and specify the height of the Gable. 5 Enter a rotation angle, or press ENTER to accept the default angle 
+of 0. 6 Continue adding Gable mass elements, and press ENTER. 
+Creating a Drape Mass Element 
+Use this procedure to create a Drape mass element. A drape is useful when you are working with a conceptual model of a building site. You can create polylines and AEC Polygons at different elevations to represent topographic lines, and then drape a mass element over the polylines to show the contours of the site. 
+For the generated terrain surface, you can choose between a regular mesh with user-defined mesh density and mass element size, and a non-regular mesh defined by the input contour curves and points (Delaunay triangulation). 
+For a non-regular mesh, you can select either a rectangular mesh of user-specified size (the topography will be extrapolated from your input if the selected rectangular region is larger than the area covered by the contour curves and points), or a non-rectangular mesh whose surface size and shape are determined by the area of the input contour curves and points. 
+NOTE AutoCAD Architecture uses the Autodesk Civil 3D technology to define the terrain surface; however, the extrapolation of the terrain is used in AutoCAD Architecture only. 
+Creating a Drape mass element 
+
+1 On the Massing tool palette, select the Drape tool. Alternatively, you can click Home tab . Build panel . Box 
+drop-down . Drape
+ . 
+2 Select the polylines or AEC Polygons to represent contours, and press ENTER. 
+3 Specify whether the source contours should be deleted after creating the drape mass element, and press ENTER. 
+4 Specify which mesh type you want to generate. 
+If you want… Then… 
+a surface with user-defined  enter y (Yes) for Generate Regular Mesh  
+mesh density and mass ele­ [Yes/No].  
+ment size (non-triangulated  
+surface)  
+
+a surface defined from the in- enter n (No) for Generate Regular Mesh  
+put contours and points  [Yes/No].  
+(Delaunay triangulation)  
+
+5 If you are generating a regular mesh, complete the following steps: 
+¦ 
+Specify the first corner point of the mesh. 
+
+¦ 
+Specify the opposite corner point of the mesh. 
+
+¦ 
+Specify the mesh subdivisions in the X-direction. 
+
+¦ 
+Specify the mesh subdivisions in the Y-direction. 
+
+¦ 
+Enter the base thickness of the resulting mass element. 
+
+
+6 If you are generating a non-regular mesh, specify whether you want it to be rectangular or non-rectangular: 
+If you want… Then… 
+a rectangular mesh enter y (Yes) for Generate Rectangular Mesh [Yes/No]. 
+a non-rectangular mesh enter n (No) for Generate Rectangular Mesh [Yes/No]. 
+7 If you are generating a non-regular, rectangular mesh, complete the following steps: 
+¦ 
+Specify the first corner point of the mesh. 
+
+¦ 
+Specify the opposite corner point of the mesh. 
+
+¦ 
+Enter the base thickness of the resulting mass element. 
+
+
+NOTE If the selected mesh area extends beyond the selected contours, the topography of the resulting mass element is extrapolated from the input values. 
+8 If you are generating a non-regular, non-rectangular mesh, enter the base thickness for the resulting mass element, and press ENTER. 
+Creating Profiles for Extrusion and Revolution Mass Elements 
+Use this procedure to define a profile from a polyline to create either of the following mass elements: 
+¦ 
+Extrusion, in which the shape of the two-dimensional (2D) profile is projected to create a 3D mass element 
+
+¦ 
+Revolution, in which the 2D profile is revolved around its X axis to create a 3D mass element 
+
+
+

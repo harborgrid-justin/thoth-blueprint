@@ -1,0 +1,271 @@
+[MIGRATED TO RTM_PART_63.md - DETAIL DRAFTING TOOLS]
+¦ 
+Text/Multiline text (Mtext) 
+
+¦ 
+Spaces 
+
+¦ 
+AEC Polygons 
+
+¦ 
+Mass element extrusions 
+
+¦ 
+Any of the above when embedded in blocks 
+
+
+Although some of the AEC Modify Tools can only be applied to the types of objects listed above, objects of any type can be used as reference points or boundaries for the editing operations. For example, linework can be trimmed or extended in relation to architectural objects such as walls. Likewise, architectural objects can be used to define a cropping boundary or an area to subtract from linework. Architectural objects can also be included as part of a collection of objects for which a shrinkwrap outline is generated. 
+When you work with architectural objects, such as windows and doors, you can use Array, Reposition From, Space Evenly, and Center tools in this suite in addition to linework and profile-based objects. 
+Trimming Linework or Profile-Based Objects 
+Use this procedure to trim hatches, lines, polylines, arcs, circles, AEC Polygons, mass element extrusions, spaces, or any block-based content (including detail components) made up of these types of linework or objects. 
+1 Select the linework, object, or block to trim. 2 Click Home tab . Modify panel . Trim Extend drop-down . AEC 
+Trim
+ . 
+3 Specify two points to establish the trim line. The trim line changes color once the second point is selected, as does all linework (except hatches) on the side of the trim line where the cursor is positioned. 
+4 Click the side of the trim line where the region you want to 
+remove is located. All linework on the selected side of the trim line is removed, and boundaries for any closed polylines on the other side are redrawn along the trim line. 
+Trimming a block 
+
+Trimming Linework or Profile-Based Objects to an Edge 
+Use this procedure to trim one or more lines, polylines, arcs, circles, hatches, AEC Polygons, mass element extrusions, or spaces precisely to a selected edge or side of any straight segment of AEC linework. This feature lets you easily trim linework to components of walls. 
+TIP If you need to trim linework to the edge of an arced segment of an object, use either the Crop option (see Cropping Linework or Profile-Based Objects on page 2811) or the Subtract option (see Subtracting from Linework and Profile-Based Objects on page 2808). The Crop option removes linework outside the implied boundary of the arc, while the Subtract option removes linework inside the implied boundary of the arc. 
+1 Select the linework or object to trim. 
+2 Click Home tab . Modify panel . Trim Extend drop-down . AEC Trim
+ . 3 Press ENTER. 
+4 Move the cursor over the edge or line to which you want to trim 
+the selected linework or object. 
+5 Click when the trim line displays. 
+6 Click the side of the trim line you want trimmed. All selected linework is trimmed to the edge you selected. 
+Trimming linework to the edge of a wall 
+
+Extending Linework to an Edge 
+Use this procedure to extend one or more lines, open polylines, or arcs precisely to an implied edge of a straight or arced segment of any object, or to an implied extension of that segment. 
+1 Select the linework you want to extend. 
+2 Click Home tab . Modify panel . Trim Extend drop-down . AEC 
+Extend
+ . 
+3 Move the cursor over the edge or line to which you want to extend the selected linework, and click when a temporary line is displayed extending along and beyond the edge/line in both directions. 
+4 Click any point on the linework you want to extend, or click the edge or line to which you want to extend the linework. The linework is extended to the edge. If you selected multiple 
+lines, clicking on any one of them extends them all. 
+Extending linework to the edge of a wall 
+
+Dividing Linework and Profile-Based Objects 
+Use this procedure to divide linework, AEC Polygons, mass element extrusions, spaces, or a block containing any of these objects into two (or more) parts defined by a divide line you draw. The parts on either side of the line are then separately selectable. If a closed-boundary object is divided into two parts using this option, both parts are recreated as closed. If an open polyline in a zigzag pattern is divided along its length, many selectable segments are created. 
+1 Select the linework, object, or block you want to divide. 
+2 Click Home tab . Modify panel .
+. Align 
+drop-down . Divide
+ . 3 Specify two points to establish the divide line. In the case of a closed-boundary object, the points can be inside or outside the 
+boundaries; the divide line is automatically extended until it intersects all boundaries of the selected object. The divided parts of the linework or object on either side of the 
+divide line are now selectable. Note that the divide line is no longer visible once the second point is selected. 
+Dividing a space object 
+
+Subtracting from Linework and Profile-Based Objects 
+Use this procedure to subtract a selected part from linework, AEC Polygons, mass element extrusions, spaces, or from a block containing any of these objects, without having to redraw any of the remaining components. You can also specify the corners of a rectangle as the subtraction. The part to be subtracted can contain or be delineated by lines, polylines (closed or open), arcs, circles, text, or hatches. If the subtraction removes part of a closed polyline, the polyline is recreated as closed. If the subtraction bisects a closed polyline, both parts are recreated as separate closed polylines. However, in cases where the subtraction bisects a hatch, the hatch remains a single linework entity that you can select by clicking either “part.” 
+NOTE Anything subtracted by this operation is actually deleted from the drawing. If you only want to hide linework from view, you may want to use the Obscure command instead. For more information, see Obscuring Regions of Linework on page 2809. 
+1 If it does not already exist, draw the linework that delineates what you want to subtract. 
+2 Select the linework or object from which to subtract the delineated part. 
+3 Click Home tab . Modify panel .
+. Merge Subtract 
+drop-down . Subtract
+ . 
+4 Press ENTER and specify a rectangular shape to be subtracted from the object. 
+5 Alternately, select the linework delineating the part you want to subtract and press ENTER. 
+6 Press ENTER to keep the selected linework, or enter y (Yes) to erase it. 
+Subtracting part of a block with an existing polyline 
+
+Subtracting part of a block by specifying rectangle corners 
+
+Obscuring Regions of Linework 
+Use this procedure to obscure or “hide” a region of linework in relation to other linework. This feature is chiefly useful when you want to indicate that one entity extends behind or beneath another entity that you want to display in the foreground. The obscured linework is placed on the layer specified by the HIDDEN layer key. Once you have begun the Obscure command, you can also specify two corners of a rectangle to use. 
+1 Select the linework to hide (the linework “being obscured”). 
+2 Click Home tab . Modify panel .
+. Obscure Crop 
+drop-down . Obscure
+ . 3 Select the “obscuring linework” (that is, the linework behind 
+which you want to hide the originally selected linework), and press ENTER. The obscured region is delineated with a dashed line. You can 
+select it (or its component segments) separately from the linework it was part of before being obscured. 
+Obscuring linework with a block 
+
+4 Alternately, press ENTER and specify a rectangular shape to obscure the object. 
+Merging Linework or Profile-Based Objects 
+Use this procedure to merge contiguous closed polylines, circles, hatches, AEC Polygons, mass element extrusions, spaces, or blocks into a single closed-boundary object or linework entity. 
+1 Select the linework or object to which you want to add one or more other linework entities or objects. 
+2 Click Home tab . Modify panel .
+. Merge Subtract 
+drop-down . Merge
+ . 3 Select the linework/object(s) you want to merge with the originally selected linework/object, and press ENTER. 
+4 Press ENTER to keep the selected linework, or enter y (Yes) to erase it. All selected linework and/or objects are merged into a single entity 
+of the type you selected first. That is, if you select an AEC Polygon in Step 1 and a space object in Step 3, the resulting entity is an AEC Polygon. 
+Merging a region with a block 
+
+5 Alternately, press ENTER after Step 2 and specify a rectangular shape to merge with the linework or object. 
+Cropping Linework or Profile-Based Objects 
+Use this procedure to crop linework or a profile-based object to a smaller area with a boundary you define. You can crop hatches, lines, polylines, arcs, circles, AEC Polygons, mass element extrusions, spaces, and/or blocks. Neither the linework to be cropped nor the linework that defines the new boundary needs to have closed boundaries. For example, you can use a v-shaped polyline to crop a circle, or you can use a circle to crop a v-shaped polyline. Once you have begun the Crop command, you can also specify two corners of a rectangle to crop the linework or objects. 
+1 Draw the linework that defines the new boundary to which you want to crop the existing linework. 
+2 Click Home tab . Modify panel .
+. Obscure Crop 
+drop-down . Crop
+ . 3 Select the linework to crop and press ENTER. 4 Select the linework you want to define the new boundary (the 
+linework you drew in Step 1), and press ENTER. 
+5 Press ENTER to keep the selected linework (the crop boundary), or enter y (Yes) to erase it. All of the originally selected linework outside the crop boundary 
+is erased. If you choose to erase the crop boundary, boundaries are redrawn for any closed-boundary entities inside the crop area, but any open-boundary objects that have been cropped remain open. 
+Cropping a block with a polyline 
+
+6 Alternately, press ENTER after Step 2 and specify a rectangular shape to crop the linework or object. 
+Shrinkwrapping Linework 
+Use this procedure to automatically create a profile or shrinkwrap outline around any collection of contiguous linework entities, including architectural objects. The visual result of the procedure is similar to merging the entities (see Merging Linework or Profile-Based Objects on page 2810), but in this case the outline you create is a separately selectable entity. Unlike the other AEC Linework Tools, the Shrinkwrap tool is accessed from the General tool palette. The AecLineworkShrinkwrap command the tool invokes is wrapped in a DesignCenter command to accommodate layer keying (that is, shrinkwrap polylines created using this tool are automatically placed on a particular layer as specified by the associated layer key). 
+1 Open the Detailing tool palette, and click the Basic tab. 2 Click the Shrink Wrap tool. 3 Select all of the objects you want to shrinkwrap. 4 Press ENTER. 
+
+All objects within the shrinkwrap remain selected. You can now select and move the shrinkwrap profile independently of the linework it encloses. 
+Creating Arrays 
+Use this procedure to create an array of identical linework (such as hatches and polylines), architectural objects (such as doors and walls), AEC polygons, or profile-based objects (such as mass element extrusions, and spaces). You can also array any block-based content (including detail components) made up of these types of linework and objects. 
+1 Select the linework, object, or block to array. 
+2 Click Home tab . Modify panel .
+. Arrays 
+drop-down . AEC Array
+ . 
+3 Select an edge and drag the cursor to specify the direction of the array for a rectangular array. The number of objects you are adding to the array is displayed in 
+the tooltip as Array Count. 
+Arraying a block 
+
+4 Enter a value for the distance offset between each instance of the 
+linework or object, and press ENTER. Alternately, for a polar array, specify two points to establish the angle of the array, enter a value for the distance offset between the linework or object, and press ENTER. 
+5 Click in the drawing area to specify the endpoint of the array. For more information on arrays, see “Array Dialog Box” in AutoCAD Help. 
+Repositioning from a Reference Point 
+Use this procedure to reposition architectural objects, linework, or blocks from a specific reference point in your drawing. For example, if you have a kitchen island that you want repositioned 6'-0” from existing cabinetry, you can place the island using the interior edge of the cabinet as a reference point. You can also use this procedure with hatches, lines, polylines, arcs, circles, AEC Polygons, mass element extrusions, spaces, or any block-based content (including detail components and DesignCenter content) made up of these types of linework or objects. 
+1 Select the linework, object, or block to reposition. 
+2 Click Home tab . Modify panel .
+. Align 
+drop-down . Reposition From
+ . 
+3 Select an existing edge from which to reposition the object, or specify two points to define a reference edge. 
+4 Select the object to be repositioned, and enter a value for the distance between it and the reference edge. 
+5 Press ENTER. 
+Evenly Spacing Linework or Objects 
+Use this procedure to space a collection of existing architectural objects, linework, or blocks at an equal distance from each other. For example, if you have windows along walls that are not colinear, you can space the windows evenly across the entire facade by specifying points along an axis. You can use this procedure with hatches, lines, polylines, arcs, circles, AEC Polygons, mass element extrusions, spaces, or any block-based content (including detail components) made up of these types of linework or objects. 
+1 Select the linework, object, or block to space. 
+2 Click Home tab . Modify panel .
+. Align 
+drop-down . Space Evenly
+ . 
+3 Select an edge as the axis along which to space all the objects evenly, and specify a start point and an endpoint along the edge; or press ENTER, and specify two points between which the objects will be spaced evenly from each other. 
+NOTE For example, if you select two objects to be spaced between two points, the spacing of the objects is from the specified start point to the center of the first object, from the center of the first object to the center of the second object, and from the center of the second object to the specified endpoint. 
+Centering Linework or Objects 
+Use this procedure to center any of the following between two points: architectural objects, hatches, lines, polylines, arcs, circles, AEC Polygons, mass element extrusions, spaces, or any block-based content (including detail components) made up of these types of linework or objects. 
+1 Select the linework, object or block to center. 
+2 Click Home tab . Modify panel .
+. Align 
+drop-down . Center
+ . 
+3 Select an existing edge as an axis, and then specify two points between which to center the object on that axis; or press ENTER, and specify any two points between which to center the object. 
+Profiles 
+36 
+Profiles are closed linework shapes that can be used to define components of complex objects. 
+What are Profiles? 
+Profiles are closed linework shapes that can be used to define components of complex objects. 
+Example: default and profile-based curtain wall frames Example 2: extruded mass element 
+
+
+Example 3: roof slab fascia and soffit 
+
+They can be used to create the following objects and components: 
+¦ 
+extruded and revolution mass elements 
+
+¦ 
+slab and roof slab edges (fascia and soffits) 
+
+¦ 
+frames for doors, windows, openings, door and window assemblies, and curtain walls 
+
+¦ 
+muntins for doors, windows, openings, door and window assemblies, and curtain walls 
+
+¦ 
+railing guardrails, handrails, bottom rails, and posts 
+
+¦ 
+wall sweeps 
+
+
+NOTE Because profiles are supporting objects that define the shape of other objects, you cannot create a profile tool on the tools palette, or insert a standalone profile in the drawing. 
+Profiles consist of one or more closed lines, which are referred to as rings. 
+Mass element extruded from profile. 
+
+Profiles can be created from the following objects: 
+¦ 
+closed polylines 
+
+¦ 
+rectangles 
+
+¦ 
+circles 
+
+¦ 
+ellipses 
+
+¦ 
+splines 
+
+¦ 
+AEC polygons 
+
+
+You can draw more than one closed linework ring in order to create a profile. A two-ring profile will create a void in the resulting object; a three-ring profile will create a void with an island. 
+Creating Profiles 
+Use this procedure to create a profile. 
+1 Draw closed linework in the shape you need for the profile-based component. 
+2 Select the linework, right-click, and click Convert To . Profile Definition. 
+3 To add another closed linework component to the profile, enter a (Add Ring), and select the desired linework. 
+4 Define the insertion point of the profile: 
+¦ 
+To create the insertion point at the object center, enter c (Centroid). 
+
+¦ 
+To create the insertion point at a different point of the object, specify an insertion point on screen. 
+
+
+5 Press ENTER. 6 Enter a name for the profile, and click OK. You can now use the profile as a building block for profile-based object components. 
+NOTE Alternatively, you can click Manage tab . Style & Display 
+panel .
+. Profile Definitions
+ , and add a new profile. In order to define the geometry, right-click the new profile definition in Style Manager, click Set From, and select the desired linework on screen. 
+Defining the Direction of Profile Edges and Extrusion 
+When a profile is used to extrude objects or components, you need to set the following parameters: 
+¦ 
+the position of each edge in a profile (left, right, back, discard, none) 
+
+¦ 
+the axis along which the object is extruded from the shape of the profile 
+
+
+These settings determine how surface hatching is applied to objects created from the profile and how the objects are extruded from the two-dimensional (2D) profile. 
+For information of surface hatching, see Working with Surface Hatches on page 890. See below some examples for different extrusion directions. 
+Face assignments from edges extruded in the X direction 
+
+Face assignments from edges extruded in the Y direction 
+
+Face assignments from edges extruded in the Z direction 
+
+NOTE Objects already created from the profile change when you change profile edges or the axis of extrusion. 
+1 Click Manage tab . Style & Display panel .
+. Profile Definitions
+ . 2 Select the profile you want to change. 
+3 Click the Profile Edges tab. 
+4 Select an edge, and specify its position: 
+If you want to… Then… 
+let the software determine the pos-click Calculate Default Edge Posi­
+ition of edges tions. You can then override the position of individual edges, if ne­cessary. 
+select a position for an edge select the setting for Edge, and se­lect a new position. 
+exclude an edge from surface select the setting for Edge, and se­hatching lect None. 
+discard an edge select the setting for Edge, and se­lect Discard. 
+5 Specify the axis of extrusion based on the type of object created from the profile: 
+If you want to… Then… 
+create a profile for roof slab or slab select X for Extrusion Direction. fascia, wall sweeps, or railings 
+create a profile for a slab soffit, or select Y for Extrusion Direction. opening frame 
+create a profile for an extruded select Z for Extrusion Direction. mass element 
+6 Click OK. 
+

@@ -13,6 +13,14 @@ import { useWorkspaceStore } from "@/store/workspaceStore";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { evaluatePointGroup } from "@thoth/domain";
+
+const POINT_GROUPS = [
+  { id: "all", name: "All Points", query: "*" },
+  { id: "trees", name: "Trees Group", query: "TR*" },
+  { id: "storm", name: "Storm Structures", query: "MH*" },
+  { id: "benchmarks", name: "Benchmarks", query: "BM*" },
+];
 
 /** The layer manager: visibility, lock, order, naming, and the active layer. */
 export function LayerPanel() {
@@ -137,6 +145,37 @@ export function LayerPanel() {
               >
                 {layer.visible ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5 opacity-40" />}
               </IconButton>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="my-2 border-t border-border" />
+
+      <div className="flex items-center justify-between px-3 pb-2 pt-1">
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">COGO Point Groups</h3>
+      </div>
+      <div className="flex flex-col gap-1 px-2 pb-4">
+        {POINT_GROUPS.map((group) => {
+          const matchedIds = evaluatePointGroup(
+            site.elements.map((e: any) => ({
+              id: e.id,
+              description: e.description || e.species || e.label || ""
+            })),
+            group.query
+          );
+          return (
+            <div
+              key={group.id}
+              className="flex items-center justify-between rounded-md px-2 py-1 text-sm hover:bg-accent/40"
+            >
+              <div className="flex items-center gap-1.5">
+                <span className="text-muted-foreground text-xs font-mono">[{group.query}]</span>
+                <span className="font-medium text-foreground text-xs">{group.name}</span>
+              </div>
+              <span className="text-xs font-semibold px-1.5 py-0.5 rounded-full bg-accent text-accent-foreground font-mono">
+                {matchedIds.length}
+              </span>
             </div>
           );
         })}

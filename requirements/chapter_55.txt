@@ -1,0 +1,2026 @@
+[MIGRATED TO RTM_PART_70.md - CUSTOM DETAIL COMPONENTS]
+Common Jigs 
+The common Jigs and JigEnts listed in the hierarchy above have options that can be specified in the <Options> section of the Recipe Spec, and in some cases, they have common Recipes that can be utilized without writing any new code. 
+Brief descriptions for some of the common Jigs are provided below, along with information on the <Options> or Recipe func that can be used with each one, if applicable. 
+Stamp Jig 
+The Stamp Jig is similar to the INSERT command in that it does a basic block insertion (with a few extra controls). Here is an example showing how the Options section is used to control the Jig’s behavior. 
+<Options> 
+<Jig> <AllowScaling>false</AllowScaling><AllowRotation>true</AllowRotation> <AllowXFlip>true</AllowXFlip> <AllowYFlip>true</AllowYFlip> <AllowBasePt>true</AllowBasePt> 
+</Jig> </Options> 
+In each case, the value listed is the default, which would be used if nothing was specified. 
+The following table lists the options for Stamp Jigs 
+Option Comment 
+<AllowScaling> 
+<AllowRotation> 
+<AllowXFlip> 
+<AllowYFlip> 
+<AllowBasePt> Boolean value specifying whether the common command line options of the Jig are valid options for this Recipe. 
+To use this Jig directly from a common recipe function, use the following section of RecipeSpec: 
+<Implementation> 
+<ObjectARX><AppName>AecRcpBase40</AppName> <RcpFunc>Stamp</RcpFunc> 
+</ObjectARX> </Implementation> 
+Linear Array Jig 
+The Linear Array Jig puts multiple copies of a block reference in a line, oriented in either the X or Y direction, with a specified spacing between each instance. Here is an example showing how the Options section is used to control the Jig’s behavior. 
+<Options> 
+<Jig> <IsOrientedX>true</IsOrientedX> <PromptStart>Start point</PromptStart><PromptEnd>End point</PromptEnd> <PromptCount>Count</PromptCount> <AllowXFlip>true</AllowXFlip> <AllowYFlip>true</AllowYFlip> <AllowCount>true</AllowCount> 
+</Jig>
+<JigEnt> <IsOrientedX>true</IsOrientedX> <Width>0.0</Width> <GapSpacing>0.0</GapSpacing> 
+<JigEnt> </Options> 
+In each case, the value listed is the default and would be used if nothing was specified. 
+The following table lists the Jig options for Linear Array Jigs 
+Jig Option Comment 
+<IsOrientedX> Boolean value specifying whether items along the line are oriented in the X direc­tion or the Y direction. 
+Jig Option Comment 
+<PromptStart> Text string to use for the start point prompt. 
+<PromptEnd> Text string to use for the endpoint prompt. 
+<PromptCount> Text string to use for the count prompt. 
+<AllowXFlip> 
+<AllowYFlip> 
+<AllowCount> Boolean value specifying whether the common command line options of the Jig are valid options for this Recipe. 
+The following table lists the JigEnt options for Linear Array Jigs 
+JigEnt Option Comment 
+<IsOrientedX> Boolean value specifying whether items along the line are oriented in the X direc­tion or the Y direction. 
+<Width> Specifies the exact width of the Block Ref­erence being arrayed. If you do not know this value and leave this element out, the extents of the block will be dynamically measured. If you know this value, you should specify it, because measuring the extents dynamically can sometimes intro­duce rounding errors that can affect the overall dimensions of the array. 
+<GapSpacing> The distance between each arrayed item. You can use a negative value to get items to overlap. 
+To use this Jig directly from a common recipe function, use the following section of Recipe Spec. 
+<Implementation> 
+<ObjectARX><AppName>AecRcpBase40</AppName> <RcpFunc>LinearArray</RcpFunc> 
+</ObjectARX> </Implementation> 
+When using this function, you can also specify an <RcpFunc> directive that will allow you to package all the individual blocks in the array into a single block reference. By default, this value is set to “false” and each item in the array will be its own block reference. 
+<Options> <RcpFunc> <PackageAsBlock>true</PackageAsBlock> </RcpFunc></Options> 
+Bookends Jig 
+The Bookends Jig is similar to the Linear Array Jig, but allows for a different block on each end as well as a block that is arrayed to fill the gap between the two ends. The “start” and “end” blocks are used once, and the “repeat” block is used however many times it needs to be in order to fill the space between. Here is an example usage: 
+<Options> 
+<Jig> <IsOrientedX>true</IsOrientedX> <PromptStart>Start point</PromptStart> <PromptEnd>End point</PromptEnd><AllowXFlip>true</AllowXFlip> <AllowYFlip>true</AllowYFlip> 
+</Jig> 
+<JigEnt> <IsOrientedX>true</IsOrientedX> <WidthStart>0.0</WidthStart><WidthRepeat>0.0</WidthRepeat> <WidthEnd>0.0</WidthEnd> <GapSpacing>0.0</GapSpacing> 
+</JigEnt> </Options> 
+In each case, the value listed is the default and would be used if nothing was specified. 
+The following table lists the Jig options for Bookends Jigs 
+Jig Option Comment 
+<IsOrientedX> Boolean value specifying whether items along the line are oriented in the X direc­tion or the Y direction. 
+<PromptStart> Text string to use for the start point prompt. 
+<PromptEnd> Text string to use for the endpoint prompt. 
+<PromptCount> Text string to use for the count prompt. 
+<AllowXFlip> 
+<AllowYFlip> Boolean value specifying whether the common command line options of the Jig are valid options for this Recipe. 
+The following table lists the JigEnt options for Bookends Jigs 
+JigEnt Option Comment 
+<IsOrientedX> Boolean value specifying whether items along the line are oriented in the X direc­tion or the Y direction. 
+<WidthStart> Specifies the exact width of the Block Ref­erence at the beginning of the array. If you do not know this value and leave this ele­ment out, the extents of the block will be dynamically measured. If you know this value, you should specify it, because measuring the extents dynamically can sometimes introduce rounding errors that can affect the overall dimensions of the ar­ray. 
+JigEnt Option Comment 
+<WidthEnd> Same as above, but for the ending block of the array. 
+<WidthRepeat> Same as above, but for the repeating block of the array 
+<GapSpacing> The distance between each arrayed item. 
+To use this Jig directly from a common recipe function, use the following section of RecipeSpec. 
+<Implementation> 
+<ObjectARX> <AppName>AecRcpBase40</AppName> <RcpFunc>Bookends</RcpFunc> 
+</ObjectARX></Implementation> 
+When using this function, you can also specify an <RcpFunc> directive that will allow you to package all the individual blocks in the array into a single block reference. By default, this value is set to “false” and each item in the array will be its own block reference. 
+<Options><RcpFunc> <PackageAsBlock>true</PackageAsBlock> </RcpFunc> </Options> 
+Surface Jig 
+This Jig creates a basic rectangular boundary of a given depth, where the user is asked for an arbitrary start and endpoint (similar to adding Walls in AutoCAD Architecture). Here is an example usage: 
+<Options> 
+<Jig> <PromptStart>Start point</PromptStart> <PromptEnd>End point</PromptEnd> <AllowXFlip>true</AllowXFlip><AllowYFlip>true</AllowYFlip> 
+</Jig> </Options> 
+In each case, the value listed is the default and would be used if nothing was specified. 
+To use this Jig directly from a common recipe function, use the following section of RecipeSpec. 
+<Implementation> 
+<ObjectARX> <AppName>AecRcpBase40</AppName> <RcpFunc>Surface</RcpFunc> 
+</ObjectARX> </Implementation> 
+StampMInsert Jig 
+The StampMInsert Jig is the same as the Stamp Jig, except that it uses an MInsert instead of a simple Block Reference. 
+SurfaceBound Jig 
+The SurfaceBound Jig is the same as the Surface Jig, except that it keeps only the top three edges of the rectangle. It is used for components that are poured onto or bounded by another entity that provides the bottom edge of the rectangle. For an example, see Concrete Topping. 
+SurfaceLtype Jig 
+The SurfaceLType Jig is the same as the Surface Jig, except that it fills with a wide polyline of a given linetype, instead of a hatch. 
+ApplyToLinework Jig 
+The ApplyToLinework Jig is used when you simply need to “brand” existing linework geometry as a specific component. For example, you could draw a detail using basic AutoCAD commands and then use this Jig to apply the Xdata and keynote for a particular component in the database. It will move the selected geometry to a new layer, if specified, but will not create any geometry of its own. 
+Recipe Logging 
+Without knowing the implied contract of a Recipe function, it is hard to know (or debug) where all the values are supposed to come from. In some cases, there may be values for an existing Recipe that you could customize if you just knew they were there (and currently not specified). 
+Recipe Logging is a mechanism that will print to the command line every piece of data that is being retrieved by the Recipe. It will give the source of the data (for example, the component database, the Recipe Section, the Properties palette prompt), and whether the value was found or not. Using this information, you can reverse-engineer what data is expected by the Recipe. 
+The following is an example produced by running the 02/Brick Paver Recipe with Recipe Logging turned on. 
+Command: dtlcompmanager 
+RCP LOG > Source:  Database  
+Field: WIDTH  
+Type: double Required: True Found: True  
+Value: 4.00000  
+RCP LOG > Source:  Database  
+Field: LENGTH  
+Type: double Required: True Found: True  
+Value: 8.00000  
+RCP LOG > Source:  Database  
+
+Field: THICKNESS Type: double Required: True Found: True Value: 1.50000 
+RCP LOG > Source: <Data> 
+Context: Item[@idStr='boundary']/Params 
+Tag: Chamfer 
+Type: double 
+Required: False 
+Found: True 
+Value: 0.00000 RCP LOG > Source: Prompt 
+Field: coarseOutline 
+Type: bool 
+Required: False 
+Found: False RCP LOG > Source: Prompt 
+Field: doHatch 
+Type: bool 
+Required: False 
+Found: True 
+Value: True RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadHatchProps 
+Tag: HatchAlias 
+Type: str 
+Required: False 
+Found: True 
+Value: brick RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadHatchProps 
+Tag: PatternType
+Type: str 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadHatchProps 
+Tag: PatternName 
+Type: str 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadHatchProps 
+Tag: PatternAngle
+Type: double 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadHatchProps 
+Tag: ScaleMultiplier
+Type: double 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadHatchProps 
+Tag: PatternScale 
+Type: double 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadEntityProps 
+Tag: Layer
+Type: str 
+Required: False 
+Found: True 
+Value: A-Detl-Patt RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadEntityProps 
+Tag: ColorIndex 
+Type: long 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadEntityProps 
+Tag: Linetype 
+Type: str 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadEntityProps 
+Tag: LinetypeScale 
+Type: double 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='infill']/AcadEntityProps 
+Tag: Lineweight 
+Type: long 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='block']/AcadEntityProps 
+Tag: Layer 
+Type: str 
+Required: False 
+Found: True 
+Value: A-Detl-Medm RCP LOG > Source: <Data> 
+Context: Item[@idStr='block']/AcadEntityProps 
+Tag: ColorIndex 
+Type: long
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='block']/AcadEntityProps 
+Tag: Linetype 
+Type: str 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='block']/AcadEntityProps 
+Tag: LinetypeScale 
+Type: double 
+Required: False 
+Found: False RCP LOG > Source: <Data> 
+Context: Item[@idStr='block']/AcadEntityProps 
+Tag: Lineweight 
+Type: long 
+Required: False 
+Found: False RCP LOG > Source: <Options> 
+Context: Jig 
+Tag: IsOrientedX 
+Type: bool 
+Required: False 
+Found: False RCP LOG > Source: <Options> 
+Context: Jig 
+Tag: PromptStart 
+Type: str 
+Required: False 
+Found: False RCP LOG > Source: <Options> 
+Context: Jig 
+Tag: PromptEnd 
+Type: str 
+Required: False 
+Found: False RCP LOG > Source: <Options> 
+Context: Jig 
+Tag: AllowXFlip 
+Type: bool 
+Required: False 
+Found: False RCP LOG > Source: <Options> 
+Context: Jig 
+Tag: AllowYFlip 
+Type: bool 
+Required: False 
+Found: False RCP LOG > Source: <Options> 
+Context: Jig Tag: AllowCount Type: bool Required: False Found: False 
+RCP LOG > Source: <Options> Context: Jig Tag: PromptCount Type: str Required: False Found: True Value: Number of courses 
+RCP LOG > Source: <Options> Context: JigEnt Tag: IsOrientedX Type: bool Required: False Found: False 
+RCP LOG > Source: <Options> Context: JigEnt Tag: Width Type: double Required: False Found: False 
+RCP LOG > Source: <Options> Context: JigEnt Tag: GapSpacing Type: double Required: False Found: True Value: 0.25000 
+Start point or [Xflip/Yflip/Count]: End point or [Xflip/Yflip/Count]: <Ortho on> Start point or [Xflip/Yflip/Count]: 
+To turn Recipe Logging on, use the REGEDIT program to change a value in the Win32 Registry. The entry can be found in: 
+HKEY_CURRENT_USER\Software\Autodesk\AutoCAD\R17.1\ACAD-XXXX\Pro files\AutoCAD Architecture\Preferences\AecRcpBase50\RecipeLog 
+Change this value to "1" to turn it on. 
+Change this value to "0" to turn it off. 
+Blocks and Block Libraries 
+Libraries of block content for detail components should be created and stored according to the following guidelines, each of which is discussed in more detail subsequently. 
+¦ 
+Block content should be drawn with the current style of geometry. (See Using Optimal Geometry on page 3957.) 
+
+¦ 
+Blocks should have namespace prefixes. (See Naming Blocks on page 3959.) 
+
+¦ 
+Base points for inserting blocks should be positioned logically. (See Base Points for Blocks on page 3959.) 
+
+¦ 
+Similar blocks should be stored in the same DWG file. (See Collecting Similar Blocks on page 3959.) 
+
+¦ 
+Properties of block entities should be set to ByBlock. (See Block Properties on page 3960.) 
+
+¦ 
+All unnecessary objects should be removed from block library drawings. (See Removing Unnecessary Objects on page 3961.) 
+
+
+Using Optimal Geometry 
+Many block libraries that were created in legacy versions of AutoCAD contain geometry that is non-optimal in that it can result in performance problems, incorrect snap points, or tolerance discrepancies that cause errors when Aec Modify tools or other AutoCAD editing commands are used. You should avoid using this old-style geometry when creating new blocks, and you should remove or replace it whenever you encounter it in existing block content. 
+The following sections describe five main areas in which you should strive to use optimal geometry. 
+Polylines 
+Prior to AutoCAD Release 14, the polyline entity consisted of multiple vertex entities and was not stored in a compact form. You can identify these old-style polylines by running the LIST command, which identifies them as type POLYLINE. Any such entities should be recreated as new-style polylines by tracing over them manually with the Polyline tool. The LIST command identifies new-style polylines as LWPOLYLINE. 
+Hatch Patterns 
+Be sure to use actual hatch entities when creating blocks that require hatch patterns. Prior to AutoCAD Release 14, hatches were anonymous blocks with all of the entities comprising the pattern stored in the drawing. If you run the LIST command on an entity that appears to be a hatch, and the entity is identified as a BLOCK REFERENCE and has a name beginning with *X, then it is an old-style hatch. Remove and replace with a new, equivalent HATCH entity. 
+NOTE In addition to the old-style hatch patterns described above, some blocks have been found to contain multiple individual line segments repeated so as to simulate an actual hatch. In such cases, the line segments should be erased and replaced with an appropriate hatch at the appropriate scale. 
+Unjoined Polylines 
+When the endpoints of line or arc segments that form a boundary coincide, it is vastly more efficient to represent the boundary by using a single polyline. For example, a rectangle made of four separate lines should be converted to a single polyline. To do this, use the following procedure: 
+1 Run the PEDIT command, and select one of the lines. 
+2 When prompted to turn the line into a polyline, enter y (for Yes). 
+3 Enter j (for Join), select the other three lines, and press ENTER. In some cases, the join will fail because the endpoints are not coincident, even though they appear to be. If this occurs, use object snaps to carefully reposition the endpoints so that they do coincide. 
+Pixelized Line Segments 
+Some conversion programs create a literal translation of what was on the screen at the time of conversion. This can result in thousands of tiny line segments placed end-to-end, where there should be a single line segment. In such cases, you should trace over the entire course of the end-to-end segments to create a single segment, and then erase all the original pixelized line segments. 
+Imprecise Geometry 
+As is the case with unjoined polylines, any endpoints that appear to coincide should actually do so. Small tolerance discrepancies can cause other editing operations to fail. Make sure that geometry that meets visually also meets at a high degree of precision. One way to ensure coincidence is to turn on Nearest, 
+Endpoint, and Midpoint object snap modes, and then adjust the geometry using its grip points. 
+Naming Blocks 
+The names of blocks containing detail component content should have a namespace prefix to avoid conflicts with other blocks. For example, all blocks in libraries provided with AutoCAD Architecture use “AecDtl_” as the namespace prefix. If you are creating your own blocks, you should use a unique prefix. 
+Base Points for Blocks 
+Each block should have a base point that is logically positioned for inserting the block in relation to other geometry in a drawing; that is, the base point location should allow the user to insert the block using an object snap on some other piece of geometry as an insertion point. If possible, the base point location should also facilitate repeated placement of the item. For example, a block representing a paver should not have the base point in the middle of the block, because you would not likely want the middle of the block inserted at any object snap on existing geometry. Likewise, a base point in the upper-left corner only makes sense if the item is to be placed under some other geometry. However, if the base point is at the lower-left corner, the user can snap to the ground plane, and repeated insertions are easy. 
+Collecting Similar Blocks 
+Similar or closely related block definitions should be collected in a single DWG file. For example, in the details block library supplied with AutoCAD Architecture, the block definitions for all the different sizes of nails are collected in a block library drawing file called AecDtlLib_Nails.dwg, and all block definitions detailing carpet accessories are in a file called AecDtlLib_CarpetAcc.dwg. As shown below, for each block definition, the drawing should include a block reference inserted on a horizontal line to show how the block’s base point is used to position the block in relation to other geometry. For each block reference, there should also be a text label containing the name of the block. 
+
+Setting up block library drawings this way makes it easy for the user to quickly survey the entire library. It also helps you in the process of cleaning up the drawing, which is explained in a subsequent section (see Removing Unnecessary Objects on page 3961). 
+Block Properties 
+In most cases, blocks should be defined to have their component entity properties set as follows: 
+Layer=0Color=BYBLOCK Linetype=BYBLOCK Linetype Scale=1.0 Lineweight=BYBLOCK 
+To accomplish this after a block has been defined, right-click the block reference, and click Set Nested Objects to ByBlock. 
+Layer Keys 
+You can use a layer key to map specific entities within a block to a layer in the drawing into which the block is inserted. For example, the millwork blocks depicted earlier (see Collecting Similar Blocks on page 3959) have the hatch entity assigned to the layer “HATCH.” If the Recipe Specification (XML file) that references this block library has the attribute “remapLayers” set to true, as shown below, then any layer that matches a layer key in the current drawing will be replaced with the layer that is assigned to that layer key. In the case of a drawing using the standard AutoCAD Architecture template file, in which the HATCH layer key is mapped to the AecDtl-Patt layer, any block library entities that were assigned to the HATCH layer will end up on the AecDtl-Patt layer when inserted into the drawing. 
+<AcadBlockProps> <BlockName dwgLib="dwgs/AecDtlLib_WoodMillwork.dwg"remapLayers=”true”>AecDtl_millworkBlk1</BlockName> <Scale>6.0</Scale> 
+</AcadBlockProps> 
+Removing Unnecessary Objects 
+Once you have ensured that a block library drawing conforms to all the previously explained guidelines, the final step is to remove all unnecessary objects (unused layers, text styles, block definitions, and so on) by performing the following procedure. 
+1 Use the ZOOM, EXTENTS command to display the extents of the current drawing. 
+2 Enter wblock (for Write Block). 
+3 In the Write Block dialog box, under Source, select Objects. 
+4 Under Base point, click the Pick point button, and then select a base point in the lower-left corner of the drawing extents. 
+5 Under Objects, with Retain selected, click the Select Objects button, specify a crossing window over the entire contents of the drawing, and then press ENTER. 
+6 Under Destination, enter the name of the drawing to be created (for example, enter the name of the current drawing with a “2” appended), and specify the units to be used for automatic scaling when the block is inserted into a drawing that uses different units. 
+7 Click OK. 8 Close the drawing. 9 Using Windows Explorer, delete the original drawing. 
+10 Rename the new drawing by removing the “2” you appended. The new drawing now contains only the entities you selected and any other entities directly or indirectly referenced by the selected entities. In other words, the drawing contains only the absolute minimum set of objects that it needs. 
+Migrating Detail Component and Keynote 
+56 
+Databases 
+If you have modified one of the default keynote or detail component databases supplied with a previous release of the software, you can migrate your modifications to the corresponding database in the current release using the Detail Component/Keynote Database Migration utility. As explained in the following topics, use of this utility is not supported if the previous and current databases use different versions of the CSI MasterFormat standard. 
+Migrating Your Database Modifications 
+AutoCAD Architecture provides default Microsoft® Access databases for detail components and keynotes. If you have modified either of these databases in a previous release (or created your own databases using the same schema), you can migrate your modifications to the corresponding database in the current release using the Detail Component/Keynote Database Migration utility. Accessed from the CAD Manager menu, this utility compares the modified database (the source) with its counterpart in the current release (the target) and updates the current database to reflect your modifications. 
+IMPORTANT Beginning with AutoCAD Architecture 2011, the US detail component and keynote databases supplied with the software use the CSI MasterFormat 2004 standard. Using the Detail Component/Keynote Database Migration utility to migrate your customizations from a database that uses the CSI MasterFormat 95 standard (as in Autodesk Architectural Desktop 2007 and previous releases) is not supported. The utility will not properly migrate custom records from the older database and may errantly overwrite records in the new database with MasterFormat 95 data. If you want to use a MasterFormat 95 database with the current release of AutoCAD Architecture, you can load it as described under Adding a Detail Component Database to Available Databases on page 3545 or Adding a Keynote Database on page 3597. Note that the older database must be located with the previous release content and must maintain that content folder structure to function properly. An older detail component database will not function with 2008 or later US details content. Likewise, an older keynote database will not automatically keynote 2008 or later US details content; it will only keynote detail components inserted using previous version details or details in previous version drawings. The Detail Component/Keynote Database Migration utility can still be used to migrate records from one CSI MasterFormat 95 database to another. Note also that using the Database Migration utility to update an older database with data from a current-release database is not supported. The utility is designed only for migrating modifications in the other direction; that is, from the older database to the database in the current release. 
+The migration utility operates according to the following assumptions and rules: 
+¦ 
+Both the source and target databases must be of the same type (either Component or Keynote), as identified by the first record in their Fingerprint tables. (For more information on the tables and records included in these databases, see Customizing and Adding New Content for Detail Components on page 3907 and Keynote Database Schema on page 3611.) 
+
+¦ 
+Both the source and target databases must use the same version of the CSI MasterFormat standard. 
+
+¦ 
+If a table in the source database has no counterpart in the target database, the table and all its records are added to the target database. 
+
+
+¦ Tables of the same type (as identified by their ID fields) are compared, and source records that differ from their counterparts in the target database (or have no counterparts) are processed as shown in the following matrix. 
+Corresponding target No corresponding target record exists record exists 
+Modified field in source record overwrites source record added to target source record = true target record table 
+Modified field in  source record is not mi- source record added to target  
+source record =  grated; target record is not  table  
+false  changed  
+
+NOTE If you have added a detail component size table or keynote of your own in the previous release, and it happens to have the same table name or keynote key as a new table or keynote supplied in the current release, it will not be processed by the migration utility, because its ID will differ from its namesake in the current release. If this scenario seems likely in your case, it is recommended that you check to see if the name you assigned is present in the current release. If so, you should change the name of your table or keynote key before running the migration utility. 
+¦ 
+If a source database record has been modified using the Detail Component Manager or the Keynote Editor, its Modified field value is set to true automatically, and the record will overwrite the corresponding record in the target database, or be added to the target database if there is no corresponding record present. 
+
+¦ 
+If a source database record has been modified using Microsoft® Access directly, and the Modified field value was not set to true manually, the record will be added to the target database if there is no corresponding record present. 
+
+¦ 
+The migration utility processes only tables and records as described above; it does not migrate any associated XML or DWG content files, nor does it migrate default values specified for particular fields in tables. Preserving such information requires manually updating the target database. 
+
+
+NOTE If migrated records were created using Microsoft® Access directly (rather than through the Detail Component Manager), and they do not have a valid record ID (equal to or greater than 100000), it may result in a conflict with records in the target database. 
+Running the Detail Component/Keynote Database Migration Utility 
+Use this procedure to migrate modifications from a detail component database or keynote database supplied with a previous release of the software to the corresponding database in the current release. Both databases should use the same version of the CSI MasterFormat standard. 
+NOTE Be sure to create a backup copy of the target database before running the migration utility. If the migration process is terminated before completion, the target database may not be usable. 
+1 On the Start menu (Windows), click Programs . Autodesk 
+. AutoCAD Architecture 2011 . Detail Component - Keynote Database Migration Utility. 
+
+2 For Merge from, click 
+, select the modified detail component or keynote database (the source) you want to migrate, and click Open. 
+
+3 For Merge into, click 
+, select the database to which you want to migrate your modifications (the target), and click Open. 
+NOTE The target database selected in this step must be the same type (either detail component or keynote) as the source database selected in Step 2. 
+4 Click OK. The utility compares the two specified databases and displays the results for each table processed, including which tables have been added and how many records have been modified or added for each table in the target database. 
+Index 
+2D DWF 263 
+2D elevation styles 3331 classifications 3344 creating 3333 design rules 
+adding 3341 changing 3343 removing 3344 
+display components adding 3335 removing 3335 
+display properties 3340 layer, color, and linetype 3345 notes and reference files 3346 subdivisions, display of 3287 See Also 2D section styles 
+2D elevations 3284 3D body component of 
+materials 3341 creating 3304 creating (overview) 3289 direction, reversing 3312 editing 3308 erased component 3339 globally updating 3328 hidden component 3339 horizontal 3306 hyperlinks, notes, and reference 
+files 3326 
+linework 3323 edit 3323 grip-edit 3308 merge 3323 
+location 3325 
+material boundaries adding ring 3321 adding vertex 3320 content 3319 creating 3318 editing 3319 removing ring 3322 removing vertex 3320 
+replacing ring 3322 
+materials 887, 3336 erased component 3339 hidden component 3339 subdivision component 3339 surface hatch 3338 
+styles, changing 3313 
+subdivisions 3285 changing display 3310 components 3339 creating 3299 
+surface hatch linework 3338 
+updating 3326 2D plan view materials 885 2D section styles 3263 
+classifications 3279 creating 3265 design rules 
+adding 3276 changing 3278 removing 3278 
+display components adding 3266 removing 3267 
+display properties 3279 materials 3275 notes and reference files 3280 subdivisions 3275 
+2D sections 3213 creating 3233 creating (overview) 3219 defined 3214 direction, reversing 3246 display components 3268 editing 3241 globally updating 3259 horizontal 3235 hyperlinks, notes and reference 
+files 3256 
+linework 3253 editing 3253 grip-edit 3242 
+merging 3253 using 3D body 
+component 3275 location 3255 materials 887, 914 section lines 3220 styles, changing 3247 subdivision display 3243 updating 3257 See also 2D section styles 
+2D spaces 2916, 2947 3D body material components 886 3D DWF 263 3D elevations 3285 
+creating 3304 creating (overview) 3289 direction, reversing 3312 editing 3308 hyperlinks, notes, and reference 
+files 3326 location 3325 materials 3336 
+erased component 3339 hidden component 3339 subdivision component 3339 surface hatch 3338 
+subdivisions 3285, 3311 changing display 3310 components 3339 creating 3299 
+updating 3326 3D extruded spaces. See extruded 3D spaces 3D freeform spaces 2904, 2916 3D model view materials 886 3D sections 3213 
+creating 3233 creating (overview) 3219 defined 3215 direction, reversing 3246 display components 3268 editing 3241 hyperlinks, notes, and reference 
+files 3256 location 3255 section lines 3220 subdivision display 3245 
+updating 3257 3D solids, converting objects to 3899 
+A 
+activating Renovation mode 568 addendums, alternates, and as-builts 
+within projects 552 additive mass elements 1058, 1083 adjacencies 
+space surfaces defining 3055 displaying 3056 
+AEC content adding from Content Browser 3874 adding from DesignCenter 3875 adding to drawings 3874 AEC blocks 3880 Content Browser 3871 custom commands 3889 custom content 3879 DesignCenter 3871 
+content, modifying 3892 editing 3892 file locations 207 insert options 3880, 3884 insertion scale factor options 3880 masking blocks 3886 moving between Content Browser and 
+DesignCenter 3877 multi-view blocks 3884 overview 3869 predefined 3870 preview graphics 3882 wizard 3879 
+AEC dimension chains AEC dimension styles 3418 distance 3412, 3424 extension line length 3413, 3425 height of openings display 3413, 
+3425 AEC dimension style wizard 3426 AEC dimension styles 3415 
+AEC dimension style wizard 3416 AutoCAD dimension styles 3415, 3424 
+chain distance 3412–3413, 3424– 
+
+3425 chain properties, changing 3418 changing 3409 creating 3417 dimension chain contents 3422 display components, changing 3419 extension lines 3413, 3425 new 3417 notes 3429 opening height 3413, 3425 selecting dimensioned 
+objects 3420, 3422 
+AEC dimension tools creating 3383 finding in palettes 3368 
+AEC dimensions 3409, 3411 adding dimensions from objects 3386 adding dimensions from points 3390 AEC dimension tools, creation with 3369 
+associative 3351–3352 2D sections 3364 AEC polygons 3364 AutoCAD linework 3360 creating 3370 curtain walls 3359 doors 3358 elevations 3364 external references 3363 grids 3358 mask blocks 3364 mass elements 3359 multi-view blocks 3364 objects (list) 3355 openings 3358 railings 3359 roof slabs 3359 roofs 3359 slabs 3359 spaces 3359 structural members 3359 walls 3355 window assemblies 3359 
+windows 3358 converting from AutoCAD dimensions 3380 
+copying properties of AEC dimensions to AutoCAD dimensions 3382 
+creating 3369–3370 detaching objects 3390 detaching objects (associative) 3390 dimension chains 
+moving 3402 resetting 3403 dimension options dimensions from associative points 3351 dimensions from non-associative 
+points  3351  
+dimensions from objects  3351  
+dimension texts  
+moving  3402  
+resetting  3403  
+extension lines  
+moving  3402  
+resetting  3403  
+external references  553  
+files  3414  
+global underlines for overrides  3408  
+hiding overline of overridden  
+values  3409  
+hiding segments  3405  
+hyperlinks  3414  
+modifying  3384  
+
+multiple, with same style 3383 
+non-associative 3351, 3353 creating 3370 
+notes 3414 
+options 3365 
+overriding dimension values 3405– 
+
+3406 
+overview 3349 
+preferences 3365 
+Q&A 3430 
+redrawing 3366 
+removing overrides from dimension values 3407 
+removing points 3390 removing points (associative and non-associative) 3394 
+removing points (associative)  3391  
+rescaling  3368  
+restoring points (associative)  3392  
+reversing direction  3395  
+
+selecting objects in style 3422 stairs 3359 superscript 3367 trailing zero suppression 3367 units 3367 
+AEC drawings, creating 3882 AEC Editor settings 203 AEC modify tools 
+array 2814 center 2816 crop 2811 divide 2806 extend 2805 merge 2810 obscure 2809 Reposition From 2815 shrinkwrap 2813 space evenly 2815 subtract 2808 trim 2803 trim to edge 2804 
+AEC objects adding a reference 3903 anchoring. See object anchors attaching to reference 3904 creating reference copies 3903 default display representations 201 default layer keys 747 display system 787 exploding 206 layer keying 745 mask blocks. See mask blocks referencing 3903 See Also objects 
+AEC polygon grips 1820 
+AEC polygon styles changing 1829 classifications 1852 creating 1842 defined 1842 
+display properties 1845 edge justification 1844 edge width 1844 files 1851 hatching 1848 masking objects 1845 notes 1851 true color display 1850 
+AEC polygon tools creating 1817 finding in palettes 1814 
+AEC Polygonrs evenly space AEC Polygons along an axis 1832 
+AEC polygons color, changing 1847 components 1812 converting to profiles 2819 creating 1814–1815 creating polylines from 1836 creating profiles from 1837 curtain walls 1811 dividing 1833 edges 1844 editing 1819 elevation, changing 1838 holes 1829 hyperlinks 1841 inserting 
+into curtain walls 1471 into door assemblies 1739 into window assemblies 1739 
+intersections, creating from 1834 layer, changing 1847 linetype, changing 1847 location 1838 mask blocks 1849 merging 1830 multiple, with same style 1817 notes 1841 polylines, creating from 1816 profiles, creating from 1817 reference files 1841 rotation, changing 1837 straight line segments, creating 
+from 1814 
+subtracting one from another 1829 trimming 1833 true color display 1839 true colors, hiding 1849 vertices 
+adding 1835 removing 1836 AEC Polygons array AEC Polygons between two points 1831 array AEC Polygons using Modify Tool 1831 center AEC Polygon between two points 1829 center AEC Polygon using Modify 
+Tool 1829 crop AEC Polygons 1834 crop AEC Polygons using Modify 
+Tool 1834 divide AEC Polygons 1833 divide AEC Polygons using Modify 
+Tool 1833 evenly space AEC Polygons using 
+Modify Tool 1832 merge AEC Polygons 1830 merge AEC Polygons using Modify 
+Tool 1830 reposition AEC Polygon using Modify Tool 1832 repositioning AEC Polygons between two points 1832 subtract AEC Polygon using Modify 
+Tool 1829 trim AEC Polygons 1833 trim AEC Polygons using Modify 
+Tool 1833 AEC standards 588 AecDtlComponents.mdb 3545 AecPurgeLayerStyles command 774 AIA layer key style 745 AIA Long Format layer standard 760, 
+764 Aligned constraints 1141 aligning UCS to faces 132 Always on Top, Content Browser 
+option 175 
+anchors doors, changing position of 1872, 
+1874 multiple, with same style 2674 openings, changing position 
+of 2053, 2055 overview 2647 stair to landing 2179 tools, creating 2674 windows, changing position 
+of 1963, 1965 
+See Also object anchors, cell anchors, curve anchors, leader anchors, node anchors, volume anchors 
+Angular constraints 1142 
+annotation bar scales 3626 block-based 3567 
+editing 3569 column grid bubbles 3628 configuring for keynoting 3571 datum points 3615 fields 3449 fire rating lines 3617 match lines 3620 north arrows 3615 project 515–516, 518–519 revision clouds 3622 text-only 3562 text-with-leader 3562 tool 3549 
+annotation scaling annotation scales and viewports 3640 annotation tools with annotative 
+properties 3637 bar scales 3626 column grid bubbles 3628 datum points 3615 derivation of annotative 
+properties 3646 match lines 3620 north arrows 3615 overview 3637 revision clouds 3622 
+specifying annotation scale 3640 updating legacy annotation objects 3642 annotation tool 3549 annotation tool properties annotation tool properties 3550 APJ project files 299 deleted or corrupted 551 opening from Windows Explorer 344 appearance of objects, setting 855 See Also styles application menu 44 accessing 45 application status bar 56 modify 59 arc constraints, spiral stairs 2106 arch mass elements 995, 1015 area calculation standard 2970 changing 2977 classifying spaces 2976 creating user-defined 2978 defining 2974 troubleshooting 2945 working with different 2977 area evaluation. See space evaluations area group styles converting to zone styles 3112 area group templates converting to zone templates 3120 area group templates See zone templates area groups converting to zones 3089 area groups. See zones area name definitions. See list definitions area styles converting to space styles 3072 areas (ADT) converting to spaces 2895 Array command 2814 array linework 2814 array profile-based object 2814 assemblies sill display 1803 
+associative AEC dimensions 2D sections 3364 AEC polygons 3364 AutoCAD linework 3360 curtain walls 3359 doors 3358 elevations 3364 external references 3363 from objects 3351 from points 3352 grids 3358 mask blocks 3364 mass elements 3359 multi-view blocks 3364 objects (list) 3355 openings 3358 railings 3359 roof slabs 3359 roofs 3359 slabs 3359 spaces 3359 stairs 3359 structural members 3359 walls 3355 window assemblies 3359 windows 3358 associative spaces 2904 2D spaces 2904 boundary objects 2905 3D freeform spaces 2904 boundary objects 2905 autogenerating 2916 automatic updates 2928 boundary objects defining 2910 defining in properties 2913 defining in style 2912 displaying in drawing 2914 boundary objects in blocks 2922 boundary objects in xrefs 2922 deducting objects 2935 defining maximum gap size 2926 dividing 2933 extruded 3D spaces 2904 boundary objects 2905 
+issues with area calculation 
+standards 2945 issues with boundaries 2944 issues with boundary objects 2939 issues with updating 2942 issues with wall sweeps and wall 
+modifiers 2946 issues with xrefs 2946 making associative 2936 making non-associative 2936–2937 manual updates 2930 merging 2931 override boundary objects in 
+xrefs 2924 troubleshooting 2938 
+updating  2927  
+attributes  
+fields  3461  
+audit of non-AEC objects  3901  
+auditing  
+projects  654  
+AutoCAD  
+exporting drawings to  212, 214  
+
+objects, identifying 3901 AutoCAD dimensions converting to AEC dimensions 3380 AutoCAD standards 590 in ADT projects 604 AutoCAD tables fields 3463 Autodesk field types 3467 Autodesk DWF Viewer publishing DWF 263 Autodesk Envision publishing drawings to 255 data structure 257 Autodesk MapGuide publishing drawings to 255 data structure 257 
+autogenerate spaces 2904, 2916 troubleshooting 2938 updating 2927 
+automatic synchronization 600 
+B 
+bar scales creating 3626 editing 3631 inserting 3628 
+barrel vault mass elements 996 
+base boundaries editing 2978 spaces 2968 
+base height, walls 1177 basepoints, project 552 bay sizes 2739–2740 beams 
+creating 2528, 2530 tools 2513 See Also structural members 
+block references, adding object tags 3718 
+block-based annotation creating 3567 editing 3569 
+blocks AEC content 3880 door components 1901 elevation marks 3302 inserting into constructs 400 masking 3886 multi-view 3884 opening components 2070 Renovation style 573 section marks 3230, 3232 window components 1995 
+body modifiers adding 1271 editing 1277 geometry 1274 removing 1277 replacing wall components 1273 restoring to mass elements 1278 subtracting from walls 1272 
+bolt components 3500 BOMA 
+area calculation standard 2974 bookends-type components 3495 boolean operations 
+spaces 2998, 3014 boundaries 
+material. See material boundaries boundaries.See space boundaries boundary filling components 3494 boundary objects 
+defining 2910 displaying in drawing 2914 for associative spaces 2905 issues with space boundaries 2939 maximum gap size 2926 
+boundary offsets by area calculation standard 2970 by style 2970, 3060 changing 2972 defining 2972 manual 2969 spaces 2968 
+box mass elements 996 
+braces creating 2539–2540 tools 2518 See Also structural members 
+break mark creating 3566 editing 3569 
+break mark tool properties 3560 BS1192 layer key style 745 BS1192 layer standard 760, 765, 767 building projects. See projects 
+Calculate Automatically feature 1382 calculation cut planes 3133 calculation formula 
+spaces 3131 
+calculation modifier styles 3127 attaching to zones 3096 calculation formula 3131 calculation type 3130 creating 3129 defined 3127 detaching from zones 3096 notes and reference files 3132 
+calculation modifiers adding 3128 
+removing 3128 calculation rules straight stairs 2083, 2089, 2099, 2107 
+calculation type spaces 3130 zones 3095 
+callout symbols 3649 attributes 3696 blocks 3698 creating 3694 creating a callout tool 3698 fields 3694, 3696 
+callout tools 3652 creating 3698 properties 3663 
+callout views detail views 433 section views 433 
+callouts 3649 callout tools 3652 details 3650, 3665 elevations 3651, 3679 model space views 
+deleting 3689 
+opening 3688 outside project 3690 placing in non-project 
+drawing 3691 placing in project drawing 3655 projects 3652 properties 3656 referencing to model space 
+views 3687 resolving fields 3689 sections 3651, 3671 standalone 3685 title marks 3652, 3664 
+callouts tools creating 3695 cameras adjust position 3897 catalog libraries, tool. See tool catalog libraries catalog library adding catalogs from registry 153 
+managing 144 opening a web page 157 catalog types 
+creating 160 catalog, Renovation styles 583 catalogs 
+filtering 161 
+sorting 161 catalogs, tool. See tool catalogs categories, in tool catalogs 165 categories, project 375 
+benefits of 378 changing 383 creating by dragging folders 379 creating in Project Navigator 378 default folder structure 299, 375 deleting 384 mixing types 378 overview 298 redirecting top-level 381–382 subcategories 382–383 user-defined 377 
+categories, Renovation objects 575 
+ceiling grid tools creating 2777 finding in palettes 2771 
+ceiling grids changing node radius 2791 clipping boundaries, creating 
+with 2776 clipping profiles, attaching 2786 creating 2772 
+dynamically 2775 
+from layout grids 2774 defined 2723 dimensions, changing 2778 display, changing 2791 holes 2787–2788 hyperlinks 2789 layout grid, creating from 2774 lines 
+adding 2779–2781 moving 2785–2786 removing 2782–2784 
+linework, creating from 2774 location 2790 masking 2787 modifying 2778 multiple, with same style 2777 notes 2789 reference files 2789 
+ceilings in space surfaces 3025 
+cell anchors adding 2666 anchoring to different cells 2668 copying objects to all layout 
+cells 2669 defined 2665 position of objects attached to, 
+changing 2667 size of objects attached to, changing 2667 
+cell infills, curtain wall units assigning 1598 panels 1603 removing 1584, 1604 
+cell infills, curtain walls alignment of objects in cells 1558 assigning 1463 editing objects in cells 1558 inserting objects 1471 offset of objects in cells 1559 orientation of objects in cells 1558 panel 1470 releasing anchored objects in 
+cells 1559 removing 1447, 1472 
+cell infills, door assemblies alignment of objects in cells 1809 assigning 1730 editing objects in cells 1808 offset of objects in cells 1809 orientation of objects in cells 1808 panel 1736 releasing anchored objects in 
+cells 1810 removing 1713, 1740 
+cell infills, window assemblies alignment of objects in cells 1809 assigning 1730 editing objects in cells 1808 offset of objects in cells 1809 orientation of objects in cells 1808 panel 1736 releasing anchored objects in 
+cells 1810 
+removing 1713, 1740 Center command 2816 center linework 2816 chamfering 
+wall endcaps 1348, 1373 
+walls 1206 circular mass elements 1018 classification definitions 
+purging 3841 
+classifications 3834 changing 3846 creating 3839 definitions, adding 3841 displaying objects by 826 editing 3844 examples of 3836 in space style 3062 notes and reference files 3846 object types, specifying 3840 property set definitions, 
+attaching 3843 schedules, including in 3836 troubleshooting 3864 
+cleanup circles about 1319 radius circles in walls 1319 
+cleanup group definitions, in Style 
+Manager 856 cleanup radius, changing 1327 cleanups 
+conditions 1322 dynamic cleanup radius 
+variable 1321 guidelines 1325 L-intersections 1311 multiple intersections 1316 overrides 1343 troubleshooting 1329 vertices 1349 wall cleanup groups 1338 wall priorities 1323 
+workflow 1309 
+clipping profiles ceiling grids 2786 column grids 2765 
+CNC machining applications 3899 COGO points 
+importing 247 Coincident constraints 1136 Collinear constraints 1138 colors 
+wall components 1225 
+column grid bubbles creating 3628 inserting 3630 
+column grid tools, finding in palettes 2724 
+column grids changing dimensions 2752 changing location 2768 changing node radius 2770 clipping profiles 2765 creating 2725–2726 
+dynamically 2730 from layout grid 2729 from linework 2732 
+creating tools 2730 defined 2723 dimensioning 2751 
+with AEC dimensions 2751 display, changing 2769 editing 2749 enhanced custom column 
+grids 2732 holes 2766 hyperlinks 2767 labeling 2749 labelling 2750 layout grid, creating from 2729 layout types 2725 lines 
+adding 2754–2755 changing 2753, 2779 moving 2759–2760, 2785 removing 2756, 2758 removing from manual 
+grids 2757 linework, creating from 2732 masking 2766 notes 2767 properties 2734 radial 2725 rectangular 2725 reference files 2767 removing holes 2767 
+columns anchoring to grids 2551, 2553 creating with user-defined 
+profiles 2512, 2550 freestanding 2545–2546 steel and concrete 2630 tools 2523 See Also structural members 
+command line drawing compare commands 697 drawing management 
+commands 548 new project environment, selecting 550 opening drawing compare 
+palette 697 opening visual filter dialog 697 Project Browser 548 Project Navigator 549–550 projects, refreshing 549 views, regenerating 549 
+command tool 104 command window 55 commands, custom AEC 3889 Communication Center 62 component cleanup overrides 1343 components. See individual component 
+names conceptual models 989 
+See Also mass models ConditionType property 3154 cone mass elements 999 configurations, display. See display 
+configurations 
+constraints AEC objects 1134 Aligned constraints 1141 Angular constraints 1142 Coincident constraints 1136 Collinear constraints 1138 Fix constraints 1141 Horizontal constraints 1140 Radial constraints 1144 Vertical constraints 1137 working with AEC object 
+constraints 1134 
+construction lines 2793 creating 2796 creating from existing objects 2793 creating from linework 2793 multi-landing stairs, changing 2138 u-shaped stairs, changing 2145 
+constructs, project 385, 387 blocks, inserting 400 content of 388 creating 389, 410 deleting 407, 410 divisions 385 dragging objects into 397 drawings, converting 393 electronically transmitting 406 elements 
+compared to 412 converting to 408 
+external references attaching 399 displaying 402 overlaying 399 
+interactions with project 410 legacy drawings, converting 386, 
+394 levels 385 levels and divisions 410 levels, copying to 386, 392 names 410 opening and closing 396 overview 291 properties 404 referencing elements into 398 referencing elements into 
+multiple 400 views, compared to 386 when to start with 387 XML files 386 
+Content Browser AEC content 3871 Always on Top option 175 catalog items 
+dragging 183 opening 182 command prompt, starting 
+from 185 multiple windows 181 overview 137 project library 329, 618 rows, specifying number of 142 tool catalogs, opening 182 tool palettes 90 tools 109 
+adding from styles 149, 615 
+creating from styles 146, 612 user interface 139 viewing a web page 157 window, keeping on screen 175 See also tool catalog libraries, tool 
+catalogs, tool packages, tool palettes 
+Content Browser library activating for projects 363 for projects 304 project catalog, adding 617 
+context help 62 context menus 50 contours 
+generating from LandXML 253 converting 
+drawing files to constructsl 419 copying and assigning object styles 861 copying, projects 314 countable linear repeating pattern 
+components 3496 Create AEC Content wizard 2832 creating objects with tools 95 Crop command 2811 curtain wall cells 
+cell assignments 1472 filling with panels 1470 infills 1441, 1472 objects, inserting 1471 
+curtain wall components 
+custom graphics 1488 
+display 1485 
+hatching 1487 
+layer, color, and linetype 1486 curtain wall dimensions 1408, 1411 curtain wall frames 1453 
+assigning definitions 1475 curtain wall grids 1403 
+cells 1463 
+fixed numbers 1434 
+fixed size 1431 
+manually defining number and 
+size 1435 
+custom 1415 
+divisions 1428–1429, 1438, 1462 
+frame edges 1476–1477 
+frames, adding 1475 
+gables, excluding 1436 
+mullions 1454, 1456–1457, 1461 
+nested grids 1464 
+offset 1439 
+polylines 1438 
+steps, excluding 1436 curtain wall grips, editing curtain walls 
+using 1523 curtain wall properties 1493, 1626 curtain wall styles 
+assigning 
+definitions to elements 1461 
+definitions to mullions 1478 
+divisions to grids 1462 
+infills to cells 1463 
+assignments, removing 1474 
+cell infills 1447, 1463 
+changing 1532 
+creating 1426 
+cut planes 1490 
+defined 1422 
+division definitions 1440 
+elements of 1425, 1461 
+frames 1447, 1449 
+offsets 1452 
+profiles 1450 
+grid cells 1428, 1431 
+infills alignment 1444 offset 1445 overriding 1493 
+matching styles 1533 modifying element definitions 1520 mullions 1454 
+assignments 1479–1480 
+offsets  1459  
+profiles  1457  
+removing definitions  1461  
+removing from grid  1481  
+
+width and depth 1456 notes and reference files 1491 overrides 1492 overview 1423 panel infills 1442 
+curtain wall tools 1419 
+curtain wall unit cells cell assignments 1605 filling with panels 1603 infills 1579, 1604 
+curtain wall unit components custom graphics 1621 display 1618 hatching 1620 layer, color, and linetype 1619 
+curtain wall unit frames 1591 assigning definitions 1607 curtain wall unit grids 1561 
+cells 1598 fixed number 1575 fixed size 1572 manually defining number and 
+size 1576 custom 1565 divisions 1570 frame edges 1609–1610 frames 1608 mullions 1591–1594, 1597 offset 1577 
+curtain wall unit grips 1655 curtain wall unit styles 
+assigning definitions to elements 1597 definitions to mullions 1611 
+infills to cells 1598 assignments 1607 cell infills 1584, 1598 changing 1659 creating 1568 cut planes 1623 defined 1567 division definitions 1579 elements of 1567, 1597 frames 
+defining 1584, 1586 defining by profile 1587 offsets 1589 profiles 1587 
+grid cells 1570, 1572 
+infills alignment 1581 offset 1582 overriding 1626 
+matching styles 1660 
+mullions assignments 1612–1613 defining 1591 defining by width and 
+depth 1592 offsets 1595 profiles 1593–1594 removing definitions 1597 removing from grid 1614 
+notes and reference files 1624 overrides 1625 panel infills 1580 
+curtain wall units alignment of anchored 1664 auto-adjusting cells 1574 base height 1658 cell markers 1626 components 1615 creating 1562 cut plane display 1664 dimensions 1661 display of 1617 division overrides 1648 door assemblies, inserting into 1739 editing 1654 frame and mullion overrides 1636– 
+
+1637 frame edges 1640 hyperlinks 1668 in-place editing 1643 infill overrides 1630 length 1658 location 1662–1663 matching properties 1660 merging cells 1627 mitered corners 1661 moving 1654 mullion edges 1640 nested grids 1599 notes and reference files 1668 offset 1664 overrides, removing 1654 window assemblies 1739 
+curtain walls AEC polygon infills 1811 alignment of objects in cells 1558 anchored objects in cells 1559 base height 1526 cell and edge assignments 1493, 
+1626 cell markers 1494 cells, merging 1494 creating 1405, 1407 
+from walls 1417 curved 1409, 1412 curves, referencing 1412 custom grids 1415 cut plane display 1538 dimensions 1533 direction, reversing 1531 display of 1484 display of custom 
+components 1539, 1666 divisions, overriding 1514 editing 1522 editing objects in cells 1558 floor lines 1544, 1551 
+editing 1545 height 1547 modifying 1542 shape 1547 
+frame edges 1506 frames and mullions, overriding 1503–1504 
+gables, adding  1549  
+hyperlinks  1541  
+in-place editing  1509  
+infills  
+for inserting objects  1443  
+overrides  1500  
+interference conditions  1535–1536  
+length  1528  
+
+matching properties 1533 materials 1483, 1616 mitered corners 1536–1537 moving 1522, 1534 mullion edges 1506 multiple, with same style 1419 nested grids 1464, 1466 notes and reference files 1541 offset of objects in cells 1559 orientation of objects in cells 1558 overrides, removing 1520 profiles 2817 radius 1531 roof lines 1542, 1551 
+editing 1545 height 1547 modifying 1542 shape 1547 
+straight 1412 swapping two objects 1559 
+curve anchors adding 2651 anchoring to new 2656 changing position of objects 2652 defined 2651 
+curved surfaces, hatching 891 custom blocks, railing components 2344 custom ceiling grids 
+adding grid lines 2782, 2785 
+custom column grids 3 creating 2732 editing 2749 labelling sides 4 labels 4 
+lines adding 2756 removing 2758 
+placing doors 1165, 1168–1171 placing windows 1165, 1168–1171 primary and secondary 
+numbering 4 properties 5 selective numbering 4 
+custom commands, AEC content 3889 
+custom components curtain walls 1539, 1666 door/window assemblies 1805 
+custom layout grids creating from linework 2701 linework, creating from 2701 custom shapes for structural members 2640 Cut Plane Elevation Display Properties Stairs 2227 
+cut planes 534 anchoring objects 547 curtain wall units 1664 curtain walls 1538 display range 535 door and window assemblies 1802 global 534 in space style 3070 and levels 536 manual 548 mass elements 1041 mass groups 1065 object-specific 535, 545 overriding for walls 545 slabs and roof slabs 2424 spaces 2966 stairs 2239 structural members 2584, 2613 wall styles 1305 walls 1227 
+cut planes, object-specific overrides 547 cylinder mass elements 999 
+D 
+data format styles publishing to DWF 266, 284 
+database fields 3476 ASCII data link 3481 comma-separated data link 3481 creating data link 3481 inserting 3478 Microsoft Access link 3481 Microsoft Excel link 3481 ODBC drivers 3481 supported data sources 3481 supported data types 3477 supported database providers 3477 udl files 3479, 3482 
+datum points creating 3615 editing 3631 inserting 3617 
+default display sets 
+specifying 822 default project options 304 default standards folder 606 defining lines, sections 3270 defining mullions 1721 definitions 
+mask block 856 multi-view block 856 profile 856 property set 856 
+demolished objects 567, 571, 575 demolition plans 565 design rules 
+2D elevation styles adding 3341 changing 3343 removing 3344 
+2D section styles 3276, 3278 changing default options 578 door styles 1888 Renovation mode 572 window styles 1986 
+DesignCenter AEC content 3871 AEC drawings 3882 
+content file locations 207 fixture layout 3873, 3876 modifying 3892 moving content to Content 
+Browser 3877 multi-view block definitions, adding 2864 
+detail component database adding 3545 configuring 3545 jigs 3941 merging 3548 recipe specification 3908, 3916 removing 3547 
+detail component database (project) 328 
+Detail Component Manager component group tables 3524 locating a component in 3512 using 3511 
+detail component table adding rows 3524 editing values 3526 removing rows 3525, 3527–3528 
+detail component tools adding to tool palette 3504 applying to linework 3510–3511 copying from Content Browser 3506 creating from linework 3507 modifying 3507 using 3504 
+detail components bolts 3500 bookends-type 3495 boundary filling 3494 countable linear repeating 
+pattern 3496 dynamically-sized rectangular 3499 editing 3501 inserting 3490 jigs 3941 linear array 3493 migrating 3963 multiple insertion 3491 recipe specification 3908 rectangular predefined-depth 
+surface 3498 
+detail pane  353  
+detail tools  3652  
+properties  3656  
+detail views  
+creating from a callout  448  
+details  
+creating with callouts  3665  
+
+in current drawing 3665 in existing project drawing 3668 in new drawing 3670 
+for a project 322 diagnostic messages 203 dialog boxes, placement of 203 diamond pattern in window 
+muntins 2007 dimension column grids 2751 dimension scale overrides 3893 dimensional constraints 1134 dimensions AEC. See AEC dimensions curtain wall units 1655, 1661 curtain walls 1523, 1533 door assemblies 1678, 1797 elevations 3295–3298 enhanced custom column grid 
+bays 2765 enhanced custom column 
+grids 2762 project 533 sections 3224–3226, 3228 stair. See stair dimensions window assemblies 1797 window. See window dimensions DIN 
+area calculation standard 2974 direct editing 
+dynamic dimensions 123 
+grips 123 display components 
+changing visibility 779 display configurations 796, 810 
+copying between drawings 833–834 
+creating 810, 812 
+default 800, 823 
+deleting 830 
+emailing 834, 836 managing 829 notes 832 predefined, in templates 787 purging 836 reference files 832 renaming 829 templates 787 tips for working with 811 view direction 821 viewing 802 viewports 822–823 xrefs 824–825 
+display management layers 706 See Also display system 
+Display Manager 800, 829 left pane 800 opening 802 right pane 801 standard settings 838 
+adding 846 excluding from 
+synchronization 841 purging version history 849 purging version 
+information 849 synchronizing 840 synchronizing standards 850 updating 841 updating from drawings 844 
+view direction icons 801 
+See Also display system, display representations, display sets, display configurations 
+display overrides 656 
+display representations 789 assigning to display sets 817 comparing between display sets 819 copying between drawings 833–834 creating 814 customizing display of objects 792 default 201, 791, 810 deleting 831 editing 815 materials 889 purging 837 renaming 830 structural members 2607 tips for working with 811 viewing 806 viewing objects that use 808–809 
+display sets 794 classifications 826 comparing display 
+representations 819 copying between drawings 833–834 creating 813 default 796 deleting 830 display representations 794 
+assigning 817 
+viewing 809 notes 832 purging 836 reference files 832 renaming 829 specifying a default display set 822 tips for working with 811 view direction 795 viewing 804 
+display settings adding standard settings 846 excluding from 
+synchronization 841 external references 788 live sections 828 materials 828 standard 838 synchronizing standards 850 synchronizing with project 
+standards 840 updating standards 841, 844 version history 
+editing 848 purging 849 
+version information, purging 849 display style, Renovation mode 572 display system 787 
+elements of 787 materials definition 788 troubleshooting 851 
+See Also display representations, display sets, display configurations, Display Manager 
+display theme legend 3852 display theme tool creating 3850 
+display themes activating 3854 adding to a drawing 3852 creating 3847–3848 disabling 3854 editing 3848 legend 3850 legend, inserting 3852 styles 3850, 3855 tools 3850 tools, creating 3850 
+display themes style creating 3856 Displaying Edit Attribute Justification 
+Grips 3555 Divide command 2806 dividing 
+spaces 3004 
+divisions curtain wall units 1570 curtain walls 1428–1429 door assemblies 1695 interaction with projects 374 project 372 
+changing 373 creating 372, 374 deleting 374–375 ID 375 name 374 overview 297 
+window assemblies 1695 documentation 
+spaces 2881 dome mass elements 1000 door and window assemblies 
+cut plane display 1802 endcaps 1674 profiles 2817 
+door assemblies alignment of objects in cells 1809 anchored objects in cells 1810 auto-adjusting cells 1699 cell markers 1764 cells, merging 1764 centering in walls from xref 
+drawings 1336 creating 1675, 1678 curtain walls, inserting into 1471 custom grids 1683 dimensions 1797 display of 1754 divisions, overriding 1786 door assembly tools, creation 
+with 1677 editing 1793 editing objects in cells 1808 frame edges 1777 frames and mullions, 
+overriding 1773–1774 freestanding 1798 hyperlinks 1807 in-place editing 1780 infills 
+for inserting objects 1709 
+overrides 1767 interference conditions 1799–1800 matching properties 1797 materials 1753 mitered corners 1801 moving 1793, 1796 mullion edges 1777 multiple, with same style 1684 nested grids 1732, 1734 notes and reference files 1807 offset of objects in cells 1809 orientation of objects in cells 1808 overrides, removing 1791 positioning 1679 swapping two objects 1810 
+door assembly cells cell assignments 1741 filling with panels 1736 infills 
+defining 1706 
+removing 1740 objects, inserting 1739 
+door assembly components custom graphics 1758 display 1755 hatching 1757 layer, color, and linetype 1756 
+door assembly dimensions 1678 door assembly frames 1721 assigning definitions 1743 door assembly grids 
+cells 1730 fixed number 1701 fixed size 1696 manually defining number and 
+size 1702 custom 1683 divisions 1695, 1730 elements 1672 frame edges 1745, 1747 frames, adding 1744 mullions 1721, 1723–1726, 1728 nested grids 1732 offsets 1703 
+door assembly grips 1794 door assembly styles 1721 
+assigning definitions to elements 1729 definitions to mullions 1747 divisions to grids 1730 infills to cells 1730 
+assignments 1743 cell infills 1730 changing 1796 creating 1692 cut planes 1760 defined 1687 division definitions 1705 element definitions 1792 elements of 1691, 1729 frame offsets 1719 frames 1714 
+profiles 1716–1717 width and depth 1715 grid cells 1696 
+infills alignment 1711 definitions 1713 offset 1711 overriding 1764 
+matching styles 1797 
+mullions assignments 1748–1749 offsets 1726 profiles 1724–1725 removing definitions 1728 removing from grid 1750 width and depth 1723 
+notes and files 1762 overrides 1763 overview 1689 panel infills 1708 shape 1798 
+door assembly tools, creating 1684 
+door components custom blocks for 1901 display of, turning off 1904 door styles, removing from 1905 layer, color, and linetype 1899 
+door dimensions 
+changing for door styles 1887 door frames, assigning materials 1897 door muntins 
+display of, turning off 1938 editing 1937 glass 1913 materials 1897 prairie-lights 1919 rectangular or diamond 1914 removing 1939 starburst 1924 sunburst 1931 void for 1912 
+door panels, assigning materials 1897 door sizes 
+properties 3790 door stops, assigning materials 1897 door styles 
+classifications 1898 components 1902, 1905 creating 1885 
+custom shapes 1890 defined 1884 dimensions 1887 display of components, turning 
+off 1904 display properties 1899 door swings 1905 files, attaching 1908 geometry 1892 materials 1900 muntins, removing 1939 notes, attaching 1908 opening percentage 1906 shapes, replacing 1891 specifying design rules for 1888 standard sizes 1889 
+door swings direction properties 3791 displaying as straight line 1905 
+door thresholds display properties 1906 symbols 1907 
+door tools creating 1858 door/window assemblies display of custom components 1805 doors array doors between two 
+points 1879 array doors using Modify Tool 1879 center door between two 
+points 1879 center door using Modify Tool 1879 centering in walls from xref 
+drawings 1336 
+creating 1857 from assemblies 1859 from openings 1859 from windows 1859 in door and window 
+assemblies 1859 
+in walls 1857 curtain walls, inserting into 1471 custom block components 1880 custom shapes 1890 
+display components and 
+materials 1895 display properties, specifying 1899 door and window assemblies, 
+inserting into 1739 door assemblies, inserting into 1739 endcaps 1856 evenly space doors along a 
+wall 1880 evenly space doors using Modify 
+Tool 1880 freestanding 1878 geometry 1892 horizontal position 1872 in space surfaces 
+adding 3032, 3038 removing 3050 
+materials assigning 1897 predefined 1857 
+moving along walls 1870 to a different wall 1877 within walls 1871 
+multiple, with same style 1858 muntins block components 1880 notes and reference files 1884 opening percents, specifying 1906 overview 1855 placing across length of wall 1168 placing centered between grid 
+lines 1170 placing evenly between grid 
+lines 1171 placing in relation to grid lines 1169 positioning 
+along walls 1870 horizontally 1875 within walls 1871 
+profiles 2817 properties of 1860 releasing from walls 1877 reposition door using Modify 
+Tool 1879 repositioning doors between two points 1879 
+reversing handing 1880 schedule tags, adding 3718 shapes 1891 specifying the swing display 1880 standard sizes 1889 threshold dimensions 1880, 2588 type and shape 1888 vertical alignment 
+changing 1866 
+overview 1856 vertical orientation 1877 vertical position 1874 
+dormers in roof slabs 2362, 2459 drape mass elements 1002 drawing 
+fields 3451 
+
+drawing compare command line 697 creating a visual filter 696 frequently asked questions 697 overview 681 review tab 690 setup tab 684 starting a session 684 
+Drawing Explorer 352 
+drawing management command line 548 concepts 291 frequently asked questions 550 overview 291 
+drawing templates, for projects 319 
+drawing window status bar 52 modifying 55 turning on and off 55 
+drawings AEC, creating 3882 closing in Style Manager 868–869 creating 
+from scratch 189 from templates 188 in Style Manager 868 
+default display representations 201 displaying objects with facets 208 dragging in Style Manager 869 elevations 3283 
+exporting to AutoCAD 212, 214 to DXF files 212, 217 
+layer key styles 198 layer management 706 layer standards 198 legacy, opening 190 opening in Style Manager 867–868 project-related information, 
+removing 343 proxy graphics 212–213 publishing to PDF 280 read-only status indicator 858 saving as AutoCAD objects 191 saving as Proxy Graphics 191 saving to previous file format 191 scale 195, 3893 setting up 191 sharing with other users 211 
+methods 213 standards, adding 628 status of 867 units, specifying 192 
+DWF data format styles 266, 284 publishing property set data 263 
+DXF files, exporting drawings to 212, 
+217 dynamic cleanup radius variable 1321 dynamic dimensions 123, 128 dynamically-sized rectangular 
+components 3499 
+E 
+edges hiding 1343 showing 1345, 1374 wall endcaps 1375 
+edit in place 3D body modifiers 1130 changing display components 1132 context menu 1127 material hatches 1131 object components 1126 polyline-based components 1128 profile-based components 1129 profiles 2824 ribbon 1127 wall intersections 1340 
+editing enhanced column grids 2760 fields 3463 renovation plan objects 575 wall intersections in place 1340 
+Editing Multiline Attributes 3555 Editing Multiline Attributes in Multi-view 
+Blocks 3555 electronically transmitting a project 337 elements 411 
+constructs compared to 412 converting to 429 
+creating 414 deleting 425, 431 dragging objects into 422 electronically transmitting 424 external references, displaying 428 interactions with projects 431 legacy drawings, converting 412, 
+417, 419 name 431 opening and closing 421 overview 411 projects, adding to 431 properties 423 referencing in multiple 
+constructs 413 referencing into other elements 426 templates 412 uses for 414 when to use 413 XML files 412 
+elevation labels 3433 attributes 3441, 3444 blocks 3441, 3445 coordinate systems 3439 creating 3435 defined 3433 DesignCenter 3446 elevation values 3439 graphic symbols 3443 
+hyperlinks 3442 modifying 3438 multi-view blocks 3439, 3445 notes 3442 offset 3440 reference files 3442 scale factor 3440 tools 
+creating 3437 
+creating with 3434 user-defined 3443 user-specified settings 3435 
+elevation lines 3283, 3290 changing 3292 drawing with elevation marks 3293 hyperlinks, notes, and reference 
+files 3303 location 3301 subdivisions 3293 
+changing display 3310 components 3339 creating 3299 
+viewing 3290 
+elevation marks 3283 attributes 3301–3302 drawing 3293 
+elevation tools 3652 properties 3656 elevations 3283 adding and removing custom components 3313 creating with callouts 3679 four-way exterior elevations 3684 four-way interior elevations 3681 
+single elevations 3679 dimensions, changing 3295–3298 horizontal 3306 live section views 3285 specifying surface hatching for 
+subdivisions 3315 specifying the display of 2D linework 3317 subdivisions 3285 changing display 3310 
+components 3339 creating 3299 See Also 2D elevations, 3D elevations, elevation lines, elevation 
+marks  
+endcaps  
+door and window assemblies  1674  
+doors  1856  
+opening  2049  
+openings  2032  
+window opening  1970  
+windows  1943  
+engineering data, adding to spaces  3154  
+enhanced custom column grids  
+
+adding labels after insertion 2763 
+creating 2732 editing preconfigured list 2739 irregular 2740 radial 2737 rectangular 2734 varying grid lines 2741 
+defining display of numbering 2745 defining numbering and lettering 2747 defining numbering scheme for 
+secondary grid lines 2748 dimensioning 2762 dimensioning bays 2765 editing 2760 editing labels 2764 labelling grids 2733 labelling sides 2733 lines 
+adding 2760 removing 2761 primary and secondary 
+numbering 2733 properties 2734 selective numbering 2733 variable lines 2732 
+entity references hyperlinks 3905 location 3905 notes 3905 reference files 3905 
+EquipmentLoad property 3154 erased component, sections 3274 existing objects, Renovation plans 567, 
+571, 575 exploded objects, identifying 3901 export file formats 
+IFC format 220 
+exporting display configurations 833 display representations 833 display sets 833 drawings 
+as IFC file format 220 Extend command 2805 extending 
+wall endcaps 1377 wall intersections 1358 extension lines, AEC dimension styles 3413, 3425 
+external references (xrefs) constructs, attaching to 399 dimensioning 553 display configurations 824–825 display settings 514 isolating objects in 1121 overview 296 paths, in projects 301 troubleshooting 1335–1336 within a project 300 
+extruded 3D spaces 2916, 2947 extrusion mass elements 1004 extrusions, hatching 893 
+F 
+F1 help 62 faces 
+aligning UCS 132 faces, hatching multiple 892 facet deviation 1668 FACETDEV variable 1396, 2572 fascia 2480 
+in slab edges 2382 fields 3449, 3467 adding to a property set definition 3809 annotation 3449 
+background color 3466 converting to text 3467, 3775 creating database links 3481 editing 3463, 3775 FIELDDISPLAY variable 3466 in callout symbols 3694 in manual properties 3774 in property set data 3786 
+in styles and definitions  3777  
+inserting  3451  
+attributes  3461  
+AutoCAD table cells  3463  
+
+multiline text 3460 object properties 3456 object styles 3458 property set definitions 3453 text elements 3459 
+ODBC drivers 3481 overview 3449 supported database providers 3481 types 3467 
+database fields 3476 keynote fields 3474 project fields 3467 sheet set fields 3469 
+updating 3466, 3775 
+fields, layer standards 762 AIA Long Format 764 BS1192 766, 768 
+files, LY 746 files, reference. See reference files fill type 2064 fillet 
+wall cleanup 1347 
+filleting wall endcaps 1371 walls 1203 
+filters, layer. See layer filters 
+fire rating lines creating 3617 editing 3634 inserting 3619 
+Fix constraints 1141 floor lines curtain walls 1544 changing 1542, 1551 
+changing vertices 1552 editing 1210, 1215 offsetting 1212 projecting 1212 reversing 1219 steps, adding 1214 vertices 1220 walls 1210, 1212, 1214, 1220 
+floor settings changing, for stairs 2174 multi-landing stairs 2091 spiral stairs 2108 u-shaped stairs 2102 
+floorplates. See slices floors in space surfaces 3025 for an opening, changing the display 2064 
+formulas evaluating results 3796 Formula Property Definition 
+worksheet 3797 in schedule tables 3792 property set definition 3792 use case 3797 VBScript code 3797 
+four-way exterior elevations 3684 four-way interior elevations 3681 frames 1880, 1976 
+door, assigning materials to 1897 window, assigning materials to 1992 
+frames, curtain wall units offsets 1589 profiles 1587 removing 1591 width and depth 1586 
+frames, curtain walls offsets 1452 profiles 1450 removing 1453 width and depth 1449 
+frames, door assemblies profiles 1717 removing 1721 width and depth 1715 frames, window assemblies offsets 1719 profiles 1717 removing 1721 width and depth 1715 
+free form mass element 
+editing faces 1028 freestanding columns 2545–2546 freestanding door assemblies 1798 freestanding doors 
+creating 1857 
+location 1878 freestanding window assemblies 1798 freestanding windows 
+creating 1945 
+location 1970 freezing walls 578 full xref paths in projects 301 
+G 
+gable mass elements 1001, 1016–1017 
+gable roof lines curtain walls, adding to 1549 settings 1554 in walls 1213 
+gable roofs creating 2363 creating with roof tools 2360 
+GBXMLEXPORT command 3159 geometric constraints 1134 geometry 
+door, editing 1892 spaces 3053 window, editing 1987 
+glass, door muntins 1913 
+global cut planes 534, 536 clipped model view 542 display range 537–539 displaying different levels 540 
+globally updating 2D sections and 
+elevations 3259, 3328 in a folder 3259, 3328 in a project 3259, 3328 updating 3261, 3330 
+gothic pattern in window muntins 2024 
+graphics path multi-landing stairs, changing 2138 u-shaped stairs, changing 2145 
+graphics, preview 3882 
+grid lines creating variable 2741 defining numbering scheme for 
+secondary grid lines 2748 numbering 4, 2733 per side 4, 2733 variable 3, 2732 
+grids about 2723 anchoring objects to 2723 anchoring to objects 2647 ceiling grid tools, creation 
+with 2772 column grids 2725 curtain wall units 1563 curtain walls 1413 dimensioning bays 2765 door assemblies 1680 fixed baysize 2725, 2753, 2779 labels 2747 moving ceiling grids 2785 preconfigured bay sizes 2739 types of 2723 window assemblies 1680 See also ceiling grids, column grids, 
+curtain wall unit grids, curtain wall grids, door assembly grids, layout grids, window assembly grids 
+grids, door assembly 1721 grids, window assembly 1721 grips 123 
+AEC dimensions dimension text, moving 3402 extension lines, moving 3402 
+AEC polygon 1820 CTRL grips 127 curtain wall 1523 curtain wall unit 1655 direct editing 123 door assembly 1794 dynamic dimensions 128 
+grip color  126  
+grip constraints  131  
+grip tips  125  
+mass group  
+attaching mass element  1056  
+detaching mass element  1057  
+opening  2046  
+railing  2292  
+roof  2369  
+roof slab  2401  
+slab  2401  
+stair  2126  
+structural members  2560  
+
+temporary coordinate systems 131 trigger grips 127 wall 1177 window 1954 window assembly 1794 
+gross boundaries activating 2980 displaying 2980 editing 2978 spaces 2968 
+GUID version 661 
+H 
+hatch generating boundary 2797 repositioning 2797 
+hatch boundary creating 2797 redefining 2798 
+hatch productivity tools 2796 
+hatches AEC polygon styles 1848 curved surfaces 891 extrusions 893 free form mass elements 895 mass element styles 1048 mass elements 1039 material components 885–886 multiple faces 892 space styles 3068 wall styles 1305 
+See Also surface hatches head height 
+openings  2036  
+window  1948  
+height  
+3D freeform spaces  2995  
+extruded 3D spaces  2993  
+walls  1177  
+help  
+context help  62  
+F1 help  62  
+
+hidden component, sections 3273 
+hidden line projection creating 3347 overview 3347 
+hiding wall endcap edges 1375 wall intersection edges 1343 
+holes 
+spaces 3019 Horizontal constraints 1140 horizontal elevations 3306 horizontal orientation 
+spiral stairs 2104 u-shaped stairs 2097 horizontal sections 3235 
+I 
+i-drop icon for tool catalogs 142 IFC importing and exporting files 219 import file formats IFC files 236 
+importing display configurations 833 display representations 833 display sets 833 IFC files 236 Inventor components 243 
+in-place editing curtain wall units 1643 curtain walls 1509 door assemblies 1780 window assemblies 1780 in curtain walls 2215, 2218 in door assemblies 2218–2219 in slabs 2211 in slabs, removing from 2214 in spaces 2214–2215 in walls 2207, 2210 in window assemblies 2218– 
+
+Industry Foundation Classes  
+importing and exporting  files 219  
+InfoCenter 60  
+insertion point  
+of openings 2036  
+of windows 1948  
+installing tool catalogs in libraries  153  
+integration with AutoCAD  135  
+intelligent wall cleanup  
+about 1310  
+cleanup circles 1319  
+conditions 1322  
+justification lines 1319  
+L-intersections 1311  
+multiple intersections  1316  
+T-intersections 1314  
+interference conditions  
+adding to walls 1280  
+removing from walls  1281  
+spaces  
+adding 2999  
+removing 3000  
+stairs 2207  
+
+2219 
+intersections spaces 3006, 3020 walls 1310 
+Inventor importing into AutoCAD Architecture 243 
+isolating objects ending object isolation 1120 external references 1121 hiding selection 1119 saving selection 1120 selecting objects 1121 
+isosceles triangle mass elements 998 
+J  
+joining walls 1201  
+justification lines in walls  1319  
+K  
+keynote database (project)  327–328  
+keynote databases  
+adding 3597  
+configuring 3596  
+creating 3601  
+groups  
+adding 3604  
+deleting 3608  
+editing 3606  
+moving 3609  
+keynotes  
+adding 3605  
+deleting 3608  
+editing 3607  
+moving 3609  
+modifying 3601  
+overview 3596  
+permissions 3600  
+removing 3598  
+schema 3611  
+Keynote Editor 3601  
+
+keynote database 3602 keynote fields 3474 inserting 3475 keynote insertion tools using 3575 keynote legend styles editing 3587 
+keynote legends adding keynotes 3586 editing 3584 generating 3582 removing keynotes 3587 reselecting keynotes for 3584 updating 3585 using 3579 
+keynotes changing databases 3592 
+changing formats 3590 globally 3591 individually 3590 
+configuring database 3596 databases 3596 editing 3588–3589 inserting 3577 insertion tools 3575 legends 
+adding keynotes 3586 editing 3584 generating 3582 removing keynotes 3587 updating 3585 using 3579 
+migrating 3963 repeat insertion 3579 sort order 3609 specifying 3593 specifying for detail 
+components 3595 specifying for object 
+components 3594 specifying for object styles 3593 viewing 3588 
+keynoting tools overview 3570 keys, layer. See layer keys 
+L-intersections 1311 l-shaped stairs 
+creating 2092 labels 2733, 2745, 2747, 2763–2764 landing shapes 2144 LandXML, importing 245 
+clipping surface model 253 COGO points 247 contours 253 drawing units 251 layer keys 254 options 251 parcels 247 parcels as polylines 252 parcels as spaces 252 
+schema version 246 selecting model base thickness 253 surfaces 247 validating 250 
+layer assignment modify 580 modifying 580 Renovation style 572 
+layer filters layer colors 725 layer names 726 linetype 726 lineweight 726 specifying 724 
+layer groups filter groups 721 filters 721 
+converting property to 
+group 730 creating 721 property 722 standard 727 
+layers, adding 728 overview 719 properties, changing 729 renaming and deleting 730 rules for 720 types of 720 
+layer key styles 745 AIA 745 BS1192 745 creating 752 creating from LY files 753 defined 705 editing 754 in Style Manager 856 notes and reference files 756 overrides to 746 properties of 746 specifying 198 
+layer keying defined 705 values for new layer keys 752 
+layer keys default 747, 760 default values 752 creating nonstandard 709 deleting 710 making current 707 renaming 710 
+defined  705, 745  
+overrides  757  
+specifying  758  
+turning on and off  759  
+remapping  759  
+selecting for LandXML  254  
+Layer Manager  
+layer filters  721  
+layer groups  
+properties  729  
+layer standards  761  
+layer states  736  
+layers  
+creating  708–709  
+
+opening 706 overview 701 
+layer settings in model space views 454 in sheet views 461 in views 461 
+layer snapshots. See layer states 
+layer standards AIA Long Format 760, 764 assigning layers to 711 BS1192 760, 765, 767 component fields 761 creating 769 creating layers conforming to 708 defined 704 editing 770–773 exporting 775 fields 762 importing 774 included with Layer Manager 761 match description 762 purging 773 specifying 198 
+layer states creating 736 deleting 743 editing 739 exporting 745 
+importing 743 overview 735 restoring 741 saving 736 
+layers adding with same name 709 AEC Editor 203 current 707 deleting 710 display management 706 layer 0 (zero) on and thawed to use 
+AEC object OSNAPs 714 layer standards 708, 711 nonstandard 709 renaming 710 snap to points on AEC objects 714 wall components 1225 See Also Layer Manager 
+layout curves 2677 adding 2680 adding nodes 2683 anchoring objects 2678 anchoring to objects 2647 changing node positions 2687 changing node radius 2691 changing node spacing 2686 changing offsets 2685 changing spacing mode 2688 display properties 2690 notes and files 2692 switching 2689 tools 2679 
+layout grids 2677, 2693 adding and removing 
+boundaries 2707 adding grid lines 2702 adding notes and files 2709 changing node radius 2706 changing spacing mode 2704 converting to column grids 2729 creating 2699 creating holes 2708 curtain wall units 1563 curtain walls 1413, 1464 defined 2723 display properties 2705 door assemblies 1680, 1732 location 2708 radial 
+adding 2694 changing 2696 
+rectangular adding 2697 changing 2698 
+removing grid lines 2703 tools 2693 window assemblies 1680, 1732 
+layout modes (grids) fixed baysize 2725, 2753, 2779 
+layout volumes 2710 adding 2712 adding grid lines 2714 changing 2714 changing node radius 2718 changing spacing mode 2716 creating 2710 location 2719 notes and files 2720 removing grid lines 2715 
+leader anchors adding 2657 changing position of objects anchored 
+to 2658 copying objects to all layout 
+nodes 2660 defined 2657 extending leaders 2660 grip editing 2659 
+legacy drawings, opening 190 
+length limits for stairs 2175, 2177 wall 1177 
+levels 364 copying 365, 367 creating 365, 371 defaults 364 deleting 370–371 floor-to-floor height 371 IDs 371 interaction with projects 371 name 371 overview 297 
+properties 369 LightingLoad property 3154 linear repeating pattern 
+components 3493 lines ceiling grids 2779 column grids 2753–2754, 2760– 
+
+2761, 2779 linetype scale display properties of AEC objects and 
+LTSCALE  853  
+troubleshooting  853  
+linetype settings, AEC Editor  203  
+linetypes  
+wall components  1225  
+linework  
+2D elevations  3323  
+edit  3323  
+grip-edit  3308  
+merge  3323  
+2D sections  3253  
+editing  3253  
+grip-edit  3242  
+merging  3253  
+using 3D body  
+component  3275  
+erased component (2D  
+
+elevations) 3339 hidden component (2D 
+elevations) 3339 section hatch 3273 section surface hatch 3272 structural members, creating 2558 surface hatch (2D elevations) 3338 
+linework material components 885 link 
+drawing file to construct 419 linking objects. See object anchors list definitions 3830 
+creating 3075, 3831 defined 3073 editing 3076, 3833 files 3076 for spaces 3075 for zones 3075 list items 3831 name lists 3076 notes 3076 notes and reference files 3834 setting in space style 3061 setting in zone style 3104 type 3075 
+live section views 3216 creating 3219, 3237–3238 display settings 828 editing 3237 in elevations 3285 materials 888 removing 3241 section lines, creating from 3220 sectioned body, displaying 3239 updating 3239 
+load calculations, specifying data for 3154 location spaces 2961 LY files, creating layer key styles from 746 
+M 
+manual properties fields in 3777 styles and definitions 3777 
+manual synchronization 601 
+mapped drives for projects 302 for remote locations 307 opening projects on 307 
+mask block definitions 
+creating 2832 from existing definitions 2833 from polylines 2832 
+editing 2836 exporting 2835 importing 2834 purging 2839 Style Manager 856, 2832 
+mask blocks 2831 adding 2840 AEC content 3886 attaching to objects 2845 definitions. See mask block definitions detaching from objects 2846 display properties 2851–2852 editing 2846 grips, editing with 2847 hyperlinks, notes, and reference 
+files 2852 location 2847 profiles, editing 2848 tool properties 2851 tools 
+adding using 2839 creating 2842 user-specified settings 2841 
+mass element styles 1043 creating 1044 display properties 1047 hatching 1048 materials 1045 materials and display 
+components 1045 materials, assigning 1046 notes 1050 reference files 1050 
+mass elements 989 additive 1058, 1083 arch 995, 1015 barrel vault 996 Boolean operations 1022 box 996 circular 1018 cone 999 converting from 
+objects 1026 
+converting to 3D solid 1025 roof slabs 1025 slabs 1025 spaces 1026 walls 1025 
+creating 993 creating with massing tools 991 cut plane display 1041 cylinder 999 display components 1069 display properties 1038 dividing 1023 dividing face of 1027 dome 1000 drape 1002 
+Delaunay triangulation 1002 rectangular 1002 regular 1002 
+editing 1010 editing with grips 1010 faces 
+dividing 1027 
+joining 1027 free form element 1024 freeform 
+faces, editing 1028 
+gable 1001 rise 1017 roof height 1016 
+grips 1010 hatching 1039 hatching free form 895 height 1015 hyperlinks 1042 intersections 1060, 1085 isosceles triangle 998 joining faces of 1027 location 1040 mass groups 1019, 1082 
+adding to 1056 attaching objects to 1083 detaching from 1057 
+materials 990, 1037, 1068, 1071 Model Explorer 1081 moving 1087 notes 1042 order within mass group 1086 profiles 2817 
+extruding 1004–1005 
+revolving 1004, 1006–1007 profiles, editing 1020 pyramid 997 rectangular 
+area 1012 
+edge 1013 reference files 1042 restoring body modifiers 1278 
+right triangle 998 shapes 993, 1019 size 993, 1019 sphere 1001 subtractive 1059, 1084 tools, creating 1007 trimming 1023 user-specified settings 994 
+mass groups 989 anchors 1063 Boolean operations 1053 changing 1020 creating 1052 cut plane display 1065 display components 1069 hyperlinks 1066 location, changing using grips 1061 markers 1055 mass elements 1082 
+adding 1056 attaching 1056, 1083 detaching 1057 
+mass group markers 1052 materials 1053, 1068, 1071 materials, assignng 1054 Model Explorer 1082 moving 1087 nested, creating 1060 nested, removing 1061 notes 1066 reference files 1066 tools 1067 
+creating with 1051 working with 1063 mass models 989 Model Explorer 1073 massing studies 990 See Also mass groups 
+massing tools mass elements 991 mass groups 1051 
+match lines creating 3620 editing 3631, 3634 inserting 3622 material boundaries 3218 adding ring 3321 adding vertex 3320 content 3319 creating 3247 editing 3248, 3319 highlights 3247 masks 3247 removing ring 3322 removing vertex 3320 replacing ring 3322 rings 
+adding 3251 removing 3252 replacing 3252 
+vertices adding 3250 removing 3250 
+material components 884 2D section and elevation 
+linework 887 3D body 886 linework 885 patterns 907 plan hatch 885 section hatch 888 sectioned body and sectioned 
+boundary 888 surface hatch 886 
+material definitions creating 905 notes and reference files 918 
+materials 2D section shrinkwrap 914 2D section styles 3275 creating 903 curtain wall styles 1483, 1616 display settings 788, 828 door assembly styles 1753 door components 1897 door styles 1900 doors 1895 in display representations 889 listing 902 mass elements 990, 1068, 1071 mass groups 1053, 1068, 1071 Renovation style 573 roof slab components 2472, 2494 roof slab edge style 2495 roof slab styles 2470, 2475 roofs 2373 section components 3268 sections 3216 slab components 2472, 2494 slab edge style 2495 slab styles 2470, 2475 space styles 3062, 3064 structural member styles 2604–2605 structural members 2503 styles 905 wall components 1299 window assembly styles 1753 window components 1992 window styles 1994 windows 1990 See also material boundaries 
+naming  904  
+objects  874, 903  
+objects that support  873  
+overview  871  
+properties, defining  906  
+queries  903  
+railings  2280  
+rendering  911  
+
+maximum gap size for space generation 2926 
+MDB exporting property set data 263 file structure 258 
+menu browser 
+displaying recent documents 47–48 Merge command 2810 merging 
+profiles with wall endcaps 1381 profiles with wall intersections 1354 spaces 3000, 3018 
+messages, diagnostic 203 
+migrating detail components 3966 keynote database 3966 
+mitered corners curtain wall units 1661 
+curtain walls 1537 door assemblies 1801 window assemblies 1801 
+mode 
+renovation 567 mode, Renovation 567 Model Explorer 990 
+display configurations 1076 left pane 1073 mass commands 1080 mass elements 1081 
+attaching 1082 mass groups 1082 mass models 1073 menu bar and toolbar 1074 navigating 1077 opening 1075 position of object 1080 projection 1076 right pane 1074 SteeringWheel 1078 toolbar commands 1080 view directions 1076 ViewCube 1077 viewing objects 1079 visual styles 1076 zoom percentage 1080 
+model space views creating 454 deleting 460 editing profiles in place 1341, 1362 layer settings 454 layer snapshots 454 outside project 
+deleting 3693 
+opening 3692 placing on sheet 457 properties 459 
+Modify Tools array AEC Polygons 1831 array doors 1879 array openings 2059 array railings 2299 array windows 1969 center AEC Polygon 1829 center door 1879 
+center opening 2059 center railing 2299 center window 1969 crop AEC Polygons 1834 divide AEC Polygons 1833 evenly space AEC Polygons 1832 evenly space doors 1880 evenly space openings 2060 evenly space railings 2300 evenly space windows 1970 merge AEC Polygons 1830 reposition AEC Polygon 1832 reposition door 1879 reposition opening 2060 reposition railing 2300 reposition window 1969 trim AEC Polygons 1833 
+mullions, curtain wall units definitions, removing 1597 profiles 1593–1594 width and depth 1592 
+mullions, curtain walls definitions, removing 1461 profiles 1457 width and depth 1456 
+mullions, door assemblies definitions, removing 1728 offsets 1726 profiles 1724–1725 width and depth 1723 
+mullions, window assemblies definitions, removing 1728 offsets 1726 profiles 1724–1725 width and depth 1723 
+multi-landing stairs creating 2085 floor settings 2091 terminating with 2088 turn types 2087 vertical orientation 2087 
+multi-view block definitions classifications 2838, 2863 creating 2856–2857 DesignCenter, adding to 2864 in Style Manager 856 
+notes 2862 reference files 2862 view blocks 
+connecting 2860 creating 2857 creating from 2859 
+multi-view block references, object tags 3718 multi-view block tool creating 2866 
+multi-view blocks 2855 adding to drawings 2869 AEC content 3884 attributes 
+editing 2876 updating 2877 definitions, changing 
+associated 2871 elevation marks 3302 hyperlinks 2875 location 2873 modifying 2871 notes 2875 offset 2872 predefined 2856 reference files 2875 rotation 2871 scale factor 2872 section marks 3230, 3232 types of objects represented 2855 See Also multi-view block definitions 
+Multi-view Blocks 3555 multiline text 
+fields 3460 muntins, door. See door muntins muntins, window. See window muntins MWX file 256 
+N 
+naming Renovation blocks and styles 582 
+napkin sketch appearance of objects 1109 changing 1113 creating 1111 line formats 1110 lock settings 1113 napkin sketch tools, creation 
+with 1111 nested objects 1113 overview 1109 
+net boundaries activating 2980 displaying 2980 editing 2978 spaces 2968 
+new objects, Renovation plans 571, 575 
+node anchors adding 2661 anchoring to different nodes 2663 changing position of objects anchored 
+to 2662 copying objects to all layout nodes 2664 defined 2661 
+node radius ceiling grids 2791 column grids 2770 layout curves 2691 layout volumes 2718 
+node raidius 
+layout grids 2706 non-AEC objects, identifying 3901 non-associative AEC dimensions 3353 non-associative spaces 
+2D 2947 converted 3D freeform 2947 extruded 3D 2947 
+north arrows creating 3615 editing 3631 inserting 3617 
+numbering display options 2745 grid bubbles 2747 primary and secondary grid 
+numbering 2733 secondary grid lines 2748 selective grid numbering 2733 
+O 
+object anchors 2647 adding 2649 defined 2648 positioning 2673 released 2650 releasing 2673 types, user-defined 2648 See Also cell anchors, curve anchors, 
+leader anchors, node anchors, volume anchors object properties fields 3456 object styles 
+fields 3458 object tags, adding 3718 Object Viewer 1097 
+display configurations 1101 embedded 1099 Model Explorer 1099 navigating 1103 objects 1097 projection 1101 saving preview image 1107 set view direction in drawing 1106 SteeringWheel 1105 styles 1098 view directions 1101 ViewCube 1104 visual styles 1101 
+objects adding 70 adding to structural members 2590 adding to walls 1271 alignment 
+in curtain walls 1558 in door assemblies 1809 in window assemblies 1809 
+categorizing 576 constraints 1134 converting to 
+mass elements 1026 converting to 3D solids 3899 default display properties 810 demolished 567 in curtain walls 1558 in door assemblies 1808 in window assemblies 1808 
+detaching mask blocks  2846  
+dimensioning  3351  
+display system  787  
+displaying in viewports  798  
+editing  
+
+existence in drawings 852 facets, displaying 208 interactions in Renovation 
+mode 574 isolating 1121 isolating in external references 1121 isolating to display 1119 isolating to edit in elevation 
+view 1123 isolating to edit in plan view 1123 isolating to edit in section 
+view 1122 isolating to hide 1119 isolating, saving 1120 layer, color, and linetype 
+settings 203 mask blocks, attaching 2845 modifying 70 offset 
+in curtain walls 1559 in door assemblies 1809 in window assemblies 1809 
+orientation in curtain walls 1558 in door assemblies 1808 in window assemblies 1808 
+releasing anchored objects in curtain walls 1559 anchored objects in door assemblies 1810 anchored objects in window 
+assemblies 1810 Renovation mode 567 selecting by category 576 selecting similar 1117 stairs, adding to 2198 subtracting from stairs 2200 
+subtracting from structural members 2591 
+subtracting from walls 1272 Obscure command 2809 Occupancy property 3154 ODBC drivers 3481 of a window, changing the 
+display 1880, 1976 
+of window, changing  1973  
+opening  
+sizes  2035  
+opening components  
+custom blocks for  2070  
+
+display of, turning off 2071 opening styles, removing from 2072 
+opening endcap styles applying to wall style 1394 creating 1393 overriding on walls 1395 
+opening endcaps 2049 opening grips, editing openings using 2046 opening height, AEC dimension styles 3413, 3425 
+opening percents door, specifying 1906 window, specifying 1999 
+opening tools copying 2044 creating 2044 finding in palettes 2032 
+openings aligning by threshold or head height 2045 array openings between two points 2059 
+array openings using Modify Tool 2059 center opening between two 
+points 2059 center opening using Modify Tool 2059 centering in walls from xref drawings 1336 components 2070, 2072 custom blocks 2070 
+creating 2034 
+creating from assemblies 2037 doors 2037 windows 2037 
+creating in walls 2034 custom block components 2063 custom shapes 2038, 2041 dimensions 2048 display components 2067, 2071 display properties 2066 editing 2046 endcap style 2049 endcaps 2032 evenly space openings along a 
+wall 2060 evenly space openings using Modify 
+Tool 2060 filll type 2064 flipping 2048 hatching 2068 head height 2036 horizontal position 2053 hyperlinks 2066 in space surfaces 
+adding 3032, 3038 copying 3035 grip-editing 3041 moving 3035, 3040 removing 3050 stretching 3035 
+insertion 2036 location 2058 moving 2046 multiple, with same style 2044 notes 2066 opening tools, creation with 2033 overview 2031 positioning 2036, 2045 
+horizontally 2056 profiles 2037, 2817 reference files 2066 reposition opening using Modify 
+Tool 2060 repositioning 2050 repositioning openings between two 
+points 2060 shape 2048 sill display 2061 threshold or head height, alignment 
+by 2036 thresholds 2036 tool properties 2049 using cut plane of containing 
+object 2061 vertical orientation 2058 vertical position 2055 
+optimization 
+limiting snap points 203 Ortho Close option 1395 OutsideAirFlow property 3154 overrides 
+component cleanups 1343 display 656 opening endcap styles 1395 wall endcap styles 1388 
+P 
+panels, door 1897 
+parcels importing 247 importing as polylines 252 importing as spaces 252 
+PDF 
+publishing drawings 280 performance. See optimization plan elevations 3306 plan hatch material components 885 plan sections 3235 plan views, dimensioning. See elevation 
+labels plan views, editing profiles in place 1341 plans 
+demolition 565 renovation 565 revision 566 
+plotting 
+sheet set reverse order 496 with page setup override 496 plotting sheets annotation 468 categories 468 changing 497 external references, displaying 486 interactions with projects 497 plotting in reverse order 496 plotting with page setup 
+override 496 project sheet set 473 sheet 
+creating 470 electronically transmitting 494 importing in sheet set 479 opening and closing 481 properties 482 registering 480 synchronizing layer settings with 
+views 461 sheet drawings deleting 483 
+sheet list changing 491 inserting 488 updating 491 
+sheet selection activating 493 creating 492 deleting 493 
+sheet set electronically transmitting 494 publishing 496 refreshing 491 
+sheet subset 477 creating 476 removing 479 
+sheet template 475 
+sheet view creating 483 deleting 485 numbering 484 opening 484 synchronizing layer settings with 
+views 461 subsets 468 when to start with 469 
+XML files 468 points dimensioning 3352 Polyline Close option 1395 polyline outline creating from objects 1095 polylines converting to profiles 2819 converting to wall modifiers 1256 from zones 3098 roof slabs 2393 slabs 2393 postlinking views to sheet views 465 PPL file new 278 prairie-12 lights in window muntins 2014 prairie-9 lights in window muntins 2010 preliminary studies. See mass models preview graphics 3882 preview pane 353 primary grid line numbers 2733, 2748 profile definitions in Style Manager 856 profiles 2817 add rings 2824 adding to objects 2823 converting to polylines 2828 creating 2819 door geometry 1892 edge direction 2820 edges 2824 edit in place 2824 extrusion direction 2820 grips 2824 railing components 2344, 2349 remove rings 2824 replace rings 2824 rings 2819 vertices 2824 wall cleanups 1340 wall endcaps 1361, 1379 window geometry 1987 project browser opening 308 Project Browser closing 342 
+command line 548 details, exporting 551 Internet Explorer view 312 navigation bar 309 overview 307 project header 309 project selector 310 projects deleting 342 moving 333 renaming 334 properties 318 using 308 project bulletin board 325 project fields 3467 inserting 3468 project files closing 335 project image 325 Project Navigator 301, 345 AutoCAD undo commands 345 categories, creating 378 command line 549 closing 550 context menu 354 details pane 353 drag-and-drop operations 360 Drawing Explorer 352 MDI compliance 554 opening 345 preview pane 353 project status bar 361 tabs 346 Constructs 347 Project 346 Sheet Explorer View 349 Sheet Set View 349 Sheets 349 Views 348 toolbar 357 tooltip styles 353, 359 views refreshing 513 project sheet set, properties 473 project standard styles adding 663 
+changing  663  
+deleting  663  
+renaming  663  
+project standards  295, 585  
+accessing in Content Browser  630  
+accessing in Display Manager  632  
+
+accessing in Style Manager 630 accessing in tool palettes 629 activating 607 auditing 654 AutoCAD standards 604 changing 663 commands 678 configuring 595 
+AutoCAD standards 604 display settings 595 styles 595 synchronization 600 
+Content Browser library 618 copy from project 605 creating tool catalogs 612 default standards folder 606 defining 324 defining standards drawings 595 display settings 587 editing drawings outside of 
+projects 657 overview 587 prerequisistes 593 project template 594 saving 658 selecting standards tool palettes 623 setting up synchronization 602 setup 593 setup report 608 styles 587 synchronization 
+conditions 635 options 600 order 636 report 651 settings 600 status 638 with AutoCAD standards 652 
+synchronizing 633, 640 
+tool catalog 618 
+creating 625 tool content root path 619 updating 660 version 661 
+exceptions 662 history 663 new 662 
+workflow 587, 592 project standards display drawings 658 project standards drawings 
+adding styles and display 
+settings 670 adding to projects 595 associating styles 598 creating 657 editing outside of project 677 editing version history 672 purging version 675 purging version history 674 removing from project 595 saving 658 synchronizing 676 updating 665 updating from project drawings 668 versioning 673 
+project standards style drawings 658 
+project template 313, 315 overview 303 setup 594 
+project templates specifying 319 
+projects activating project tool palettes 361 addendums, alternates, and 
+as-builts 552 AEC dimensions and external references 553 
+annotating 515 schedules 518–519 tagging 516 
+archiving 552 auditing 654 basepoints 552 closing all files 335 command line 549 
+command line, new project 
+environment  550  
+configuring standards  324, 595  
+constructs  
+copying  553  
+moving  553  
+
+Content Browser library 304, 329 copying 313–314 copying standards 605 creating 313 
+from scratch 317 from template 313, 315 with existing structure 315 
+current, selecting 312 
+cut planes 534 anchoring objects 546–547 display range 535 and levels 536 manual 548 object-specific 535, 545, 547 overriding for walls 545 
+default folders 210 default options 304 defining standards drawings 595 deleting 342 detail component database 328 details, adding 322 dimensioning 533 disk space needed for project 
+files 551 
+displaying by folder structure 310 by history 311 
+drawing templates 303 electronically transmitting 337 elements 
+copying 553 
+locking 553 external references 300, 553 global cut planes 534, 536 
+clipped model view 542 display range 537–539 displaying different levels 540 
+keynote database 327–328 mapped drives 302, 307 moving 333 new 313 opening project browser 308 opening project library 363 overview 291 palettes 210 paths 511 project (APJ) file 299 project standards 585 project tool catalog 329 project-related information, 
+removing 343 
+properties bulletin board 325 defining 318 drawing templates 319 project image 325 
+property set definitions 521–522 property sets 519, 521, 553 
+example of using 518 renaming 334 schedule tables 526 schedule tags 553 setting up standard display 
+settings 595 setting up standard styles 595 settings 318 
+bulletin board 325 Content Browser library 329 detail component database 328 keynote database 327–328 project details 322 project image 325 project standards 324 templates 319 tool palettes 329 
+sheet set 299 sheet set template 303 specifying templates 319 standards drawings 304 structure 315 subcategories 382–383 support files 302 synchronization report 651 synchronizing overview 591 synchronizing view layers with sheet 
+layers 466 
+synchronizing with AutoCAD standards 652 synchronizing with standards 633, 
+640 templates 210 tips for working with 301 title blocks 527 
+creating tools 531 inserting 532 multi-view blocks 531 project attributes 528 project blocks 530 
+tool palettes 304 updating standards 660 user access 302, 551 wall cleanup work 553 workflow overview 289 XML files 296, 300, 550 
+corrupted 551 
+xref paths full 301 relative 301 
+See Also categories, constructs, divisions, Project Browser, Project Navigator 
+properties AEC dimension styles 3419 door 1860 fields, for objects 3774 grids 2734 manual, for objects 3774 on Extended Data tab, hiding 3824 on Extended Data tab, 
+sequencing 3824 section lines 3231 styles and definitions 3777 window 1953 
+Properties palette adjusting transparency 118 appearance 116 Design tab 118 Display tab 120 docking 117 Extended Data tab 121 hiding 117 opening 116 
+transparency 118 worksheets 122 
+property data formats 3764 applying 3765 creating 3767 managing 3765 notes and reference files 3771 property set definitions 3787 units 3766 using different 3765 
+property set data adding 3763, 3772 attaching to objects and styles 3850 attaching to styles and 
+definitions 3776 browsing 3783 edit property set data 
+worksheet 3719 editing 3761, 3772 exporting 3754 exporting to MDB 263 objects and styles, attaching to 3773 publishing to DWF 263 removing 3776 renumbering 3727 styles and definitions, removing 
+from 3782 
+property set definitions 3705, 3785 anchor property definitions 3820 automatic properties 3788 automatic property definition 3811 classification property 
+definitions 3814 classifications 3843 creating 3803 defining 3786 door size properties 3790 door swing direction 
+properties 3791 editing 3825 fields 3453, 3809 formula property definitions 3792 graphic property definitions 3822 in Style Manager 856 location property definitions 3813 managing 3787 manual property definitions 3807 material property definitions 3817 merging 3829 notes and reference files 3804 project property definitions 3819 property data formats 3787 slab and roof slab properties 3790 specifying application of 3805 structural member length 
+properties 3791 wall area properties 3788 wall length properties 3790 wall volume properties 3789 
+property sets 3786 attaching to objects in xrefs 523 fields 
+converting to text 3775 editing 3775 properties 3774 updating 3775 
+formulas 3796 evaluating results 3796 inserting VBScript code 3796 
+manual and automatic 
+properties 3787 removing 3776, 3829 schedule tables 3705 
+proxy graphics 191, 212–213 publishing drawings to PDF 280 
+publishing drawings to Autodesk MapGuide and Autodesk Envision 255 
+blocks and MVblocks 256 default map file 256 exported data types 255 external references 256 graphic data 255 MDB file 258 point databases 256 prerequisites 255 project data 261 property set data 256 publishing 260 SDF Component Toolkit 255 SDF Loader 256 
+purging classification definitions 3841 pyramid mass elements 997 
+Q 
+queries, material 903 quick access toolbar 49 Quick Slice 
+creating 1095 Quick Slice tool 1095 quick view drawings 74 quick view layouts 73 
+R 
+Radial constraints 1144 radial grids 2737 radial layout grids 2694 radius, wall 1177 railing styles 
+bottom rail location 2332 changing 2315 classifications 2343 components 2335 creating 2329 custom blocks 
+adding 2344 removing 2354 turning off 2354 
+custom blocks and profiles 2344 
+custom profiles adding 2349 turning off 2354 
+defined 2327 display components 2342 extensions 2337 files 2343 materials 2339, 2341 notes 2343 post location 2333 profile from closed polyline 2337 upper rail location 2330 
+railing tools creating 2290 finding in palettes 2281 railings 2305 anchor properties, changing 2321 anchoring 
+to objects 2297 to stairs 2296 array railings between two points 2299 array railings using Modify 
+Tool 2299 bottom rails, changing 2317 center railing between two 
+points 2299 center railing using Modify 
+Tool 2299 custom block components 2301 custom profile 2306 direction, reversing 2296 display of custom profiles 2311 editing 2292 evenly space railings along a 
+wall 2300 evenly space railings using Modify 
+Tool 2300 freestanding 2286 grips, using to edit 2292 hyperlinks 2326 location 2324 materials 2280 multiple, with same style 2290 notes 2326 polylines, creating from 2290 posts 
+adding 2293 changing 2318 hiding 2295 redistributing 2295 removing 2294 showing hidden 2295 
+profiles 2817 railing extensions 2319–2320 railing tools, creation with 2282 reference files 2326 releasing anchored 2299 reposition railing using Modify 
+Tool 2300 
+repositioning railings between two 
+points 2300 stairs, attaching to 2282 tool properties 2326 upper rails, changing 2315 
+ramps, creating 2122 read-only drawings, status indicator 858 rectangular components 
+dynamically-sized 3499 rectangular layout grids 2697, 2734 rectangular mass elements 1012–1013 rectangular pattern in window 
+muntins 2003 rectangular predefined-depth surface components 3498 
+reference files AEC dimension styles 3429 AEC polygon styles 1851 calculation modifiers 3132 curtain wall units 1624 curtain walls 1491 door assemblies 1762 doors 1908 list definitions 3076 railing styles 2343 slab edges 2496 slabs 2479 space styles 3071 wall cleanup definitions 1339 wall endcap styles 1393 wall modifier styles 1270 wall styles 1309 walls 1232 window assemblies 1762 windows 2001 zone styles 3112 zone templates 3119 
+referencing AEC objects 3903 relative xref paths in projects 301 removing frame 1453, 1591, 1721 removing from style 
+curtain wall styles 1453 curtain wall unit styles 1591 door assembly styles 1721 window assembly styles 1721 
+removing vertices 1352 rendering materials, assigning 911 
+Renovation categories 575 display modes 578 layers 580 modifying objects 575 settings 571 styles catalog 583 
+renovation mode 567 
+Renovation mode about 567 activating 568 design rules 578 
+renovation plans 565 renumbering objects for schedules 3727 repathing projects 511 Reposition From command 2815 reposition linework 2815 reposition profile-based object 2815 representations, display. See display 
+representations restoring layer states 741 return offsets 
+wall endcap styles 1392 ReturnAirFlow property 3154 reversing handing 
+doors 1880 
+windows 1975 reversing wall direction 1208 revision clouds 
+creating 3622 editing 3631, 3634 inserting 3625 
+revision plans 566 revolution mass elements 1004 ribbon 32 right triangle mass elements 998 rigid frame structural members 2633 
+first and second rafter 2638–2639 second segment 2639 rings 
+spaces 3013–3014 roof dormers 2362, 2459 roof grips, editing roofs using 2369 roof lines 
+editing 1210, 1214–1215 
+offsetting 1210 projecting 1210 reversing 1219 steps, adding 1214 vertices 1220 walls 1210, 1214, 1220 
+roof lines, curtain walls changing 1542, 1551 offsetting 1542 projecting 1542 vertices, changing 1552 
+roof slab body modifiers editing in place 2446 
+roof slab edge styles materials 2495 profile edges and extrusion 2487 soffits 
+geometry 2490 roof slab edges 
+profiles 2817 roof slab grips 2401 roof slab offsets 2421 roof slab styles 
+display components and materials 2470 materials 2475 roof slab thickness changing 2421 
+roof slabs adding objects to 2441, 2445 clipped gable 2458 creating 
+from roofs 2372, 2392 creating from 
+polylines 2393 cutting 2435 defined 2357, 2379 dormers 2362, 2459 editing 2400 holes 2438, 2440 materials 2472, 2494 mitering 2432, 2434 moving 2400 polylines 2393 properties 3790 removing objects from 2443 
+styles 2421 vertices 2436–2437 xcut 2458 
+roof tools creating 2366 finding in palettes 2358 
+roofs dimensions 2370 display components and 
+materials 2373 display properties 2374 edges and face 2371 editing 2368 hatching 2375 hyperlinks 2377 location 2376 moving 2368 multiple, with same style 2366 notes 2377 polylines, creating from 2365 reference files 2377 roof slabs, converting to 2372 tool properties 2369 walls, creating from 2364 
+root path tool content 329 rules, design. See design rules 
+S 
+sash, window 1992 
+saving AutoCAD objects 191 Proxy Graphics 191 to previous file format 191 
+scale specifying in drawings 195 schedule table styles 3731 
+columns adding 3739 editing 3747 formula 3743 quantity 3742 repeating 3743 spanning with a heading 3746 
+creating 3731, 3733 default format of 3735 display properties 3751 filtering by classification 3738 headings 3746 notes and reference files 3752 sort order 3749 specifying objects 3736 title formats 3750 troubleshooting 3863 
+schedule tables adding objects 3713 adding to drawing 3709 basic 3709 cell data, editing 3761 convert to table option 3728 creating 3728 customizing appearance 3728 default tools 3709 display properties 3755 editing 3728 exporting 3753 exporting data for objects 3754 external source properties 3758 formulas 3792 general properties 3756 hyperlinks, notes, and reference 
+files 3761 managing 3728 markers, turning off 3714 out-of-date, flagging 3731 placement 3758 property set data, adding 3763 removing objects 3713 reselecting objects 3714 selection criteria 3757 showing objects 3715 table breaks 3759 tools, creating 3710 troubleshooting 3860 updating 3715 See Also schedule table styles 
+schedule tag tool,creating 3722 
+schedule tags 3718 adding 3718 anchoring to objects 3725 connection to objects 3726 creating 3716, 3719 doors and windows, adding to 3718 
+editing  3716  
+property set data worksheet  3719  
+releasing anchored objects  3726  
+troubleshooting  3866  
+schedules  
+classifications in  3836  
+creating  3729  
+matrix  3732  
+overview  3701  
+
+renumbering objects for 3727 terminology 3702 See Also schedule tables 
+SDF Component Toolkit 255 SDF Loader 256 secondary grid line numbers 2733, 2748 section hatch linework 3273 section hatch material components 888 section lines 3220 
+changing 3221 defined 3213 graphic subdivisions 3229 hyperlinks, notes and reference 
+files 3233 location properties 3231 and section marks 3222 viewing 3221 
+section marks attributes 3230, 3232 defined 3213 and section lines 3222 
+section subdivisions. See subdivisions, section section tools 3652 properties 3656 section views creating from a callout 448 section views, dimensioning. See elevation labels sectioned bodies in live section views 3239 sectioned body material components 888 sectioned boundary material components 888 
+sections 
+creating with callouts 3671 in current drawing 3672 in existing drawing 3674 in new drawing 3677 
+defining lines 3270 dimensions, changing 3224–3226, 
+3228 display components 3268 erased component 3274 hidden component 3273 horizontal 3235 live section views 3216, 3237 location properties 3231 material boundaries 3218, 3247 materials 888, 3216, 3269 section hatch linework 3273 shrinkwrap 3270 shrinkwrap hatch 3271 subdivisions 3217, 3222, 3274 surface hatch linework 3272 See also 2D sections and 3D sections 
+semi-automatic synchronization 601 separator lines 
+in tool palettes 89 settings, Renovation objects 571 sheet drawings 
+deleting 483 Sheet Explorer View 349 sheet index 488 sheet list 488 sheet selection 492 
+activating 493 deleting 493 
+sheet set for projects 299 overview 293 publishing 496 
+sheet set fields 3469 inserting 3472 sheet set template consolidating inconsistent project information 332 
+creating 497 from existing drawings 505 from existing sheet set 498 
+for projects 303 Sheet Set View 349 sheet subset 477 sheet template in projects 475 sheet views 467 
+creating from model space 
+views 457 creating from view drawings 451 postlinking to views 465 synchronizing layer settings with 
+views 461 using display configurations from views 464 viewport layer overrides 464 
+sheets 467 display configurations 464 layer settings 461 overview 293 sheet 
+deleting from sheet set 482 sheet drawings 467 sheet view 467 synchronizing layer settings with 
+views 461 
+viewport layer overrides 464 ShowMotion 78 shrinkwrap 3270 
+cut plane display 1227, 1305 shrinkwrap hatch 3271 sills 1803, 1973, 2061 sills of assemblies, changing 1803 sills of openings, changing 2061 sills of windows, changing 2000 SIS 
+area calculation standard 2974 
+sizes openings 2035 windows 1947 
+slab body modifiers editing 2450 editing in place 2446 removing 2450 restoring to mass element 2452 
+slab edge styles 2482 angles 2484 creating 2482 
+defined 2480 edge cuts 2484 fascia 
+geometry 2490 placement 2481 specifying 2488 
+materials 2495 notes and reference files 2496 overhang 2484 profiles 
+fascia 2485 soffits 2485 
+soffits placement 2481 specifying 2488 
+slab edges defined 2382 editing 2426 overhang 2411 profiles 2817 
+slab grips 2401 
+slab styles changing 2421 classifications 2478 cut plane height 2477 defined 2460 display components and 
+materials 2470 display properties 2473 hatching 2475 materials 2475 notes and reference files 2479 
+slab tools creating 2397 finding in palettes 2384 
+slabs adding objects to 2441, 2445 based on walls 2389 bodies 2380 components 2474 creating 2386 
+from spaces 2396 overview 2379 creating from polylines 2393 creating with slab tools 2384 
+cutting 2435 
+edge styles 2480 
+editing 2400 
+extending 2430 
+holes 2438, 2440 
+hyperlinks 2425 
+justification 2387 
+location 2423 
+material components 2471 
+materials 2472, 2494 
+moving 2400, 2423 
+multiple walls 2389 
+multiple with same style 2397 
+notes 2425 
+offsets 2414 
+pivot points 2420 
+polylines 2393 
+properties 3790 
+reference files 2425 
+removing objects from 2443 
+slopes 2416, 2422 
+thickness 2414 
+tool properties 2420 
+trimming 2427 
+vertices 2436–2437 slabs and roof slabs 
+cut plane display 2424 slices 1087 
+attaching objects 1090 
+converting 
+to polylines 1091 
+detaching objects 1090 
+elevation 1090 
+generating 1088 
+hyperlinks 1092 
+location 1091 
+notes 1092 
+reference files 1092 sloped roofs 
+creating 2362 
+creating with roof tools 2359 soffits 2480 
+slab edge 2382 solution tips 67 space boundaries 
+activating 2980 by area calculation standard 2970 
+by style 2970 
+classifying 2976 
+displaying 2980 
+dividing 3004 
+editing 2978 
+grip-editing 2981 
+intersecting 3006 
+manual 2969 
+merging 3000 
+moving 2989 
+removing voids 3013 
+resetting 2988 
+reversing rings 3013–3014 
+subtracting holes 3005 
+trimming 3011 space boundaries (legacy) 
+converting to spaces 3160 converting to walls 3160 space calculation modifier styles. See 
+calculation modifier styles space decomposition 
+defined 3135 
+display settings 3136 
+displaying 3136 
+layer, color, linetype settings 3136 
+methods 3137 
+text settings 3139 
+trapezoid 3137 
+triangulated 3137 space evaluation document formats 
+TXT (ASCII text) 3150 
+XLS (spreadsheet) 3149 space evaluations 
+content, defining 3143 
+creating XLT template 3151 
+data format style properties 3147 
+default templates 3148 
+defined 3140 
+documents. See space evaluation 
+document formats 
+image display 3145 
+preparing the evaluation 3141 
+selecting spaces 3142 selecting zones 3142 Space Evenly command 2815 
+space linework evenly 2815  
+space profile-based object evenly  2815– 
+ 
+2816  
+space styles 3057  
+boundary offsets 3060  
+classifications 3062  
+converting from area styles  3072  
+creating 3058  
+cut plane 3070  
+defined 3057  
+display properties 3065  
+hatching 3068  
+list definitions 3061  
+materials 3062, 3064  
+notes 3071  
+reference files 3071  
+target dimensions 3059  
+tools, creating with 2903  
+space surfaces  
+adjacencies  
+defining 3055  
+displaying 3056  
+ceilings 3025  
+doors  
+removing 3050  
+floors 3025  
+grip-editing 3021  
+joining 3017  
+openings 3031  
+adding 3032, 3038  
+copying 3035  
+grip-editing 3041  
+moving 3035, 3040  
+removing 3050  
+stretching 3035  
+properties 3025  
+splitting 3016  
+windows  
+removing 3050  
+space type  
+changing 2990  
+space types 2881  
+associative 2904  
+non-associative 2947  
+
+SpaceEngineeringObjects property set 3154 
+spaces adjacencies 3055–3056 associative 2904 attaching to zones 3091 
+autogenerating  2904  
+2D spaces  2916  
+3D freeform spaces  2916  
+extruded 3D spaces  2916  
+
+automatic updates 2928 base boundaries 2978 boolean operations 2998, 3014 boundaries 2968 
+grip-editing 2981 boundary objects 2905 boundary objects in blocks 2922 boundary objects in xrefs 2922 calculating and evaluating 
+information. See space 
+evaluations calculation cut planes 3133 calculation formula 3131 calculation modifiers 3128 calculation type 3130 changing height (3D freeform) 2995 changing height (extruded 3D) 2993 changing space type 2990 changing styles 2961 changing surface height (extruded 
+3D) 2997 classifying according to area 
+calculation standard 2976 commands 3161 converting from 
+areas 2895 mass elements 2951 mass groups 2953 object outlines 2953 polylines 2953 profiles 2953 
+converting mass elements 1026 
+creating 2D 2947 converting from objects 2951 extruded 3D 2947 polygonal 2950 rectangular 2949 
+with target dimensions 2947 cut plane display 2966 decomposition. See space 
+decomposition deducting objects 2935 detaching from zones 3092 display components 3063 dividing 2933, 3004 editing 
+space boundaries 2978 geometry 3053 grip-editing 2981 gross boundaries 2978 hyperlinks 2967 inheriting zone hatch 3109 interference conditions 
+adding 2999 
+removing 3000 intersections 3006, 3020 issues with area calculation 
+standards 2945 issues with boundaries 2944 issues with boundary objects 2939 issues with updating 2942 issues with wall sweeps and wall 
+modifiers 2946 issues with xrefs 2946 joining surfaces 3017 location 2961 making associative 2936 making non-associative 2936–2937 manual updates 2930 merging 2931, 3000, 3018 net boundaries 2978 notes 2967 override boundary objects in 
+xrefs 2924 planning 2881 properties 2897 reference files 2967 removing voids 3013 renaming 2961 reversing rings 3013–3014 space boundaries 2978 
+activating 2980 displaying 2980 
+resetting 2988 space calculation modifier styles. See calculation modifier styles specifying additional display properties for zones 3100 specifying text type for a decomposition 2964 specifying the decomposition 
+type 2962 splitting surfaces 3016 subtracting holes 3005, 3019 surfaces 
+grip-editing 3021 height 2997 openings 3031 
+tools 2903, 2955 trimming 3011, 3014 troubleshooting 2938 types 2881 updating 2927 usable boundaries 2978 zone boundary offset 3094 
+spaces, adding engineering data to 3154 special conditions in walls 1241 specifying cleanup settings 2305 specifying object dimension points 3409 Specifying Stair Display at Different 
+Levels 2227 specifying the AutoCAD style, specifying 
+other display properties 3411 sphere mass elements 1001 spiral stairs 
+arc constraints 2106 constraints, changing 2167 creating 2102 drawn direction, changing 2166 floor settings 2108 horizontal orientation 2104 outside edge, changing 2168 terminating with 2105 vertical orientation 2104 
+stair custom from linework 2109 custom from tread profiles 2113 
+stair anchors landing 2179 releasing 2181 
+stair body modifiers editing 2205 geometry 2202 removing 2205 restoring to mass element 2206 stair components 
+adding to 2198 replacing 2201 subtracting from 2200 
+working with 2198 
+stair dimensions height, changing 2164 justification, changing 2166 multi-landing stairs, changing 2133 spiral, changing 2147 straight stairs, changing 2128 u-shaped, changing 2141 width, changing 2150 
+stair flights components, changing 2222 shape 2152 
+stair height multi-landing stairs, 
+changing 2138–2139 spiral stairs, changing 2149 straight stairs, changing 2131 u-shaped stairs, changing 2145 
+stair interference conditions 2207 curtain walls 2215, 2218 door assemblies 2218–2219 size, changing 2220 slabs 2211, 2214 spaces 2214–2215 walls 2207, 2210 window assemblies 2218–2219 
+stair landings components, changing 2223 extensions, changing 2226 shape 2154 
+stair location multi-landing stairs, changing 2134 spiral stairs, changing 2148 straight stairs, changing 2129 u-shaped stairs, changing 2142 
+stair sides, changing shape 2156 generating polyline 2162 offsetting side 2161 projecting side 2159 removing changes 2163 
+stair styles changing 2166 classifications 2269 color 2263 components 2256, 2261 creating 2248 defined 2247 dimension properties 2249 display properties 2262, 2265 editing 2249 files 2270 landing extensions 2258 layer 2263 linetype 2263 materials 2260–2261 notes 2270 riser numbering display 2268 stringers 2251 
+stair tools creating 2124 finding in palettes 2079 
+stair tower creating 2274 modifying 2277 
+Stair Tower Generator 2274 
+stair winder styles creating 2271 defined 2271 files 2273 notes 2273 settings 2272 
+stair winders adding a tread 2190 aligning a tread edge 2185 editing 2181 lengthening a flight to align tread 
+edge 2182 manual editing 2193, 2195 moving tread ends 2195 removing a tread 2188 straightening treads 2193 
+StairFit 2175 stairs adding and subtracting 
+objects 2198, 2200 AEC options 2078 attaching railings 2282 components 2238 cut planes 2239 dimensions 2171 display properties 2241 display properties, changing 2237 editing 2126 files 2246 grips 2126 hyperlinks 2246 location 2235 materials, specifying 2236 multiple, with same style 2124 notes 2246 overlapping 2227, 2233 replacing stairs with objects 2201 riser numbers, displaying 2243 shape 2136 stair tools, creation with 2080 tool properties 2235 
+Stairs Cut Line Extension 2264 Display Ramp Arrows 2265 Specifying Down Display 
+Components 2227 Specifying Up and Down Display Components 2227 Specifying Up Display 
+Components 2227 stamp-type components 3491 standard display settings 838 
+accessing 632 standard sets See default display sets standard styles accessing 630 standard tools 590 project 608 standards drawings for projects 304 standards, layer. See layer standards 
+starburst pattern in window muntins 2018 status indicator for read-only 
+drawings 858 SteeringWheels 76 steps, adding to roof or floor line 1214, 
+1555 
+Stock Tool catalog categories 165 viewing 140 
+stops, door 1897 straight curtain walls curtain wall tools, creation with 1406 straight stairs calculation rules 2083, 2089, 2099, 
+2107 creating 2080 terminating with 2082 vertical orientation 2081 
+straight swing 
+specifying the display of 1880 structural column grid tools 2730 structural column grids 2730 structural member body modifiers 
+adding 2590 editing 2597 geometry 2594 removing 2597 restoring to mass element 2598 structural member components 
+replacing 2593 working with 2589 
+Structural Member Catalog 2500 browsing 2505 content of 2506 locating shapes 2509 opening 2507 opening catalog files 2509 organization of 2505 structural member styles, 
+creating 2505–2507 structural member length properties 3791 
+Structural Member Style wizard 2500 structural member styles, creating 2510 structural member styles catalog shapes, creating from 2506– 
+
+2507 changing 2584 classifications 2617 custom blocks 
+adding 2614 removing 2617 turning off 2616 
+cut plane elevation 2613 display components 2605 display properties 2607 hatching 2612 layer, color, and linetype 2611 materials 2604–2605 
+assigning 2605 notes 2618 overview 2602 reference files 2618 Structural Member Catalog 2505 Structural Member Style 
+wizard 2510 Style Manager 2603 
+structural members adding objects to 2598 creating 2504 curved structural members 2572 custom 2619 custom block components 2586 custom shape 2641 custom shapes 
+adding 2626 
+creating 2640 cut plane display 2584 design rules 2622 display representations 2607 editing 2559 endpoint 2569 grips, editing with 2560 hyperlinks 2589 justification 2573 length 2566 linework, creating from 2558 
+materials 2503 modifying 2625 multi-component 2630, 2633 notes 2589 overview 2499 radius of curved 2571 reference files 2589 removing objects from 2601 replacing structural members with 
+objects 2593 rigid frames. See rigid frame structural 
+members roll 2570 shapes, adding 2626 start and end offsets 2567 start point 2569 styles 2584 subtracting objects 2591 tool properties 2584 tools 2513, 2527 
+beam tools 2513 brace tools 2518 column tools 2523 
+trim planes adding 2577 adding, based on object or 
+linework 2581 changing 2583 mitering 2582 overview 2576 removing 2583 
+type of 2575 structural members body modifiers structural members subtracting from 2591 Style Manager 
+drawings and templates closing 868–869 creating new 868 determining status of 867 dragging 869 opening 867–868 
+left pane 858 menu bar and toolbar 858 opening 857 overview 856 right pane 858 status bar 859 structural member styles 2603 styles 
+creating 860 dragging to tool palettes 862 sorting 859 
+styles 583 attaching property set data 3776 cleanup group definitions 856 copying between drawings 863 copying between objects 861 creating 860 creating tools from 862 displaying 858 entering properties 3777 layer key 856 materials 874, 905 previewing 858 removing property set data 3782 renaming 863 sending to other users 865 sorting 859 spaces 3057 standard tools 590 unused, removing 866 viewing across multiple 
+drawings 859 walls 1198 See also individual component names, 
+Style Manager styles locations 134 subcategories. See categories, project subdivisions, section 3216–3217, 3222 
+components 3274 display of 3243, 3245 section lines 3229 
+Subtract command 2808 
+subtracting profiles 1353 profiles from wall endcaps 1379 spaces 3005 
+subtractive mass elements 1059, 1084 sunburst pattern in window muntins 2021 SupplyAirFlow property 3154 
+support files 
+for projects 302 support files locations 134 surface hatch linework, sections 3272 surface hatch material components 886 surface hatches 890 
+curved surfaces 891 extrusions 893 free form mass elements 895 hidden, displaying 898 hiding 896 multiple faces 892 offset, horizontal and vertical 900 overrides, editing 902 overriding 895 patterns 909 rotation 899 
+surfaces 
+importing 247, 253 surfaces See space surfaces swings, door 
+displaying as straight line 1905 swings, window angles 1957 
+synchronization automatic 600 display settings 645 exceptions 642 excluding display settings 651 excluding styles 651 individual display settings 650 individual styles 650 manual 601 of project standards 600 performing 640 project drawing 653 project drawing with standards 643 report 651 selected styles 645 semi-automatic 601 setup 602 with AutoCAD standards 652 
+synchronizing layers in project 461 postlinking 465 view layers and sheet view 
+layers 461 synchronizing project standards 633 
+T 
+T-intersections 1314 target dimensions 
+for spaces 3059 technical support 25 templates 
+closing in Style Manager 868–869 creating drawings from 188 creating in Style Manager 868 default folders 187 defined 187 dragging in Style Manager 869 opening in Style Manager 867–868 predefined display 
+configurations 787 space evaluation documents 3148 
+terminating with multi-landing stairs 2088 spiral stairs 2105 straight stairs 2082 u-shaped stairs 2098 
+text fields 3459 in tool palettes 89 
+text-based annotation editing 3568 text-only annotation creating 3562 text-with-leader annotation 
+creating 3562 thawing walls 578 thresholds, door 
+display properties 1906 symbols 1907 
+title blocks 527 inserting 532 multi-view blocks 531 project attributes 528 project blocks 530 tools, creating 531 
+title marks 3652 inserting 3664 properties 3656 
+tool catalog libraries 138 
+catalogs adding 152 copying 154 creating 145 editing properties 158 removing 162 viewing 140 
+opening 162 renaming 163 websites, adding 156 
+tool catalogs adding tools from drawings 149, 
+615 catalog libraries 152 categories, definition of 165, 168 copying 154 
+tool packages 179 
+tool palettes 178 creating 145 creating a catalog install file 153 creating from drawings 146, 612 creating from projects 612 customizing tools 174 deleting items 175 dragging items to workspace 143 for projects 618 i-drop icon 142 linked 158 linked and unlinked items 175–176 moving tools between 172 name limitations 145 opening in Content Browser 182 properties, editing 158 publishing 154 read-only 142 refresh options for tool palettes 181 removing 162 searching 163–164 supplied with Autodesk Architectural 
+Desktop 138 tool packages, adding 169 tool palettes, adding 168 tools 
+adding 170 using 176 
+unlinked 158 viewing 140 tool content root path 329 tool content root path in projects 619 
+tool packages adding to tool catalogs 169 adding tools 170 copying 171, 179 moving 171 moving tools between 172 opening in Content Browser 182 overview 167 
+tool palettes 51, 78 activating for projects 361 adding from Content Browser 91 adding to tool catalogs 168 adding tools 170 appearance 87 AutoCAD tool palettes 136 central location 90 copying 171, 178 creating 86 dragging to workspace 143 for projects 304 in Content Browser 90 moving 171 moving tools between 172 opening in Content Browser 182 overview 167 project profile, adding 627 refreshing 181 selecting project standards 623 separator lines 89 setting the appearance 87 text 89 updating from Content Browser 92 working from central location 90 
+tool palettes group 80 creating 85 
+tool palettes set 79 adjusting transparency 83 appearance 81 creating 84 different palette combinations 83 docking 82 
+hiding 82 
+opening 81 
+renaming 83 
+setting appearance 81 
+specifying tool palettes 83 tools 80, 93 
+AEC dimension 3368, 3383 
+AEC polygon 1814, 1817 
+anchor 2674 
+applying properties to object 113 
+ceiling grid 2771, 2777 
+column grid 2724 
+command tools 104 
+copying from tool palette 101 
+creating 1236 
+creating from DesignCenter 103, 
+3877 
+creating from objects 100 
+creating from Style Manager 101 
+creating from styles 862 
+creating objects 95 
+curtain wall 1419 
+deleting 115 
+door 1858 
+door assembly 1684 
+elevation label 3437 
+from a central location 109 
+icon 
+changing 98 
+refreshing 99 
+in Content Browser 109 
+linking from Content Browser 109 
+multi-view blocks 2866 
+openings 2032, 2044 
+properties, changing 97 
+railing 2281, 2290 
+re-importing styles 114 
+refreshing 180 
+removing link to Content 
+Browser 113 
+roof 2358, 2366 
+slab 2384, 2397 
+stair 2079, 2124 
+structural column grid 2730 
+style location 94 tool types 94 updating from Content Browser 112 updating in Content Browser 112 wall 1149, 1197 window 1943, 1950 window assembly 1684 zone 3087 
+tooltips 62 command tooltips 62 dialog tooltips 64 extended tooltips 62 object grip tooltips 68 object rollover tooltips 64 palette tooltips 64 property tooltips 65 solution tips 67 thumbnail previews 65 turning on and off 63 
+top-level categories, specifying location 
+of 381 Trim command 2803–2804 trim linework 2803 trim linework to edge 2804 trim planes, structural members 2576– 
+
+2577, 2583 trim profile-based object 2803 trim profile-based object to edge 2804 trimming 
+spaces 3011, 3014 wall encaps 1376 wall intersections 1356 
+troubleshooting AEC Editor 203 classifications 3864 display changes upon dragging 852 display system 851 existence of objects in drawings 852 linetypes 853 schedule table styles 3863 schedule tables 3860 schedule tags 3866 units, on extended data tab 3866 viewports 852 wall cleanups 1329 
+true colors AEC polygons 1839, 1850 
+masking in AEC polygons 1849 true length 1396 turn types 
+multi-landing stairs 2087 u-shaped stairs 2096 
+U 
+u-shaped stairs alignment, changing 2221 constraints 2101 creating 2095 floor settings 2102 horizontal orientation 2097 terminating with 2098 turn types 2096 vertical orientation 2098 
+UCS 
+aligning to object face 132 unconstrained doors and windows 1164 units 
+property data formats 3766 
+troubleshooting 3866 units, specifying in drawings 192 updating 
+associative spaces 2927 fields 3466 
+usable boundaries activating 2980 displaying 2980 editing 2978 spaces 2968 
+user interface working with objects in 69 utilities referencing AEC objects 3903 
+V 
+validating LandXML 250 variable grid lines 2732 variable lines 3 version 
+editing 672 exceptions 662 GUID 661 
+history 663 new 662 project standards 661 project standards drawing 673 purging 675 purging history 674 
+version history 672 Vertical constraints 1137 vertical orientation 
+multi-landing stairs 2087 spiral stairs 2104 straight stairs 2081 u-shaped stairs 2098 
+vertices adding to wall intersections 1349 removing 1352 roof and floor lines 1220 
+vertices in roof and floor lines 1556 
+view directions and display representations 808 assigning display sets 821 
+view drawings placing on sheets 451 synchronizing layers with sheet 
+views 461 ViewCube 75 viewers, placement of 203 viewports 
+display configurations 796 assigning 822 default 823 
+displaying objects 787, 798 troubleshooting 852 
+views and sheet views 432 annotation 437 changing 466 and constructs 436 content 467 creating 439 
+assigning levels and 
+divisions 441 defining properties 440 selecting constructs 442 
+deleting 453, 467 display configurations 464 electronically transmitting 452 external references, displaying 444 interactions with projects 466 layer settings 461 layer snapshots 432 model space view drawings 448 model space views 454 names and categories 467 opening and closing 447 overview 292, 432 placing on sheets 451 plotting sheets 432 postlinking to sheet views 465 projects, adding to 466 properties 449 regenerating 451, 549 synchronizing display configurations 
+with sheet view 464 synchronizing view layers with sheet 
+views 461 templates 438 updating 437 viewport layer overrides 464 when to start with 438 
+visibility display components 779 Visual Audit utility 3901 performing 3902 voids spaces 3013 
+volume anchors adding 2669 anchoring to different 
+volumes 2672 copying objects to all layout 
+volumes 2672 defined 2669 position of objects attached to, 
+changing 2670 size of objects attached to, changing 2670 
+W 
+wall area properties 3788 subtracting from walls 1272 working with 1270 
+wall body modifiers  
+adding  1271  
+editing  1277  
+geometry  1274  
+removing  1277  
+replacing wall components  1273  
+restoring to mass elements  1278  
+
+wall cleanup chamfering 1348 fillet 1347 
+wall cleanup groups assigning different definitions 1326 creating 1338 definitions 1337 notes and reference files 1339 
+wall cleanups definitions 1339 notes and reference files 1339 profiles 1340 troubleshooting 1329 
+wall components cleanup priorities of 1288 hatching 1226, 1303 index 1288 layer, color, and linetype 1225, 
+1302 material components 1299 
+wall endcap styles applying to wall style 1388 modifying 1389, 1392 notes and files 1393 overriding on walls 1388 return offset 1392 substituting geometry 1389 wall endcap profile 1389 
+wall endcaps adding vertex grips 1368 Calculate Automatically 
+feature 1382 chamfering 1373 converting edges to arcs 1369 creating with in-place edit 
+grips 1361 drawing polylines 1382 
+editing 1365 extending 1377 filleting 1371 hiding edges 1375 merging 1381 modifying components with in-place 
+edit grips 1361 modifying with in-place edit 
+grips 1361 offsetting 1366 profiles 1361 showing edges 1374 subtracting profiles 1379 trimming 1376 Vertex grips 1365 
+wall grips 1177 wall interference conditions 1278 wall intersections 
+cleanup workflow 1309 cleanups 1310, 1340, 1343 dynamic cleanup radius 
+variable 1321 editing in place 1340 extending 1358 hiding edges 1343 merging profiles 1354 multiple intersections 1316 removing vertices 1352 showing edges 1345 subtracting profiles 1353 trimming 1356 vertices 1349 
+wall justification changing while drawing 1151 
+wall length changing 1177 properties 3790 
+wall modifier styles creating 1269 notes and files 1270 
+wall modifiers adding 1259 applying opposite faces 1254 bump-outs or chases 1254 converting polylines to 1256 editing 1261 
+placement 1265 removing 1281 working with 1254 
+wall orientation 
+changing while drawing 1150 wall properties 1281 wall radius 1177 wall styles 
+adding components from other 
+styles 1293 classifications 1308 complex endcaps 1306 components 1285, 1291 components browser 1287 creating 1283 creating components 1291 cut planes 1305 defined 1282 display properties 1302 endcap styles 1388 hatching 1303 information 1306 materials 1299, 1301 miters 1306 notes and reference files 1309 offset 1398 opening endcap styles 1394 removing components 1299 viewing components 1286 width 1398 
+wall sweeps adding to walls 1244 editing 1253 geometry 1246 mitering 1253 profiles 2817 profiles, creating for 1243 removing 1253 
+wall tools 1236 wall volume properties 3789 wall width 1177 walls 
+3D objects, creating from 1162 adding and subtracting objects 1271–1272 adding assemblies 1173 
+adding doors and windows 1164, 
+1173 adding sweeps 1244 anchoring objects to 1174 arced wall segments 1149 base height 1177, 1190 chamfering 1206 cleanup guidelines 1325 cleanup priorities 1323 cleanup radius 1327 cleanup workflow 1309 cleanup, specifying for specific 
+walls 1326 converting polylines to wall 
+modifiers 1256 converting to curtain walls 1417 creating from arcs 1160 creating from circles 1160 creating from lines 1159 creating from linework 1159 creating from polylines 1161 creating roofs from 2364 creating with tools 1149 curved walls 1396 customized surfaces 1241 cut plane display 1227 detaching objects 1175 direction 1147, 1208 display properties 1224, 1230 draw wall from wall justification 
+line 1157 duplicated in xref drawings 1336 editing 1176 filleting 1203 floor line vertices 1397 floor lines 1210, 1212 gable roof lines 1213 grips 1177 intelligent cleanups 1310–1311, 
+1314, 1316 interference conditions 1280–1281 interference objects, 
+modifying 1281 intersection cleanup 1310 intersections 1310 joining 1201 justification 1151, 1156, 1193 justification lines 1319 length 1177, 1191, 1396 length properties 3790 location 1199 materials 1222 merging 1200 merging profiles 1354 miters 1253 modifier styles 1269 modifiers 1254, 1261 moving 1176, 1182 multiple, with same style 1236 notes and reference files 1232 offsets 1153, 1157, 1193 openings 1173 orientation 1150 plan views 1230 profiles for sweeps 1243 properties 1155, 1281 radius 1177 releasing doors from 1877 releasing windows from 1968 removing all merged 1201 removing individual merged 1200 removing objects 1174 removing sweeps 1253 replacing walls with objects 1273 repositioning 1153, 1195–1196 reverse baselines 1208 reversing direction 1208 roof line vertices 1397 roof lines 1210 shape, changing 1185 special conditions 1241 start and end points 1208 straight wall segments 1149 styles 1198, 1398 sweep geometry 1246 sweeps 1242, 1244, 1246, 1253 tools 1149, 1197, 1236 vertices in roofs and floors 1220 volume properties 3789 wall component priorities 1328 wall modifiers 1259, 1265 width 1177, 1186, 1188, 1398 
+websites, adding to tool catalog libraries 156 
+width wall 1177 window 1956 
+winders editing 2181 manual editing 2193, 2195 
+window repositioning windows between two points 1969 
+window assemblies alignment of objects in cells 1809 auto-adjusting cells 1699 cell markers 1764 creating 1675, 1678 curtain walls, inserting into 1471 custom grids 1683 dimensions 1797 display of 1754 division overrides 1786 editing 1793 editing objects in cells 1808 frame and mullion overrides 1774 frame edges 1777 frames and mullion overrides 1773 freestanding 1798 hyperlinks 1807 in-place editing 1780 infills 
+for inserting objects 1709 
+overrides 1767 interference conditions 1799–1800 matching properties 1797 materials 1753 merging cells 1764 mitering 1801 moving 1793, 1796 mullion edges 1777 multiple, with same style 1684 nested grids 1732, 1734 notes and reference files 1807 offset of objects in cells 1809 orientation of objects in cells 1808 positioning 1679 releasing anchored objects in 
+cells 1810 removing overrides 1791 swapping two objects 1810 window assembly tools, creation 
+with 1677 
+window assembly cells cell assignment 1741 filling with panel 1736 infills 
+defining 1706 removing 1740 objects, inserting 1739 
+window assembly components 
+custom graphics  1758  
+display  1755  
+hatching  1757  
+layer, color, and linetype  1756  
+window assembly dimensions  1678  
+
+window assembly frame 1721 window assembly frames 1743 window assembly grids 
+cells 1730 fixed size 1696 manually defining number and 
+size 1702 custom 1683 divisions 1695, 1730 elements 1672–1673 fixed number 1701 frame edges 1745, 1747 frames, adding 1744 mullions 1721, 1723–1726, 1728 nested grids 1732 offset 1703 
+window assembly grips editing window assemblies 
+using 1794 window assembly properties 1763 window assembly styles 1721 
+assigning definitions to elements 1729 definitions to mullions 1747 divisions to grids 1730 infills to cells 1730 
+assignments 1743 elements of 1691, 1729 frame offsets 1719 frames 1714 
+cell infills  1730  
+changing  1796  
+creating  1692  
+creating cut planes  1760  
+defined  1687  
+division definitions  1705  
+element of  1792  
+
+width and depth 1715 grid cells 1696 infills 
+alignment 1711 definitions 1713 offset 1711 overriding 1764 
+matching styles 1797 
+mullions assignments 1748–1749 definitions 1728 offsets 1726 removing from grids 1750 width and depth 1723 
+notes and reference files 1762 overrides 1763 overview of creating 1689 panel infills 1708 profiles 
+frames 1716–1717 mullions 1724–1725 
+shape 1798 window assembly tools 1684 window components 
+custom blocks for 1995 display of, turning off 1998 layer, color, and linetype 1994 window styles, removing from 1998 
+window dimensions changing for window styles 1983 window frames, assigning materials 1992 window measurements. See window dimensions window muntins creating 2002 
+diamond pattern 2007 display of, turning off 2028 editing 2027 gothic pattern 2024 materials 1992 prairie-12 lights 2014 prairie-9 lights 2010 rectangular pattern 2003 starburst pattern 2018 sunburst pattern 2021 window styles, removing from 2029 
+window sash materials  1992  
+window sills  
+height  1948  
+specifying display  2000  
+window styles  
+changing  1956  
+
+components 1996, 1998 creating 1981 creating window tools from 1950 custom window shapes 1984 defined 1980 design rules for 1986 dimensions 1983 display of components, turning 
+off 1998 display properties 1993 geometry 1987 materials 1994 muntins 2029 notes and files 2001 opening percentage 1999 shapes, replacing 1987 standard sizes 1983 
+window swings angles 1957 opening percent 1957 
+windows adding 1164 aligning by head height or sill 
+height 1948 array windows between two points 1969 array windows using Modify Tool 1969 assemblies 1336 
+center window between two points 1969 center window using Modify Tool 1969 centering in walls from xref drawings 1336 creating 1945 from door and window 
+assemblies 1949 from doors 1949 from openings 1949 in door and window 
+assemblies 1949 
+in walls 1945 custom block components 1977 custom shapes 1984 display components and 
+materials 1990 display of endcaps in model 
+views 1229 display properties, specifying 1993 door and window assemblies, 
+inserting 
+into 1739 editing 1953 endcaps 1943 evenly space windows along a 
+wall 1970 evenly space windows using Modify 
+Tool 1970 frame display 1880, 1976 freestanding 1970 geometry, editing 1987 head height, aligning 1948 horizontal position 1963 in space surfaces 
+adding 3032, 3038 removing 3050 inserting 1948 
+into door assemblies 1739 inserting into curtain walls 1471 materials, assigning 1992 moving 1953 
+along walls 1959 to a different wall 1968 within walls 1962 multiple with same style 1950 muntins block components 1972 notes and reference files 1979 opening endcap styles 1970 opening percents, specifying 1999 placing across length of wall 1168 placing centered between grid 
+lines 1170 placing evenly between grid 
+lines 1171 placing evenly on wall 1165 placing in relation to grid lines 1169 positioning 1948, 1953 
+horizontally 1966 profiles 2817 properties of 1953 releasing from walls 1968 reposition window using Modify 
+Tool 1969 reversing handing 1975 schedule tags, adding 3718 shapes 1987 sill display 1973 sizes 1947 sizes, standard 1983 tools, creating 1950 type and shape 1986 using cut plane of containing 
+object 1971 vertical alignment, changing 1958 vertical orientation 1968 vertical position 1965 width 
+changing how measured 1956 grips, using to edit 1954 
+window tools, creating with 1943 wings. See divisions wizard, Create AEC Content 2832 worksheets 122 workspace 
+adding objects 70 application menu 44 application status bar 56 command window 55 Communication Center 62 components 31 context menus 50 drawing window status bar 52 InfoCenter 60 modifying objects 70 overview 30 Project Navigator palette 59 Properties palette 52, 115 quick access toolbar 49 quick view drawings 74 quick view layouts 73 ribbon 32 ShowMotion 78 SteeringWheels 76 tool palettes 51, 78 tool palettes group 80 tool palettes set 79 tools 80, 93 tooltips 62 
+command tooltips 62 dialog tooltips 64 extended tooltips 62 object grip tooltips 68 object rollover tooltips 64 palette tooltips 64 property tooltips 65 solution tips 67 thumbnail previews 65 turning on and off 63 
+ViewCube 75 
+X 
+XML files constructs 386 corrupted or deleted 551 elements 412 plotting sheets 468 project 296, 300, 550 
+xrefs associatively dimensioning 3363 xrefs. See external references (xrefs) 
+Z 
+zone boundary offset 3094 
+zone hatch inheriting to spaces 3109 
+zone styles arrow 3111 classifications 3106 component hatching 3108 content restrictions 3105 converting from area group 
+styles 3112 creating 3103 defined 3102 display properties 3106 files 3112 hatching components 3108 inheriting hatch to spaces 3109 layer, color, linetype 3106 list definitions 3104 marker size 3111 notes 3112 text style 3111 
+zone templates contents 3116 converting from area group 
+templates 3120 creating 3115 defined 3114 files 3119 notes 3119 properties 3116 
+zone tools creating 3087 zones, creating 3079 
+zones attaching to zones 3091 calculation modifier styles 3096 calculation type 3095 changing style 3093 commands 3162 content restrictions 3105 content rules 3095 converting from area groups 3089 creating 3083 defined 3077 detaching from zones 3092 hyperlinks 3102 modifying 3093 multiple, with same style 3087 notes 3102 ordering structure 3097 pecifying additional display 
+properties 3100 polylines, creating 3098 properties 3080 reference files 3102 renaming 3093 selecting attached spaces 3092 selecting attached zones 3092 structure 3097 templates 3078, 3085 
+See Also zone templates tools 3079 zone boundary offset 3094 zone templates, creating from 3085 
+
+
+
+
+
+
+

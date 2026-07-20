@@ -18,6 +18,8 @@ import {
   stitchContours,
   unionBounds,
   unitLabel,
+  resolveAlignment,
+  traceWaterDropPath,
   type Bounds,
   type ElevationGrid,
   type InfrastructureNetwork,
@@ -62,6 +64,7 @@ type Interaction =
   | { type: "panning"; lastScreen: Point }
   | { type: "moving"; startWorld: Point; delta: Point }
   | { type: "vertex"; elementId: string; index: number; boundary: Polygon }
+  | { type: "alignmentPI"; elementId: string; index: number; boundary: Point[] }
   | { type: "edgeBulge"; elementId: string; index: number; from: Point; to: Point; bulge: number };
 
 /** Midpoint of an edge, honoring an existing bulge (the arc's midpoint). */
@@ -118,6 +121,8 @@ export function PlanningCanvas() {
   const deleteVertex = useWorkspaceStore((s) => s.deleteVertex);
   const setEdgeBulge = useWorkspaceStore((s) => s.setEdgeBulge);
   const setTool = useWorkspaceStore((s) => s.setTool);
+  const viewFrames = useWorkspaceStore((s) => s.viewFrames ?? []);
+  const matchLines = useWorkspaceStore((s) => s.matchLines ?? []);
 
   // Find & filter: dim non-matching elements when canvas filtering is on.
   const findQuery = useFindStore((s) => s.query);
@@ -156,6 +161,7 @@ export function PlanningCanvas() {
   const [cursor, setCursor] = React.useState<Point | null>(null);
   const [cursorSnappedToVertex, setCursorSnappedToVertex] = React.useState(false);
   const [measure, setMeasure] = React.useState<Point[]>([]);
+  const [waterDropPath, setWaterDropPath] = React.useState<Point[] | null>(null);
   const interactionRef = React.useRef<Interaction>({ type: "idle" });
   const [, forceRender] = React.useReducer((n: number) => n + 1, 0);
 
@@ -165,6 +171,7 @@ export function PlanningCanvas() {
   React.useEffect(() => {
     setDraft([]);
     setMeasure([]);
+    setWaterDropPath(null);
   }, [activeTool]);
 
   // --- size tracking -------------------------------------------------------
@@ -258,6 +265,35 @@ export function PlanningCanvas() {
           if (Math.hypot(s.x - c.x, s.y - c.y) < 14) return element.id;
         }
       }
+
+      // Check stationed baseline alignments
+      if (site.alignments) {
+        for (const align of site.alignments) {
+          const resolved = resolveAlignment(align);
+          if (!resolved) continue;
+          for (const el of resolved.elements) {
+            if (el.kind === "tangent") {
+              const p1 = worldToScreen(el.from, viewport);
+              const p2 = worldToScreen(el.to, viewport);
+              const c = worldToScreen(world, viewport);
+              if (pointSegmentDistance(c, p1, p2) < 10) return align.id;
+            } else {
+              const c = el.curve;
+              const steps = Math.max(2, Math.ceil(c.deltaDeg / 2));
+              let prevPt = { x: c.center.x + c.radius * Math.cos(c.startAngle), y: c.center.y + c.radius * Math.sin(c.startAngle) };
+              for (let idx = 1; idx <= steps; idx++) {
+                const ang = c.startAngle + (c.sweep * idx) / steps;
+                const currPt = { x: c.center.x + c.radius * Math.cos(ang), y: c.center.y + c.radius * Math.sin(ang) };
+                const p1 = worldToScreen(prevPt, viewport);
+                const p2 = worldToScreen(currPt, viewport);
+                const click = worldToScreen(world, viewport);
+                if (pointSegmentDistance(click, p1, p2) < 10) return align.id;
+                prevPt = currPt;
+              }
+            }
+          }
+        }
+      }
       return null;
     },
     [site, viewport],
@@ -348,6 +384,14 @@ export function PlanningCanvas() {
       return;
     }
 
+    if (activeTool === "waterdrop") {
+      if (terrainSurface) {
+        const path = traceWaterDropPath(terrainSurface, snapped);
+        setWaterDropPath(path);
+      }
+      return;
+    }
+
     if (tool.mode === "point" && tool.kind) {
       addPointElement(tool.kind as "note" | "tree" | "spot", snapped);
       setTool("select");
@@ -403,6 +447,27 @@ export function PlanningCanvas() {
       }
     }
 
+    // Grip PI editing on horizontal alignment
+    const selectedAlign = site?.alignments?.find((a) => a.id === selection[0]);
+    if (selectedAlign) {
+      const rect = getRect();
+      const sc = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      const idx = selectedAlign.pis.findIndex((pi) => {
+        const s = worldToScreen(pi.point, viewport);
+        return Math.hypot(s.x - sc.x, s.y - sc.y) < 9;
+      });
+      if (idx >= 0) {
+        e.currentTarget.setPointerCapture(e.pointerId);
+        interactionRef.current = {
+          type: "alignmentPI" as any,
+          elementId: selectedAlign.id,
+          index: idx,
+          boundary: selectedAlign.pis.map((p) => ({ ...p.point })) as any,
+        };
+        return;
+      }
+    }
+
     const hitId = hitTest(world);
     if (hitId) {
       if (!selection.includes(hitId)) select(hitId, e.shiftKey);
@@ -443,6 +508,12 @@ export function PlanningCanvas() {
       return;
     }
 
+    if (interaction.type === "alignmentPI") {
+      interaction.boundary = (interaction.boundary as any).map((v: any, i: number) => (i === interaction.index ? snapped : v));
+      forceRender();
+      return;
+    }
+
     if (interaction.type === "edgeBulge") {
       interaction.bulge = bulgeThroughCursor(interaction.from, interaction.to, snapped);
       forceRender();
@@ -456,6 +527,16 @@ export function PlanningCanvas() {
       if (interaction.delta.x !== 0 || interaction.delta.y !== 0) moveSelection(interaction.delta);
     } else if (interaction.type === "vertex") {
       updateBoundary(interaction.elementId, interaction.boundary);
+    } else if (interaction.type === "alignmentPI") {
+      const selectedAlign = site?.alignments?.find((a) => a.id === interaction.elementId);
+      if (selectedAlign) {
+        const patch = {
+          ...selectedAlign,
+          pis: selectedAlign.pis.map((pi, i) => i === interaction.index ? { ...pi, point: (interaction.boundary as any)[i] } : pi),
+        };
+        const updatedAlignments = site?.alignments?.map((a) => a.id === selectedAlign.id ? patch : a) ?? [];
+        useWorkspaceStore.getState().updateElement(selectedAlign.id, { alignments: updatedAlignments } as any);
+      }
     } else if (interaction.type === "edgeBulge") {
       setEdgeBulge(interaction.elementId, interaction.index, interaction.bulge);
     }
@@ -607,6 +688,81 @@ export function PlanningCanvas() {
         {/* Drafting reference marks (sections, elevations, details, revisions). */}
         {showAnnotations && <AnnotationLayer site={site} viewport={viewport} />}
 
+        {/* View Frames for Plan Production sheet splits. */}
+        {viewFrames.map((f: any) => {
+          const halfW = f.width / 2;
+          const halfH = f.height / 2;
+          const rad = (f.rotationDeg * Math.PI) / 180;
+          const cos = Math.cos(rad);
+          const sin = Math.sin(rad);
+
+          const localCorners = [
+            { x: -halfW, y: -halfH },
+            { x: halfW, y: -halfH },
+            { x: halfW, y: halfH },
+            { x: -halfW, y: halfH },
+          ];
+
+          const screenPoints = localCorners.map((p) => {
+            const wx = f.center.x + (p.x * cos - p.y * sin);
+            const wy = f.center.y + (p.x * sin + p.y * cos);
+            return worldToScreen({ x: wx, y: wy }, viewport);
+          });
+
+          const pts = screenPoints.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+
+          return (
+            <g key={f.id}>
+              <polygon
+                points={pts}
+                fill="none"
+                stroke="#3b82f6"
+                strokeWidth={1.8}
+                strokeDasharray="6 4"
+              />
+              <text
+                x={screenPoints[0].x}
+                y={screenPoints[0].y - 6}
+                fill="#3b82f6"
+                fontSize={10}
+                fontWeight="bold"
+              >
+                {f.name}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Match Lines for Plan Production sheet splits. */}
+        {matchLines.map((m: any) => {
+          const p1 = worldToScreen(m.cutLine[0], viewport);
+          const p2 = worldToScreen(m.cutLine[1], viewport);
+
+          return (
+            <g key={m.id}>
+              <line
+                x1={p1.x}
+                y1={p1.y}
+                x2={p2.x}
+                y2={p2.y}
+                stroke="#ef4444"
+                strokeWidth={2}
+                strokeDasharray="10 5"
+              />
+              <text
+                x={(p1.x + p2.x) / 2}
+                y={(p1.y + p2.y) / 2 - 8}
+                textAnchor="middle"
+                fill="#ef4444"
+                fontSize={9}
+                fontWeight="bold"
+              >
+                {m.label}
+              </text>
+            </g>
+          );
+        })}
+
         {/* Dense metes-and-bounds on every parcel/lot boundary (plat style). */}
         {showDimensions && <BoundaryDimensions site={site} viewport={viewport} />}
 
@@ -630,6 +786,9 @@ export function PlanningCanvas() {
 
         {/* Edge midpoint handles: drag to curve an edge. */}
         <EdgeHandles site={site} selection={selection} viewport={viewport} />
+
+        {/* Alignment grip handles: drag to move PIs. */}
+        <AlignmentHandles site={site} selection={selection} viewport={viewport} />
 
         {/* Live preview of the arc while dragging an edge handle. */}
         {bulgePreview && (
@@ -657,6 +816,31 @@ export function PlanningCanvas() {
             kind={tool.kind ?? tool.label}
             polyline={tool.mode === "polyline"}
           />
+        )}
+
+        {waterDropPath && waterDropPath.length > 1 && (
+          <g className="pointer-events-none">
+            <polyline
+              points={waterDropPath
+                .map((p) => {
+                  const s = worldToScreen(p, viewport);
+                  return `${s.x},${s.y}`;
+                })
+                .join(" ")}
+              fill="none"
+              stroke="#3b82f6"
+              strokeWidth={3}
+              strokeDasharray="4 3"
+            />
+            {(() => {
+              const startScreen = worldToScreen(waterDropPath[0], viewport);
+              return <circle cx={startScreen.x} cy={startScreen.y} r={5} fill="#3b82f6" />;
+            })()}
+            {(() => {
+              const endScreen = worldToScreen(waterDropPath[waterDropPath.length - 1], viewport);
+              return <circle cx={endScreen.x} cy={endScreen.y} r={4} fill="#1e3a8a" stroke="#3b82f6" strokeWidth={1.5} />;
+            })()}
+          </g>
         )}
 
         {/* Measurement ruler. */}
@@ -907,6 +1091,39 @@ function ElementShape({
           )}
         </text>
       )}
+    </g>
+  );
+}
+
+function AlignmentHandles({
+  site,
+  selection,
+  viewport,
+}: {
+  site: NonNullable<ReturnType<typeof useWorkspaceStore.getState>["site"]>;
+  selection: string[];
+  viewport: Viewport;
+}) {
+  if (selection.length !== 1) return null;
+  const align = site.alignments?.find((a) => a.id === selection[0]);
+  if (!align) return null;
+  return (
+    <g>
+      {align.pis.map((pi, idx) => {
+        const s = worldToScreen(pi.point, viewport);
+        return (
+          <circle
+            key={idx}
+            cx={s.x}
+            cy={s.y}
+            r={5.5}
+            fill="hsl(var(--background))"
+            stroke="#b91c1c"
+            strokeWidth={1.8}
+            className="cursor-pointer hover:r-7"
+          />
+        );
+      })}
     </g>
   );
 }

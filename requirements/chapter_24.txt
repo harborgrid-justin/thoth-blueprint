@@ -1,0 +1,1436 @@
+[MIGRATED TO RTM_PART_56.md - DOORS]
+Specifies the height of a pointed or arched top of the door 
+Illustration 
+
+Sizes of a Door Style on page 1889 
+Enter a value for Rise, or 
+click 
+to pick points on the screen to specify the rise. 
+Property Special Description How to set Condi­tion 
+Leaf width Uneven, Uneven-Dhung, and Un­even Oppos­ing door types only Determines the width of Enter a value for Leaf the door panel in an un­
+width, or click 
+toeven door type pick points on the screen to specify the
+Illustration 
+leaf. 
+
+Width/Height If no standard sizes have been defined in the door style, or you do want to use a different size, you can edit the width and height of the door. 
+Measure to Specifies whether the width and height of the door is measured to the inside of the door frame or the out­side. When a door is meas­ured to the outside of the frame it is smaller by the amount that is deducted for the frame. 
+Click the drop-down list and select Inside of Frame or Outside of Frame. 
+Property Special Description How to set Condi­tion 
+Illustration 
+
+Swing Angle Lets you determine at Enter a value. which opening angle the door will be displayed. 
+Swing angle and dis­play properties 
+The swing angle can also be determined in the display properties of the door style. The settings in the style override properties set­ting. For more informa­tion, see Specifying the Opening Percentage for Display Representa­
+tions in a Door on page 1906. 
+Property Special Description How to set Condi­tion 
+Location Category 
+Position along wall Only during adding a door/anchored walls 
+Illustration 
+
+Specifies the insertion point  Click the drop-down list  
+of the door relative to the  and select Uncon­ 
+wall or door/window as- strained or Offset/Cen­ 
+sembly. You have the fol­ ter.  
+lowing options:  
+¦ Unconstrained: you can  
+place the door any­ 
+where on the wall.  
+NOTE This will work  
+only if the Osnap is  
+turned off, otherwise  
+the door will snap to  
+wall points.  
+
+Property Special Description How to set Condi­tion 
+¦ Offset/Center: allows you either place the door in the center of the wall, or at a spe­cified offset from the wall end. 
+Automatic Offset Only Specifies the offset from the Enter a value for Auto-during wall end during insertion if matic Offset, or click adding you have chosen Off­
+
+to pick points onan set/Center for Position the screen to specify theanchored along wall offset.
+door 
+Vertical Alignment  anchored  Lets you specify if the vertic- Click the drop-down list  
+doors  al height of the door should  and select Threshold or  
+only  be measured to the door  Head.  
+threshold or the door head.  
+
+Head  anchored  
+Height/Threshold  doors  
+Height  only  
+
+Anchor 
+anchored doors only/not available for door tools Depending on the vertical alignment you chose, you can modify either the head height or the threshold height of the door. For ex­ample, if you want to cre­ate an elevated threshold, you select Threshold for Vertical Alignment, and then enter the elevation of the threshold under Threshold height. 
+The anchor worksheet lets you change the position and rotation of the door in relation to the wall it is anchored to. 
+Enter a value for Head Height or Threshold 
+height, or click 
+to pick points on the screen to specify the height. 
+Click the Anchor work­sheet, and enter the de­sired values there. 
+More information 
+¦ Using Anchors to Change the Hori­
+
+Property Special Description How to set Condi­tion 
+zontal Position of a Door on page 1872 
+¦ Using Anchors to Change the Vertical Position of a Door on page 1874 
+¦ 
+Using Anchors to Change the Position of a Door Within a Wall on page 1875 
+
+¦ 
+Changing the Ori­
+entation of a Door to a Wall on page 1877 
+
+
+Additional Inform- freest- The additional information  Click the Additional In­ 
+ation  anding  worksheet lets you change  formation worksheet,  
+doors  the position of a a freestand­ and enter the desired  
+only/not  ing door relative to the  values there. For more  
+available  WCS or UCS.  information, see Chan- 
+for door  ging the Location of a  
+tools  Freestanding Door on  
+page 1878.  
+
+Endcaps Category 
+Opening Endcap  anchored  Lets you define an endcap  Click the drop-down  
+doors  style for the door where it  list, and select an end­ 
+only/not  is connected to the wall.  cap style. If you select  
+available  For more information, see  By Wall Style, the wall  
+for door  Working with Wall Endcaps  endcaps will be used.  
+tools  and Opening Endcaps on  
+page 1359.  
+
+Editing Doors 
+You can edit doors in your drawing with different tools and methods. 
+Using Grips to Edit Doors 
+For grip edit operations where you are changing a dimension or an angle, the Dynamic Input feature lets you enter a precise value instead of moving a grip. 
+When this feature is active (click 
+on the application status bar), selecting a grip displays a text box in which you can enter the desired value for the associated dimension or angle. For more information, see “Use Dynamic Input” in AutoCAD Help. 
+You can use the following grips to modify doors: 
+
+Grip Description 
+
+Lets you change the width of a door (Width) 
+NOTE Initially the grip is set to con­strain the sizing to one of the standard values on page 1889defined for the door’s style. 
+The CTRL key acts as a toggle between standard and custom sizing. 
+Grip Description 
+Additional information 
+A series of tick marks indicates the standard sizes for the selected dimension. As you move the grip, it snaps to each tick mark and displays the measurement at that mark. The size and color of the grip tick marks indicate whether setting a standard value for the dimension will result in a standard door size. For example, if the height of the door is set to a non-standard value, then even if you set the door width to a standard value for that door’s style, the door is still not a standard size. Long grey tick marks indicate that a stand­ard size is possible; short red marks indicate that another di­mension is already set to a non­standard value. 
+
+Lets you change the Height of a door
+ (Height) 
+
+(Location) 
+Lets you move a door within a wall 
+More options for moving a door 
+¦ 
+Moving a Door Along a Wall on page 1870 
+
+¦ 
+Moving a Door Within a Wall on page 1871 
+
+¦ 
+Moving a Door to a Different Wall on page 1877 
+
+¦ 
+Releasing a Door from a Wall on page 1877 
+
+
+Grip Description 
+
+Lets you change the hinge side of the door
+(Flip Hinge) 
+
+Lets you change the swing direction of the door
+(Flip Swing Direction) 
+
+Rise Rise applies to Peak Pentagon, Arch, and Gothic door shapes. For more in­formation, see Specifying the Design Rules of a Door Style on page 1888. 
+Moving a Door Along a Wall 
+Use this procedure to change the location of one or more doors along a wall by offsetting the doors from a reference location. 
+This feature is useful when you want to position a door at a specified distance from another object. For example, you may want to specify an exact distance between a series of doors along a wall. 
+1 Select the doors you want to move. 
+2 Click Door tab . Anchor panel . Reposition Along Wall
+ . A marker indicates the current location within the opening: left jamb, center of door, or right jamb. 
+3 Specify how to measure the offset: 
+If you want to… Then… 
+measure the offset from select a point near the the center of the door center of the door. 
+measure the offset from select a point on the the left or right jamb jamb of the door you want to measure from. 
+4 Select a point to measure to (the reference point). 
+5 Specify the distance between the points you selected: 
+If you want to… Then… 
+move the door to the reference enter 0. point 
+move the door a specified distance enter a value for the offset distance. from the reference point 
+specify the distance as a measure- select the two points measuring the  
+ment between two points, such as  distance.  
+the distance between the centers  
+of two doors that are correctly posi­ 
+tioned  
+
+Moving a Door Within a Wall 
+Use this procedure to move one or more doors within a wall by offsetting the doors from a reference location. 
+This feature allows you to align doors within the thickness of a wall. You can set an offset distance from any point within a wall, or center the doors between the faces of a wall. You can select doors, windows, or openings, and reposition them at the same time. If you select more than one object, you can select only one side to offset. 
+1 Select the doors you want to move. 
+2 Click Door tab . Anchor panel . Reposition Within Wall
+ . A marker indicates the current location within the opening. This may be the center of the frame, the interior face of the frame, or the exterior face of the frame. 
+3 Specify how to measure the offset: 
+If you want to… Then… 
+center the doors between the faces select a point near the center of the of the wall door jamb. 
+offset the doors from the interior or select a point on the side of the face exterior face you want to measure from. 
+4 Select a point to measure to. 5 Specify the offset distance from the selected point: 
+If you want to… Then… 
+center the doors between the faces use the Midpoint osnap to select of the wall the midpoint of the end of the wall. 
+move the doors to the reference enter 0. point 
+move the doors a specified distance enter a value for the offset distance. 
+specify the distance as a measure-select the two points measuring the ment between two points distance. 
+Using Anchors to Change Doors 
+You can use anchors to change the position and orientation of a door. 
+Using Anchors to Change the Horizontal Position of a Door 
+Use this procedure to change the horizontal position of doors along a wall to which the doors are anchored. 
+Door position along the X axis parameters 
+
+1 Select the door you want to change. 
+2 Click Door tab . Anchor panel . Settings
+ . 3 Select the reference point for the anchor along the X axis: 
+If you want to… Then… 
+use the start of the wall as your ref-under Position Along (X), select erence point Start of wall (curve) for From. 
+use the midpoint of the wall as your under Position Along (X), select reference point Midpoint of wall (curve) for From. 
+use the end of the wall as your ref-under Position Along (X), select End erence point of Wall (curve) for From. 
+4 Enter the distance from the reference point at which to place the doors. Use a negative value to measure from endpoint to start point. 
+5 Select the position of the doors to measure to: 
+If you want to… Then… 
+measure to the start edge of the select Start Edge of object for To. doors 
+measure to the center of the doors select Center of object for To. 
+measure to the end edge of the select End Edge of object for To. doors 
+6 Click OK. 
+Using Anchors to Change the Vertical Position of a Door 
+Use this procedure to change the vertical position of doors in a wall to which the doors are anchored. 
+Door position along the Z axis parameters 
+
+1 Select the door you want to change. 
+2 Click Door tab . Anchor panel . Settings 3 Select the reference point for the anchor along the Z axis: 
+
+If you want to… Then… 
+use the bottom of the wall height select Bottom of wall (curve) height as your reference point for From. 
+use the center of the wall height as select Center of wall (curve) height your reference point for From. 
+use the top of the wall height as select Top of wall (curve) height for your reference point From. 
+4 Enter the distance from the reference point at which to place the doors. Use a negative value to measure from endpoint to start point. 5 Select the position of the doors to measure to: 
+If you want to… Then… 
+measure to the bottom of the doors select Threshold (Bottom) of object for To. 
+measure to the center of the doors select Center of object for To. 
+measure to the top of the doors select Head (Top) of object for To. 
+6 Click OK. 
+Using Anchors to Change the Position of a Door Within a Wall 
+Use this procedure to change the position of doors horizontally within a wall to which the doors are anchored. 
+Door position along the Y axis parameters 
+
+1 Select the door you want to change. 
+2 Click Door tab . Anchor panel . Settings
+ . 3 Select the reference point for the anchor along the Y axis: 
+If you want to… Then… 
+use the left edge of the wall as your select Left edge of wall (curve) reference point width for From. 
+use the center of the wall as your select Center of wall (curve) width reference point for From. 
+use the right edge of the wall as select Right edge of wall (curve) your reference point width for From. 
+4 Enter the distance from the reference point at which to place the doors. Use a negative value to measure from endpoint to start point. 5 Select the position of the doors to measure to: 
+If you want to… Then… 
+measure to the front of the doors select Front for To. 
+measure to the center of the doors select Center for To. 
+measure to the back of the doors select Back for To. 
+6 Click OK. 
+Changing the Orientation of a Door to a Wall 
+Use this procedure to change the vertical orientation of doors in a wall to which the doors are anchored. 
+1 Select the doors you want to change. 
+2 Click Door tab . Anchor panel . Settings
+ . 3 Enter the X and Z rotation angles of the doors. 4 Indicate if you want to reverse the flip direction of the doors in 
+the X, Y, and Z axes: 
+If you want to… Then… 
+reverse the direction the doors open select Flip X. to 
+reverse the side of the wall the select Flip Y. doors open to 
+reverse the top and bottom of the select Flip Z. doors 
+5 Click OK. 
+Moving a Door to a Different Wall 
+Use this procedure to move a door from one wall to another. 1 Select the door you want to move. 2 Click Door tab . Anchor panel . Set
+ . 3 Select the wall to move the door to. 
+Releasing a Door from a Wall 
+Use this procedure to release doors from the wall to which they are anchored. 
+¦ Select the doors you want to release. 
+¦ Click Door tab . Anchor panel . Release 
+Changing the Location of a Freestanding Door 
+Use this procedure to relocate a freestanding door by changing the coordinate values of its insertion point. The door also has an orientation with respect to the WCS or the current UCS. For example, if the top and bottom of the door are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the door by aligning its normal with another axis. You can also rotate the door on its plane by changing the rotation angle. 
+For information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use World and User Coordinate Systems in 3D” in AutoCAD Help. 
+1 Double-click the door you want to move. 2 On the Properties palette, expand Basic, then expand Location 
+and click 
+next to Additional Information. 3 In the Location dialog box, specify the door’s location: 
+
+If you want to… Then… 
+relocate the door enter new coordinate values under Insertion Point. 
+locate the door on the XY plane make the normal of the door paral­lel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the door on the YZ plane make the normal of the door paral­lel to the X axis: under Normal, enter 1 for X and enter 0 for Y and Z. 
+locate the door on the XZ plane make the normal of the door paral­lel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the door enter a new value for Rotation Angle. 
+4 Click OK. 
+Center a Door Using Modify Tools 
+Use this procedure to center a door on a specified axis or between any two specified points. 
+1 Select the door to center. 
+2 Click Door tab . Modify panel . Center
+ . 
+3 Select an existing axis line on which to center the door, or press ENTER and then specify two points between which to center the door. 
+Create a Door Array Using Modify Tools 
+Use this procedure to create an array of identical doors along a wall. 
+1 Select the door to array. 
+2 Click Door tab . Modify panel . Array
+ . 
+3 Select an edge from which to start the array that is perpendicular to the array axis, then drag along your wall in the direction of the array. Do one of the following: 
+¦ 
+Offset: start the door array a specified offset distance from the edge. 
+
+¦ 
+Clear Distance: specify a clear distance between each arrayed door. 
+
+¦ 
+Pick Array Distance: specify a distance between arrayed doors. 
+
+¦ 
+Enter Count: specify the number of doors to appear in the array. 
+
+
+Alternatively, you can press ENTER and then specify two points between which to array the door. 
+Repositioning a Door with Modify Tools 
+Use this procedure to reposition a door. 
+1 Select the door to reposition. 
+
+2 Click Door tab . Modify panel . Reposition From 
+3 Select an existing wall edge from which to reposition the door, or specify two points to define a reference edge. 
+Spacing Doors Evenly with Modify Tools 
+Use this procedure to space doors evenly along a wall. 
+1 Select the door to space evenly. 
+2 Click Door tab . Modify panel . Space Evenly
+ . 
+3 Select an edge as the axis along which to space all the doors evenly, and specify a start point and an endpoint along the edge. Alternatively, press ENTER and specify two points between which 
+the doors will be spaced evenly from each other. 
+Display Properties of Doors 
+The display properties of a door determine how the door appears the drawing. They are different from door object properties (Door Properties on page 1860), which describe real world characteristics of doors, like the direction of the door swing, or the width of the door. Display properties describe how the door objects are displayed in the drawing, like cut plane, and layer, color, linetype settings. 
+Display properties are often dependent on a specific view; for example, the door swing and the threshold symbol appear only in plan views. 
+The display properties of a door can be set on 3 different levels: 
+¦ 
+for an individual object 
+
+¦ 
+for the object style 
+
+¦ 
+globally for all objects of the type (drawing default settings) 
+
+
+What happens when I change the display source? 
+When you change the display source from the style or drawing default settings to the object then any changes you make to the display are not propagated to the style or drawing default settings anymore. The object will become inconsistent with the other objects inserted with this tool. 
+When you change the display settings from the object to the door style or the drawing default, any overrides you have made will be overwritten by the style or drawing defaults. 
+To change the display properties of a door 
+1 Double-click the door you want to change. 2 In the Properties palette, click the Display tab. 3 Change the display properties as needed: 
+Display Property Description How to Set 
+Display component  Lets you select individual object components  Select *NONE* from the  
+for editing. If no component is selected, the  drop-down list. This allows  
+change applies to the whole door.  you to make a change to the  
+entire door.  
+
+Display controlled by 
+Displays the currently selected display source. 
+Options 
+¦ 
+This object: Display properties are used for this object only. 
+
+¦ 
+Door Style: Display properties come from the door style on page 1884 
+
+¦ 
+Drawing default settings: display proper­ties come bfrom the global drawing set­
+tings on page 201. 
+
+
+Display representa- Shows you which display representations are  Select the display representa­ 
+tion  active in the current drawing view. Multiple  tion in which you want to  
+display representations can be turned on. For  change a display property  
+example in Plan view, both plan and threshold  from the drop-down menu.  
+symbol plan display representations are vis- If the list is greyed out, the  
+ible.  view only has one associated  
+display representation.  
+
+Use cut plane of con- Specifies whether a selected door will use the  Select Yes or No from the  
+taining object when  cut plane of the wall or door/window as- drop-down menu.  
+anchored (Plan views  sembly it is anchored to  
+only)  
+
+Display Property Description How to Set 
+Straight Swing (Plan Views only)  Specifies whether to display the swing of a selected door as a straight line in the current display representation.  Select Yes or No from the drop-down menu.  
+Illustration  
+Straight swing (left) and curved (right)  
+
+
+Override Swing  Lets you define an override to the swing angle  For Override Swing angle,  
+Angle/Swing Angle  that was defined in the Door Properties on  select Yes. Then, enter a  
+(Plan and Elevation  page 1860.  door angle under Swing  
+views only)  Angle.  
+
+Custom Block Display Custom blocks are AutoCAD blocks that you Click the Custom Block Dis-
+can add to a specific display representation play worksheet ( 
+), and
+of a door, like a door knob, or a custom panel. add blocks to the door in the
+In this worksheet, you can add on page 1902, selected display representa­
+edit on page 1901, disable on page 1904, or re­
+tion. 
+move on page 1905 custom blocks from the door. 
+Threshold Dimen- Lets you specify the depth and extension of  Click the Threshold Dimen­ 
+sions (Threshold Plan only)  the threshold display.  sions worksheet ( ), and add values for the depth and  
+extension.  
+
+Threshold Symbol  Lets you define a Threshold symbol.  Click the Symbol worksheet  
+(Threshold Symbol Plan Only)  ( ), and select one of the available symbols - Heel,  
+Passthrough, Threshold, or  
+no - in the list.  
+
+Display Property Description How to Set 
+Muntins (Elevation and Model view) Door muntins are secondary framing mem­bers that hold multiple lights in door glass. AutoCAD Architecture provides an easy way to create muntins with different layout pat-terns.This worksheet lets you add, edit, dis­able, or remove muntins from a door. 
+Click the Muntins worksheet 
+( 
+), and add or remove muntins. For detailed inform­ation, see Creating Muntins in a Door Style on page 1909. 
+Reverse Handing (El-?? Click the drop-down list and evation views only) select Yes or No. 
+Single Line Panel (Plan High Detail view only)  Lets you display the door panel as a single line Illustration  Click the drop-down list and select Yes or No.  
+Single line door panel (right)  
+
+
+Frame Display (Plan  Lets you display the door frame with different  Click the Frame Display  
+High Detail Only)  representations in Plan High Detail  worksheet, and select the  
+desired Frame representation  
+Illustration  there.  
+
+
+Attaching Hyperlinks, Notes, and Files to a Door 
+Use this procedure to enter notes and attach reference files to a door. You can also edit notes and edit or detach reference files from a door. 
+1 Double-click the door to which to attach notes or files. 2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click 
+next to Hyperlink, and specify the 
+link. For more information, see “Add Hyperlinks to a Drawing” in AutoCAD Help. 
+4 To add a note, click 
+next to Notes, enter text, and click OK. 
+5 To attach, detach, or edit a reference file, click 
+next to Reference documents, and then do any of the following: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+6 Click OK. 
+Door Styles 
+A door style is a group of properties assigned to a door that determines the appearance and characteristics of the door. 
+You can use door styles to represent standard door types for specific jobs and drawings or for your office standards. When you create or modify a door style, the doors using the style have the settings and characteristics of the style. 
+Templates provided with AutoCAD Architecture contain door styles for many typical doors. You can create a style using default style properties or by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+Creating Tools from Door Styles 
+To create a door tool from any door style, you drag the style from the Style Manager onto a tool palette. You can then specify default settings for doors created with that tool. For more information, see Creating a Tool from the Style Manager on page 101. 
+Managing Door Styles 
+To create, edit, copy, or purge door styles, you access the Style Manager. The Style Manager provides a central location in AutoCAD Architecture in which to work with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+Creating a Door Style 
+Use this procedure to create a door style. 
+You can create a style with default style properties, or you can create a style by copying an existing one. After you create the style, you edit its properties to customize the characteristics of the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 3 Create a door style: 
+If you want to… Then… 
+create a style with default properties right-click Door Styles, and click New. 
+create a style from an existing style right-click the door style you want to copy, and click Copy. Right-click, and click Paste. 
+4 Enter a name for the new door style, and press ENTER. 
+5 Edit the properties of your new door style: 
+If you want to… Then… 
+enter a description of the style click the General tab, and enter a description. 
+change dimension properties of the see Specifying the Dimensions of a style Door Style on page 1887. 
+change design rules of the style see Specifying the Design Rules of a Door Style on page 1888. 
+change the standard door sizes of see Specifying the Standard Sizes the style of a Door Style on page 1889. 
+assign materials to the components see Assigning Materials to a Door 
+of the door style Style on page 1897 and Turning on Materials for a Door Style on page 1900. 
+add classifications to a door style see Adding Classifications to a Door Style on page 1898. 
+specify the display properties of the see Specifying the Display Proper-style ties of a Door Style on page 1899. 
+change the appearance of the dis-see Changing the Layer, Color, and play components of the style Linetype of Door Components on page 1899. 
+add components to the style see Adding Components to a Door Style on page 1902. 
+remove components from the style see Removing Custom Components from a Door Style on page 1905. 
+turn off components in the style see Turning Off Custom Compon­
+ents in a Door Style on page 1904. 
+display a straight door swing from see Displaying a Straight Door the style Swing on page 1905. 
+If you want to… Then… 
+override the opening percentage in see Specifying the Opening Percent-the style age for Display Representations in a Door on page 1906. 
+change the threshold in the style see Changing the Door Threshold in a Door Style on page 1906. 
+add muntins to the style see Creating Muntins in a Door Style on page 1909. 
+add notes, files, or documents to see Attaching Notes and Files to a the style Door Style on page 1908. 
+6 If you want to assign the style to a door tool, drag the style from 
+the Style Manager to a tool palette. You can later rename the tool and specify other properties for it as described in Creating a Tool from the Style Manager on page 101. 
+7 Click OK. 
+Specifying the Dimensions of a Door Style 
+Use this procedure to change the default dimensions of a door style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Dimensions tab. 
+Changing door style dimensions 
+
+5 Change dimension values: 
+If you want to… Then… 
+change the frame width and depth under Frame, enter values for Width and Depth. 
+set the frame width to the wall under Frame, select Auto-Adjust to thickness Width of Wall. 
+change the stop dimensions under Stop, enter values for Width and Depth. 
+change the door thickness enter a value for Door Thickness. 
+change the glass thickness enter a value for Glass Thickness. 
+6 Click OK. 
+Specifying the Design Rules of a Door Style 
+Use this procedure to specify the shape and the type of door for a door style. 
+Door shapes are named geometrical descriptions of a door. You can select predefined and custom door shapes, or create your own shape from profiles. For more information, see Creating a Custom Door Shape on page 1890. 
+The door type describes the type of opening for the door, such as bifold or pocket. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Design Rules tab. 5 Select a door shape: 
+If you want to… Then… 
+use a predefined door shape under Shape, click Predefined, and select a shape. 
+use a custom door shape under Shape, click Use Profile, and select a profile. 
+6 Select a door type. 7 Click OK. 
+Specifying the Standard Sizes of a Door Style 
+Use this procedure to create standard door sizes in a door style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 
+4 Click the Standard Sizes tab, and add, change, or remove door-size values: 
+If you want to… Then… 
+create standard sizes 
+click Add 
+. Under Standard Sizes, enter values for Description, Width, Height, Rise, and Leaf. 
+If you want to… Then… 
+change a size select the size, and click Edit 
+. Enter new values for Width, Height, Rise, and Leaf. 
+delete a size select a size, and click Remove . 
+
+The description can be used to identify standard door sizes in door schedules. For example, you can specify a manufacturer’s size or model code for Description. 
+Rise is available for Arch, Gothic, and Peak Pentagon door shapes. Leaf controls the width of Uneven, Uneven-Dhung, and Uneven-Opposing door types. For more information on door types and shapes, see Specifying the Design Rules of a Door Style on page 1888. 
+5 Click OK. 
+Creating a Custom Door Shape 
+Use this procedure to create a profile that you can use to define a custom door shape in a door style. To create a custom door shape that includes glazing, see Creating a Void for Door Muntins on page 1912. 
+1 Draw a closed polyline in the shape you want. 
+2 Select the polyline, right-click, and click Convert To . Profile Definition. 
+3 Specify the insertion point of the profile. The insertion point is not used for doors. 
+4 Enter n (New). 5 Enter a name for the profile, and click OK. 
+Replacing the Door Shape in a Door Style 
+Use this procedure to replace a predefined shape in a door style with a custom shape created from a profile. 
+
+1 Select a door that uses the style you want to modify. 
+2 Click Door tab . Profile panel . Add Profile
+ . 3 Specify the profile to use for the custom shape: 
+If you want to… Then… 
+use a predefined door shape select a profile for Profile Definition, and click OK. For information about creating a profile, see Creating a Custom Door Shape on page 1890. 
+use a predefined door shape, but select a profile for Profile Definition, modify it select Continue Editing, and click OK. For information about modify-
+If you want to… Then… 
+ing the shape, see Editing the Geo­
+metry of a Door Style on page 1892. 
+create a custom shape select Start from scratch for Profile Definition, enter a name for the new profile, and click OK. For in­formation about modifying the de­fault shape, see Editing the Geo­
+metry of a Door Style on page 1892. 
+Editing the Geometry of a Door Style 
+Use this procedure to edit the geometry of the profile used to define a door style. You can also add a profile to a door style that does not currently use a profile to define its shape. 
+1 Add a door that has the style you want to change. 2 Add or edit a profile: 
+If you want to… Then… 
+add an existing profile to the style select the door, and click Door tab . Profile panel . Add Profile
+
+ . Select the name of the profile, and click OK. 
+add and an existing profile to the select the door, and click Door style and edit it immediately tab . Profile panel . Add Profile
+
+ . Select the name of the profile, click Continue Editing, then click OK. 
+create a profile and add it to the  select the door, and click Door  
+style tab . Profile panel . Add Profile  
+. Select Start from scratch for  
+Profile Definition, enter a name for  
+the new profile, and click OK. A  
+rectangular profile is created for you  
+
+If you want to… Then… 
+to edit to define the required geo­metry. 
+edit the existing profile for the style select the door, and click Door tab . Profile panel . Edit In Place
+
+ . 
+3 If you receive a message that the profile is not drawn to size, click 
+Yes. The area of the door defined by the profile is selected in the drawing. 
+4 NOTE After you perform an editing task, you may need to select the profile again to perform another editing task. If the editing commands that you want to use are not available, select the profile again. 
+Edit the profile as necessary: 
+If you want to… Then… 
+change the shape of the perimeter of the profile or its rings 
+select the profile, and use edge or vertex grips to adjust the shape. The Edge grip has three edit modes: Offset, Add Vertex, and Convert to Arc. The default mode is Offset, which offsets the selected edge in a direction that is perpendicular to the midpoint of the edge. Depend­ing on the shape of the profile and the edge you choose to modify, neighboring lines are extended or trimmed, and new lines are added, as necessary. Use the Add Vertex edit mode to add a vertex to the selected edge, and create a new edge. If the selec­ted edge is an arc, the new edge is an arc, as well. Convert to Arc changes the selected edge to an arc and stretches the midpoint of the edge. The edge 
+If you want to… Then… 
+grip for an arc also has a Stretch mode, so that you can stretch the midpoint of the edge after it has been converted to an arc. 
+add vertices to the profile select an Edge grip, and press CTRL to switch to the Add Vertex edit mode. Move the edge to the de­sired location and click, or enter a value and press ENTER. 
+remove vertices from the profile select the Vertex grip for the vertex you want to remove, and press CTRL to switch to the Remove edit mode. Move the cursor off the se­lected vertex, and click. 
+replace an existing ring of the pro- click Edit In Place tab . Profile  
+file with new geometry  panel . Replace Ring  . Select  
+the ring to replace, and select the  
+new geometry. Press ENTER to keep  
+the geometry, or enter n (No) to  
+erase it.  
+
+add a ring to the profile click Edit In Place tab . Profile 
+panel . Add Ring
+ . Select the geometry to define the ring. Press ENTER to keep the geometry, or enter n (No) to erase it. 
+remove a ring from the profile click Edit In Place tab . Profile 
+panel . Remove Ring
+ . Select the ring to remove, and press ENTER. 
+5 Save or discard the changes: 
+If you want to… Then… 
+restore the profile to its original click Edit in Place tab . Edits pan-shape 
+el . Cancel
+ . 
+save the changes to the current  click Edit in Place tab . Edits pan- 
+profile  el . Finish  . The door style uses  
+the edited profile to define its geo­ 
+metry. Any other objects or styles  
+that use this profile are also up­ 
+dated with the edited geometry.  
+
+save the changes to a new profile definition 
+click Edit in Place tab . Edits pan­
+el . Save As
+ . Enter a name for the new profile definition, and click OK. The door uses the new profile to define its geometry. Any doors of this style are updated with the new geometry. Other styles or ob­jects that use the original profile are not affected. 
+About Door Display Components and Materials 
+A door object consists of a number of components whose display properties can be determined by the materials assigned to each component. 
+You assign one material to each display component of the door. For example, you assign a wood material to the frame and a glass material to the glass inset. You assign materials to door components in each display representation in which the materials are to be used. 
+To use the display properties of the door object or the door style, instead of using material display properties, you can turn off the material assignments in the display properties of the door or the door style. 
+Material definitions consist of display components that correspond to component types of objects. For example, the Linework component of a material is used for all linework in plan view. The Surface Hatch component of a material is used to hatch all object surfaces in 3D model views and elevations. 
+For a complete list of material components and their descriptions, see Material Components and Display Properties on page 884. 
+The following table lists door components that can be displayed using materials assigned to them, and identifies the material component of each. 
+Door Component Material Component 
+Plan, Plan High Detail, Reflected 
+Door Panel Linework 
+Frame Linework 
+Stop Linework 
+Plan Low Detail 
+Panel Linework 
+Model 
+Door Panel 3D Body 
+Frame 3D Body 
+Stop 3D Body 
+Glass 3D Body 
+Elevation 
+Door Panel 2D Section/Elevation Linework 
+Frame 2D Section/Elevation Linework 
+Stop 2D Section/Elevation Linework 
+Glass 2D Section/Elevation Linework 
+Assigning Materials to a Door Style 
+Use this procedure to assign materials to the individual components of a door style. Components use the display properties of the material. For more information, see About Door Display Components and Materials on page 1895. 
+You can specify the materials used to display the following components of a door style: 
+¦ 
+Frame 
+
+¦ 
+Stop 
+
+¦ 
+Panel 
+
+¦ 
+Glass 
+
+¦ 
+Muntin 
+
+
+NOTE If a material assignment does not determine the display properties of a door component, you can change the display properties of the door style as described in Specifying the Display Properties of a Door Style on page 1899. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which to display the changes, 
+and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select By Material for any component to which you want to assign 
+a material, and click OK. If the setting for By Material is not available, the display of this component cannot be determined by a material. 
+9 Click the Materials tab. 
+10 Click the component you want to change, and select a different material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a component. 
+WARNING Although you can edit a material definition from this dialog box, any changes you make apply to all objects that are assigned the material. 
+11 Click OK. 
+Adding Classifications to a Door Style 
+Use this procedure to specify classifications for definitions applied to a door style. 
+For more information about creating and applying classification definitions, see Classification Definitions on page 3834. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style that you want to change. 
+4 Click the Classifications tab. The default setting for classification definitions is Unspecified. If no classification definitions are listed, none are applied to door styles. 
+5 For each classification definition, select the classification you want to apply to the current door style. 
+6 Click OK. 
+Specifying the Display Properties of a Door Style 
+In most cases, you want the appearance of doors that belong to the same style to be consistent throughout a drawing. To achieve this, you specify the following display properties of the doors in each door style: 
+¦ 
+The layer, color, and linetype of door components 
+
+¦ 
+The hatching used with each component 
+
+¦ 
+The cut plane height and the display of components relative to the cut plane 
+
+¦ 
+Other specific door display information, such as the shape of the door swing 
+
+
+You can also use materials to control the display properties of the physical components of a door. Symbolic components, such as the door swing, are not controlled by materials. For more information about using materials in doors, see About Door Display Components and Materials on page 1895. 
+Changing the Layer, Color, and Linetype of Door Components 
+Use this procedure to change the following properties of the display components of a door style: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+By material (material assigned to the display component determines its layer properties) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+NOTE You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. Note also, that If a material assignment determines the properties of components in the door style, you can change the properties of the display component by clearing By Material or by overriding the material assignment with a different material. For more information, see Assigning Materials to a Door Style on page 1897. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which to display the changes, 
+and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select the component to change, and select a different setting for 
+the property. 9 Click OK. 
+Turning on Materials for a Door Style 
+Use this procedure to turn on material assignments for individual display representations in a door style. 
+For more information about using materials to control the display of door components, see About Door Display Components and Materials on page 1895. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which to display the changes, 
+and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select By Material for each component to be controlled by the 
+material. The By Material check box is unavailable for components 
+that cannot be assigned a material. When you select By Material for a display component, all other settings in the dialog are unavailable. Since the display properties are now taken from the material definition, you can no longer set them directly in the display properties of the door style. 
+9 Click OK. 
+Using Custom Blocks to Create Door Components 
+You can add custom blocks for components, such as door hardware, to the display components, or to replace the default display components. For example, you can replace a simple door leaf with a custom six-panel door leaf in which the custom component is to appear. You can have a different custom block for each display representation. 
+When you add a custom block, you can specify rules for positioning and scaling the new component. Each custom block also appears in the display properties component list so that you can control its layer, color, and linetype. For more information on adding custom blocks, see Adding Components to a Door Style on page 1902. 
+If you create a custom block from mass elements, you can use the material assignments of the mass elements to determine the display properties of the custom block. 
+Be sure to set the properties of objects used to create your custom blocks to ByBlock. Otherwise, you cannot control these objects through the display properties. For more information about ByBlock, see “Use Layers to Manage Complexity” in AutoCAD Help. 
+Adding Components to a Door Style 
+Use this procedure to add or edit custom block components in the display representation of door styles. 
+1 Create a block for the component to add to the door style. Create the block in the same plane as the door that you use to represent the style. For more information about custom blocks, see Using Custom Blocks to Create Door Components on page 1901. 
+2 Click Manage tab . Style & Display panel . Style Manager
+ . 3 Expand Architectural Objects, and expand Door Styles. 
+
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+4 Select the style you want to edit. 5 Click the Display Properties tab. 6 Select the display representation in which to display the changes, 
+and select Style Override. 
+7 If necessary, click 
+. 8 Click the Other tab. 9 Specify whether to add or edit a block component: 
+If you want to… Then… 
+add a new block component click Add. 
+edit an existing block component select the component to edit, and click Edit. Proceed to step 11. 
+10 Click Select Block. 11 Select the block to use, and click OK. 12 Specify whether to scale to fit the block component to the object 
+by width, depth, or height, or to lock the XY ratio: 
+If you want to… Then… 
+set the block scale to the width of select Width. the object 
+If you want to… Then… 
+set the block scale to the depth of select Depth. the object 
+set the block scale to the height of select Height. the object 
+scale the whole block equally, so select Lock XY Ratio. that one direction is scaled to fit another of the scale criteria 
+scale the block to its original size clear all options under Scale to Fit. 
+13 Specify whether to mirror the block in the X,Y, or Z direction: 
+If you want to… Then… 
+create a mirror of the block in the select Mirror X. X direction 
+create a mirror of the block in the select Mirror Y. Y direction 
+create a mirror of the block in the select Mirror Z. Z direction 
+14 Specify the X, Y, and Z location of the insertion point. 15 Specify an insertion offset of the block in the X, Y, and Z directions. 16 Specify whether the component is for the door frame, leaf or glass: 
+If you want to… Then… 
+add the block to the inside or out-click Frame Component, and click side of the frame either Outside or Inside. 
+add the block to all leaf compon-click Leaf Component, and click 
+ents or to a single leaf component either All or Single. If you select Single, enter the component num­ber. 
+add the block to all glass compon-click Glass Component, and click ents or to a single glass component either All or Single. If you select 
+If you want to… Then… 
+Single, enter the component num­ber. 
+NOTE If you specified Depth for Scale to Fit, the depth will be scaled to the glass thickness. You can scale to the door panel thickness instead by selecting Scale Depth to Panel Thickness. 
+17 Leaf and glass components are not available in some display representations. 
+Click OK three times. 
+Turning Off Custom Components in a Door Style 
+Use this procedure to turn off custom blocks in a door style. 
+You can turn off the display of component blocks without removing them from the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which to turn off the display 
+of the door component, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Select Disable Custom Blocks. 9 Click OK. 
+Removing Custom Components from a Door Style 
+Use this procedure to remove components from a door style. 
+Removing component blocks from a door style deletes them from the style. 1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation from which to remove the door 
+component, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Select the component to remove, and click Remove. 9 Click OK. 
+Displaying a Straight Door Swing 
+Use this procedure to display the door swing as a straight line in a door style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which to display a straight 
+door swing, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 
+8 Select Straight Swing. 9 Click OK. 
+Specifying the Opening Percentage for Display Representations in a Door 
+Use this procedure to override the opening percentage in the display representation of a door style. For example, you can specify that a door is displayed closed in model and elevation representations, but open in plan representations. 
+NOTE This setting overrides other door opening percent settings. If the opening percent is specified here, the opening percent entered on the Properties palette when you add or modify doors is ignored. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which to override the opening 
+percent, and select Style Override. 
+6 If necessary, click 
+. 
+7 Click the Other tab. 
+8 Select Override Opening Percent. 
+9 Enter a value for the opening percent. 
+10 Click OK. 
+Changing the Door Threshold in a Door Style 
+Use this procedure to display a door threshold and change its dimensions in threshold display representations. 
+You can turn on threshold display representations in addition to door display representations. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select Threshold Plan, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Under Threshold Dimensions, enter the threshold extension and 
+depth dimensions. Component A is the swing side of the door. Component B is the other side. 
+9 Click the Layer/Color/Linetype tab. 10 Under Visible, click the icons to turn on visibility. 11 Click OK. 
+Changing the Door Threshold Symbol in a Door Style 
+Use this procedure to specify the symbol indicating a threshold that appears in a door opening for the door style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select Threshold Symbol Plan, and select Style Override. 
+
+6 If necessary, click 7 Click the Other tab. 8 Select the type of symbol you want to display in the door opening. 9 Click the Layer/Color/Linetype tab. 
+10 Under Visible, click the icon to turn on visibility. 11 Click OK. 
+Defining a Door Style as Bounding for Associative Spaces 
+Use this procedure to define a door style that can bound associative spaces. 
+When a door style is set as bounding, by default all doors that have the style assigned will be used in the selection set for an associative space. For more information about associative spaces see Generating Associative Spaces on page 2904. 
+You can override the bounding settings from the door style in an individual door, if necessary. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select a door style. 4 Click the General tab. 5 Select the checkbox for Objects of this style may act as a boundary 
+for associative spaces. 6 Click OK. 
+Attaching Notes and Files to a Door Style 
+Use this procedure to enter notes and attach reference files to a door style. You can also edit reference files attached to the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the General tab. 5 To add a description to the door, enter the description under 
+Description. 
+6 Click Notes. 
+7 To add or edit a note, click the Notes tab, and enter the note. 
+8 To attach, edit, or detach a reference file, click the Reference Docs 
+tab: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Edit file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. Click OK when you finish editing. 
+detach a reference file select the file name, click Delete, and click OK. 
+9 Click OK. 
+Creating Muntins in a Door Style 
+Door muntins are secondary framing members that hold multiple lights in door glass. AutoCAD Architecture provides an easy way to create muntins with different layout patterns. 
+Door muntins are available in the following patterns that you can customize into different styles: 
+¦ 
+Rectangular 
+
+¦ 
+Diamond 
+
+¦ 
+Prairie 9 Lights 
+
+
+¦ 
+Prairie 12 Lights 
+
+¦ 
+Starburst 
+
+¦ 
+Sunburst 
+
+
+Starburst and Sunburst patterns are a combined-rectangular pattern with a half-round or quarter-round spoked top. They can be used for half- and quarter-round door glass as well as rectangular door glass. The other patterns are primarily rectangular but fit into half-round glass. You can make up custom glass shapes by creating profiles from polylines and adding them to a new door style. 
+Door muntin components 
+
+Process Overview: Creating Door Muntins 
+You must have a void for the glass in the door in order to add muntins. Sample content provided with the software includes several door styles that already have glass and can receive muntins. The door style description indicates whether the style has glass. You can create door styles with a glazing void to receive muntins. 
+The process of creating a door style with door glass and muntins has three steps: 
+1 Create a void for door glass and muntins. You create a profile from two concentric polylines that define the door shape and the door glass. 
+Concentric closed polylines for a door profile 
+
+2 Add glass to a door style. You apply the profile with a void to a door style so that the style has glass for doors to receive muntins. 
+Door style created from a profile 
+
+3 Add muntins to the door style. Door glass with muntins 
+
+Creating a Void for Door Muntins 
+Use this procedure to create a profile of a door with a void for glass to receive muntins. This is the first step for adding muntins to door styles that do not have glass. 
+The profile is made up of concentric, closed polylines. The outer polyline, or ring, becomes the door shape, and the inner polyline becomes the void for the glass. You can create multiple voids by adding more inner polylines. Voids for glazing must be entirely within the polyline representing the door shape. The polylines are proportional in size and shape to each other and also to the individual doors created from the door style. 
+You can draw these polylines anywhere in the drawing and use any convenient scale relative to your final door and glass size. One method for sizing the polylines relative to the door is to draw them by snapping to an existing door, and then move them to the side. 
+Concentric closed polylines for a door profile 
+
+1 Draw concentric, closed polylines representing the door and the glass that receives the muntin pattern. 
+2 Select the polylines, right-click, and click Convert To . Profile Definition. 
+3 Select the outermost polyline. 
+4 Enter a (Add ring). 
+5 Select an inner polyline. 
+6 Repeat steps 3 and 4 as needed to add more voids to the profile. 
+7 Specify the insertion point of the profile. 
+8 Enter n (New), enter a name for the profile, and click OK. 
+To add the profile to a door style, see Adding Glass to a Door Style on page 1913. 
+Adding Glass to a Door Style 
+Use this procedure to create a door style with glass for doors to accept muntin patterns. 
+The drawing must contain a profile that defines the door style and the void for the door glass. For more information about creating such a profile, see Creating a Void for Door Muntins on page 1912. 
+Door profile with a void for glass 
+
+Door style created from the profile 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 3 Create a door style: 
+If you want to… Then… 
+create a style with default properties right-click Door Styles, and click New. 
+If you want to… Then… 
+create a style from an existing style right-click the Door style you want to copy, and click Copy. Right-click, and click Paste. 
+4 Select the new door style, right-click, and click Rename. 5 Enter a name for the new door style, and press ENTER. 6 Select the new door style. 7 Click the Design Rules tab. 8 Under Shape, select Use Profile, and select a profile that defines 
+a door style containing a void for door glass. 9 Click the Standard Sizes tab. 10 Add new sizes to the style. For more information about adding standard sizes to a door style, see Specifying the Standard Sizes of a Door Style on page 1889. 
+11 Click OK. 
+The door style now contains glass. You can now add muntins to a door style. 
+Adding Rectangular or Diamond Muntins to a Door Style 
+Use this procedure to add rectangular or diamond muntins to a door style that contains glass. 
+You add muntins by editing the display properties of the door style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and apply them to all display representations of that door style. You add the muntins block to glass components of the door style in display properties. Each muntins block becomes a display component of the door style. 
+Rectangular door glass with rectangular muntins 
+
+Gothic door glass with diamond muntins 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 
+NOTE A door style must contain glass to receive muntins. For more information about adding glass to a door style, see Adding Glass to a Door Style on page 1913. 
+4 Click the Display Properties tab. 5 Select the display representation in which to display the changes, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Muntins tab. 8 Click Add. 
+9 Enter a name for the muntins block. 10 If the door style contains multiple glass components, specify whether you want to apply muntins to all glass components or to one glass component in the door: 
+If you want to… Then… 
+attach muntins to all glass compon-under Glass Component, select All. ents 
+apply muntins to an individual glass  under Glass Component, select  
+component  Single, and specify the index num­ 
+ber. Lights are indexed counter­ 
+clockwise, starting from the lower- 
+left corner.  
+
+Muntins applied to all or one glass component 
+
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 
+Specifying muntin width and depth 
+
+13 Clean up the muntin intersections: 
+If you want to… Then… 
+convert the muntin intersections to under Muntin, select Clean Up corners Joints. 
+convert all the muntins to one body under Muntin, select Convert to with the joints cleaned up Body. 
+Specifying muntin cleanup joints 
+
+Converting muntins to a body 
+
+14 Under Lights, select a pattern: 
+If you want to… Then… 
+use a rectangular pattern select Rectangular for pattern. 
+use a diamond pattern select Diamond for pattern. 
+15 Enter a value for Lights High to specify the number of light rows in the vertical direction. 
+16 Enter a value for Lights Wide to specify the number of light columns in the horizontal direction. 
+Values for lights high and lights wide 
+
+17 Click OK. 18 Add other muntins: 
+If you want to… Then… 
+add muntins to another glass com-repeat this procedure from step 8. ponent in the door style 
+add muntins to another display click OK, and repeat this procedure representation from step 5. 
+add muntins to all display represent-select Automatically Apply to Other ations of the selected door style Display Representations and Object Overrides. 
+19 When you finish adding muntins to the door style, click OK three times. 
+After you add a muntins block to a door style, you can assign a material, such as wood sash, and specify the display properties, such as color and linetype. For more information, see Assigning Materials to a Door Style on page 1897 and Changing the Layer, Color, and Linetype of Door Components on page 1899. 
+Adding Prairie-Lights Muntins to a Door Style 
+Use this procedure to add prairie-9-lights or prairie-12-lights muntins to a door style that contains glass. 
+You add muntins by editing the display properties of the door style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and apply them to all display representations of that door style. You add the muntins block to glass components of the door style in display properties. Each muntins block becomes a display component of the door style. 
+Rectangular door glass with prairie-9-lights muntins 
+
+Rectangular door glass with prairie-12-lights muntins 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 
+NOTE A door style must contain glass to receive muntins. For more information about adding glass to a door style, see Adding Glass to a Door Style on page 1913. 
+4 Click the Display Properties tab. 5 Select the display representation in which to display the changes, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Muntins tab. 8 Click Add. 
+9 Enter a name for the muntins block. 10 If the door style contains multiple glass components, specify whether you want to apply muntins to all glass components or to one glass component in the door: 
+If you want to… Then… 
+attach muntins to all glass compon-under Glass Component, select All. ents 
+apply muntins to an individual glass  under Glass Component, select  
+component  Single, and specify the index num­ 
+ber. Lights are indexed counter­ 
+clockwise, starting from the lower- 
+left corner.  
+
+Muntins applied to all or one glass component 
+
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 
+Specifying muntin width and depth 
+
+13 Clean up the muntin intersections: 
+If you want to… Then… 
+convert the muntin intersections to under Muntin, select Clean Up corners Joints. 
+convert all the muntins to one body under Muntin, select Convert to with the joints cleaned up Body. 
+Specifying muntin cleanup joints 
+
+Converting muntins to a body 
+
+14 Under Lights, select a pattern: 
+If you want to… Then… 
+use a nine-light prairie pattern select Prairie-9 Lights for Pattern. 
+use a twelve-light prairie pattern select Prairie-12 Lights for Pattern. 
+15 Enter a value for Edge X Offset to specify the horizontal distance of the muntins from the edges of the glass. 
+16 Enter a value for Edge Y Offset to specify the vertical distance of the muntins from the edges of the glass. 
+Specifying edge X and Y offsets 
+
+17 Click OK. 18 Add other muntins: 
+If you want to… Then… 
+add muntins to another glass com-repeat this procedure from step 8. ponent in the door style 
+add muntins to another display click OK, and repeat this procedure representation from step 5. 
+add muntins to all display represent-select Automatically Apply to Other ations of the selected door style Display Representations and Object Overrides. 
+19 When you finish adding muntins to the door style, click OK three times. 
+After you add a muntins block to a door style, you can assign a material, such as wood sash, and specify the display properties, such as color and linetype. For more information, see Assigning Materials to a Door Style on page 1897 and Changing the Layer, Color, and Linetype of Door Components on page 1899. 
+Adding Starburst Muntins to a Door Style 
+Use this procedure to add starburst muntins to a door style that contains glass. 
+You add muntins by editing the display properties of the door style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and apply them to all display representations of that door style. You add the muntins block to glass components of the door style in display properties. Each muntins block becomes a display component of the door style. 
+Half-round door glass with starburst muntins 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 
+NOTE A door style must contain glass to receive muntins. For more information about adding glass to a door style, see Adding Glass to a Door Style on page 1913. 
+4 Click the Display Properties tab. 
+5 Select the display representation in which to display the changes, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Muntins tab. 8 Click Add. 9 Enter a name for the muntins block. 
+10 If the door style contains multiple glass components, specify whether you want to apply muntins to all glass components or to one glass component in the door: 
+If you want to… Then… 
+attach muntins to all glass compon-under Glass Component, select All. ents 
+apply muntins to an individual glass  under Glass Component, select  
+component  Single, and specify the index num­ 
+ber. Lights are indexed counter­ 
+clockwise, starting from the lower- 
+left corner.  
+
+Muntins applied to all or one glass component 
+
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 
+Specifying muntin width and depth 
+
+13 Clean up the muntin intersections: 
+If you want to… Then… 
+convert the muntin intersections to under Muntin, select Clean Up corners Joints. 
+convert all the muntins to one body under Muntin, select Convert to with the joints cleaned up Body. 
+Specifying muntin cleanup joints 
+
+Converting muntins to a body 
+
+14 Under Lights, select Starburst for pattern. 15 Under Shape, select Half Round or Quarter Round. 16 Enter a value for Lights High to specify the number of light rows 
+in the vertical direction, exclusive of the spoked lights. 
+17 Enter a value for Lights Wide to specify the number of light columns in the horizontal direction. Count the columns as though they continue around the hub. For 
+a half-round starburst, five apparent columns are counted as three. For a quarter-round starburst, three apparent columns are also counted as three. 
+18 Enter a value for Spokes to specify the number of radial muntin spokes. 
+Specifying the number of radial muntin spokes 
+
+19 Specify where to place the hub: 
+If you want to… Then… 
+place the hub at the bottom of a under Hub, select Bottom Center. half-round shape 
+place the hub at the top of a half-under Hub, select Top Center. round shape 
+place the hub at the bottom left of under Hub, select Bottom Left. a quarter-round shape 
+place the hub at the bottom right under Hub, select Bottom Right. of a quarter-round shape 
+place the hub at the top left of a under Hub, select Top Left. quarter-round shape 
+place the hub at the top right of a under Hub, select Top Right. quarter-round shape 
+Specifying hub placement of half-round shape Specifying hub placement of quarter-round shape 
+
+
+20 Click OK. 21 Add other muntins: 
+If you want to… Then… 
+add muntins to another glass com-repeat this procedure from step 8. ponent in the door style 
+add muntins to another display click OK, and repeat this procedure representation from step 5. 
+add muntins to all display represent-select Automatically Apply to Other ations of the selected door style Display Representations and Object Overrides. 
+22 When you finish adding muntins to the door style, click OK three times. 
+After you add a muntins block to a door style, you can assign a material, such as wood sash, and specify the display properties, such as color and linetype. 
+For more information, see Assigning Materials to a Door Style on page 1897 and Changing the Layer, Color, and Linetype of Door Components on page 1899. 
+Adding Sunburst Muntins to a Door Style 
+Use this procedure to add sunburst muntins to a door style that contains glass. 
+You add muntins by editing the display properties of the door style for a display representation, such as Model or Elevation, where you want the muntins to appear. You can add muntins to display representations individually. You can also add muntins to a single display representation and apply them to all display representations of that door style. You add the muntins block to glass components of the door style in display properties. Each muntins block becomes a display component of the door style. 
+Quarter-round door glass with sunburst muntins and closed hub 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 
+NOTE A door style must contain glass to receive muntins. For more information about adding glass to a door style, see Adding Glass to a Door Style on page 1913. 
+4 Click the Display Properties tab. 
+5 Select the display representation in which to display the changes, and select Style Override. 
+
+6 If necessary, click 7 Click the Muntins tab. 8 Click Add. 9 Enter a name for the muntins block. 
+10 If the door style contains multiple glass components, specify whether you want to apply muntins to all glass components or to one glass component in the door: 
+If you want to… Then… 
+attach muntins to all glass compon-under Glass Component, select All. ents 
+apply muntins to an individual glass  under Glass Component, select  
+component  Single, and specify the index num­ 
+ber. Lights are indexed counter­ 
+clockwise, starting from the lower- 
+left corner.  
+
+Muntins applied to all or one glass component 
+
+11 Enter a value for the width of all muntins. 12 Enter a value for the depth of all muntins. 
+Specifying muntin width and depth 
+
+13 Clean up the muntin intersections: 
+If you want to… Then… 
+convert the muntin intersections to under Muntin, select Clean Up corners Joints. 
+convert all the muntins to one body under Muntin, select Convert to with the joints cleaned up Body. 
+Specifying muntin cleanup joints 
+
+Converting muntins to a body 
+
+14 Under Lights, select Sunburst for pattern. 15 Under Shape, select Half Round or Quarter Round. 16 Enter a value for Lights High to specify the number of light rows 
+in the vertical direction, exclusive of the spoked lights. 
+17 Enter a value for Lights Wide to specify the number of light columns in the horizontal direction. Count the columns as though they continue around the hub. For 
+a half-round sunburst, five apparent columns are counted as two. For a quarter-round sunburst, three apparent columns are also counted as two. 
+18 Enter a value for Spokes to specify the number of radial muntin spokes. 
+Specifying the number of radial muntin spokes 
+
+19 Under Hub Style, select Closed for no hub light, or select Open for a hub light. 
+Specifying closed and open hubs 
+
+20 Enter a value for Radius to specify the radius for the hub. Specifying hub radius 
+
+21 Specify where to place the hub: 
+If you want to… Then… 
+place the hub at the bottom of a under Hub, select Bottom Center. half-round shape 
+place the hub at the top of a half-under Hub, select Top Center. round shape 
+If you want to… Then… 
+place the hub at the bottom left of under Hub, select Bottom Left. a quarter-round shape 
+place the hub at the bottom right under Hub, select Bottom Right. of a quarter-round shape 
+place the hub at the top left of a under Hub, select Top Left. quarter-round shape 
+place the hub at the top right of a under Hub, select Top Right. quarter-round shape 
+Specifying hub placement of quarter-round shape 
+
+22 Click OK. 23 Add other muntins: 
+If you want to… Then… 
+add muntins to another glass com-repeat this procedure from step 8. ponent in the door style 
+add muntins to another display click OK, and repeat this procedure representation from step 5. 
+add muntins to all display represent-select Automatically Apply to Other ations of the selected door style Display Representations and Object Overrides. 
+24 When you finish adding muntins to the door style, click OK three times. 
+After you add a muntins block to a door style, you can assign a material, such as wood sash, and specify the display properties, such as color and linetype. For more information, see Assigning Materials to a Door Style on page 1897 and Changing the Layer, Color, and Linetype of Door Components on page 1899. 
+Editing a Door Muntins Block in a Door Style 
+Use this procedure to edit the muntins settings for a door style. 
+After you create a muntins block, you can change its settings by editing the display properties of the door style for each display representation, such as Model or Elevation. You can edit the muntins for display representations individually. You can also edit the muntins for a single display representation and apply the changes to all display representations of that door style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which to display the changes, 
+and click 
+. 
+6 Click the Muntins tab. 7 Select the muntins block to edit. 8 Click Edit. 9 Edit any of the settings. 
+For more information on settings, refer to the door muntins type in Creating Muntins in a Door Style on page 1909. 
+10 Select Automatically Apply to Other Display Representations and Object Overrides to apply edits to all display representations of the selected door style. 
+Clear this setting to apply edits to only the selected display 
+representation. 
+11 When you finish editing the door muntins block in the door style, click OK three times. 
+You can edit the display properties, such as color and linetype, for the muntins block. For more information, see Changing the Layer, Color, and Linetype of Door Components on page 1899. 
+You can also edit the material applied to the muntins. For more information, see Assigning Materials to a Door Style on page 1897. 
+Turning Off the Display of Muntins in a Door Style 
+Use this procedure to turn off the display of muntins in a door style. You can turn off the display of door muntins without removing them from the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation in which to turn off the display 
+of door muntins, and click 
+. 
+6 Click the Muntins tab. 
+7 Select Disable Muntins Blocks. 
+8 Select Automatically Apply to Other Display Representations and Object Overrides to turn off muntins block(s) for all display representations of the selected door style. 
+Clear this setting to turn off muntins block(s) for only the selected display representation. 
+9 Click OK two times. 
+Removing a Door Muntins Block from a Door Style 
+Use this procedure to remove muntins from a door style. 
+When you remove muntins blocks from a door style, they are deleted. To turn off muntins without deleting them, see Turning Off the Display of Muntins in a Door Style on page 1938. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Door Styles. 
+NOTE Alternatively, you can select a door, and click Door tab . General panel . Edit Style drop-down . Door Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation for which to remove door 
+muntins, and click 
+. 6 Click the Muntins tab. 7 Select the muntins block to remove. 8 Click Remove. 9 Repeat steps 7 and 8 to remove multiple muntins blocks. 
+10 Select Automatically Apply to Other Display Representations and Object Overrides to remove muntins block(s) from all display representations of the selected door style. 
+Clear this setting to remove muntins block(s) from only the 
+selected display representation. 
+11 When you finish removing muntins blocks from the door style, click OK two times. 
+Windows 
+25 
+A window is an AEC object that interacts with walls and door and window assemblies. After a window is placed in a wall or door and window assembly, the window is constrained to the object and cannot move outside it. Windows can be anchored to specific locations in walls or door and window assemblies; when the wall or door and window assembly moves or changes size, the location of the window in that object stays constant. Windows can also be freestanding objects. 
+Windows 
+A window is an AEC object that interacts with walls and door and window assemblies. After a window is placed in a wall or door and window assembly, the window is constrained to the object and cannot move outside it. Windows can be anchored to specific locations in walls or door and window assemblies; when the wall or door and window assembly moves or changes size, the location of the window in that object stays constant. Windows can also be freestanding objects. 
+Creating Windows 
+You can create windows using all of the typical design parameters for style, standard size, width and height, threshold height, head height, and vertical alignment. You can choose styles with glass shapes that receive standard muntins patterns, and create your own custom glass shapes from profiles. 
+Working with Window Styles 
+Templates provided with AutoCAD Architecture contain ready-to-use window styles. The design rules of a window style determine the default dimensions of windows created from the style. The window style also determines the window shape and the window type: 
+¦ 
+The window shape determines the geometry of the window frame, such as rectangular, half round, and arch. You can also create custom window shapes from profiles. 
+
+¦ 
+The window type determines the number of panels and the method of opening the window, such as glider, pass-through, hopper, or picture. 
+
+
+You can also define standard sizes in a window style and then select the size you want to use when you place the window in a drawing. 
+Anchoring Windows 
+After a window is placed in a wall or door and window assembly, the window is constrained to the object and cannot move outside it. 
+Windows can also be anchored to specific locations in walls or door and window assemblies that when the wall or door and window assembly moves or changes size, the location of the window in that object stays constant. 
+Window Dimensions 
+Some window dimensions depend on the window shape and type specified in the window style. 
+Rise is the height from the top of the rectangular portion of a window to the peak of the window opening for Gothic, Arch, and Peak Pentagon window shapes. 
+Vertical Alignment of Windows 
+To control how you place the window in the wall, the location of the working point vertically in the wall, and how the window responds to modifications in height, use the vertical alignment settings. To determine the working point on the window, use the threshold and head height settings. You can place the working point at the sill or at the head. 
+The threshold height is maintained. For example, if you specify the vertical alignment as 0'' and the window height as 7'–0'', the window opening height is 7’–0''. If you next specify the height of the window as 6'–8'', the window threshold remains at 0'' and the window opening height becomes 6’–8''. 
+The window head work point is maintained. For example, if you specify the vertical alignment as 7'–0'' and the window height as 7'–0'', the window opening height is 7–0''. If you specify the window height as 6'–8'', the window head remains at 7'–0'' and the window threshold becomes 4''. 
+Materials in Windows 
+In AutoCAD Architecture, you can assign materials to a window. These materials then are displayed in wireframe or rendered views. Materials have specific settings for individual components of a window, such as the frame, the sash, or the muntins. For more information, see Material Components and Display Properties on page 884. 
+Window in 2D wireframe and rendered views 
+
+AutoCAD Architecture provides a large number of predefined materials for all common design purposes, which contain settings for windows. You can use these predefined materials, or modify them to your special designs. You can also create your own materials. If you create a material that should specifically be used only for windows, it is recommended that you name it accordingly; for example, Window - Wood Frame or Window Sill - Marble. For more information, see Creating and Editing Material Definitions on page 905. 
+Window Endcaps 
+Windows that are anchored in a wall can have endcap styles applied to them. The endcap shapes for wall openings are defined in the wall style and are a property of the wall. For information on setting an opening endcap style in a wall, see Working with Wall Endcaps and Opening Endcaps on page 1359. 
+Using Window Tools to Create Windows 
+Tools provided with AutoCAD Architecture let you quickly place windows by selecting a window tool with a specific window style and other predefined properties. You can use the tool with all of its default settings, or you can change any properties that are not controlled by the style. You can also use 
+window tools to create new windows by applying tool properties to existing door/window assemblies, openings and doors. 
+Tool palette containing window tools 
+
+The following palettes contain one or more window tools: 
+Tool palette… Contains… 
+Design a window tool for the Standard window style and default settings for other window properties 
+Windows a window tool for sample window styles, with default properties appropriate for each window style 
+Custom tool palettes created by your CAD window tools with window styles and manager properties that are customized for your projects or office standards 
+When you place windows using windows tools, you can use the default settings of the tool, or you can change settings for any windows properties that are not controlled by the style. 
+Creating a Window 
+Use this procedure to add a new window that has the properties specified in the window tool that you select. To specify settings when you add a window, see Creating a Window with User-Specified Settings on page 1945. 
+1 Open the tool palette that you want to use, and select a window 
+tool. If necessary, scroll the palette to display the tool that you want to use. 
+NOTE Alternatively, you can click Home tab . Build panel . Window . 
+
+2 Select a wall or door and window assembly in which to insert the 
+window, or press ENTER to add a freestanding window. You can move or hide the Properties palette to expose more of the drawing area. 
+3 Specify the insertion point of the window. 4 Continue adding windows, and press ENTER. 
+Creating a Window with User-Specified Settings 
+Use this procedure to create any of the following, with settings that you specify: 
+¦ 
+Freestanding windows 
+
+¦ 
+Windows in walls 
+
+
+Adding a window to a wall 
+
+TIP )To ensure that the Properties palette is displayed before you select a tool, click Home tab . Build panel . Tools drop-down . Properties. 
+1 Open the tool palette that you want to use, and select a Window 
+tool. If necessary, scroll the tool palette to display the tool you want to use. 
+NOTE Alternatively, you can click Home tab . Build panel . Window . 
+
+2 On the Properties palette, expand Basic, and expand General. 3 Select a window style. 4 Under Bound Spaces, define if this window can be used as a 
+bounding object for associative spaces. 
+You can select three options here: 
+¦ 
+Yes: this window can be used as bounding object for associative spaces. 
+
+¦ 
+No: this window cannot be used as bounding object for associative spaces. 
+
+¦ 
+By style: this window will use the bounding settings from the window style. 
+
+
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+5 Expand Dimensions. 6 Specify a window size: 
+If you want to… Then… 
+use a standard window size click Standard Sizes, and then select a window size. 
+use a custom window size enter values for Width and Height. 
+7 Enter a value for Rise, if applicable to the selected style and window type. 
+8 Specify where the window width and height are measured to: 
+If you want to measure to… Then… 
+the outside of the window frame Select Outside of frame for Measure to. 
+the inside of the window frame Select Inside of frame for Measure to. 
+9 Enter a value for Opening percent or Swing angle. Zero indicates a closed window. 10 Expand Location. 
+11 If you are placing the window in a wall, specify the position of the window: 
+If you want to… Then… 
+position the window at a specific select Offset/Center for Position distance between the edge of the along wall, and enter a value for opening and the end of a wall seg-Automatic offset. ment 
+center the window on a wall seg-select Offset/Center for Position ment along wall, and specify a point near the center of the wall segment. 
+position the window anywhere click Position along wall, and select along the wall Unconstrained. 
+12 Specify whether you want the window aligned vertically by sill height or by head height: 
+If you want to align the win-Then… dow… 
+by sill height select Sill for Vertical alignment, and enter a value for Sill height. 
+by head height select Head for Vertical alignment, and enter a value for Head height. 
+13 Specify the insertion point for a freestanding window or a window in a wall: 
+If you want to insert… Then… 
+a freestanding window press ENTER, and specify an inser­tion point and a rotation angle for the window. 
+the window in a wall select the wall and specify an inser­tion point along the wall. 
+TIP There are 2 command line options that make the insertion of a window in a specific location easier: You can switch the insertion point of the window from left (default) to center and right by entering CY (cycle measure to) once or twice on the command line. You can also measure the insertion point of a window in relation to a specified point in the drawing - for example the frame of a door - by entering RE (Reference point on) and then selecting the point from which the distance should be measured. 
+14 Continue to place windows by selecting window styles and specifying insertion points, or press ENTER to end the command. 
+Creating a Window in a Door and Window Assembly 
+Use this procedure to insert a window into a door and window assembly. 
+1 Open the tool palette that you want to use, and select a Window 
+tool. If necessary, scroll the tool palette to display the tool you want to use. 
+NOTE Alternatively, you can click Home tab . Build panel . Window . 
+
+2 Select a door and window assembly to insert the window into. 
+3 Select the grid cell on the door and window assembly into which you want to insert the window. 
+4 Commence adding the window to the door and window assembly, as described in Inserting a Door or Window into a Door and Window Assembly on page 1737. 
+Creating a Window from Doors, Door/Window Assemblies and Openings 
+Use this procedure to convert a door, door/window assembly, or opening to a window that has the properties of the window tool you select. You can edit these properties after creating the window. 
+1 Open the tool palette that you want to use. 
+If necessary, scroll to display the tool that you want to use. 
+2 Right-click a window tool, and click Apply Tool Properties to . Door, Door/Window Assembly, Opening. 
+3 Select the door or window assembly, opening, or door to convert, and press ENTER. 
+4 Edit the properties of the window in the Properties palette, if needed. 
+Creating a Window Tool 
+Use this procedure to create a window tool and add it to a tool palette. You may want to create your own window tools if you are placing multiple windows of specific styles with additional properties that you want to be the same each time you add a window of each type. 
+For example, you are creating an office floor plan that contains two custom window styles: fixed casement for conference rooms and operable casement for offices. To work efficiently, you can create a window tool for each style. You can then select the appropriate tool to place windows in offices and conference rooms. 
+You can use any of the following methods to create a window tool: 
+¦ 
+Drag a window that has the properties you want to a tool palette. 
+
+¦ 
+Drag a window style from the Style Manager to a tool palette, and then customize the properties of the new tool. 
+
+¦ 
+Copy an existing tool, and then customize the properties of the new tool. 
+
+¦ 
+Drag a tool from a tool catalog in the Content Browser, and then customize the properties of the tool. For information about using the Content Browser to create a tool, see Using Tool Catalog Items on page 175. 
+
+
+1 Open the tool palette where you want to create a tool. 2 Create the tool: 
+If you want to… Then… 
+create a tool from a window in the select the object, and drag it to the drawing tool palette. 
+If you want to… Then… 
+create a tool from a window style click Manage tab . Style & Display in the Style Manager. 
+panel . Style Manager
+ . Locate the style you want to copy, and drag it to the tool palette. Click OK. 
+copy a tool in the current palette right-click the tool, click Copy, and click Paste. 
+copy a tool from another palette open the other tool palette, right-click the tool, and click Copy. Re­open the palette where you want to add the tool, right-click, and click Paste. 
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. This description is used as the tool’s tooltip on the tool palette, and to describe the tool if it is stored in a tool catalog. 
+6 Expand Basic, and expand General. 7 Enter a description of the tool. 8 If you do not want to use the default layer key for windows, select 
+a layer key. 9 If you want to override the default layer name for windows, select 
+a layer override. 
+10 Select a window style. 
+11 For Style location, select the drawing file containing the style used 
+for this window, or select Browse and use a standard file selection dialog box to select the file. 
+12 Under Bound Spaces, define if this window tool can be used as a bounding object for associative spaces. You can select three options here: 
+¦ 
+Yes: this window tool can be used as bounding object for associative spaces. 
+
+¦ 
+No: this window tool cannot be used as bounding object for associative spaces. 
+
+¦ 
+By style: this window tool will use the bounding settings from the window style. 
+
+
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+13 Expand Dimensions. 14 Specify a window size: 
+If you want to… Then… 
+use a standard window size click Standard Sizes, and then select a window size. 
+use a custom window size enter values for Width and Height. 
+15 Specify where the window width and height are measured to: 
+If you want to measure to… Then… 
+the outside of the window frame Select Outside of frame for Measure to. 
+the inside of the window frame Select Inside of frame for Measure to. 
+16 Enter a value for Rise, if applicable to the selected style and window type. 17 Enter a value for the Opening percent or Swing angle. Zero indicates a closed window. 
+NOTE Defining the opening percent in display properties overrides this setting on the Tool Properties palette. For more information, see Specifying the Display Properties of a Window Style on page 1993. 
+18 Expand Location. 
+19 Specify the position of the window when it is placed in a wall: 
+If you want to… Then… 
+position the window at a specific select Offset/Center for Position distance between the edge of the along wall, and enter a value for opening and the end of a wall seg-Automatic offset. ment 
+center the window on a wall seg-select Offset/Center for Position ment along wall, and specify a point near the center of the wall segment 
+position the window anywhere click Position along wall, and select along the wall Unconstrained. 
+20 Enter a value for the head height. 21 Enter a value for the sill height. 22 Click OK. 
+Editing Windows 
+After you create a window, you can change the size, height, width, rise, and opening. You can also move the window within the wall, flip the hinge or swing, and change the swing opening. 
+You can change the properties of existing windows in your drawing by changing the window style, changing the dimensions of the window, moving the anchor location of the window, and specifying the endcap conditions of the window. 
+AutoCAD Architecture offers several methods for editing windows: 
+¦ 
+You can directly edit windows using grips for dimensions and other physical characteristics. 
+
+¦ 
+For grip edit operations where you are changing a dimension or an angle, the Dynamic Input feature lets you enter a precise value instead of moving a grip. When this feature is active (click DYN on the application status bar), selecting a grip displays a text box in which you can enter the desired value for the associated dimension or angle. For more information, see “Use Dynamic Input” in AutoCAD Help. 
+
+
+¦ 
+You can change window settings on the Properties palette. You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+
+¦ 
+You can select editing commands from the context menu for a selected window. 
+
+
+Using Grips to Edit Windows 
+You can use the following grips to modify windows: 
+
+Grip Description 
+
+Lets you change the width of a window (Width) 
+NOTE Initially the grip is set to con­strain the sizing to one of the standard values on page 1983 defined for the win­dow style. 
+The CTRL key acts as a toggle between standard and custom sizing. 
+

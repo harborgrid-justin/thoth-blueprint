@@ -1,0 +1,515 @@
+[MIGRATED TO RTM_PART_60.md - ROOFS]
+or double slopes and gable roofs. You can also use roof tools to create new roofs by applying tool properties to existing polylines and walls. 
+Tool palette containing roof tool 
+
+The default tool palettes in the workspace contain sample roof tools that you can use and customize as necessary. In addition, the following catalogs provided with the software contain roof tools that you can add to your tool palettes: 
+¦ 
+Stock Tool catalog 
+
+¦ 
+Sample Palette catalog 
+
+
+Custom palettes created by your CAD manager or other users may also contain roof tools with properties customized for your projects or office standards. 
+Creating a Slope Roof 
+Use this procedure to add a slope roof that has the properties specified in the roof tool that you select. You can create a single slope or a double slope roof object. To specify settings when you add a roof, see Creating a Slope Roof with User-Specified Settings on page 2362. 
+NOTE To add additional slopes to a roof face, right-click a roof object and click Edit Edges/Faces. 
+Creating a single slope roof 
+
+Creating a double slope roof 
+
+1 Open the tool palette that contains the roof tool you want to use, and select the tool. 
+Alternatively, you can click Home tab . Build panel . Roof Slab 
+drop-down . Roof
+ . 
+2 On the Properties palette, select Single slope or Double slope for Shape. 
+TIP After specifying the desired setting, you can move or hide the Properties palette to expose more of the drawing area. 
+3 In the drawing area, specify points for the corners of the roof. 4 When you are finished specifying points, press ENTER. 
+Creating a Gable Roof 
+Use this procedure to add a gable roof that has the properties specified in the roof tool that you select. You can create a single sloped roof and set each edge to gable as needed. You can specify a slope for the gable ends to create a hip. 
+To specify settings when you add a roof, see Creating a Gable Roof with User-Specified Settings on page 2363. 
+Viewing a gable roof end 
+
+NOTE You can create a gable on an existing roof by gripping any ridge line point and stretching it past the roof edge. 
+1 Open the tool palette that contains the roof tool you want to use, and select the tool. 
+Alternatively, you can click Home tab . Build panel . Roof Slab 
+drop-down . Roof
+ . 
+2 On the Properties palette, select Single slope for Shape. 3 In the drawing area, specify the first point for the first roof edge. 4 Specify the second point to complete the first sloped roof edge. 5 On the Properties palette, select Gable for Shape. 6 In the drawing area, specify the next point to create a gable roof 
+edge. 7 Select Single slope for Shape. 8 Specify the next point to create a sloped roof edge. 9 Select Gable slope for Shape. 
+10 Specify additional points as needed to define the roof, and press 
+ENTER. To create a clipped gable roof, you first need to convert the gabled roof to roof slabs. For more information, see Creating a Roof Slab from a Roof on page 2392 and Creating a Clipped Gable Roof on page 2458. 
+Creating Dormers 
+To add a dormer to a roof, you must first convert the roof to roof slabs, and then create additional roof slabs, walls, and all other parts of the dormer. For more information, see Creating a Roof Slab from a Roof on page 2392 and Creating a Dormer in a Roof Slab on page 2459. 
+Creating a Slope Roof with User-Specified Settings 
+Use this procedure to add a slope roof with settings that you specify. You can create a single slope or a double slope roof object. 
+Creating a single slope roof 
+
+Creating a double slope roof 
+
+1 Open the tool palette that contains the roof tool you want to use, and select the tool. 
+Alternatively, you can click Home tab . Build panel . Roof Slab 
+drop-down . Roof
+ . 
+2 On the Properties palette, expand Basic, and expand Next Edge. 3 Select Single slope or Double slope for Shape. 4 Enter a value for Overhang. 
+5 Expand Lower Slope, and enter values for Plate Height, Rise, and 
+Slope. Plate height is the height of the bottom surface of the roof at its lowest edge (where the overhang begins). This is usually the height of the top plate of the wall that the roof sits on. 
+
+6 For a double slope roof, expand Upper Slope, and enter values for Upper Height, Rise, and Slope. 
+TIP After specifying the desired settings, you can move or hide the Properties palette to expose more of the drawing area. 
+7 In the drawing area, specify points for the corners of the roof. 8 When you are finished specifying points, press ENTER. 
+Creating a Gable Roof with User-Specified Settings 
+Use this procedure to add a gable roof with settings that you specify. You create a single sloped roof and set each edge to gable as needed. You can specify a slope for the gable ends to create a hip. 
+TIP You can create a gable on an existing roof by dragging a ridge line grip to the roof edge or beyond, as shown. 
+Viewing a gable roof end 
+
+1 Open the tool palette that contains the roof tool you want to use, and select the tool. Alternatively, you can click Home tab . Build panel . Roof Slab drop-down . Roof
+ . 2 On the Properties palette, expand Basic, and expand Next Edge. 3 Select Single slope for Shape. 
+TIP You can move or hide the Properties palette to expose more of the drawing area. 
+4 In the drawing area, specify the first point for the first roof edge. 5 Specify the second point to complete the first sloped roof edge. 6 On the Properties palette, select Gable for Shape. 7 In the drawing area, specify the next point to create a gable roof 
+edge. 8 Select Single slope for Shape. 9 Specify the next point to create a sloped roof edge. 
+10 Select Gable slope for Shape. 11 Specify additional points as needed to define the roof, and press ENTER. 
+Creating a Roof from Walls 
+Use this procedure to create a roof that is based on a selected closed set of walls and has the properties of the roof tool you select. You can edit these properties after creating the roof. The roof takes its plate height from the top of each wall segment. 
+NOTE If your walls are not properly cleaned up, the roof conversion is unpredictable. For more information, see Cleanup Group Definitions on page 1337. 
+Creating a roof from walls 
+
+1 Open the tool palette that contains the roof tool you want to use. 2 Right-click a roof tool, and click Apply Tool Properties to . Linework and Walls. 3 Select the walls to convert, and press ENTER. 
+NOTE If the walls you select are not closed, a roof is added to the top of each wall segment. 
+4 When prompted to erase the original geometry, press ENTER to keep the wall, or enter y (Yes) to erase it. 
+5 Edit the properties of the roof on the Properties palette, if needed. 
+Creating a Roof from Polylines 
+Use this procedure to create a roof that is based on a two-dimensional (2D) polyline and has the properties of the roof tool you select. You can edit these properties after creating the roof. 
+Creating a roof from a polyline 
+
+1 Draw a closed 2D polyline in the shape of the intended roof, in the location where you want to place the roof. 
+2 Open the tool palette that contains the roof tool you want to use. (You may have to scroll to display the desired tool.) 
+3 Right-click a roof tool, and click Apply Tool Properties to . Linework and Walls. 
+4 Select the polyline to convert, and press ENTER. 
+5 When prompted to erase the original geometry, press ENTER to keep the linework, or enter y (Yes) to erase it. 
+6 Edit the properties of the roof on the Properties palette, if needed. 
+Creating a Roof Tool 
+Use this procedure to create a roof tool and add it to a tool palette. You may want to create your own roof tools if you are placing multiple roofs that have the same properties. 
+For example, you are creating an office building that has a multi-peaked roof. Although the entire roof is single sloped, each peak has a different slope. To work efficiently, you can create a roof tool for each slope, and select the appropriate tool to place the roofs with the correct slope on each area of the building. 
+1 Open the tool palette on which to create a tool. 
+2 Create the tool: 
+If you want to… Then… 
+create a tool from a roof in the select the object, and drag it to the drawing tool palette. 
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool  open the other tool palette, right- 
+palette  click the tool, and click Copy. Re­ 
+open the palette where you want  
+to add the tool, right-click, and click  
+Paste.  
+
+copy a tool from the Content  click Home tab . Build pan- 
+Browser  el . Tools drop-down . Content  
+Browser  , and locate the tool  
+you want to copy. Position the  
+cursor over the i-drop handle, and  
+drag the tool to the tool palette.  
+
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. 
+6 Expand Basic, and expand General. 
+7 Click the setting for Description, enter a description of the roof 
+created from this tool, and click OK. 
+8 Specify a layer key and any layer key overrides if you do not want to use the layer assignments specified in the layer key style used in the drawing. 
+9 Specify roof settings: 
+If you want to… Then… 
+change the thickness value expand Dimensions, and enter a value for Thickness. 
+change the type of edge expand Dimensions, and select a new setting for Edge cut. 
+If you want to… Then… 
+change the roof shape expand Next Edge, and select a new setting for Shape. 
+add or remove the overhang, or expand Next Edge, and enter a change the overhang value value for Overhang. 
+change the plate height expand Lower Slope, and enter a value for Plate Height. 
+change the upper height for a expand Upper Slope, and enter a double slope roof value for Upper Height. 
+change the rise or slope angle for expand Lower Slope, or Upper each slope Slope for a double slope roof, and enter a value for Rise or Slope. 
+10 Click OK. 
+Editing Roofs 
+After placing roofs, you can edit any characteristics of the roof that you specified when you drew the roof. You can change the basic geometry of a roof, apply a different roof shape, and change the roof edge or overhang conditions. 
+AutoCAD Architecture offers several methods for editing roofs: 
+¦ 
+Edit roofs directly using grips for dimensions and other physical characteristics. 
+
+¦ 
+For grip edit operations where you are changing a dimension or an angle, the Dynamic Input feature lets you enter a precise value instead of moving a grip. When this feature is active (click DYN on the application status bar), selecting a grip displays a text box in which you can enter the desired value for the associated dimension or angle. For more information, see “Use Dynamic Input” in AutoCAD Help. 
+
+¦ 
+Change roof settings on the Properties palette. You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. 
+
+
+For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+¦ Select editing commands from the context menu for a selected roof. 
+Using Grips to Edit Roofs 
+Refer to the illustrations and steps in this topic to use roof grips to edit roofs. 
+Editing Roof Dimensions 1 Select the roof. 2 Select the grip for the dimension you want to change. Roof grips 
+
+3 Move the grip until the dimension value you want is displayed, and click once, or enter a value. 
+Applying Tool Properties to an Existing Roof 
+Use this procedure to apply the properties of a roof tool to one or more existing roofs. The properties include any settings specified in the tool you select. 
+1 Open the tool palette that you want to use. If necessary, scroll to display the tool that you want to use. 
+2 Right-click a roof tool, and click Apply Tool Properties to . Roof. 3 Select the roof, and press ENTER. 4 When prompted to erase the original geometry, press ENTER to 
+keep the linework, or enter y (Yes) to erase it. 
+5 Edit the properties of the roof on the Properties palette, if necessary. 
+Changing the Dimensions of a Roof 
+Use this procedure to change the dimensions of a roof, including the plate height, the upper height for a double slope (gambrel) roof, the slope, and the depth of the overhang. You can also change the thickness of the roof slabs and the type of roof edge. 
+NOTE You can create a gable end on a roof by gripping any ridge line point and stretching it past the roof edge. 
+1 Select the roof. 2 On the Properties palette, specify roof settings: 
+If you want to… Then… 
+change the thickness value under Dimensions, enter a value for Thickness. 
+change the type of edge under Dimensions, select a new setting for Edge cut. 
+change the number of slopes under Dimensions, select a new setting for Shape. 
+add or remove the overhang, or under Dimensions, enter a value for change the overhang value Overhang. 
+change the plate height under Lower Slope, enter a value for Plate Height. 
+change the upper height for a under Upper Slope, enter a value double slope roof for Upper Height. 
+change the rise or slope angle for under Lower Slope, or Upper Slope each slope for a double slope roof, enter a value for Rise or Slope. 
+Changing the Edges and Faces of a Roof 
+Use this procedure to edit the edges and faces of a roof. You can edit: 
+¦ 
+the height and overhang of individual edges 
+
+¦ 
+the number of segments and the radius for curved segments 
+
+¦ 
+the height and slope of individual roof faces 
+
+
+
+1 Select the roof you want to change. 
+2 Click Roof tab . Modify panel . Edit Edges
+ . 3 Select roof edges that you want to change and press ENTER. As you select edges, they are numbered consecutively, beginning with zero, for display in the dialog box. 
+4 Specify new values for each roof edge: 
+If you want to… Then… 
+change the height of a roof edge select Height for the roof edge, and enter the height value. 
+change the overhang of a roof edge select Overhang for the roof edge, and enter the overhang value. 
+change the number of segments in select Segments for the roof edge, a curved roof for a roof edge and enter the number of segments. 
+If you want to… Then… 
+change the radius of the curved select Radius for the roof edge, and roof edge enter the radius. 
+5 Specify new dimensions for the roof faces of the selected edges: 
+If you want to… Then… 
+change the height of a roof face select Height for the roof face, and enter the height value. 
+change the slope of a roof face select Slope for the roof face, and enter the slope value. 
+add a face to the selected edge click the blank space under the last number in the Face column, and enter values for Height and Slope. 
+remove a roof face select the Face column number, and press DELETE. 
+6 Click OK. 
+Converting a Roof to Roof Slabs 
+Use this procedure to convert a roof to one or more roof slabs, each modeling a separate face of the roof. Roof slab objects differ from roof objects in that each roof slab is a separate entity, defined by its perimeter, edge conditions, and style. This gives you more flexibility in controlling to geometry of the roof and its edges. Also, because roof slabs are style based, you can apply design changes globally. 
+For more information about working with roof slabs, see Slabs and Roof Slabs on page 2379. 
+1 Select the roof you want to convert. 
+2 Click Roof tab . Modify panel . Convert
+ . The Convert to Roof Slabs worksheet displays the roof slab styles that exist in your current drawing. 
+Convert to Roof Slabs worksheet 
+
+3 Select a roof slab style. 4 Select Erase Layout Geometry to erase the roof and click OK. 5 Select individual roof slabs and edit them as needed. 
+Specifying the Material of a Roof 
+Use this procedure to select a different material for the components of an individual roof. 
+NOTE If a material assignment does not determine the display properties of the roof component, you can change the properties of the display component as described in Specifying the Display Properties of a Roof on page 2374. 
+1 Select the roof you want to change, right-click, and click Edit Object Display. 
+2 To verify that the material assignment determines the display properties of the component, click the Display Properties tab, select the display representation in which to display the changes, 
+and click 
+. 3 Click the Layer/Color/Linetype tab, verify that By Material is 
+selected for the component, and click OK. 4 Click the Materials tab. 5 Select the component you want to change, and select a different 
+material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new one and assign it to a component. 
+WARNING Although you can edit a material definition from this dialog box, any changes you make apply to all objects that are assigned the material. 
+6 Click OK. 
+Specifying the Display Properties of a Roof 
+Use this procedure to change the following properties of the display components of an individual roof: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+By material (material assigned to the display component determines its display properties) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+NOTE If a material assignment determines the properties of a roof display component, you can change the properties of the display component by clearing By Material or by overriding the material assignment with a different material. For more information, see Specifying the Material of a Roof on page 2373. 
+1 Select the roof you want to change, right-click, and click Edit Object Display. 
+NOTE You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+2 Click the Display Properties tab. 
+3 Select the display representation in which to display the changes, and select Object Override. The display representation in bold is the current one. 
+4 If necessary, click 
+. 5 Click the Layer/Color/Linetype tab. 6 Select the component to change, and select a different setting for 
+the property. 7 Click OK twice. 
+Specifying the Hatching of a Roof 
+Use this procedure to specify the hatching of the components of an individual roof. Hatching is displayed only in the section display representation. 
+NOTE If a material assignment determines the hatching properties of a roof display component, you can change the hatching of the display component by clearing By Material or by overriding the material assignment with a different material. For more information, see Specifying the Material of a Roof on page 2373. 
+1 Select the roof you want to change, right-click, and click Edit Object Display. 
+NOTE You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+2 Click the Display Properties tab. 3 Select the Section display representation, and select Style Override. 
+4 If necessary, click 
+. 5 Click the Hatching tab. 6 Select the display component, and click the setting for Pattern. 7 Select the hatching for the display component: 
+If you want to… Then… 
+specify a hatching pattern that is select Predefined for Type, and se­available in the software lect a pattern. 
+specify a custom pattern select Custom for Type, and enter the name of the custom pattern. If necessary, click Browse, and navig­ate to the folder that contains the custom pattern file. 
+specify single hatching select User-Defined for Type, and clear Double Hatch. 
+specify double hatching select User-Defined for Type, and select Double Hatch. 
+If you want to… Then… 
+specify solid fill select Solid Fill for Type. 
+8 Click OK. 9 Click Scale/Spacing, and enter a value that determines how the 
+selected pattern is repeated. 
+10 Click Angle, and enter the angle for the selected pattern. 
+11 Click Orientation, and specify how the hatching is oriented: 
+If you want to… Then… 
+orient the hatching to the roof slab, select Object. regardless of the roof slab rotation 
+orient the hatching to the world select Global. coordinate system 
+12 Click X Offset and Y Offset, and enter offset values. 13 Click OK twice. 
+Changing the Location of a Roof 
+Use this procedure to relocate a roof by changing the coordinate values of its insertion point. The roof also has an orientation with respect to the world coordinate system (WCS) or the current user coordinate system (UCS). For example, if the top and bottom of the roof are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the roof by aligning its normal with another axis. You can also rotate the roof on its plane by changing the rotation angle. 
+For information about the WCS and UCS, see “Use Coordinates and Coordinate Systems” in AutoCAD help. 
+1 Select the roof you want to change. 2 On the Properties palette, expand Basic, and expand Location. 3 Select Additional information. 
+4 Specify the location of the roof: 
+If you want to… Then… 
+relocate the roof enter new coordinate values under Insertion Point. 
+locate the roof on the XY plane make the normal of the roof parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the roof on the YZ plane make the normal of the roof parallel to the X axis: under Normal, enter 1 for X and enter 0 for Y and Z. 
+locate the roof on the XZ plane make the normal of the roof parallel to the Y axis: under Normal, enter 1 for Y, and enter0 for X and Z. 
+change the rotation of the roof enter a new value for Rotation Angle. 
+5 Click OK. 
+Attaching Hyperlinks, Notes, or Files to a Roof 
+Use this procedure to attach hyperlinks, notes, or files to a roof. You can also edit hyperlinks and notes, and edit or detach reference files from a roof. 
+1 Select the roof to which you want to attach information. 2 On the Properties palette, click the Extended Data tab. 3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. 4 Click OK. 5 To add a note, click the setting for Notes, and enter the note. 6 Click OK. 7 To add a reference file, click the setting for Reference documents, 
+and attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+If you want to… Then… 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+8 Click OK twice. 
+Slabs and Roof Slabs 
+30 
+In AutoCAD Architecture, a slab object is a three-dimensional (3D) body that is bounded by a planar polygon (perimeter) of any shape, and has multiple edges. A slab is defined by its perimeter, edge conditions, and style. You can use slabs to draw floors and other building model components that require a flat surface and edge conditions. 
+Roof slabs are similar to slabs in most respects, but are based on distinct roof slab styles. When modeling a roof, you can convert individual faces of the roof into roof slabs, which give you more flexibility in modeling details of the roof’s geometry. 
+Overview of Slabs and Roof Slabs 
+Slabs and roof slabs are AutoCAD Architecture objects that you use to model floors, roof faces, and other flat surfaces where edge conditions need to be specified. The slab or roof slab object is a three-dimensional (3D) body bounded by a planar polygon (perimeter) of any shape, and has multiple edges. The object is defined by its perimeter, edge conditions, and style. Though they share many of the same properties, slabs and roof slabs represent separate style categories and tool types. For instance, you cannot apply the properties of a slab tool to an existing roof slab object. 
+Roof Slabs 
+A roof slab models a single face of a roof. Roof slab objects also differ from roof objects in that each roof slab is a separate entity with no direct connection to other entities. When you use multiple roof slabs to model an entire roof surface, you have more flexibility in editing the roof, but the combined topology (3D geometry) of the roof is not calculated automatically. For this reason, it is recommended that when you design complex roofs, you start with a roof object. Then, when the design is substantially complete, but you need more flexibility for customizing edges and other details, you can convert the roof to individual roof slabs. 
+While roof slabs do not dynamically interact with each other, they do allow significant control over the roof geometry. For example, you can trim roof slabs individually, extend them, and miter them with other roof slabs. You can also cut holes in roof slabs, add or subtract mass elements, and apply detailed fascia and soffit profiles to any edge at any angle and orientation. Like slabs, roof slabs are style-based, so you can apply design changes globally. 
+Methods of Creating Slabs/Roof Slabs 
+Using slab and roof slab tools, you can create slabs and roof slabs independently, or you can create them from existing objects, such as walls and polylines. Slabs and roof slabs created from other objects do not maintain a link to the original object. 
+Pitched roofs are usually designed by specifying a plate line and a slope angle. Roof slabs are designed so that you can use the same approach in laying them out. To add a roof slab, you simply specify two points and an angle. 
+If you have a traditionally designed roof created from a two-dimensional (2D) plan showing ridge, hip, and valley lines, you can trace over that plan with roof slabs, specifying the desired height and slope. From these values and the specified points, the software creates the correct three-dimensional (3D) model. 
+Slab/Roof Slab Bodies 
+The body of a slab or roof slab is an extrusion perpendicular to the plane of the perimeter and is defined by the following geometry: 
+¦ 
+The perimeter of a slab or roof slab is a planar polygon defined by the X,Y,Z coordinates of its vertices. 
+
+¦ 
+A slab or roof slab has 3 or more vertices, with the ability to add or remove vertices. Each pair of vertices defines an edge. 
+
+¦ 
+The thickness of a slab or roof slab extrusion is specified either in the object style (when it has a fixed thickness) or for the individual object. 
+
+¦ 
+The position of the slab or roof slab bottom, relative to its perimeter plane, is controlled by the thickness offset value in the style. 
+
+¦ 
+The baseline of a slab or roof slab is defined by the first two points you select when defining the vertices. 
+
+¦ 
+The slab or roof slab insertion point, by default, is the first point on the baseline. You can offset the baseline either horizontally or vertically from the insertion point to allow for precise alignment with walls or structural elements. 
+
+
+¦ 
+A slab or roof slab has a slope (pitch), which you can specify either as an angle or as a rise-to-run ratio. If you change the slope, the slab or roof slab rotates around the slope pivot point. 
+
+¦ 
+The pivot point is initially the first vertex of the baseline, but you can move it to any other point, either on or off the slab or roof slab. A small pyramid-shaped marker represents the pivot point. 
+
+¦ 
+An imaginary line passing through a slab or roof slab at the perimeter line (in section) is called the slopeline. The slopeline aligns the slab or roof slab with the wall base height. The slopeline is the position of the slab or roof slab baseline relative to its bottom face. The value you enter for the thickness offset in the slab or roof slab style determines the distance between the slab or roof slab baseline and the bottom face of the slab or roof slab. 
+
+
+Geometry of a roof slab 
+
+Slab/Roof Slab Edges 
+The following parameters define a slab or roof slab edge: 
+¦ 
+edge cut orientation (plumb or square) 
+
+¦ 
+angle (relative to the orientation) 
+
+¦ 
+edge style (fascia and soffit) ¦ overhang (defines the point at which the fascia begins) 
+
+You apply a fascia and soffit to slab or roof slab edges with styles that define edge conditions 
+
+¦ 
+The fascia is defined by a profile, with its insertion point located at the top of the slab or roof slab edge. The local Y axis of the profile polyline aligns with the slab or roof slab edge angle. 
+
+¦ 
+The soffit is also defined by a profile, with its insertion point positioned at the X and Y offsets from the fascia insertion point. 
+
+
+Roof slab with fascia and soffit components 
+
+Edge Control 
+You can customize each slab or roof slab edge individually, applying styles and making other adjustments as required by your design. A slab or roof slab edge style defines the fascia and soffit design from profiles that you create for these components. You can specify whether the style uses a fascia, a soffit, both, or neither. You also specify how the fascia and soffit are positioned relative to the slab or roof slab. 
+Slab and Roof Slab Styles 
+Slabs and roof slabs have their own distinct style categories in which individual styles specify the default properties for specific types of slabs or roof slabs. 
+These properties include dimensions, edge styles for the fascia and soffit, and entity properties for layer, color, and linetype. Slab and roof slab styles allow you to use a different edge style for each edge. 
+Materials in Slabs and Roof Slabs 
+You can assign materials to a slab or roof slab. For example, a floor slab can be assigned a material representing tiles with concrete edges. These materials are displayed in wireframe or rendered views. Materials have specific settings for individual components of slabs or roof slabs, such as the body, fascia and soffit. 
+Slab appearance in different views 
+
+AutoCAD Architecture provides predefined materials for common design purposes. These materials contain settings for slabs or roof slabs that you can use as provided or modify for special designs. You can also create materials from scratch. If you create a material to use only for slabs, name it accordingly; for example, Slab—Ceramic Tile or Slab Edge—Concrete. This will help in organizing your material definitions. For more information, see Specifying the Materials of a Slab or Roof Slab Style on page 2470. 
+Editing Tools 
+In addition to the control provided by slab or roof slab styles and edge styles, AutoCAD Architecture includes a variety of tools that let you edit slabs and roof slabs to fit unique conditions. For example, you can add holes to slabs for structures such as chimneys and vent pipes. You can also use roof slabs to create dormers. For a description of the tools available, see Editing Slabs and Roof Slabs on page 2400. 
+Using Tools to Create Slabs and Roof Slabs 
+Tools provided with AutoCAD Architecture let you quickly place slabs or roof slabs by selecting a tool with a specific slab or roof slab style and other predefined properties. You can use the tool with all of its default settings, or you can change any properties that are not controlled by the style. You can also use slab or roof slab tools to create new slabs or roof slabs by applying tool properties to existing linework, walls, and spaces. 
+The Design tool palette contains sample slab and roof slab tools that you can use and customize as needed. Custom palettes created by your CAD manager or other users may also contain slab or roof slab tools with styles and properties that are customized for your projects or office standards. 
+Tool palette containing slab and roof slab tools 
+
+Slab and roof slab tools are also included in the Stock Tool catalog supplied with the Content Browser. For information about using the Content Browser, see Content Browser Overview on page 137. 
+Creating a Slab or a Roof Slab 
+Use this procedure to add a new slab or roof slab that has the properties specified in the slab or roof slab tool you select. To specify your own settings when you add a slab or roof slab, see Creating a Slab/Roof Slab with User-Specified Settings on page 2386. 
+You add the slab or roof slab by specifying points to define its perimeter as follows: 
+¦ 
+The first point determines the insertion point of the slab or roof slab and the start of the baseline. This point also locates the default pivot point of the slab or roof slab. 
+
+¦ 
+The second point determines the endpoint of the baseline. 
+
+¦ 
+Subsequent points establish the vertices of the perimeter. 
+
+
+1 Open the Design tool palette, and select the Slab tool or the Roof Slab tool. (You may have to scroll to display the desired tool.) 
+NOTE Alternatively, you can click Home tab . Build panel . Roof Slab drop-down . Roof Slab 
+ , or Home tab . Build panel . Roof Slab drop-down . Slab 
+. 
+2 Specify the start point of the slab or roof slab. 
+3 Specify a second point to define the first edge (baseline) of the slab. 
+4 Specify further points to finish defining the perimeter: 
+If you want to… Then… 
+close the perimeter by drawing two  specify a point in the direction in  
+edges that meet at a right angle  which the perimeter is to close;  
+then enter o (for Ortho). The edge  
+is extended until it meets another  
+edge perpendicular to the first  
+edge.  
+
+close the perimeter by adding an enter c (for Close). edge from the previous point to the start point of the baseline 
+5 Press ENTER. 
+Drawing a slab 
+
+Creating a Slab/Roof Slab with User-Specified Settings 
+Use this procedure to create a slab or roof slab with settings that you specify. 1 Open the Design tool palette, and select the Slab tool or the Roof Slab tool. (You may have to scroll to display the desired tool.) 
+NOTE You can also access Slab and Roof Slab tools from the Build panel on the ribbon’s Home tab. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand General. 
+3 Under Style, select a slab or roof slab style. 
+4 Specify a value for Bound Spaces: 
+If you want to… Then… 
+allow the slab or roof slab to be select Yes. used as a bounding object for asso­ciative spaces 
+If you want to… Then… 
+prevent the slab or roof slab from select No. being used as a bounding object for associative spaces 
+use the bounding settings from the select By Style. slab or roof slab style 
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+5 Select Projected or Direct for Mode. If you select Projected, the X,Y coordinates of the first point you specify are projected to a Z value of the current base height. This establishes the insertion point. The second point establishes the baseline. All subsequent points are projected onto a plane established by the baseline and the specified slope angle. This mode is provided for architects who wish to lay out a slab or roof slab by tracing over a plan drawing. 
+If you select Direct, the points you specify become the vertices of the slab perimeter. 
+6 Expand Dimensions. 7 Enter a value for Thickness. 8 Enter a value for the vertical offset distance from the insertion 
+point for Vertical Offset. 9 Enter a value for the horizontal offset distance from the insertion point for Horizontal Offset. 10 Select the justification: 
+If you want to align the … Then, for Justify,… 
+top of the slab or roof slab with the select Top. first specified point 
+center of the slab or roof slab with select Center. the first specified point 
+bottom of the slab or roof slab with select Bottom. the first specified point 
+If you want to align the … Then, for Justify,… 
+slopeline of the slab or roof slab select Slopeline. with the first specified point 
+NOTE This justification is used only for inserting a slab or roof slab and is not retained as a parameter of the inserted object. Justification is intended primarily for Direct mode. 
+The slopeline is the position of the slab or roof slab baseline relative to its bottom face. The thickness offset in the style determines the distance between the baseline and the bottom face. 
+11 Enter a value for the height of the slab or roof slab insertion point for Base Height. This is available only when you select Projected mode. 
+12 Select a direction, or define how the slab or roof slab is drawn relative to the baseline. 
+13 Enter a value for the depth of the overhang for Overhang. 
+14 Select a style for Perimeter edge. 
+15 If you selected the Projected mode, expand Slope, and enter values for Rise, Run, or Angle to define the slope of the slab or roof slab. 
+16 Specify the start point of the slab or roof slab. The start point is the insertion point and the start of the baseline. The start point also determines the location of the default pivot point for the slab or roof slab. 
+17 Specify a second point to define the first edge (baseline). 
+18 Specify further points to establish the vertices of the slab or roof slab perimeter: 
+If you want to… Then… If you want to… Then… 
+close the perimeter by drawing two  specify a point in the direction in  
+edges that meet at a right angle  which the perimeter is to close;  
+then enter o (for Ortho). The edge  
+is extended until it meets another  
+edge perpendicular to the first  
+edge.  
+
+close the perimeter by adding an enter c (for Close). edge from the previous point to the start point of the baseline 
+19 Continue to place slabs or roof slabs, and press ENTER when finished. 
+Creating a Slab or Roof Slab from Walls 
+Use this procedure to create a rectangular slab or roof slab from one or more walls. This is useful when you want a specific alignment between the slab or roof slab baseline and the wall baseline. When you create a slab or roof slab from a single wall, the base height of the wall defines the baseline edge of the slab or roof slab. When you create a slab or roof slab from multiple walls, the top of the first selected wall defines the baseline edge of the slab or roof slab. 
+You can create a flat slab or roof slab that follows the outline of multiple walls by specifying a zero slope. If you select multiple walls and a non-zero slope, multiple slabs or roof slabs are created. 
+If the closed polyline intersects one of the selected walls, the slab or roof slab is invalid and you must select the walls again. 
+TIP This procedure is useful to place roof slabs on top of existing walls. The Convert command, accessed from an existing roof object’s contextual Roof tab, is useful when you want a specific alignment between the slab baseline and the wall baseline. 
+Creating a roof slab from a wall 
+
+NOTE When selecting multiple walls, if your walls are not properly “cleaned up,” the slab or roof slab conversion is unpredictable. For more information, see Cleanup Group Definitions on page 1337. 
+1 Open the Design tool palette, and select the Slab tool or the Roof Slab tool. (You may have to scroll to display the desired tool.) 
+2 Right-click the tool, and click Apply Tool Properties to . Linework and Walls (or Linework, Walls and Roof, in the case of roof slab tools). 
+3 Select one or more walls, and press ENTER. 
+4 Enter y (Yes) to erase the walls, or n (No) to keep the walls in the drawing. 
+5 Specify a slab justification method: 
+If you want to align the … Then… 
+top of the slab or roof slab with the enter t (Top). first specified point 
+If you want to align the … Then… 
+center of the slab or roof slab with enter c (Center). the first specified point 
+bottom of the slab or roof slab with enter b (Bottom). the first specified point 
+slopeline of the slab or roof slab enter s (Slopeline). with the first specified point 
+NOTE This justification is used only for inserting a slab or roof slab and is not retained as a parameter of the inserted object. 
+The slopeline is the position of the slab or roof slab baseline relative to its bottom face. The thickness offset in the style determines the distance between the baseline and the bottom face. 
+6 Specify the wall justification for edge alignment: 
+If you want to align the Then… baseline edge of the slab or roof slab to the… 
+left side of the wall, based on the enter l (Left). direction the wall was drawn 
+center of the wall enter c (Center). 
+right side of the wall, based on the enter r (Right). direction the wall was drawn 
+baseline of the wall enter b (Baseline). 
+7 To specify the slope direction, enter l (Left) or r (Right). This is based on the direction the wall was drawn. 
+Creating a slab based on walls 
+
+8 Edit the properties of the slab or roof slab in the Properties palette, if needed. 
+Creating a Roof Slab from a Roof 
+Use this procedure to convert the faces of an existing roof object to individual roof slabs that have the properties of the roof slab tool you select. You can then edit the roof slabs and their edges individually. 
+You can also convert a roof to roof slabs from the contextual Roof tab. For more information, see Converting a Roof to Roof Slabs on page 2372. 
+
+TIP When you convert a roof to roof slabs, the roof slabs will have the same overhang as the roof. 
+1 Open the tool palette that contains the roof slab tool you want to use. (You may have to scroll to display the desired tool.) 
+2 Right-click the tool, and click Apply Tool Properties to . Linework, Walls and Roof. 
+3 Select the roof to convert, and press ENTER. 
+4 When prompted to erase the original geometry, press ENTER to keep the existing roof, or enter y (Yes) to erase it. 
+5 Edit the properties of the roof slabs on the Properties palette, if needed. 
+Creating a Slab or Roof Slab from a Polyline 
+Use this procedure to convert a closed polyline to a single slab or roof slab that has the properties of the tool you select. You can edit these properties after the object is created. The first line drawn in the polyline becomes the baseline edge of the slab or roof slab. 
+Creating slabs or roof slabs from polylines is useful when you need to create a complex shape or one with curved edges. The smoothness (tessellation) of curved edges is controlled by 2 AEC display resolution settings called Facet Deviation and Facet Maximum. Beginning with Autodesk Architectural Desktop 2007, you can adjust these settings after the slab or roof slab is created. Also, the individual segments or facets making up a curved edge are no longer treated as separate edges; each arc on the perimeter of a slab or roof slab is treated as a single edge. For more information, see Specifying the Display Resolution of Objects with Facets on page 208. 
+1 Draw a closed polyline of the desired shape in the location where you want to place the slab or roof slab. 
+2 Open the tool palette that contains the slab or roof slab tool you want to use. (You may have to scroll to display the desired tool.) 
+3 Right-click the tool, and click Apply Tool Properties to . Linework and Walls (or Linework, Walls and Roof, in the case of roof slab tools). 
+4 Select a closed polyline, and press ENTER. 
+5 Enter y (Yes) to erase the polyline, or n (No) to keep the polyline in the drawing. 
+6 Specify a mode: If you enter d (Direct), the polyline vertices become the vertices of the slab or roof slab perimeter. Any slope value specified in the tool properties is ignored. 
+Converting a polyline to a slab using the direct mode 
+
+Converting a polyline to a roof slab using direct mode 
+
+Converting a polyline to a roof slab using direct mode and adding a slope angle 
+
+If you enter p (Projected), you are prompted for the base height of the slab or roof slab. The X,Y coordinates of the first polyline 
+

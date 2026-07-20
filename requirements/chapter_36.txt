@@ -1,0 +1,405 @@
+[MIGRATED TO RTM_PART_33.md - PROFILE OUTLINES & SWEEPS]
+Adding a Profile to an Object Component 
+Profiles can be used to determine the shape of various objects and object components. The table below contains links for how to add a profile to the various objects and components: 
+Object component How to 
+extruded mass elements Creating a Mass Element by Extruding a Profile on page 1005 
+revolution mass elements Creating a Mass Element by Revolving a Profile on page 1006 
+roof slab and slab edges Specifying a Fascia and a Soffit for a Slab/Roof Slab Edge Style on page 2488 
+door frames Specifying the Design Rules of a Door Style on page 1888 Replacing the Door Shape in a Door Style on page 1891 
+window frames Specifying the Design Rules of a Window Style on page 1986 Replacing the Window Shape in a Window Style on page 1987 
+opening frames Creating an Opening with a Custom Shape on page 2038 
+door muntins Adding Glass to a Door Style on page 1913 
+railings Adding a Custom Profile to a Railing Component on page 2306 
+curtain wall frames/mul-Defining a Curtain Wall Frame Using a Profile on page 1450 lions Defining the Mullions of a Curtain Wall Using a Profile on page 1457 Defining a Curtain Wall Unit Frame Using a Profile on page 1587 
+Defining the Mullions of a Curtain Wall Unit Using a Profile 
+on page 1594 
+door and window assembly Defining a Door and Window Assembly Frame Using a Profile on page 1717 Defining the Mullions of a Door and Window Assembly Using a Profile on page 1725 
+Object component How to 
+AEC polygon Creating an AEC Polygon from a Profile on page 1817 
+wall sweeps Adding a Sweep to a Wall on page 1244 
+Editing a Profile In Place 
+Profiles that are assigned to objects in the drawing provide in place editing, so that you can change the shape of the profile (and thereby the component) on screen. The edit in place mode is a special editing mode where object components can be edited, but other editing capabilities are limited. For example when you are in edit in place mode, you cannot save and close the drawing. Upon exiting the edit in place mode, you can choose if the changes should discarded, overwrite the existing profile definition, or if a new profile definition should be created. 
+Entering the edit in place mode 
+1 Insert an object with the desired profile into the drawing. For a list of objects that can have profiles, see What are Profiles? on page 2817. 
+2 Select the object and do one of the following: 
+¦ 
+On the contextual tab of the object on the ribbon, select the Edit in Place command. Depending on the object, the edit in place command can be located in different panels. Also, some objects like walls or curtain walls can have multiple profile-based components. In this case, first select the appropriate panel for the component, and then the associated Edit in Place command. 
+
+¦ 
+Select the Edit Profile in Place command from the context menu of the object. If an object has multiple profile-based components, first select the correct submenu, for example Sweeps . Edit in Place. 
+
+
+
+
+The edit in place mode is characterized by the following user interface changes: 
+¦ On the ribbon, the contextual Edit in Place tab for the selected component is displayed. 
+Edit in Place tab for Wall Endcaps 
+
+¦ 
+Grips on editable profiles display in a magenta color to identify an edit in place grip mode. 
+
+¦ 
+A number of commands, such as closing or saving the drawing, are deactivated while the in-place edit mode is active. In order to access them, you must exit the in-place edit mode first. 
+
+
+Editing the profile 
+3 Select the profile you want to edit. 
+Grip-edit options for profiles 
+
+4 Use the grips, the ribbon, or the context menu in order to make any of the following changes to the profile: 
+Move a Vertex Select the vertex grip, and move it. 
+Add a Vertex ¦ Grips: Select the edge grip that is closest to the location of the new vertex. Then, press Ctrl once and use the preview image to place the new vertex. 
+¦ 
+Ribbon: On the Edit in Place tab of the selected 
+
+profile, click Profile panel . Add Vertex 
+. Then, specify the location of the new vertex on screen. 
+
+¦ 
+Context menu: Click Add Vertex, and specify the location of the new vertex on screen. 
+
+
+Remove a vertex ¦ Grips: Select the vertex grip you want to re­move. Then, press Ctrl once and click to remove the vertex. 
+¦ 
+Ribbon: On the Edit in Place tab of the selected 
+
+profile, click Profile panel . Remove Vertex . Then, select the vertex to remove on screen. 
+
+¦ 
+Context menu: Click Remove Vertex, and select the vertex to remove. 
+
+
+
+Offset a vertex with its edges ¦ Grips: Select the vertex grip which you want to offset with its associated edges. Then, press Ctrl 
+twice and drag the vertex to the desired loca­tion. 
+Offset a profile edge ¦ Grips: Select the grip of the edge you want to offset and drag it to the desired location. 
+Convert an edge to an arc ¦ Grips: Select the grip of the edge you want to convert, and press Ctrl twice. Then, drag the grip until the desired arc shape is in place. 
+Offset all edges of the profile ¦ Grips: Select any edge grip on the profile, and press Ctrl three times. Then, drag the grip until the overall profile shape is correct. 
+Add a ring to a profile ¦ Ribbon: On the Edit in Place tab of the selected 
+profile, click Profile panel . Add Ring 
+. Then, select a closed polyline, spline, ellipse or circle to convert. 
+¦ Context menu: Select the profile, and click Add ring. Then, select a closed polyline, spline, el­lipse to convert. 
+Remove a ring from a profile ¦ Ribbon: On the Edit in Place tab of the selected 
+profile, click Profile panel . Remove Ring . Then, select the ring you want to remove from the profile, and press Enter. 
+
+¦ Context menu: Select the profile, and click Re­move Ring. Then, select the ring you want to remove from the profile, and press Enter. 
+Replacing a ring with another ¦ Ribbon: On the Edit in Place tab of the selected 
+profile, click Profile panel . Replace Ring . Then, select the ring you want to replace and the ring that should be used instead. 
+
+¦ Context menu: Select the profile, and click Re­place Ring. Then, select the ring you want to replace, and after that the ring that should be used instead. 
+Ending the edit in place mode 
+5 When you have made all changes to the profile, you can end the edit in place mode in one of the following ways: 
+If you want to… Then… 
+discard the changes and revert ¦ Ribbon: On the Edit in Place tab of the the profile to its original shape selected profile, click Edits panel . Can­
+cel 
+. 
+¦ Context menu: Click Discard All Changes. 
+save the changes to the current ¦ Ribbon: On the Edit in Place tab of the profile selected profile, click Edits panel . Fin­
+ish 
+. 
+¦ Context menu: Click Save Changes. 
+save the changes to a new ¦ Ribbon: On the Edit in Place tab of the profile definition selected profile, click Edits pan­
+el . Save As 
+. Enter a name for the new profile definition, and click OK. 
+¦ Context menu: Click Save as New Profile. 
+Converting Profiles to Polylines 
+You cannot insert a standalone profile into a drawing. You can however insert a profile as a polyline into the drawing. This process would be most useful when you want to make changes to the profile shape. You insert the profile as a polyline, make changes to the polyline, and then re-convert the polyline to the profile. 
+1 Click Manage tab . Style & Display panel .
+. Insert As Polyline. 
+2 Select the profile you want to insert as a polyline. 
+3 Select the insertion point in the drawing, and place the polyline. 
+4 Make changes to the polyline as needed. 5 If you want to save the polyline shape back to the profile, select the polyline, right-click, choose Convert to . Profile. 
+6 On the command line, enter e (Existing), and select the name of the existing profile in the Profile Definitions worksheet. The current polyline shape will overwrite the profile definition. 
+7 If you want to save the changed polyline shape to a new profile, enter n (New) and enter the name for the new profile. 
+Mask Blocks 
+37 
+A mask block is a two-dimensional (2D) block that covers, or “masks,” part of the graphic display of an AEC object in a plan view. You can use mask blocks to clean up or correct objects in your drawings or to create custom 2D shapes from predefined drawing objects, such as walls or grids. 
+Mask Blocks 
+A mask block is a two-dimensional (2D) block that covers, or “masks,” part of the graphic display of an AEC object in a plan view. You can use mask blocks to clean up or correct objects in your drawings or to create custom 2D shapes from predefined drawing objects, such as walls or grids. 
+For example, attach a light fixture as a mask block to a ceiling grid in a plan view. If the light fixture is bigger than one or more of the ceiling grid bays, the light fixture masks, or covers, the ceiling grid lines that would visibly pass through the light fixture if it had been defined as a regular AutoCAD block. 
+Before you can begin to mask objects in your plan view drawings, you must have an existing mask block or a mask block definition created in your drawing. You can find predefined mask blocks on the Drafting tool palette and in the AutoCAD Architecture Stock Tool catalog. You can also create a mask block with the AEC Content Wizard. For more information about custom content, see Creating an AEC Content Masking Block for DesignCenter on page 3886. 
+After you have selected a mask block, add it to your drawing in plan view. Adding the mask block to your drawing is like adding a regular AutoCAD block: specify an insertion point or scale factors and a rotation angle. The mask block and the object that you want to mask must be coplanar; that is, for the mask object to cover the other object, they must be on the same plane. 
+After you insert a mask block in your drawing, attach the objects to be masked. The mask block clips the graphics of the objects that you are masking when the objects regenerate themselves in a plan view. Only the objects that you attach to the mask block are clipped. The masked objects are plotted as you see them on your screen. 
+If you change your drawing from a 2D view to a three-dimensional (3D) view, the mask block is still displayed, but it no longer masks the objects that are attached to it. You can detach the mask block from the objects at any time. You can also import and export mask block definitions. If you create a mask block definition that you decide not to use in your drawings, you can purge it. 
+Creating Mask Block Definitions 
+You can define a mask block by selecting a closed polyline in the drawing and defining it as a mask block, by copying and editing an existing mask block, or by using the AEC Content Wizard. 
+Use the AEC Content Wizard to save mask blocks in content drawings for convenient reuse. For more information, see Creating an AEC Content Masking Block for DesignCenter on page 3886. 
+Managing Mask Block Definitions 
+To create, edit, copy, or purge mask block definitions, use the Style Manager. The Style Manager provides a central location in AutoCAD Architecture, where you can work with definitions and styles from multiple drawings and templates. For more information, see Style Manager Overview on page 856. 
+Creating a Mask Block Definition from a Polyline 
+Use this procedure to create a mask block definition from one or more closed polylines. If you use more than one polyline to create your mask block definition, the polylines must be completely within or completely outside each other: they cannot overlap or touch. Polylines that are within each other can be specified as void areas that become holes when the mask block is created. After you create the definition, edit the definition properties to customize the characteristics of the definition. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed, with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, right-click Mask Block Definitions, and click New. 
+3 Enter a name for the new mask block definition, and press ENTER. 
+4 Right-click the new mask block definition name, and click Set From. 
+5 Select the closed polyline to use to create the mask block definition. 
+6 Do one of the following to complete the mask block definition: 
+¦ 
+Press ENTER to create the mask block definition from a single polyline. 
+
+¦ 
+Enter y (Yes) to select additional polylines to add to the mask block definition. These polylines must be entirely within or outside each other; they cannot overlap or touch. Polylines that are within other rings can be specified as void areas that become holes in the mask block. 
+
+
+7 Specify an insertion base point for the mask block. 
+8 Select additional graphics to include in the mask block definition, or press ENTER if you do not want to include additional graphics. 
+NOTE You can select text or symbols to include in the mask block definition. 
+9 Click OK. 
+A mask block definition is created from the polyline or polylines that you selected. The new mask block definition is listed in the mask block definition tree and can be viewed in the graphics screen of Style Manager. The original polylines remain in the drawing. 
+Creating a Mask Block Definition from an Existing Mask Block Definition 
+Use this procedure to create a mask block definition from a mask block definition that already exists in a drawing. After you create the new definition, you edit the definition properties to customize the characteristics of the definition. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+The Style Manager is displayed, with the current drawing 
+expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Mask Block Definitions. 
+3 Right-click the mask block definition to copy, and click Copy. 
+4 Right-click, and click Paste. 
+5 Right-click the new mask block definition, and click Rename. 
+6 Enter a name, and press ENTER. 
+7 Click OK. 
+Importing Mask Block Definitions 
+Use this procedure to import a mask block definition from another drawing. After you create the definition, you edit the definition properties to customize the characteristics of the definition. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed, with the current drawing expanded in the tree view. 
+2 On the File menu, click Open drawing to browse for the drawing that contains the definition that you want to copy to your current drawing. 
+3 Select the drawing with the definition to copy, and click Open. 4 Expand Multi-Purpose Objects, and expand Mask Block 
+Definitions. 
+5 Right-click the mask block definition to copy, and click Copy. 
+6 Select the current drawing, and expand Multi-Purpose Objects. 
+7 Right-click Mask Block Definitions, and click Paste. 
+The definition is copied into the current drawing. If the current drawing already contains a definition with the same name, the duplicate names are displayed in the Import/Export - Duplicate Names Found dialog box. 
+8 To resolve duplicate names, select one of the following options: 
+¦ 
+To not replace the existing definition in the drawing with the new definition of the same name, select Leave Existing, and click OK. 
+
+¦ 
+To replace the existing definition in the drawing with the new definition, select Overwrite Existing, and click OK. 
+
+¦ 
+To rename the new definition so both definitions exist in the drawing, select Rename to Unique, and click OK. New definition names are appended with a numeral in the Style Manager. 
+
+
+9 Click OK. 
+Exporting Mask Block Definitions to a New Drawing 
+Use this procedure to copy mask block definitions from your current drawing to a new drawing. After you create the definition, you edit the definition properties to customize the characteristics of the definition. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed, with the current drawing expanded in the tree view. 
+2 On the File menu, click New drawing to create the drawing to which you want to copy the definition. 
+3 Enter a name for the new drawing, and click Save. The new drawing opens in the Style Manager. 
+4 In the current drawing, Expand Multi-Purpose Objects, and expand Mask Block Definitions. 
+5 Right-click the mask block definition to copy to the new drawing, and click Copy. 
+6 Select the new drawing, and expand Multi-Purpose Objects. 
+7 Right click Mask Block Definitions, and click Paste. 
+8 Click OK. 
+Exporting Mask Block Definitions to an Existing Drawing 
+Use this procedure to copy mask block definitions from your current drawing to another drawing. After you create the definition, you edit the definition properties to customize the characteristics of the definition. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+The Style Manager is displayed, with the current drawing 
+expanded in the tree view. 
+2 On the File menu, click Open drawing to browse for the drawing to which you want to copy the definition. 3 Select the drawing that you want to copy the definition to, and click Open. The drawing opens in the Style Manager. 
+4 In the current drawing, Expand Multi-Purpose Objects, and expand Mask Block Definitions. 5 Right-click the mask block definition to copy to the second drawing, and click Copy. 6 Select the second drawing, and expand Multi-Purpose Objects. 7 Right-click Mask Block Definitions, and click Paste. 
+8 The definition is copied into the second drawing. If the drawing already contains a definition with the same name, the duplicate names are displayed in the Import/Export - Duplicate Names Found dialog box. 
+9 To resolve duplicate names, select one of the following options: 
+¦ 
+To not replace the existing definition in the drawing with the new definition of the same name, click Leave Existing, and click OK. 
+
+¦ 
+To replace the existing definition in the drawing with the new definition, click Overwrite Existing, and click OK. 
+
+¦ 
+To rename the new definition so both definitions exist in the drawing, click Rename to Unique, and click OK. New definition names are appended with a numeral in the Style Manager. 
+
+
+10 Click OK. 
+Editing a Mask Block Definition 
+Use this procedure to make any of the following types of modifications to a mask block definition: 
+¦ 
+Change the objects or styles to which the mask block can be attached. 
+
+¦ 
+Add and remove properties. 
+
+¦ 
+Change the name, description, type, and format of properties. 
+
+
+Changes that you make to a mask block definition are immediately applied to any objects or styles to which the mask block created from the definition is attached. 
+1 Select a mask block object, and click Mask Block Reference tab . General panel . Edit Style drop-down . Mask Definition Styles. 
+The Style Manager is displayed, and Mask Block Definitions is highlighted in the tree view of the current drawing. 
+NOTE Alternatively, you can click Manage tab . Style & Display 
+panel . Style Manager
+ , expand Multi-Purpose Objects, and expand Mask Block Definitions. 
+2 Select the mask block definition. 3 Click the Classifications tab. 4 Select a classification for the classification definition. 
+For more information, see Classification Definitions on page 3834. 
+5 Click the Display Properties tab. 
+6 Select the display representation where you want the changes to appear, and select Object Override. The display representation in bold is the current display 
+representation. 
+7 If necessary, click 
+. 8 Click the Layer/Color/Linetype tab. 9 Select the component to change, and select a different setting. 
+10 Click OK. 
+11 Click the General tab. 
+12 Enter text for Description. 
+13 Click Notes. 
+14 Click the Notes tab, and enter a note. 
+15 Click the Reference Docs tab, and attach, edit, or detach a 
+reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+If you want to… Then… 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+16 Click OK. 
+17 To attach or edit schedule data, click Property Sets. For more information, see Attaching Property Set Data to Objects on page 3773 and Entering Manual Properties and Fields for Objects on page 3774. 
+18 Click OK. 
+Adding Classifications to a Mask Block Definition 
+Use this procedure to specify classifications for any classification definition applied to a mask block definition. Classifications enable you to track objects by construction status, vendor, or other criteria. For more information about creating and applying classification definitions, see Classification Definitions on page 3834. 
+1 Open a tool palette that has a mask block definition tool. 
+2 Right-click a mask block definition tool, and click Mask Block 
+Definitions. 3 Select the definition that you want to change. 4 Click the Classifications tab. 
+By default, the classification for all classification definitions is Unspecified. If no classification definitions are listed, none are applied to mask block definitions. 
+5 For each classification definition, select the classification you want to apply to the current mask block definition. 6 Click OK. 
+Purging Mask Block Definitions 
+Use this procedure to purge mask block definitions from your drawing. You have the option to purge any mask block definition unless it is currently applied as a mask block in the drawing. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed, with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Mask Block Definitions. 
+3 Purge mask block definitions: 
+If you want to… Then… 
+purge one unused mask block right-click the style you want to re­definition style move, and click Purge. 
+purge all unused mask block defini-right-click Mask Block Definitions, 
+tion styles and click Purge. When prompted, verify that the styles you want to purge are selected, and click OK. 
+4 Click OK. 
+Using Mask Block Tools to Create Mask Blocks 
+Tools provided with AutoCAD Architecture let you quickly place mask blocks using tool with a specific mask block definition and other predefined properties. You can use the default settings of tool, or you can change any properties that are not controlled by the definition. You can also create new mask blocks by applying tool properties to existing mask blocks or to closed polylines. For more information, see Creating a Mask Block Tool on page 2842. 
+Mask block tools are found in the following locations: 
+Location Tool 
+Drafting tool palette a mask block tool for the Standard mask block definition style and default settings for other mask block properties 
+Location Tool 
+Drafting Tools category in the Stock Tool  a mask block tool for the Standard mask  
+catalog  block definition style and default settings  
+for other mask block properties. For more  
+information on accessing tools in this  
+catalog, see Content Browser Overview on  
+page 137.  
+
+custom tool palettes created by your CAD Mask block tools with mask block definition manager styles and properties customized for your projects or office standards 
+NOTE The Standard mask block definition style is imported if you create your drawing with a template. It will not be present if you start your drawing without using a template. For more information, see About Templates on page 187. 
+Adding a Mask Block 
+Use this procedure to add a new mask block that has the properties specified in the mask block tool that you select. To specify settings when you add a mask block, see Adding a Mask Block with User-Specified Settings on page 2841. You can add a mask block to a drawing if the drawing contains a mask block definition. For more information, see Creating Mask Block Definitions on page 2832. 
+TIP When you add mask blocks to your drawing, insert them on a separate layer. You can turn the layer off in 3D views, where the mask blocks no longer mask any objects. 
+1 If you have created your own mask block definition, create a tool from it as described in Creating a Mask Block Tool on page 2842. 2 If you are working with an existing mask block tool, open the 
+palette it is located on. A mask block tool is located on the Drafting tool palette and in the Drafting Tools category in the AutoCAD Architecture Stock Tool catalog. You can add this tool to any tool palette. For more information, see Content Browser Overview on page 137. 
+3 Select the mask block tool on the palette. 4 Specify the insertion point of the mask block. 
+You can move or hide the Properties palette to expose more of the drawing area. 
+NOTE If you are using a mask block to mask a wall, the mask block must be located at the baseline of the wall (Z = 0). Even though the wall components are at different heights, the plan display representation draws them at the height of the baseline, as they would be drawn on paper. 
+5 Continue adding mask blocks, and press ENTER. The mask blocks are displayed in the drawing at the insertion point you specified. To use a mask block to clean up or correct an object in the drawing, attach the object to the mask block. 
+Adding a Mask Block with User-Specified Settings 
+Use this procedure to add a mask block with settings that you specify. 
+1 Open the tool palette that contains the mask block tool you want to use, and select the tool. (You may have to scroll to display the desired tool.) 
+2 On the Properties palette, expand Basic, and expand General. 3 Select a definition. 4 Expand Scale. 5 Enter the X, Y, and Z scale of the mask block. The X, Y, and Z scales 
+represent the distance from the insertion point. 6 Alternately, select Yes for Specify scale on screen. Use your 
+pointing device to designate the scale of the mask block. 7 Expand Location. 8 Enter rotation and elevation values. 9 Alternately, select Yes for Specify rotation on screen. Use your 
+pointing device to designate the rotation of the mask block. 10 In the drawing area, specify the insertion point of the mask block. You can move or hide the Properties palette to expose more of the drawing area. 
+11 Continue adding mask blocks, and press ENTER. To use a mask block to clean up or correct an object in the drawing, attach the object to the mask block. 
+Creating a Mask Block from Polylines 
+Use this procedure to create a mask block reference from one or more closed polylines. If you use more than one polyline to create your mask block, the polylines must be completely within or completely outside each other; they cannot overlap or touch. Polylines that are within each other can be specified as void areas that become holes when the mask block is created. 
+1 Select the polylines, right-click, and click Convert To . Mask Block. The Convert to Mask Block worksheet is displayed. 
+
+2 Enter a name for the new mask block. 
+3 Clear Mask AEC Objects Automatically to avoid masking existing AEC objects overlapping the polylines being converted. 
+4 To select existing AEC objects for masking with the new mask block, make sure Select AEC Objects to Mask is selected. 
+5 Select Erase Layout Geometry to erase the original polylines, and click OK. 
+6 Edit the properties of the mask block in the Properties palette, if necessary. 
+Creating a Mask Block Tool 
+Use this procedure to create a mask block tool and add it to a tool palette. You may want to create your own mask block tools if you are placing multiple mask blocks of a specific style and they all have the same properties. 
+You can use any of the following methods to create a mask block tool: 
+¦ Drag a mask block that has the properties you want to a tool palette. 
+IMPORTANT Make sure that the mask block is in a drawing that has been saved and that will be available in the future. 
+¦ 
+Drag a mask block definition from the Style Manager to a tool palette, and then customize the properties of the new tool. 
+
+¦ 
+Drag a copy of a tool from another palette to the current palette, and then customize the properties of the new tool. 
+
+¦ 
+Copy an existing tool in the current palette, and then customize the properties of the new tool. 
+
+¦ 
+Drag a tool from a tool palette in the Content Browser to a tool palette, and then customize the properties of the new tool. 
+
+
+1 Open the tool palette on which you want to add a tool. 2 Create the tool: 
+If you want to… Then… 
+create a tool from a mask block in select the mask block, and drag it the drawing to the tool palette. 
+create a tool from a mask block  open Style Manager. Locate the  
+definition in the Style Manager  mask block definition you want to  
+copy, and drag it to the tool  
+palette. Click OK to close the Style  
+Manager.  
+
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool  open the other tool palette, right- 
+palette  click the tool, and click Copy. Re­ 
+open the palette where you want  
+to add the tool, right-click, and click  
+Paste.  
+
+copy a tool from a tool palette in  open the Content Browser, and  
+the Content Browser  locate the tool you want to copy.  
+Position the cursor over the i-drop  
+handle, and drag the tool to the  
+tool palette.  
+
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. This description is used as the tooltip on the tool palette, and to describe the tool if it is stored in a tool catalog. 
+6 Expand Basic, and expand General. 7 Specify properties for the mask block created from the tool: 
+If you want to… Then… 
+enter a description of the mask click Description, enter a description block that you can create using this of the tool, and click OK. tool 
+specify a unique layer key for the click Layer Key, select a layer key, object type and click OK. 
+specify a layer override for the tool click Layer Overrides, clear Do not specify Layer Overrides, specify the override, and click OK. 
+specify a definition click Definition, select a mask block definition, and click OK. 
+specify a definition location click Definition location, select the file containing the mask block definition you want to use, click Open, and click OK. 
+8 Expand Scale. 9 Specify the scale for the mask block created from the tool: 
+If you want to… Then… 
+use your pointing device to desig-click Yes for Specify scale on screen. nate the scale for the mask block 
+specify the scale of the mask block click No for Specify scale on screen, on the Properties palette and enter the X, Y, and Z scale for the mask block. 
+10 Expand Location. 
+11 Specify the rotation for the mask block created from the tool: 
+If you want to… Then… 
+use your pointing device to desig-click Yes for Specify rotation on nate the angle for the mask block screen. 
+specify the angle of the mask block click No for Specify rotation on 
+on the Properties palette screen, and enter the angle for Ro­tation. 
+12 Click OK. 
+Attaching Mask Blocks to Objects 
+Use this procedure to mask an object by attaching the mask block to the object after you have the mask block placed correctly. 
+1 Select the mask block or blocks that you want to attach to an object. 2 Click Mask Block Reference tab . Modify panel . Attach Objects. 3 Select the object that you want to mask. 4 Select a display representation from the list of current display representations, and click OK. 
+Attaching a mask block to an object 
+
+The object is now hidden by the mask block. 
+Mask blocks mask AutoCAD Architecture objects only and mask them only in plan views. Mask blocks are visible in 3D views, but they do not mask the objects that are attached to them. 
+Detaching Mask Blocks from Objects 
+Use this procedure to unmask an object in plan view by detaching the object from the mask block. 
+1 Select the mask block that you want to detach from an object. 2 Click Mask Block Reference tab . Modify panel . Detach Objects. 3 Select the object that you want to detach from the mask block. 
+Detaching an object from a mask block 
+
+The object is detached from the mask block and is no longer hidden by the mask block. 
+Editing Mask Blocks 
+AutoCAD Architecture offers several methods for editing mask blocks: 
+¦ 
+Change the location using grips. 
+
+¦ 
+Change settings on the Properties palette. 
+
+¦ 
+Edit the profile. 
+
+¦ 
+Select commands from the context menu. 
+
+
+

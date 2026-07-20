@@ -446,3 +446,48 @@ function lerp(a: number, b: number, t: number): number {
 function round(v: number): number {
   return Math.round(v * 1e6) / 1e6;
 }
+
+/** Traces a downhill path from a starting coordinate on the terrain grid (Water Drop analysis). */
+export function traceWaterDropPath(
+  grid: ElevationGrid,
+  start: Point,
+  stepSize: number = 5,
+  maxSteps: number = 80
+): Point[] {
+  const path: Point[] = [start];
+  let curr = { ...start };
+
+  for (let i = 0; i < maxSteps; i++) {
+    const c = Math.round((curr.x - grid.origin.x) / grid.cellSize);
+    const r = Math.round((curr.y - grid.origin.y) / grid.cellSize);
+
+    if (c < 0 || c >= grid.cols || r < 0 || r >= grid.rows) {
+      break;
+    }
+
+    const dzdx = (nodeHeight(grid, c + 1, r) - nodeHeight(grid, c - 1, r)) / (2 * grid.cellSize);
+    const dzdy = (nodeHeight(grid, c, r + 1) - nodeHeight(grid, c, r - 1)) / (2 * grid.cellSize);
+
+    const length = Math.hypot(dzdx, dzdy);
+    if (length < 0.005) {
+      break;
+    }
+
+    const stepX = -dzdx / length;
+    const stepY = -dzdy / length;
+
+    const next = {
+      x: curr.x + stepX * stepSize,
+      y: curr.y + stepY * stepSize
+    };
+
+    if (Math.hypot(next.x - curr.x, next.y - curr.y) < 1e-3) {
+      break;
+    }
+
+    path.push(next);
+    curr = next;
+  }
+
+  return path;
+}

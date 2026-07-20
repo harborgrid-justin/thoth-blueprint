@@ -1,0 +1,472 @@
+[MIGRATED TO RTM_PART_31.md - LAYOUT CURVES & BASELINE ALIGNMENTS]
+position of the other lines remains unchanged. The grid size changes accordingly. 
+¦ If you have added a line to a layout grid with evenly spaced lines, the new line is inserted and all lines are recalculated, so that they are evenly distributed again. The grid size remains unchanged. 
+Removing Grid Lines from Layout Grids 
+Use this procedure to remove individual grid lines from a grid. You can separately remove grid lines from the X plane and the Y plane. 
+NOTE You can remove lines only from grids that have been inserted with manually spaced lines or evenly spaced lines. Layout grids with lines placed at a fixed repeated spacing value cannot be changed. For information about grid modes, see Changing the Spacing Mode of Layout Grids on page 2704. 
+1 Select the layout grid, and: 
+If you want to remove a grid Then… line from… 
+the X plane of the grid click Layout Grid 2D tab . X Axis 
+panel . Remove Grid Line
+ . Then proceed to next step. 
+the Y plane of the grid click Layout Grid 2D tab . Y Axis 
+panel . Remove Grid Line
+ . Then proceed to next step. 
+a custom grid that was created by applying tool properties to linework 
+click Layout Grid 2D tab . Custom Grid panel . Remove Grid Lines
+
+ . Then select the linework to be removed, and press ENTER. The linework remains visible in the drawing but is no longer part of the grid. You can select it and delete it if desired. 
+2 Click the grid line to be removed from the grid. 
+¦ 
+If you have removed a line from a layout grid with manually spaced lines, the specified line is removed from the grid. The position of the other lines remains unchanged. 
+
+¦ 
+If you have removed a line from a layout grid with evenly spaced lines, the specified line is removed from the grid. All remaining lines are recalculated, so that they are evenly distributed again. 
+
+
+Changing the Spacing Mode of Layout Grids 
+Use this procedure to change the spacing mode of a radius or rectangular layout grid. Layout grids can have three different spacing modes. These modes are set separately for the X and Y planes: 
+¦ 
+Manual: You specify the position of each line on the layout grid. 
+
+¦ 
+Repeat: You specify equidistant spacing between lines on the layout grid. The number of lines is determined by the size of the layout grid. As the size of the grid changes, lines are added or subtracted accordingly. The distance between the lines remains fixed. 
+
+¦ 
+Space Evenly: You specify the number of lines on the grid. The space between the lines is determined by the size of the layout grid. As the size of the grid changes, the spacing between the lines is lengthened or shortened accordingly. The number of lines remains fixed. 
+
+
+By default, layout grids are inserted with evenly spaced lines. 
+1 Select the layout grid, and: 
+If you want to change… Then… 
+the spacing mode of the X plane of click Layout Grid 2D tab . X Axis the grid 
+panel . Layout Mode
+ . 
+the spacing mode of the Y plane of click Layout Grid 2D tab . Y Axis the grid 
+panel . Layout Mode
+ . 
+2 Select the desired mode, and press ENTER. 
+¦ 
+If you are changing a layout grid with manually spaced lines to a grid with lines placed at a fixed repeated spacing value, you are prompted for start and end offsets, and the distance between the lines. If there are too few lines on the grid to fill it according to your specifications, new lines are created. 
+
+¦ 
+If you are changing a layout grid with manually spaced lines to a grid with evenly spaced lines, you are prompted for start and end offsets for the grid. The existing lines are distributed evenly on the grid. 
+
+¦ 
+If you are changing a layout grid with lines placed at a fixed repeated spacing value to a grid with manually spaced lines, there is no visible change, but the lines have been converted to manual lines, so that you now can add lines to and remove lines from the grid. 
+
+¦ 
+If you are changing a layout grid with lines placed at a fixed repeated spacing value to a grid with evenly spaced lines, you are prompted for start and end offsets. The existing lines are then recalculated and distributed evenly. You can now add lines to and remove lines from the grid. 
+
+¦ 
+If you are changing a grid with evenly spaced lines to a grid with manually spaced lines, there is no visible change. However, if you change the grid, the lines remain fixed and are not distributed evenly anymore. 
+
+¦ 
+If you are changing a grid with evenly spaced lines to a grid with lines placed at a fixed repeated spacing value, you are prompted for start and end offsets, and the distance between the lines. If there are too few lines on the grid to fill the grid according to your specifications, new lines are created. 
+
+
+Changing the Display Properties of Layout Grids 
+Use this procedure to change any of the following display properties of the nodes on a layout grid: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+Layer 
+
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+¦ 
+Node size 
+
+
+1 Select the layout grid that you want to change, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 4 Click the Layer/Color/Linetype tab. 5 Select the component to change, and select a different setting for 
+the property. 6 Click OK twice. 
+Changing the Node Radius for a Layout Grid 
+Use this procedure to change the node radius for a layout grid by editing its display properties. 
+1 Double-click the layout grid you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all layout grids in the drawing, select Drawing default setting. 
+5 If necessary, expand Object Display Properties . Advanced. 
+6 Click the value for Node radius, and enter a new value. 
+(Alternatively, you can click 
+and specify 2 points in the 
+drawing area to set the new radius.) 
+You can also access and modify the node radius property through the layout grid’s context menu, as follows: 
+1 Select the layout grid, right-click, and click Edit Object Display. 
+2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 
+4 In the Display Properties dialog, click the Other tab, and then change the radius as needed. 
+5 Click OK twice. 
+Creating and Removing Boundaries for Layout Grids 
+Use this procedure to create a boundary around a 2D layout grid. Areas of the grid outside the boundary are not shown. However, objects anchored to the grid outside the boundary are still displayed. Boundaries are useful when you need to create a grid in an irregularly shaped area. 
+You can also remove a boundary to redisplay the entire grid. 
+1 Draw a closed polyline to define the grid boundary. 2 Select a layout grid, and then click Layout Grid 2D tab . Clipping 
+panel . Set Boundary
+ . 
+3 Select the layout grid, and press ENTER. 
+4 Select the closed polyline for the boundary of the layout grid, and 
+press ENTER. 
+5 To remove a grid boundary, erase the polyline that defines the boundary. 
+Creating Holes in Layout Grids 
+Use this procedure to create a hole in a layout grid. The area of the grid within the hole is not displayed. 
+1 Draw a closed polyline to define the hole. 2 Select a layout grid, and click Layout Grid 2D tab . Clipping 
+panel . Add Hole
+ . 3 Select the layout grid, and press ENTER. 4 Select the closed polyline for the hole, and press ENTER. 
+A hole is cut in the layout grid. 
+Removing Holes from Layout Grids 
+Use this procedure to remove holes that you have created in layout grids. 
+1 Select a layout grid, and click Layout Grid 2D tab . Clipping 
+panel . Remove Hole
+ . 2 Select a layout grid, and press ENTER. 3 Select the closed polyline of the hole. 
+Changing the Location of Layout Grids 
+Use this procedure to change the location of layout grids. You can relocate a layout grid by changing the coordinate values of its insertion point. The layout grid also has an orientation with respect to the world coordinate system (WCS) or the current user coordinate system (UCS). For example, if the top and bottom of the layout grid are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the layout grid by aligning its normal with another axis. You can also rotate the layout grid on its plane by changing the rotation angle. 
+For information about WCS and UCS, see “Use Coordinates and Coordinate Systems” in AutoCAD help. 
+1 Double-click the layout grid that you want to change. 2 On the Properties palette, expand Basic, and expand Location. 3 Select Additional information. 
+4 In the Location dialog, specify the location of the layout grid: 
+If you want to… Then… 
+relocate the layout grid enter new coordinate values under Insertion Point. 
+locate the layout grid on the XY make the normal of the layout 
+plane curve parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the layout grid on the YZ make the normal of the layout grid 
+plane parallel to the X axis: under Normal, enter 1 for X and enter 0 for Y and Z. 
+locate the layout grid on the XZ make the normal of the layout grid 
+plane parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the layout enter a new value for Rotation grid Angle. 
+5 Click OK. 
+Attaching Hyperlinks, Notes, or Files to a Layout Grid 
+Use this procedure to attach hyperlinks, notes, or files to a layout grid. You can also edit hyperlinks and notes, and edit or detach reference files from a layout grid. 
+1 Double-click the layout grid to which to attach information. 2 On the Properties palette, click the Extended Data tab. 3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. For more information, see “Add Hyperlinks to a Drawing” in AutoCAD help. 
+4 Click OK. 5 To add a note, click the setting for Notes, and enter the note. 
+6 Click OK. 
+7 To add a reference file, click the setting for Reference documents, and attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click OK. 
+edit the description of a reference select the file, enter the description, file and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+8 Click OK. 
+Using Layout Volumes 
+Use a layout volume to arrange objects in a 3D grid. Changing the size of a layout volume changes the spacing of objects attached to that volume and can also change the size and height of objects attached to that volume. 
+Creating a Layout Volume Tool 
+Use this procedure to create a layout volume tool and add it to a tool palette. You may want to create your own layout volume tools if you are placing multiple layout volumes of a specific style and they all have the same properties. 
+1 Open the tool palette where you want to add the tool. 2 Create the tool: 
+If you want to… Then… 
+create a tool from a layout volume select the object, and drag it to the in the drawing tool palette. 
+If you want to… Then… 
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool  open the other tool palette, right- 
+palette  click the tool, and click Copy. Re­ 
+open the palette where you want  
+to add the tool, right-click, and click  
+Paste.  
+
+copy a tool from the Content  open the Content Browser, and  
+Browser  locate the tool you want to copy.  
+Position the cursor over the i-drop  
+handle, and drag the tool to the  
+tool palette.  
+
+3 Right-click the new tool, and click Properties. 4 For Name, enter the name you want displayed for this tool’s tooltip. This name will also be displayed with the tool if it is published to a catalog in the Content Browser. 5 For Description, click in the text box, and then enter the description you want displayed for this tool’s tooltip. This description will also be displayed with the tool if it is published 
+to a catalog in the Content Browser. 6 Expand Basic, and expand General. 7 Under General, click the Description text box, enter a description 
+of the tool, and click OK. 8 For Layer key, click the text box, select a layer key, and click OK. 9 For Layer overrides, click the text box, select a layer key override, 
+and click OK. 
+10 Expand Dimensions. 
+11 For Specify on screen: 
+If you want to… Then… 
+specify the dimension of the grid click Yes. on the drawing screen as you are creating it 
+specify numerical values on the click No, and enter values for Properties palette Width, Depth, and Height. 
+12 Expand X Axis. 13 Select Space evenly for Layout type, and enter a value for Number 
+of bays. 14 Select Repeat for Layout type, and enter a value for Bay size. 15 Enter a value for Start offset. 16 Enter a value for End offset. 17 Expand Y Axis. 18 Select Space evenly for Layout type, and enter a value for Number 
+of bays. 19 Select Repeat for Layout type, and enter a value for Bay angle. 20 Enter a value for Start offset. 21 Enter a value for End offset. 22 Expand Z Axis. 23 Select Space evenly or Repeat for Layout type. 24 Enter a value for Start offset. 25 Enter a value for End offset. 26 Click OK. 
+Adding Layout Volumes 
+Use this procedure to add a layout volume, which is a three-dimensional (3D) layout grid. 
+Layout volume parameters 
+
+1 Open the tool palette that contains the volume layout tool you want to use, and select the tool. 
+TIP You may have to scroll to display the desired tool. After selecting it, you can move or hide the Properties palette to expose more of the drawing area. 
+If there are no volume layout tools available on tool palettes in the workspace, you can use the Content Browser to access the Stock Tool catalog, which contains a volume layout tool under 
+Parametric Layout and Anchoring Tools. You can add this tool to any tool palette. For more information, see Content Browser Overview on page 137. 
+2 Select the volume layout tool. 3 On the Properties palette, expand Basic, and expand General. 4 Enter a value for the X width, Y depth and the Z height. 5 Select the Repeat option for Layout type, and enter values, for X 
+Axis, Y Axis, and Z Axis bay size and start and end offsets. 
+6 Specify an insertion point in the drawing for the lower-left corner of the rectangular layout grid. 
+7 Specify the rotation of the rectangular grid about the insertion point. 
+Changing Layout Volumes 
+Use this procedure to change the angle or size of three-dimensional (3D) layout volumes. You can also change the number and size of the grid bays. 
+If you use grips to stretch a layout volume, the behavior of the layout volume depends on the spacing type of each axis. The overall size of the grid “jumps” in directions that are specified to use a certain bay size with repeat spacing because the exact bay size is maintained. The overall size changes in directions that are specified to be evenly spaced or manually spaced. 
+1 Double-click one or more 3D volume grids. 2 On the Properties palette, expand Basic, and expand General. 3 Enter a new X width, Y depth, and Z height value. 4 Select and change the Layout type option under X Axis, Y Axis, 
+and Z Axis, if necessary, and adjust values for Number of Bays or Bay size, Start offset, and End offset. 
+Adding Grid Lines to Layout Volumes 
+Use this procedure to add grid lines to a layout volume. You can add grid lines on the X, Y, and Z planes separately. 
+NOTE You can add lines only to volumes inserted with manually spaced lines or evenly spaced lines. Layout volumes with lines placed at a fixed repeated spacing value cannot be changed. For information about grid modes, see Changing the Spacing Mode of Layout Grids on page 2704. 
+1 Select the layout volume. 2 Specify the axis to which to add the grid line: 
+If you want to add… Then… 
+a grid line to the X plane of the click Layout Grid 3D tab . X Axis volume 
+panel . Add Grid Line
+ . 
+a grid line to the Y plane of the click Layout Grid 3D tab . Y Axis volume 
+panel . Add Grid Line
+ . 
+a grid line to the Z plane of the click Layout Grid 3D tab . Z Axis volume 
+panel . Add Grid Line
+ . 
+3 Specify the distance of the new grid line from the start of the grid. 
+¦ 
+If you have added a line to a layout volume with manually spaced lines, the new line is inserted at the specified position. The position of the other lines remains unchanged. The grid size changes accordingly. 
+
+¦ 
+If you have added a line to a layout volume with evenly spaced lines, the new line is inserted and all lines are recalculated, so that they are evenly distributed again. The grid size remains unchanged. 
+
+
+Removing Grid Lines from Layout Volumes 
+Use this procedure to remove individual grid lines from a volume. You can remove grid lines from the X, Y, and Z planes separately. 
+NOTE You can remove lines only from volumes which have been inserted with manually spaced lines or evenly spaced lines. Layout volumes with lines placed at a fixed repeated spacing value cannot be changed. For information about grid modes, see Changing the Spacing Mode of Layout Grids on page 2704. 
+1 Select the layout volume. 
+2 Specify the axis from which to remove the grid line: 
+If you want to remove… Then… 
+a grid line from the X plane of the click Layout Grid 3D tab . X Axis volume 
+panel . Remove Grid Line
+ . 
+a grid line from the Y plane of the click Layout Grid 3D tab . Y Axis volume 
+panel . Remove Grid Line
+ . 
+a grid line from the Z plane of the click Layout Grid 3D tab . Z Axis volume 
+panel . Remove Grid Line
+ . 
+3 Click the grid line to be removed from the volume. 
+¦ 
+If you have removed a line from a layout volume with manually spaced lines, the specified line is removed from the volume. The position of the other lines remains unchanged. 
+
+¦ 
+If you have removed a line from a layout volume with evenly spaced lines, the specified line is removed from the volume. All remaining lines are recalculated, so that they are evenly distributed again. 
+
+
+Changing the Spacing Mode of Layout Volumes 
+Use this procedure to change how modes are positioned along a layout volume. For more information, see Adding Layout Volumes on page 2712. 
+For example, you can change the mode so that a volume with manually spaced nodes becomes a volume with evenly spaced nodes. If you want to add nodes to a layout volume with a fixed number of nodes, you must first convert the layout volume to the manually spaced or evenly spaced mode. 
+You can also change the layout mode on the Properties palette. 
+1 Select the layout volume by selecting one of the node anchors. 2 Choose the desired command: 
+¦ For X axis, click Layout Grid 3D tab . X Axis panel . Layout 
+Mode
+ . 
+¦ 
+For Y axis, click Layout Grid 3D tab . Y Axis panel . Layout 
+
+Mode
+ . 
+
+¦ 
+For Z axis, click Layout Grid 3D tab . Z Axis panel . Layout 
+
+
+Mode
+ . 
+3 Select the desired mode, and press ENTER. 
+¦ 
+If you are changing a layout volume with manually spaced nodes to a volume with nodes placed at a fixed repeated spacing value, you are prompted for start and end offsets, and the distance between the nodes. If there are too few nodes on the curve to fill it, new nodes are created at the specified distance. 
+
+¦ 
+If you are changing a layout volume with manually spaced nodes to a volume with evenly spaced nodes, you are prompted for start and end offsets for the volume. The existing nodes are distributed evenly on the volume. 
+
+¦ 
+If you are changing a volume with nodes placed at a fixed repeated spacing value to a volume with manually spaced nodes, there is no visible change. However, the nodes have been converted to manual nodes, so that you now can add nodes to and remove nodes from the volume. 
+
+¦ 
+If you are changing a volume with nodes placed at a fixed repeated spacing value to a volume with evenly spaced nodes, you are prompted for start and end offsets. The existing nodes are than recalculated and distributed evenly. You can now add nodes to and remove nodes from the volume. 
+
+¦ 
+If you are changing a volume with evenly spaced nodes to a volume with manually spaced nodes, there is no visible change. If you change the volume, however, the nodes remain fixed and are no longer redistributed evenly. 
+
+¦ 
+If you are changing a volume with evenly spaced nodes to a volume with nodes placed at a fixed repeated spacing value, you are prompted for start and end offsets, and the distance between the nodes. If there are too few nodes on the curve to fill it, new nodes are created at the specified distance. 
+
+
+Changing the Display Properties of Layout Volumes 
+Use this procedure to change any of the following display properties of the nodes on a layout volume: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+¦ 
+Node size 
+
+
+1 Select the layout volume that you want to change, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already selected, click 
+at the upper-right corner of the tab. 4 Click the Layer/Color/Linetype tab. 5 Select the component to change, and select a different setting for the property. 6 Click OK twice. 
+Changing the Node Radius for a Layout Volume 
+Use this procedure to change the node radius for a layout volume by editing its display properties. 1 Double-click the layout volume you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that *NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all layout volumes in the drawing, select Drawing default setting. 
+5 If necessary, expand Object Display Properties . Advanced. 6 Click the value for Node radius, and enter a new value. 
+(Alternatively, you can click 
+and specify 2 points in the 
+drawing area to set the new radius.) 
+You can also access and modify the node radius property through the layout volume’s context menu, as follows: 
+1 Select the layout volume, right-click, and click Edit Object Display. 
+2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 
+4 In the Display Properties dialog, click the Other tab, and then change the radius as needed. 
+5 Click OK twice. 
+Changing the Location of Layout Volumes 
+Use this procedure to change the location of layout volumes. You can relocate a layout volume by changing the coordinate values of its insertion point. The layout volume also has an orientation with respect to the world coordinate system (WCS) or the current user coordinate system (UCS). For example, if the top and bottom of the layout volume are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the layout volume by aligning its normal with another axis. You can also rotate the layout volume on its plane by changing the rotation angle. 
+For information about WCS and UCS, see “Use Coordinates and Coordinate Systems” in AutoCAD help. 
+1 Double-click the layout volume that you want to change. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Location. 
+3 Select Additional information. 
+4 Specify the location of the layout volume: 
+If you want to… Then… 
+relocate the layout volume enter new coordinate values under Insertion Point. 
+locate the layout volume on the XY make the normal of the layout 
+plane volume parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the layout volume on the YZ make the normal of the layout 
+plane volume parallel to the X axis: under Normal, enter 1 for X and enter 0 for Y and Z. 
+locate the layout volume on the XZ make the normal of the layout 
+plane volume parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the layout enter a new value for Rotation volume Angle. 
+5 Click OK. 
+Attaching Hyperlinks, Notes, or Files to a Layout Volume 
+Use this procedure to attach hyperlinks, notes, or files to a layout volume. You can also edit hyperlinks and notes, and edit or detach reference files from a layout volume. 
+1 Double-click the layout volume to which to attach information. 2 On the Properties palette, click the Extended Data tab. 3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. For more information, see “Add Hyperlinks to a Drawing” in AutoCAD help. 
+4 Click OK. 5 To add a note, click the setting for Notes, and enter the note. 
+6 Click OK. 
+7 To add a reference file, click the setting for Reference documents, and attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click OK. 
+edit the description of a reference select the file, enter the description, file and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+8 Click OK. 
+Grids 
+34 
+Grids are AEC objects on which you can anchor other objects, such as columns, and constrain their locations. 
+Grids 
+Grids are AEC objects on which you can anchor other objects, such as columns, and constrain their locations. Grids are useful in the design and documentation phases of a project. 
+Types of Grids 
+There are several types of grids, each with its own purpose: 
+Layout grids help you position objects relative to each other in your building design. For more information about layout grids, see Layout Curves and Grids on page 2677. 
+Column grids are layout grids that place a column at each intersection of the grid as you add it to your drawing. They are unique also in that they have automatic labeling tools. For more information about columns, see Creating a Freestanding Column on page 2545 or Creating Grid-Anchored Columns on page 2551. 
+Ceiling grids are specialized layout grids that represent suspended ceiling systems or cassette ceilings. They can be anchored to a space object at ceiling height. 
+All of these grid types share some common features. 
+Anchoring Objects to Grids 
+Grids can be used to anchor other objects. This is most visible in column grids, where special functionality allows you to anchor columns to the grid during insertion. Once the grid is inserted, you can add other objects to it as well. 
+There are 2 anchoring mechanisms available for grids: 
+¦ 
+Anchoring objects to a grid cell (Cell Anchor) 
+
+¦ 
+Anchoring objects to a grid intersection (Node Anchor) 
+
+
+For more information about anchoring objects, see Anchors on page 2647. 
+Using Column Grid Tools to Create Column Grids 
+Tools in the software let you quickly place column grids using a structural column grid tool with specific predefined properties. You can use the default settings of the tool, or you can change the properties. You can also use structural column grid tools to convert linework to column grids, and to apply the settings of a structural column grid tool to existing column grids. 
+Tool palettes containing structural column grid tools 
+
+The default tool palettes in the workspace contain sample structural column grid tools that you can use and customize as needed. In addition, the following catalogs provided with the software contain structural column grid tools that you can add to your tool palettes: 
+¦ 
+AutoCAD Architecture Stock Tool catalog 
+
+¦ 
+AutoCAD Architecture Sample Palette catalog 
+
+
+Custom palettes created by your CAD manager or other users may also contain structural column grid tools with column grid properties that are customized for your projects or office standards. 
+Creating Rectangular and Radial Column Grids 
+You can create column grids with symmetric sides by using column grid tools. 
+
+The above column grids are inserted via a Tool from the Tools palette. You can edit their properties on the Properties palette. 
+Layout Types for Column Grids 
+There are 3 different layout types that control the spacing of lines in a grid. Layout type is specified separately for the X and Y planes. 
+¦ 
+Manual: You specify the position of each line on the grid. 
+
+¦ 
+Repeat (Fixed Bay Size): You specify equidistant spacing between lines on the grid. The number of lines is determined by the size of the grid. As the size of the grid changes, lines are added or subtracted accordingly. The distance between lines remains fixed. 
+
+¦ 
+Space Evenly: You specify the number of lines on the grid. The space between lines is determined by the size of the grid. As the size of the grid changes, the spacing between lines is lengthened or shortened accordingly. The number of lines remains fixed. 
+
+
+NOTE By default, grids are inserted with evenly spaced lines. 
+Creating a Column Grid 
+Use this procedure to add a column grid from a column grid tool. Column grids can be either rectangular or radial. 
+Rectangular grid 
+
+Radial grid 
+
+1 Open the tool palette that you want to use, and select a structural column grid tool. 
+Alternatively, you can click Home tab . Build panel . Column 
+Grid drop-down . Column Grid
+ . 
+2 On the Properties palette, expand Basic, and expand General. 3 Select a shape, either Rectangular or Radial. 4 Expand Dimensions. 5 If you have selected a rectangular grid shape, specify the settings: 
+If you want to… Then… 
+define the width of the grid expand Dimensions, and enter a value for X - Width. 
+If you want to… Then… 
+define the depth of the grid expand Dimensions, and enter a value for Y - Depth. 
+lay out the grid with evenly spaced expand X Axis, select Space evenly bays along the X direction for Layout type, and enter a value for Number of bays. 
+lay out the grid with a fixed bay size expand X Axis, select Repeat for along the X direction Layout type, and enter a value for Bay size. 
+specify the offset distance from the expand X Axis, and enter a value start point along the X direction of for Start offset. The offset distance the grid may be used to reduce the effective 
+grid size. 
+specify the offset distance from the expand X Axis, and enter a value end point along the X direction of for End offset. The offset distance the grid may be used to reduce the effective 
+grid size. 
+lay out the grid with evenly spaced expand Y Axis, select Space evenly bays along the Y direction for Layout type, and enter a value for Number of bays. 
+lay out the grid with a fixed bay size expand Y Axis, select Repeat for along the Y direction Layout type, and enter a value for Bay size. 
+specify the offset distance from the expand Y Axis, and enter a value for start point along the Y direction of Start offset. The offset distance may the grid be used to reduce the effective grid 
+size. 
+specify the offset distance from the expand Y Axis, and enter a value for end point along the Y direction of End offset. The offset distance may the grid be used to reduce the effective grid 
+size. 
+6 If you have selected a radial grid shape, specify the settings: 
+If you want to… Then… 
+define the width of the grid expand Dimensions, and enter a value for X - Width. 
+define the angle of the grid expand Dimensions, and enter a value for A - Angle. 
+lay out the grid with evenly spaced expand X Axis, select Space evenly bays along the X direction for Layout type, and enter a value for Number of bays. 
+lay out the grid with a fixed bay size expand X Axis, select Repeat for along the X direction Layout type, and enter a value for Bay size. 
+specify the inside radius of the grid expand X Axis, and enter a value for Inside radius. 
+specify the offset distance from the expand X Axis, and enter a value end point along the X direction of for End offset. The offset distance the grid may be used to reduce the effective 
+grid size. 
+lay out the grid with evenly spaced expand Y Axis, select Space evenly bays along the Y direction for Layout type, and enter a value for Number of bays. 
+lay out the grid with a fixed bay expand Y Axis, select Repeat for angle along the Y direction Layout type, and enter a value for Bay angle. 
+specify the offset angle from the expand Y Axis, and enter a value for start angle along the X direction Start angle offset. The offset angle grid curve may be used to reduce the grid size. 
+specify the offset angle from the expand Y Axis, and enter a value for end angle along the X direction End angle offset. The offset distance grid curve may be used to reduce the grid size. 
+7 To add columns to the grid intersection during insertion, expand Column, and specify a style for the structural member. 
+

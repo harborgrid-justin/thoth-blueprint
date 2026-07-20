@@ -45,7 +45,8 @@ export type ToolId =
   | "road"
   | "utility"
   | "alignment"
-  | "note";
+  | "note"
+  | "waterdrop";
 
 export interface ToolDef {
   id: ToolId;
@@ -85,6 +86,7 @@ export const TOOLS: ToolDef[] = [
 
   { id: "grade", label: "Grading", icon: Mountain, shortcut: "D", kind: "grade", mode: "polygon", group: "terrain" },
   { id: "spot", label: "Spot elevation", icon: LocateFixed, shortcut: "E", kind: "spot", mode: "point", group: "terrain" },
+  { id: "waterdrop", label: "Water drop", icon: Waves, shortcut: "J", mode: "point", group: "terrain" },
 
   { id: "measure", label: "Measure", icon: Ruler, shortcut: "M", mode: "ruler", group: "select" },
   { id: "note", label: "Note", icon: MapPin, shortcut: "N", kind: "note", mode: "point", group: "select" },

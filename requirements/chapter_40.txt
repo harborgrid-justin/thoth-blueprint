@@ -1,0 +1,1248 @@
+[MIGRATED TO RTM_PART_65.md - SECTIONS]
+object or a live section view. Materials have specific settings for sections, such as a 2D section hatch setting and a sectioned boundary for live section views. In a 2D or 3D section object, you can specify whether to use the display properties of the materials or the display properties of the section object. 
+2D section with different surface hatches 
+
+AutoCAD Architecture provides a large number of predefined materials for all common design purposes. You can use these predefined materials, or modify them to your special designs. You can also create your own materials from scratch. For more information, see About 2D and 3D Section Display Components and Materials on page 3268. 
+Subdivisions in 2D Section Styles and Materials 
+When you create subdivisions in your style, you usually want the objects in them to be visually distinct from other subdivisions. When you assign materials to the objects, you can set the 2D section style so that it uses the hatch pattern from the material, but uses the color and linetype from the subdivision display properties. 
+3D section with subdivisions and assigned colors in 3D view 
+
+For more information see Use Subdivision Properties and Materials in 2D Section Styles on page 3275. 
+Material Boundaries in 2D Sections 
+Material boundaries allow you to erase or limit portions of a 2D section or elevation. For example, you might do the following: 
+¦ 
+Limit the amount of hatching to produce cleaner construction documents. 
+
+¦ 
+Highlight a region in an elevation or section. 
+
+
+2D section with highlighted hatching region detail 
+
+¦ Mask out a portion of a section so that more detail can be drawn. 
+2D section with hatch masked 
+
+¦ Crop an irregular-shaped portion of a section or elevation. 
+2D section with cropped material display detail 
+
+For more information, see Creating a Material Boundary in a 2D Section on page 3247. 
+Workflow to Create a 2D or 3D Section or a Live Section View 
+Watch the movie Review the steps 
+
+The section line on page 3222 defines the extents of the section (its width, height, and length) to extract from the building model for 2D, 3D, and live section views. 
+
+Create a 2D or 3D section by selecting the section line and the objects to be included, and generate on page 3233 a section. Live section views on page 3237 are created from the section line. All objects in the drawing are automatically included. 
+You can edit on page 3220 the section line and the section object to refine the appearance of the objects. 
+Watch the movie Review the steps 
+Update on page 3257 sections to apply changes you made to the section line, the section object, 
+
+Update the section -----and the building model. You can also globally on page 3261 update all sections within a project or a specified folder all at once. 
+Drawing and Editing Section Lines 
+The first step in creating a section is to draw a section line through the building model. The section line defines the extents of the section to extract from the building model. 
+NOTE You can create vertical sections and horizontal sections. 
+Creating a Section Object from a Section Line 
+When you generate a section from a section line, you specify the type of section object that is created. 
+When you create… The result is… 
+a 2D section object an orthographic projection from the building model. 
+a 3D section object or a live section the area of the building model defined in the section line. 
+Creating a Live Section View from a Section Line 
+When you create a live section view from a section line, you do not create a new section object but instead switch to a special view of the 3D building model. You do not select objects to include in the section; the live section view includes all objects in the drawing. The section line controls how objects are displayed in a live section view. Objects or parts of objects that are within the bounding box of the section line retain their original display properties. Objects or parts of objects that are outside of the section line are either not displayed at all or are displayed with a special display component for the sectioned body. 
+Viewing the Section Line 
+In plan view, the section line is displayed as you would expect on a construction document. The section marks point in the direction that the section is cut. 
+Viewing the section line and mark in plan view 
+
+In an isometric view, the same section line is displayed with a boundary that defines the extents of the section. 
+Viewing a section line in isometric view 
+
+Changing the Section Line 
+You can change the section line to control the section that you create. Using the section line, you can change the height and shape of the section. You can also add a lower extension to the section and create section subdivisions. 
+You can change section line properties before or after you create a section. After changing section line properties, you can apply the changes to a section that you previously created with the section line. For information about updating existing sections, see Updating a 2D or 3D Section on page 3257. 
+For information about updating existing live section views, see Updating a Live Section View on page 3239. 
+Using Subdivisions in Sections 
+You can set up graphic subdivisions in section line properties. These subdivisions are added to the 2D or 3D section you create. Subdivisions are specified at distances from the cutting plane of the section line. You can control the lineweight and other display properties of subdivisions to add levels of depth to sections. For example, you can display one subdivision with a heavy lineweight and another subdivision with a lighter lineweight to suggest that the first subdivision is in front of the second subdivision. 
+You can use the display properties of a subdivision together with the display properties of a material. For more information, see Use Subdivision Properties and Materials in 2D Section Styles on page 3275. 
+Drawing a Section Line and Marks 
+Use this procedure to draw a section line with a section mark at each end. You draw a section line by specifying a start point, an endpoint, a length, and a height for the section. You can specify additional points between the start point and the endpoint to create jogs in the section. The section line acts as a cutting plane, slicing a section from the building model. 
+NOTE If you are working with a drawing set where several xrefs are linked to a main drawing, draw the section line in the main drawing. 
+TIP You can also create sections with Callout tools. For more information, see Placing Section Callouts on page 3671. 
+1 On the default tool palette set, click the Design tab, and then click the Vertical Section tool. If necessary, scroll the palette to display the tool that you need. 
+NOTE Alternatively, click Home tab . Section & Elevation panel . Section Line
+ . 
+2 Specify the start point of the section line. 3 Continue to specify points to define the section line, if needed. 
+You can create jogs in the section line to cut through portions of the building model that you want to show in the section, but which are not along a single straight path. 
+4 Specify the endpoint of the section line, and press ENTER. Specifying section line start and end points in 3D view 
+
+5 Specify the length of the section, or press ENTER to accept the 
+length taken from the endpoints of the line. The section line is displayed in the drawing. Depending on the direction in which you drew the section line, the section marks point in the direction of the section. 
+
+The section marks are multi-view blocks, anchored to the section line. You can edit the section marks to change the information displayed in the bubbles. For more information, see Changing Section Mark Attributes on page 3230. 
+The height of the section line is set to the extents of the selected objects. You can change the properties of the line to change the height and depth of the section, add a lower extension, or add subdivisions. For more information, see Changing the Height of a Section Using Grips on page 3224. 
+Changing the Height of a Section Using Grips 
+Use this procedure to change the height of any section connected to the section line. You can change the height of the section line before or after you create a connected section. If you change the height after creating the section, you need to update the section to show the changes. 
+You can also change the height of a section using the Properties palette. 
+1 Click View tab . Appearance panel . Views 
+. SW Isometric
+
+ . 
+2 Select the section line you want to change. 
+3 Select the Model Extents grip to turn off use of model extents for 
+section height. 4 Select the Height grip. 
+NOTE If you use model extents for height mode, the height of the section is determined by the height of the objects in the section and is not available to modify dynamically. 
+Viewing Section Grips in 3D View 
+
+5 Move the grip until the height value you want is displayed, and 
+click once; or enter a value. The objects are cut at this height when you create or update a section. 
+6 Right-click, and click Deselect All to turn off grips. 
+To update a 2D or 3D section created from this section line, see Updating a 2D or 3D Section on page 3257. 
+Changing the Lower Extension of a Section Using Grips 
+Use this procedure to change the lower extension of any section connected to the section line. You can change the lower extension of the section line before or after you create a connected section. If you change the lower extension after creating the section, you need to update the section to show the changes. 
+You can also change the lower extension of a section using the Properties palette. 
+1 Click View tab . Appearance panel . Views 
+. SW Isometric
+
+ . 2 Select the section line you want to change. 
+3 Select the Model Extents grip to turn off model extents for height. 4 Select the Lower Extension grip. 
+NOTE If you turn off model extents, the default for the lower section is 1 foot below the XY plane. 
+Viewing Section Grips in 3D View 
+
+5 Move the grip until the lower extension value you want is displayed, and click once; or enter a value. 
+6 Right-click, and click Deselect All to turn off grips. 
+To update a 2D or 3D section created from this section line, see Updating a 2D or 3D Section on page 3257. 
+Changing the Length of a Section Using Grips 
+Use this procedure to change the length of any section boundary connected to the section line. You can change the length of the section as a whole, or you can change the length of the sides of the section boundary individually. 
+You can change the length of the section boundary before or after you create a connected section. If you change the length after creating the section, you need to update the section to show the changes. 
+You can also define the depth of a section (its length) by changing the length of the sides of a section boundary on the Properties palette. 
+1 Select the section line you want to change. 2 Select the Length grip. 
+Viewing Section Grips in Plan View 
+
+3 Move the grip until the length value you want is displayed, and click once. The entire section boundary length is updated. 
+4 To change the length of side 1 of the section boundary, click the Side 1 Endpoint grip. Side 1 starts from the first point specified for the section line. 
+5 Move the grip to the desired location, and click once; or enter a value on the command line, and press ENTER. 
+Viewing Section Grips in Plan View 
+
+6 To change the length of side 2 of the section boundary, click the Side 2 Endpoint grip. 
+Side 2 starts from the endpoint of the section line. 
+7 Move the grip to the desired location, and click once; or enter a value on the command line, and press ENTER. 
+8 Right-click, and click Deselect All to turn off grips. 
+To update a 2D or 3D section created from this section line, see Updating a 2D or 3D Section on page 3257. 
+Changing the Angle Dimensions of a Section 
+Use this procedure to change the angle of the sides of the building section boundary. You can change the angle dimensions before or after you create a connected section. If you change the angles after creating the section, you need to update the section to show the changes. 
+1 Double-click the section line you want to change. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Component Dimensions. 
+3 Specify values for Angle 1 and Angle 2. These values define the angles of the two sides from the section line to create the section box. The apex of Angle 1 is the start point of the section line. The apex of Angle 2 is the endpoint of the section line. Values for these angles must be between 0 and 90 degrees. 
+Specifying section angle parameters 
+
+4 Right-click, and click Deselect All to turn off grips. 
+To update a 2D or 3D section created from this section line, see Updating a 2D or 3D Section on page 3257. 
+Creating Graphic Subdivisions for 2D and 3D Sections 
+Use this procedure to define subdivisions that are created when you generate a section. Each subdivision is specified as a distance from the cutting plane of the section line. 
+A section line with graphic subdivisions 
+
+You can control the lineweight and other display properties of the subdivisions to add different levels of depth to sections. 
+You can use the display properties of a subdivision together with the display properties of a material. For more information, see Workflow to Create a 2D or 3D Section or a Live Section View on page 3219 and Use Subdivision Properties and Materials in 2D Section Styles on page 3275. 
+1 Double-click the section line you want to change. 2 On the Properties palette, click the Design tab, expand Basic, and expand Dimensions. 3 Click the setting for Subdivisions, and then add or modify subdivisions: 
+If you want to… Then… 
+create a subdivision 
+click 
+ . To change the default distance from the section line, select 
+If you want to… Then… 
+the subdivision, click the value, and enter a new one. 
+change the length of a subdivision select the subdivision, click its value, and enter a new one. 
+delete a subdivision 
+select the subdivision, and click . 
+
+4 Click OK. 
+Changing a Subdivision Using Grips 
+Use this procedure to change the distance of a subdivision, as measured from the section line. You can drag the constrained grip to the desired distance, or you can enter a specific value for the distance measurement. 
+Viewing Section Subdivision Grips 
+
+1 Select the section line you want to change. 2 Select the Distance grip for the subdivision you want to modify. 3 Move the grip until the distance value you want is displayed, and 
+click once; or enter a value. 4 Right-click, and click Deselect All to turn off grips. 
+Changing Section Mark Attributes 
+Use this procedure to change the information displayed in the section mark. The section mark is a multi-view block. 
+1 Double-click the section mark you want to change. 2 On the Properties palette, expand Advanced. 3 Click Attributes. 4 Select the existing attribute under Value, and enter the new 
+information to include in the bubble. 5 Click OK. 
+Changing the Location of a Section Line 
+Use this procedure to relocate a section line by changing the coordinate values of its insertion point. The section line also has an orientation with respect to the WCS or the current UCS. For example, if the top and bottom of the section line are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the section line by aligning its normal with another axis. You can also rotate the section line on its plane by changing the rotation angle. 
+For information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use Coordinates and Coordinate Systems” in AutoCAD Help. 
+1 Double-click the section line you want to relocate. 2 On the Properties palette, click the Design tab, expand Basic, and 
+expand Location. 3 Click Additional Information. 4 Specify the location of the section line: 
+If you want to… Then… 
+relocate the section line enter new coordinate values under Insertion Point. 
+locate the section line on the XY make the normal of the section line 
+plane parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the section line on the YZ make the normal of the section line 
+plane parallel to the X axis: under Normal, enter 1 for X, and enter 0 for Y and Z. 
+If you want to… Then… 
+locate the section line on the XZ make the normal of the section line 
+plane parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the section enter a new value for Rotation line Angle. 
+5 Click OK. 
+To update an existing section created from this section line, see Updating a 2D or 3D Section on page 3257. 
+Modifying a Section Line Using Grips 
+Use this procedure to change the start point, endpoint, edge, or vertex of a section line. You can drag the grip to the desired location, or you can enter a specific value for the measurement. 
+1 Select the section line you want to change. 
+2 Select a section line grip, and move it to the desired location. You can also move the grip in the desired direction and enter a specific value on the command line. 
+Viewing Section Grips in Plan View 
+
+3 Right-click, and click Deselect All to turn off grips. 
+Attaching Hyperlinks, Notes, and Files to a Section Line 
+Use this procedure to add hyperlinks, enter notes, and attach reference files to a section line. You can also edit notes and edit or detach reference files from a section line. 
+1 Double-click the section line you want to attach notes or files to. 2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click 
+next to Hyperlink, and specify the link. 
+4 To add a note, click 
+next to Notes, enter text, and click OK. 
+5 To attach, detach, or edit a reference file, click 
+next to Reference documents, and then do any of the following: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click 
+. 
+6 Click OK. 
+Creating a 2D or 3D Section 
+Use this procedure to create a 2D or 3D section. After you draw a section line, you extract a section from the section line and the objects you select in the building model. 
+TIP Before you create a section, thaw and turn on all layers containing objects that you want to include in the section. Objects on layers that are off or frozen cannot be part of the selection set for the section. To enhance performance, turn off the layers of the objects that you do not need to include in the section. 
+WARNING If you want to insert a 2D section in a Plan view, make sure that the display set used for the Plan view does not section objects by display range. In that case, the section result would not be displayed in the Plan view. To make sure that this is not the case, click Manage tab . Style & Display panel . Display 
+Manager
+ . Select the Plan display set for the currently used display configuration. On the Display Options tab, verify that Section AEC Objects by Display Range defined in Display Configuration is cleared. 
+1 Draw a section line in the drawing. For more information, see Drawing a Section Line and Marks on page 3222. 2 Select the section line, and click Building Section Line tab . Modify panel . Generate Section
+ . 3 Select the type of section object you want to create: 
+If you want to create… Then… 
+a 2D section select 2D Section/Elevation Object with Hidden Line Removal. 
+a 3D section select 3D Section/Elevation Object. 
+4 For Style to Generate, select a style for a 2D section. If you want to use a particular style, select it from Style to Generate. Otherwise, use the Standard style. For more information, see 2D Section Styles on page 3263. 
+3D sections do not use styles. 
+5 Under Selection Set, click 
+(Select Objects), and select the objects that you want to include in the section. Press ENTER when you finish selecting objects. 
+NOTE If you select an object that you do not want to include in the section, hold down SHIFT and select the object again to remove it from the selection set. 
+6 Under Display Set, select a display set for the section object. The display set controls the representation of the section. 
+7 Under Placement, select New Object, and specify where to place the section: 
+If you want to… Then… 
+specify a location graphically click 
+(Pick Point), and specify the location for the new section object in the drawing. 
+specify the coordinates of the inser-enter X, Y, and Z coordinates for tion point for the section the location of the new section ob­ject. 
+8 Click OK. A 2D or 3D section is created from the section line properties and the selected objects in the building model. The section is linked to the building model. If you make changes to the building model after you create the section, you can update the section to reflect the changes. For more information, see Updating a 2D or 3D Section on page 3257. 
+You can edit certain characteristics of the section to control its placement and appearance. For more information, see Editing a 2D or 3D Section on page 3241. 
+You can also use a 2D section style to control the display of selected objects in a 2D section, and you can control the display of individual lines in a 2D section. For more information, see 2D Section Styles on page 3263 and Editing and Merging Linework in a 2D Section on page 3253. 
+Creating a Horizontal 2D Section 
+Use this procedure to create a horizontal section or elevation of a plan view. 
+The Hidden Line control available in AutoCAD Architecture makes it possible to create horizontal sections and elevations of Plan views. With a horizontal section or elevation, you can look “down” on the model. Previously, users could achieve that effect only by manually changing the UCS. Now, a tool enables you to create a horizontal section or elevation. This feature could be useful for creating a detailed display of sill components in tapered walls. 
+The illustration below displays a horizontal section line for an irregularly shaped building. 
+Horizontal section line 
+
+The illustration below displays the section results. Note the sill displays of the tapered walls and the correct representation of the sloped curtain walls. 
+
+1 On the default tool palette set, click the Design tab, and then click the Horizontal Section tool. If necessary, scroll the palette to display the tool that you need. 
+NOTE Alternatively, click Home tab . Section & Elevation panel . Horizontal Section. 
+2 Specify the first point of the section plane. 3 Specify the second corner of the section plane. 4 Specify the elevation of the section plane, and press ENTER. 5 Specify the depth of the section, and press ENTER. 6 Proceed with creating the section, as described in Creating a 2D 
+or 3D Section on page 3233. 
+Creating and Editing a Live Section View 
+A live section view is a special view of a 3D model section. 
+A live section view is always applied to all objects in the drawing. Unlike a 2D or 3D section, you do not choose a selection set of objects to be contained in the section. All objects are contained in the live section view. Their display properties are determined by whether or not they are situated within the bounding box of the section line. 
+The objects contained in the live section view are not converted into a section object, but are retained as objects in the drawing. They keep all of their properties and display components, and can be edited. The area of objects that lie outside of the section line, or objects that lie completely outside of the section line, can be displayed or hidden. The appearance of these objects, and of parts of objects outside of the section line, is controlled by the Sectioned Body component. When you render a live section, you can show the outside part as a half-transparent addition, for example. 
+The live section view can be turned on and off in a drawing. 
+Rendered live section view with transparent outside material 
+
+NOTE When a live section view contained in a project view drawing is dragged onto a project sheet, and the live section view should be displayed in the sheet view, the external reference of the view needs to be selected in the sheet, and have a display configuration override applied to it, as described in Changing the Display Configuration Used in Xref Drawings on page 825. 
+Creating a Live Section View 
+Use this procedure to create a live section view of your building model. 1 Draw a section line through the building model. For more information, see Drawing a Section Line and Marks on page 3222. 
+NOTE You do not need to select objects for the live section view. The live section view is created from the whole drawing. 
+2 Switch to a 3D view, such as SW Isometric. 
+3 Select the section line, and click Building Section Line tab . Live Section panel . Enable Live Section 
+. 
+Updating a Live Section View 
+When you create a live section view, the sectioned objects are not converted into a section object. Instead, the objects remain in the drawing. The objects and object areas which are inside the section line retain their previous display properties. A brick wall inside a section line retains its brick pattern and its dark red linework. The objects and object areas outside of the section line change their display properties, since they are now placed on the Sectioned Body display component and use its display properties. 
+The live section updates interactively when you change the objects associated with it. If you drag a wall outside of the section line, the wall uses the display properties of the Sectioned Body component. If you drag a wall inside of the section line, the wall uses its own display properties. 
+When you change the material assignment of an object in a live section view, the new material is automatically used in the live section. 
+NOTE If you change from a material in which the Sectioned Boundary and Sectioned Body components are turned on, to a material in which these components are turned off, it might look as if objects outside of the section line disappear. You can edit the current material definition to display objects outside of the section line, as described in Displaying the Sectioned Body in a Live Section View on page 3239. 
+Displaying the Sectioned Body in a Live Section View 
+Use this procedure to display the parts of the drawing in a live section view that are outside the section. 
+Whether objects and areas of objects outside the section line are displayed in the live section view depends on the material settings for each object and object style. The sectioned objects inside the section are displayed with their regular display components and material assignments. For example, a brick wall inside a section displays its regular brick surface hatch. 
+Objects or object parts that are outside of the section are displayed differently. You can either hide them completely, or display them on the Sectioned Body display component. The Sectioned Body display component is specified in the material assigned to the object. 
+The sectioned body is often displayed in a lighter, half-transparent color, or as dotted linework. 
+Live section view with sectioned body displayed as light blue linework 
+
+In a material definition, the Sectioned Body and Sectioned Boundary display components influence the display of the live section view. The Sectioned Body includes the objects or object parts outside of the section line. The Sectioned Boundary is the cut line created by the section line. 
+1 Select the object for which you want to display the sectioned body, right-click and click Edit Object Display. 2 Click the Materials tab. 
+3 Select the material definition you want to change, and click . 
+
+4 Select the display representation of the material, and click 
+. 5 Click the Layer/Color/Linetype tab. 6 Change the display of the sectioned body and sectioned boundary: 
+If you want to… Then… 
+hide the sectioned body set Visible off for the Sectioned Body and Sectioned Boundary components. 
+display the sectioned body set Visible on for the Sectioned Body and Sectioned Boundary components, and assign them dis­play properties as needed. 
+7 Click OK three times. 
+NOTE When the Sectioned Body component is set to visible and the material display component is on, you can turn the display of the sectioned body on and off by selecting the section line and clicking Building Section Line tab . Live Section panel . Toggle Body Display. 
+Removing a Live Section View 
+Use this procedure to turn off a live section view. You can also remove the live section view by deleting the section line that was used to create it. 1 Select the section line that was used to create the live section view. 2 Click Building Section Line tab . Live Section panel . Disable 
+Live Section
+ . After turning off the live section view, you see the regular 3D building model again. You can turn live section view on and off as long as the section line remains in the drawing. 
+Editing a 2D or 3D Section 
+After you create a 2D or 3D section, you can edit the section line and the section object to refine the appearance of the section in any of the following ways: 
+¦ 
+Add, remove, or modify graphic subdivisions. 
+
+¦ 
+Reverse the section to display a different area of the building. 
+
+¦ 
+Relocate the section. 
+
+¦ 
+Add notes or reference files. 
+
+¦ 
+Select a different style. A section style determines how the linework in a 2D section is displayed. 
+
+¦ 
+Change the display properties of selected linework. 
+
+¦ 
+Add linework and details that are not part of the building model. 
+
+
+In addition, you can continue to modify the building model and then update the section to incorporate the changes. 
+You can also create and edit material boundaries for 2D sections. For more information, see Creating a Material Boundary in a 2D Section on page 3247. 
+For information about switching from a view other than a section to a temporary section view to edit objects, see Editing Objects in a Temporary Section View on page 1122. 
+Using Grips to Edit Linework in a 2D Section 
+Use this procedure to edit linework in a 2D section. You can assign selected linework to fixed display components that determine the display of every section that you generate, or you can assign linework to display components that you have defined. 
+For information about adding custom display components, see Adding a Display Component to a 2D Section Style on page 3266. After you assign linework to display components, you can change the display properties (visibility, color, layer, lineweight, linetype, and linetype scale) to change the display of lines. 
+1 Select the section to be changed. 2 Select the Edit Linework grip. 
+
+NOTE Alternatively, click 2D Section/Elevation tab . Linework panel . Edit
+ . 
+The contextual Edit In Place: Linework tab appears on the ribbon. 
+3 Click Edit in Place: Linework tab . Profile panel . Zoom To to zoom to the section. 
+
+4 Select the linework to edit and click Edit In Place . Linework tab . Profile panel . Modify Component
+ . 
+5 Select the component you want to put the lines on. For example, if you want to make the lines invisible, select Erased Vectors for Linework Component. 
+
+You can also click 
+(Match existing linework), and select linework in the elevation whose display component you want to match. 
+6 Click OK. 7 Exit the linework edit in place mode: 
+If you want to... Then click… 
+save all changes to the linework Edit in Place tab . Edits pan­el . Finish. 
+discard all changes to the linework Edit in Place tab . Edits pan­el . Cancel. 
+Changing the Display of Graphic Subdivisions in a 2D Section 
+Use this procedure to change the display of subdivisions in a 2D section by changing its display properties. 
+You create subdivisions by adding them to the section line. You can then change their length using grips or by editing the values in the section line properties. For more information, see Creating Graphic Subdivisions for 2D and 3D Sections on page 3229. 
+Each subdivision in a 2D section is assigned to a numbered subdivision display component in the display properties of the section or the 2D section style. You can control the visibility, layer, color, linetype, lineweight, and linetype scale of each subdivision by changing the display properties of each component. You can apply these changes to the selected section, to the current 2D section/elevation style, or to all 2D sections and elevations in the drawing that do not have a style override. 
+1 Select the 2D section in the drawing, and do one of the following: 
+¦ 
+To change the display for the graphic subdivisions in the 2D section style, click 2D Section/Elevation tab . General 
+
+panel . Edit Style drop-down . Edit Style
+ . 
+
+¦ 
+To change the display for the graphic subdivisions for the selected 2D section object only, right-click, and Edit Object Display. Then, check the Object Override box. 
+
+
+2 Click the Display Properties tab. 3 Select the property source to edit: 
+¦ 
+To change the display for the graphic subdivisions in the 2D section style, check the Style Override box. 
+
+¦ 
+To change the display for the graphic subdivisions for the selected 2D section object only, check the Object Override box. 
+
+
+4 If necessary, click 
+. 
+5 Click the Layer/Color/Linetype tab to list all the components that contribute to the display of the object. The defining line represents the cutting plane of the section line. 
+The numbered subdivision components correspond to subdivisions added to the section line. For example, the display component Subdivision 1 corresponds to the subdivision closest to, but not on, the cutting plane of the section line. 
+6 Turn the visibility on or off, and change the layer, color, linetype, lineweight, or linetype scale as needed for each subdivision component. 
+7 Click the Hatching tab to change the shrinkwrap hatch pattern of the section. 8 Click the Other tab to add a custom display component to the display of the 2D section. 
+For more information about adding custom display components, see Adding a Display Component to a 2D Section Style on page 3266. 
+9 Click OK twice. 
+Changing the Display of Graphic Subdivisions in a 3D Section 
+Use this procedure to change the display of subdivisions in a 3D section by changing its display properties. 
+You create the subdivisions by adding them to the section line. You can then change their length using grips or by editing the values in the section line properties. For more information, see Creating Graphic Subdivisions for 2D and 3D Sections on page 3229. 
+Each subdivision in a 3D section is assigned to a numbered subdivision display component in the display properties of the 3D section. You can control the visibility, layer, color, linetype, lineweight, and linetype scale of each subdivision by changing the display properties of each component. You can apply these changes to the selected 3D section or to all 3D sections in the drawing. 
+1 Select the 3D section in the drawing, right-click, and click Edit Object Display. 
+2 Click the Display Properties tab. 
+3 Select the Sub-divisions display representation. 
+4 Check the Object Override box. 
+5 If necessary, click 
+. 
+6 Click the Layer/Color/Linetype tab to list all the components that contribute to the display of the object. The defining line represents the cutting plane of the section line. 
+The numbered subdivision components correspond to subdivisions added to the section line. For example, the display component Subdivision 1 corresponds to the subdivision closest to, but not on, the cutting plane of the section line. 
+7 Turn the visibility on or off, and change the layer, color, linetype, lineweight, or lineweight scale as needed for each subdivision component. 
+8 Click OK twice. 
+Reversing a 2D or 3D Section 
+Use this procedure to reverse the direction of a section by reversing the section line and refreshing the section. 
+The direction of the section is determined by the direction in which you drew the section line. You can select the section line in plan view to see the bounding box that defines the area of the model included in the section. If the box does not include the area of the model that you intended, you can reverse the section line. If you have already created a section from the section line, update the section after reversing the section line. 
+1 Select the section line that you used to create the section, and 
+click Building Section Line tab . Modify panel . Reverse
+ . The section line is mirrored about its own axis, as is the bounding box with its original parameters. 
+2 Select the existing section. 
+If you selected… Then click… 
+a 2D section 
+click 2D Section/Elevation tab . Modify panel . Regenerate
+
+ . 
+NOTE If you do not need to respecify the objects to include in the section, you can instead click 2D Section/Elevation tab . Modify panel . Refresh 
+
+. This immediately updates the section. 
+a 3D section click 3D Section/Elevation tab . Modify panel . Regenerate 
+
+3 If you want to include different objects in the updated section, click 
+(Reselect Objects), and select the objects. Press ENTER when you finish selecting objects. 
+4 Click OK. 
+Changing the Style of a 2D Section 
+Use this procedure to select a different style for a 2D section. A 2D section/elevation style controls the appearance of any 2D section object to which the style is applied. 
+1 Double-click the section you want to change. 2 On the Properties palette, click the Design tab, expand Basic, and expand General. 3 Select a new style for the section. 
+Creating a Material Boundary in a 2D Section 
+Use this procedure to create a material boundary in a 2D section. For more information, see Material Components and Display Properties on page 884. 
+1 Draw a polyline around the area in the section that you want to mask or to highlight. 
+2 Select the section, and click 2D Section/Elevation tab . Material 
+Boundary panel . Add
+ . 3 Select the polyline. 4 Enter y (Yes) to erase the polyline, or n (No) to keep the polyline 
+in the drawing. 5 Specify the settings of the material boundary: 
+If you want to… Then… 
+highlight the area inside the poly-select Limit for Purpose. line 
+mask (erase) the area inside the select Erase for Purpose. polyline 
+apply the highlight or mask only to  select the appropriate parts for Ap­ 
+specific parts of the section  ply to. You can choose Surface and  
+Section Hatching, Section Hatching  
+Only, Surface Hatching Only, Edge  
+Linework Only, and All Linework.  
+
+apply the material boundary to all select All Materials for Material Se-materials used in the section lection. 
+If you want to… Then… 
+apply the material boundary only select Specific Materials for Material to selected materials Selection and then select the de­sired materials in the list below. 
+apply the highlighting or masking select Apply to section shrinkwrap within the polyline to the shrink-linework. For information on section wrap linework shrinkwrap, see Shrinkwrap on page 
+3270 and Shrinkwrap Hatch on page 3271. 
+apply the highlighting or masking select Apply to section shrinkwrap within the polyline to the shrink-hatching. For information on sec-wrap hatching tion shrinkwrap, see Shrinkwrap on 
+page 3270 and Shrinkwrap Hatch on page 3271. 
+6 Click OK. 
+Editing a Material Boundary 
+You can edit existing material boundaries in a number of different ways: 
+¦ 
+Change the content within the material boundary. For example, you can determine if you want to see only surface hatching, or both surface and section hatching. 
+
+¦ 
+Change the shape of the material boundary. For example, you can make the boundary bigger or smaller, or add additional rings and vertex points to it. 
+
+
+For more information, see Material Components and Display Properties on page 884. 
+Editing the Content of a Material Boundary 
+Use this procedure to change the content of a material boundary. The content includes such settings as materials displayed, hatch types, and boundary type. 
+1 Select the 2D section with the material boundary, and click 2D Section/Elevation tab . Material Boundary panel . Edit In Place
+
+ . You are now in edit in place mode. The material boundary is highlighted, and the grips are displayed. 
+2 Click Edit In Place tab . Profile panel . Edit Material Boundary . 3 Specify the content of the material boundary: 
+
+If you want to… Then… 
+highlight the area inside the select Limit for Purpose. boundary 
+mask (erase) the area inside the select Erase for Purpose. boundary 
+apply the highlight or mask only to  select the appropriate parts for Ap­ 
+specific parts of the section  ply to. You can choose Surface and  
+Section Hatching, Section Hatching  
+Only, Surface Hatching Only, Edge  
+Linework Only, and All Linework.  
+
+apply the material boundary to all select All Materials for Material Se-materials used in the section lection. 
+apply the material boundary only select Specific Materials for Material to selected materials Selection, and then select the de­sired materials from the list below. 
+4 Click OK. 5 To exit edit in place mode, 
+if you want to.. then click… 
+save all changes Edit in Place: Material Boundary tab . Edits panel . Finish. 
+discard all changes Edit in Place: Material Boundary tab . Edits panel . Cancel. 
+Adding a Vertex to a Material Boundary 
+Use this procedure to add a vertex to a material boundary. 
+1 Select the 2D section with the material boundary to change, and click 2D Section/Elevation tab . Material Boundary panel . Edit 
+In Place
+ . You are now in edit in place mode. The material boundary is highlighted, and the grips are displayed. 
+2 Right-click, and click Add Vertex. 3 Specify the point at which to add a vertex. 4 Specify additional vertex points as needed. 5 Press ENTER. 6 To exit edit in place mode, 
+if you want to.. then click… 
+save all changes Edit in Place: Material Boundary tab . Edits panel . Finish 
+discard all changes Edit in Place: Material Boundary tab . Edits panel . Cancel 
+Removing a Vertex from a Material Boundary 
+Use this procedure to remove a vertex from a material boundary. 
+1 Select the 2D section with the material boundary to change, and click 2D Section/Elevation tab . Material Boundary panel . Edit In Place
+ . You are now in edit in place mode. The material boundary is highlighted, and the grips are displayed. 
+2 Right-click, and click Remove Vertex. 
+3 Specify the vertex points to remove. 
+4 Press ENTER. 
+5 To exit edit in place mode, 
+if you want to.. then click… 
+save all changes Edit in Place: Material Boundary tab . Edits panel . Finish. 
+discard all changes Edit in Place: Material Boundary tab . Edits panel . Cancel. 
+Adding a Ring to a Material Boundary 
+Use this procedure to add a ring to a material boundary. A material boundary can consist of more than one closed polyline. For example, you could use one polyline to highlight a wall detail and another polyline to highlight a window detail in another location. 1 Draw a polyline for the new material boundary ring. 2 Select the material boundary to add a new ring to, and click 2D Section/Elevation tab . Material Boundary panel . Edit In Place . You are now in edit in place mode. The material boundary is highlighted, and the grips are displayed. 
+
+3 Click Edit In Place: Material Boundary tab . Profile panel . Add Ring
+ . 4 Select the polyline you drew in Step 1. 5 Enter y (Yes) to erase the polyline, or n (No) to keep the polyline in the drawing. 6 To exit edit in place mode, 
+if you want to.. then click… 
+save all changes Edit in Place: Material Boundary tab . Edits panel . Finish 
+discard all changes Edit in Place: Material Boundary tab . Edits panel . Cancel 
+Removing a Ring from a Material Boundary 
+Use this procedure to remove a ring from a material boundary. 
+A material boundary can consist of more than one closed ring. You can remove each ring individually. 
+NOTE You cannot remove the last ring from a material boundary. 
+1 Select the 2D section with the material boundary to change, and click 2D Section/Elevation tab . Material Boundary panel . Edit 
+In Place
+ . You are now in edit in place mode. The material boundary is highlighted and the grips are displayed. 
+2 Click Edit In Place: Material Boundary tab . Profile panel . Remove Ring
+ . 3 Select the ring you want to remove. 4 To exit edit in place mode, 
+if you want to.. then click… 
+save all changes Edit in Place: Material Boundary tab . Edits panel . Finish 
+discard all changes Edit in Place: Material Boundary tab . Edits panel . Cancel 
+Replacing a Ring from a Material Boundary with Another 
+Use this procedure to replace a ring from a material boundary with a different ring. 
+1 Draw the polyline to replace one of the existing material boundary rings. 
+2 Select the 2D section with the material boundary to change, and click 2D Section/Elevation tab . Material Boundary panel . Edit 
+In Place
+ . You are now in edit in place mode. The material boundary is highlighted and the grips are displayed. 
+3 Click Edit In Place: Material Boundary tab . Profile 
+panel . Replace Ring
+ . 
+4 Select the ring to be replaced. 
+5 Select the closed polyline you drew in Step 1. 
+6 Enter y (Yes) to erase the polyline, or n (No) to keep the polyline 
+in the drawing. 7 To exit edit in place mode, 
+if you want to.. then click… 
+save all changes Edit in Place tab . Edits pan­el . Finish 
+discard all changes Edit in Place tab . Edits pan­el . Cancel 
+Editing and Merging Linework in a 2D Section 
+After you create a 2D section, you can edit the display of individual lines that make up the section. For example, you may want to assign linework for small details to a display component with a lighter lineweight, so that the details are not obscured when plotted. 
+You can also merge existing geometry into the section. 
+Editing Linework in a 2D Section 
+Use this procedure to edit individual lines in a 2D section by assigning them to display components in the section. For information about the Edit Linework grip, see Using Grips to Edit Linework in a 2D Section on page 3242. 
+You can assign selected linework to fixed display components that determine the display of every section that you generate, or you can assign linework to display components that you have defined. For information about adding custom display components, see Adding a Display Component to a 2D Section Style on page 3266. After you assign linework to display components, you can change the display properties (visibility, color, layer, lineweight, linetype, and linetype scale) to change the display of lines. 
+1 Select the section to be changed, and click 2D Section/Elevation 
+tab . Linework panel . Edit
+ . The contextual Edit In Place: Linework tab is displayed. 
+2 Select the lines that you want to assign to a display component, and click Edit In Place . Linework tab . Profile panel . Modify 
+Component
+ . A list of available display components is displayed. 
+3 Select the component on which to put the lines. For example, to make the lines invisible, select Erased Vectors for Linework Component. 
+You can also click 
+(Match existing linework) and select linework in the section whose display component you want to match. 
+4 Click OK. 5 If you want to undo an individual component change, enter Aec2dSectionResultAbortChanges on the command line, and select the component. This will undo all changes to that component during the edit in place session, and automatically exit the edit in place mode. 6 To finish the linework editing process, 
+if you want to.. then click… 
+save all changes Edit in Place: Linework tab . Edits panel . Finish 
+discard all changes Edit in Place: Linework tab . Edits panel . Cancel 
+Merging Linework into a 2D Section 
+Use this procedure to merge geometry into a 2D section. When you merge linework into a section, you assign additional linework to a display component of a section. Use this feature to add detail, or to add linework that you did not model. 
+1 Draw the geometry that you want to merge into a 2D section. 
+2 Select the 2D section to be changed, and click 2D 
+Section/Elevation tab . Linework panel . Merge
+ . 3 Select the geometry to merge into the section, and press ENTER. 4 Select the display component to assign the linework to. 
+You can also click 
+(Match existing linework) and select linework in the section whose display component you want to match. 
+5 Click OK. The linework is merged into the 2D section. When you select the section, the linework is selected with it. 
+Changing the Location of a 2D or 3D Section 
+You can relocate a section by changing the coordinate values of its insertion point. The section also has an orientation with respect to the WCS or the current UCS. For example, if the top and bottom of the section are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the section by aligning its normal with another axis. You can also rotate the section on its plane by changing the rotation angle. 
+For information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use Coordinates and Coordinate Systems” in AutoCAD help. 
+1 Double-click the section you want to move. 2 On the Properties palette, click the Design tab, expand Basic, and 
+expand Location. 3 Click Additional information. 4 Specify a new location or rotation: 
+If you want to… Then… 
+relocate the section enter new coordinate values under Insertion Point. 
+locate the section on the XY plane make the normal of the section parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+If you want to… Then… 
+locate the section on the YZ plane make the normal of the section parallel to the X axis: under Normal, enter 1 for X, and enter 0 for Y and Z. 
+locate the section on the XZ plane make the normal of the section parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the section enter a new value for Rotation Angle. 
+5 Click OK. 
+Attaching Hyperlinks, Notes, and Files to a 2D or 3D Section 
+Use this procedure to add hyperlinks, enter notes, and attach reference files to a 2D or 3D section. You can also edit notes and edit or detach reference files from a 2D or 3D section. 
+1 Double-click the 2D or 3D section you want to attach notes or files to. 
+2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click 
+next to Hyperlink, and specify the link. 
+4 To add a note, click 
+next to Notes, enter text, and click OK. 
+5 To attach, detach, or edit a reference file, click 
+next to Reference documents, and then do any of the following: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+If you want to… Then… 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+6 Click OK. 
+Updating a 2D or 3D Section 
+Use this procedure to update a 2D or 3D section to reflect changes you have made to the building model or to section line properties. For 2D sections, you also update the section to show changes made to the 2D section style. You can update a 2D or 3D section if you have not exploded the section, which destroys the link between the section and the building model. 
+When you update a section, you can add or remove objects from the section, change the location of the section in the drawing, and change the display set of the section. 
+If you do not need to change the section definition in any way, you can skip the following procedure. Instead, select the section you want to update, and 
+click 2D Section/Elevation tab . Modify panel . Refresh
+ . 
+1 Select the section you want to update. 
+If you selected… then… 
+a 2D section object click 2D Section/Elevation tab . Modify panel . Regenerate
+
+ . 
+a 3D section object click 3D Section/Elevation tab . Modify panel . Regenerate
+
+ . 
+2 Select a result type: 
+If the section is… Then… 
+a 2D section object select 2D Section/Elevation Object with Hidden Line Removal. 
+a 3D section object select 3D Section/Elevation Object. 
+3 To change the style of a 2D section, select a new style for Style to Generate. 
+4 If you edited linework in the 2D section, select a style in which to save the changes you made that cannot be reapplied. Choose a style that will distinguish the unapplied changes in the section. 
+5 Under Selection Set, specify the objects that you want to include in the section: 
+If you want to… Then… 
+use the objects in the selection set proceed to the next step. you specified when you created the section or when you previously up­dated it 
+add new objects to the selection set click Select Additional Objects, se­that you specified when you created lect the new objects in the drawing, the original section and press ENTER. 
+select a new selection set of objects click Reselect Objects, select a new for the section selection set of objects for the sec­tion, and press ENTER. 
+NOTE If you select an object that you do not want to include in the section, hold down SHIFT, and select the object again to remove it from the selection set. 
+6 Under Display Set, select a display set for the section. 7 Under Placement, locate the section in the drawing: 
+If you want to… Then… 
+create a new section object without select New Object, and either click overwriting the original object
+
+ to specify an insertion point in 
+If you want to… Then… 
+the drawing area, or enter X, Y, and Z coordinates for the new section. 
+replace the original section with the select Replace Existing. updated section 
+8 Click OK. 
+Globally Updating 2D Sections 
+AutoCAD Architecture makes it possible for you to globally update all sections and elevations within a project or a specified folder. 
+Updating Sections and Elevations in a Project 
+AutoCAD Architecture includes the Drawing Management feature that allows users to combine their floor plans, section and elevation views, construction sheets, and reusable components in one building project. A project consists of a number of drawings linked together with a powerful external referencing mechanism. You can open a project and update all 2D sections and elevations included in that project in one comfortable workflow. For information on which project file types can be updated, see Supported Project Drawing Types on page 3260. 
+Updating Sections and Elevations in a Specific Folder 
+When you are working without a project, you can also globally update sections and elevations by specifying a folder and updating all sections and elevations in that folder. When you select a specific folder for updating, you can also include its subfolders in the update. 
+Section of a building project 
+
+For more information about building projects, see Drawing Management on page 289. 
+Supported Project Drawing Types 
+When you are updating a project, you can globally update all 2D sections and elevations within the views and sheets of the project. You cannot globally update elements and constructs, because these project drawings usually contain reusable elements and individual parts of the building project. They normally do not contain sections or elevations. 
+For more information about project drawing types, see Views on page 432 and Sheets on page 467. 
+NOTE When you globally update the sections and elevations in a project drawing, all model and paper space layouts are updated. 
+When you are updating a specified folder within a project, or a folder outside of a project, all sections and elevations in that folder are updated regardless of their type. For example, if you choose to update a specific folder within the Constructs category of a project, the sections and elevations in that folder will be updated, even though they are Construct drawings. If you do not specify a folder, but choose to update the whole project, these construct drawings are not updated. 
+Globally Updating 2D Sections and Elevations in a Project or a Folder 
+Use this procedure to globally update all 2D sections and elevations in a project or a specified folder. 
+NOTE To update all 2D sections and elevations in a project, the project must be defined as current. If no project is current, you receive an error message if you try to globally update 2D sections and elevations. For information on setting a project current, see Setting a Project Current on page 312. 
+1 Click Home tab . Section & Elevation panel .
+. Batch Refresh
+ . 
+
+2 Select if you want to update the 2D sections and elevations in the current project, or only the 2D sections and elevations in a specific folder. 
+If you want to... Then... 
+update the 2D sections and el-select Current Project. evations in the current project 
+update the 2D sections and el- select Folder. Then click the Browse  
+evations in a specific folder  button  , select the folder containing  
+the files you want to update, and click  
+OK.  
+
+3 If you have specified a folder, you can specify whether the subfolders of that folder should be updated as well. To update the subfolders, select Process subfolders. 
+NOTE When you are working with a large building project, updating all sections and elevations can be a time-consuming process. In this case, you might consider updating only a selected subfolder of your project and thereby improve system performance. 
+4 Click Begin. Globally updating all sections and elevations may take a while. A status window lets you know which drawing is currently being updated. 
+When you start the global update, the Stop button is available. If you want to interrupt the global update, click Stop. When the global update is finished, the Begin button is available. 
+Updating Legacy Drawings 
+During the global update of 2D sections and elevations, each drawing in the project or specified folder is opened, updated, and saved again. If you are updating drawings from an earlier version of the software, the drawings are converted to the current version. Before you convert the drawings, a warning message notifies you of the conversion. To update the drawings to the new version, click OK. To cancel the update of all sections and elevations, press CTRL+BREAK. 
+Update Exceptions 
+There are a number of cases in which a 2D section or elevation cannot be updated with the global update. 
+¦ 
+The drawing containing the 2D section or elevation is read-only. 
+
+¦ 
+The 2D section or elevation is placed on a locked layer. 
+
+¦ 
+There have been user edits to a 2D section or elevation that could not be reapplied to the 2D section or elevation. 
+
+
+When a 2D section or elevation cannot be updated, an error message is displayed in the status window. 
+To fix the problem, you can set the drawing to read/write instead of read-only, you can unlock the section layer, or you can undo a specific user edit to a 2D section or elevation. 
+2D Section Styles 
+A 2D section/elevation style is a group of properties assigned to a 2D section or to an elevation that determines the appearance and other characteristics of that object. 
+Using 2D Section Styles 
+A 2D section/elevation style controls the linework in a section, using design rules that determine how different parts of the section are displayed. You can apply the style to one or more sections to control their appearance. You can also change the display of individual lines in the section, and save the changes in a 2D section/elevation style. 
+Display Components and Design Rules 
+Display components determine the graphical characteristics, such as color and linetype, of linework assigned to each display component. Design rules determine how the linework in a section is assigned to display components. 
+When you create a design rule, you specify the part of the 2D section to control based on the color of those objects in the building model and their context in the section. You then select the display component to use for linework that meets the criteria you specified. You can assign the linework to a default display component or to a custom display component that you have added to the style. For example, you might define a rule that assigns all objects that 
+are color 150 in the model and that are located along the section line (the defining line) to a custom display component named Darker that you created in the style. Or you might hide a staircase behind a wall using a rule that assigns all blue linework to the Hidden display component. 
+Managing 2D Section Styles 
+To create, edit, copy, or purge styles, you access the Style Manager. The Style Manager provides a central location in AutoCAD Architecture where you can work with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+Materials and 2D Section Styles 
+You can use 2D section styles to specify which section components will have their display controlled by materials and which will not. Custom components cannot use materials. 
+Subdivisions in 2D Section Styles and Materials 
+When you are creating subdivisions in your style, you usually want the objects in them to be visually distinct from other subdivisions. When you assign materials to the objects, you can set the 2D section style so that it uses the hatch pattern from the material, but the color and linetype from the subdivision display properties. 
+Section subdivision surface hatching with color assignments 
+
+Creating a 2D Section Style 
+Use this procedure to create a 2D section style. You can create a style using default style properties or by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Expand Documentation Objects, and expand 2D Section/Elevation Styles. 
+NOTE Alternatively, select a 2D section in the drawing, and click 2D Section/Elevation tab . General panel . Edit Style drop-down . 2D 
+Section/Elevation Style
+ . 
+3 Create a 2D section style: 
+If you want to… Then… 
+create a style using default proper-right-click 2D Section/Elevation 
+ties Styles, and click New. Enter a name for the new 2D section style, and press ENTER. 
+create a style from an existing style right-click the 2D section style you want to copy, and click Copy. Right-click, and click Paste. Right-click the new style, and click Re­name. Enter a name and press ENTER. 
+4 Edit the 2D section style: 
+If you want to… Then… 
+add display components to the style see Adding a Display Component to a 2D Section Style on page 3266. 
+remove display components from see Removing a Display Component the style from a 2D Section Style on page 3267. 
+use the subdivision properties of the see Use Subdivision Properties and section for the display Materials in 2D Section Styles on page 3275. 
+If you want to… Then… 
+use the 3D Body component of the see Use the 3D Body Component material for the section linework of a Material for the 2D Section Linework on page 3275. 
+add design rules to the style see Adding a Design Rule to a 2D Section Style on page 3276. 
+change design rules in the style see Changing a Design Rule in a 2D Section Style on page 3278. 
+add classifications to a style see Adding Classifications to a 2D Section Style on page 3279. 
+change the display properties of the see Changing the Layer, Color, and display components in the style Linetype of a 2D Section Style on page 3279. 
+add notes, files, or documents to see Attaching Notes and Files to a the style 2D Section Style on page 3280. 
+5 Click OK. 
+Adding a Display Component to a 2D Section Style 
+Use this procedure to add a custom display component to a 2D section style. After you add a component, you assign linework in the section to the new component. To apply these style changes to existing 2D sections, you must update the section. 
+2D sections include the following default display components: Defining Line, Hidden, Erased, Unknown, and Subdivision. 
+1 Select a section that has the style you want to change, and click 2D Section/Elevation tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 2 Click the Components tab. 3 Click Add. 4 Enter a name and a description for the new component. 
+To enter a name, click Unnamed and enter a new name. To enter a description, click in the Description column next to the name, and enter a description. 
+5 Click the Display Properties tab. 6 Select the display representation in which to display the changes, and select Style Override. 
+7 If necessary, click 
+. 8 Click the Layer/Color/Linetype tab. 9 Specify the display properties of the new component. 
+10 Click OK twice. To create a design rule that uses the new display component, see Adding a Design Rule to a 2D Section Style on page 3276. To manually assign linework to the display component, see Editing Linework in a 2D Section on page 3253. 
+Removing a Display Component from a 2D Section Style 
+Use this procedure to remove a custom display component from a 2D section style. Removing a display component also removes any design rules that use the component. You cannot remove the default display components. 
+1 Select a section that has the style you want to change, and click 2D Section/Elevation tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 2 Click the Components tab. 3 Select the component that you want to remove, and click Remove. 
+If the component is used in a design rule, a dialog box is displayed, warning you that the associated design rule is removed as well. 
+4 Click OK. 5 Update the section to apply the style changes to the section. For more information, see Updating a 2D or 3D Section on page 3257. 
+About 2D and 3D Section Display Components and Materials 
+2D and 3D section object consist of a number of display components which can be determined by materials. 
+When you assign materials to an object, you assign one material to each display component of an object. For example, you assign a wood material to the frame of a window and a glass component to the glass of a window. 
+When you create a 2D or 3D section object from building objects, the material assignments of the source objects are applied to the section. You do not assign a material directly to a 2D/3D section. The section takes its material assignments from the objects that are sectioned. For example if you create a section through a wall with a window, the section hatch you have defined in the glass, wood, and brick materials of the wall and the window are displayed in the section. 
+
+If you do not want to use the material display properties, but instead use those of the 2D or 3D section object, or the 2D section style, you can deactivate the material assignments in the display properties of the section or the section style. 
+Material Component Assignments 
+Material definitions consist of display components which correspond to component types of objects. For example, the Linework component of a material is used for all linework of objects in Plan view. The Surface Hatch component of a material is used to hatch all object surfaces in 3D model views and elevations. 
+For a complete list of material components and their description, see Material Components and Display Properties on page 884. 
+The following table lists all section components plus information about the material components that determine them. 
+NOTE Keep in mind that materials are not assigned directly to 2D section objects, but that the assignment of materials happens indirectly via the sectioned objects. For example, if a brick material has a surface hatch component with a red brick pattern, this surface hatch determines the display of the surface hatch in a brick wall. When you create a 2D section from that wall, the resulting section object will inherit the red brick pattern from the wall. When you change the material of the wall from brick to concrete, and then update the 2D section, it will now display with a grey concrete pattern. 
+2D Section Component Material Component 
+Defining Line 2D Section/Elevation Linework or 3D Body. For information on switching between these material components, see Use the 3D Body Component of a Material for the 2D Section Linework on page 3275. 
+Outer Shrinkwrap No Material 
+Inner Shrinkwrap No Material 
+Shrinkwrap Hatch No Material 
+Surface Hatch Linework Surface Hatch 
+Section Hatch Linework Section Hatch 
+Hidden No Material 
+Erased No Material 
+2D Section Component Material Component 
+Subdivision 1-10 2D Section/Elevation Linework or 3D Body. For information on switching between these material components, see Use the 3D Body Component of a Material for the 2D Section Linework on page 3275. 
+Defining Line 
+The defining line determines where the section cuts the objects it contains. The material component which controls the display of the Defining Line is the Linework component. The defining line is a display component of both 2D and 3D section objects. 
+For example, if you cut a brick wall that contains a window, you can specify one uniform color for the defining line, or use different colors where the section line cuts the wall and where it cuts the window. If you want to use a uniform color for the Defining Line component, assign a color to it and do not use the properties of the material. If you want the color of the defining line to be influenced by the objects in the section, use the material properties. In the case of a section through a brick wall with a window, you might use a red defining line where the wall is cut and a blue defining line where the window is cut. 
+Specifying cut line colors for different materials 
+
+Shrinkwrap 
+The shrinkwrap displays the union of all object faces cut by the section line. The Outer Shrinkwrap component represents the outline of solid, filled components, such as a wall shrinkwrap. The Inner Shrinkwrap component represents the outline of holes which have been cut, such as a space. These components are specific to 2D sections. 
+You can exclude individual objects from contributing to the shrinkwrap. For example, you might do this for glass components in windows. For information on excluding objects from the 2D shrinkwrap, see Excluding a Material Definition from 2D Section Shrinkwrap on page 914. 
+2D section with red outer shrinkwrap 
+
+Window glass excluded from shrinkwrap 
+
+The Outer and Inner Shrinkwrap components cannot be defined by a material component. 
+Shrinkwrap Hatch 
+The Shrinkwrap Hatch component hatches the union of all object faces cut by a section line. The Shrinkwrap Hatch is defined by either an outer or an inner shrinkwrap line component. This component is specific to 2D sections. 
+Shrinkwrap Hatch with glass excluded from shrinkwrap detail 
+
+The Shrinkwrap Hatch component cannot be defined by a material component. 
+NOTE The Shrinkwrap Hatch and Section Hatch components overlap each other. This could result in two different hatches in the same location. To avoid a conflict, either assign a solid hatch for Shrinkwrap Hatch, or do not use the Shrinkwrap and Section Hatch components simultaneously. 
+Surface Hatch Linework 
+The Surface Hatch Linework component draws all linework coming from surface hatches of the objects cut. Surface hatches appear in faces of the section object that are not cut by the section line. This component is specific to 2D sections. 
+NOTE Surface hatches that you have assigned to objects will display in a 3D section object. However, you cannot set them separately in a 3D section; you can do that only in a 2D section object. 
+The surface hatch linework component is controlled by the surface hatch component of the material. For information about the surface hatch component of the material, see Surface Hatch Material Component on page 886. 
+2D section with roof surface hatch 
+
+Section Hatch Linework 
+The Section Hatch Linework component draws all linework coming from section hatches. Section hatches appear on all faces that are cut by the section line. A section hatch is similar to a shrinkwrap hatch. The difference is that in a section hatch the sectioned faces are not merged into one shrinkwrap component. Use either a section hatch or a shrinkwrap hatch on a 2D section. For information on shrinkwrap hatches see Shrinkwrap Hatch on page 3271. 
+The Section Hatch Linework display component is specific to 2D section. 
+Section hatches on walls, roof and door 
+
+The Section Hatch Linework component is controlled by the Section Hatch component of the material. For information about the Section Hatch component of the material, see Creating a Hidden Line Projection on page 3347. 
+Hidden Component 
+The Hidden component contains all linework that is hidden in the 2D projection because other components are in front of it. By default, this component is turned off. You can use design rules to achieve special effects, such as a see-through effect, using the Hidden component. The Hidden component is specific to 2D sections. 
+The Hidden component cannot be defined by a material component. You can only set it in the display properties of the 2D section. For information on setting the display properties of a 2D section, see Creating a Hidden Line Projection on page 3347. 
+Erased Component 
+The Erased component contains linework in the section object that you do not want to see. For example, if you have a section of a multi-story building in which you want to hide the lines between each floor, you can edit the linework of the section and assign the floor lines to the Erased component. Since the Erased component is turned off by default, the floor lines do not display. For information on linework editing of a section, see Editing Linework in a 2D Section on page 3253. 
+The Erased component is specific to 2D sections. 
+The Erased component cannot be defined by a material component. 
+Subdivision Components 
+The subdivision components partition a section object. They are useful to create perspective effects, where parts closer to the viewer are drawn with darker, stronger lines and parts which are farther from the user are drawn with lighter, thinner lines. Subdivisions can have no individual material assignments. However the display properties of the subdivisions can be used for the surface hatching of the subdivisions by selecting “Use Subdivision Properties for Surface Hatching” in the Other tab of the 2D section display properties. For information on using the subdivision display properties to display the section divisions, see Use Subdivision Properties and Materials in 2D Section Styles on page 3275. 
+Subdivisions are a display component of both 2D and 3D section objects. 
+The subdivision components are either controlled by the 2D Section/Elevation Linework component of the material or by the 3D Body component of a material. For information how to switch between these component assignments, see Use the 3D Body Component of a Material for the 2D Section Linework on page 3275. 
+Use Subdivision Properties and Materials in 2D Section Styles 
+Use this procedure to use the display properties of materials together with the display properties of section subdivisions. 
+1 Select a section that has the style you want to change, and click 2D Section/Elevation tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 2 Click the Display Properties tab. 3 Select the display representation in which to display the changes, 
+and select Style Override. 
+4 If necessary, click 
+. 5 Click the Layer/Color/Linetype tab. 6 To set a subdivision to use the surface hatch of the material, while 
+using the layer, color, and linetype display properties of the subdivision, perform the following steps: 
+¦ 
+Clear By Material. 
+
+¦ 
+Specify the layer, color and linetype settings of the subdivision as desired. For example, the first subdivision could have a darker color and stronger linetype the second subdivision. 
+
+
+7 Click the Other tab. 8 Select Use Subdivision properties for surface hatching. 9 Click OK twice. 
+For more information, see Updating a 2D or 3D Section on page 3257. 
+Use the 3D Body Component of a Material for the 2D Section Linework 
+Use this procedure to use the 3D Body component of a material for the linework in a 2D section. 
+1 Select a section that has the style you want to change, and click 2D Section/Elevation tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 2 Click the Display Properties tab. 
+3 Select the display representation in which to display the changes, and select Style Override. 
+4 If necessary, click 
+. 5 Click the Other tab. 6 Determine if the 3D body component of the selected material 
+should control the display of the linework in the 2D section: 
+If you want to… Then… 
+control the display of the 2D sec-select Use 3D Body display compon­tion linework by the 3D Body com-ent for By Material linework. ponent of the material, 
+control the display of the 2D sec-clear Use 3D Body display compon­tion linework by the 2D Section/El-ent for By Material linework. This is evation Linework component of the the default behavior. material, 
+7 Click OK twice. For more information, see Updating a 2D or 3D Section on page 3257. 
+Adding a Design Rule to a 2D Section Style 
+Use this procedure to add a design rule to a 2D section style. A design rule has four fields of information that identify lines in the section and determine how to display them: 
+Field Description 
+Color Identifies the color of the objects in the building model represented by lines in the section. 
+Context Identifies the context of the lines in the 2D section, such as on the defining line (the cutting plane) or in a graphic subdivision. 
+Component Identifies the display component to which the lines are assigned. 
+Description Contains a description of the design rule. 
+For example, a design rule has the color 50, a context of Within Subdivision 2, and a component of New. This rule assigns any lines in the section representing objects that have the color 50 in the building model and that are within subdivision 2 in the section to the user-defined display component, New. 
+You can also specify that all hidden linework that is not handled by a specific design rule will be assigned to the Hidden display component. You could use this option if you want to generate a section of an object or a set of objects and see all edges, for example, if you are creating foundations and formwork. 
+NOTE Alternatively, you can define which hidden linework should be displayed by object material. For more information, see Controlling the Display of Hidden Lines by Material on page 915. 
+1 Select a section that has the style you want to change, and click 
+2D Section/Elevation tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 2 Click the Design Rules tab, and click Add. 
+A new design rule is created with default color, context, and 
+component values. 
+3 Specify settings for the new design rule: 
+If you want to… Then… 
+specify the color of objects in the click the default color, select a new building model that are affected by color, and click OK. this rule 
+specify the context in which the click the default context, and select linework for the objects appears in a new context. the section 
+select the display component for click the default component, and the linework select a new component. 
+enter a description of the rule click the Description field, enter a description, and press ENTER. 
+4 To place all hidden linework on the Hidden display component, select Keep all hidden linework. 
+5 Click OK. 
+6 Update the section to apply the style changes to the section. For more information, see Updating a 2D or 3D Section on page 3257. 
+Changing a Design Rule in a 2D Section Style 
+Use this procedure to change the settings in the fields that define a design rule. 
+1 Select a section that has the style you want to change, and click 2D Section/Elevation tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 2 Click the Design Rules tab. 3 Specify settings for the design rule you want to change: 
+If you want to… Then… 
+specify the color of objects in the click the current color, select a new building model that are affected by color, and click OK. this rule 
+specify the context in which the click the current context, and select linework for the objects appears in a new context. the section 
+select the display component for click the current component, and the linework select a new component. 
+edit the description of the rule click the description, edit the de­scription, and press ENTER. 
+4 Click OK. 
+5 Update the section to apply the style changes to the section. For more information, see Updating a 2D or 3D Section on page 3257. 
+Removing a Design Rule from a 2D Section Style 
+Use this procedure to remove a design rule from a 2D section style. 
+1 Select a section that has the style you want to change, and click 2D Section/Elevation tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 
+2 Click the Design Rules tab. 
+3 Select the rule that you want to remove, and click Remove. 
+4 Click OK. 
+5 Update the section to apply the style changes to the section. 
+For more information, see Updating a 2D or 3D Section on page 3257. 
+Adding Classifications to a 2D Section Style 
+Use this procedure to specify classifications for any classification definition applied to a 2D section style. 
+For more information about creating and applying classification definitions, see Classification Definitions on page 3834. 
+1 Select a section that has the style you want to change, and click 2D Section/Elevation tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 
+2 Click the Classifications tab. By default, the classification for all classification definitions is Unspecified. If no classification definitions are listed, none are applied to 2D section styles. 
+3 For each classification definition, select the classification you want to apply to the current 2D section style. 
+4 Click OK twice. 
+Changing the Layer, Color, and Linetype of a 2D Section Style 
+Use this procedure to change the following display properties of a 2D section style: 
+¦ 
+Visibility (component is on or off) 
+
+¦ 
+Display properties by materials 
+
+¦ 
+Layer 
+
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+NOTE The custom display components in the display properties are identical to those listed on the Components tab of the 2D Section/Elevation Styles dialog box. For more information about custom display components, see Adding a Display Component to a 2D Section Style on page 3266. 
+1 Select a section that has the style you want to change, and click 2D Section/Elevation tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 
+2 Click the Display Properties tab. 
+3 Select the display representation in which to display the changes, 
+and select Style Override. 
+4 If necessary, click 
+. 5 Click the Layer/Color/Linetype tab. 6 Select the component to change, and select a different setting for 
+the property. 
+7 Select By Material for any component that you want to use the display properties of the materials assigned to the sectioned objects. 
+NOTE Not all display components of a 2D section have an associated material definition. For example, Hidden and Erased cannot be set by material. For a list of all display components and their associated material components, see About 2D and 3D Section Display Components and Materials on page 3268. 
+8 Click OK twice. 
+Attaching Notes and Files to a 2D Section Style 
+Use this procedure to enter notes and attach reference files to a 2D section style. You can also edit reference files attached to the style. 
+1 Select a section that has the style you want to change, and click 2D Section/Elevation tab . General panel . Edit Style 
+drop-down . Edit Style
+ . 
+2 Click the General tab. 
+3 To add a description to the 2D section, enter the description under 
+Description. 
+4 Click Notes. 
+5 To add or edit a note, click the Notes tab, and enter the note. 
+6 To attach, edit, or detach a reference file, click the Reference Docs 
+tab: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Edit file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. Click OK when you are done editing. 
+detach a reference file select the file name, click Delete, and click OK. 
+7 Click OK twice. 
+Elevations 
+41 
+You can create elevations of the building models in your drawings by first drawing an elevation line and mark, and then creating a 2D or 3D elevation based on that line. You can control the size and shape of any elevation that you create, and you can update an existing elevation when the objects included in the elevation are modified. 2D elevations are created with hidden and overlapping lines removed. You can control the appearance of 2D elevations by applying rules that are controlled by the style and display properties of the 2D elevation. 
+Working With Elevations 
+You can create elevations of the building models in your drawings by first drawing an elevation line and mark, and then creating a 2D or 3D elevation based on that line. You can control the size and shape of any elevation that you create, and you can update an existing elevation when the objects included in the elevation are modified. 2D elevations are created with hidden and overlapping lines removed. You can control the appearance of 2D elevations by applying rules that are controlled by the style and display properties of the 2D elevation. 
+Elevation Line and Marks 
+The elevation line defines the extents of the elevation view of your building model. Elevation lines can be straight or jogged. You can also specify the length and the height of the area defined by the elevation line. Elevation marks, which typically contain a letter or number and indicate the direction of the elevation, appear at each end of the elevation line. 
+After you draw the elevation line, you create an elevation object from the line. 
+Viewing the elevation line and mark 
+
+2D Elevations 
+2D elevations are created by drawing an elevation line in front of a number of objects and then creating a 2D elevation object from them. The elevation object is drawn without hidden and overlapping lines. You can edit a 2D elevation by changing its object display properties or its style display properties. The 2D elevation style lets you add display components to the display representation of the elevation and create rules that assign different parts of the elevation to different display components. You can control the visibility, layer, color, linetype, lineweight, and linetype scale of each component. You can also assign a material, such as a brick or concrete hatch, to individual components of the object or the style. Furthermore, you can use linework editing commands to assign individual lines in a 2D elevation to different display components, and merge geometry into a 2D elevation. You can dimension 2D elevations. 
+2D building elevation 
+
+3D Elevations 
+3D elevations are created by drawing an elevation line in front of a number of objects and then creating a 3D isometric elevation object from them. 3D elevations do not use styles. However, you can control the display of subdivisions within 3D elevations. Using the Hidden Line Projection command, you can create 2D hidden line projections of any view of the 3D elevation that you can explode and edit or hatch. For more information about using this command, see Creating a Hidden Line Projection on page 3347. 
+3D elevation in 3D view 
+
+Elevation Subdivisions 
+A 2D or 3D elevation object can have a number of subdivisions partitioning the elevation object. This feature is useful when you want to create a perspective view of the object, in which the parts that are closer to the viewer are drawn with darker and stronger lines, and parts that are farther off are drawn lighter. 
+3D elevation with subdivisions in perspective view 
+
+Live Section View 
+A live section view is a special view of a 3D section where the objects that are sectioned are not converted to a 3D section object, but remain in the drawing as objects. The parts of the objects within the bounding box of the section line keep their individual display components while the parts of the objects outside of the section line can be displayed or hidden. To control the appearance of the object parts outside of the section line, you need to assign a material to the sectioned objects. 
+When you render a live section, you can show the outside part as a half-transparent addition, for example. 
+You can use the live section view in an elevation in order to clip out just the region you need momentarily and to focus on that specific area. This can accelerate performance and make working with the building model easier. 
+For information on creating live section views, see Creating a Live Section View on page 3238. 
+Rendered live section view with transparent body component 
+
+Materials in Elevations 
+In AutoCAD Architecture, you can assign materials to different components of an object. These materials are displayed when you create a 2D or 3D elevation object. You can specify whether to use the display properties of the materials or the display properties of the elevation object. 
+2D elevation with different surface hatches 
+
+AutoCAD Architecture provides a large number of predefined materials for all common design purposes. You can use these predefined materials or modify them to your special designs. You can also create your own materials. For more information, see About 2D and 3D Elevation Display Components and Materials on page 3336. 
+Subdivisions in 2D Elevation Styles and Materials 
+When you are creating subdivisions in your style, you usually want the objects in them to be visually distinct from other subdivisions. When you have assigned materials to the objects, you can set the 2D elevation style so that it uses the hatch pattern from the material, but uses the color and linetype from the subdivision display properties. 
+Elevation subdivisions with assigned surface hatching 
+
+For more information see Use Subdivision Properties and Materials in 2D Elevation Styles on page 3340. 
+Material Boundaries in 2D Elevations 
+Material boundaries allow you to erase or limit portions of a 2D elevation: 
+¦ 
+Limit the amount of hatching to produce cleaner construction documents. 
+
+¦ 
+Highlight a region in an elevation. 
+
+¦ 
+Mask out a portion of an elevation so that more detail can be drawn. 
+
+
+
+
+¦ Crop an irregular-shaped portion of an elevation. 
+
+For more information, see Creating a Material Boundary in a 2D Elevation on page 3318. 
+Workflow to Create a 2D or 3D Elevation 
+
+The elevation line on page 3293 defines the extents of the elevation (its width, height, and length) to extract from the building model. 
+
+Select the elevation line and the objects to be include, and generate on page 3304 an elevation. 
+
+You can edit on page 3308 the elevation line, edit linework, or edit objects to refine the appearance of the elevation. 
+
+Update on page 3326 elevations to apply the changes you made to the elevation line, elevation object, or the building model. You can also globally on page 3328 update all elevations within a project or a specified folder all at once. 
+Drawing and Editing Elevation Lines 
+The first step in creating elevations is to draw an elevation line relative to your building model. The elevation line defines the extents of the elevation view of the building model. 
+NOTE You can create vertical elevations and horizontal elevations. 
+Creating an Elevation Object from an Elevation Line 
+When you generate an elevation from an elevation line, you specify the type of elevation object that is created. 
+When you create… The result is… 
+a 2D elevation object an orthographic projection from the building model. 
+a 3D elevation object the area of the building model defined in the elevation line. 
+Viewing the Elevation Line 
+In plan view, the elevation line is displayed as you would expect on a construction document. 
+Creating an Elevation 
+
+In an isometric view, the same elevation line is displayed with a boundary that defines the depth of elevation view. 
+Drawing an elevation line in 3D view 
+
+Resulting elevation line in 3D view 
+
+Changing the Elevation Line 
+You can change the elevation line to control the elevation that you create. Using the elevation line’s grips, you can change the height and shape of the elevation. You can also add a lower extension to the elevation and create elevation subdivisions. 
+You can change elevation line properties before you create an elevation. You can also change elevation line properties and update an elevation that you have already created. For more information about updating existing elevations, see Updating a 2D or 3D Elevation on page 3326. 
+Using Subdivisions in Elevations 
+You can set up graphic subdivisions in elevation line properties. These subdivisions are then added to the 2D or 3D elevation you create. Subdivisions are specified at distances from the elevation line. You can control the lineweight and other display properties of subdivisions to add levels of depth to elevations. For example, you can display one subdivision with a heavy lineweight and another subdivision with a lighter lineweight to suggest that the first subdivision is in front of the second subdivision. 
+Drawing an Elevation Line and Mark 
+Use this procedure to draw an elevation line with an elevation mark at each end. You draw an elevation line by specifying a start point and an endpoint for the line in relation to your building model. 
+NOTE If you are working with a drawing set in which several xrefs are linked to a main drawing, draw your elevation line in the main drawing. 
+TIP You can also create elevations with Callout tools. For more information, see Placing Elevation Callouts on page 3679. 
+1 Click Home tab . Section & Elevation panel . Elevation Line . 
+2 Specify the elevation line start point. 
+
+NOTE Specify the start point and endpoint for the elevation line so that it extends past the face or segment of your building model view, thus ensuring that all objects are included in the elevation view. 
+3 Specify the elevation line endpoint. The elevation line is displayed in your drawing with an elevation mark. The elevation line boundary is drawn using the elevation line as its left side and forming a box with the elevation line. This is the area that defines the elevation. 
+Drawing an elevation line in 3D view 
+
+Drawing an elevation line in 3D view 
+
+Depending on the direction in which you drew the elevation line, the elevation mark points in the direction of the elevation view. 
+The elevation mark is a multi-view block, anchored to the elevation line. You can edit the elevation mark to change the information that is displayed in 
+the bubble. For more information, see Changing Elevation Mark Attributes on page 3301. 
+Once you have an elevation line in your drawing, you can change the properties of the line to change the elevation. 
+Changing the Height of an Elevation Using Grips 
+Use this procedure to change the height of any elevation connected to the elevation line. You can change the height of the elevation line before or after you create a connected elevation. If you change the height after creating the elevation, you need to update the elevation to show the changes. 
+You can also change the height of an elevation using the Properties palette. 
+1 On the floating View panel, click View drop-down . SW isometric
+
+ . 
+2 Select the elevation line you want to change. 
+3 Select the Model Extents grip to turn off model extents mode. 
+If you use model extents for height, the height of the elevation is determined by the height of the objects in the elevation and is not available to modify dynamically. 
+4 Select the Height grip. 
+Viewing Elevation Grips in 3D View 
+
+5 Move the grip until the height value you want is displayed, and then click once, or enter a value. 
+The objects are cut at this height when you create or update an 
+elevation. 
+6 Right-click, and click Deselect All to turn off grips. 
+To update an elevation created from this elevation line, see Updating a 2D or 3D Elevation on page 3326. 
+Changing the Lower Extension of an Elevation Using Grips 
+Use this procedure to change the lower extension of any elevation connected to the elevation line. You can change the lower extension of the elevation line before or after you create a connected elevation. If you change the lower extension after creating the elevation, you need to update the elevation to show the changes. 
+You can also change the lower extension of an elevation using the Properties palette. 
+1 On the floating View panel, click View drop-down . SW isometric
+
+ . 
+2 Select the elevation line you want to change. 
+3 Select the Model Extents grip to turn off model extents for height 
+mode. If you use model extents, the default for the lower elevation is 1 foot below the XY plane. 
+4 Select the Lower Extension grip. 
+Viewing Elevation Grips in 3D View 
+
+5 Move the grip until the lower extension value you want is displayed, and click once; or enter a value. 
+6 Right-click, and click Deselect All to turn off grips. 
+To update an elevation created from this elevation line, see Updating a 2D or 3D Elevation on page 3326. 
+Changing the Length of an Elevation Using Grips 
+Use this procedure to change the length of any elevation boundary connected to the elevation line. You can change the length of the elevation as a whole, or you can change the length of the sides of the elevation boundary individually. 
+You can change the length of the elevation boundary before or after you create a connected elevation. If you change the length after creating the elevation, you need to update the elevation to show the changes. 
+You can also define the depth of an elevation (its length) by changing the length of the sides of an elevation boundary on the Properties palette. 
+1 Select the elevation line you want to change. 2 Select the Length grip. 
+View Elevation Grips in Plan View 
+
+3 Move the grip until the length value you want is displayed, and click once. The entire elevation boundary length is updated. 
+4 To change the length of side 1 of the elevation boundary, click the Side 1 Endpoint grip. Side 1 starts from the first point specified for the elevation line. 
+5 Move the grip to the desired location, and click once; or enter a value on the command line, and press ENTER. 
+6 To change the length of side 2 of the elevation boundary, click the Side 2 Endpoint grip. Side 2 starts from the endpoint of the elevation line. 
+7 Move the grip to the desired location, and click once; or enter a value on the command line, and press ENTER. 
+8 Right-click, and click Deselect All to turn off grips. 
+To update an elevation created from this elevation line, see Updating a 2D or 3D Elevation on page 3326. 
+Changing the Angle Dimensions of an Elevation 
+Use this procedure to change the angle of the sides of the building elevation boundary. You can change the angle dimensions before or after you create a connected elevation. If you change the angles after creating the elevation, you need to update the elevation to show the changes. 
+1 Double-click the elevation line you want to change. 
+2 On the Properties palette, expand Basic, and expand Component Dimensions. 
+3 Specify values for Angle 1 and Angle 2. These values define the angles of the two sides from the elevation line to create the elevation box. The apex of Angle 1 is the start point of the elevation line. The apex of Angle 2 is the endpoint of the elevation line. Values for these angles must be between 0 and 90 degrees. 
+Specifying section angle parameters 
+
+4 Right-click, and click Deselect All to turn off grips. 
+To update an elevation created from this elevation line, see Updating a 2D or 3D Elevation on page 3326. 
+Creating Graphic Subdivisions for 2D and 3D Elevations 
+Use this procedure to define subdivisions that are created within the elevation when you generate it. Each subdivision is specified as a distance from elevation line. 
+You can view the location of a subdivision by viewing the elevation line with its boundary in an isometric view. In this view, you can use grips to relocate a subdivision. 
+An elevation line with graphic subdivisions 
+
+You can control the lineweight and other display properties of the subdivisions to add different levels of depth to elevation. 
+1 Double-click the elevation line you want to change. 2 On the Properties palette, expand Basic, and expand Dimensions. 3 Click the setting for Subdivisions, and then add or modify 
+subdivisions: 
+If you want to… Then… 
+create a subdivision 
+click 
+ . To change the default distance from the elevation line, select the subdivision, click the value, and enter a new value. 
+change the length of a subdivision select the subdivision, click its value, and enter a new value. 
+delete a subdivision 
+select the subdivision, and click . 
+
+4 Click OK. 
+
+Changing Elevation Mark Attributes 
+Use this procedure to change the information displayed in the elevation mark. The elevation mark is a multi-view block. 
+1 Double-click the elevation mark you want to change. 2 On the Properties palette, expand Advanced. 3 Click Attributes. 4 Select the existing attribute under Value, and enter the new 
+information to include in the bubble. 5 Click OK. 
+Changing the Location of an Elevation Line 
+Use this procedure to relocate an elevation line by changing the coordinate values of its insertion point. The elevation line also has an orientation with respect to the WCS or the current UCS. For example, if the top and bottom of the elevation line are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the elevation line by aligning its normal with another axis. You can also rotate the elevation line on its plane by changing the rotation angle. 
+For information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use World and User Coordinate Systems in 3D” in AutoCAD Help. 
+TIP The quickest way to locate and view an AutoCAD topic referenced in AutoCAD Architecture Help is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+1 Double-click the elevation line you want to relocate. 2 On the Properties palette, expand Basic, and expand Location. 3 Click Additional Information. 4 Specify the location of the elevation line: 
+If you want to… Then… 
+relocate the elevation line enter new coordinate values under Insertion Point. 
+If you want to… Then… 
+locate the elevation line on the XY make the normal of the elevation 
+plane line parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the elevation line on the YZ make the normal of the elevation 
+plane line parallel to the X axis: under Normal, enter 1 for X, and enter 0 for Y and Z. 
+locate the elevation line on the XZ make the normal of the elevation 
+plane line parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the elevation enter a new value for Rotation line Angle. 
+5 Click OK. 
+To update an existing elevation created from this elevation line, see Updating a 2D or 3D Elevation on page 3326. 
+Modifying an Elevation Line Using Grips 
+Use this procedure to change the start point, end point, or edge of an elevation line. You can drag the grip to the desired location, or you can enter a specific value for the measurement. 
+1 Select the elevation line you want to change. 
+2 Select an elevation line grip and move it to the desired location. You can also move the grip in the desired direction and enter a specific value on the command line. 
+View Elevation Grips in Plan View 
+
+3 Right-click, and click Deselect All to turn off grips. 
+Attaching Hyperlinks, Notes and Files to an Elevation Line 
+Use this procedure to add hyperlinks, enter notes and attach reference files to an elevation line. You can also edit notes and edit or detach reference files from an elevation line. 
+1 Double-click the elevation line you want to attach notes or files to. 
+2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. For more information, see “Add Hyperlinks to a Drawing” in AutoCAD Help. 
+4 To add a note, click 
+next to Notes, enter text, and click OK. 
+5 Click 
+next to Reference documents, and then attach, detach, or edit a reference file: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+If you want to… Then… 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+6 Click OK. 
+Creating a 2D or 3D Elevation 
+Use this procedure to create a 2D or 3D elevation. After you draw an elevation line, you extract an elevation from the elevation line and the objects you select in the building model. 
+When you create a 2D elevation, the object that is created is a 2D Section/Elevation object. Both 2D sections and elevations share the same object type and style. 
+TIP Before you create an elevation, thaw and turn on all layers of objects in the building model that you want to include in the elevation. Objects on layers that are off or frozen cannot be part of the selection set for the elevation. To speed performance, turn off the layers of the objects that you do not need to include in the elevation. 
+1 Draw an elevation line in the drawing. For more information, see Drawing an Elevation Line and Mark on page 3293. 
+2 Select the elevation line. 
+3 Click Building Elevation Line tab . Modify panel . Generate Elevation
+ . 4 Select the type of elevation object you want to create: 
+If you want to create… Then… 
+a 2D elevation select 2D Section/Elevation Object with Hidden Line Removal. 
+a 3D elevation select 3D Section/Elevation Object. 
+5 For Style to Generate, select a style for a 2D elevation. If you want to use a particular style, select it from Style to Generate. Otherwise, use the Standard style. For more information, see 2D Elevation Styles on page 3331. 
+3D elevations do not use styles. 
+6 Under Selection Set, click 
+(Select Objects), select the objects that you want to include in the elevation, and press ENTER. 
+NOTE If you select an object that you do not want to include in the elevation, press and hold SHIFT and select the object again to remove it from the selection set. 
+7 Under Display Set, select a display set for the elevation object. The display set controls the representation of the elevation. 
+8 Under Placement, select New Object, and specify where to place the elevation: 
+If you want to… Then… 
+specify a location graphically click 
+(Pick Point), and specify the location for the new elevation object in the drawing. 
+specify the coordinates of the inser-enter X, Y, and Z coordinates for tion point for the elevation the location of the new elevation object. 
+9 Click OK. A 2D or 3D elevation is created from the elevation line properties and the selected objects in the building model. The elevation is linked to the building model. If you make changes to the building model after you create the elevation, you can update the elevation to reflect the changes. For more information, see Updating a 2D or 3D Elevation on page 3326. 
+You can edit certain characteristics of the elevation to control its placement and appearance. For more information, see Editing a 2D or 3D Elevation on page 3308. 
+You can also use a 2D section/elevation style to control the display of selected objects in a 2D elevation, and you can control the display of individual lines in a 2D elevation. For more information, see 2D Elevation Styles on page 3331 and Editing and Merging Linework in a 2D Elevation on page 3323. 
+Creating a Horizontal 2D Elevation 
+Use this procedure to create a horizontal section or elevation of a plan view. 
+The Hidden Line control available in AutoCAD Architecture makes it possible to create horizontal sections and elevations of Plan views. With a horizontal section or elevation, you can look “down” on the model. Previously, users could achieve that effect only by manually changing the UCS. Now, a tool enables you to create a horizontal section or elevation. This feature could be useful for creating a detailed display of sill components in tapered walls. 
+The illustration below displays a horizontal section line for an irregularly shaped building. 
+Horizontal elevation line 
+
+The illustration below displays the view results. Note the sill displays of the tapered walls and the correct representation of the sloped curtain walls. 
+
+1 Click Home tab . Section & Elevation panel . Horizontal Section . 
+
+NOTE Alternatively, on the default tool palette set, click the Design tab, and then click the Horizontal Section tool. If necessary, scroll the palette to display the tool that you need. 
+2 Specify the first point of the elevation plane. 3 Specify the second corner of the elevation plane. 4 Specify the elevation of the plane, and press ENTER. 5 Specify the depth of the elevation, and press ENTER. 6 Proceed with creating the elevation, as described in Creating a 
+2D or 3D Elevation on page 3304. 
+Editing a 2D or 3D Elevation 
+After you create an elevation, you can edit the elevation line and the elevation object to refine the appearance of the elevation in any of the following ways: 
+¦ 
+Edit the elevation line to add, remove, or modify graphic subdivisions. 
+
+¦ 
+Display a different area of the building model by reversing the elevation. 
+
+¦ 
+Place the elevation in a different location in the drawing. 
+
+¦ 
+Add notes or reference files to the elevation. 
+
+¦ 
+Select a different style for 2D elevations. An elevation style determines how the linework in a 2D elevation is displayed. 
+
+¦ 
+Edit a 2D elevation object to change the display properties of selected linework or to add linework and details that are not part of the building model. 
+
+
+In addition, you can continue to modify the building model, updating the elevation later to incorporate the changes. 
+For information about switching from a view other than an elevation to a temporary elevation view to edit objects, see Editing Objects in a Temporary Elevation View on page 1123. 
+Using Grips to Edit Linework in a 2D Elevation 
+Use this procedure to edit linework in a 2D elevation. You can assign selected linework to fixed display components that determine the display of every elevation that you generate, or you can assign linework to display components that you have defined. After you assign linework to display components, you can change the display properties (visibility, color, layer, lineweight, linetype, and linetype scale) to change the display of lines. 
+For information about adding custom display components, see Adding a Display Component to a 2D Elevation Style on page 3335. 
+1 Select the elevation. 
+2 Select the Edit Linework grip. 
+
+The Edit In Place tab opens. 
+3 Click Edit In Place tab . Profile panel . Zoom To
+ to zoom to the elevation. 
+4 Select the linework to edit. 
+5 Click Edit In Place tab . Profile panel . Modify Component . 
+
+6 Select the component you want to put the lines on. For example, if you want to make the lines invisible, select Erased Vectors for Linework Component. 
+
+You can also click 
+(Match existing linework), and select linework in the elevation whose display component you want to match. 
+7 Click OK. 
+8 To finish the linework editing process, click Edit In Place tab . Edits panel . Finish
+ to save all changes, or click Edit In Place tab . Edits panel . Cancel
+ to discard them and exit the edit-in-place session. 
+Changing the Display of Graphic Subdivisions in a 2D Elevation 
+Use this procedure to change the display of subdivisions in a 2D elevation by changing its display properties. 
+You create subdivisions by adding them to the elevation line. You can then change their length using grips or by editing the values in the elevation line properties. For more information, see Creating Graphic Subdivisions for 2D and 3D Elevations on page 3299. 
+Each subdivision in a 2D elevation is assigned to a numbered subdivision display component in the display properties of the elevation or the 2D elevation style. You can control the visibility, layer, color, linetype, lineweight, and linetype scale of each subdivision by changing the display properties of each component. You can apply these changes to the selected elevation, to the current 2D section/elevation style, or to all 2D sections and elevations in the drawing that do not have a style override. 
+You can use the display properties of a subdivision together with the display properties of a material. For more information, see Use Subdivision Properties and Materials in 2D Elevation Styles on page 3340. 
+1 Select the 2D elevation in the drawing, right-click, and click Edit Object Display. 
+2 Click the Display Properties tab. 
+3 Select the property source to edit: 
+If you want to edit graphic Then… subdivisions… 
+for all 2D sections and elevations in select Drawing Default. the current drawing (except those that have a 2D Section/Elevation Style override) 
+for all 2D sections and elevations select 2D Section/Elevation Style, that use the current style and click Object Override. 
+for the selected 2D elevation Select 2D Section/Elevation, and click Object Override. 
+4 If necessary, click 
+. 
+5 Click the Layer/Color/Linetype tab to list all the components that contribute to the display of the object. 
+

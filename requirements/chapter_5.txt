@@ -1,0 +1,616 @@
+[MIGRATED TO RTM_PART_26.md - LANDXML & INTEROP]
+When you import a LandXML file, you can select different object types to import. For a complete list, see Supported Data Types on page 247. Depending on the object type, you can define additional conversion parameters. For example, if you want to import LandXML parcels, you can choose to convert them to space objects or standard polylines. 
+NOTE A LandXML file contains information about the drawing units in which it is measured. When you import a LandXML file into a drawing with different units, the LandXML data is converted to the units in the current DWG. When a LandXML file based on meter units is imported into a drawing based on millimeters, the resulting coordinates may exceed the range in which accurate calculations can be made. 
+1 Click Insert tab . Import panel . Land XML. 2 Select a LandXML file to import, and click Open. 
+NOTE If you have selected an invalid LandXML file, an XML file not based on the LandXML Schema, or an XML file based on a LandXML Schema version earlier than 1.1, you receive an error message and cannot import the file. Select another file that conforms to the LandXML 1.1 schema, or update the existing file accordingly. 
+3 Select the import options. 
+
+If you want to… Then… 
+import surfaces from  select Surfaces. This selects all surfaces from the  
+the LandXML file  imported file. To import only individual surfaces,  
+expand Surfaces, expand Collection, and then  
+select the surfaces you want to import.  
+
+import parcels from  select Parcels. This selects all parcels from the  
+the LandXML file  imported file. To import only individual parcels,  
+expand Parcels, expand Collection, and then  
+select the parcels you want to import.  
+
+import COGO points  select CgPoints. This selects all COGO from the  
+from the LandXML file  imported file. To import only individual points,  
+expand CgPoints, expand Collection, and then  
+select the points you want to import.  
+
+4 If you are importing parcels, indicate the form to which you want them converted by selecting either Space Objects or Polylines. 
+Parcels converted to spaces (left) and polylines (right) 
+
+5 If you want to clip the surface model using the boolean union of all parcels as the model boundary, select Clip Surface Model at Combined Parcel Boundary. 
+If this check box is selected, you can also enter an offset from the boundary. 
+6 Enter a value for Model Base. This creates an extrusion of the surface outer boundary from the value you enter starting at the lowest surface point. 
+7 If you want to generate contours from the surface data you are importing, select Generate Contours from Surfaces. 
+NOTE If you want to see the actual surfaces of the converted mass element, such as a TIN model, you can display the mass element without Gouraud shading. 
+8 Indicate how you want the contours to be created by selecting either Polylines or Slice Objects. 
+9 Enter an interval value for the vertical spacing of the contours. 
+NOTE Because slice objects shade their entire area, they can interfere with the appearance of the surface itself in shaded or hidden line views. 
+10 Click Import. 
+
+Selecting Layer Keys for LandXML Data 
+Use this procedure to set a default layer key for the different types of LandXML data being imported. You can set layer keys individually for COGO points, parcels, surfaces, and contour lines. 
+If you do not define specific layer keys for your LandXML data, the imported data is placed on the default layer keys specified for LandXML data, TINN (Surfaces), PRCL (Parcels), COGO (COGO Points), and TOPO (Contours). 
+You can also define a specific space style for parcels that are imported as spaces. 
+1 Click Insert tab . Import panel . Land XML. 2 Select a LandXML file to import, and click Open. 3 Click Defaults. 
+
+4 Select a layer key default for the imported objects. 
+If you want to… Then… 
+select a layer key default for im-click Surfaces. ported surfaces 
+select a layer key default for im-click Parcels. ported parcels 
+select a layer key default for im-click COGO points. ported COGO points 
+select a layer key default for im-click Contours. ported contours 
+5 Select a layer key, and click OK. 
+6 If you want to import LandXML parcels as spaces, select a space style and a style location if necessary. 
+7 Click OK. 
+8 Import your LandXML data as described in Importing LandXML Data on page 250. 
+
+
+
+Publishing Drawing Files to Autodesk MapGuide 
+You can publish objects and property set data to the Autodesk MapGuide® product suite. 
+The MapGuide product suite provides the tools to create, publish, and display maps, drawings, designs, schematics, facilities management plans, and associated attribute data over the Internet, an intranet, or an extranet with the services of a web server and a web browser. 
+You can find a number of sample MapGuide projects under http://data.mapguide.com/SampleApps/fm/default.htm. 
+Prerequisites 
+To publish graphic objects and property set data to MapGuide, the MapGuide SDF Component Toolkit must be installed on your computer. 
+The MapGuide SDF Component Toolkit is a development library that allows developers to read, write, and modify point, line, and polygon data within SDF files. SDF files are the native Spatial Data File format of MapGuide, created from stand-alone applications or CGI applications. 
+You can download the Autodesk MapGuide SDF Component Toolkit from http://www.autodesk.com. 
+
+Published Data Types 
+You can publish the following data types from a drawing to MapGuide. 
+¦ Graphic data: All graphic objects can be exported to MapGuide in an SDF (Spatial Data File) file. Areas and spaces are converted to polygons in the appropriate SDF files. All other graphic objects are converted to polylines. 
+¦ 
+Property set data: Property set data attached to an exported object is exported to a Microsoft® Access Database consisting of a series of tables representing the individual property sets. Each object record within a table is assigned a unique object key matching the corresponding object key in the SDF file in order to associate the record in the database with the appropriate SDF geometry. 
+
+¦ 
+Blocks and MVBlocks: Blocks and MVBlocks are exported as SDF files and point databases. Since the blocks and MVBlocks are exported in SDF format as well, the point databases provide an option for users to use symbols rather than the SDF geometry to represent Blocks and MVBlocks in MapGuide. There is a point geometry SDF format, but since AutoCAD Architecture does not work with geospatial coordinate systems, a table in an external database presents a better data source for point-related data. The Publish To MapGuide command does not create bitmap files (BMP) or Windows Metafiles (WMF) representing the geometry of blocks or MVBlocks. If you want to generate WMFs, you need to use either the AutoCAD®WmfOut command or the MapGuide SDF Loader. 
+
+The SDF Loader is a utility used to create Spatial Data Files (SDF) and their accompanying Spatial Index Files (SIF) from a variety of GIS data formats. You can download the SDF Loader utility from http://www.autodesk.com. 
+
+¦ 
+External references: objects and property set data from external references are exported as if they actually resided in the host drawing. 
+
+
+NOTE The external reference name prefix of the layer name is removed when exporting data to MapGuide. This means that objects of the same type that are on the same layer in separate externally referenced files are placed in the same SDF files. 
+
+Generating a MWX File 
+The Publish To MapGuide feature creates, in addition to the data types listed in Published Data Types on page 255, a default map file (MWX file) that combines the exported data in a MapGuide® project. The map contains one layer for each generated SDF file. Each layer is visible and selectable. 
+
+An Overview of the Published Data Structure 
+When you publish data to MapGuide®, a data structure is created that facilitates the incorporation of the data into an MWX project. The exported files are placed in a series of folders representing the relevant portions of an MWX project folder hierarchy. If the following folders do not already exist below the folder you select for exporting your data, they are created and the appropriate files placed in each folder. 
+Directory structure of exported data 
+
+The following files are contained in the individual folders: 
+¦ Data Sources folder: In the Data Sources folder, you can find the data links to the MDB database and the SDF directory. The Publish To MapGuide options allow you to place the Data Sources in an alternate location. 
+Data link to exported database 
+
+¦ DB: The DB folder contains the Microsoft® Access Database created on export. 
+Exported database file 
+
+¦ 
+MWX: the MWX folder contains the MapGuide project file combining the exported spatial and non-spatial data. To view and edit the exported data in MapGuide, you open the MWX file. 
+
+¦ 
+SDF: The SDF folder contains the exported SDF (Spatial Data File) and SIF (Spatial Index File) files from the graphic objects. 
+
+
+
+
+An Overview of the Database Structure 
+When you publish data to MapGuide®, a Microsoft® Access Database (MDB) is created that contains information about the exported graphic objects and property set data. 
+Exported database file 
+
+Table Name Content 
+ADT_Drawings This table lists information about the drawing from which the data is exported. Information includes file name, path, date of last modification, and the units of the drawing. 
+ADT_Object Types This table provides a listing of the object types and object styles contained in the exported data. Each type and style is assigned an ID, which is later used to identify individual ob­jects in the ADT_Objects table. 
+ADT_Objects This table lists all individual objects contained in the exported data. 
+ADT_Property Set Defini- This table provides a listing of the property set definitions  
+tions  contained in the exported data. Each property set definition  
+is assigned an ID, which is later used to identify individual  
+properties.  
+
+ADT_Property Definitions This table lists all properties contained in the exported data. To identify individual properties, use the PropertySetId from the ADT_Property Set Definitions table. 
+<Objects> For each object type that has property data attached directly to one or more of its objects, a table is created that contains 
+Table Name Content 
+<Object>Styles 
+the objects and their associated property data. For example, if an exported drawing contains a number of doors with at­tached properties for frame depth and frame width, a DoorObjects table is created that lists all of these doors and their frame depths and frame widths. 
+For each object type that has property data attached via an object style, a table is created that contains the objects and the property data derived from their styles. For example, if an exported drawing contains a number of doors with a style controlling the louver height and louver width, a DoorStyles table is created that lists all doors of that style with their louver heights and louver widths. 
+NOTE For a detailed view and description of the individual tables, select a table in Microsoft® Access, right-click, and click Design View. 
+When you export data to an MDB, make sure that your property set definitions names, property definition names, and layer names meet the following naming criteria. 
+¦ 
+Names must not exceed 64 characters. Longer names will be truncated after 64 characters. 
+
+¦ 
+Names must not contain the following special characters: period (.), exclamation mark (!), accent ague (`), and brackets ([]). 
+
+
+
+
+Publishing Data to Autodesk MapGuide 
+Use this procedure to publish data to MapGuide®. 
+1 Click 
+. Publish . To Map Guide. 
+
+If the drawing from which you want to publish objects is part of a building project, the project name and level assignment of the drawing display in the Publish to MapGuide dialog. 
+If the drawing is not part of a building project, the name of the drawing and “Level 1” display by default. You can change these entries. 
+NOTE The project name that you enter here is not used as the name of the source MapGuide project folder and project files. The name of the project source folder and project files is created from the name of the drawing. 
+2 Under Objects, click 
+. 
+3 Select the objects you want to publish, and press ENTER. 
+4 Under Folder, select the location for the project files. For a detailed description of the files and folders generated on export, see An Overview of the Published Data Structure on page 257. 
+5 Click Options. 
+
+6 Specify additional export options: 
+If you want to... Then... 
+preserve the existing Map Window XML file 
+select Preserve Existing Map Window XML file. This option will prevent an existing MWX file in this location from being over­written. This will allow users to preserve any changes they made to the MWX file (secondary data source table selections, layer properties, or themes) when updating or re-publishing the underlying data or geometry. 
+include an URL to a Map select Include a Map Server URL, and enter Server a server address. 
+publish your data to a Map select Publish to Map Server Data Source Server data location Location, and browse for a location. 
+For more information about Map Server data locations, see the online Autodesk MapGuide® User’s Guide. 
+7 Click OK twice. Depending on your selection set, the export may take extra time. A progress bar shows you the state of the export. 
+
+
+Exporting Property Set Data to an MDB 
+Use this procedure to export property set data in a drawing to a Microsoft® Access Database (MDB). 
+1 Click 
+. Export . Property Data. 2 Select the objects that contain the property data that you want 
+to export. 
+3 Press ENTER. 
+4 In the Export Property Data dialog, enter a path and a name for 
+the exported MDB. 
+5 Click Save. The property set data of the objects you selected is exported to a Microsoft® Access database. 
+
+
+Publishing Drawings to DWF and DWFx 
+The Design Web Format™ (DWF™) is an Autodesk® method of publishing design data to a file that can be posted on the Internet or on an intranet. You can view DWF files with a web browser, like Microsoft® Internet Explorer, or with the free downloadable Autodesk® Design Review, from where you can also plot the file. You can send a published DWF file as an e-mail attachment, share it using a project collaboration site such as Autodesk® Buzzsaw®, or you can post it to a company website. 
+DWFx is the next version of the DWF file format. The DWFx file format is a blend of DWF and the Microsoft XPS (XML Paper Specification) format. 
+You can publish your DWG files as 2D or 3D model with the included property set data to DWF or DWFx. When these files are viewed with Autodesk® Design Review, users can select components that represent objects and display the object information on the Object Properties palette. 
+For more information about property set data, see Property Set Definitions on page 3785. 
+TIP To view published DWF or DWFx files, you need to install Autodesk Design Review. You can download the latest version of Autodesk Design Review from http://www.autodesk.com. 
+DWFx file published to Autodesk Design Review 
+
+Workflow for Publishing Drawings to DWF or DWFx 
+Watch the movie Review the steps 
+
+Select a 2D or 3D view of the building with the correct display on page 265. If you are working in a structured AutoCAD Architecture project, select a sheet on page 496 or a sheet set from the Project Navigator. 
+
+Attach additional property set data on page 272 if desired. 
+Publish the 2D or 3D on page 275 drawing. 
+
+
+Conditions and Limitations to Publishing Drawings to 3D DWF or DWFx 
+When publishing a drawing to 3D DWF or DWFx, the following conditions apply: 
+¦ 
+Most types of hatches (patterns, solid, graphics) are published. 
+
+¦ 
+The 3D DWF or 3D DWFx file uses the display configuration that is active in the DWG file during publishing. 
+
+
+NOTE When you publish 3D objects to DWF or DWFx, only the display set used for 3D views of the drawing is published. For 3D views, this is usually a Model display set, for example Model Medium Detail, Model High Detail, or Model Low Detail. You can view the objects in Top view in Design Review; however, this is only a Top view of the Model display, and not a Plan view. Objects with no display representation in the Model display set are not displayed in the published DWF or DWFx. Objects that typically are not displayed in Model views are tags, annotations, dimensions, and 2D Plan symbols. If you want these to display in the DWF or DWFx, you can either activate them for the Model display set, or generate a 2D DWF or 2D DWFx file. For more information about the display system, see Display System on page 777. 
+¦ 
+If Render materials are enabled, the transparency is translated to the DWF or DWFx file. For more information, see Materials on page 871. 
+
+¦ 
+Live Section objects are published. 
+
+¦ 
+Property set data attached to objects or styles is published to DWF or DWFx. 
+
+The following limitations apply: 
+
+¦ 
+Infinite lines, like construction lines (xlines) and rays, are not published. 
+
+¦ 
+Text fonts in the DWG file are all converted to Arial. Text formatting like Bold, Italic, and Underline are not currently supported. 
+
+¦ 
+Clip Planes and Xref Clipping are not supported. 
+
+¦ 
+OLE objects as well as inserted images are not supported. 
+
+¦ 
+Linetypes and lineweights are currently not supported. 
+
+¦ 
+Hyperlinks are not published (but are visible for non-AEC objects.) 
+
+
+
+Exporting Property Set Data to a DWF or DWFx File 
+You can export different types of property set data to a DWF or DWFx file. 
+Automatic Property Set Data 
+Each object in AutoCAD Architecture has a set of automatic properties attached to it. For example, every wall has a width, length, and height. Automatic properties are a subgroup of all property set data that can be attached to an object (or object style) with a property set definition. 
+You can automatically export all automatic properties of an object to a DWF or DWFx file. Automatically exporting all automatic properties has the advantage that you do not need to set up property set definitions for individual objects; it does not allow you however to select which properties to export and which to ignore. 
+For information on how to export automatic property set data, see Publishing a 3D DWF or 3D DWFx File with Automatic Property Set Data on page 269. 
+
+User-Defined Property Set Data 
+User-defined property set data is data from a property set definition that you have created and attached to an object or object style. Property set data can include automatic object properties, like height and width of a wall, but also manually defined data such as fire ratings or manufacturing information, project information, and more. 
+When publishing user-defined property set data, you specify which property set definitions to include and which to exclude. For example, some property sets in your drawing can contain confidential information, which you do not want to expose to others. In other cases, the recipient of a published file might need only very specific property set information about one aspect of the drawing, and does not want to search for that information among a large amount of unrelated information. 
+When publishing user-defined property set data, you must attach property set definitions to the objects in your drawing, and select a PPL (Published Properties List) file that contains these property sets. For example, you attach the property set definition DoorObjects to a number of doors in your drawing. Then, you add the DoorObjects property set definition to your PPL file. When you publish the drawing to DWF or DWFx, the property set data from these doors is published. In the same PPL file, you add the WindowObjects property set definition. However, you do not attach the WindowObjects property set definition to any windows in your drawing. When you publish the drawing to DWF or DWFx, no property set data from the WindowObjects property set definition is published. 
+In order to publish user-defined property set data to a DWF or DWFx file, you need to perform the following high-level steps: 
+1 Create property set definitions for objects and apply them to an object or an object style. For more information, see Property Set Definitions on page 3785. 
+2 Define in the PPL file (Published Properties List) which property set 
+definitions from your drawing should be exported. For more information, see Creating a New Published Property List (PPL) on page 278. 
+3 Publish the drawing to DWF or DWFx, as described in Publishing a 3D DWF or 3D DWFx file with User-Defined Property Set Data on page 272 and Publishing a 2D or 3D DWF or DWFx File with Property Set Data on page 275. 
+
+
+Publishing Property Set Data from External References 
+Property set data works across external references, and you can publish data from an external reference to a DWF or DWFx file. To make sure that data from the external reference is published correctly, make sure that the following conditions are met: 
+¦ 
+The data structure of property sets coming from an external reference must be identical to the structure of any corresponding property sets in the host drawing. For example, if an external reference has a property set definition called Doors that reports Height, Width, and Door Number, the host drawing cannot have a property set definition called Doors that reports Fire Rating, Leaf Width, and Glass thickness. 
+
+¦ 
+The same property data format must be applied to property set definitions from external references and corresponding property set definitions in the host drawing. For example, if an external reference property set definition called Doors specifies architectural units with 1/4 inch precision, the host drawing cannot have a property set definition called Doors that specifies architectural units with 1/16 inch precision. If the property data formats differ, the format of the host drawing is used for the external reference. 
+
+
+
+Property Set Data Structure 
+As shown in the following examples, you can specify how property data is organized when exporting property set data from a DWG file to a DWF, DWFx, or PDF file. This capability can be helpful when exporting large drawings with many object properties. 
+¦ 
+Grouping property set data by external reference first, and then by object type and object style: 
+
+¦ 
+Grouping property set data by external reference first, and then by layer: 
+
+¦ 
+Grouping property set data by object type first, and then object style: 
+
+
+
+
+
+¦ Grouping property set data by object layer: 
+
+For information on setting the data structure, see Publishing a 3D DWF or 3D DWFx File with Automatic Property Set Data on page 269 and Publishing a 3D DWF or 3D DWFx file with User-Defined Property Set Data on page 272. 
+
+Publishing a 3D DWF or 3D DWFx File with Automatic Property Set Data 
+NOTE This instruction lets you create a single 3D DWF or 3D DWFx file of the model you are working on with automatic property set data. If you want to create multiple DWF or DWFx files for different sheets with automatic property set data, see Publishing a 2D or 3D DWF or DWFx File with Property Set Data on page 275. 
+1 Do one of the following: 
+¦ Click 
+Export . 3D DWF. 
+¦ 
+Enter 3ddwf on the command line. 2 In the Export 3D DWF dialog, select 3D DWF or 3D DWFx for 
+
+
+Files of type. (By default 3D DWFx is selected.) 3 Click Tools menu . Options. 
+
+4 Under Objects to Publish, select either the whole model or click Selected Model space objects, and pick objects in the drawing to include in the exported DWF or DWFx file. 
+5 Under 3D DWF Organization select in which order xrefs and objects will be displayed in the exported file. 
+If you want to… Then… 
+group the objects by their external check Group by Xref Hierarchy. Un­reference, and then by their object der Group individual objects by, se­type and style lect Object Type and Style. 
+group the objects by their external check Group by Xref Hierarchy. Un­reference, and then by their layer der Group individual objects by, se­lect Layer. 
+
+If you want to… Then… 
+group the objects by their type and uncheck Group by Xref Hierarchy. style Under Group individual objects by, select Object Type and Style. 
+group the objects by their layer uncheck Group by Xref Hierarchy. Under Group individual objects by, select Layer. 
+For example illustrations, see Property Set Data Structure on page 268. 
+6 Select Publish with materials in order to include the material definitions from the DWG file in the DWF or DWFx file. 
+7 Click Edit AEC DWF Options. 
+
+8 In the AEC DWF Publishing Options dialog, click Publish All 
+Automatic Properties. This will publish all automatic properties associated with the objects you have selected for exporting to the DWF or DWFx file. 
+9 If you want to publish user-defined property set data, see 
+Publishing a 3D DWF or 3D DWFx file with User-Defined Property Set Data on page 272. 
+10 Click OK, and then Save. By default, the automatic property data exported will be listed under a property group called Aec+<object type>. For example, if you export the automatic properties of a door, they will be listed under AecDoor. If you are exporting additional user-defined property set definitions and one of them already uses the name Aec+<object type>, the automatic properties will be listed in a property group called Aec+<object type> (2). In the door example that would mean that if you are exporting a user-defined property set definition named AecDoor, then the automatic door properties will be listed under AecDoor (2). 
+If an object property is both an automatic property and is also included in a property set definition, it will be listed both under the automatic properties and under the property set definition it is part of in the DWF or DWFx file. 
+
+
+Publishing a 3D DWF or 3D DWFx file with User-Defined Property Set Data 
+NOTE This instruction lets you create a single DWF or DWFx file of the model you are working on with user-defined property set data. If you want to create multiple DWF or DWFx files for different sheets with user-defined property set data, see Publishing a 2D or 3D DWF or DWFx File with Property Set Data on page 275. 
+1 Do one of the following: 
+¦ Click 
+Export . 3D DWF. 
+¦ 
+Enter 3ddwf on the command line. 
+
+
+2 In the Export 3D DWG dialog, select 3D DWF or 3D DWFx for file format. (By default, 3D DWFx is selected.) 
+3 Click Tools menu . Options. 
+
+4 Under Objects to Publish, select either to publish the whole model or click Selected Model space objects, and pick objects in the drawing to include in the exported DWF or DWFx file. 
+5 Under 3D DWF Organization select in which order xrefs and objects will be displayed in the exported file. 
+If you want to… Then… 
+group the objects by their external check Group by Xref Hierarchy. Un­reference, and then by their object der Group individual objects by, se­type and style lect Object Type and Style. 
+group the objects by their external check Group by Xref Hierarchy. Un­reference, and then by their layer der Group individual objects by, se­lect Layer. 
+group the objects by their type and uncheck Group by Xref Hierarchy. style Under Group individual objects by, select Object Type and Style. 
+group the objects by their layer uncheck Group by Xref Hierarchy. Under Group individual objects by, select Layer. 
+For example illustrations, see Property Set Data Structure on page 268. 
+6 Select Publish with materials in order to include the material definitions from the DWG file in the DWF or DWFx file. 
+7 Click Edit AEC DWF Options. 
+
+8 Verify that Publish Property Set Data is selected. 
+9 To add a property set definition to the exported DWF or DWFx file, click Add. In the Add Property Sets dialog, by default the currently active 
+drawing and the property set definitions in it are displayed. 
+10 To select one of the listed property set definitions, check its mark and click OK. 
+11 To select property set definitions from another drawing file, click Browse, and navigate to the desired drawing. Then, proceed to add property set definitions as described above. 
+12 Click OK. 13 To remove a property set definition from the exported DWF or DWFx file, select it, and click Remove. 14 To create a new PPL file, click New, and follow the instructions 
+in Creating a New Published Property List (PPL) on page 278. 15 To select a different PPL file, click Browse and select a new file. 16 Click OK twice, and then click Save. 
+When the export is finished, you are asked whether you want to view the DWF or DWFx file. Click Yes to open the exported file in Autodesk Design Review. 
+
+
+Publishing a 2D or 3D DWF or DWFx File with Property Set Data 
+When you create a DWF or DWFx file with the Publish dialog, you can create both 2D and 3D DWF or DWFx files. You can also create multiple DWF or DWFx files for individual sheets in your drawing. If you export property set data, the property set data will be displayed in each DWF or DWFx file. 
+DWG file with property set data 
+
+DWFx file with property set data 
+
+1 Click Publish. 
+
+NOTE If you want to publish sheets from a project, see Publishing Sheet Sets on page 496. 
+2 Under Page Setup, select if you want to publish a 2D or 3D DWF or DWFx file: 
+¦ 
+To publish a 2D DWF or DWFx file, select a 2D page setup, or select <Default: None>. 
+
+¦ 
+To publish a 3D DWF or 3D DWFx file, select <3D DWF>. If the <3D DWF> option is not available, no valid 3D display configuration has been set for the drawing. 
+
+
+3 Under Publish to, select DWF format. 
+4 Depending on whether you want to create DWF or DWFx, select the appropriate option below DWF Format. 
+5 Click Publish Options. 
+
+6 Specify the general DWF options as described in Publish Options Dialog Box in the AutoCAD Help. 
+7 If you want to publish user-defined property set data, select Include for AEC property set data. 
+8 If you want to publish all automatic properties of the objects in the drawing, select Include for AEC automatic properties. 
+NOTE Automatic properties can be published instead of or in addition to user-defined property set data. 
+9 In order to add or remove user-defined property sets for the exported DWF or DWFx file, click the Browse button under AEC DWF Options. 
+10 If you are creating a 3D DWF or 3D DWFx file, define the organization of published AEC objects in Autodesk Design Review: 
+
+If you want to… Then… 
+group the objects by their external select Object Type and Style for AEC reference, and then by their object Group Individual Objects by. Then, type and style select Yes for Group by Xref Hier­
+archy. 
+group the objects by their external select Layer for AEC Group Individual reference, and then by their layer Objects by. Then, select Yes for Group by Xref Hierarchy. 
+group the objects by their type and select Object Type and Style for AEC 
+style Group Individual Objects by. Then, select No for Group by Xref Hier­archy. 
+group the objects by their layer select Layer for AEC Group Individual Objects by. Then, select No for Group by Xref Hierarchy. 
+For example illustrations, see Property Set Data Structure on page 268. 
+11 If you are creating a 2D DWF or 2D DWFx file, select a sorting option under AEC Group Individual objects by. 
+12 Click OK. 
+13 Click Publish. The publishing process is initiated and notifies you when it is finished. 
+
+
+Creating a New Published Property List (PPL) 
+Use this procedure to create a new, Published Property List (PPL). The Published Property List specifies which property set definitions in a DWG file will be exported to DWF or DWFx, provided the property set definition has been added to objects or styles in the drawing. 
+1 Click 
+. Publish . AEC DWF Publishing Options. 
+2 Click New. 
+
+3 Browse for the folder in which you want to save the new PPL file, and enter a name for the new PPL file. 
+4 Click Save. The new PPL file is opened in the AEC DWF Publishing Options dialog. By default it does not contain any property set definitions. 
+5 Click Add. By default the currently active drawing and all property set definitions in it are displayed. 
+6 If you want to add property set definitions from another drawing, click Browse to navigate to the desired file. 
+7 Select all property set definitions that should be included in the new PPL either by selecting their check marks or by using the Select All button. 
+8 If the PPL is complete, click OK. 9 If you want to add more property set definitions to it, click Add again, and repeat step 6 - 7. 10 Click OK twice. 
+
+
+Publishing Drawings to PDF 
+The Adobe® Portable Document Format (PDF) facilitates exchanging drawing sets electronically. An electronic drawing set is the digital equivalent of a set of plotted drawings. 
+PDF files can be easily distributed for viewing and plotting using the free, downloadable Adobe® Acrobat software. You can send a published PDF file as an e-mail attachment, share it using a project collaboration site such as Autodesk® Buzzsaw®, or post it to a company website. 
+Like DWF files, PDF files are generated in a vector-based format conducive to maintaining precision. Drawings that are converted to PDF can be easily distributed for viewing and printing in Adobe Reader, versions 7 or later, available from the Adobe website. 
+Unlike DWF or DGN files, multi-page PDF files are attached one page at a time (as opposed to one sheet at a time for DWF files or one model at a time for DGN files). Also, hypertext links from PDF files are converted to straight text, and digital signatures are not supported. For information about publishing a PDF file, see Publish Drawings in the AutoCAD Help. 
+Publishing to PDF 
+You can specify that drawings are automatically published to PDF format (or DWF or DWFx) whenever they are saved or closed. The auto-publish settings also let you specify whether to include models, layouts, or both and whether to publish a multi-sheet or single-sheet file. (For more information, see Auto Publish Options Dialog Box in the AutoCAD Help.) The following topics explain how to publish or export to PDF on demand using settings you specify at the time. 
+Publish to PDF 
+Use this procedure to publish PDF files based on options you select. 
+1 Click . Publish. 
+
+
+2 For Publish to, in the Publish dialog, select PDF. 
+3 Specify other information for the PDF file as desired. For more information, see Publish Dialog Box in AutoCAD Help. 
+4 Click Publish Options if you want to change your settings, make the changes, and click OK. 
+
+5 In the Publish dialog, click Publish. Export to PDF 
+Use this procedure to create a PDF file. 
+6 Click 
+. Export . PDF. 
+
+7 Specify information for the PDF file as desired. For more information, see Save as PDF Dialog Box in AutoCAD Help. 
+8 Click Options if you want to change your settings, make the changes, and click OK. For more information, see Export to DWF/PDF Options Palette in AutoCAD Help. 
+
+9 In the Save As PDF dialog, click Save. 
+
+Exporting Property Set Data to a PDF File 
+You can export both automatic and user-specified property set data to a PDF file. 
+Automatic Property Set Data 
+Each object in AutoCAD Architecture has a set of automatic properties attached to it. For example, every wall has width, length, and height properties. Automatic properties are a subgroup of property set data that can be attached to an object (or object style) with a property set definition. 
+If you automatically export all automatic properties of an object to a PDF file, you do not have to set up property set definitions for individual objects; but you cannot select which properties to export and which to ignore. 
+For information on how to export automatic property set data, see Publishing a PDF File with Automatic Property Set Data on page 285. 
+
+User-Defined Property Set Data 
+User-defined property set data is data from a property set definition that you have created and attached to an object or object style. Property set data can include automatic object properties, like height and width of a wall, but also manually defined data such as fire ratings or manufacturing information, project information, and more. 
+When publishing user-defined property set data, you specify which property set definitions to include and which to exclude. For example, some property sets in your drawing might contain information you want to keep confidential. In other cases, the recipient of a published file might need only specific property set information about one aspect of the drawing, and does not want to search for that information among a large amount of unrelated information. 
+When publishing user-defined property set data, you must attach property set definitions to the objects in your drawing, and select a PPL (Published Properties List) file that contains these property sets. For example, you attach the property set definition DoorObjects to a number of doors in your drawing. Then, you add the DoorObjects property set definition to your PPL file. When you publish the drawing to PDF, the property set data from these doors is published. In the same PPL file, you add the WindowObjects property set definition. However, you do not attach the WindowObjects property set definition to any windows in your drawing. When you publish the drawing to PDF, no property set data from the WindowObjects property set definition is published. 
+To publish user-defined property set data to a PDF file, you need to perform the following high-level steps: 
+1 Create property set definitions for objects and apply them to an object or an object style. For more information, see Property Set Definitions on page 3785. 
+2 Specify in the PPL file (Published Properties List) which property set 
+definitions from your drawing should be exported. For more information, see Creating a New Published Property List (PPL) on page 278. 
+3 Publish the drawing to PDF, as described in Publishing to PDF on page 280. 
+
+
+Publishing Property Set Data from External References 
+Property set data works across external references, and you can publish data from an external reference to a PDF file. To make sure that data from the external reference is published correctly, make sure that the following conditions are met: 
+¦ 
+The data structure of property sets coming from an external reference must be identical to the structure of any corresponding property sets in the host drawing. For example, if an external reference has a property set definition called Doors that reports Height, Width, and Door Number, the host drawing cannot have a property set definition called Doors that reports Fire Rating, Leaf Width, and Glass thickness. For more information, see Property Set Data Structure on page 268. 
+
+¦ 
+The same property data format must be applied to property set definitions from external references and corresponding property set definitions in the host drawing. For example, if an external reference property set definition called Doors specifies architectural units with 1/4 inch precision, the host drawing cannot have a property set definition called Doors that specifies architectural units with 1/16 inch precision. If the property data formats differ, the format of the host drawing is used for the external reference. 
+
+
+
+Publishing a PDF File with Automatic Property Set Data 
+Use this procedure to include automatic property data in your PDF. If you want to publish sheets from a project, see Publishing Sheet Sets on page 496. 
+1 Do either of the following: 
+¦ Click 
+Export . DWF/PDF Options. 
+¦ 
+Enter exportsettings and select Options on the command line. 
+
+
+2 In the Export to DWF/PDF Options dialog, under DWF data options for AEC automatic properties, select Include, and click OK. 
+
+All automatic properties associated with the objects you have selected for exporting are published to the PDF file. For more information, see Export to DWF/PDF Options Palette in AutoCAD Help. 
+By default, the automatic property data exported will be listed under a property group called Aec+<object type>. For example, if you export the automatic properties of a door, they will be listed under AecDoor. If you are exporting additional user-defined property set definitions and one of them already uses the name Aec+<object type>, the automatic properties will be listed in a property group called Aec+<object type> (2). In the door example that would mean that if you are exporting a user-defined property set definition named AecDoor, then the automatic door properties will be listed under AecDoor (2). 
+If an object property is both an automatic property and is also included in a property set definition, it will be listed both under the automatic properties and under the property set definition it is part of in the PDF file. 
+
+Publishing a PDF with All Property Set Data 
+Use this procedure to include automatic and user-defined property set data in your PDF. If you want to publish sheets from a project, see Publishing Sheet Sets on page 496. 
+1 Do either of the following: 
+¦ Click 
+port . DWF/PDF Options. 
+¦ 
+Enter exportsettings and select Options on the command line. 
+
+
+2 In the Export to DWF/PDF Options dialog, under DWF data options for AEC property set data, select Include, and click OK. For more information, see Export to DWF/PDF Options Palette in AutoCAD Help. 
+
+
+
+
+Drawing Management 
+6 
+The Drawing Management feature formalizes and automates the processes relating to building model design and documentation. The feature provides automated tools that aid you in the management, viewing, and construction of your building. 
+When you manage your project files with this feature, you have consistency throughout all aspects of the project. Everyone on your design team has a centralized project environment for accessing the most current documents, from project templates to sections and elevations. 
+Workflow for a Project Environment 
+Creating a set of construction documents with the Drawing Management feature in AutoCAD Architecture is more efficient than creating standalone drawings and compiling them afterwards. 
+
+Open the Project Browser on page 307 and create the project framework from scratch on page 317, a template on page 313, or an existing project on page 315. 
+
+Define vertical levels on page 365 for the project. 
+
+Define the project properties on page 318 and details on page 322. 
+Organize your drawings in categories on page 375. 
+Create constructs on page 389 and assign them horizontal locations in the building with divisions on page 372. 
+Create views on page 439. 
+Create a sheet on page 470 for the project drawing. 
+Add views on page 451 to a sheet. 
+
+Publish on page 496 your sheets. 
+
+Concepts of Drawing Management 
+The Drawing Management feature of AutoCAD Architecture lets you create large building projects distributed among many drawing files. The following sections describe the key concepts of this feature. 
+Project 
+At the highest level, building models are organized conceptually into projects. A project is composed of 2 parts: the building model and the reports generated from the model. The building model is composed of constructs and elements, while reports consist of views and sheets. Within a project, constructs are referenced into views, and views are referenced into sheets. 
+
+
+Constructs 
+A construct describes one unique portion of a building and is assigned to a specific level and division within the project. Spanning constructs, like curtain walls, can be assigned to multiple levels and divisions. 
+For example, the first level of your building project may consist of an exterior shell construct, a first-level core construct, and a first-level interior partitions construct. 
+A construct can contain drawing objects like walls and doors, external references to elements, or a combination of both. For example, a first-level core construct can contain the core walls directly drawn into the construct and an elevator element inserted as an external reference. 
+You can create and modify constructs within the current project. You can also import drawings and convert them or add them to constructs. You can import constructs into the project physically or by creating a link. 
+Constructs are referenced into views. For more information, see Constructs on page 385. 
+
+Views 
+After the structure of the building is defined, and constructs are assigned to levels and divisions, you can generate reports (views and sheets) from the building model. A view automatically references a number of constructs to present a specific view of the building project. To create a view drawing, you first decide what portion of the building you wish to look at and the type of view to generate. You could, for example, create a first-floor reflected ceiling plan or a second-floor framing plan. 
+You could also create a composite view of all floors in the building as shown: 
+3D view of entire building view 
+
+View drawings automatically reference the appropriate constructs according to their location within the building. For example, to create a floor plan of the west wing of the second floor, you would create a view that references all constructs assigned to the second floor and the west wing. This would also include a curtain wall spanning the first through fifth floors. You can reference additional constructs that you want to see in the view even though they do not lie on that floor, such as a building outline. 
+In a view drawing you can also add data like annotation, dimensions, and schedules. Whether to create the annotation in a view drawing or on a sheet is a decision you make based on your workflow and individual needs. 
+Three different types of view drawings, each with its own template and identified by a different icon, can be used as organizational tools. 
+¦ 
+General view drawing 
+
+¦ 
+Detail view drawing 
+
+¦ 
+Section/Elevation view drawing 
+
+
+Views are referenced into sheets. For more information on the view system in AutoCAD Architecture, see Views on page 432. 
+
+Sheets 
+Sheets are used to plot drawings of your building project. 
+The sheet system in AutoCAD Architecture consists of the following components: 
+¦ Sheet: A sheet is a paper space layout that has been registered as a sheet. A sheet can contain one or more sheet views. For more information, see “Work with Model Space and Paper Space” in AutoCAD Help. 
+Sheet with building plan sheet view 
+
+¦ Sheet views: A sheet view is a paper space viewport created by dragging a model space view from a view drawing in the Drawing Explorer onto a sheet. 
+Sheet view created from model space view 
+
+¦ Sheet set: A sheet set is a named and ordered collection of sheets. Sheet sets are similar to the physical set of bound sheets that are the primary communication medium for a typical building project. Sheet sets are tailored for efficient output of printed or electronic documents through the Publish command. 
+Sheet set for AutoCAD Architecture project 
+
+Each project in AutoCAD Architecture has a simple project sheet set, which contains all sheets for the project. 
+¦ Sheet drawing: A sheet drawing is a DWG file containing one or more sheets. 
+Sheet set, sheets, sheet views, sheet drawings, and model space views are listed on the Sheets and Views tabs of the Project Navigator. 
+Although it is recommended to place annotation in a view, you can add annotation like tags, dimensions, and schedule tables to a sheet. For more information, see Sheets on page 467. 
+
+Project Standards 
+There is a Project Standards feature in AutoCAD Architecture. Project standards provide a mechanism to establish, maintain, and synchronize styles and display settings across an AutoCAD Architecture project. Within a project, you can specify standard styles, display settings, and AutoCAD standards that are used across all project drawings. Standard styles and display settings are 
+defined in standards drawings associated with the project. The project is synchronized with these standards throughout the project life cycle. For more information, see Project Standards on page 585. 
+
+Project Tool Palettes and Content Browser Library 
+In addition to standards drawings, you can also set up project-specific tool palettes and a Content Browser library for a project. A user-definable root path for tool content ensures that the tools always reference the correct content drawing for their definition. 
+
+External Reference Management 
+External references allow your source files to be distributed over many different locations on your computer or on a network. You can assign schedule tables, annotation tags, and dimensions to external references easily. Different people can work simultaneously on the same project. 
+You specify whether reference paths are full external or relative external paths. 
+For more information on external references, see “Reference Other Drawing Files (Xrefs)” in AutoCAD Help. 
+For more information on annotating external references in a project, see Workflow for Annotating a Project on page 515. 
+
+Mapped Drives 
+AutoCAD Architecture supports mapped drives within a project environment. You can map the same identifying drive letter on different servers with the same project structure. If you use mapped drives within an AutoCAD Architecture project, you are not prompted to repath each time you open the project drawing files from different servers. For more information, see Working with Design Teams Located Remotely on page 307. 
+
+XML Structure 
+A AutoCAD Architecture project has an underlying XML structure. For each drawing file you create—for example, a floor drawing or a structural drawing—an accompanying XML file is created. The XML file contains project-relevant information, such as level and division information. You can reuse any drawing file created within a project outside the project as well, because the drawing file itself does not contain project-relevant information. 
+
+
+Levels and Divisions 
+The project provides a framework of levels (floors) and divisions (wings) that specify where in the building project constructs are located. By default, a new project consists of one level and one division. You can add levels and divisions throughout the lifetime of a project. The matrix of levels and divisions provide the framework to help uniquely identify the building components. For example, you could have a construct in your building assigned to First Floor—West Wing. 
+Levels and divisions schematic 
+
+Building objects, such as curtain walls and elevator shafts, can span multiple levels and divisions. You can use a spanning construct for these types of building objects. 
+For more information, see Levels on page 364 and Divisions on page 372. 
+
+Categories 
+To help organize the building, components of the building project—constructs, views, and sheets—can be categorized. You can use categories like shell, core, and interior partitions. Categorizing a construct lets you filter that construct when generating views. 
+Construct categories in the Project Navigator 
+
+For more information, see Categories on page 375. 
+
+The Project Structure 
+When you create a new project, AutoCAD Architecture automatically creates a project environment to connect the individual files into one project. This environment has 3 main components: 
+
+The Project (APJ) File 
+The project (APJ) file contains: 
+¦ 
+the project name and number 
+
+¦ 
+information about levels and divisions 
+
+¦ 
+settings for drawing templates, project details, project standards, project palettes, and the method of linking xrefs 
+
+
+You also configure standards styles, display settings, and AutoCAD standards here. For more information, see Working with Project Properties on page 318. An existing APJ file can serve as the template for a new project. For more information, see Creating a New Project Based on a Template (Copying a Project) on page 313. 
+NOTE The APJ file is a well-formed XML document. You can open and modify it using an XML editor. 
+
+The Default Category Structure 
+When you create a new project, the following default category structure is created: 
+
+These categories are empty unless you created the new project from an existing project with drawing files. 
+These top-level categories can be redirected to point to other folders. Each top folder must use a unique folder, and they cannot be an ascendant or descendant of each other in the tree structure. You can create subcategories in each of them. For more information, see Categories on page 375. 
+
+The Project Sheet Set 
+In AutoCAD Architecture, project sheets are collected in sheet sets or a project. A sheet set allows you to have common publishing setups across a number of sheets. 
+When you create a new project, a unique sheet set is created for this project. The project sheet set is displayed on the Sheets tab of the Project Navigator. 
+Project sheet set in AutoCAD Architecture Project Navigator 
+
+Only one sheet set can be associated with a project. You cannot change the sheet set for an existing project, but you can change its properties. For more information, see Setting the Properties of the Project Sheet Set on page 473. 
+
+
+Before You Begin: External References 
+The Drawing Management feature uses external references (xrefs) as a means to create a project and maintain it. Elements are referenced into constructs, constructs are referenced into views, and views are referenced into sheets. The mechanism of referencing is identical to the regular AutoCAD External References Management feature. However, the background methods employed have additional features. 
+Xrefs that are created in drawing management can automatically make use of project data, while those that are created manually through the xref palette or command line cannot. For example, a construct that is placed on a specific 
+

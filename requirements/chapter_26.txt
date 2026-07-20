@@ -1,0 +1,817 @@
+[MIGRATED TO RTM_PART_58.md - OPENINGS]
+opening tools to create new openings by applying tool properties to existing door/window assemblies, doors and windows. 
+Tool palette containing opening tool 
+
+The default tool palettes in the workspace contain a sample opening tool that you can use and customize as needed. In addition, the following catalogs provided with the software contain opening tools that you can add to your tool palettes: 
+¦ 
+Stock Tool catalog 
+
+¦ 
+Sample Palette catalog 
+
+
+Custom palettes created by your CAD manager or other users may also contain opening tools with properties that are customized for your projects or office standards. 
+Creating an Opening 
+Use this procedure to add an opening that has the properties specified in the opening tool that you select. To specify settings when you add an opening, see Creating an Opening with User-Specified Settings on page 2034. 
+Adding an opening to a wall 
+
+1 Open the tool palette that you want to use, and select an opening tool. If necessary, scroll to display the desired tool. 
+NOTE Alternatively, you can click Home tab . Build panel . Door drop-down . Opening
+ . 
+2 Select a wall in which to insert the opening, or press ENTER to add 
+a freestanding opening. You can move or hide the Properties palette to expose more of the drawing area. 
+3 Specify the insertion point of the opening. If you are adding a freestanding opening, specify the rotation of the opening after you specify the insertion point. 
+4 Continue adding openings, and press ENTER. 
+Creating an Opening with User-Specified Settings 
+Use this procedure to create an opening with settings that you specify. 
+Adding an opening to a wall 
+
+1 Open the tool palette that you want to use, and select an opening tool. If necessary, scroll to display the desired tool. 
+2 On the Properties palette, expand Basic, and expand General. 3 Select a shape for the opening. To specify a custom shape, select Custom for Shape, and select the profile that provides the geometry of the shape for Profile. 
+NOTE Alternatively, after creating an opening, you can later add a profile to it by selecting the opening, and clicking Opening 
+tab . Profile panel . Add Profile
+ . 
+4 Expand Dimensions. 5 Enter values for Width, Height, and Rise. Rise is available only for arch, gothic, peak pentagon, and trapezoid shapes. 
+6 Expand Location. 
+7 If you are placing the opening in a wall, specify the opening position: 
+If you want to… Then… 
+position the edge of the opening at select Offset/Center for Position a specific distance from the end of along wall, and enter a value for a wall segment Automatic offset. 
+center the opening on a wall seg-select Offset/Center for Position ment along wall, and specify a point near the center of the wall segment. 
+position the opening anywhere select Unconstrained for Position along the wall along wall. 
+8 Specify whether you want the opening to be aligned vertically by sill height or by head height: 
+If you want to… Then… 
+align the opening by sill height select Sill for Vertical alignment, and enter a value for Sill height. 
+align the opening by head height select Head for Vertical alignment, and enter a value for Head height. 
+9 Specify the insertion point for an opening in a wall or for a freestanding opening: 
+If you want to… Then… 
+place an opening in a wall select the wall, and specify an inser­tion point along the wall. 
+place a freestanding opening press ENTER, and specify an inser­tion point and rotation angle for the opening. 
+10 Continue to place openings, and press ENTER. 
+Creating an Opening from Doors, Door/Window Assemblies and Windows 
+Use this procedure to convert a door, door/window assembly, or window to an opening that has the properties of the opening tool you select. You can edit these properties after creating the opening. 
+1 Open the tool palette that you want to use. If necessary, scroll to display the tool that you want to use. 
+2 Right-click an opening tool, and click Apply Tool Properties to . Door, Door/Window Assembly, Window. 
+3 Select the door, door/window assembly or window to convert, and press ENTER. 
+4 Edit the properties of the opening in the Properties palette, if needed. 
+Creating and Editing Custom Openings 
+In addition to using predefined shapes for openings, you can create openings with custom shapes. You create a profile from a closed polyline to define the two-dimensional (2D) geometry of the shape. The profile is then extruded when it is applied to an opening. You can edit the profile to change the shape of the opening. You can then save the changes to the current profile or to a new profile. You can apply the profiles you create to any openings. 
+Creating a Profile for a Custom Opening 
+Use this procedure to create a profile that provides the geometry for an opening with a custom shape. 
+You can create the profile as you add it to an opening. However, if the shape you need is elaborate and has curved segments, you may find it easier to create the profile from a polyline first. You can then add the profile to the opening. 
+1 Draw concentric, closed polylines representing the opening and any insets. 
+2 Select the polylines, right-click, and click Convert to . Profile Definition. 
+3 Select the outermost polyline. 
+4 Enter a (Add ring). 5 Select an inner polyline. 6 Repeat steps 4 and 5 as needed to add more rings to the profile. 7 Specify the insertion point of the profile. 8 Enter n (New), enter a name for the profile, and click OK. 
+Creating an Opening with a Custom Shape 
+Use this procedure to create an opening with a custom shape and other settings that you specify. 
+Adding an opening with a custom shape 
+
+1 Open the tool palette that you want to use, and select an opening tool. If necessary, scroll to display the desired tool. 
+2 On the Properties palette, expand Basic, and expand General. 3 Select Custom for Shape. 
+4 Select the profile that provides the geometry of the shape for Profile. 
+5 Expand Dimensions. 
+6 Enter values for Width and Height. 
+7 Expand Location. 
+8 If you are placing the opening in a wall, specify the opening position: 
+If you want to… Then… 
+position the edge of the opening at select Offset/Center for Position a specific distance from the end of along wall, and enter a value for a wall segment Automatic offset. 
+center the opening on a wall seg-select Offset/Center for Position ment along wall, and specify a point near the center of the wall segment. 
+position the opening anywhere select Unconstrained for Position along the wall along wall. 
+9 Specify whether you want the opening to be aligned vertically by sill height or by head height: 
+If you want to… Then… 
+align the opening by sill height select Sill for Vertical alignment, and enter a value for Sill height. 
+align the opening by head height select Head for Vertical alignment, and enter a value for Head height. 
+10 Specify the insertion point for an opening in a wall or for a freestanding opening: 
+If you want to… Then… 
+place an opening in a wall select the wall, and specify an inser­tion point along the wall. 
+place a freestanding opening press ENTER, and specify an inser­tion point and a rotation angle for the opening. 
+11 Continue to place openings, and press ENTER. 
+Editing the Geometry of a Custom Opening 
+Use this procedure to edit the geometry of a profile that determines the shape of a custom opening. You can save the changes to the existing profile or to a new profile. 
+1 Select the opening that has the shape you want to change, and 
+click Opening tab . Profile panel . Edit In Place
+ . A temporary profile is created for you to edit the geometry of the custom opening. 
+A temporary profile for editing a custom opening 
+
+2 NOTE After you perform an editing task from the Edit in Place tab, you may need to select the profile again to perform another editing task. If you do not see the editing commands that you expect on the ribbon, select the profile, and click Edit in Place once again. 
+Edit the profile: 
+If you want to… Then… If you want to… Then… 
+change the shape of the  select the profile, and use edge and vertex  
+perimeter of the profile or its  grips to adjust the shape.  
+rings  The Edge grip has three edit modes: Off­ 
+set, Add Vertex, and Convert to Arc. The  
+default mode is Offset, which offsets the  
+selected edge in a direction that is perpen­ 
+dicular to the midpoint of the edge. De­ 
+pending on the shape of the profile and  
+the edge you choose to modify, neighbor- 
+
+ing lines are extended or trimmed, and new lines are added, as necessary. Use the Add Vertex edit mode to add a vertex to the selected edge, and create a new edge. If the selected edge is an arc, the new edge is an arc, as well. Convert to Arc changes the selected edge to an arc and stretches the midpoint of the edge. The edge grip for an arc also has a Stretch mode, so that you can stretch the midpoint of the edge after it has been converted to an arc. 
+add vertices to the profile select an Edge grip, and press CTRL to switch to the Add Vertex edit mode. Move the edge to the desired location and click, or enter a value and press ENTER. 
+remove vertices from the  select the Vertex grip for the vertex you  
+profile  want to remove, and press CTRL to switch  
+to the Remove edit mode. Move the  
+cursor off the selected vertex, and click.  
+
+replace an existing ring of the  select the profile, and click Edit In Place  
+profile with new geometry  tab . Profile panel . Replace Ring  .  
+Select the ring to replace, and select the  
+new geometry. Press ENTER to keep the  
+geometry, or enter y (Yes) to erase it.  
+
+add a ring to the profile draw the linework in place on the tempor­ary profile. Select the profile, and click Edit In Place tab . Profile panel . Add Ring
+
+ . Select the geometry to define the 
+ring. Press ENTER to keep the geometry, 
+or enter y (Yes) to erase it. 
+remove a ring from the pro-select the profile, and click Edit In Place file 
+tab . Profile panel . Remove Ring
+ . Select the ring to remove, and press 
+If you want to… Then… 
+ENTER. This option does not appear if the profile has only one ring. 
+Profile for custom opening after editing 
+
+3 Save or discard the changes: 
+If you want to… Then… 
+restore the opening to its original click Edit In Place tab . Edits pan-shape 
+el . Cancel 
+. 
+save the changes to the current click Edit In Place tab . Edits pan-profile el . Finish 
+. The opening uses the edited profile to define its geo­metry. Any other objects or styles that use this profile are also up­dated with the edited geometry. 
+save the changes to a new profile 
+select the profile, and click Edit In Place tab . Edits panel . Save As
+
+ . Enter a name for the new profile, and click OK. The opening uses the new profile to define its geometry. Other styles or objects that use the original profile are not affected. 
+Creating an Opening Tool 
+Use this procedure to create an opening tool and add it to a tool palette. You may want to create your own opening tools if you are placing multiple openings that have the same properties. 
+For example, you are creating a restaurant floor plan that contains openings of various sizes. To work efficiently, you can create an opening tool for each size. You can then select the appropriate tool to place openings in the floor plan. 
+1 Open the tool palette where you want to create a tool. 2 Create the tool: 
+If you want to… Then… 
+create a tool from an opening select the opening, and drag it to the in the drawing tool palette. 
+copy a tool in the current right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another  open the other tool palette, right-click  
+palette  the tool, and click Copy. Reopen the  
+palette where you want to add the tool,  
+right-click, and click Paste.  
+
+copy a tool from a tool catalog open the tool catalog in the Content Browser, and locate the tool you want to copy. Position the cursor over the i-drop handle, and drag the tool to the tool palette. 
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. This description is used as the tooltip on the tool palette, and to describe the tool if it is stored in a tool catalog. 
+6 Expand Basic, and expand General. 
+7 Enter a description of the opening that you can create using this opening tool. 
+8 If you do not want to use the default layer key for openings, select a layer key. 9 If you want to override the default layer name for openings, select a layer override. 
+10 Select a shape for the opening. To specify a custom shape, select Custom for Shape, and select the profile that provides the geometry of the shape for Profile. 
+11 Expand Dimensions. 
+12 Enter values for Width, Height, and Rise. Rise is available only for arch, gothic, peak pentagon, and trapezoid shapes. 
+13 Expand Location. 
+14 If you are placing the opening in a wall, specify the opening position: 
+If you want to… Then… 
+position the edge of the opening select Offset/Center for Position along at a specific distance from the wall, and enter a value for Automatic end of a wall segment offset. 
+center the opening on a wall  select Offset/Center for Position along  
+segment  wall, and specify a point near the  
+center of the wall segment.  
+
+position the opening anywhere select Unconstrained for Position along the wall along wall. 
+15 Specify whether you want the opening to be aligned vertically by sill height or by head height: 
+If you want to… Then… 
+align the opening by sill height select Sill for Vertical alignment, and enter a value for Sill height. 
+align the opening by head select Head for Vertical alignment, and height enter a value for Head height. 
+16 Click OK. 
+Editing Openings 
+After you create an opening, you can change the height, width, and rise. You can also change the endcap conditions applied to the opening. You can move the opening within the wall. 
+AutoCAD Architecture offers several methods for editing openings: 
+¦ 
+Edit openings directly using grips for dimensions and other physical characteristics. 
+
+¦ 
+For grip edit operations where you are changing a dimension or an angle, the Dynamic Input feature lets you enter a precise value instead of moving a grip. When this feature is active (click DYN on the application status bar), selecting a grip displays a text box in which you can enter the desired value for the associated dimension or angle. For more information, see “Use Dynamic Input” in AutoCAD Help. 
+
+¦ 
+Change settings on the Design tab of the Properties palette. You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+
+¦ 
+Select editing commands from the Opening context tab for a selected opening. 
+
+
+Using Grips to Edit Openings 
+You can use the following grips to edit openings: 
+Opening dimension grips 
+
+Grip Description Animation 
+
+Lets you change the width of an open-Changing the Opening Width with (Width) ing Grip Animation 
+
+Lets you change the Height of an Changing the Opening Height with
+ / 
+(Sill opening. You can choose if you want Grips Animation Height/Head to change the sill height or the head Height) height. 
+
+Lets you move an opening within a wall Changing the Location of an Open­
+(Location) 
+¦ 
+Drag the cursor to move the open-ing with Grips Animation ing along the length of the wall 
+
+¦ 
+Press CTRL and drag to move the opening within the width of the wall 
+
+¦ 
+Press CTRL twice and drag to move the opening vertically within the wall 
+
+
+
+Rise Rise applies to Peak Pentagon, Arch, and Gothic opening shapes. 
+Changing the Shape and Dimensions of an Opening 
+Use this procedure to change the shape and size of an opening. 
+1 Double-click the opening you want to change. 2 On the Properties palette, click the Design tab, expand Basic, and expand General. 3 Select a shape. To specify a custom shape, select Custom for Shape, and select the profile that provides the geometry of the shape for Profile. 
+4 Expand Dimensions. 5 Change the width, height, or rise for the opening. 
+Flipping an Opening along the X or Y Axis 
+Use this procedure to reorient an opening along its X or Y axis. 
+TIP You can also flip an opening along its X axis using the Flip grip that is displayed when you select an opening. 
+1 To flip an opening along the X axis, select the openings you want to change, right-click, and click Wall Anchor . Flip X. 
+Opening in original position, and flipped along its X axis 
+
+2 To flip an opening along the Y axis, select the openings, right-click, and click Wall Anchor . Flip Y. 
+Opening in original position, and flipped along its Y axis 
+
+Changing Endcap Style for an Opening 
+Use this procedure to change the opening endcap style used at each side of an opening. An endcap is a user-definable condition for the edges of an opening. For more information about opening endcap styles, see Working with Wall Endcaps and Opening Endcaps on page 1359. 
+1 Select the opening you want to change. 
+2 Click Opening tab . Endcap panel . Opening Endcap: drop-down menu. 
+3 Select an opening endcap style. Alternatively, you can change endcap styles on the Design tab of the Properties palette. 
+Applying Tool Properties to an Existing Opening 
+Use this procedure to apply the properties of an opening tool to one or more openings. 
+1 Open the tool palette that you want to use. If necessary, scroll to display the desired tool. 
+2 Right-click an opening tool, and click Apply Tool Properties to Opening. 
+3 Select the openings, and press ENTER. 
+4 Edit the properties of the openings in the Properties palette, if necessary. 
+Repositioning an Opening 
+Use this procedure to change the location of an opening along the wall by offsetting the opening from a reference location. 
+This feature is useful when you want to position an opening at a specified distance from another object. For example, you may want to specify an exact distance between a series of openings along a wall. 
+Repositioning an opening by offsetting points 
+1 Select the opening you want to move, and click Opening tab . Anchor panel . Reposition Along Wall
+ . A marker indicates the current location within the opening: left jamb, center of opening, or right jamb. 2 Specify how to measure the offset: 
+If you want to… Then… 
+measure the offset from the center select a point near the center of the of the opening opening. 
+measure the offset from the left or select a point on the jamb of the right jamb opening from which you want to measure. 
+Selecting the center of the opening for measuring the offset 
+
+3 Select a point to measure to (the reference point). You can select a point along the wall. 
+Specifying a reference point 
+
+4 Specify the distance between the points you selected: 
+If you want to… Then… 
+move the opening to the reference enter 0 (zero). point 
+move the opening a specified dis-enter a value for the offset distance. tance from the reference point 
+If you want to… Then… 
+specify the distance as a measure- specify the two points measuring  
+ment between two points, such as  the distance.  
+the distance between the centers  
+of two openings that are correctly  
+positioned  
+
+Opening repositioned along the wall 
+
+Using Anchors to Change the Position and Orientation of an Opening 
+When an opening is anchored to a wall, you can use the anchor to change position and orientation of the opening in relation to the wall. 
+Using Anchors to Change the Horizontal Position of an Opening 
+Use this procedure to change the horizontal position of openings along a wall to which the openings are anchored. 
+You can also change the horizontal position of the opening using the Location grip. For more information, see Using Grips to Edit Openings on page 2046. 
+Positioning an opening horizontally 
+
+1 Select the openings you want to change, and click Opening tab . Anchor panel . Settings
+ . Alternatively, you can access anchor settings on the Properties palette. 
+2 Select the reference point for the anchor along the X axis: 
+If you want to… Then… 
+use the start of the wall as the refer-under Position Along (X), select ence point Start of wall for From. 
+use the midpoint of the wall as the under Position Along (X), select reference point Midpoint of wall for From. 
+use the end of the wall as the refer-under Position Along (X), select End ence point of wall for From. 
+3 Enter the distance from the reference point at which to place the openings. Use a negative value to measure from endpoint to start point. 
+4 Select the position of the openings to measure to: 
+If you want to measure… Then… 
+to the start edge of the opening select Start edge of object for To. 
+to the center of the opening select Center of object for To. 
+to the end edge of the opening select End edge of object for To. 
+5 Click OK. 
+Using Anchors to Change the Vertical Position of an Opening 
+Use this procedure to change the vertical position of openings in a wall to which the openings are anchored. 
+You can also change the vertical position of the opening using the Location grip. For more information, see Using Grips to Edit Openings on page 2046. 
+Changing the vertical position of an opening 
+
+1 Select the openings you want to change, and click Opening tab . Anchor panel . Settings
+ . 
+Alternatively, you can access anchor settings on the Properties palette. 
+2 Select the reference point for the anchor along the Z axis: 
+If you want to… Then… 
+use the bottom of the wall height under Position Vertical (Z), select as the reference point Bottom of wall height for From. 
+use the center of the wall height as under Position Vertical (Z), select the reference point Center of wall height for From. 
+use the top of the wall height as the under Position Vertical (Z), select reference point Top of wall height for From. 
+3 Enter the distance from the reference point at which to place the openings. Use a negative value to measure from endpoint to start point. 4 Select the position of the openings to measure to: 
+If you want to… Then… 
+measure to the bottom of the select Sill of object for To. openings in wall 
+measure to the center of the open-select Center of object for To. ings in walls 
+measure to the top of the openings select Head of object for To. in walls 
+5 Click OK. 
+Changing the Position of an Opening Within a Wall 
+Use this procedure to change the horizontal position of openings within a wall to which the openings are anchored. 
+You can also change the position of the opening within a wall using the Location grip. For more information, see Using Grips to Edit Openings on page 2046. 
+Changing the position of an opening within a wall 
+
+1 Select the openings you want to change, and click Opening tab . Anchor panel . Settings
+ . Alternatively, you can access anchor settings on the Properties palette. 
+2 Select the reference point for the anchor along the Y axis: 
+If you want to… Then… 
+use the left edge of the wall as your under Position Within (Y), select Left reference point edge of wall width for From. 
+use the center of the wall as your under Position Within (Y), select reference point Center of wall width for From. 
+use the right edge of the wall as under Position Within (Y), select your reference point Right edge of wall width for From. 
+3 Enter the distance from the reference point at which to place the openings. Use a negative value to measure from endpoint to start point. 4 Select the position of the openings to measure to: 
+If you want to… Then… 
+measure to the front of the opening select Front of object for To. 
+measure to the center of the open-select Center of object for To. ing 
+measure to the back of the opening select Back of object for To. 
+5 Click OK. 
+Changing the Orientation of an Opening to a Wall 
+Use this procedure to change the vertical orientation of an opening in a wall to which the openings are anchored. 1 Select the opening you want to change, and click Opening 
+tab . Anchor panel . Settings
+ . Alternatively, you can access anchor settings on the Properties palette. 
+2 Enter the X and Z rotation angles of the openings. 3 Indicate if you want to reverse the flip direction of the opening in the X, Y or Z axes: 
+If you want to… Then… 
+reverse the direction of the opening select Flip X. 
+reverse the top and bottom of the select Flip Z. opening 
+reverse the position of the opening select Flip Y. in the side of the wall 
+4 Click OK. 
+Changing the Location of an Opening 
+Use this procedure to relocate a freestanding opening by changing the coordinate values of its insertion point. The opening also has an orientation with respect to the world coordinate system (WCS) or the current user coordinate system (UCS). For example, if the top and bottom of the opening are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the opening by aligning its normal with another axis. You can also rotate the opening on its plane by changing the rotation angle. 
+1 Double-click the opening, and on the Properties palette, expand Basic, and expand Location. 
+2 Click Additional information. 
+3 Specify a new location, orientation, or rotation angle: 
+If you want to… Then… 
+relocate the opening enter new coordinate values under Insertion Point. 
+locate the opening on the XY plane make the normal of the opening parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the opening on the YZ plane make the normal of the opening parallel to the X axis: under Normal, enter 1 for X and enter 0 for Y and Z. 
+locate the opening on the XZ plane make the normal of the opening parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the opening enter a new value for Rotation Angle. 
+4 Click OK. 
+Center an Opening Using Modify Tools 
+Use this procedure to center an opening on a specified axis or between any two specified points. 
+1 Select the opening to center. 
+2 Click Opening tab . Modify panel . Center
+ . 
+3 Select an existing axis line on which to center the opening, or press ENTER and then specify two points between which to center the opening. 
+Create an Opening Array Using Modify Tools 
+Use this procedure to create an array of identical openings along a wall. 
+1 Select the opening to array. 
+2 Click Opening tab . Modify panel . Array
+ . 
+3 Select an edge from which to start the array that is perpendicular to the array axis, then drag along your wall in the direction of the array. Do one of the following: 
+¦ 
+Offset: start the opening array a specified offset distance from the edge. 
+
+¦ 
+Clear Distance: specify a clear distance between each arrayed opening. 
+
+¦ 
+Pick Array Distance: specify a distance between arrayed openings. 
+
+¦ 
+Enter Count: specify the number of openings to appear in the array. 
+
+
+Alternatively, you can press ENTER and then specify two points 
+between which to array the opening. 
+Repositioning an Opening with Modify Tools 
+Use this procedure to reposition an opening. 
+1 Select the opening to reposition. 
+2 Click Opening tab . Modify panel . Reposition From
+ . 
+3 Select an existing wall edge from which to reposition the opening, or specify two points to define a reference edge. 
+Spacing Openings Evenly with Modify Tools 
+Use this procedure to space openings evenly along a wall. 
+1 Select the opening to space evenly. 
+2 Click Opening tab . Modify panel . Space Evenly
+ . 
+3 Select an edge as the axis along which to space all the openings evenly, and specify a start point and an endpoint along the edge. Alternatively, press ENTER and specify two points between which 
+the openings will be spaced evenly from each other. 
+Changing the Cut Plane Setting for an Opening 
+Use this procedure to specify whether a selected opening will use the cut plane of the containing object when anchored to that object in the current display representation. Note that cut plane display properties apply only to display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Double-click the opening. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display controlled by, select This 
+object. 
+NOTE To apply your changes to all openings in the drawing, select Drawing default setting. 
+4 For Display representation, verify that the desired display representation is selected. 
+5 If necessary, expand Object Display Properties . Cut Plane. 6 For Use cut plane of containing object when anchored, select Yes or No. 
+Specifying the Display of Sills for an Opening 
+Use this procedure to change the sill dimensions for an opening in the Sill Plan display representation. 
+1 Double-click the opening. 2 Click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all openings in the drawing, select Drawing default setting. 
+5 For Display representation, select Sill Plan. 
+6 If necessary, expand Object Display Properties . Advanced, and click 
+Sill dimensions. 
+7 On the Sill Dimensions worksheet, enter the sill extension and 
+depth dimensions. Sill components A and B are for the outside of the opening. Sill components C and D are for the interior side. 
+8 Click OK. 9 In the Display component drop-down list, click the light bulb icons next to individual sill components to turn their visibility on or off as desired. 
+You can also access and modify sill dimensions and visibility settings through the opening’s context menu, as follows: 
+1 Select the opening you want to change, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 4 Click the Other tab. Opening sill dimensions 
+
+5 Under Sill Dimensions, enter the sill extension and depth dimensions. 
+6 On the Layer/Color/Linetype tab, under Visible, click the light bulb icons to turn on visibility for individual sill display components as necessary. 
+7 Click OK twice. 
+Specifying the Display of Custom Block Components of an Opening 
+Use this procedure to specify the display of custom block components for an individual opening. If you are going to use custom graphics for a new component, draw the component and save it as a block before you start this procedure. 
+1 Double-click the opening. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all openings in the drawing, select Drawing default setting. 
+5 For Display representation, verify that the desired display representation is selected. 
+6 If necessary, expand Object Display Properties . Advanced, and 
+for Custom block display, click 
+(The number in parentheses indicates the number of blocks currently attached to the opening.) 7 If you want to turn off the display of custom blocks for this opening without removing them, select Disable Custom Blocks. 8 Specify whether to add, edit, or remove a block component: 
+If you want to… Then… 
+add a new block component click Add, and then click Select Block, select the block, and click OK. 
+edit an existing block component select the component to edit, and click Edit. 
+remove an existing block compon-select the block, click Remove, and ent click OK. 
+9 When adding or editing a block component, specify whether you want to scale to fit the block component to the object by width, depth, and height, or to lock the XY ratio: 
+If you want to… Then… 
+set the block scale to the width of select Width. the object 
+set the block scale to the depth of select Depth. the object 
+set the block scale to the height of select Height. the object 
+scale the whole block equally, so select Lock to XY Ratio. that one direction is scaled to fit another of the scale criteria 
+scale the block to its original size clear all options under Scale to Fit. 
+10 Specify whether to mirror the block in the X,Y, or Z direction: 
+If you want to create a mirror Then… of the block… 
+in the X direction select Mirror X. 
+in the Y direction select Mirror Y. 
+in the Z direction select Mirror Z. 
+11 Specify the X, Y, and Z locations of the insertion point. 12 Specify an insertion offset of the block in the X, Y, and Z directions. 13 Click OK twice. 
+Specifying the Display of Fill Type for an Opening 
+Use this procedure to specify the type of fill to display for an opening in display representations used in the Top view (plan view) of a drawing. 
+1 Double-click the opening. 
+2 Click the Display tab. 
+3 Under the General category, for Display component, verify that *NONE* is selected. 
+4 Under the General category, for Display controlled by, select This object. 
+NOTE To apply your changes to all openings in the drawing, select Drawing default setting. 
+5 For Display representation, verify that the desired display representation is selected. 
+6 If necessary, expand Object Display Properties . Advanced, and 
+click 
+Fill type. 7 On the Fill type worksheet, select the desired fill type. Opening fill types 
+
+8 Click OK. You can also access and modify frame display settings through the opening’s context menu, as follows: 1 Select the opening you want to change, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already selected, click 
+at the upper-right corner of the tab. 4 Click the Fill type tab. 5 Under Hatch Type, select the desired option. 
+6 Click OK twice. 
+Attaching Hyperlinks, Notes, and Files to an Opening 
+Use this procedure to enter notes and attach hyperlinks or reference files to an opening. You can also edit reference files attached to the style. 
+1 Double-click the opening to which you want to attach information. 
+2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click the setting for Hyperlink, specify the 
+link, and click OK. For more information, see “Add Hyperlinks to a Drawing” in AutoCAD help. 
+4 To add a note, click the setting for Notes, enter the note, and click OK. 
+5 Click the setting for Reference Docs. 
+6 Attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click OPEN. 
+edit the description of a reference select the description of the file, and file edit the description. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+7 Click OK. 
+Changing the Display Properties of Openings 
+You use the display properties of openings to control their appearance in a drawing. In addition, you can create custom components for openings by adding custom blocks to any display representation where you want the components to appear. 
+Specifying the Display Properties of an Opening 
+Use this procedure to change the properties of the following display components of an individual opening: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+NOTE Openings do not have material assignments. 
+1 Select the opening you want to change, right-click, and click Edit Object Display. 
+
+NOTE You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 4 Click the Layer/Color/Linetype tab. 5 Select the component to change, and select a different setting for 
+the property. 6 Click OK twice. 
+Specifying the Hatching of an Opening 
+Use this procedure to specify the hatching of the components of an opening. Hatching is displayed only in display representations used in the Top view (plan view) of a drawing. 
+1 Select the opening you want to change, right-click, and click Edit Object Display. 
+NOTE You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+2 Click the Display Properties tab. 3 Select the display representation in which to display the changes. 4 Specify whether changes apply to all openings, or only to the 
+selected opening: 
+If you want to… Then… 
+apply the hatching to all openings verify that Object Override is in the drawing 
+cleared, and click 
+. 
+apply the hatching only to the selec-select Object Override. If it is ted opening 
+already selected, click 
+. 
+The display representation in bold is the current one. 5 Click the Layer/Color/Linetype tab. 6 Verify that the Hatch display component is turned on. 7 Click the Hatching tab. 8 Click the setting for Pattern. 9 Select the hatching: 
+If you want to… Then… 
+select a hatching pattern that is select Predefined for Type, and then available in the software select a pattern. 
+select a custom pattern  select Custom for Type, and then  
+enter the name of the custom pat­ 
+
+If you want to… Then… 
+tern. If necessary, click Browse, and navigate to the folder where the custom pattern file is located. 
+select single hatching select User-Defined for Type, and clear Double Hatch. 
+select double hatching select User-Defined for Type, and select Double Hatch. 
+select solid fill select Solid Fill for Type. 
+10 Click OK. 11 Click Scale/Spacing, and enter a value that determines how the 
+selected pattern is repeated. 
+12 Click Angle, and enter the angle for the selected pattern. 
+13 Click Orientation, and specify how the hatching is oriented: 
+If you want to… Then… 
+orient the hatching to the object select Object. regardless of the object rotation 
+orient the hatching to the World select Global. Coordinate System 
+14 Click the Fill type tab. 
+15 Select a graphic representation to use for hatching the opening. Specifying hatching graphics for openings 
+
+16 Click OK twice. 
+Using Custom Blocks to Create Opening Components 
+You can add custom blocks for components, such as hardware, to the display components or to replace the default display components. You can have a different custom block for each display representation. 
+You can specify several rules for positioning and scaling the new component. Each custom block also appears in the display properties component list so that you can control its layer, color, and linetype. 
+If you create a custom block from mass elements, you can use the material assignments of the mass elements to determine the display properties of the custom block. 
+Be sure to set the properties of the objects used to create your custom blocks to ByBlock. Otherwise, you cannot control these objects through the display properties. For more information, see “Control the Color and Linetype Properties in Blocks” in AutoCAD help 
+Adding Components to an Opening 
+Use this procedure to add or edit custom block components in the display representation of openings. 
+1 Create a block for the component to add to the opening. Create the block in the same plane as the opening. 
+2 Select the opening you want to change, right-click, and click Edit Object Display. 
+3 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+4 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 
+5 Click the Other tab. 
+6 Specify whether to add or edit a block component: 
+If you want to… Then… 
+add a new block component click Add. 
+edit an existing block component select the component to edit, and click Edit. Proceed to step 10. 
+7 Click Select Block. 8 Select the block to use, and click OK. 9 Specify whether you want to scale to fit the block component to 
+the object by width, depth, and height, or to lock the XY ratio: 
+If you want to… Then… 
+set the block scale to the width of select Width. the object 
+set the block scale to the depth of select Depth. the object 
+set the block scale to the height of select Height. the object 
+scale the whole block equally, so select Lock XY Ratio. that one direction is scaled to fit another of the scale criteria 
+scale the block to its original size clear all options under Scale to Fit. 
+10 Specify whether to mirror the block in the X,Y, or Z direction: 
+If you want to… Then… 
+create a mirror of the block in the select Mirror X. X direction 
+create a mirror of the block in the select Mirror Y. Y direction 
+create a mirror of the block in the select Mirror Z. Z direction 
+11 Specify the X, Y, and Z location of the insertion point. 12 Specify an insertion offset of the block in the X, Y, and Z directions. 13 Click OK three times. 
+Turning Off Custom Components in an Opening 
+Use this procedure to turn off custom blocks in an opening. 
+You can turn off the display of component blocks without removing them from the opening. 
+1 Select the opening you want to change, right-click, and click Edit Object Display. 
+2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 
+4 Click the Other tab. 
+5 Select Disable Custom Blocks. 
+6 Click OK twice. 
+Removing Custom Components from an Opening 
+Use this procedure to remove components from an opening. 
+Removing custom blocks deletes them from the opening. 
+1 Select the opening you want to change, right-click, and click Edit Object Display. 
+2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 
+4 Click the Other tab. 
+5 Select the component to remove, and click Remove. 
+6 Click OK twice. 
+Stairs 
+27 
+Stairs are AEC objects that use flights of treads and risers to accommodate vertical circulation. Stairs also interact with railing objects. You can control the style of the stair, the shape of the landing, the type of treads, and the height and width of the stair run. 
+Stairs 
+Stairs are AEC objects that use flights of treads and risers to accommodate vertical circulation. Stairs also interact with railing objects. You can control the style of the stair, the shape of the landing, the type of treads, and the height and width of the stair run. 
+Stair Shapes 
+While strictly rectangular stairs are predominant in modern buildings, in some cases the edges of a flight are not parallel, or they might be curved. Landings can also be non rectangular. Stairs allow the use of nearly arbitrary profiles for the edges of flights and landings. In addition, railings and stringers can be anchored to stairs and can follow the edges of flights and landings. You can create custom stairs from linework or profiles to model different conditions as well. 
+Landings and Turns 
+Stairs are created at a specified overall height that requires a total length based on the tread length. Within that length, you can place landings or turns. When you begin to create a stairway, a rectangular box is displayed that represents the width and length of the stair as if it were a straight stairway. As you select consecutive points, depending upon the shape of the stair, landings and turns are created. 
+Materials in Stairs 
+In AutoCAD Architecture, you can assign materials to a stair. These materials are displayed in the Realistic visual style, or when rendered. Materials have specific settings for the physical components of a stair, such as risers, nosing, and treads. 
+Viewing a stair in different visual styles 
+
+AutoCAD Architecture provides a number of predefined materials for common design purposes, which contain settings for stair components. You can use predefined materials, or modify them for your designs. You can also create your own materials. Object styles provided with the software have appropriate materials already assigned to them. For more information, see Stair Materials and Display Components on page 2261. 
+Solution Tips for Stairs 
+When AutoCAD Architecture detects a problem with the way a stair object is drawn, it displays a solution tip icon on the stair in the drawing. 
+Stair with solution tip icon 
+
+Move the cursor over the icon to display a message that describes the problem and provides one or more possible solutions. Where more detailed instructions are required, you can press F1 to access the relevant topic in Help. 
+Stair with solution tip 
+
+A number of the solution tips for stair objects identify an invalid configuration for a particular type of stair. The F1 links for these tips bring you to this topic and the following table, which shows and describes the different types of stairs you can draw in AutoCAD Architecture. Follow the associated links to specific instructions for drawing each type of stair. 
+Stair 2D Stair 3D Stair Turn How to Draw View View Shape Type 
+
+Straight None Specify flight start and endpoints. For more information, see Creating a Straight Stair with User-Specified Set­
+tings on page 2080. 
+
+U­ 1/2  Specify flight start and endpoints. For  
+shaped  land- more information, see Creating a U­
+ 
+ing  Shaped Stair with User-Specified Set­
+ 
+tings on page 2095.  
+
+
+U­ 1/2  Specify flight start and endpoints. For  
+shaped  turn  more information, see Creating a U- 
+Shaped Stair with User-Specified Set­
+ 
+tings on page 2095.  
+
+
+Multi­ 1/2  Specify first flight start and endpoints;  
+landing  land- specify next flight start and endpoints.  
+ing  For more information, see Creating a  
+Multi-Landing Stair with User-Specified  
+Settings on page 2085.  
+
+
+Multi­ 1/2  
+landing  land­ 
+(straight)  ing  
+
+Specify first flight start and endpoints; specify next flight start and endpoints. For more information, see Creating a Multi-Landing Stair with User-Specified Settings on page 2085. 
+Stair 2D Stair 3D Stair Turn How to Draw View View Shape Type 
+
+Multi-1/2 landing turn Specify first flight start and endpoints; specify next flight start and endpoints 
+- draw in one direction only. For more information, see Creating a Multi-Landing Stair with User-Specified Set­
+tings on page 2085. 
+
+Multi­ 1/4  
+landing  land­ 
+ing  
+
+Specify first flight start and endpoints; specify next flight endpoint; specify next flight endpoint. For more inform­ation, see Creating a Multi-Landing Stair with User-Specified Settings on page 2085. 
+
+Multi-1/4 landing turn Specify first flight start and endpoints; specify next flight endpoint; specify next flight endpoint. For more inform­ation, see Creating a Multi-Landing Stair with User-Specified Settings on page 2085. 
+
+Spiral None Specify center of spiral stair; specify start point. For more information, see 
+Creating a Spiral Stair with User-Spe­
+cified Settings on page 2102. 
+
+Custom None stair (from line-work) Draw custom stair linework; select left and right sides; select stair path; select left, right, and center stringer paths; select first tread at current level; select remaining treads. For more informa­tion, see Creating a Custom Stair from Linework on page 2109. 
+Stair 2D Stair 3D Stair Turn How to Draw View View Shape Type 
+
+Custom None stair (from tread profile) Draw custom tread profile; array tread profile; select stair path; select left, right, and center stringer paths; select first tread profile at current level; select remaining tread profiles. For more in­formation, see Creating a Custom Stair from Tread Profiles on page 2113. 
+
+Anchor None Stair to Landing Draw multi-landing stair; draw straight stair; select multi-landing stair; anchor straight stair to multi-landing stair landing. For more information, see Anchoring a Stair to a Landing on page 2179. 
+Specifying AEC Options for Stairs 
+Use this procedure to specify parameters and options for stairs that are not specified in the stair styles or display properties. These options are on the AEC Object Settings tab of the Options dialog box: 
+¦ 
+Presentation format 
+
+¦ 
+Node Osnaps 
+
+¦ 
+Flight height measurement 
+
+¦ 
+Calculator limits 
+
+
+1 Click 
+. Options. 2 Click the AEC Object Settings tab. 3 Specify the stair defaults: 
+If you want to… Then… 
+display the stair with no cut lines or select Presentation Format (No Cut path Lines or Path). 
+If you want to… Then… 
+use Node Osnap to select the select Flight & Landing Corners for corners of the stairs and landings Node Osnap. 
+specify the stair height distance select Vertical Alignment for Node above the start of the stair and be-Osnap. low the end of the stair as the posi­tion for the Node Osnap 
+include top and bottom offsets in select Finished Floor to Floor for the stair height measurement Measure Stair Height. 
+ignore top and bottom offsets in select Rough Floor to Floor for the stair height measurement Measure Stair Height. 
+display the stair with a solution tip select Strict for Calculator Limits. icon when an edit causes it to viol­ate the calculation limits set in the Calculation Rules tab of the Stair Style dialog box 
+display the stair normally when an select Relaxed for Calculator Limits. edit causes it to violate the calcula­tion limits set in the Calculation Rules tab of the Stair Style dialog box 
+NOTE The Calculator Limits setting is stored with the drawing. Some earlier versions of the software have the Calculator limits set to Relaxed by default. Any new drawing has it set to Strict by default. 
+4 Click OK. 
+Using Stair Tools to Create Stairs 
+Tools provided with AutoCAD Architecture let you quickly place stairs using a stair tool with a specific stair style and other predefined properties. You can use the default settings of the tool, or you can change the properties that are not controlled by the style. 
+The following catalogs provided with the software contain stair tools that you can add to your tool palettes: 
+¦ 
+Stock Tool catalog 
+
+¦ 
+AutoCAD Architecture Sample Palette catalog 
+
+¦ 
+Design Tool catalog 
+
+
+Custom palettes created by your CAD manager or other users may also contain stair tools with stair styles and properties that are customized for your projects or office standards. 
+Creating a Stair 
+Use this procedure to add a new stair that has the properties specified in the stair tool that you select. To specify settings when you add a stair, see Creating a Straight Stair with User-Specified Settings on page 2080. 
+1 Open the tool palette that you want to use, and select a stair tool. If necessary, scroll to display the tool that you want to use. 
+NOTE Alternatively, you can create stairs by clicking Home tab . Build panel . Stair drop-down . Stair
+ . 
+2 Specify the insertion point of the stair. You can move or hide the Properties palette to expose more of the drawing area. 3 Specify the direction point of the stair. The stair is created at the length necessary to accommodate the values specified. 4 Continue adding stairs, and press ENTER. 
+Creating a Straight Stair with User-Specified Settings 
+Use this procedure to add a straight stair with settings that you specify. 
+Creating a straight stair 
+
+TIP To ensure that the Properties palette is displayed before you select a tool, click Home tab . Build panel . Tools drop-down . Properties. 
+1 Open the tool palette that you want to use, and select a stair tool. If necessary, scroll to display the tool that you want to use. 
+NOTE Alternatively, click Home tab . Build panel . Stair drop-down . Stair
+ . 
+2 On the Properties palette, click the Design tab, expand Basic, and expand General. 
+3 Select a style. 
+4 For Shape, select Straight. 
+5 Specify the vertical orientation of the stair: 
+If you want to… Then… 
+draw the stair from this floor to the select Up for Vertical Orientation. floor above 
+If you want to… Then… 
+draw the stair from this floor to the select Down for Vertical Orienta­floor below tion. 
+6 Expand Dimensions. 7 Specify stair width, height, and justification: 
+If you want to… Then… 
+specify the width of the stair enter a value for Width. 
+specify the height of the stair enter a value for Height. 
+specify the justification of the stair enter a value for Justify. The Justify value controls the insertion point when you place the stair (left, cen­ter, or right) at the beginning of the stair run. 
+8 Specify the stair termination: 
+If you want to… Then… 
+end the stair run with a riser select Riser for Terminate with. 
+
+NOTE Stairs that end with a riser will have an overall height that is one tread thickness less than the floor-to-floor height specified. 
+If you want to… Then… 
+end the stair run with a tread select Tread for Terminate with. 
+
+end the stair run with a landing select Landing for Terminate with. 
+
+9 Click 
+next to Calculation rules, and 
+if you want to… then… 
+specify the overall linear length of the stair 
+enter values for Straight Length, and Riser Count, then click OK. 
+¦ 
+When Straight Length is set to
+
+
+ (automatic), the value is calculated based on the tread size and riser count. 
+
+¦ 
+When Straight Length is (user-defined), the stair length is equal to the dimension entered, and the other three values are adjusted within the code limits. 
+
+¦ When Riser Count is 
+(user­defined), the tread depth is in­creased or decreased to accom­modate the stair. 
+
+
+if you want to… then… 
+specify the total number of stair risers 
+enter a value for Riser Count, then click OK. 
+¦ 
+When Riser Count is set to (automatic), the number of risers is based on the overall length and overall height of the stair and the code limits spe­cified on the Design Rules tab. The Straight Length value of the stair is adjusted automatic­ally. 
+
+¦ 
+When Riser Count is set to (user-defined), you can specify a value that is used to calculate the tread depth and riser height. If these values fall out­side the stair limits, an error message is displayed. 
+
+
+
+
+specify the height of each riser in set all fields to 
+(automatic),the stair flight click the icon to Riser to change it 
+to 
+(user-defined) and enter a value for Riser. Click OK. 
+specify the tread depth for each set all fields to 
+(automatic),tread in the stair flight click the icon next to Tread to 
+change it to 
+(user-defined), and enter a tread depth value. You can also specify the Riser Count when you set the tread depth. 
+NOTE If a value is set to user-defined on the Calculation rules worksheet, it can be modified directly in the Properties palette. 
+NOTE If 
+is displayed next to a field in the Calculation Rules dialog box, that field can’t be changed until another field is changed from
+
+ (user-defined) to 
+(automatic). 
+10 In the drawing area, specify the insertion point of the stair. You can move or hide the Properties palette to expose more of the drawing area. 
+11 Specify the endpoint of the stair. 12 Continue adding stairs, or press ENTER. 
+Creating a Multi-Landing Stair with User-Specified Settings 
+Use this procedure to create a multi-landing stair. You can use multi-landing stair shapes to define both straight and angled stair runs. You can insert quarter-landings, half-landings, and turns. 
+This type of stair is constrained by the design rules on the stair and the floor-to-floor height. For more information about stair design rules, see Specifying the Design Rules of a Stair Style on page 2249. 
+If you are drawing the risers or flights of a stair, lines for each tread are shown. If you are drawing a flat landing, no tread lines are shown. If you are drawing a turn-type landing, angled tread lines are shown through the turn. These temporary lines do not necessarily represent the actual locations of tread lines in the final stair. In addition, the number of risers currently added to the stair is displayed (to the left of the stair), as a fraction of the total number of risers required for the stair; for example, “10/18.” 
+NOTE To create a straight stair with user-specified landings, use the multi-landing shape with half-landings. Select all the points in a straight line to define the flight start points and flight endpoints. 
+Creating a multi-landing stair with 1/4 landings 
+
+TIP To ensure that the Properties palette is displayed before you select a tool, click Home tab . Build panel . Tools drop-down . Properties. 
+1 Open the tool palette that you want to use, and select a stair tool. If necessary, scroll to display the tool that you want to use. 
+NOTE Alternatively, click Home tab . Build panel . Stair drop-down . Stair
+ . 
+2 On the Properties palette, click the Design tab, expand Basic, and expand General. 
+3 Select a style. 
+

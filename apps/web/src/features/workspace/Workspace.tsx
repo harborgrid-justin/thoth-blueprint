@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { Layers, Mountain, Ruler, SlidersHorizontal } from "lucide-react";
+import { Layers, Mountain, Ruler, SlidersHorizontal, HardHat } from "lucide-react";
 import { api, type Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
@@ -29,6 +29,13 @@ import { CommandPalette } from "@/features/command/CommandPalette";
 import { ShortcutsDialog } from "@/features/command/ShortcutsDialog";
 import { PreferencesDialog } from "@/features/preferences/PreferencesDialog";
 import { FindPanel } from "@/features/find/FindPanel";
+import { QtoPanel } from "./QtoPanel";
+import { ProfileSectionDialog } from "@/features/survey/ProfileSectionDialog";
+import { PipeDesignDialog } from "@/features/survey/PipeDesignDialog";
+import { PlanProductionWizard } from "@/features/survey/PlanProductionWizard";
+import { SuperelevationWizardDialog } from "@/features/survey/SuperelevationWizardDialog";
+import { CorridorDesignerDialog } from "@/features/survey/CorridorDesignerDialog";
+import { GradingSolverDialog } from "@/features/survey/GradingSolverDialog";
 import type { CommandActions } from "@/features/command/commands";
 
 /** Tool single-letter shortcuts (e.g. "v" → select), for keyboard-first drawing. */
@@ -240,18 +247,21 @@ export function Workspace() {
           </main>
           <aside className="flex w-[320px] shrink-0 flex-col border-l border-border bg-card">
             <Tabs value={tab} onValueChange={setTab} className="flex min-h-0 flex-1 flex-col">
-              <TabsList className="m-2 grid grid-cols-4">
+              <TabsList className="m-2 grid grid-cols-5">
                 <TabsTrigger value="inspect">
-                  <SlidersHorizontal /> Inspect
+                  <SlidersHorizontal className="h-3 w-3" /> Inspect
                 </TabsTrigger>
                 <TabsTrigger value="layers">
-                  <Layers /> Layers
+                  <Layers className="h-3 w-3" /> Layers
                 </TabsTrigger>
                 <TabsTrigger value="terrain">
-                  <Mountain /> Terrain
+                  <Mountain className="h-3 w-3" /> Terrain
                 </TabsTrigger>
                 <TabsTrigger value="metrics">
-                  <Ruler /> Metrics
+                  <Ruler className="h-3 w-3" /> Metrics
+                </TabsTrigger>
+                <TabsTrigger value="qto">
+                  <HardHat className="h-3 w-3" /> QTO
                 </TabsTrigger>
               </TabsList>
               <ScrollArea className="min-h-0 flex-1">
@@ -267,6 +277,9 @@ export function Workspace() {
                 <TabsContent value="metrics" className="mt-0">
                   <MetricsPanel />
                 </TabsContent>
+                <TabsContent value="qto" className="mt-0">
+                  <QtoPanel />
+                </TabsContent>
               </ScrollArea>
             </Tabs>
           </aside>
@@ -274,6 +287,12 @@ export function Workspace() {
         <CheckpointsDialog open={checkpointsOpen} onOpenChange={setCheckpointsOpen} />
         <PlatReportDialog />
         <AlignmentReportDialog />
+        <ProfileSectionDialog />
+        <PipeDesignDialog />
+        <PlanProductionWizard />
+        <SuperelevationWizardDialog />
+        <CorridorDesignerDialog />
+        <GradingSolverDialog />
         <PlatSheetDialog />
         <SheetSetDialog />
         <CommandPalette actions={commandActions} />

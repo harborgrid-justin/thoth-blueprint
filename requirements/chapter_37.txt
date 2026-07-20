@@ -1,0 +1,321 @@
+[MIGRATED TO RTM_PART_82.md - MASK BLOCK CLIPPING]
+[MIGRATED TO RTM_PART_64.md - MASK BLOCKS]
+¦ Change how a mask block is displayed. 
+Using Grips to Move Mask Blocks 
+Use this procedure to change the location of a mask block with grips. 1 Select the mask block. 2 Select the highlighted grip. Viewing Mask Block Location grip 
+
+3 Move the grip until the door is in the desired location, and click once. 
+Changing the Location of a Mask Block 
+Use this procedure to change the rotation, elevation, and location of the mask block on the Properties palette. 
+You can relocate a mask block by changing the coordinate values of its insertion point. The mask block also has an orientation with respect to the WCS or the current UCS. For example, if the top and bottom of the mask block are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the mask block by aligning its normal with another axis. You can also rotate the mask block on its plane by changing the rotation angle. 
+For information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use Coordinates and Coordinate Systems” in AutoCAD Help. 
+TIP The quickest way to locate and view an AutoCAD topic referenced in AutoCAD Architecture Help is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+1 Double-click the mask block you want to change. 2 On the Properties palette, expand Basic, and expand Location. 
+3 Specify the placement of the mask block: 
+If you want to… Then… 
+change the rotation enter a new value for Rotation Angle. 
+change the elevation enter a new value for Elevation. 
+4 Click Additional information to specify location of the mask block: 
+If you want to… Then… 
+relocate the mask block enter new coordinate values under Insertion Point. 
+locate the mask block on the XY make the normal of the mask block 
+plane parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the mask block on the YZ make the normal of the mask block 
+plane parallel to the X axis: under Normal, enter 1 for X and enter 0 for Y and Z. 
+locate the mask block on the XZ make the normal of the mask block 
+plane parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the mask enter a new value for Rotation block Angle. 
+Editing the Profile of a Mask Block 
+Use this procedure to edit the geometry of a mask block. 
+NOTE If you want to replace the geometry of the mask block with newly drawn polylines, ellipses, or circles, draw them before you start this procedure. 
+1 Select the mask block that you want to change. 
+2 Click Mask Block Reference tab . Modify panel . Edit In Place
+
+ . 3 If prompted that the profile is not drawn to size, click Yes. A temporary profile is created for you to edit the geometry of the mask block. 
+4 NOTE After you perform an editing task from the Edit in Place tab, you may need to select the profile again to perform another editing task. If you do not see the editing commands that you expect on the ribbon, reselect the profile, then choose the Edit in Place command again. 
+Edit the profile: 
+If you want to… Then… 
+change the shape of the perimeter of the profile or its rings 
+select the profile, and use edge or vertex grips to adjust the shape. The Edge grip has two edit modes: Stretch and Move. The default mode is Stretch, and the direction of the stretch depends on the orient­ation of edges connected to the selected edge. For example, if the edges at both ends of the selected edge are parallel, the grip edit mode is Stretch (Parallel) and the stretch direction is limited to the direction of the parallel edges. If the connected edges are not parallel, the grip edit mode is Stretch (Off­set) and the stretch direction is perpendicular to the direction of the selected edge. The Move edit mode allows an unconstrained move of the selected edge. 
+add vertices to the profile Click Edit In Place tab . Profile 
+panel . Add Vertex 
+. Select a point for each new vertex, and press ENTER. 
+If you want to… Then… 
+remove vertices from the profile Click Edit In Place tab . Profile 
+panel . Remove Vertex 
+. Select each vertex to remove, and press ENTER. 
+replace an existing ring of the pro- Click Edit In Place tab . Profile  
+file with new geometry  panel . Replace Ring  . Select  
+the ring to replace, and select the  
+new geometry. Press ENTER to keep  
+the geometry, or enter n (No) to  
+erase it.  
+
+add a ring to the profile Click Edit In Place tab . Profile 
+panel . Add Ring 
+. Select the geometry to define the ring. Press ENTER to keep the geometry, or enter n (No) to erase it. 
+remove a ring from the profile Click Edit In Place tab . Profile 
+panel . Remove Ring 
+. Select the ring to remove, and press ENTER. 
+5 Save or discard the changes: 
+If you want to… Then… 
+restore the mask block to its original Click Edit In Place tab . Edits pan-shape 
+el . Cancel 
+. 
+save the changes to the current Click Edit In Place tab . Edits pan-
+mask block el . Finish 
+. The mask block uses the edited profile to define its geometry. Any other objects or styles that use this profile are also updated with the edited geometry. 
+Applying Tool Properties to an Existing Mask Block Reference 
+Use this procedure to apply the properties of a mask block tool to one or more existing mask blocks. The properties include the mask block definition and any other settings specified in the tool you select. 
+1 Open the tool palette that you want to use. If necessary, scroll to display the tool that you want to use. 
+2 Right-click a mask block tool, and click Apply Tool Properties to Mask Block Reference. 
+3 Select the mask block reference, and press ENTER. 
+4 Edit the properties of the mask blocks in the Properties palette, if necessary. 
+Changing Display Properties of Mask Blocks 
+In most cases, you want the appearance of objects that belong to the same style to be consistent throughout a drawing. To achieve this, you specify the display properties of the mask blocks in each mask block definition style. However, in certain instances, you may need to override a display property for an individual mask block to achieve a specific result. All the display properties that you can specify in mask block definition styles are available for individual mask blocks: 
+¦ 
+The visibility of mask block components 
+
+¦ 
+The layer, color, and linetype of mask block components 
+
+¦ 
+The lineweight, linetype scale, and plot style of mask block components 
+
+
+NOTE If the mask block is attached to a grid, you can change the anchor properties as well. 
+When you change the display properties of a mask block, the changes apply only to that mask block. Other mask blocks of the same definition style are not affected. To change the display properties of all mask blocks of a specific definition style, see Creating Mask Block Definitions on page 2832. 
+Changing the Display Properties of a Mask Block 
+Use this procedure to change any of the following properties of the display components of an individual mask block: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+1 Select the mask block you want to change, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the display representation where you want the changes to 
+appear, and select Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 5 Click the Layer/Color/Linetype tab. 6 Select the component to change, and select a different setting for 
+the property. 7 Click OK twice. 
+Attaching Hyperlinks, Notes, and Files to a Mask Block 
+Use this procedure to attach hyperlinks, enter notes, or attach reference files to a mask block in a drawing. You can also edit notes and edit or detach reference files from a mask block. 
+1 Double-click the mask block to which you want to attach information. 2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click 
+next to Hyperlink, and specify the link. 
+For more information about adding hyperlinks, see “Add Hyperlinks to a Drawing” in AutoCAD Help. 
+4 To add or edit a note, click 
+next to Notes, enter text, and click OK. 
+5 To attach, detach, or edit a reference file, click 
+next to Reference documents: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+Multi-View Blocks 
+38 
+A multi-view block is an AutoCAD Architecture object that can have different representations in different view directions. You create a multi-view block from AutoCAD blocks that represent the different views of the custom object that you are creating. 
+Multi-View Blocks 
+A multi-view block is an AutoCAD Architecture object that can have different representations in different view directions. You create a multi-view block from AutoCAD blocks that represent the different views of the custom object that you are creating. 
+Understanding Multi-View Blocks 
+Multi-view blocks can represent different types of objects in AutoCAD Architecture. They are typically used to represent the following items: 
+¦ 
+Furniture and fixtures, such as tables and kitchen sinks 
+
+¦ 
+Annotation components, such as revision clouds or fire rating signs 
+
+¦ 
+Schedule tags, such as door numbers 
+
+
+Multi-view blocks can be displayed differently in each view direction and each display representation. For example, the top view of a multi-view block representing a kitchen sink shows the top of the sink; the bottom view shows the bottom of the sink; and there are representations for left, right, front, and back views. Additionally, you can define a different group of displays for each display representation, so that you can have one set of views for Plan view and another for Reflected view. 
+
+You can use a multi-view block as a cutout in objects such as walls, slabs, and curtain walls. You create a view block to represent the cutting body. The block forms the body that will be subtracted from objects by applying the multi-view block as interference. For example, you can create a skylight as a multi-view block and specify the block as a subtractive Boolean in a slab. 
+Predefined Multi-View Blocks 
+The content folders of AutoCAD Architecture contain predefined multi-view blocks for various design purposes, such as furniture, electrical appliances, annotation symbols, schedule tags, and other useful elements. You can access these multi-view blocks from DesignCenter™. For more information, see AEC Content and DesignCenter on page 3869. 
+Creating Multi-View Block Definitions 
+Each multi-view block in a drawing is based on a definition that specifies the display representations in which the block can be viewed, as well as the views available in each representation. From a multi-view block definition, you can create as many multi-view blocks as you need. 
+Multi-view blocks typically represent 3D architectural objects. For example, you can create customized cabinetry by drawing plan, elevation, and model views, and saving each view as an individual AutoCAD block. You assign each block to a view when you create the multi-view block definition. The blocks (top, bottom, front, back, left, right, and model views) are used to define the custom object as a single multi-view block. Prior to defining the block, you can add points on the Defpoints layer to identify additional insertion points for the view block. You set the display representations and view directions in the process of defining the multi-view block. 
+You can see the individual blocks of your custom object as one assembly in plan, elevation, and isometric views after inserting them in the drawing as a multi-view block. For more information about working with blocks, see “Overview of Blocks” in AutoCAD Help. For more information about display representations, see Display Representations on page 789. 
+TIP The quickest way to locate and view an AutoCAD topic referenced in AutoCAD Architecture Help is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+Process Overview: Creating Multi-View Block Definitions 
+There are four general steps for creating a multi-view block: 
+1 Create a set of view blocks for each view direction in every display 
+representation you need. For example, if you need a multi-view block definition that displays in Model view and Reflected Plan view, create a set of views for each representation. You create views only for those view directions where you want a different result. For example, if the top and bottom views are supposed to look the same in the Reflected Plan display representation, you draw the view block only once, and assign it to both view directions. 
+2 Create a multi-view block definition in which you assign the view blocks to view directions in individual display representations. 
+3 If you want the new multi-view block definition to be available through DesignCenter™, add the definition to DesignCenter. 
+4 If you want the new multi-view block definition to be available from a tool palette, add it to a palette. 
+Creating View Blocks 
+Use this procedure to create AutoCAD blocks to represent each view of the multi-view block definition in display representations. 
+1 Draw the views you need for a specific display representation: 
+If you want to… Then… 
+create views for the front and back draw them on the XZ plane. directions 
+If you want to… Then… 
+create views for the left and right draw them on the YZ plane. directions 
+create views for the top and bottom draw them on the XY plane. directions 
+create a block for an interference create a block containing objects, condition such as mass elements, to be used as the subtractive body. 
+2 Specify additional insertion points on the Defpoints layer through the AutoCAD point command, if necessary. 
+NOTE The points added to view blocks are cumulative. For example, if you add one point to a view block used for the top view and two points to the view block used for the model view, you have a total of four points to cycle through. The fourth point is the regular base point defined during the creation of the block. 
+3 Select the World Coordinate System before making blocks from 
+these individual views. For more information about coordinate systems, see “Use Coordinates and Coordinate Systems” in AutoCAD Help. 
+4 Define each view as a block, and coordinate the location of the insertion base point as you define each block. For example, if you specify the insertion base point of the model view block as the midpoint of the bottom edge on the back side, the front and back view blocks have an insertion base point at the midpoint of the bottom edge. Then, the left and right view blocks have an insertion base point at the bottom corner on the back side, with the insertion base point for the top and bottom view blocks at the midpoint of the back edge. 
+For more information about blocks, see “Create and Use Blocks (Symbols)” in AutoCAD Help. 
+Creating individual blocks for multi-view block definition 
+
+TIP It is helpful to have a naming convention for saving views as blocks. For example, name the plan view block desk-p, and name the right view block desk-r. 
+Creating a New Multi-View Block Definition 
+Use this procedure to create a multi-view block definition from the view blocks you created to represent different views of a custom object. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Multi-Purpose Objects. 3 Right-click Multi-View Block Definitions, and click New. 4 Enter a name for the new multi-view block definition, and press 
+ENTER. 
+5 Edit the new multi-view block definition: 
+If you want to… Then… 
+connect view blocks to the view see Connecting View Blocks to View directions of the different display Directions on page 2860. representations 
+add notes and files to the multi-see Attaching Notes and Files to a view block definition Multi-View Block Definition on page 2862. 
+add classifications to a multi-view see Adding Classifications to a block definition Multi-View Block Definition on page 2863. 
+specify a cut body for the multi- click Set Interference Block, select  
+view block when the block is used  a block, and click OK.  
+as interference in other objects (for  
+example, walls, curtain walls,  
+spaces, slabs)  
+
+6 Click OK. 
+Connecting View Blocks to View Directions 
+Use this procedure to connect view blocks to the view directions of individual display representations. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Expand Multi-Purpose Objects, and expand Multi-View Block Definitions. 
+NOTE Alternatively, you can select a multi-view block in the drawing, and click Multi-View Block tab . General panel . Edit Style 
+drop-down . Multi-View Block Definitions
+ . 
+3 Select the multi-view block definition to which you want to connect view blocks. 
+
+4 Click the View Blocks tab. 
+5 Select the display representation to which to connect view blocks. 
+Six display representations are available for multi-view blocks: 
+Display Representation Purpose 
+General Plan views, Section views, and Sketch views 
+Model Model views 
+Plan Plan views 
+Plan High Detail Plan High Detail views 
+Plan Low Detail Plan Low Detail views 
+Reflected Reflected views 
+6 Click Add, and select a view block for the display representation. 7 Click OK. 8 Select the view directions that correspond to the selected block. 
+For example, to connect the view block to the left side of the multi-view block definition, select Left and clear all other directions. 
+You can connect a view block to multiple view directions. For example, if you have a symmetrical element that looks identical from left and right, you can select Left and Right. 
+The Other view direction represents a view that displays the block three-dimensionally. It is used for non-orthogonal (isometric or perspective) views of the custom object. 
+To ensure that the multi-view block is visible in all views, assign a block to every view direction. 
+9 To specify view blocks in other display representations, continue from step 5. 10 Click OK. 
+Defining a Multi-View Block Definition as Bounding for Associative Spaces 
+Use this procedure to define a multi-view block definition that can bound associative spaces. 
+When a multi-view block definition is set as bounding, by default all multi-view blocks that have the definition assigned will be used in the selection set for an associative space. For more information about associative spaces see Generating Associative Spaces on page 2904. 
+You can override the bounding settings from the multi-view block definition in an individual multi-view block, if necessary. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Expand Multi-Purpose Objects, and expand Multi-View Block Definitions. 
+NOTE Alternatively, you can select a multi-view block in the drawing, and click Multi-View Block tab . General panel . Edit Style 
+drop-down . Multi-View Block Definition
+ . 
+3 Select a multi-view block definition. 4 Click the General tab. 5 Select the check mark for Objects of this style may act as a 
+boundary for associative spaces. 6 Click OK. 
+Attaching Notes and Files to a Multi-View Block Definition 
+Use this procedure to enter notes and attach reference files to a multi-view block definition. You can also edit notes and edit or detach reference files from a multi-view block. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Multi-Purpose Objects, and expand Multi-View Block Definitions. 
+NOTE Alternatively, you can select a multi-view block in the drawing, and click Multi-View Block tab . General panel . Edit Style 
+drop-down . Multi-View Block Definitions
+ . 
+3 Select the multi-view block definition to which you want to attach notes or files. 
+4 Click the General tab. 
+5 To add a description to the multi-view block, enter the description under Description. 
+6 Click Notes. 
+7 On the Notes tab, add or edit a note, as applicable. 
+8 On the Reference Docs tab, attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Edit file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. Click OK when you are done editing. 
+detach a reference file select the file name, click Delete, and click OK. 
+9 Click OK twice. 
+Adding Classifications to a Multi-View Block Definition 
+Use this procedure to specify classifications for any classification definition applied to a multi-view block definition. For more information, see Classification Definitions on page 3834. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Expand Multi-Purpose Objects, and expand Multi-View Block Definitions. 
+NOTE Alternatively, you can select a multi-view block in the drawing, and click Multi-View Block tab . General panel . Edit Style 
+drop-down . Multi-View Block Definitions
+ . 
+3 Select the definition that you want to change. 4 Click the Classifications tab. By default, the classification for all classification definitions is Unspecified. If no classification definitions are listed, none are applied to multi-view block definitions. 
+5 For each classification definition, select the classification you want to apply to the current multi-view block definition. 6 Click OK. 
+Adding a Multi-View Block Definition to DesignCenter 
+Use this procedure to add a multi-view block to DesignCenter™. You can then create new multi-view blocks by dragging and dropping them from DesignCenter to your drawing. To add a multi-view block definition to DesignCenter, you need to create a DWG file using the AEC Content Wizard. 
+For a detailed description of the AEC Content Wizard, see Overview of AEC Content on page 3869. 
+1 On the command line, enter AecCreateContent. 2 Select Multi-View Block. 3 Under Current Drawing, select a multi-view block definition, and 
+click Add to add it to the Content File list. 4 Click Next. 5 Select the layer key to use when the multi-view block is inserted, 
+and specify any additional properties: 
+If you want to… Then… 
+explode the multi-view block when select Explode on Insert. it is inserted in a drawing 
+specify an elevation for the multi-enter a value for Preset Elevation. view block 
+associate an anchor with the multi-select an anchor type. view block 
+If you want to… Then… 
+specify the scale for the multi-view under Scale, enter X, Y, and Z scale block values, and select an option for Ad­ditional Scaling. 
+scale the multi-view block based on select Enable AEC Unit Scaling. the drawing units specified in the Drawing Setup dialog box 
+specify properties for attributes as-select options for Attribute Text sociated with the multi-view block Style and Attribute Text Angle. 
+6 Click Next. 
+7 Specify the drawing file in which to store the multi-view block definition: 
+If you want to store the multi-Then… view block… 
+in the current drawing select Current Drawing. 
+in a different drawing clear Current Drawing, and then either enter a file name or click Browse to specify a file. 
+8 Select the icon to represent the multi-view block in DesignCenter: 
+If you want to… Then… 
+use a bitmap of the drawing as the click Default Icon. icon 
+specify a bitmap (.bmp) file contain-click New Icon, and select a bitmap ing the image to be used as the file. icon 
+9 Enter a description of the multi-view block. The description is displayed in DesignCenter, along with the icon representing the multi-view block. 
+10 Select Save Preview Graphics to enable previewing in DesignCenter, or clear Save Preview Graphics to disable previewing. 
+11 Click Finish. 
+Creating a Multi-View Block Tool 
+Use this procedure to create a multi-view block tool and add it to a tool palette. You may want to create your own multi-view block tool for customized multi-view blocks you plan to use repeatedly. For example, you might create an office floor plan in which each conference room and office contains a floor lamp. Conference rooms and executive offices get the deluxe model floor lamp, and all other rooms get the standard model. You could define a multi-view block to represent each type of floor lamp, and then create a floor lamp tool for each type. You would then select the appropriate tool to place a floor lamp in each room. 
+You can use any of the following methods to create a multi-view block tool: 
+¦ 
+Drag a multi-view block that has the properties you want to a tool palette. 
+
+¦ 
+Drag a multi-view block definition from the Style Manager to a tool palette, and then customize the properties of the new tool. 
+
+¦ 
+Copy an existing multi-view block tool, and then customize the properties of the new tool. 
+
+¦ 
+Drag a multi-view block tool from a tool catalog in the Content Browser, and then customize the properties of the tool. 
+
+
+1 Open the tool palette on which you want to add a tool. 2 Create the tool: 
+If you want to… Then… 
+create a tool from a multi-view select the multi-view block and drag block in the drawing it to the tool palette. 
+create a tool from a multi-view click Manage tab . Style & Display block definition in the Style Man-
+panel . Style Manager
+ . Locate ager 
+the definition you want to copy, and drag it to the tool palette. Click OK to close the Style Manager. 
+copy a multi-view block tool from  click Home tab . Build pan- 
+a tool catalog  el . Tools drop-down . Content  
+
+

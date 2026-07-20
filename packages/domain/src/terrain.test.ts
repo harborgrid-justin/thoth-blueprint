@@ -10,8 +10,16 @@ import {
   slopeAtNode,
   slopeStats,
   stitchContours,
+  traceWaterDropPath,
   type ElevationGrid,
 } from "./terrain";
+import {
+  matchWildcard,
+  findMatchingKey,
+  formatDescription,
+  evaluatePointGroup,
+  DEFAULT_DESCRIPTION_KEYS,
+} from "./descriptionKeys";
 
 /** A planar ramp z = slope·x over a `size`×`size` extent at unit resolution. */
 function ramp(size: number, slope: number): ElevationGrid {
@@ -128,5 +136,63 @@ describe("grading & earthwork", () => {
     const work = cutFill(existing, proposed, { spatial });
     expect(work.balanced).toBe(true);
     expect(work.net).toBeCloseTo(0, 4);
+  });
+});
+
+describe("water drop flow tracer", () => {
+  it("traces flow downhill along a planar ramp", () => {
+    const size = 10;
+    // Ramp going down in positive X direction (z decreases as X increases)
+    const n = size + 1;
+    const heights: number[] = [];
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) {
+        heights.push(10 - c); // z is 10 at x=0, and 0 at x=10
+      }
+    }
+    const grid: ElevationGrid = {
+      origin: { x: 0, y: 0 },
+      cellSize: 10,
+      cols: n,
+      rows: n,
+      heights,
+    };
+
+    const path = traceWaterDropPath(grid, { x: 20, y: 20 }, 5, 10);
+    expect(path.length).toBeGreaterThan(1);
+    // Flow should go downslope, meaning X should increase
+    expect(path[1].x).toBeGreaterThan(20);
+    expect(path[1].y).toBe(20); // no gradient in Y
+  });
+});
+
+describe("description keys & point groups", () => {
+  it("matches wildcard prefixes correctly", () => {
+    expect(matchWildcard("Tree-Oak", "TR*")).toBe(true);
+    expect(matchWildcard("MH-Storm-1", "MH*")).toBe(true);
+    expect(matchWildcard("BM-Survey-1", "BM*")).toBe(true);
+    expect(matchWildcard("Concrete-Pad", "TR*")).toBe(false);
+  });
+
+  it("finds matching description keys", () => {
+    const match = findMatchingKey("Tree-Maple", DEFAULT_DESCRIPTION_KEYS);
+    expect(match).not.toBeNull();
+    expect(match!.layerId).toBe("c-tree");
+    expect(match!.elementKind).toBe("tree");
+  });
+
+  it("formats descriptions matching raw keys", () => {
+    const formatted = formatDescription("Oak", "Tree - $*");
+    expect(formatted).toBe("Tree - Oak");
+  });
+
+  it("groups points matching raw descriptions", () => {
+    const pts = [
+      { id: "p1", description: "Tree-Oak" },
+      { id: "p2", description: "MH-General" },
+      { id: "p3", description: "Tree-Pine" },
+    ];
+    const groupIds = evaluatePointGroup(pts, "TR*");
+    expect(groupIds).toEqual(["p1", "p3"]);
   });
 });

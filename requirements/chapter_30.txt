@@ -1,0 +1,1839 @@
+[MIGRATED TO RTM_PART_30.md - SITE SLABS & PAVEMENTS]
+vertex are projected to a Z value of the base height. This establishes the insertion point. 
+Converting a polyline to a slab using the projected mode 
+
+7 If you specified Projected mode, enter a value for Base Height. 8 Specify a slab justification method: 
+If you want to align the slab or Then… roof slab… 
+top with the polyline (or base enter t (Top). height, when using projected mode) 
+center with the polyline (or base enter c (Center). height, when using projected mode) 
+If you want to align the slab or Then… roof slab… 
+bottom with the polyline (or base enter b (Bottom). height, when using projected mode) 
+slopeline with the polyline (or base enter s (Slopeline). height, when using projected mode) 
+NOTE This justification is used only for inserting a slab or roof slab and is not retained as a parameter of the inserted object. 
+9 Edit the properties of the slab or roof slab in the Properties palette, if needed. For example, you can add a slope angle. 
+Creating a Slab from a Space 
+Use this procedure to convert a space to a slab that has the properties of the slab tool you select. You can edit these properties after creating the slab. If there is an interference condition on any of the selected spaces, you can specify whether you want these applied as holes in the new slab. 
+NOTE This procedure is currently available for slab tools only. 
+1 Open the tool palette that contains the slab tool you want to use. (You may have to scroll to display the desired tool.) 
+2 Right-click the tool, and click Apply Tool Properties to . Space. 3 Select one or more spaces, and press ENTER to open the Convert Space to Slab worksheet. 
+
+4 If you want to create a slab from the ceiling of the space, select Convert Ceiling to Slab. 
+5 If you want to create a slab from the floor of the space, select Convert Floor to Slab. 
+6 If you want interference conditions on any of the spaces you selected to be ignored, clear Apply Interferences to Slab. 
+7 Select Erase Layout Geometry to erase the space. 
+8 Click OK. 
+9 Edit the properties of the new slab in the Properties palette, if needed. 
+Creating a Slab or Roof Slab Tool 
+Use this procedure to create a slab tool or a roof slab tool and add it to a tool palette. You may want to create your own tools if you are placing multiple slabs or roof slabs of specific styles that have the same properties. 
+For example, you are creating an office building that has a complex roof system. Although all sections of pitched roof use the same roof slab and edge style, each roof slab has a different slope. To work efficiently, you can create a roof slab tool for each slope, and select the appropriate tool to place the roof slabs with the correct slope for each section of the roof. 
+You can use any of the following methods to create a slab or roof slab tool: 
+¦ 
+Drag a slab or roof slab that has the properties you want to a tool palette. 
+
+¦ 
+Drag a slab or roof slab style from the Style Manager to a tool palette, and then customize the properties of the new tool. 
+
+¦ 
+Copy an existing slab or roof slab tool, and then customize the properties of the new tool. 
+
+¦ 
+Drag a slab or roof slab tool from a tool catalog in the Content Browser, and then customize the properties of the tool. 
+
+
+1 Open the tool palette on which you want to create a tool. 
+2 Create the tool: 
+If you want to… Then… 
+create a tool from a slab or roof slab in the drawing  select the slab or roof, and drag it to the tool palette.  
+TIP Drag the slab or roof slab by a point on its perimeter, not by one of its grips.  
+
+create a tool from a slab or roof slab  Click Manage tab . Style & Display  
+style in the Style Manager  panel . Style Manager  , locate  
+the style you want to copy, and  
+drag it to the tool palette. Click OK  
+to close the Style Manager.  
+
+copy a tool on the current palette right-click the tool, click Copy, and click Paste. 
+copy a tool from another palette open the other tool palette, right-click the tool, and click Copy. Re­open the palette where you want to add the tool, right-click, and click Paste. 
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. 
+This description is used as the tool’s tooltip on the tool palette, 
+and to describe the tool if it is stored in a tool catalog. 
+6 Expand Basic, and expand General. 
+7 Click next to Description to enter a description of the tool. 
+8 If you do not want to use the default layer key, click Layer key to select a layer key.  next to  
+9 If you want to override the default layer names, click Layer overrides to select a layer override.  next to  
+10 Select a slab or roof slab style.  
+
+11 For Style location, select the drawing file containing the style to be used for this tool, or select Browse and use a standard file selection dialog box to select the file. 
+12 Specify a value for Bound Spaces: 
+If you want to… Then… 
+allow the slab or roof slab to be select Yes. used as a bounding object for asso­ciative spaces 
+prevent the slab or roof slab from select No. being used as a bounding object for associative spaces 
+use the bounding settings from the select By Style. slab or roof slab style 
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+13 Select Projected or Direct for Mode. 14 Expand Dimensions. 15 Enter a value for Thickness. 16 Enter a value for the vertical offset distance from the insertion 
+point for Vertical Offset. 
+17 Enter a value for the horizontal offset distance from the insertion point for Horizontal Offset. 
+18 Select the justification: 
+If you want to align the … Then… 
+top of the slab or roof slab with the select Top. first specified point 
+center of the slab or roof slab with select Center. the first specified point 
+bottom of the slab or roof slab with select Bottom. the first specified point 
+slopeline of the slab or roof slab select Slopeline. with the first specified point 
+NOTE This justification is used only when inserting the slab and is not retained as a parameter of the slab. Justification is intended primarily for Direct mode. 
+The slopeline is the position of the slab or roof slab baseline relative to its bottom face. The thickness offset in the style determines the distance between the baseline and the bottom face. 
+19 Select a direction, or define how the slab or roof slab is drawn relative to the baseline. 
+20 Enter a value for the depth of the overhang for Overhang. 
+21 Select a style for Perimeter edge. 
+22 For Edge style location, select the drawing file containing the edge style used for slabs created with this tool, or select Browse and use a standard file selection dialog box to select the file. 
+23 Click OK. 
+Editing Slabs and Roof Slabs 
+After placing a slab or roof slab object, you can change its style, location, size, shape, slope, edge styles, and other characteristics. You can miter its edges and trim or extend it using another object as a reference. You can also modify slabs and roof slabs using other objects as interference conditions or body modifiers. 
+Depending on the type of editing you want to perform, various methods may be available: 
+¦ 
+After selecting a slab or roof slab, you can click any non-grip point along the perimeter and drag the entire object to a new location. You can also move the object by clicking a grip, pressing the Space bar, and then moving the object to the new location and clicking again. 
+
+¦ 
+You can drag the grips that are displayed on a selected slab or roof slab to reorient it, resize it, or change other physical characteristics. 
+
+¦ 
+For grip edits where you are changing a dimension or an angle, the Dynamic Input feature lets you enter a precise value instead of dragging a grip. (This feature is activated by default; you can toggle it on and off by clicking DYN on the application status bar. For more information, see Dynamic Dimensions on page 128.) 
+
+
+¦ 
+You can apply the properties of a slab tool to an existing slab or the properties of a roof slab tool to an existing roof slab. 
+
+¦ 
+You can change settings on the object’s Properties palette. You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+
+¦ 
+You can use editing commands from the object’s contextual ribbon tab. 
+
+
+Using Grips to Edit Slabs/Roof Slabs 
+Various types of editing grips are displayed for a selected slab or roof slab object. You can drag these grips as needed to reposition or resize the object, or you can enter precise distance or angle values using the Dynamic Input feature. When you select a grip that has multiple functions, you can cycle among them by pressing Ctrl. 
+The types of editing grips available for a selected slab or roof slab depend on the view direction. As shown in the following illustrations, Edge, Edge Overhang, Vertex, and Pivot Point grips are displayed in both plan and three-dimensional (3D) isometric views. Angle, Vertical Offset, Horizontal Offset, and Thickness grips are available only in 3D isometric views. 
+Slab Vertex and Edge grips 
+
+Slab Edge Overhang and Pivot Point grips 
+
+Slab Angle, Thickness, Horizontal Offset, and Vertical Offset grips 
+
+Roof Slab Vertex and Edge grips 
+
+Roof Slab Edge Overhang and Pivot Point grips Roof Slab Angle, Thickness, Horizontal Offset, and Vertical Offset grips 
+
+
+Using Slab/Roof Slab Edge Grips 
+Edge grips let you change the size, shape, or slope of a selected slab or roof slab by moving one edge at a time. When you move the cursor over an Edge grip, a tooltip lists the available edit modes (see mode descriptions following the procedure below). After you click the Edge grip, you can cycle through the modes by pressing Ctrl. 
+Use the following general procedure to select an Edge grip mode and edit an edge of a slab or roof slab: 
+1 Select the slab or roof slab you want to edit. Edge grips are displayed. 
+2 Move the cursor over the Edge grip on the edge you want to edit. The list of available edit modes is displayed. (Modes differ for straight and curved edges; see descriptions below.) 
+3 Click the Edge grip, and move the cursor slightly in the direction that you want to move the edge. If you want to use the default edit mode, proceed to the next step; otherwise, press Ctrl to cycle through the edit modes to the one you want. 
+4 Either enter values as needed to specify a distance or position, or move the cursor until the preview is in the desired position, and then click to complete the edit and deselect the grip. 
+5 Press Esc, or right-click, and click Deselect All to deselect the slab 
+and turn off all grips. Normal grip editing maintains the slope angle of the slab or roof slab regardless of the Z value of the specified point. 
+NOTE The pivot point is unaffected by editing the slab or roof slab edges with grips. 
+Edit Modes for Straight Edges 
+Edge grips for straight slab or roof slab edges have the following 6 edit modes: 
+¦ 
+Move edge - maintain slope 
+
+¦ 
+Move edge - change slope 
+
+¦ 
+Add new edges - maintain slope 
+
+¦ 
+Add new edges - change slope 
+
+¦ 
+Convert to arc - maintain slope 
+
+¦ 
+Offset all edges - maintain slope 
+
+
+Move edge - maintain slope 
+As you move the edge, adjacent edges stretch or shorten accordingly with no change to the slope. This is the default mode for straight edges. 
+
+Move edge - change slope 
+As you move the edge, adjacent edges stretch or shorten according to the direction of the move, and the slope changes as necessary to maintain the elevation of the edge being moved. 
+
+Side view 
+
+Add new edges - maintain slope 
+As you move the edge outward, rather than adjacent edges being stretched, new edges are added, each with its own Edge and Edge Overhang grips. There is no change to the slope. 
+
+Add new edges - change slope 
+As you move the edge outward, rather than adjacent edges being stretched, new edges are added, each with its own Edge and Edge Overhang grips. The slope changes as necessary to maintain the elevation of the edge being moved. 
+
+Convert to arc - maintain slope 
+Converts the edge to an arc, which you can move inward or outward in the current plane to specify the arc direction and degree. Adjacent edges are not affected. 
+
+Offset all edges - maintain slope 
+All outside perimeter edges move inward or outward in the current plane the same distance as you move the selected Edge grip. The degree of arc is maintained. If holes have been added to the slab or roof slab, their edges are unaffected. 
+
+Edge Grip Edit Modes for Curved Edges 
+For curved edges (whether originally created as such, or converted from a straight edge using the Convert to arc mode listed above), the Edge grip has 5 modes, none of which change the slope: 
+¦ 
+Stretch edge - maintain slope 
+
+¦ 
+Move edge - maintain slope 
+
+¦ 
+Add new edges - maintain slope 
+
+¦ 
+Convert to line - maintain slope 
+
+¦ 
+Offset all edges - maintain slope 
+
+
+Stretch edge - maintain slope 
+Move the Edge grip inward or outward in the current plane to reposition the midpoint of the arc. Adjacent edges are not affected. This is the default mode for curved edges. 
+Move edge - maintain slope 
+As you move the Edge grip inward or outward in the current plane, adjacent edges stretch or shorten according to the direction of the move. The distance between the endpoints of the arc changes, but the degree of arc is maintained. 
+Add new edges - maintain slope 
+As you move the Edge grip outward in its current plane, rather than adjacent edges being stretched or reoriented, new edges are added, each with its own Edge and Edge Overhang grips. The degree of arc and the distance between the arc endpoints are both maintained. 
+Covert to line - maintain slope 
+When you click, the curved edge is converted to a straight line between the endpoints of the arc. Adjacent edges are not affected. 
+Offset all edges - maintain slope 
+All outside perimeter edges move inward or outward in the current plane the same distance as you move the selected Edge grip. The degree of arc is maintained. If holes have been added to the slab or roof slab, their edges are unaffected. 
+Using Slab/Roof Slab Edge Overhang Grips 
+Use this procedure to change the overhang of a slab or roof slab edge. (You can also change the overhang using the worksheet available from the object’s Properties palette or its contextual ribbon tab. For more information, see Changing the Edges of a Slab/Roof Slab on page 2426.) 
+1 Select the slab or roof slab. 2 Select an Edge Overhang grip. 3 Enter a value to specify the desired overhang distance, or move 
+the grip until the desired value is displayed. 
+Changing the edge overhang of a slab using the Edge Overhang grip 
+Using Slab/Roof Slab Vertex Grips 
+Use this procedure to change the size or shape of a slab or roof slab by moving one or more of its vertices. 
+1 Select the slab or roof slab. 
+2 Select the Vertex grip for the vertex you want to move (or press Shift while selecting multiple Vertex grips). 
+3 Move the vertex to the desired location, and click. Adjacent edges stretch or shorten accordingly. If you have Shift-selected multiple Vertex grips, drag one of them to the desired location, and click; any other selected Vertex grip also moves, maintaining its position relative to the grip you drag. 
+Changing the perimeter of a slab by moving a Vertex grip 
+
+Using Slab/Roof Slab Thickness Grips 
+Use this procedure to change the thickness of a slab or roof slab in a 3D isometric view. (To change the thickness of multiple objects at once, regardless of the type of view, see Changing the Thickness of a Slab or Roof Slab on page 2421.) 
+1 Select the slab or roof slab. 2 Select the Thickness grip. 3 Enter a value to specify the desired thickness, or move the cursor 
+until the desired value is displayed, and then click. 
+Changing the thickness of a slab using the Thickness grip 
+
+Using Slab/Roof Slab Offset Grips 
+Use this procedure to change the vertical and horizontal offsets of a slab or roof slab object in a 3D isometric view. (To change the horizontal or vertical offsets of multiple objects at once, regardless of the type of view, see Changing the Offsets of a Slab or Roof Slab on page 2421.) 
+The offsets are the vertical and horizontal distances from the insertion point of the slab. 
+1 Select the slab. 2 Select the Vertical Offset or Horizontal Offset grip. 3 Enter a value to specify the desired offset distance, or move the 
+cursor until the desired value is displayed, and then click. 
+Changing the horizontal offset of a slab using the Horizontal Offset grip 
+
+Changing the vertical offset of a slab using the Vertical Offset grip 
+
+Using Slab/Roof Slab Angle Grips 
+Use this procedure to change the slope of a slab or roof slab in a 3D isometric view. (You can also use the Properties palette to adjust the slope and control the automatic alignment of the fascia. For more information, see Changing Slab/Roof Slab Slope Settings on page 2422). 
+1 Select the slab. 
+2 Select the Angle grip. If Dynamic Input is turned on, the associated Slope, Rise, and Run values are displayed in the drawing area. 
+IMPORTANT The Angle grip is available only when you select a slab or roof slab in a 3D isometric view. 
+Using the Angle grip to edit slab slope Using the Angle grip to edit roof slab slope 
+
+
+3 Adjust the slope: 
+If you want to… Then… 
+adjust the slope manually either enter a value, or move the grip until the desired angle is dis­played, and then click. 
+adjust the slope by changing the  press TAB until the rise value is  
+rise of the slab  highlighted, and then either enter  
+a value, or move the grip until the  
+desired rise is displayed, and then  
+click.  
+
+4 Click once. 
+Using Slab/Roof Slab Pivot Point Grips 
+Use this procedure to change the pivot point of a slab or roof slab. (You can also use the Properties palette to change the X, Y, and Z values of the pivot point.) 
+By default, the pivot point is the first vertex of the baseline. However, you can move the pivot point to any other point, either on or off the slab or roof slab. 
+NOTE If a Hold fascia elevation constraint was set for the object, the pivot point is ignored. For information about setting this option, see Changing Slab/Roof Slab Slope Settings on page 2422. 
+1 Select the slab or roof slab. 2 Select the Pivot Point grip. 3 Move the cursor until the pivot point is in the desired location, 
+and then click. 
+Applying Tool Properties to an Existing Slab/Roof Slab 
+Use this procedure to modify one or more slabs or roof slabs by applying the properties of a slab or roof slab tool. The properties include the style and any other settings specified in the tool you select. 
+1 Open the tool palette that contains the slab or roof slab tool you want to use. (You may have to scroll to display the desired tool.) 
+2 Right-click the tool, and click Apply Tool Properties to . Slab or Apply Tool Properties to . Roof Slab. 
+3 Select the slabs or roof slabs to be modified, and press ENTER. 
+4 Edit the properties of the modified slabs or roof slabs in the Properties palette, if necessary. 
+Changing the Properties of Slabs or Roof Slabs 
+Many of the slab or roof slab properties that you can edit using grips can also be edited on the Properties palette. In cases where multiple selected objects have the same value for a property, you can change the value for all the objects with a single entry on the Properties palette. The Properties palette also provides access to the Slab Edges and Roof Slab Edges worksheets, and enables you to attach hyperlinks, notes, or files to slabs or roof slabs. 
+Changing the Style of Slabs or Roof Slabs 
+Use this procedure to change the style for one or more slabs or for one or more roof slabs in a drawing. Note that the procedure cannot be applied to slabs and roof slabs simultaneously. 
+1 Select one or more slabs or roof slabs, and double-click one of them. 
+2 On the Properties palette, click the Design tab, expand Basic, and 
+expand General. If the selected objects are of different styles, the value of the Style property is *VARIES*. 
+3 For Style, select a new style from the drop-down list. The selected style is assigned to all selected objects. 
+Changing the Thickness of a Slab or Roof Slab 
+Use this procedure to change the thickness of a slab or roof slab for which the Base Thickness (BT) variable is used to define the Thickness value in the object style. If the style specifies a fixed thickness for the slab or roof slab (or for any component of a multi-component slab or roof slab), then the Thickness value on the Properties palette is read-only and can only be changed by editing the style or applying a different style. For more information on using the BT variable, see Specifying the Thickness and Offset of a Slab/Roof Slab Component on page 2467. 
+1 Select the slab or roof slab you want to change. 2 On the Properties palette, expand Basic, and expand Dimensions. 3 Click the Thickness value, and enter a new value. 
+Changing the Offsets of a Slab or Roof Slab 
+Use this procedure to change the vertical or horizontal offset of a slab or roof slab. The offsets are the vertical and horizontal distances from the insertion point of the slab or roof slab. 
+1 Double-click the slab or roof slab you want to change. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Dimensions. 
+3 Click the Vertical offset or Horizontal offset value, and enter a new value. 
+Changing Slab or Roof Slab Edges 
+Use this procedure to access the Slab Edges or Roof Slab Edges worksheet from the Properties palette. 
+1 Double-click the slab or roof slab whose edge(s) you want to change. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Dimensions. 
+3 Click 
+next to Edges. The Slab Edges and Roof Slab Edges worksheets are identical in function to the Edit Slab Edges and Edit Roof Slab Edges worksheets accessed from the slab or roof slab contextual tab. For more information on using these worksheets, see Changing the Edges of a Slab/Roof Slab on page 2426 
+4 Click OK. 
+Changing Slab/Roof Slab Slope Settings 
+Use this procedure to change the slope settings of a slab or roof slab, and to specify whether the fascia is to be aligned when the slope is changed. 
+You can also control the adjustment of the overhang or baseline height of the slab. This constraint applies only to the baseline edge, and it works only when the baseline is horizontal. 
+1 Double-click the slab you want to change. 
+2 On the Properties palette, click the Design tab, expand Dimensions, and expand Slope. 
+3 Enter a value for Rise, Run, or Angle to define the slope. 
+4 Select a setting for Hold fascia elevation: 
+If you want to… Then… 
+force the fascia to align with other select By adjusting overhang. slab or roof slab fascias, regardless of style, by adjusting the overhang 
+force the fascia to align with other select By adjusting baseline height. slab or roof slab fascias, regardless of style, by adjusting the baseline height 
+ignore fascia alignment select No. 
+Changing the Location of a Slab or Roof Slab 
+Use this procedure to relocate a slab or roof slab by changing the coordinate values of its insertion point. The slab or roof slab object also has an orientation with respect to the WCS or the current UCS. For example, if the top and bottom of the object are parallel to the XY plane, the object’s normal is parallel to the Z axis. You can change the orientation of the object by aligning its normal with another axis. You can also rotate the object on its plane by changing the rotation angle. 
+For information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use Coordinates and Coordinate Systems” in AutoCAD Help. 
+TIP The quickest way to locate and view an AutoCAD topic referenced in AutoCAD Architecture Help is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+1 Double-click the slab or roof slab you want to move. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Location. 
+3 Click 
+next to Additional Information. 
+4 Specify the location of the slab or roof slab: 
+If you want to… Then… 
+relocate the slab or roof slab enter new coordinate values under Insertion Point. 
+locate the slab or roof slab on the make the normal of the slab or roof 
+XY plane slab parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the slab or roof slab on the make the normal of the slab or roof 
+YZ plane slab parallel to the X axis: under Normal, enter 1 for X and enter 0 for Y and Z. 
+locate the slab or roof slab on the make the normal of the slab or roof 
+XZ plane slab parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the slab or enter a new value for Rotation roof slab Angle. 
+5 Click OK. 
+Specifying the Cut Plane Display of a Slab or Roof Slab 
+Use this procedure to specify the properties of one or more cut planes for an individual slab or roof slab. Cut plane display properties apply only to display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Double-click the slab or roof slab you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all slabs or roof slabs in the drawing, select Drawing default setting. To apply changes to all slabs or roof slabs of this style, select Slab or Roof Slab Style:<style name>. For more information on styles, see Slab and Roof Slab Styles on page 2460. 
+5 If necessary, expand Object Display Properties . Cut Plane. 
+6 For Override cut plane, specify whether you want to override the global cut plane defined for the current display configuration. 7 If you selected Yes for Override cut plane, enter a value for Height 
+to define the cut plane for this object. Alternatively, you can click
+
+ , and specify 2 points in the drawing area to define the new height. 
+You can also access and modify these same cut plane settings through the slab’s or roof slab’s context menu, as follows: 
+1 Select the slab or roof slab you want to change, right-click, and click Edit Object Display. 
+2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 
+4 In the Display Properties dialog, click the Cut Plane tab, and then change the settings as needed. 
+5 Click OK twice. 
+Attaching Hyperlinks, Notes, or Files to a Slab/Roof Slab 
+Use this procedure to attach hyperlinks, enter notes, or attach reference files to a slab or roof slab. You can also edit existing notes and edit or detach currently attached reference files. 
+1 Double-click the slab or roof slab to which to attach information. 2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click 
+next to Hyperlink, and specify the link. 
+4 To add or edit a note, click 
+next to Notes, enter text, and click OK. 
+5 To attach, detach, or edit a reference, click 
+next to Reference documents, and then do any of the following: 
+If you want to… Then… 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+6 Click OK. 
+Using Slab and Roof Slab Contextual Tools 
+In addition to grip-editing slabs and roof slabs, or changing values on their Properties palettes, you can edit these objects using the tools available on their contextual ribbon tabs and context menus. These tools let you trim, extend, and cut an object, edit its edges, add and edit interference conditions and body modifiers, and edit the object display properties. 
+Changing the Edges of a Slab/Roof Slab 
+Use this procedure to edit one or more edges of a slab or roof slab. For each selected edge, you can change the overhang, style, cut (square or plumb), and angle. A viewer box shows you which edge(s) of the slab you are editing. 
+1 Select the slab or roof slab to be modified, and, 
+if the object selected is… then… 
+a slab click Slab tab . Edge panel . Edit . 
+
+a roof slab click Roof Slab tab . Edge pan­el . Edit
+ . 
+2 Select the edges to be modified, and press ENTER. 
+3 In the Edit Slab Edges or Edit Roof Slab Edges worksheet, in the list of edges, select the edge to edit. To modify multiple edges using the same values, press and hold CTRL while selecting each edge. 
+NOTE Beginning with Autodesk Architectural Desktop 2007, the individual segments or facets making up a curved edge are no longer listed as separate edges on this worksheet. Each arc on the perimeter of a slab or roof slab is treated as a single edge. 
+The selected edges are highlighted in the viewer in the right pane of the worksheet. 
+4 Enter a value for Overhang. 5 Select a slab edge style. 6 Select Square or Plumb for Edge Cut. 7 Enter a value for Angle. 
+To reset the angle to the slab or roof slab style defaults, right-click the edge number, and click Reset to Style Defaults. This option is available only if an edge style has been assigned, and the value for Angle is different than the default. 
+8 If desired, select additional edges from the list and edit them as described above. 
+9 When edits are completed for all edges, click OK. 
+Trimming a Slab/Roof Slab 
+Use this procedure to trim a slab or roof slab using a polyline, wall, roof slab, or slab to define the trim plane. The trimming object itself does not need to intersect the slab or roof slab, as long as it projects an intersection in the current user coordinate system (UCS). However, the trim plane must intersect the slab or roof slab perimeter line; you cannot trim only the overhang. 
+Any fascia or soffit profile that intersects the trim plane is trimmed at the same angle as the slab or roof slab. 
+If the trimming object is a wall or a slab, the trim plane is at the closest surface. The new edge at the trim plane has its edge angle defined by the trim plane. 
+Trimming a slab to a wall Trimming a roof slab to a wall 
+
+
+1 Select the slab or roof slab to be trimmed, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify pan­el . Trim
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Trim
+ . 
+2 Select a wall, a polyline, or another slab or roof slab for the trimming object. 
+3 Select the side of the slab or roof slab to be trimmed. 
+Extending a Slab/Roof Slab 
+Use this procedure to extend a slab or roof slab to a plane defined by another slab, roof slab, or wall. This target object itself does not have to intersect with the extended slab or roof slab, as long as it projects an intersection in the current user coordinate system (UCS). 
+Because multiple edges may need to move in an extend operation, you are prompted to select the adjacent edges to lengthen, rather than the specific edges to move. These selected edges retain their current vector (angle) and are stretched until they intersect the plane of the target object. 
+If multiple edges exist between the selected edges, they are joined to form a single edge. The new edge is set to the angle of the target surface. 
+Any fascia or soffit profile on the adjacent edges is extended to the target surface and trimmed to its angle. 
+Extending a slab to a wall Extending a roof slab to a wall 
+
+
+1 Select the slab or roof slab to be extended, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify panel . Ex­tend
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Extend
+ . 
+2 Select the target wall, slab, or roof slab to which the slab or roof slab is to be extended. 
+3 Select the slab or roof slab to be extended. 
+4 Select the first edge to lengthen. 
+5 Select the second edge to lengthen. 
+NOTE You cannot use curved walls as objects to lengthen a slab or roof slab to. 
+Mitering Slabs/Roof Slabs by Intersection 
+Use this procedure to miter 2 intersecting slabs or roof slabs. Both slabs or roof slabs are trimmed along the intersection of their perimeter lines. Vertices are added or removed as required. The new edges of the slabs or roof slabs are set to angles required for a true miter cut. If the slab thicknesses of the two edges are different, the angles are different. 
+If you want to miter slabs or roof slabs that do not intersect, you can miter them by edges. For more information, see Mitering Roof Slabs Using Edges on page 2434 
+Mitering roof slabs by intersection 
+
+
+1 Select one of the two slabs or roof slabs you want to miter, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify pan­el . Miter
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Miter
+ . 
+2 Enter i (Intersection) to miter at the intersection of the two slabs or roof slabs. 
+3 Select the first roof slab at the side of that slab to keep. 
+The opposite side is trimmed. 
+4 Select the second roof slab at the side of that slab to keep. The opposite side is trimmed. 
+Mitering Roof Slabs Using Edges 
+Use this procedure to miter two roof slabs that do not intersect. You can select particular edges to miter. You can miter edges of overlapping roof slabs without trimming the entire slab. To accomplish this, however, you may need to insert additional vertices. Only one edge of each roof slab is mitered. 
+If you need to miter multiple edges of a roof slab, stretch them to overlap the other roof slab and then miter them at their intersection. For more information, see Mitering Slabs/Roof Slabs by Intersection on page 2432. 
+Mitering roof slabs by edge 
+
+1 Select one of the two roof slabs you want to miter, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify pan­el . Miter
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Miter 
+. 
+2 Enter e (Edges) to miter selected edges of the roof slabs. 3 Select one edge on the first roof slab. 4 Select one edge on the second roof slab. 
+Cutting a Slab/Roof Slab 
+Use this procedure to cut a slab or roof slab into two or more slabs or roof slabs. You can use any 3D object or polyline to define the cutting geometry. If you use a 3D body, such as a wall, slab, mass element, or closed polyline, the slab or roof slab is cut along the intersection lines of the surfaces. 
+The slab or roof slab is cut only when the 3D body or closed polyline intersects its perimeter line. If you use an open polyline, the slab or roof slab is cut along the projection to its surface. 
+In either case, when the intersection line crosses the slab or roof slab multiple times, multiple slabs or roof slabs are created. If the intersection line has multiple edges, multiple edges are added to the new objects. 
+The smoothness (tessellation) of curved edges is controlled by 2 AEC display resolution settings called Facet Deviation and Facet Maximum. Beginning with Autodesk Architectural Desktop 2007, you can adjust these settings after the slab or roof slab is created. Also, the individual segments or facets making up a curved edge are no longer treated as separate edges; each arc on the perimeter of a slab or roof slab is treated as a single edge. For more information, see Specifying the Display Resolution of Objects with Facets on page 208. 
+1 Draw an object or polyline for defining the cutting geometry. 
+2 Select the slab or roof slab to be cut, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify pan­el . Cut
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Cut
+ . 
+3 Select the objects or polylines that represent the cutting geometry, and press ENTER. 
+4 Enter n (No) to keep the geometry, or enter y (Yes) to erase the geometry. 
+Adding a Vertex to a Slab/Roof Slab 
+Use this procedure to add a vertex to a slab or roof slab edge. Adding a vertex creates two edges from one edge. 
+1 Select a slab or roof slab, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify panel . Ver­tex drop-down . Add
+ . 
+a roof slab click Roof Slab tab . Modify pan­
+el . Vertex drop-down . Add . 
+
+2 Specify a point for the new vertex. To place a new vertex at a precise intersection point, use Intersection or Apparent Intersection object snaps. 
+The new vertex is added to the nearest edge, perpendicular to the specified point. If there is no point perpendicular to the slab or roof slab, no vertex is added. 
+Adding a vertex to a roof slab 
+
+3 To see the new vertex, select the slab or roof slab. A new Vertex grip is displayed at the point you specified, and new grips are displayed for the edge that has been added. 
+Deleting a Vertex from a Slab/Roof Slab 
+Use this procedure to delete a vertex from a slab or roof slab. After the vertex is deleted, the 2 adjacent vertices connect in a straight line. 
+1 Select the slab or roof slab, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify panel . Ver­tex drop-down . Remove
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Vertex drop-down . Remove
+
+ . 
+2 Select the vertex to remove. 
+Adding a Hole to a Slab/Roof Slab 
+Use this procedure to add a hole to a slab or roof slab. The hole adds new vertices and edges, which you can edit as you do other slab or roof slab vertices and edges. 
+You can use polylines or three-dimensional (3D) objects, such as walls and mass elements, to create the hole. 
+¦ 
+Holes generated by a closed polyline are projected from the polyline to the slab or roof slab, using the current user coordinate system (UCS). 
+
+¦ 
+3D objects must intersect the slab or roof slab without any projection. 
+
+
+If the objects contain an interior void, you are prompted to use the inside or outside surface to create the hole. For example, if you create a chimney using four wall objects, you can cut the hole at the inside or outside of the chimney. The new hole faces are aligned with the surfaces of the cutting bodies, and are not necessarily parallel to each other. 
+The smoothness (tessellation) of curved edges is controlled by 2 AEC display resolution settings called Facet Deviation and Facet Maximum. Beginning with Autodesk Architectural Desktop 2007, you can adjust these settings after the slab or roof slab is created. Also, the individual segments or facets making up a curved edge are no longer treated as separate edges; each arc on the perimeter of a slab or roof slab is treated as a single edge. For more information, see Specifying the Display Resolution of Objects with Facets on page 208. 
+Adding a hole to a slab 
+
+Adding a hole to a roof slab 
+
+1 Draw a closed polyline in the shape and location for the hole, or add an object in the location for the hole. 
+2 Select the slab or roof slab, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify pan­el . Hole drop-down . Add
+ . 
+if the object selected is… then… 
+a roof slab click Roof Slab tab . Modify pan­el . Hole drop-down . Add
+ . 
+3 Select the closed polyline or the connected objects that define the hole, and press ENTER. 
+4 Enter n (No) to keep the geometry, or enter y (Yes) to erase the geometry. 
+5 If you select 3D objects, you are prompted to create the hole at the inside or outside surface of the cutting objects. Press ENTER to use the outside of the object to define the hole, or enter i (Inside) to use the inside or void of the object to define the hole. This prompt is displayed even if the bodies do not contain an inner void, in which case the Inside option does not create a hole. 
+NOTE If you create a hole that is outside or which overlaps the slab or roof slab baseline or perimeter line at an overhang, the body of the slab or roof slab is cut, but the fascia and soffit remain. In this case, it is better to create a hole by cutting the slab or roof slab. For more information, see Cutting a Slab/Roof Slab on page 2435. 
+Removing a Hole from a Slab/Roof Slab 
+Use this procedure to remove a hole from a slab or roof slab. 
+Removing a hole from a slab 
+
+1 Select the slab or roof slab, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify pan­el . Hole drop-down . Remove
+
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Hole drop-down . Remove
+
+ . 
+2 Select any edge of the hole to remove. 
+Creating Slab/Roof Slab Interference Conditions 
+Just as you can use another object to define the perimeter of a hole you want to add to a slab or a roof slab, you can also modify the geometry of a slab or roof slab by using another object to create an interference condition within the slab or roof slab. Unlike the object used to add a hole, which has no connection to the slab or roof slab and can be erased after the hole is added, the object used to create an interference condition remains partially or wholly embedded in the slab or roof slab, cutting out and replacing a part of its geometry. All interference conditions are subtractive in this sense, but the shrinkwrap effect option you use to create the interference condition (Additive or Subtractive) determines whether the outline of the interference condition is included in or excluded from the shrink wrap outline of the slab or roof slab in plan view. 
+Typically, after creating interference conditions for a slab or roof slab, you freeze the layer where the interfering objects are placed. If you move or edit the objects, the slab or roof slab updates accordingly. 
+NOTE Objects used as interference conditions are not included for the Area in the LIST command or in a Schedule Query result. 
+Use the following procedure to create either additive or subtractive interference conditions for a slab or roof slab. If you want to create both additive and subtractive interference conditions, you need to perform the procedure separately for each type. 
+1 Create one or more objects in the actual location where you want the interference condition positioned in relation to the slab or roof slab. 
+2 Select the slab or roof slab, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify panel . In­terference Condition drop-
+down . Add
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Interference Condition drop-
+down . Add
+ . 
+3 Select the objects to use as interference conditions, and press ENTER. 
+NOTE AEC objects from externally referenced (xref) files can be added to a slab or roof slab as interference conditions so long as the following conditions are met: 
+¦ 
+The object is a three-dimensional (3D) body 
+
+¦ 
+The xref is found 
+
+¦ 
+The xref is read/write 
+
+¦ 
+The xref is not locked or opened by another user 
+
+¦ 
+The xref is loaded 
+
+
+4 Specify the desired shrinkwrap effect: 
+If you want to… Then… 
+include the interference condition(s) enter a (Additive). within the shrink wrap outline in plan view 
+exclude the interference condi-enter s (Subtractive). tion(s) from the shrink wrap outline in plan view 
+The selected objects are added to the slab or roof slab as either additive or subtractive interference conditions. You can delete an interference condition or change its shrinkwrap effect using the Interference Conditions worksheet. For more information, see Editing Slab/Roof Slab Interference Conditions on page 2443 
+Removing Slab/Roof Slab Interference Conditions 
+Use this procedure to remove an interference condition from a slab or roof slab. Note that only the interference condition is removed; the object from which the interference condition was created remains in the drawing. 
+1 Select the slab or roof slab, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify panel . In­terference Condition drop-
+down . Remove
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Interference Condition drop-
+down . Remove
+ . 
+2 Select the objects to remove as interference conditions, and press ENTER. 
+NOTE You can also remove interference conditions through the Interference Conditions worksheet. For more information, see Editing Slab/Roof Slab Interference Conditions on page 2443. 
+Editing Slab/Roof Slab Interference Conditions 
+Objects applied as interference conditions in slabs and roof slabs can be edited like any other objects, using grips, contextual tab options, or the Properties palette. If you move or edit the objects, the slab or roof slab updates accordingly. You can also change the setting that determines whether an interference condition is added to or subtracted from the shrink wrap outline of the slab or roof slab in plan view by using the following procedure. 
+1 Select the slab or roof slab, and, 
+if the object selected is… then… 
+a slab click Slab tab . Modify panel . In­terference Condition drop-down . Interference Conditions
+
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Interference Condition drop-down . Interference Conditions
+
+ . 
+NOTE You can also access this worksheet on the Design tab of the Properties palette, under Advanced. 
+
+2 On the Interference Conditions worksheet, click the Shrinkwrap Effect value you want to change, and select a different value from the drop-down menu. 
+3 Click OK. 
+NOTE You can also use this worksheet to remove an interference condition by right-clicking its Object or Type value and then clicking Remove. The alternate method is to use the contextual tab of the slab or roof slab, as explained under Removing Slab/Roof Slab Interference Conditions on page 2443. When you remove an interference condition, you remove the association between the slab or roof slab and the object that was used to create the interference condition. The object itself is not removed from the drawing. 
+Creating Slab/Roof Slab Body Modifiers 
+Like interference conditions, body modifiers let you modify the geometry of a slab or roof slab by incorporating another three-dimensional (3D) object. However, where interference conditions always subtract from the mass of a slab or roof slab and affect only components that they touch, body modifiers can be used to add to, subtract from, or completely replace a specific component. If a slab or roof slab has only one component, then the body modifier applies to the entire slab or roof slab. 
+You can create a body modifier from a mass element, a mass group, or any other AEC object with mass. You can also create body modifiers from ACIS solids or blocks that form 3D bodies. You must place the object in the location you want in the drawing before defining the object as a body modifier. 
+After you create a body modifier from an object, you can delete the original object. However, if you have created a complex object, such as a mass group comprising many mass elements, you may want to retain the object in the drawing until you are sure you have the results you want for the slab or roof slab. 
+NOTE Objects used as interference conditions are not included for the Area in the LIST command or in a Schedule Query result. 
+To create a body modifier for a slab or roof slab: 1 Create one or more objects in the location where you want the body modifier positioned in relation to the slab or roof slab. 2 Select the slab or roof slab you want to modify, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify pan­el . Body Modifier drop-
+down . Add 
+. 
+a roof slab click Roof Slab tab . Modify pan­el . Body Modifier drop-
+down . Add
+ . 
+3 Select the objects to be applied as body modifiers, and press ENTER. 
+
+4 On the Add Body Modifier worksheet, specify the following: 
+¦ 
+For Slab Component (or Roof Slab Component), select the component to which you want the body modifier applied. 
+
+¦ 
+For Operation, select Additive, Subtractive, or Replace, depending on whether you want the body modifier added to the selected component, subtracted from it, or used to replace the entire component. 
+
+¦ 
+For Description, enter a text description of the body modifier(s) you are applying. 
+
+
+5 If you do not want the outline of the object(s) to be visible in the drawing, select Erase Selected Object(s). 
+6 Click OK. 
+Editing a Slab/Roof Slab Body Modifier in Place 
+Use this procedure to edit the shape of a body modifier that is attached to a slab or a roof slab. You can edit the body using grips to edit faces, using Boolean commands to add or remove other objects from the body modifier, and other editing commands to change its shape. 
+1 Select the slab or roof slab that has the body modifier you want to change, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify pan­el . Body Modifier drop-
+down . Edit In Place
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Body Modifier drop-
+down . Edit In Place
+ . 
+A temporary mass element is created for you to edit the geometry of the body modifier. If the slab or roof slab contains multiple body modifiers, a mass element is created for each body modifier. If an object was not originally a mass element (for example, if you used a structural member as a body modifier), the object becomes a temporary Free Form mass element with faces that you can edit. 
+2 NOTE After you perform an editing task from the Edit in Place contextual tab, you may need to select a profile again to perform another editing task. If you do not see the editing commands that you expect on the contextual tab, re-select a profile to redisplay the Edit in Place contextual tab. 
+Edit the body modifier: 
+If you want to … Then … 
+change the shape of a body modifi­ select the body modifier. Select a  
+er that is a Free Form mass element  Face grip to activate edge grips for  
+the face. Move the grips to the de­ 
+sired locations. Continue editing  
+other faces in the same manner.  
+
+change the shape of a body modifi­er that is a conventional mass ele­ment select the body modifier. Select grips and move them to change the shape of the body modifier. The grips that are available depend on the type of mass element used as a body modifier and the current view direction. 
+If you want to … Then … 
+add an object to a body modifier place the object in the location where it is needed. 
+¦ 
+For a slab object, click Edit In Place: Slab Body Modifi­er . Modify panel . Boolean drop-down . Union. 
+
+¦ 
+For a roof slab object, click Edit In Place: Roof Slab Body Modifi­er . Modify panel . Boolean drop-down . Union. 
+
+
+Select the object, and press ENTER. Enter y (Yes) to keep the object in the drawing, or press ENTER to erase it. 
+subtract an object from a body modifier 
+place the object in the location where it is needed. 
+¦ 
+For a slab object, click Edit In Place: Slab Body Modifi­er . Modify panel . Boolean drop-down . Subtract. 
+
+¦ 
+For a roof slab object, click Edit In Place: Roof Slab Body Modifi­er . Modify panel . Boolean drop-down . Subtract. 
+
+
+Select the object, and press ENTER. Enter y (Yes) to keep the object in the drawing, or press ENTER to erase it. 
+create a body modifier that is the intersection of the original body modifier with another object 
+place the object in the location where it is needed. 
+¦ 
+For a slab object, click Edit In Place: Slab Body Modifi­er . Modify panel . Boolean drop-down . Intersect. 
+
+¦ 
+For a roof slab object, click Edit In Place: Roof Slab Body Modifi­
+
+
+If you want to … Then … 
+er . Modify panel . Boolean 
+drop-down . Intersect. Select the object, and press ENTER. Enter y (Yes) to keep the object in the drawing, or press ENTER to erase it. 
+trim a body modifier ¦ if the object is a slab, click Edit In Place: Slab Body Modifi­er . Modify panel . Trim by 
+Plane
+ . 
+¦ if the object is a roof slab, click Edit In Place: Roof Slab Body Modifier . Modify pan­
+el . Trim by Plane
+ . 
+Specify the points that define the 
+trim plane, and select the side of 
+the body modifier to be trimmed. 
+The trimmed body modifier is con­
+verted to a Free Form mass ele­
+ment. 
+divide the face of a body modifier into two faces 
+¦ 
+if the object is a slab, click Edit In Place: Slab Body Modifi­er . Modify panel . Split Face
+
+
+ . 
+
+¦ 
+if the object is a roof slab, click Edit In Place: Roof Slab Body Modifier . Modify pan­
+
+
+el . Split Face
+ . Specify the points that define the edge created by splitting the faces. 
+join two faces that are on the same ¦ if the object is a slab, click Edit plane into a single face In Place: Slab Body Modifi­
+er . Modify panel . Join Faces
+
+ . 
+If you want to … Then … 
+¦ if the object is a roof slab, click Edit In Place: Roof Slab Body Modifier . Modify panel . Join 
+Faces
+ . Select the edge that separates the coplanar faces. 
+remove a body modifier select the object that forms the body modifier, and press DELETE. 
+3 Save or discard the changes: 
+If you want to … Then … 
+restore the body modifier to its ori-select the body modifier, and 
+ginal shape ¦ if the object is a slab, click Edit In Place: Slab Body Modifi­er . Edits panel . Cancel. 
+¦ if the object is a roof slab, click Edit In Place: Roof Slab Body Modifier . Edits panel . Can­cel. 
+save the changes to the body select the body modifier, and 
+modifier ¦ if the object is a slab, click Edit In Place: Slab Body Modifi­er . Edits panel . Finish. 
+¦ if the object is a roof slab, click Edit In Place: Roof Slab Body Modifier . Edits panel . Fin­ish. 
+Managing Slab/Roof Slab Body Modifiers 
+Use this procedure to edit or remove three-dimensional (3D) body modifiers from a slab or a roof slab. You can change the component to which the body modifier is applied or the way it is applied (whether it adds to, subtracts from, or replaces the selected component). You can also enter or edit the descriptions of body modifiers. 
+NOTE To remove a body modifier from a slab or roof slab component and restore the modifier as a mass element that you can edit or apply to other slabs or roof slabs, see Restoring a Slab/Roof Slab Body Modifier to a Mass Element on page 2452. 
+1 Select the slab or roof slab you want to change, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify pan­el . Body Modifier drop-
+down . Body Modifiers
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Body Modifier drop-
+down . Body Modifiers
+ . 
+NOTE You can also access this worksheet on the Design tab of the Properties palette, under Advanced. 
+
+2 Select a body modifier, and change its settings: 
+If you want to … Then … 
+apply the body modifier to a differ-select a different component for ent slab or roof slab component Component. 
+If you want to … Then … 
+change the operation used to apply the body modifier to the slab or roof slab component select a different operation for Op­eration: 
+¦ 
+Select Additive to add the body modifier to the component. 
+
+¦ 
+Select Subtract to subtract the shape of the body modifier from the component. 
+
+¦ 
+Select Replace to replace the component with the body modifier. 
+
+
+delete the body modifier from the select the body modifier, and click slab or roof slab component
+
+ , or right-click, and click Re­move. 
+enter a description of the body click Description, enter text, and modifier press ENTER. 
+3 Click OK. 
+Restoring a Slab/Roof Slab Body Modifier to a Mass Element 
+Use this procedure to remove a body modifier from a slab or a roof slab and add it to the drawing as a mass element. Restoring a body modifier to a mass element enables you to modify the shape as a mass element and then add it to the slab or roof slab again as a body modifier. You can also restore the body modifier to a mass element while leaving the body modifier still applied to the slab or roof slab. This is useful if you want to create other slabs or roof slabs with the same shape. 
+If the object used to create the body modifier was a conventional mass element, it is restored to that mass element. For example, a Gable mass element is restored as a Gable mass element. However, if the body modifier was created from another object, such as a structural member, or was edited using Boolean operations or face editing commands, the body modifier is restored as a Free Form mass element. 
+1 Select the slab or roof slab you want to change, and 
+if the object selected is… then… 
+a slab click Slab tab . Modify pan­el . Body Modifier drop-
+down . Restore
+ . 
+a roof slab click Roof Slab tab . Modify pan­el . Body Modifier drop-
+down . Restore
+ . 
+2 NOTE This procedure restores all body modifiers attached to a slab or roof slab. 
+Create mass elements from the body modifiers: 
+If you want to … Then … 
+create mass elements from the body press ENTER. modifiers while keeping the body modifiers attached to the slab or roof slab 
+remove all body modifiers from the enter y (Yes), and press ENTER. slab or roof slab, and create mass elements from their shapes 
+Specifying the Material of a Slab/Roof Slab 
+Use this procedure to select a different material for components of an individual slab or roof slab. 
+To change the materials assigned to all slabs or roof slabs of the same style, see Specifying the Materials of a Slab or Roof Slab Style on page 2470. 
+NOTE If a material assignment does not determine the display properties of the component, you can change the properties of the display component as described in Specifying the Display Properties of a Slab/Roof Slab on page 2454. 
+1 Select the slab or roof slab you want to change, right-click, and click Edit Object Display. 
+2 To verify that the material assignment determines the display properties of the component, click the Display Properties tab, select the display representation on which to display the changes, 
+and click 
+. 3 Click the Layer/Color/Linetype tab, verify that By Material is 
+selected for the component, and click OK. 
+4 Click the Materials tab. 
+5 Select the component you want to change, and select a different 
+material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a 
+component. 
+WARNING When you edit a material definition from this dialog box, any changes you make will apply to all objects that are assigned the material. 
+6 Click OK. 
+Specifying the Display Properties of a Slab/Roof Slab 
+Use this procedure to change the following properties of the display components of an individual slab or roof slab: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+By Material (material assigned to the display component determines its display properties) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+To change these display properties for all slabs or roof slabs of the same style, see Specifying the Display Properties of a Slab or Roof Slab Style on page 2473. 
+NOTE If a material assignment determines the display properties of a component, you can change the properties by clearing By Material or by overriding the material assignment with a different material. For more information, see Specifying the Material of a Slab/Roof Slab on page 2453. 
+1 Select the slab or roof slab you want to change, right-click, and click Edit Object Display. 
+NOTE You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 
+4 Click the Layer/Color/Linetype tab. 
+5 Select the component to change, and select a different setting for 
+the property. 6 Click OK twice. 
+Specifying the Hatching of a Slab/Roof Slab 
+Use this procedure to specify the hatching of the components of a slab or roof slab. Hatching is displayed only in display representations that are used in the Top view (plan view) of a drawing. 
+To change the hatching for all slabs or roof slabs of the same style, see Specifying the Hatching of a Slab/Roof Slab Style on page 2475. 
+NOTE If a material assignment determines the hatching properties of a slab display component, you can change the hatching of the display component by clearing By Material or by overriding the material assignment with a different material. For more information, see Specifying the Material of a Slab/Roof Slab on page 2453. 
+1 Select the slab or roof slab you want to change, right-click, and click Edit Object Display. 
+NOTE You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+2 On the Display Properties tab, select the display representation for which you want to change a property, and select Style Override. 
+3 If necessary, click 
+. 
+4 On the Hatching tab, select the display component, and click the setting for Pattern. 
+5 Select the hatching for the display component: 
+If you want to… Then… 
+specify a hatching pattern that is select Predefined for Type, and then available in the software select a pattern. 
+specify a custom pattern select Custom for Type, and enter the name of the custom pattern. If necessary, click Browse, and navig­ate to the folder where the custom pattern file is located. 
+specify single hatching select User-Defined for Type, and clear Double Hatch. 
+specify double hatching select User-Defined for Type, and select Double Hatch. 
+specify solid fill select Solid Fill for Type. 
+6 Click OK. 
+7 Click the setting for Scale/Spacing, and enter a value that determines how the selected pattern is repeated. 
+8 Click the setting for Angle, and enter the angle for the selected pattern. 
+9 Click the setting for Orientation, and specify how the hatching is oriented: 
+If you want to… Then… 
+orient the hatching to the slab or click to select Object. roof slab, regardless of its rotation 
+orient the hatching to the World click to select Global. Coordinate System 
+10 Click the setting for X Offset, and enter an offset value. 11 Click the setting for Y Offset, and enter an offset value. 12 Click OK twice. 
+Specifying the Cut Plane Height of a Slab/Roof Slab 
+Use this procedure to specify the cut plane height of a slab or roof slab. 
+If the value you specify for the cut plane height is greater than zero, you must specify the layer, color, and linetype for the elements above and below the cut plane height. This is especially important for slabs or roof slabs with interference conditions or body modifiers. 
+To change the cut plane height for all slabs or roof slabs of the same style, see Specifying the Cut Plane Height of a Slab/Roof Slab Style on page 2477. 
+1 Select the slab or roof slab you want to change, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 4 Click the Other tab. 5 Select Override Display Configuration Cut Plane, and enter a value 
+for Cut Plane Height. 6 Click OK twice. 
+Creating a Clipped Gable Roof 
+Use this procedure to modify two roof slabs to add a third slab, creating a clipped gable roof. 
+1 Create a gable roof with two roof slabs. 2 In an isometric view, draw a 3D polyline in the shape and location 
+of the clipped roof slab. 3 Enter roofslab. 4 Enter e (Edit). 5 Enter x (Xcut). 6 Select the two roof slabs and press ENTER. 7 Select the 3D polyline and press ENTER twice. 
+Creating a clipped gable roof 
+
+NOTE You can edit the outside edge of the new roof slab to change it from square to plumb. For more information, see Changing Slab or Roof Slab Edges on page 2422. 
+Creating a Dormer in a Roof Slab 
+Use this procedure to add a dormer to a roof slab. You must first create the roof slabs, walls, and all other parts of the dormer, so that an appropriate hole can be cut in the roof slab. The walls you create for the dormer must include a back segment, so that a complete hole for the dormer can be cut in the roof slab. 
+Adding a dormer to a roof slab 
+
+1 Create the walls for the dormer, including a closing rear wall. 
+2 Open the tool palette that contains the roof slab tool you want to use. (You may have to scroll to display the desired tool.) 
+3 Right-click the tool, and click Apply Tool Properties to . Linework, Walls and Roof. 
+4 Select the walls, and press ENTER. 5 Miter the roof slab edges as required. 6 Move the structure so that the walls and roof slabs of the dormer 
+fully penetrate the existing roof slab in the correct position. 7 Select the roof slab to add the dormer to, and click Roof Slab 
+tab . Dormer panel . Add
+ . 8 Select the objects that form the dormer, and press ENTER. 9 When prompted to slice the walls with the roof slab, press ENTER 
+to slice the walls, or enter n (No) to leave the walls as they are. 10 Erase the wall at the rear of the dormer. 
+Slab and Roof Slab Styles 
+A slab or roof slab style is a set of parameters that determines the appearance and other characteristics of the slab or roof slab object to which it is assigned. By editing a style, you can control the properties of all objects that use that style, without having to change the properties of each such object in a drawing. For slabs and roof slabs, the style controls the following properties: 
+¦ 
+default dimensions, including thickness 
+
+¦ 
+default edge conditions, including fascia and soffit styles 
+
+¦ 
+default display properties, including fascia and soffit 
+
+¦ 
+physical components (concrete, metal deck, and so on) 
+
+¦ 
+materials assigned to components of slabs 
+
+
+The default slab and roof slab tools provided with the software use standard styles. You can use these as provided, edit the standard styles in the Style Manager, or create your own styles and use them to make new tools. 
+Using Materials in Slab/Roof Slab Styles 
+You can control how slabs or roof slabs of a particular style are displayed in a drawing by assigning materials to the slab or roof slab components in the style. The components are then displayed using the display properties of the assigned materials. For more information see Material Components and Display Properties on page 884. 
+AutoCAD Architecture provides predefined materials for common design purposes. You can use these materials as provided, modify them to meet your project requirements, or define new materials. For more information about materials and how to define them, see Creating and Editing Material Definitions on page 905 and Specifying the Material of a Slab/Roof Slab on page 2453. 
+Creating Tools from Slab/Roof Slab Styles 
+You can create a slab or roof slab tool from a slab or roof slab style by dragging the style from the Style Manager onto a tool palette. The default settings provided by the style are then applied to any object created with that tool. For more information, see Using Tools to Create Slabs and Roof Slabs on page 2384. 
+Managing Slab/Roof Slab Styles 
+To create, copy, edit, or purge styles for slabs and roof slabs, you use the Style Manager. The Style Manager provides a central location in AutoCAD Architecture where you can work with styles from multiple drawings and templates. For more information, see Style Manager Overview on page 856. 
+Creating a Slab or Roof Slab Style 
+Use this procedure to create a slab or roof slab style. You can start by using the default properties of the standard style, or you can copy an existing style to use as your template. You then edit the style properties to customize the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Expand Architectural Objects, and expand Slab Styles or Roof Slab Styles. 
+3 Create a style: 
+If you want to… Then … 
+create a style with default properties right-click Slab or Roof Slab Styles, and click New. Enter a name for the new style, and press ENTER. 
+create a style from an existing style right-click the slab or roof slab style you want to copy, and click Copy. Right-click, and click Paste. Right-click the copy, and click Rename. 
+If you want to… Then … 
+Enter a name for the new style, and press ENTER. 
+4 To specify or edit the properties of the new style, use the tabs on the right pane of the Style Manager as described in the following table. 
+If you want to … Then … 
+enter a description of the style click the General tab, and enter a description. 
+specify the physical components of see Specifying the Components of the slab or roof slab a Slab or Roof Slab Style on page 2463. 
+specify either a fixed or variable see Specifying the Thickness and thickness or offset for the slab or Offset of a Slab/Roof Slab Compon­
+roof slab or its components ent on page 2467. 
+assign materials to the display  see Assigning Materials to a  
+components of the style  Slab/Roof Slab Style on page 2472  
+and Turning on Materials for a  
+Slab/Roof Slab Style on page 2475.  
+
+add classifications to the style see Adding Classifications to a Slab or Roof Slab Style on page 2478. 
+specify hatching, cut plane proper-see Specifying the Display Proper­
+ties, and other display properties of ties of a Slab or Roof Slab Style on the style page 2473. 
+add notes and files to the style see Attaching Notes and Files to a Slab or Roof Slab Style on page 2479. 
+5 If you want to create a tool that uses the new style, drag the style 
+from the Style Manager to a tool palette. You can later rename the tool and specify other properties for it as described in Creating a Slab or Roof Slab Tool on page 2397. 
+6 Click OK. 
+Specifying the Components of a Slab or Roof Slab Style 
+Slab or roof slab components are the physical structures of the slab or roof slab, such as concrete, metal deck, insulation, and so on. 
+Slab/Roof Slab Components and Their Properties 
+Each component in a slab or roof slab style corresponds to a structural component or material of a slab or roof slab. When you create a component, you specify values for the following properties of the component: 
+¦ 
+Name (generally identifies the material used, such as concrete, metal deck, or insulation) 
+
+¦ 
+Thickness (analogous to the Width property of a wall component; can be a fixed value or a variable) 
+
+¦ 
+Thickness Offset (specifies the position of the component within the slab or roof slab, relative to the slab or roof slab baseline or to adjacent slab or roof slab components; can be a fixed value or a variable) 
+
+
+Using Components from Other Slab/Roof Slab Styles 
+In addition to creating new components from scratch within a slab or roof slab style, you can also paste in components you have copied from a different style of the same type. That is, you can paste components from one slab style into another slab style, or components from one roof slab style into another roof slab style. 
+Components Tab 
+Use the Components tab of the Style Manager for the following tasks: 
+¦ 
+Add or remove slab or roof slab components and edit their properties. 
+
+¦ 
+View the components as you create and configure them. 
+
+¦ 
+Change the order of components relative to other components in the style. 
+
+
+Specifying the properties of slab components 
+
+Creating or Editing a Component in a Slab/Roof Slab Style 
+Use this procedure to create a slab or roof slab component, or to edit existing components in a slab or roof slab style. 
+You can also add components to a style by pasting in components you have copied from other styles of the same type. 
+TIP Only the first 20 components of a slab or roof slab style are controlled by the display system. It is suggested that you limit the number of components to 20, since any additional components would be controlled by material assignment only. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style that you want to change. 3 Click the Components tab. 
+4 To add a new component, click 
+. If no existing component was selected, the new component is assigned an Index number of 2, but otherwise has the same values as the first component in the list. If an existing component was selected, the new component is a duplicate of the selected component, except that its Index number is 1 higher. In either case, you can edit the properties of the new component as described in the following steps. 
+5 To edit the name of a selected component, click in the Name column, and enter a new name. 6 To specify the thickness of a component, double-click its Thickness value, and then do one of the following: 
+If you want to … Then … 
+specify a fixed thickness that cannot enter a new value for Thickness. be edited when you add or edit objects of this style 
+specify a variable thickness based on a Base Thickness (BT) value that can be determined when you add or edit objects of this style click 
+to display text boxes that let you specify a formula that defines how the Base Thickness variable is used to calculate compon­ent thickness. For more information, see Specifying the Thickness and Offset of a Slab/Roof Slab Compon­
+ent on page 2467. 
+7 To specify the offset distance between the component and the slab or roof slab baseline, double-click the Thickness Offset value for the component, and then do one of the following: 
+If you want to … Then … 
+move the component up or down click 
+or 
+in the lower-leftby a specified increment 
+corner of the Components tab to offset the component by the Offset Increment value that you specify. 
+If you want to … Then … 
+The selected component is high­lighted in green in the viewer. 
+let the software calculate the offset select Auto Calculate Thickness Offset. 
+specify a fixed offset enter a value for Thickness Offset. 
+specify a variable offset that is calcu­lated from values that you specify click 
+in the Thickness Offset column to display text boxes that let you specify a formula that defines how the Base Thickness variable is used to calculate compon­ent thickness. For more information, see Specifying the Thickness and Offset of a Slab/Roof Slab Compon­
+ent on page 2467. 
+8 Repeat steps 5 through 8 to add more components to the style. 9 To change the order of components in the style, select a 
+component, and click 
+or 
+at the upper-right side of the tab to move the component to the desired position relative to the other components. 
+The Index numbers update to reflect the new order. 
+10 Click OK. 
+Adding a Component from Another Slab or Roof Slab Style 
+Use this procedure to copy a slab or roof slab component from one style and add it to another style of the same type that you are creating or editing. 
+TIP Only the first 20 components of a slab or roof slab style are controlled by the display system. It is suggested that you limit the number of components to 20, since any additional components would be controlled by material assignment only. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style that contains the component you want to copy: 
+If you want to … Then … 
+view the components for a style in  in the left pane of the Style Man- 
+the current drawing  ager, select a style. The right pane  
+lists the components and their  
+properties and displays the style in  
+the viewer.  
+
+view the components for a style in 
+another drawing click 
+, navigate to the drawing you want, click Open, and then se­lect a style in the left pane of the Style Manager. 
+3 On the Components tab for the selected style, right-click the desired component, and click Copy. 
+4 In the left pane of the Style Manager, select the style to which you want to add the component: 
+5 Move the cursor onto the Components tab, right-click, and click 
+Paste. You can now edit or delete the new components as needed. For more information, see Creating or Editing a Component in a Slab/Roof Slab Style on page 2464 and Removing a Component from a Slab/Roof Slab Style on page 2469. 
+6 Click OK to save the style with the new component. 
+Specifying the Thickness and Offset of a Slab/Roof Slab Component 
+When you create or edit a slab or roof slab component in a style, you can enter values that establish a fixed thickness and a fixed offset from the slab or roof slab baseline. If all the components in a slab or roof slab style use these fixed values, then you cannot change the thickness for an object of that style when you add one to a drawing. (The Thickness value on the Properties palette is read-only, and no Thickness grip is available on the object itself.) 
+Specifying slab component offsets 
+
+Alternatively, when you specify the Thickness or Thickness Offset values for a slab or roof slab component, you can use a variable called Base Thickness (BT), which has a default value of 4'' but can be changed at the time you add the slab or roof slab to a drawing or subsequently, either through the Properties palette or by grip editing. You can use the Base Thickness variable by itself, or as part of a formula that will be used to calculate the component thickness or offset. 
+For example, if you want to create a style in which a 2'' paving component is positioned directly above a paving base of variable thickness whose bottom edge is the same as the slab baseline, you would specify the Thickness and Thickness Offset values as follows: 
+
+For more complicated positioning relationships involving the Base Thickness variable, you can construct formulas for calculating the Thickness and Thickness Offset values. For example, if you know you want .5'' rebar to be positioned in the middle of a concrete layer with a fixed thickness of 6'', you might configure the components in the slab style as follows: However, if you want the rebar to be positioned in the middle of the concrete component, regardless of its thickness, you can configure the components as follows, where the concrete thickness is specified as a variable (BT), and the offset of the rebar component is specified as one half of the concrete thickness, whatever that may be, minus half the thickness of the rebar (1/4''). 
+
+
+To specify a formula using the Base Thickness variable, click the Thickness or 
+Thickness Offset value for the component, and then click 
+to display the text boxes for the formula as shown. 
+
+The formula can be as simple as the one shown, in which only the Base Thickness is used, or it can specify a value to be added to the Base Thickness, or a further mathematical operation involving the Base Thickness. (Note that the operation drop-down menu and the operand box at the far right are only available if Base Thickness is selected.) In the case of the 1/2'' rebar positioned in the middle of a variable thickness concrete slab, the formula for the rebar Thickness Offset would be constructed as follows: 
+
+After you have entered the desired formula, press Enter to dismiss the text boxes and transfer the formula to the Thickness or Thickness Offset value for the selected component. 
+Removing a Component from a Slab/Roof Slab Style 
+Use this procedure to delete a component from a slab or roof slab style. When you remove a component from a style, the component is also removed from all existing objects that use that style. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style that you want to change. 3 Click the Components tab. 4 Select the slab or roof slab component you want to remove, and 
+click 
+. 5 Click OK. 
+Specifying the Materials of a Slab or Roof Slab Style 
+A slab or roof slab object consists of a number of components whose display properties can be determined by the materials assigned to them. 
+You assign one material to each display component of the object. For example, you might assign a floor tile material to a slab body and a concrete material to a slab edge. 
+If you want to use the display properties of a slab or roof slab object or style, instead of using material display properties, you can turn off the material assignments in the display properties of the object or its style. 
+Material definitions consist of display components that correspond to component types of objects. For example, the Linework component of a material is used for all linework in Plan view. The Surface Hatch component of a material is used to hatch all object surfaces in 3D model views and elevations. 
+For a complete list of material components and their description, see Material Components and Display Properties on page 884. 
+Roof slabs with assigned materials 
+
+Slab/Roof Slab Materials and Display Components 
+The following table identifies the material component that corresponds to each slab or roof slab component. 
+Display Representa-Slab/Roof Slab Display Material Display Compon­tions Component ent 
+Plan, Plan High Detail,  Below Cut Plane Body  
+Plan Low Detail, Reflec- Shrinkwrap  
+ted Plan, Screened  
+Above Cut Plane Body  None  
+Shrinkwrap  
+
+Below Cut Plane Outline None 
+Above Cut Plane Outline None 
+Cut Plane Shrinkwrap None 
+Cut Plane Shrinkwrap None Hatch 
+Boundary Plan Linework 
+Hatch Plan Hatch 
+Baseline None 
+Fascia Plan Linework 
+Soffit Plan Linework 
+Pivot Point None 
+Model Baseline None 
+Slab 3D Body 
+Fascia 3D Body 
+Soffit 3D Body 
+Display Representa-Slab/Roof Slab Display Material Display Compon­tions Component ent 
+Pivot Point None 
+Assigning Materials to a Slab/Roof Slab Style 
+Use this procedure to assign materials to the individual components of a slab or roof slab style. The components will then use the display properties of the materials instead of the style display properties. 
+You can assign a material to any physical component of the slab or roof slab. Custom components and components that are only symbolic do not use materials for their display properties. For example, the slab or roof slab body is a physical component, while the pivot point is a symbolic component. 
+NOTE Although fascias and soffits are physical components of slabs or roof slabs, they are defined in the slab or roof slab edge style, and not in the slab or roof slab style. For information on assigning materials to edge styles, see Assigning Materials to a Slab/Roof Slab Edge Style on page 2494. 
+NOTE If a material assignment does not determine the display properties of a slab or roof slab component, you can change the display properties of the style as described in Specifying the Display Properties of a Slab or Roof Slab Style on page 2473. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style you want to edit. 3 Click the Display Properties tab. 4 Select the display representation in which to display the changes, 
+and select Style Override. 
+5 If necessary, click 
+. 6 Click the Layer/Color/Linetype tab. 7 Select By Material for any component to which you want to assign 
+a material, and click OK. 
+If the setting for By Material is not available, the display of this 
+component cannot be determined by a material. 
+8 Click the Materials tab. 
+9 Click the component you want to change, click its current material definition, and select a different material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a 
+component. 
+WARNING Any changes you make to the material definition in this dialog will apply to all objects that are assigned the material. 
+10 Click OK. 
+Specifying the Display Properties of a Slab or Roof Slab Style 
+In most cases, you want the appearance of slabs or roof slabs that use the same style to be consistent throughout a drawing. To achieve this, you specify the following display properties in each style: 
+¦ 
+The layer, color, and linetype of slab or roof slab components 
+
+¦ 
+The hatching used for the surface of the slab or roof slab in plan views 
+
+¦ 
+The cut plane height 
+
+
+Components with display properties include dimensions for slab or roof slab thickness, edge conditions for the fascia and soffit, line work, cut planes, cut lines, 3D shading factors, baseline, and pivot point. The display properties of the fascia and soffit are also controlled by the slab or roof slab style, although the geometry of these components is controlled through edge styles. 
+You can also use materials to control the display properties of the physical components of a slab or roof slab. Symbolic components, such as the pivot point, are not controlled by materials. For more information about using materials in slabs and roof slabs, see Specifying the Materials of a Slab or Roof Slab Style on page 2470. 
+Specifying the Layer, Color, and Linetype of a Slab/Roof Slab Style 
+Use this procedure to change the following display properties for display components of a slab or roof slab style: 
+¦ 
+Visibility (component is on or off) 
+
+¦ 
+By material (material assigned to the display component determines its display properties) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype Scale 
+
+
+NOTE If a material assignment determines the properties of components in the slab or roof slab style, you can change the properties of the display component by clearing By Material, or by overriding the material assignment with a different material. For more information, see Assigning Materials to a Slab/Roof Slab Style on page 2472. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style you want to edit. 3 Click the Display Properties tab. 4 Select the display representation in which to display the changes, 
+and select Style Override. 
+5 If necessary, click 
+. 6 Click the Layer/Color/Linetype tab. 7 Select the component to change, and select a different setting for 
+the property. 
+8 Click OK. 
+Turning on Materials for a Slab/Roof Slab Style 
+Use this procedure to turn on material assignments for individual display representations in a slab or roof slab style. 
+For more information about using materials to control the display of slab or roof slab components, see Specifying the Materials of a Slab or Roof Slab Style on page 2470. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style you want to edit. 3 Click the Display Properties tab. 4 Select the display representation in which to display the changes, 
+and select Style Override. 
+5 If necessary, click 
+. 6 Click the Layer/Color/Linetype tab. 7 Select By Material for each component to be controlled by the 
+material. The By Material check box is unavailable for components 
+that cannot be assigned a material. When you select By Material for a display component, all other settings in the dialog box are unavailable. Since the display properties are now taken from the material definition, you can no longer set them directly in the display properties of the slab or roof slab style. 
+8 Click OK. 
+Specifying the Hatching of a Slab/Roof Slab Style 
+Use this procedure to specify the hatching of a slab or roof slab style. Hatching is displayed only in display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style you want to edit. 3 Click the Display Properties tab. 4 Select the display representation in which to display the changes, 
+and select Style Override. 
+5 If necessary, click 
+. 6 Click the Hatching tab. 7 Click the setting for Pattern. 8 Select the hatching pattern: 
+If you want to… Then… 
+select a hatching pattern that is select Predefined for Type, and then available in the software select a pattern. 
+select a custom pattern select Custom for Type, and then enter the name of the custom pat­tern. If necessary, click Browse, and navigate to the folder where the custom pattern file is located. 
+select single hatching select User-defined for Type, and then clear Double Hatch. 
+select double hatching select User-defined for Type, and then select Double Hatch. 
+select solid fill select Solid Fill for Type. 
+9 Click OK. 10 Click Scale/Spacing, and enter a value that determines how the selected pattern is repeated. 11 Click Angle, and enter the angle for the selected pattern. 
+12 Click Orientation, and specify how the hatching is to be oriented: 
+If you want to… Then… 
+orient the hatching to the slab or click to select object. roof slab, regardless of its rotation 
+orient the hatching to the World click to select global. Coordinate System 
+13 Click OK twice. 
+Specifying the Cut Plane Height of a Slab/Roof Slab Style 
+Use this procedure to specify the cut plane height of a slab or roof slab style. 
+If the value you specify for the cut plane height is greater than zero, you must specify the layer, color, and linetype for the elements above and below the cut plane height. This is especially important when interference conditions or body modifiers are present. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style you want to edit. 3 Click the Display Properties tab. 4 Select the display representation in which to display the changes, 
+and select Style Override. 
+5 If necessary, click 
+. 6 Click the Other tab. 7 Select Override Display Configuration Cut Plane, and enter a value 
+for Cut Plan Height. 8 Click OK twice. 
+Adding Classifications to a Slab or Roof Slab Style 
+Use this procedure to specify classifications for any classification definition applied to a slab or roof slab style. 
+For more information about creating and applying classification definitions, see Classification Definitions on page 3834. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style you want to edit. 
+3 Click the Classifications tab. By default, the classification for all classification definitions is Unspecified. If no classification definitions are listed, none are applied to slab or roof slab styles. 
+4 For each classification definition, select the classification you want to apply to the current style. 
+5 Click OK. 
+Defining a Slab/Roof Slab Style as Bounding for Associative Spaces 
+Use this procedure to define a slab or roof slab style that can bound associative spaces. 
+When a style is set as bounding, by default all objects of that style will be used in the selection set for an associative space. For more information about associative spaces see Generating Associative Spaces on page 2904. 
+By default, this setting is checked. 
+You can override the bounding setting for the style in an individual slab or roof slab if necessary. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style you want to edit. 3 Click the General tab. 4 Select the checkbox for Objects of this style may act as a boundary 
+for associative spaces. 5 Click OK. 
+Attaching Notes and Files to a Slab or Roof Slab Style 
+Use this procedure to enter notes and attach reference files to a slab or roof slab style. You can also edit notes and edit or detach reference files from the style. 
+1 Open a tool palette that has a slab or roof slab tool, right-click the tool, and click Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style you want to edit. 3 Click the General tab. 4 To add a description to the style, enter it under Description. 5 Click Notes. 6 To add or edit a note, click the Notes tab, and enter the note or 
+edits. 
+7 To attach, edit, or detach a reference file, click the Reference Docs tab: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Edit file the description, and click OK. 
+If you want to… Then… 
+edit a reference file double-click the reference file name to start its application. Click OK when you are finished editing. 
+detach a reference file select the file name, click Delete, and click OK. 
+8 Click OK. 
+Slab and Roof Slab Edge Styles 
+Slab and roof slab edge styles control the appearance of the edges of slab and roof slab objects. Using edge styles, you can specify dimensions, such as the overhang length, and the orientation and angle of the edges. You can also specify a fascia and soffit for the edge style. 
+Components of Slab/Roof Slab Edge Styles 
+The slab or roof slab edge style defines the appearance of slab or roof slab edges. Each style consists of two optional components: a fascia and a soffit. 
+A fascia is a shape applied to the outside face of a slab or roof slab edge. A soffit is a shape applied to the underside of an edge overhang. 
+You can create fascia and soffit components by defining profiles that provide the two-dimensional (2D) geometry of the component whose shape is then extruded along the slab or roof slab edge. 
+The fascia component follows the orientation of the slab edge (plumb or square cut). The soffit component, however, is always oriented to the horizontal. Either component can have a positive or negative angle, relative to its base orientation. 
+The +/- directions for edge component angles remain the same regardless of their orientation in the XY plane. They always follow the slab or roof slab slope, so that, for example, a +30° soffit and a +30° slab or roof slab would be parallel to each other. Similarly, a +10° (plumb cut) fascia and a -10° soffit would meet at a right angle. Mirroring a slab or roof slab maintains the same angle signs for all components. 
+Controlling the Placement of the Fascia and Soffit on Slab/Roof Slab Edges 
+The fascia profile is drawn at actual size, except when you select Auto-Adjust. If the slab or roof slab edge is sloped relative to the ground plane, then the length is measured parallel to that slope, and not plumb with the ground. When you select Auto-Adjust to Edge Height, the fascia profile is scaled about its insertion point so that its lowest Y axis point aligns with the bottom of the slab or roof slab edge. 
+NOTE Slope offsets are measured relative to the slab or roof slab edge angle from the ground plane, and not relative to the world UCS. 
+The soffit profile is drawn at actual size, except when you select Auto-Adjust. The soffit angle is measured about its insertion point, using the local X axis of the profile. 
+When you select Auto-Adjust to Overhang Depth, the soffit profile is scaled about the insertion point, so that the furthest X axis point aligns with a plumb line from the slab or roof slab baseline or perimeter line. Auto-Adjust scaling is adjusted by the horizontal offset from the baseline dimension. 
+Display Properties of the Fascia and Soffit 
+In most cases, you want the appearance of fascias or soffits that use the same edge style to be consistent throughout a drawing. To achieve this, you specify the following display properties in each slab or roof slab edge style: 
+¦ 
+The layer, color, and linetype of slab or roof slab edge components 
+
+¦ 
+The hatching used for the surface of slab or roof slab edges in plan views 
+
+¦ 
+The cut plane height 
+
+
+Slab edge components with display properties include dimensions for slab thickness, fascia and soffit, vertical and horizontal offsets, line work, cut planes, cut lines, 3D shading factors, baseline, slab, and pivot point. The display properties of the fascia and soffit are also controlled by slab or roof slab style, although the geometry of these components is controlled through slab or roof slab edge styles. 
+Materials in Slab/Roof Slab Edges 
+You can assign materials to a slab or roof slab edge. These materials are then displayed in wireframe or rendered views. Materials have specific settings for individual components of a slab or roof slab edge, such as the fascia and soffit. 
+Viewing Slab Edge detail in 2D wireframe and rendered views 
+
+AutoCAD Architecture provides predefined materials for common design purposes. These materials contain settings for slabs and slab edges that you can use “as is” or modify for special designs. You can also create materials from scratch. For more information, see Specifying the Materials of a Slab or Roof Slab Style on page 2470. 
+Managing Slab/Roof Slab Edge Styles 
+To create, import, export, or edit styles, you use the Style Manager. The Style Manager provides a central location where you can work with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+Creating a Slab or Roof Slab Edge Style 
+Use this procedure to create a new slab or roof slab edge style. You can start by using the default properties of the standard style, or you can copy an existing style to use as your template. You then edit the style properties to customize the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 Expand Architectural Objects, and expand Slab Edge Styles or Roof Slab Edge Styles. 
+NOTE Alternatively, select a slab or roof slab object drawing, and then from the contextual ribbon’s General panel, click the Edit Style drop-down menu, and choose Edge Styles. 
+3 Create a slab or roof slab edge style: 
+If you want to… Then… 
+create a style with default properties right-click Slab Edge Styles or Roof Slab Edge Styles, and click New. 
+If you want to… Then… 
+Enter a name for the new style, and press ENTER. 
+create a style from an existing style right-click the style you want to copy, and click Copy. Right-click, and click Paste. Right-click the copy, and click Rename. Enter a name for the new style, and press ENTER. 
+4 To specify or edit the properties of the new style, use the tabs on the right pane of the Style Manager as described in the following table: 
+If you want to… Then… 
+enter a description of the style click the General tab, and enter a description. 
+specify the overhang, edge cut, and see Specifying the Overhang, Edge angle for the style Cut, and Angle of a Slab/Roof Slab Edge Style on page 2484. 
+specify soffits and fascias for the see Specifying a Fascia and a Soffit style for a Slab/Roof Slab Edge Style on page 2488. 
+assign materials to the display see Assigning Materials to a components of the style Slab/Roof Slab Edge Style on page 2494. 
+turn on materials for the style see Turning on Materials for a Slab/Roof Slab Edge Style on page 2495. 
+add notes and files to the style see Attaching Notes and Files to a Slab/Roof Slab Edge Style on page 2496. 
+5 When you finish specifying the properties of the style, click OK. 
+Specifying the Overhang, Edge Cut, and Angle of a Slab/Roof Slab Edge Style 
+Use this procedure to specify the default overhang depth, edge cut, and edge angle for slab or roof slab edges using an edge style. 
+1 Select a slab or roof slab, and 
+if the object selected is… then… 
+a slab click Slab tab . General pan­el . Edit Style drop-down . Slab 
+Edge Style
+ . 
+a roof slab clickRoof Slab tab . General pan­el . Edit Style drop-down . Roof Slab Edge Style. 
+2 Select an edge of the slab or roof slab. 3 Click the Defaults tab. 
+
+4 Specify the overhang, edge cut, and angle of the edge: 
+If you want to… Then… 
+specify the overhang of the slab or enter a value for Overhang. roof slab 
+If you want to… Then… 
+specify the orientation of the edge select a setting for Edge Cut: 
+cut ¦ Select Square to cut the edge 90 degrees with the plane of the slab or roof slab. 
+¦ Select Plumb to cut the edge perpendicular to the ground. 
+specify the angle of the edge enter a value for Angle. A positive value moves the bottom of the edge out and a negative value moves the bottom of the edge in. 
+Specifying square and plumb edges 
+
+5 Click OK. 
+Creating Profiles for the Fascia and Soffit 
+Use this procedure to create a profile for the fascia and soffit. 
+The profile is made up of closed polylines. To represent solid fascia or soffits, such as a wood fascia, you can create a profile from a single polyline. To represent fascia or soffits that are extruded, such as aluminum soffits, you can create a profile from concentric polylines that can include one or more voids. The outer polyline, or ring, becomes the exposed shape, and the inner polyline, if used, becomes the void. You can create multiple voids by adding more inner closed polylines. The polylines are proportional in size and shape to each other and to the slab. 
+You can draw these polylines anywhere in the drawing and use any convenient scale relative to your final fascia or soffit size. One method for sizing the polylines relative to the slab or roof slab edge is to draw them by snapping to an existing fascia, and then move your completed polylines to an open area of the drawing to create the profile. 
+Assigning a profile as a fascia 
+
+Assigning a profile as a soffit 
+
+1 Draw one or more closed polylines representing the fascia or soffit. 2 Select the polylines, right-click, and click Convert to . Profile 
+Definition. 3 Select the outermost polyline. 4 Enter a (Add ring) as needed. 5 Select an inner polyline as needed. 6 Repeat steps 3 and 4 as needed to add more voids to the profile. 7 Specify the insertion point for the fascia or soffit. (The insertion 
+point is typically the lower-left corner.) 8 Enter n (New), enter a name for the profile, and click OK. 
+Controlling Profile Edges and Extrusion 
+Use this procedure to specify the following parameters for a profile: 
+¦ 
+the position of each edge in a profile (left, right, back, discard, none) 
+
+¦ 
+the axis along which an object is extruded from the shape of a profile 
+
+
+These settings determine how surface hatching is applied to objects created from the profile and how the objects are extruded from the two-dimensional (2D) profile. 
+NOTE Objects already created from the profile change when you change profile edges or the axis of extrusion. 
+1 Click Manage tab . Style & Display panel .
+. Profile Definitions
+ . 2 Select the profile you want to change. 
+3 Click the Profile Edges tab. 
+4 Specify edge positions: 
+If you want to… Then… 
+let the software determine the pos-click Calculate Default Edge Posi­
+ition of edges tions. You can then override the position of individual edges, if ne­cessary. 
+select a position for an edge select edge number under Edge, and select a new position under Position. 
+exclude an edge from surface select the edge number under hatching Edge, and select None under Posi­tion. 
+discard an edge select the edge number under Edge, and select Discard under Pos­ition. 
+5 Specify the axis of extrusion based on the type of object created from the profile: 
+If you want to… Then… 
+create a roof slab or slab fascia select X for Extrusion Direction. 
+create a slab soffit select Y for Extrusion Direction. 
+extrude mass elements select Z for Extrusion Direction. 
+6 Click OK. 
+Specifying a Fascia and a Soffit for a Slab/Roof Slab Edge Style 
+Use this procedure to specify a fascia and a soffit for a slab or roof slab edge style. The drawing must contain profiles for the fascia and soffit. For more information, see Creating Profiles for the Fascia and Soffit on page 2485. 
+1 Select a slab or roof slab, and 
+if the object selected is… then… 
+a slab click Slab tab . General pan­el . Edit Style drop-down . Slab 
+Edge Styles
+ . 
+a roof slab click Roof Slab tab . General pan­el . Edit Style drop-down . Roof Slab Edge Styles. 
+NOTE Alternatively,click Manage tab . Style & Display panel . Style 
+Manager
+ , and then expand Architectural Objects, and expand Slab Edge Styles or Roof Slab Edge Styles. 
+2 Select the slab or roof slab edge style that you want to edit. 
+3 Click the Design Rules tab. 
+
+4 Select Fascia, and select a profile that defines the geometry of the 
+fascia. If you select *NONE*, display component settings apply to the slab or roof slab edge line or plane where the fascia is located. 
+5 Specify how the fascia is to be scaled on the slab or roof slab edge: 
+If you want to… Then… 
+scale the fascia to fit the height of select Auto-Adjust to Edge Height the edge to scale the fascia to edge height. 
+use the fascia at its drawn size clear Auto-Adjust to Edge Height. 
+6 Select Soffit, and select a profile that defines the geometry of the 
+soffit. If you select *NONE*, display component settings apply to the slab or roof slab edge line or plane where the soffit is located. 
+7 Specify how the soffit is to be scaled on the slab or roof slab overhang: 
+If you want to… Then… 
+scale the soffit to fit the depth of select Auto-Adjust to Overhang the overhang Depth. 
+If you want to… Then… 
+use the soffit at its drawn size clear Auto-Adjust to Overhang Depth. 
+8 Specify the placement of the soffit: 
+If you want to… Then… 
+specify the soffit angle of the slab  enter a value for the Angle, with  
+or roof slab edge  zero being horizontal. A positive  
+value slopes the soffit up from the  
+insertion point, and a negative  
+value slopes the soffit down.  
+
+specify the horizontal offset from enter a value for Horizontal Offset the slab or roof slab baseline or from [Slab/Roof Slab] Baseline. (This perimeter line for the slab edge option is available only if you select 
+Auto-Adjust to Overhang Depth.) 
+specify the soffit offsets from the enter a value for “X” Direction and insertion point of the fascia “Y” Direction. 
+9 Click OK. 
+Editing the Geometry of Fascia and Soffits 
+Use this procedure to edit the geometry of the profile used to define the fascia and soffit of a slab or roof slab edge style. You can also add a profile to the fascia or soffit of an edge style that does not currently use a profile to define its shape. 
+NOTE If you want to replace the geometry of the profile with newly drawn polylines, draw them before you start this procedure. 
+1 Select the slab or roof slab that has the style you want to change. 2 Add or edit a profile: 
+If you want to… Then… 
+add an existing profile to the style ¦ For a slab, click Slab tab . Edge panel . Add Pro­
+files
+ . 
+If you want to… Then… 
+create a profile and add it to the style 
+¦ 
+For a roof slab, click Roof Slab tab . Edge panel . Add Pro­
+
+files
+ . Select an edge. Select the name of the profile for the fascia or soffit, and click OK. 
+
+¦ 
+For a slab, click Slab tab . Edge panel . Add Pro­
+
+files
+ . 
+
+¦ 
+For a roof slab, click Roof Slab tab . Edge panel . Add Pro­
+
+
+files
+ . Select an edge. Select Start from scratch for Fascia or Soffit Profile Definition, enter a name for the new profile, and click OK. A rect­angle profile is created for you to edit. 
+edit the existing profile for the style ¦ For a slab, click Slab tab . Edge panel . Edit Profile 
+In Place
+ . 
+¦ For a roof slab, click Roof Slab tab . Edge panel . Edit Profile 
+In Place
+ . 
+NOTE If you are prompted about the selected edge not having an edge style and overhang, click Yes. 
+3 If you receive a message that the profile is not drawn to size, click 
+Yes. The area of the slab or roof slab edge defined by the profile is selected and hatched in the drawing. 
+NOTE After you perform an editing task from the Edit in Place contextual tab, you may need to select a profile again to perform another editing task. If you do not see the editing commands that you expect on the contextual tab, re-select a profile to redisplay the Edit in Place contextual tab. 
+4 Edit the profile as necessary: 
+If you want to… Then… 
+change the shape of the perimeter of the profile or its rings 
+select the profile, and use edge and vertex grips to adjust the shape. The Edge grip has two edit modes: Stretch and Move. The default mode is Stretch, and the direction of the stretch depends on the orient­ation of edges connected to the selected edge. For example, if the edges at both ends of the selected edge are parallel to each other, the grip edit mode is Stretch (Parallel) and the stretch direction is limited to the direction of the parallel edges. If the connected edges are not parallel, the grip edit mode is Stretch (Offset) and the stretch dir­ection is perpendicular to the direc­tion of the selected edge. The Move edit mode allows an unconstrained move of the selected edge. 
+add vertices to the profile ¦ if the object is a slab, click Edit In Place: Slab Edge Profile tab . Profile panel . Add Ver­
+tex
+ . 
+¦ if the object is a roof slab, click Edit In Place: Roof Slab Edge Profile tab . Profile pan­
+el . Add Vertex
+ . Select a point for each new vertex, and press ENTER. 
+If you want to… Then… 
+remove vertices from the profile 
+¦ 
+if the object is a slab, click Edit In Place: Slab Edge Pro­file . Profile panel . Remove 
+
+Vertex
+ . 
+
+¦ 
+if the object is a roof slab, click Edit In Place: Roof Slab Edge Profile tab . Profile panel . Re­
+
+
+move Vertex
+ . Select each vertex to remove, and press ENTER. 
+replace an existing ring of the pro­file with new geometry 
+5 Save or discard the changes: 
+¦ 
+if the object is a slab, click Edit In Place: Slab Edge Profile tab . Profile panel . Replace 
+
+Ring
+ . 
+
+¦ 
+if the object is a roof slab, click Edit In Place: Roof Slab Edge Profile tab . Profile panel . Re­
+
+
+place Ring
+ . Select the ring to replace, and select the new geometry. Press ENTER to keep the geometry, or enter n (No) to erase it. 
+If you want to… Then… 
+restore the profile to its original ¦ if the object is a slab, click Edit shape In Place: Slab Edge Profile 
+tab . Edits panel . Cancel. 
+¦ if the object is a roof slab, click Edit In Place: Roof Slab Edge Profile tab . Edits panel . Can­cel. 
+If you want to… Then… 
+save the changes to the current profile 
+¦ 
+if the object is a slab, click Edit In Place: Slab Edge Profile tab . Edits panel . Finish. 
+
+¦ 
+if the object is a roof slab, click Edit In Place: Roof Slab Edge Profile tab . Edits panel . Fin­ish. 
+
+
+The slab or roof slab style uses the edited profile to define its geo­metry. Any other objects or styles that use this profile are also up­dated with the edited geometry. 
+save the changes to a new profile definition 
+¦ 
+if the object is a slab, click Edit In Place: Slab Edge Profile tab . Edits panel . Save As
+
+
+ . 
+
+¦ 
+if the object is a roof slab, click Edit In Place: Roof Slab Edge Profile tab . Edits panel . Save 
+
+
+As
+ . Enter a name for the new profile definition, and click OK. The slab or roof slab uses the new profile to define its geometry. Any other ob­jects of this style are updated with the new geometry. Other styles or objects that use the original profile are not affected. 
+Assigning Materials to a Slab/Roof Slab Edge Style 
+Use this procedure to assign materials to individual components of a slab or roof slab edge style. 
+1 Click Manage tab . Style & Display panel . Style Manager then expand Architectural Objects, and expand Slab Edge Styles or Roof Slab Edge Styles. 
+
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Edge Styles or Roof Slab Edge Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style to which to assign materials. 3 Click the Materials tab. 4 Select the edge component to which to assign a material, and 
+click its current material definition. 
+5 Select a material definition from the list. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a 
+component. 
+WARNING Any changes you make to the material definition in this dialog will apply to all objects that are assigned the material. 
+6 Click OK. 
+Turning on Materials for a Slab/Roof Slab Edge Style 
+Use this procedure to turn on material assignments for individual display representations in a slab or roof slab edge style. Display components for edges are not turned on in the edge style, but rather in the slab or roof slab style that uses them. 
+For information on creating and assigning materials, see Specifying the Materials of a Slab or Roof Slab Style on page 2470. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . Expand Architectural Objects, and expand Slab Styles or Roof Slab Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Styles or Roof Slab Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style that contains the edges you want to turn on. 3 Click the Display Properties tab. 4 Select the display representation in which to display the changes, 
+and select Style Override. 
+5 If necessary, click 
+. 6 Click the Layer/Color/Linetype tab. 7 Select By Material for each component to be controlled by the 
+material. If the setting for By Material is not available, the display of this component cannot be determined by a material. 
+8 Click OK twice. 
+Attaching Notes and Files to a Slab/Roof Slab Edge Style 
+Use this procedure to enter notes and attach reference files to a slab or roof slab edge style. You can also edit notes and edit or detach reference files from the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . Expand Architectural Objects, and expand Slab Edge Styles or Roof Slab Edge Styles. 
+NOTE Alternatively, you can select a slab or roof slab in the drawing, and click Slab Edge Styles or Roof Slab Edge Styles from the Edit Style drop-down on the General panel of ribbon’s contextual menu. 
+2 Select the style you want to edit. 3 Click the General tab. 4 To add a description to the edge style, enter it under Description. 5 Click Notes. 6 To add or edit a note, click the Notes tab, and enter the note. 7 To attach, edit, or detach a reference file, click the Reference Docs 
+tab: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+If you want to… Then… 
+edit the description of a reference select the file, and click Edit. Edit file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. Click OK when you are finished editing. 
+detach a reference file select the file name, click Delete, and click OK. 
+8 Click OK. 
+Structural Members 
+31 
+A structural member is an object that can represent a beam, brace, or column in a drawing. All the beams, braces, and columns that you create are sub-types of a single structural member object. 
+Structural Members 
+A structural member is an object that can represent a beam, brace, or column in a drawing. All the beams, braces, and columns that you create are sub-types of a single structural member object. 
+Creating Structural Members 
+You create a structural member in AutoCAD Architecture by extruding a structural shape along a path. The style that you use to create the structural member provides the shape. The shape, similar to a profile, is a 2-dimensional cross-section of a structural member. You define the extrusion path (axis) of the member when you specify start and endpoints for the member or when you convert linework to a member. 
+Creating a structural member 
+
+Connecting Structural Members 
+Connections between structural members are supported. Structural members are considered connected when an endpoint of one member lies on an endpoint or along the axis of another. With some exceptions, you have the option of maintaining or breaking these connections when you move a member using its Location grip. Connections between structural members are also recognized across external reference (xref) drawings, and you can use objects in an xref to position and establish trim planes for members you are adding. For example, while working in one drawing, you can open an xref containing a column grid and use it to lay out columns or beams. If you edit the xref in-place, connections between structural members are maintained just as they would be in the host drawing. For more information on the behavior of connections during edits, see Using Grips To Edit Structural Members on page 2560. 
+Creating Styles with the Structural Member Catalog and Structural Member Style Wizard 
+To create styles for most standard beams, braces, and columns, you can use the Structural Member Catalog included in AutoCAD Architecture. The catalog contains specifications for industry-standard concrete, steel, and timber structural shapes organized in a Windows® Explorer-like tree view. You can browse the catalog, select a shape, and create a style. 
+Structural Member Catalog 
+
+If you know the type, shape, and shape dimensions of the member that you want to create, you can quickly enter the information in the Structural Member Style wizard to create a style. You can create a structural member shape within a style that is based on any of the member shapes in the catalog. 
+Structural Member Style Wizard 
+
+After you create structural member styles, you can drag them from the Style Manager onto tool palettes to create structural member tools. 
+Adding Graphics to Structural Members 
+You can add blocks to the display of structural members as components in display representations. For example, you can create blocks that represent stiffener plates and add them to beams or create blocks that represent clip angles and add them to members. 
+Beam with added stiffener plates 
+
+Trimming Structural Members 
+Structural members are trimmed using objects called trim planes, which let you clean up joints between multiple structural members or between structural members and other objects. Using the Properties palette for a structural member tool, you can create specific trim planes that are applied when you add a new member with the tool. Or you can specify that trim planes be created automatically when you connect the new member to an existing structural member in a drawing. Once a member has been added to a drawing, you can edit its trim planes or add new ones. Additional trim planes can be defined on the member itself or in relation to an edge of another object. For more information, see Trimming Structural Members on page 2576. 
+Trimming a structural member with a trim plane 
+
+Creating Column Grids 
+When you create a column, you can attach it to a grid. You can also create a column grid with the structural column grid tool that is included in AutoCAD Architecture. The tool creates a grid with columns pre-anchored to nodes on the grid. For more information, see [Reference to WScedd0d2069f88934b1c260fa2566209d-7fff]. 
+Materials in Structural Members 
+In AutoCAD Architecture, you can assign materials to a structural member. These materials are displayed in wireframe and working shade views, or when rendered. Materials have specific settings for the physical components of a structural member. 
+AutoCAD Architecture provides a large number of predefined materials for all common design purposes, which contain settings for structural members. You can use these predefined materials, or modify them to your special designs. You can also create your own materials from scratch. 
+For more information, see Specifying the Materials of a Structural Member Style on page 2604. 
+Creating Columns with User-Defined Profiles 
+If you need a custom shape for a column which does not exist in the tool palettes or structural member catalog of your application, you can create a column with a user-defined linework profile. For more information, see Creating Columns with User-Defined Profiles on page 2512. 
+
+Creating Custom Structural Members 
+You can use the styles from the Structural Member Catalog and Structural Member Style wizard to create structural members for most of your design needs. However, your project requirements may require you to create structural members that cannot be created from a shape in the catalog or created with the wizard. For example, you may want to create: 
+¦ 
+a column with a shape that tapers from start to end 
+
+¦ 
+a composite column created from a steel shape encased in a concrete shape 
+
+¦ 
+a rigid frame created from multiple tapering shapes extruded along the path of the frame 
+
+
+¦ a structural member with a custom shape that cannot be created in the catalog or with the wizard 
+To create custom structural members, you use the design rules within a structural member style to extrude one or more shapes along the path of the member. You can use shapes created in the catalog or with the wizard, or you can create your own custom shapes. 
+Predefined Custom Structural Member Styles 
+You can access predefined styles for custom structural members from the Member Styles and Bar Joists Styles drawings located in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\<Imperial or Metric>. 
+Workflow to Create Styles for Structural Members 
+Structural members include braces, beams, and columns as the same object is used for all three, the orientation just differs to achieve them (diagonal, horizontal, vertical). In addition to predefined styles of structural members, you can also create new styles. 
+Watch the movie Review the steps 
+Create a style on page 2507 based on a shape you manually define or use a predefined shape. Alternatively, if you know the type of shape and the dimensions of the member that you want to create, enter the information in the Structural Member Style wizard on page 2510 to create a style. Using styles with design rules, you can also create complex on page 2619 custom structural members. 
+
+
+Create a structural member tool on page 2513 by dragging the new style on page 862 onto a tool palette. 
+Watch the movie Review the steps 
+
+Create on page 2527 a structural member in the drawing with the tool you made. 
+Creating Structural Member Styles in the Structural Member Catalog 
+The Structural Member Catalog contains specifications for different types and sizes of standard structural shapes. You can browse the catalog, select a shape, and create a structural member style that contains the selected shape. When you create a structural member with the style, the style provides the shape of the member. 
+Organization of the Structural Member Catalog 
+The left pane of the Structural Member Catalog contains standard structural shapes organized in a Windows® Explorer-like tree view. Several industry standard specifications are organized in the tree, first by imperial or metric units, and then by material. 
+Structural Member Catalog 
+
+Browsing the Catalog 
+You can open all the levels in the tree pane under a unit and material to view the different structural shape types available in the catalog. When you select 
+a shape type in the tree view, a preview image of the shape with its dimensions displays in the upper right pane. All the available sizes of the shape type display in the lower right pane. 
+If you have a structural member in a drawing with a style created in the catalog, you can locate the catalog shape contained in that style from the member. 
+Creating Structural Member Styles from Catalog Shapes 
+When you create a structural member style in the catalog, the dimensions of the catalog shape that you select define and store the shape in the style. 
+For example, the dimensions of the steel beam selected in the previous illustration include its depth (d), flange width (bf), flange thickness (tf), and web thickness (tw). When you create a style, these dimensions create the following shape that is stored in the style. 
+Wide-flange structural shape cross-sectional parameters 
+
+When you create a beam in your drawing with this style, the style provides the shape of the beam. You determine the length, start and end offsets, justification, and roll of the beam when you create the beam. 
+Contents of the Structural Member Catalog 
+When you display the Structural Member Catalog, a default catalog file, -AecStructural.apc, provides the catalog content. This file is located in: C:\Program Files\AutoCAD Architecture 2011\Catalogs\Structural. 
+In the future, additional catalog files that you can open in the catalog may become available on the Autodesk web site, or you may create your own catalog files. 
+Opening the Structural Member Catalog 
+Use this procedure to open the Structural Member Catalog. 
+1 Click Manage tab . Style & Display panel .
+. Structural Member Catalog
+ . 
+Opening the Structural Member Catalog 
+
+2 Move and resize the Structural Member Catalog, or resize the left and right panes within the catalog as needed to view catalog information. 
+3 Click 
+to close the Structural Member Catalog. 
+Creating a Style from a Shape in the Structural Member Catalog 
+Use this procedure to create a structural member style from a shape that you select in the Structural Member Catalog. 
+1 Click Manage tab . Style & Display panel .
+. Structural 
+Member Catalog
+ . A tree view in the left pane of the catalog lists the available shapes. 
+2 Expand Imperial or Metric in the tree view. 
+3 Expand the type of material (Concrete, Steel, or Timber) for the structural shape that you want to create with the style. 
+4 Expand the shape that you want to create. 
+Depending on the member, you may need to expand one or more levels in the tree. 
+5 Select the shape type of the member that you want to create. In the top right pane, a preview of the shape displays. 
+In the bottom right pane, a list of the available sizes of the selected shape display. The following shapes may take a significant amount to time to display: 
+¦ 
+Imperial . Steel . AISC . HSS and Pipes . HSS, Small Hollow Structural Sections 
+
+¦ 
+Metric . Steel . CISC . Angles . L, Angle Shapes 
+
+¦ 
+Metric . Steel . CISC . I-Shaped . W, Wide Flange Shapes 
+
+¦ 
+Metric . Steel . CISC . I-Shaped . WWF, Welded Wide Flange Shapes 
+
+¦ 
+Metric . Steel . CISC . Structural Tees . WT, Shapes 
+
+
+6 Under Shape Designation in the bottom right pane, select the shape size that you want to use to create your style, right-click, and click Generate Member Style. 
+7 Enter a style name, if necessary, and click OK. The name of the shape is used as the default style name. Special characters in the shape name, such as quotation marks, are substituted with underscores. If you change the default style name, you cannot use any of the following special characters in your style name: 
+¦ 
+Less-than and greater-than symbols (< >) 
+
+¦ 
+Forward slashes and backslashes (/ \) 
+
+¦ 
+Quotation marks (") 
+
+¦ 
+Colons (:) 
+
+¦ 
+Semicolons (;) 
+
+¦ 
+Question marks (?) 
+
+¦ 
+Commas (,) 
+
+¦ 
+Asterisks (*) 
+
+¦ 
+Vertical bars (|) 
+
+¦ 
+Equal signs (=) 
+
+¦ 
+Back quotes (`) 
+
+
+8 Continue creating structural member styles, or click 
+to close the Structural Member Catalog. 
+You can access the style that you created in the Style Manager, create a new structural member tool from the style, modify an existing tool to use that style, or apply the style to an existing member. 
+Locating a Shape in the Structural Member Catalog from a Structural Member in a Drawing 
+Use this procedure to locate a shape in the Structural Member catalog from a shape contained in the style of a structural member in a drawing. You may find this command useful if you created a style from a shape in the catalog and did not name it with the same name as the catalog shape. 
+1 Click Manage tab . Style & Display panel .
+. Structural 
+Member Catalog
+ . 
+2 On the Tools menu in the Structural Member Catalog, click Locate. 
+3 Select the structural member in the drawing that you want to 
+select in the catalog. 
+The shape that you located from the existing member is selected in the Structural Member Catalog. 
+Opening a Catalog File in the Structural Member Catalog 
+Use this procedure to open a new catalog file in the Structural Member Catalog. 
+1 Click Manage tab . Style & Display panel .
+. Structural 
+Member Catalog
+ . 2 Specify the location of the new catalog file: 
+If you… Then… 
+know the location and name of the enter the full path and name of the catalog file catalog file in the Catalog bar under 
+If you… Then… 
+the Structural Member Catalog toolbar. 
+want to browse your hard disk or on the File menu in the Structural server for a catalog Member Catalog, click Open. Select a new catalog file, and click Open. 
+Creating a Structural Member Style with the Structural Member Style Wizard 
+Use this procedure to create a structural member style with the Structural Member Style wizard. You can create a structural member shape within the style that is based on any of the 19 different shape types in the Structural Member Catalog. The current drawing units determine the units of the style that you create. 
+1 Click Manage tab . Style & Display panel .
+. Structural 
+Member Wizard
+ . 
+2 Select the type of structural member shape that you want to create, and click Next. 
+Selecting a structural member shape type 
+
+3 Enter dimensions for the shape, and click Next. 
+Entering the structural member dimensions 
+
+4 Enter a name for the structural member style, and click Finish. Entering a structural member style name 
+
+You cannot use the following special characters in your style names: 
+¦ 
+Less-than and greater-than symbols (< >) 
+
+¦ 
+Forward slashes and backslashes (/ \) 
+
+¦ 
+Quotation marks (") 
+
+¦ 
+Colons (:) 
+
+¦ 
+Semicolons (;) 
+
+¦ 
+Question marks (?) 
+
+¦ 
+Commas (,) 
+
+¦ 
+Asterisks (*) 
+
+¦ 
+Vertical bars (|) 
+
+¦ 
+Equal signs (=) 
+
+¦ 
+Back quotes (`) 
+
+
+You can access the style that you created in the Style Manager, create a new structural member tool from the style, modify an existing tool to use that style, or apply the style to an existing member. 
+Creating Columns with User-Defined Profiles 
+If you need a custom shape for a column which does not exist in the tool palettes or structural member catalog of your application, you can create a column with a user-defined linework profile. You can use the following closed and non-self intersecting linework objects as column profiles: 
+¦ 
+circles and rectangles 
+
+¦ 
+ellipses and splines 
+
+¦ 
+closed polylines 
+
+
+TIP You can insert a profile definition as a polyline into the drawing and use it as the column profile. For more information, see Converting Profiles to Polylines on page 2828. 
+
+1 Draw the linework for the profile of the customized column. 2 Click Home tab . Build panel . Column drop-down . Custom 
+Column. 
+3 Select the linework. 
+4 Define the insertion (base) point of the column. 
+5 In the Convert to Column dialog, enter a name for the column style. 
+6 If you want to remove the source linework for the new style, select Erase layout geometry. 
+7 Click OK. The column is inserted into the drawing. At the same time, a new column style is created in Style Manager. 
+8 Use the Properties palette to change dimension, location, and other properties of the column instance, and use Style Manager to change design rules, materials, and display properties for the new style, if necessary. 
+Creating Structural Member Tools 
+You can create structural member tools and add them to tool palettes. Tool palettes in AutoCAD Architecture let you quickly place beams, braces, and columns by selecting a structural member tool with a specific style and other predefined properties. 
+If you created structural member styles in the Structural Member Catalog or with the Structural Member Style wizard, you can drag the styles from the Style Manager to tool palettes and then customize the properties of the new tools. 
+You can also use any of the following methods to create structural member tools: 
+¦ 
+Drag a structural member that has the properties you want to a tool palette. 
+
+¦ 
+Copy an existing tool in the current palette, paste it onto the current palette or a different palette, and then customize the properties of the new tool. 
+
+¦ 
+Drag a tool from the Content Browser to a tool palette and then customize the properties of the new tool. 
+
+
+Creating a Beam Tool 
+Use this procedure to create a structural beam tool and add it to a tool palette. 
+1 Open the tool palette on which you want to add a tool. 
+2 Create the tool: 
+If you want to… Then… 
+create a tool from a structural  click Manage tab . Style & Display  
+member style in the Style Manager  panel . Style Manager  . Locate  
+the style you want to copy, and  
+drag it to the tool palette. Click OK  
+to close the Style Manager.  
+
+create a tool from a beam in the select the beam, and drag it to the drawing tool palette. 
+copy a tool in the current palette right-click the tool, and click Copy. Right-click, and click Paste. 
+copy a tool from another palette open the other tool palette, right-click the tool, and click Copy. Re­open the palette where you want to add the tool, right-click, and click Paste. 
+copy a tool from the Content  open the Content Browser, and  
+Browser  locate the tool you want to copy.  
+Position the cursor over the i-drop  
+handle, and drag the tool to the  
+tool palette.  
+
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. The description displays in the tooltip when you select the tool from the tool palette, and describes the tool if you store it in a tool catalog in the Content Browser. 
+6 Expand Basic, and expand General. 
+7 Enter a description of the beams that you can create using this beam tool. 
+8 If you do not want to use the layer assignments specified in the layer key style used in the drawing, specify a layer key and any layer key overrides. 
+9 Select a structural member style, and select a style location, if not the current drawing. The style provides the shape of the beam. 10 Specify a value for Bound spaces: 
+
+If you want to… Then… 
+allow the beam to be used as a select Yes. bounding object for associative spaces 
+prevent the beam from being used select No. as a bounding object for associative spaces 
+use the bounding setting from the select By Style. beam style 
+NOTE For more information on associative spaces, see Generating Associative Spaces on page 2904. 
+11 Specify a value for Trim automatically: 
+If you want… Then… 
+the geometry of the beam to be select Yes. automatically trimmed to any other structural members, other architec­tural objects, or linework to which it is logically connected 
+prevent the geometry of the beam select No. from being trimmed automatically 
+use the trim setting from the beam select By Style. style 
+NOTE This setting affects only the structural member being added. Adding a new structural member will not change the geometry of an existing structural member, regardless of the setting for Trim automatically. 
+12 Expand Dimensions. 
+13 Specify offsets: 
+If you want to… Then… 
+offset the beam on its extruded axis enter a value for Start offset. A pos­
+at the start point of the beam itive value shortens the beam on its axis, while a negative value lengthens the beam on its axis. 
+offset the beam on its extruded axis enter a value for End offset. A posit-
+at the endpoint of the beam ive value lengthens the beam on its axis, while a negative value shortens the beam on its axis. 
+14 Enter a value for Roll. This value specifies the orientation of the beam relative to its extruded axis in terms of degrees of roll. A positive value rolls the beam counterclockwise when viewed from its end to its start. 
+15 If Layout type is Fill, and you want beams to be added to the selected edge of a column grid, slab, roof slab, or wall at an angle other than the default of 90 degrees, enter a value for Angle relative to selected object. 
+16 Select a Layout type to specify how a beam is positioned in relation to a highlighted edge of a column grid, slab, roof slab, or wall: 
+If you want to position the Then… beam… 
+along the highlighted edge of the select Edge for Layout type. object 
+within the boundaries of the object select Fill for Layout type. (from one edge to an opposite edge or edges) 
+17 Specify the beam justification, which positions the beam shape in relation to its extruded axis when you draw the beam: 
+If you want to… Then… 
+position the axis of the beam along  select Baseline for Justify.  
+the centroid of the beam shape  
+ 
+NOTE This applies to members  
+created with styles from the  
+Structural Member Catalog  
+only.  
+
+position the axis of the beam along  select one of the 9 positions for  
+one of 9 positions on the beam  Justify.  
+shape  NOTE These positions are defined at a roll of zero, viewing the beam from the end to the  
+start.  
+
+Justification options for a beam 
+
+18 To specify the justification of members with multiple shapes and segments created with this tool, select a setting for Justify using overall extents: 
+If you want to justify the Then… member… 
+based on the largest cross-sectional  select Yes. The justification is ap­ 
+extent of the member’s lowest pri­ plied ONLY to the lowest priority  
+ority shapes  shape definitions, and is calculated  
+based on the node (vertex) of the  
+member with the greatest cross  
+section.  
+
+at each node, based on all shapes select No. The justification is calcu­lated based on the cross-sectional extents at each node, and applied to all the shapes without regard to priority. 
+For more information about members with multiple shapes and segments, see Creating Custom Structural Members on page 2619. 
+19 If Layout type is Fill, and you want to array multiple beams between two existing beams or within a column grid, slab, roof slab, or wall, expand Layout and select Yes for Array. 
+20 Specify the layout method for the array: 
+If you want to array beams… Then… 
+so that they create a specific num-select Space evenly for Layout ber of equal-sized bays method, and enter a value for Number of bays. 
+at a specific distance from each select Repeat for Layout method, other and enter a value for Bay size. 
+21 Click OK. 
+Creating a Brace Tool 
+Use this procedure to create a structural brace tool and add it to a tool palette. 1 Open the tool palette on which you want to add a tool. 
+

@@ -1,0 +1,830 @@
+[MIGRATED TO RTM_PART_42.md - CONTENT BROWSER]
+Creating a New Tool Catalog 
+Use this procedure to create a new tool catalog in your catalog library. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Click 
+ to display the catalog library. 
+3 Click 
+to create a catalog. 4 In the Add Catalog dialog box, select Create a new catalog. 5 Enter a name for your tool catalog. 
+Tool catalog names can include spaces and can contain any characters except the following:\ / : * ? " < > | 
+NOTE The full path name of the catalog file cannot exceed 255 characters, so be careful about using long catalog names. 
+The name you assign is used for both the file containing the catalog definition and the folder containing the catalog’s contents. The name is also used in the title identifying the tool catalog in the catalog library. You can change the title displayed in the catalog library without affecting the file and folder name. For information about changing the title, see Editing Tool Catalog Properties on page 158. 
+6 Identify the folder in which to store your tool catalog: 
+If you want to… Then… 
+store the tool catalog in the default click OK. location 
+store the tool catalog in a different click Browse, select the folder in location which to store the catalog, and then click OK. 
+The tool catalog is displayed in the catalog library with the following default 
+graphic image: 
+. For information about changing the graphic image and other tool catalog properties, see Editing Tool Catalog Properties on page 158. 
+
+
+Creating a Tool Catalog from Content Drawings 
+Use this procedure to create a new tool catalog based on existing standards from the styles in one or more drawings. You specify the styles from which tools will be created and whether the new tools are organized in categories or palettes. Note that Content Browser does not have to be open to create a tool catalog. 
+WARNING Converting large numbers of tools can slow down your computer considerably. Depending on your processor and amount of RAM, the conversion process can take a long time and the application may appear to be non-responsive. To avoid this, do not convert more than 3000 tools in one Tool Catalog Generator session. Instead, break up the source drawings, and use multiple instances of Tool Catalog Generator to achieve the conversion. 
+1 Click Manage tab . Customization panel .
+. Generate Tool Catalog
+ . 
+
+2 Under Catalog, select Create New Catalog. 
+3 Enter a name for the new catalog. 
+4 Click Browse to define the location of the catalog. By default, a new catalog is saved in C:\My Documents. 
+5 Under Content Source, specify whether you want the new catalog to be created from multiple drawings in a folder or from a single drawing. Then, enter the path for the folder or drawing. 
+NOTE When you specify a folder as the catalog source, any nested folders are included in the new tool catalog. 
+6 Under Tool Organization, specify how you want the tools organized in the new catalog. 
+¦ To organize the new tools by their source drawing, select Group tools by source drawing. This option is well suited for a tool catalog that is generated from a number of styles drawings. The resulting tools could be placed in categories or palettes named “Wall Styles ­Concrete (Imperial)”, “Wall Styles - Brick (Imperial),” etc. 
+¦ To organize the new tools by their object type, select Group tools by object type. This option is well suited if you want to merge styles from various drawings into palettes or categories. The resulting tools will be placed in categories or palettes named “Walls”, “Doors,” etc. 
+NOTE If both options are enabled, the catalog is first grouped by the drawings and then by the object type, generating categories from the drawings, and palettes from the object types. This is implemented because palettes cannot be nested. In this case the radio buttons for categories and palettes are disabled, and the Create tools in palettes option is selected for the catalog. 
+NOTE If neither of the two options is enabled, all new tools will be generated in the top category of the catalog. 
+¦ 
+To organize the new tools in categories, select Create Tools in Categories. If you select Group tools by source drawing, a category will be created for each source drawing. If you select Group tools by object type, a category will be created for each object type. 
+
+¦ 
+To organize the new tools in palettes, select Create Tools in Palettes. If you have selected to group tools by their source drawing, then for each source drawing a palette will be created. If you have selected to group tools by their object type, then for each object type a palette will be created. 
+
+
+7 Under Create tools for the following objects, select the object 
+styles you want to appear as tools in the new catalog. By default, all available style types are selected. Use the Select All and Clear All buttons as necessary. 
+8 Click OK. A progress bar in the application status bar informs you of the progress of the catalog generation. This can take a few moments for a large catalog. 
+NOTE Each category and each palette is created in its own ATC file. The category and palette ATC files are stored in the Palettes or Categories subfolders within the folder where the new catalog is created. 
+After creating a new catalog, you can add it to your Content Browser library, as described in Adding an Existing Tool Catalog to Your Catalog Library on page 152. 
+
+Adding Tools from Content Drawings to a Tool Catalog 
+Use this procedure to add tools from one or more drawings to an existing catalog. 
+WARNING Converting large numbers of tools can slow down your computer considerably. Depending on your processor and amount of RAM, the conversion process can take a long time and the application may appear to be non-responsive. To avoid this, do not convert more than 3000 tools in one Tool Catalog Generator session. Instead, break up the source drawings, and use multiple instances of Tool Catalog Generator to achieve the conversion. 
+1 Click Manage tab . Customization panel .
+. Generate Tool Catalog
+ . 
+
+2 Under Catalog, select Add to an existing catalog. 3 Enter the name and the path of the catalog. 4 Click Append to Catalog and select Ignore Duplicate Styles if you 
+want existing styles from being overwritten by styles with the 
+same name and file path from the appended drawing. If you clear Ignore Duplicate Styles, existing styles are overwritten with styles from the appended drawing if they have the same name and file path. 
+5 If you want to overwrite the existing catalog, click Overwrite 
+Catalog. This deletes the whole catalog and replaces it with the palettes, categories, and tools from the source drawing(s). 
+WARNING You should use that option with great caution, as it will delete the complete existing catalog. If you just want to overwrite tools with their up-to-date versions from a content drawing, select Append to Catalog instead, and verify that Ignore Duplicate Styles is cleared. 
+6 Under Content Source, select a project standards drawing or standards folder to use as source for the new tools. 
+If you want to… Then… 
+add tools from multiple  select Create from drawings in folder, and  
+drawings in a folder  then enter the path and folder name under  
+Type the source location.  
+
+add tools from a single  select Create from drawing, and then enter  
+drawing  the path and drawing name under Type the  
+source drawing.  
+
+7 Under Tool Organization, specify how the tools should be organized in the catalog. 
+¦ 
+To organize the resulting tools by their source drawing, select Group tools by source drawing. This option is well suited for a tool catalog that is generated from a number of styles drawings. The resulting tools could be placed in categories or palettes named “Wall Styles ­Concrete (Imperial),” “Wall Styles - CMU (Imperial),” etc. 
+
+¦ 
+To organize the resulting tools by their object type, select Group tools by object type. This option is well suited if you want to merge styles from various drawings into a new catalog. The resulting tools will be placed in categories or palettes named “Walls,” Doors,” etc. 
+
+
+NOTE If both options are enabled, then the tools are first grouped by the drawings and then by the object type, generating categories from the drawings, and palettes from the object types. This is implemented because palettes cannot be nested. In this case the radio buttons below are disabled and the Create tools in palettes option is selected for the tools. 
+NOTE If neither of the two options are enabled, all new tools will be generated in the top category of the catalog. 
+¦ 
+To organize the new tools in categories, select Create Tools in Categories. If you have selected to group tools by their source drawing, then for each source drawing a category will be created. If you have selected to group tools by their object type, then for each object type a category will be created. 
+
+¦ 
+To organize the new tools in palettes, select Create Tools in Palettes. If you have selected to group tools by their source drawing, then for each source drawing a palette will be created. If you have selected to group tools by their object type, then for each object type a palette will be created. 
+
+
+8 Under Create tools for the following objects, select which object 
+styles should appear as tools in the catalog. By default, all available style types are selected. Use the Select All and Clear All buttons as needed to make your selections. 
+9 Click OK. A progress bar in the application status bar indicates the progress of the tool generation. When a large number of tools are being added, the process can take a few moments. 
+NOTE Each category and each palette is created in its own ATC file. The category and palette ATC files are stored in the Palettes or Categories subfolders in the folder in which the new catalog is created. 
+
+Adding an Existing Tool Catalog to Your Catalog Library 
+Use this procedure to add an existing tool catalog to your catalog library. 
+Adding a tool catalog to a catalog library does not physically move or copy any files. Instead, a pointer to the catalog’s location is added to the catalog library. If you add a tool catalog that resides on another computer, and then a tool in that catalog is updated, you always reference the latest version of the tool in the catalog library. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Click 
+ to display the catalog library. 
+3 Click 
+to create a catalog. 
+4 In the Add Catalog dialog box, select Add an existing catalog or website. 
+5 Enter the location of the tool catalog you want to add, or click Browse and select a catalog. Tool catalog files typically have the extension .atc. 
+6 Click OK. 
+NOTE Alternatively, you can drag and drop an ATC file from Windows Explorer to the Content Browser library pane. 
+
+Creating a Catalog Install File 
+Use this procedure to create a registry file that adds catalogs to other users’ Content Browser libraries. 
+When you add a catalog in Content Browser, it is automatically added to your Content Browser library (CBL). However, as a CAD manager, you might also want to automatically install new catalogs into other user’s libraries. In that case, you can either add a pointer to a catalog in an existing registry file, or create a new registry file that adds that catalog to the user’s library. 
+Creating a catalog install file 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Select the catalog that you want to add to a registry file. When you add a catalog to a registry file, make sure that the network location of the catalog and all its affiliated files can be accessed by all users to whom you want the catalog distributed. 
+3 Shift-Rightclick the catalog. 
+4 Click Convert to Registry File. 
+If you want to… Then… 
+create a new registry file for  browse to the desired folder location,  
+the catalog  enter a name for the registry file, and  
+click Open.  
+In that case, a new registry file (REG) is  
+created, containing the registry informa­ 
+tion for the selected catalog.  
+
+enter the catalog into an exist- browse for the registry file, select it and  
+ing registry file  click Open.  
+In that case, an entry containing the re­ 
+gistry information for the selected cata­ 
+log is appended to the registry file.  
+
+NOTE When you select an existing registry file, the file is not overwritten, as in standard Windows Save dialogs; the catalog entry is simply added to the registry file. If you want to overwrite an existing registry file, you need to delete it from Windows Explorer, and then create a new one of the same name. 
+
+Entering a catalog in a users’ library 
+5 To enter the catalog reference into the local registry, and thereby into the user’s catalog library (CBL), run the new registry file. 
+6 Either place the generated REG file on a generally accessible network folder, or copy it to the local user machine where the catalog should be entered. 
+7 Double-click the REG file on the user’s computer. 
+8 Click Yes when asked whether you want to add the information into the local registry. The catalog is entered into the users’ registry and catalog library. 
+
+
+Publishing Tool Catalogs 
+The Publish Catalog feature helps you make tool catalogs available for use by multiple users on a network. You can move and copy catalogs or make them available from their current location. The feature handles dependent file paths during the publish catalog operation. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Right-click the tool catalog you want to publish, and click Publish <catalog_name>. 
+3 In the Publish Tool Catalog - Step 1 of 4 dialog box, do one of the following: 
+If you want to… Then… 
+move the catalog to a new location click Move it to a new location. when publishing it 
+copy the catalog to a different loca-click Copy to another location. tion 
+publish the catalog from its current click Leave it in its current location. location 
+4 Click Next. If you are moving or copying the catalog, you are prompted to specify the destination location. 
+5 In the Publish Tool Catalog - Step 2 of 4 dialog box, specify the 
+destination for the tool catalog. You can enter a path, or click [...] to navigate to the destination location. You can specify an existing location or create a new folder. 
+6 Click Next. 
+7 In the Publish Tool Catalog - Step 3 of 4 dialog box, specify the location for any dependent files. You can enter a path, or click [...] to navigate to the destination 
+location. You can specify an existing location or create a new 
+folder. 
+Dependent files contain information referenced by the tools; for example, style information. If you select the option Automatically move (or copy) tool dependent files into the above folder to be referenced by the publish catalog, the feature attempts to copy all of the dependent files referenced in the catalog to the dependent file location you specify. If you do not select this option, you must verify that the files are already present in the dependent location. If you select the option Report invalid catalog references, the feature generates a report of any dependent files 
+it cannot locate. 
+8 To have the publish catalog feature move (or copy) dependent files, click Automatically move (or copy) tool dependent files into the above folder to be referenced by the publish catalog. 
+9 Click Report invalid catalog references to generate an HTML file containing any dependent files that were not found, and then click Next. 
+10 In the Publish Tool Catalog - Step 4 of 4 dialog box, do one of the following: 
+
+If users will… Then… 
+access the catalog directly from the Click Directly from the location network location you specify provided. 
+access the catalog from an alternate Click From an http:// site or 
+or aliased location mapped drive, and enter the loca­tion name. 
+11 To make the catalog read-only, select Set items in catalog to be read-only. 
+12 To prevent catalog items from refreshing when they are dropped in the workspace, select Set items in catalog to not be refreshable when drag/dropped into the workspace, and click Finish. 
+Individual users can specify the location of dependent files, such as styles for tools, on the AEC Content tab in the Options dialog box. The variable %AECCONTENT_DIR% is used for tool-dependent file references. This variable is updated to use the path specified. For example, <Style href=”%AECCONTENT_DIR%\<DoorStyles\DoorStyles.dwg”/>. For more information, see Changing the AEC Content Settings on page 207. 
+
+
+Adding a Website to Your Catalog Library 
+Use this procedure to add a website link to your catalog library. Links are useful for websites containing AutoCAD Architecture 2011 tools and content that you can download using i-drop® technology. 
+You can also add a website link by dragging the URL from the Address bar of Internet Explorer into the Content Browser window. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Click 
+ to display the catalog library. 
+3 Click 
+to create a catalog. 
+4 In the Add Catalog dialog box, select Add an existing catalog or website. 
+5 Enter the location of the website to link: 
+If you want to… Then… 
+link to a website on the Internet or on an intranet 
+enter the URL of the website, includ­ing the http:// prefix. 
+TIP Here is the easiest way to specify a URL: 1. Open a web browser, such as Internet Ex­plorer. 2. Open the web page you want to link to. 3. Copy the URL from your browser’s ad­dress bar. 4. Paste the URL into the Add Catalog dialog box. 
+link to a web page in an HTML file enter the file name, or click Browse on your computer or on your net-and select the file you want to link work to. 
+6 Click OK. 
+The link to the website is represented in the catalog library by a default graphic image, which you can change. For information about changing this image and other Tool Catalog properties, see Editing Tool Catalog Properties on page 158. 
+
+
+Opening Web Pages in the Content Browser 
+Use this procedure to open a web page through a website link in your catalog library. 
+TIP If you have any problem viewing a web page in the Content Browser window, try opening the page in Internet Explorer. 
+¦ Move your pointer over the website link you want to open, and do one of the following: 
+If you want to… Then… 
+view the web page in the Content Browser click the link. window 
+view the web page in a new Content right-click the link, and click Open in New Browser window Window. 
+view the web page in a new Internet Ex-right-click the link, and click Open With plorer window Internet Explorer. 
+
+
+Editing Tool Catalog Properties 
+Use this procedure to view and modify the properties of a tool catalog. If you have write access to the tool catalog, you can select a different source file or target, and you can change the cover page. 
+1 Click Home tab . Build panel . Tools drop-down . Content Browser
+ . 2 Right-click the desired tool catalog, and click Properties. 
+3 Edit the properties: 
+If you want to… Then… 
+change the graphic image that represents the tool catalog in the catalog library click the image in the Properties dialog box, and then select a graphic file to use. You can use a BMP, JPEG, PNG, or TIFF file for your graphic. The graphic image is displayed at 90 × 120 pixels. If you specify an image of a different size, the image is scaled to fit. 
+
+If you want to… Then… 
+NOTE The graphic file you se­lect is copied into the tool catalog’s image folder. 
+change the title displayed beneath enter a new title. You can also right-the tool catalog’s graphic image in click the catalog and click Rename the catalog library <catalog_name>. 
+change the descriptive text that enter a new description. displays when you move the pointer over the tool catalog’s graphic im­age 
+change the tool catalog file or enter the new file in File or Target, website or click Browse to select a tool catalog file. 
+change or specify the HTML file that enter the new HTML file in Cover displays when the tool catalog is Page, or click Browse to select a opened cover page. 
+change the publisher of the tool enter a new publisher name. catalog 
+change the type designation for the select a type from the Type list. For 
+catalog information on assigning types to catalogs, see Creating Catalog Types on page 160. 
+define that tools and palettes from select Link items when added to this catalog should be automatically workspace. For information on linked to the Content Browser when linking tools to the Content dropped onto the tool palettes set Browser, see Using Tool Catalog of AutoCAD Architecture 2011 Items in AutoCAD Architecture on 
+page 175 and Working with Tools from a Central Location on page 109. 
+define that tools and palettes from clear Link items when added to this catalog should not retain a link workspace. Inserting tools without to the Content Browser when retaining a link to Content Browser 
+
+If you want to… Then… 
+dropped onto the tool palettes set of AutoCAD Architecture 2011 
+would be the right choice if you want to make changes to a tool in AutoCAD Architecture that should not overwritten by the tool proper­ties in Content Browser; also, un­linked tools create a better general performance in AutoCAD Architec­ture 2011. 
+4 Click OK. 
+
+
+Creating Catalog Types 
+Use this procedure to create catalog types. You can assign a type property to a catalog and then sort and filter your catalogs by type. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Click 
+ to display the catalog library. 
+3 Click to display the Content Browser Preferences dialog box. 4 In the Catalog Types area, under New Catalog Type, enter the 
+name of the type you want to create. 5 Click OK. 6 The new type is added to the list of available types. You can now 
+assign this type to catalogs by editing their properties. Once the type is assigned to a catalog, you can sort or filter the display of catalogs in the Library View by this type. 
+7 To remove a type, click the type name and click Remove. 
+NOTE The Type catalog property is cleared for any catalogs associated with this type. 
+
+Sorting Catalogs in the Library View 
+Use this procedure to sort the display of catalogs by last-used date, publisher, title, or type. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Click 
+ to display the catalog library. 
+3 With the catalog library open in the right pane of the Content Browser, position the pointer over Sort in the left pane. 
+4 From the list of available sort options, click the method you want to use to sort catalogs in the library. 
+If you want to… Then… 
+sort chronologically by when you click By Last Used. last used each catalog 
+sort alphabetically by the publisher click By Publisher. If the catalog name of each catalog, and then by does not have a publisher property, title the catalog appears at the bottom 
+of the display. 
+sort alphabetically by catalog title click By Title. 
+sort by catalog type click By Type. If the catalog does not have a type assigned, the cata­log appears at the bottom of the display. 
+
+
+Filtering Catalogs in the Library View 
+Use this procedure to filter the display of catalogs in the Library View. 1 Click Home tab . Build panel . Tools drop-down . Content Browser
+ . 
+2 Click 
+ to display the catalog library. 
+3 With the catalog library open in the right pane of the Content Browser, position the pointer over Filter in the left pane. 
+4 From the list of available types, click the type of catalog you want to view. To display all the catalogs in the library, click All Catalogs. 
+NOTE To filter catalogs by Type, you must assign a type to each catalog in the library. For more information, see Creating Catalog Types on page 160. 
+
+Removing a Tool Catalog or Website Link 
+Use this procedure to remove a tool catalog or website link from your catalog library. 
+When you remove a tool catalog or website link, only a pointer to the item is removed; no files or web pages are physically deleted. 
+1 With the catalog library open in the right pane of the Content Browser, right-click the tool catalog or website link to delete, and click Remove <catalog_name> from Library. 
+2 When prompted, click Yes to confirm deletion, or click No to cancel deletion. 
+
+
+Opening a Different Catalog Library 
+Use this procedure to open a catalog library other than your personal catalog library, or to reopen your personal catalog library. 
+A catalog library is stored in a file having the extension .cbl. The default file name for your personal catalog library is ContentBrowserLibrary.cbl; it is stored in the folder C:\My Documents\Autodesk\My Content Browser Library\ACA 2011. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Click 
+ to display the current open catalog library. 3 Right-click the catalog library name, and click Open New Library. 4 In the Open dialog box, select the catalog library that you want 
+to open. 
+
+Renaming a Catalog Library 
+Use this procedure to rename the currently open catalog library. The name change affects the title of the catalog library displayed in the Content Browser, but no files are renamed. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 2 Click 
+ to display the catalog library. 
+3 Click to display the Content Browser Preferences dialog box. 4 Under Library Name, enter the new library name. 5 Click OK. 
+
+Searching for Items in a Tool Catalog 
+You can use the Search feature to help you find a particular tool. You can search across multiple catalogs or search a particular tool catalog, tool palette, or tool package. For example, if you are looking for a tool to help you create a 3D desk, you could search on the keywords 3D desk. The search applies to all the catalogs currently displayed (filtered). Narrow the search by filtering the catalog display. 
+The Search feature looks at the text in the following properties of tool catalog items for the keywords you specify: 
+¦ 
+Name 
+
+¦ 
+Description 
+
+¦ 
+Keywords 
+
+
+The Search tool is only as helpful as the tool names and descriptions that you assign. A tool name should indicate the tool’s function, and the description should indicate the tool’s use. 
+If you enter a search term containing more than one word, the Search feature looks for items containing both words. You can also join multiple search words with AND, &, or +. To retrieve items containing any of the search words, enter OR or | between search terms. To exclude a word from the search, precede the word with !. Use * as a wild-card string and ? as a wild-card character. Search is not case sensitive by default. To use a particular case in a search, surround the word in quotes. 
+Search results are displayed in the right pane of the Content Browser window. The following illustration shows the results of a search on the term 3D desk in the Content catalogs group: 
+
+The search term and the number of items found are listed on the line below the tool catalog name. If multiple pages are returned, you can specify the page to display by clicking the page number or by clicking Next or Prev. 
+Performing a Search 
+Use this procedure to search across multiple catalogs or to search all or part of a tool catalog. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 2 Filter the library to display the catalogs you want to search: 
+If you want to… Then… 
+search for tools across multiple display the catalog library and then catalogs filter the display to include the catalogs you want to search. 
+search for tools only within a specif-open the tool catalog you want to ic catalog search. 
+search for tools only within a specif-open the category you want to 
+ic category and its subcategories search, and select the box labeled in <category name>. 
+
+If you want to… Then… 
+search for tools only on a specific open the tool palette you want to tool palette search, and select the box labeled in <palette name>. 
+search for tools anywhere in the leave the box under the search term open catalog clear. 
+3 Enter the terms to search for under Search. 
+4 Click GO. Items that match your search criteria are displayed in the right pane of the Content Browser. To go to the catalog containing an item, click that item. To view the source catalog of an item, right-click the item. 
+5 To perform another search, click the 
+button located near the top of the left pane. 
+
+
+
+Adding Content to a Tool Catalog 
+Tool catalogs can contain tools, tool palettes, and tool packages, which may be organized into categories. 
+Categorizing the Items in a Tool Catalog 
+You can define categories and subcategories in a tool catalog to organize a large number of items. For example, the Stock Tool catalog contains dozens of tools. If these tools were not grouped into categories, you would have to scroll through page after page to find a particular tool. To make it easier to find tools, the Stock Tool catalog is organized into categories and subcategories, as shown in the following diagram: 
+Category Name Contents 
+Architectural Object Tools ¦ Wall, Curtain Wall, and Curtain Wall Unit 
+¦ 
+Opening, Door, Window, and Door/Window Assembly 
+
+¦ 
+Roof, Roof Slab and Slab 
+
+¦ 
+Ceiling Grid 
+
+
+
+Category Name Contents 
+¦ 
+Stair, Stair Tower, and Railing 
+
+¦ 
+Space and Space Boundary 
+
+¦ 
+Structural Members and Column Grid 
+
+
+Drafting Tools ¦ AEC Dimensions 
+¦ 
+Callouts and Title Mark 
+
+¦ 
+Text, Leaders, Keynotes, Legend 
+
+¦ 
+Masking Block 
+
+¦ 
+Hatching and Gradient 
+
+¦ 
+Chamfer and Fillet 
+
+¦ 
+Shrink Wrap Tool 
+
+¦ 
+Welding Symbols 
+
+
+Helper Tools ¦ AEC Entity Reference 
+¦ 
+AEC Polygon 
+
+¦ 
+Camera 
+
+¦ 
+Horizontal and Vertical Design Sections 
+
+¦ 
+Hidden Line Removal Tool and Napkin Sketch 
+
+
+Measurement Tools ¦ Area, Distance, and Point ID 
+Modeling Tools Mass Element Tools: 
+¦ 
+Box, Arch, Pyramid, Extrusion, and so on 
+
+¦ 
+Mass Group 
+
+¦ 
+Convert to Mass Elements 
+
+
+3D Solids Tools: 
+¦ 3D Solid Box, Cylinder, Convert to 3D Solids 
+
+
+Category Name Contents 
+Parametric Layout and Anchoring Tools ¦ Layout Curve 
+¦ 
+Layout Grid (2D and 3D) 
+
+¦ 
+Object Anchor, Node Anchor, Cell An­chor, Volume Anchor 
+
+
+Scheduling and Reporting Tools ¦ Space Evaluation 
+¦ 
+Display Theme 
+
+¦ 
+Tag Tool 
+
+¦ 
+Schedule Table 
+
+¦ 
+Property Data Browse and Renumber Tools 
+
+
+
+
+About Tool Palettes 
+A tool palette is a collection of tools used to support a task. For example, a palette might contain tools to create the different types of doors (single-hinged, double-hinged, revolving, and so on) used in a building project. Storing a tool palette in a tool catalog makes the palette available to multiple users. 
+The date and time at which the tool palette was created and last modified are identified in the Tool Palette Properties dialog box. To view the dialog box, right-click the tool palette, and click Properties. For information about other tool palette properties, see Adding a Tool Palette to a Tool Catalog on page 168. 
+
+About Tool Packages 
+A tool package is a group of tools stored together for distribution. For example, a package might contain a set of productivity tools and utilities. 
+The date and time at which the tool package was created and last modified are identified in the Tool Package Properties dialog box. To view the dialog box, right-click the tool package, and click Properties. For information about other tool package properties, see Adding a Tool Package to a Tool Catalog on page 169. 
+
+Customizing Tools 
+You customize a tool by copying it to a palette in the AutoCAD Architecture 2011 tool palette set, modifying the tool’s properties, and then copying it back to its original location in the tool catalog. 
+
+Defining Categories in a Tool Catalog 
+Use this procedure to define categories and subcategories in a tool catalog. Categories are listed in the left pane of the Content Browser, below the name of the open tool catalog. 1 Click Home tab . Build panel . Tools drop-down . Content Browser
+ . 2 Open the tool catalog in which to define categories. 3 Select the location for the new category: 
+If the tool catalog… Then… 
+already has one or more categories in the left pane of the Content defined and you want to add a Browser, navigate to the desired subcategory category, and click the category 
+name. 
+is not currently divided into categor-in the left pane of the Content ies and is open to a cover page Browser, click the catalog name. 
+is not currently divided into categor-do nothing; this is where you define ies and the content page is dis-your first category. played 
+4 In the right pane of the Content Browser window, right-click a blank area, and click Add Category. 
+5 Enter a name for the category, and click OK. 
+6 To define additional categories and subcategories, continue from step 2. 
+
+
+Adding a Tool Palette to a Tool Catalog 
+Use this procedure to add a tool palette to a tool catalog. You must have write access to the tool catalog in order to add a palette. 
+You can also drag a tool palette from the AutoCAD Architecture 2011 workspace into a tool catalog. Click the tab of the tool palette to drag it. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 2 Open the tool catalog in which to add the tool palette. 
+To add the palette to a specific category in the catalog, open that category. If no graphics appear at the bottom of the left pane, the tool 
+catalog is read-only, and you cannot add a tool palette. 
+3 Click 
+ in the left pane of the Content Browser. 4 In the Tool Palette Properties dialog box, enter a name for the tool palette, and enter any other desired properties: 
+If you want to… Then… 
+add a description to be displayed enter a description. in the tool catalog and queried in catalog search operations 
+define terms that will be found enter the terms for keywords. during a search of the tool catalog 
+identify the publisher of the tool enter a publisher. palette 
+
+
+Adding a Tool Package to a Tool Catalog 
+Use this procedure to add a tool package to a tool catalog. You must have write access to the tool catalog in order to add a package. 1 Click Home tab . Build panel . Tools drop-down . Content Browser
+ . 
+2 Open the tool catalog in which to add the tool package. To add the package to a specific category in the catalog, open that category. 
+3 Click 
+ in the left pane of the Content Browser. 
+4 In the Package Properties dialog box, enter a name for the tool package, and enter any other desired properties: 
+If you want to… Then… 
+add a description to be displayed enter a description. in the tool catalog and queried in catalog search operations 
+define terms that will be found enter the terms for keywords. during a search of the tool package 
+identify the publisher of the tool enter a publisher. package 
+If the tool catalog is read-only, the Package Properties dialog box is displayed, but you cannot enter anything in it. 
+
+
+Adding Tools to a Tool Catalog 
+Use this procedure to add a tool to a tool catalog or to a tool palette or tool package stored in a catalog. You must have write access to the tool catalog in order to add a tool to it. 
+You can also drag a tool from a tool palette in the AutoCAD Architecture 2011 workspace to a tool catalog in the Content Browser. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Open the tool catalog in which to add a tool. If you are adding the tool to a specific category in the catalog or to a palette or package in a specific category, open that category. 
+3 Double click the image to open the palette or package if you are adding the tool to a tool palette or tool package. 
+4 In the AutoCAD Architecture 2011 workspace, open the tool palette that contains the tool to add to the tool catalog. 
+5 Right-click the tool, and click Copy. 
+6 In the right pane of the Content Browser window, right-click in a blank area, and click Paste. 
+NOTE If there is no Paste option on the shortcut menu, then the pointer is probably positioned over a tool, even though the space may appear to be blank. Move the pointer and try again. 
+
+Copying and Moving Tool Palettes and Tool Packages 
+Use this procedure to copy or move tool palettes or tool packages between tool catalogs or between categories in the same catalog. To copy an item, you must have write access to the catalog you are copying to. To move an item, you must have write access to both the catalog you are copying from and the catalog you are copying to. 
+You can also open multiple Content Browser windows and drag tool palettes and tool packages from one window to another. For information about using multiple windows to copy and move items, see Dragging Catalog Items Between Content Browser Windows on page 183. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Open the tool catalog containing the tool palette or tool package to copy or move. If the item is located in a specific category of the catalog, open that category. 
+3 Right-click the item, and select an action: 
+If you want to… Then… 
+add a copy of the tool palette or click Copy. tool package in another location 
+move the tool palette or tool pack-click Cut. age to another location, deleting it from its original location 
+4 Select the item’s destination: 
+
+If the destination is… Then… 
+a category within the current tool click that category in the left pane catalog of the Content Browser window. 
+
+If the destination is… Then… 
+another tool catalog click 
+to return to the catalog library, and then click the tool catalog. 
+a category in another tool catalog click 
+to return to the catalog library, click the tool catalog you are copying to, and then select its category in the left pane of the Content Browser window. 
+5 In the right pane of the Content Browser window, right-click in a blank area, and click Paste. 
+NOTE If there is no Paste option on the shortcut menu, then the pointer is probably positioned over a catalog item, even though the space may appear to be blank. Move the pointer and try again. 
+
+
+Copying and Moving Tools 
+Use this procedure to copy or move tools between tool palettes, tool packages, or tool catalogs. 
+You can also open multiple Content Browser windows and drag items from one window to another. For information about using multiple windows to copy and move items, see Working with Multiple Content Browser Windows on page 181. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Open the tool catalog containing the tool to copy or move. 
+3 Open the item containing the tool to copy or move: 
+If the tool is in… Then… 
+a category of the tool catalog open the category. 
+
+If the tool is in… Then… 
+a tool palette in the tool catalog open the category for that tool palette, if necessary, and then click the tool palette. 
+a tool package in the tool catalog open the category for that tool package, if necessary, and then click the tool package. 
+4 Right-click the tool, and select an action: 
+
+If you want to… Then… 
+add a copy of the tool in another click Copy. location 
+move the tool to another location, click Cut. deleting it from its original location 
+5 If the destination of the tool is in a different tool catalog, click
+
+ to return to the catalog library, and then click the tool catalog to open it. 6 Open the destination of the tool: 
+
+If the destination is… Then… 
+a category of the tool catalog open the category. 
+a tool palette in the tool catalog open the category for that tool palette, if necessary, and then click the tool palette. 
+a tool package in the tool catalog open the category for that tool package, if necessary, and then click the tool package. 
+7 In the right pane of the Content Browser window, right-click in a blank area, and click Paste. 
+NOTE If there is no Paste option on the shortcut menu, then the pointer is probably positioned over a catalog item, even though the space may appear to be blank. Move the pointer and try again. 
+
+
+Customizing a Tool 
+Use this procedure to modify a tool that is stored in a tool catalog. 
+When you begin this procedure, both the AutoCAD Architecture tool palette set and the Content Browser window should be visible, so that you can drag items between them. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Open the tool catalog that contains the tool to customize. If the tool is located in a specific category of the catalog, open that category. 
+3 Move the pointer over the i-drop® icon next to the tool you want, 
+so that the pointer image changes to an eyedropper ( 
+). 
+4 Click the eyedropper and drag it to a palette in the tool palette set. If the tool palette does not accept the tool, it might be because 
+the palette is set to allow updates only from a linked tool palette in a tool catalog. To check this, right-click on the palette, click Properties, and look at the Refresh from setting. If Refresh from is selected, the palette is linked to a palette in a tool catalog. To break the link, clear Refresh from. For more information about linked tool palettes, see Using the Items in a Tool Catalog on page 143. 
+5 Right-click the copy of the tool in the tool palette set, and click Properties. 
+6 In the Tool Properties worksheet, clear Refresh from. If Refresh from is selected, the tool is linked to its source in the tool catalog and can be updated only from the source tool. 
+7 Make any property changes, and then click OK. 
+8 Drag the tool from the tool palette set back to its original location in the Content Browser. 
+TIP Right-click the title bar of the Autodesk Content Browser, and select Always on Top before dragging the tool to the Content Browser. 
+9 When prompted to confirm catalog item replacement, click Yes. 
+
+Deleting Tool Catalog Items 
+Use this procedure to delete a tool palette, tool package, or tool in a tool catalog. You must have write access to the tool catalog in order to delete items. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 2 Open the tool catalog containing the item to delete. If the item 
+is located in a specific category of the catalog, open the category. 3 Right-click the item, and click Delete. 4 When prompted, click Yes to delete the item, or click No to cancel 
+deletion. 
+
+
+Using Tool Catalog Items 
+Tools from catalogs can be used immediately in the drawing area or stored in a palette in the tool palette set. You can add a catalog tool palette or tools in a tool package to the tool palette set. 
+TIP To keep the Content Browser window in view while other applications are active, right-click the title bar of the Autodesk Content Browser, and select Always on Top. 
+Linked and Unlinked Tool Catalog Items 
+When you copy a tool or tool palette from the Content Browser to the tool palette set, you can choose whether the copy retains its association with the original. Linking the copy to the original means that, if you copy the item back to its original location, the Content Browser assumes you are updating the original item. This is the default behavior. If you change the original, you can update a linked copy using a single mouse click. To make working easier for you, you can set a whole tool catalog to be linked or unlinked. When a tool catalog is linked, all tools and palettes contained in it are dropped into the AutoCAD Architecture palettes set as linked items by default. When a tool catalog has been set to unlinked, all items in it are dropped as unlinked. 
+An unlinked copy of a tool or tool palette is treated as a new item, with no relationship to the original item. If you copy an unlinked item back to its original location in a tool catalog, the Content Browser simply adds it to the catalog; you end up with two copies of that item with the same name. 
+Any time you copy an item from the Stock Tool catalog to the tool palette set, the item is treated as unlinked. 
+You can tell whether an item in the tool palette set is linked by right-clicking the item and clicking Properties. If Refresh from is activated and a source is listed, as shown below, the item is linked. 
+Refresh from property of a linked palette 
+
+If you select Enable Auto-Refresh, each time you start the software, any linked tool palettes will be updated to reflect any changes made to the tool palette and its contents in the tool catalog. 
+
+Using a Tool in the AutoCAD Architecture Workspace 
+Use this procedure to use a tool from a tool catalog in the AutoCAD Architecture 2011 workspace. You can also copy tools stored in a tool package to a tool palette in the tool palette set. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Open the tool catalog containing the tool you want to use. If the tool is located in a specific category of the catalog, open that category. 
+3 Move the pointer over the i-drop® icon next to the tool, so that 
+the pointer image changes to an eyedropper ( 
+). To select multiple tools to copy, press and hold CTRL while clicking each tool; then position the eyedropper over any of the selected tools. You can also select all the tools in the current category by right-clicking and clicking Select All. 
+4 Drag the eyedropper according to the desired action: 
+If you want to… Then… 
+use the tool immediately click the eyedropper and drag it in­to the drawing area. 
+store a linked copy of the tool on a tool palette in the tool palette set 
+click the eyedropper and drag it to a tool palette in the tool palette set. 
+NOTE A linked copy will only be created when the tool cata­log has been set to linked. If the catalog has been set to non-linked, any tool from that cata­log will be inserted as non-linked tool onto the AutoCAD Architecture tool palettes set. For more information about linking tool catalogs see Editing Tool Catalog Properties on page 158. 
+create an unlinked copy of the tool on a tool palette in the tool palette set 
+press and hold alt. Then click the eyedropper, and drag it to a tool palette in the tool palette set. 
+NOTE If the tool catalog con­taining the tool has been set to unlinked, you do not need to hold down alt while dragging the tool. It will be inserted as unlinked in any case. 
+NOTE If a tool palette does not accept a tool, it might be because the palette is set to allow updates only from a linked tool palette in a tool catalog. To check this, right-click on the palette, click Properties, and look at the Refresh from setting. If Refresh from is selected, the palette is linked to a palette in a tool catalog. To break the link, clear Refresh from. 
+
+
+Copying a Tool Palette to the AutoCAD Architecture Workspace 
+Use this procedure to store a copy of a tool palette in the tool palette set. 
+You can create a linked or unlinked copy of the tool palette. A linked copy remains connected to the original in the tool catalog, so that you can easily update the copy with any changes made to the original. An unlinked copy is treated as a new tool palette, with no relationship to the original. For more information about linked and unlinked tool palettes, see Using the Items in a Tool Catalog on page 143. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Open the tool catalog containing the tool palette to copy to the tool palette set. If the palette is located in a specific category of the catalog, open that category. 
+3 Move the pointer over the i-drop® icon next to the tool palette, 
+so that the pointer image changes to an eyedropper ( 
+). To copy multiple tool palettes, press and hold CTRL while clicking each palette; then position the eyedropper over any of the selected palettes. 
+4 Drag the eyedropper according to the desired action: 
+If you want to… Then… 
+store a linked copy of the tool palette in the tool palette set 
+click the eyedropper and drag it to a tool palette in the tool palette set. 
+NOTE A linked palette will only be created when the tool cata­log has been set to linked. If the catalog has been set to non-linked, any palette from that catalog will be inserted as non-linked tool palette onto the AutoCAD Architecture tool palettes set. For more informa­tion about linking tool catalogs see Editing Tool Catalog Proper­
+ties on page 158. 
+
+If you want to… Then… 
+create an unlinked copy of the tool palette in the tool palette set 
+press and hold alt. Then click the eyedropper, and drag it to a tool palette in the tool palette set. 
+NOTE If the tool catalog con­taining the palette has been set to unlinked, you do not need to hold down alt while drag­ging the palette. It will be inser­ted as unlinked in any case. 
+
+
+Copying a Tool Package to the AutoCAD Architecture Workspace 
+Use this procedure to copy a tool package to a palette in the tool palette set. 
+You can create linked or unlinked copies of the tools in the package. A linked copy remains connected to the original in the tool catalog, so that you can easily update the copy with any changes made to the original. An unlinked copy is treated as a new tool, with no relationship to the original. For more information about linked and unlinked tools, see Using the Items in a Tool Catalog on page 143. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Open the tool catalog containing the tool package to copy into the tool palette set. If the package is located in a specific category of the catalog, open that category. 
+3 Move the pointer over the i-drop® icon next to the tool package, 
+so that the pointer image changes to an eyedropper ( 
+). To copy multiple tool packages, press and hold CTRL while clicking each package; then position the eyedropper over any of the selected packages. 
+4 Drag the eyedropper according to the desired action: 
+If you want to… Then… 
+store linked copies of the package’s tools in the tool palette set 
+click the eyedropper and drag it to a tool palette in the tool palette set. 
+NOTE Linked tools will only be created when the tool catalog has been set to linked. If the catalog has been set to non-linked, any tool in that package will be inserted as non-linked tool package onto the AutoCAD Architecture tool palettes set. For more information about linking tool catalogs see Editing Tool Catalog Properties on page 158. 
+create unlinked copies of the pack­age’s tools in the tool palette set 
+press and hold alt. Then click the eyedropper, and drag it to a tool palette in the tool palette set. 
+NOTE If the tool catalog con­taining the package has been set to unlinked, you do not need to hold down alt while dragging the tool. It will be in­serted as unlinked in any case. 
+
+
+Refreshing Linked Tools 
+Use this procedure to update a linked tool with the contents of its source copy in a tool catalog. 
+¦ In the tool palette set, right-click the tool you want to refresh, and click Refresh Tool. If Refresh Tool is not listed on the shortcut menu, click Properties. Then, in the Tool Properties worksheet, select Refresh from. 
+
+Refreshing Linked Tool Palettes 
+Use this procedure to update a linked tool palette with the contents of its source copy in a tool catalog. 
+¦ In the tool palette set, right-click the tool palette you want to refresh, and click Refresh Palette. If Refresh Palette is not listed on the shortcut menu, click Properties. Then, in the Tool Palette Properties worksheet, select Refresh from. 
+
+Specifying Refresh Options for Linked Tool Palettes 
+Use this procedure to determine whether a linked tool palette and its tools are refreshed from the tool catalog when you start AutoCAD Architecture 2011. 
+1 In the tool palette set, right-click the desired tool palette, and click Properties. 
+2 Select an Auto-refresh option: 
+If you want… Then… 
+the tool palette and all its tools to select Enable Auto-refresh. automatically refresh when you start AutoCAD Architecture 2011 NOTE Refresh from must also 
+be selected in order to enable Auto-refresh. 
+no automatic refreshing of the tool clear Enable Auto-refresh. palette 
+3 Click OK. 
+
+
+
+Working with Multiple Content Browser Windows 
+You can open more than one copy of the Content Browser and you can move or copy items by dragging them between the windows. You can copy tool palettes, tool packages, and tools; you cannot copy tool catalogs between Content Browser windows. Only one catalog library can be open at any time. 
+When you drag tool catalog items between Content Browser windows, the following rules apply: 
+¦ 
+If a different catalog is open in each Content Browser window, dragging an item copies it to the new location and leaves the original item in place. 
+
+¦ 
+If the same catalog is open in both Content Browser windows, dragging items from one window to the other moves the item (for example, from one category to another), removing the original item. 
+
+
+If you have the same tool catalog open in multiple windows, and you add an item to the catalog, the tool catalog display is updated in all open Content Browser windows. 
+Opening Additional Content Browser Windows 
+You can open a new instance of the Content Browser by pressing CTRL+N in the Content Browser. You can also open a specific tool catalog, tool palette, or tool package in a new Content Browser window. 
+
+Closing Content Browser Windows 
+Closing one Content Browser window has no effect on other Content Browser windows. You can close all open Content Browser windows at once by right-clicking in the title bar of any window and selecting Close All Windows. 
+
+Opening a Tool Catalog in a New Content Browser Window 
+Use one of the following procedures to open a tool catalog in a new Content Browser window or display an open catalog in a new Content Browser window. 
+¦ 
+With the catalog library displayed in the right pane of the Content Browser window, right-click the catalog to open, and click Open in New Window. 
+
+¦ 
+If a tool catalog is already open in the right pane of the Content Browser window, right-click in a blank area of the catalog, and click New Window. You can open a specific category of the tool catalog in a new Content Browser window by opening the category. 
+
+
+
+Opening Catalog Items in a New Content Browser Window 
+Use this procedure to open a tool palette or tool package in a new Content Browser window. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 Open the catalog containing the desired tool palette or tool package. If the item is located in a specific category of the catalog, open that category. 
+3 Right-click the tool palette or tool package, and click Open in New Window. 
+
+Dragging Catalog Items Between Content Browser Windows 
+Use this procedure to send tools, tool palettes, or tool packages from one catalog location to another by dragging them between two Content Browser windows. Moving an item removes it from its original location, while copying an item retains the original. 
+NOTE You must have write access to the original catalog before you can move it. 
+1 Open two Content Browser windows. 
+2 In the first Content Browser window, display the catalog item that you want to move or copy. 
+3 In the second Content Browser window, open the catalog, category, tool palette, or tool package to send the item to (only tools can be sent to palettes and packages). 
+4 In the first Content Browser window, move the pointer over the i-drop icon associated with the item to be moved, so that the 
+pointer image changes to an eyedropper ( 
+). 
+If you want to… Then… 
+move an item to another location 
+in the same catalog right-click 
+and drag the item to its destination catalog or category in the second Content Browser window, and click Copy Here. 
+copy an item to another location in 
+the same catalog press CTRL; then 
+and drag the item to its destination catalog or category in the second Content Browser window. 
+
+If you want to… Then… 
+move an item to a different catalog press CTRL; then click 
+and drag the item to its destination catalog or category in the second Content Browser window. 
+copy an item to a different catalog click 
+and drag the item to its destination catalog or category in the second Content Browser win­dow. 
+move a tool to a tool palette or tool 
+package in the same catalog click 
+and drag the item to its destination palette or package in the second Content Browser win­dow. 
+copy a tool to a tool palette or tool 
+package in the same catalog press CTRL; then click 
+and drag the item to its destination palette or package in the second Content Browser window. 
+move a tool to a tool palette or tool 
+package in a different catalog press CTRL; then click 
+and drag the item to its destination palette or package in the second Content Browser window. 
+copy a tool to a tool palette or tool 
+package in a different catalog click 
+and drag the item to its destination palette or package in the second Content Browser win­dow. 
+Starting the Content Browser from a Windows Command 
+
+
+
+Prompt 
+Use this procedure to open the Content Browser from a Windows command prompt, even if AutoCAD Architecture 2011 is not currently open. 
+1 Click Start (Windows) menu . Command Prompt. The location of the Command Prompt application varies from one version of Windows to another. It is most likely to be found either in Programs or on the Accessories menu within Programs. 
+2 At the command prompt, specify the AutoCAD Architecture program folder as the current directory. 
+3 Enter the command aeccb, followed optionally by the path to the tool catalog you want the Content Browser to open. For example: 
+aeccb "c:\my documents\autodesk\my content browser 
+library\mycatalog\mycatalog.atc” 
+
+
+Creating and Saving Drawings 
+4 
+Drawings have common properties that you can specify when you create a new drawing. You can specify: 
+¦ 
+the template on which to base the drawing, or create a drawing that is not based on any template. 
+
+¦ 
+units, scale, layer standard, layer key style, and default display properties. 
+
+
+¦ options that control drawing performance and behavior. 
+You also have a number of options for saving files to use with other applications. These options are useful if you work with vendors and consultants who do not use AutoCAD Architecture. 
+About Templates 
+The templates included in the software are drawing files with predefined settings. Predefined settings include drawing units, drawing scales, and annotation plot sizes. You can use these templates to create new drawings without going through any additional setup. 
+Templates are installed in C:\ProgramData\Autodesk\ACA 2011\enu\Template. 
+NOTE The Template folder is marked as hidden in Windows by default. To display hidden folders, enable that option on the View tab of the Folder Options command in Windows Explorer. 
+Templates also contain predefined display configurations. Display configurations allow you to produce different architectural displays, such as floor plans, reflected plans, elevations, 3D models, or schematic displays. For more information, see Display System on page 777. If you are working with a project, as described in Drawing Management on page 289, you can assign display configurations directly to the project as a project standard. For more information, see Configuring Project Standards on page 595. 
+If you are a new user of the software, it is recommended that you use a template to create your drawings. You always have the option to modify a template or create your own template after you become more familiar with the software. 
+You can modify a template to conform to your office standards by changing the settings and then saving it as a new template, or you can import settings from another template into the current drawing, and then saving the current drawing as a template. For more information about creating your own template, see “Use a Template File to Start a Drawing” in AutoCAD Help. For more information about importing display settings to a custom template, see Using Display Settings in Multiple Drawings on page 833 and Creating and Editing Display Configurations on page 810. 
+
+Creating a Drawing from a Template 
+Use this procedure to create a drawing from a template. The drawing templates provided with the software are located in C:\ProgramData\Autodesk\ACA 2011\enu\Template. Template files have the extension dwt. 
+NOTE To create a drawing that you want to include in a project, see Workflow for a Project Environment on page 289. 
+1 Click 
+. New . Drawing. 
+NOTE Be sure to choose the New command from the application 
+menu to select a template. The 
+icon on the Quick Access toolbar is a shortcut to the “QNew” command which creates a new drawing based upon a default template file. You can configure the default template file used for QNew in the Options dialog. For more information, see “QNEW Command” in AutoCAD Help. 
+2 Select the template you want to use, or click Tools . Find, and navigate to the template you want to use. 
+
+3 Click Open. To view or change the default drawing settings for units, scale, layers, and display, see Setting Up a Drawing on page 191. 
+
+Creating a Drawing Without a Template 
+Use this procedure to create a drawing that is not based on a template. Drawings that are not based on templates contain no customized or predefined settings, such as display configurations or architectural units. Drawings without a template use the settings specified in the Drawing Setup dialog box. 
+If you are a new user use one of the templates provided to create drawings until you are comfortable working with display configurations and other settings. After you are more familiar with the program, you can create your own templates and customize your drawing settings. For more information, see Creating a Drawing from a Template on page 188. 
+NOTE To create a drawing to include in a project, see Workflow for a Project Environment on page 289. 
+
+1 Click . New . Drawing. 
+2 Click the arrow next to Open. 
+
+3 Select Open with no Template - Imperial to begin a drawing in imperial units, or select Open with no Template - Metric to begin a drawing in metric units. 
+For more information, see Setting Up a Drawing on page 191. 
+
+Opening Legacy Drawings 
+Keep the following points in mind when you open drawings from earlier releases: 
+¦ 
+To upgrade a drawing from an earlier release to the current release, open the legacy drawing and then save the drawing. When you open a drawing from a previous release in a newer one, a task dialog appears prompting you to do so. If the drawing references other legacy drawings, open and save those externally referenced (xref) drawings to upgrade them to the current release. 
+
+¦ 
+If you try to edit an external reference drawing within a legacy drawing, you are prompted to update the external reference drawing to the current release. It is recommended that you use the same version for your external references and host drawings. 
+
+¦ 
+If you open a legacy drawing in the Style Manager, the drawing is marked as read-only; you can copy styles from that drawing to drawings in newer 
+
+
+

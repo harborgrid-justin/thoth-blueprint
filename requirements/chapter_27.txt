@@ -1,0 +1,2427 @@
+[MIGRATED TO RTM_PART_78.md - MULTI-LANDING STAIRS]
+[MIGRATED TO RTM_PART_55.md - STAIRS]
+4 For Shape, select Multi-landing. 5 Specify the turn type: 
+If you want to… Then… 
+create a flat landing with a user-select 1/2 landing for Turn type. defined length where the stair run turns 
+create stairs with a user-defined select 1/2 turn for Turn type. 
+length where the stair run turns 
+with treads through the turn NOTE These stairs must have at least three segments and each corner must turn in the same direction. 
+create a flat landing where the stair select 1/4 landing for Turn type. turns, with the length of the land­ing equal to the width of the stair NOTE These stairs typically 
+have two or more flights joined by square landings. 
+create stairs having treads along the select 1/4 turn for Turn type. 
+entire length, with one or more 
+turns in any direction NOTE These stairs may have two or more segments, and corners may turn in either direc­tion. 
+6 Specify the vertical orientation of the stair: 
+If you want to… Then… 
+draw the stair from this floor to the select Up for Vertical Orientation. floor above 
+draw the stair from this floor to the select Down for Vertical Orienta­floor below tion. 
+7 Expand Dimensions. 
+8 Specify stair width, height, and justification: 
+If you want to… Then… 
+specify the width of the stair enter a value for Width. 
+specify the height of the stair enter a value for Height. 
+specify the justification of the stair enter a value for Justify. The Justify value controls the insertion point when you place the stair (left, cen­ter, or right) at the beginning of the stair run. 
+9 Specify the stair termination: 
+if you want to… then… 
+end the stair run with a riser select Riser for Terminate with. 
+
+NOTE Stairs that end with a riser will have an overall height that is one tread thickness less than the floor-to-floor height specified. 
+end the stair run with a tread select Tread for Terminate with. 
+
+if you want to… then… 
+end the stair run with a landing select Landing for Terminate with. 
+
+10 Click 
+next to Calculation rules, and 
+if you want to… then… 
+specify the overall linear length of the stair 
+enter values for Straight Length and Riser Count, then click OK. 
+¦ 
+When Straight Length is set to
+
+
+ (automatic), the value is calculated based on the tread size and riser count. 
+
+¦ 
+When Straight Length is set to
+
+
+ (user-defined), the stair length is equal to the dimen­sion entered, and the other three values are adjusted within the code limits. 
+
+¦ 
+When Riser Count is set to (user-defined), the tread depth is increased or decreased to ac­commodate the stair. 
+
+
+
+specify the total number of stair  enter a value for Riser Count, then  
+risers  click OK.  
+¦ When Riser Count is set to  
+(automatic), the number of  
+risers is based on the overall  
+length and overall height of the  
+stair and the code limits spe- 
+
+if you want to… then… 
+cified on the Design Rules tab. The Straight Length value of the stair is adjusted automatic­ally. 
+¦ When Riser Count is set to (user-defined), you can specify a value that is used to calculate the tread depth and riser height. If these values fall out­side the stair limits, an error message is displayed. 
+
+specify the height of each riser in set all fields to 
+(automatic),the stair flight click the icon for Riser to change it 
+to 
+(user-defined), and enter a value for Riser. Click OK. 
+specify the tread depth for each set all fields to 
+(automatic),tread in the stair flight click the icon next to Tread to 
+change it to 
+(user-defined), and enter a value for Tread. You can also specify the Riser count when you set the tread depth. Click OK. 
+NOTE If a value is set to user-defined on the Calculation rules worksheet, it can be modified directly in the Properties palette. 
+NOTE If 
+is displayed next to a field in the Calculation Rules dialog box, that field can’t be changed until another field is changed from
+
+ (user-defined) to 
+(automatic). 
+11 Expand Advanced. 
+12 Specify the Floor Settings: 
+If you want to… Then… 
+change the thickness of the floor enter a value for Top offset. finish material at the top of the stair 
+change the depth of the structure enter a value for Top depth. at the top of the stair 
+change the thickness of the floor enter a value for Bottom offset. finish material at the bottom of the stair 
+change the depth of the structure enter a value for Bottom depth. at the bottom of the stair 
+13 Set the minimum height or number of risers in a stair flight, or specify *NONE*. 
+14 Set the maximum height or number of risers in a stair flight, or specify *NONE*. 
+15 In the drawing area, specify the insertion point of the stair. You can move or hide the Properties palette to expose more of the drawing area. 
+16 Specify the point of the first turn or landing for the stair. 17 Continue specifying points for the stair. 
+NOTE If you specified Landing for Terminate with, the last point for the stair beyond the final riser defines the end of the landing. 
+Specifying terminal landing length for multi-landing stair 
+
+18 Continue adding stairs, or press ENTER. 
+Creating an L-Shaped Stair with 45-Degree Tread 
+Use this procedure to add an L-shaped stair with a 45-degree turn in the winder. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Architectural Objects, and expand Stair Winder Styles. 3 Right-click, select New, and enter Single Point – 2 Tread as the 
+style name. 4 On the Settings tab, confirm that Use Riser Line is not selected. 5 Specify Single Point for Winder Type. 6 Select Adjust Winder Turn and enter 2 for Number of Treads in 
+Turn. 7 Click OK. 8 Open the tool palette that you want to use, and select a stair tool. 
+If necessary, scroll to display the tool that you want to use. 
+NOTE Alternatively, click Home tab . Build panel . Stair drop-down . Stair
+ . 
+9 On the Properties palette, click the Design tab, expand Basic, and expand General. 10 For Shape, select Multi-landing. 11 For Turn type, select 1/4 turn. 12 For Winder Style, select Single Point – 2 Tread. 13 Expand Dimensions. 14 For Flight length, select Tread length. 
+NOTE If the stair style has Extend Landings to Prevent Risers and Treads Sitting under Landings turned on, the flight will not be pivoted exactly around the end of the stair. 
+15 Draw a stair with one 90-degree turn, and press ENTER. 
+Creating an L-shaped stair with a 45 degree tread 
+
+16 Select the stair, enter winderturnadjust at the command line, and press ENTER. 
+NOTE The winderturnadjust command changes the number of treads in a turn zone for a stair using a Single Point winder style. The default number of treads is specified in the Settings tab of the Stair Winder Styles. You can change the amount of treads on the command line while running the winderturnadjust command. 
+When you change the number of treads in the turn zone, the construction line changes location across the stair because the tread length must remain constant along the stair. Changing the winder treads changes the width, so the line moves. The construction line can be edited with grips. If you move the construction line, the winder treads are affected. 
+Creating a U-Shaped Stair with User-Specified Settings 
+Use this procedure to add a U-shaped stair with settings that you specify. U-shaped stairs have two equal-length runs joined by a half-landing. The justification setting controls where the points that define the stair fall within its width. 
+When drawing the stair, the flights are shown with lines for each tread. Flat landings have no tread lines, while turn-type landings show tread lines through the entire turn. For turn-type stairs, these temporary lines do not necessarily represent the actual locations of tread lines in the final stair. 
+Creating a U-shaped stair 
+
+TIP To ensure that the Properties palette is displayed before you select a tool, click Home tab . Build panel . Tools drop-down . Properties. 
+1 Open the tool palette that you want to use, and select a stair tool. If necessary, scroll to display the tool that you want to use. 
+NOTE Alternatively, click Home tab . Build panel . Stair drop-down . Stair
+ . 
+2 On the Properties palette, click the Design tab, expand Basic, and expand General. 
+3 Select a style. 
+4 For Shape, select U-shaped. 
+5 Specify the turn type: 
+If you want to… Then… 
+create a flat landing where the stair select 1/2 landing for Turn type. run turns back in the opposite direc­tion 
+If you want to… Then… 
+create stairs where the stair run select 1/2 turn for Turn type. turns back in the opposite direction with treads throughout the run 
+6 Specify the horizontal orientation of the stair: 
+If you want to… Then… 
+draw the U-shaped stair so that the select Counterclockwise for Hori­right is the outer edge of the stair zontal Orientation. and left is the inner edge 
+draw the U-shaped stair so that the select Clockwise for Horizontal Ori­left is the outer edge of the stair entation. and right is the inner edge 
+Specifying the horizontal direction for U-shaped stairs 
+
+7 Specify the vertical orientation of the stair: 
+If you want to… Then… 
+draw the stair from this floor to the select Up for Vertical Orientation. floor above 
+draw the stair from this floor to the select Down for Vertical Orienta­floor below tion. 
+8 Expand Dimensions. 9 Specify stair width, height, and justification: 
+If you want to… Then… 
+specify the width of the stair enter a value for Width. 
+specify the floor-to-floor height of enter a value for Height. the stair 
+specify the justification of the stair enter a value for Justify. The Justify value you select controls the inser­tion point when you place the stair (inside, center, or outside) at the beginning of the stair run. 
+10 Specify the stair termination: 
+If you want to… Then… 
+end the stair run with a riser select Riser for Terminate with. 
+
+NOTE Stairs that end with a riser will have an overall height that is one tread thickness less than the floor-to-floor height specified. 
+If you want to… Then… 
+end the stair run with a tread select Tread for Terminate with. 
+
+end the stair run with a landing select Landing for Terminate with. 
+
+11 Click 
+next to Calculation rules, and 
+if you want to… then… 
+specify the overall linear length of the stair 
+enter values for Straight Length and Riser Count, then click OK. 
+¦ 
+When Straight Length is set to
+
+
+ (automatic), the value is calculated based on the tread size and riser count. 
+
+¦ 
+When Straight Length is set to
+
+
+ (user-defined), the stair length is equal to the dimen­sion entered, and the other three values are adjusted within the code limits. 
+
+¦ 
+When Riser Count is set to (user-defined), the tread depth 
+
+
+
+if you want to… then… 
+specify the total number of stair risers 
+is increased or decreased to ac­commodate the stair. 
+enter a value for Riser Count, then click OK. 
+¦ 
+When Riser Count is set to (automatic), the number of risers is based on the overall length and overall height of the stair and the code limits spe­cified on the Design Rules tab. The Straight Length value of the stair is adjusted automatic­ally. 
+
+¦ 
+When Riser Count is set to (user-defined), you can specify a value that is used to calculate the tread depth and riser height. If these values fall out­side the stair limits, an error message is displayed. 
+
+
+
+
+specify the height of each riser in set all fields to 
+(automatic),the stair flight click the icon for Riser to change it 
+to 
+(user-defined), and enter a value for Riser. Click OK. 
+specify the tread depth for each set all fields to 
+(automatic),tread in the stair flight click the icon next to Tread to 
+change it to 
+(user-defined), and enter a value for Tread. You can also specify the Riser count when you set the tread depth. Click OK. 
+NOTE If a value is set to user-defined on the Calculation rules worksheet, it can be modified directly in the Properties palette. 
+NOTE If 
+is displayed next to a field in the Calculation Rules dialog box, that field can’t be changed until another field is changed from
+
+ (user-defined) to 
+(automatic). 
+12 Expand Advanced. 13 Specify the Constraints: 
+If you want to… Then… 
+place the treads and risers with the select Free for Alignment. minimum landing extension 
+align the tread of the up flight to select Tread to tread for Alignment. the tread of the down flight 
+align the tread of the up flight to select Tread to riser for Alignment. the riser of the down flight 
+align the riser of the up flight to the select Riser to riser for Alignment. riser of the down flight 
+14 Specify a value for Alignment offset. When you select Tread to tread, Tread to riser, or Riser to riser, you can specify an offset value. A positive offset value means that the down-flight tread location is closer to landing than the up-flight tread location. 
+Specifying tread to riser alignment offsets 
+
+15 Specify a value for the Extend alignment (Lower flight or Upper flight). 
+16 Specify a value for Uneven tread to determine which flight will be longer if the total number of treads is uneven. Select Upper flight to place the Uneven tread on the upper flight. Select Lower flight to place the uneven tread on the lower flight. 
+17 Specify floor settings: 
+If you want to… Then… 
+change the thickness of the floor enter a value for Top offset. finish material at the top of the stair 
+change the depth of the structure enter a value for Top depth. at the top of the stair 
+change the thickness of the floor enter a value for Bottom offset. finish material at the bottom of the stair 
+change the depth of the structure enter a value for Bottom depth. at the bottom of the stair 
+18 Set the minimum height or number of risers in a stair flight, or specify *NONE*. 
+19 Set the maximum height or number of risers in a stair flight, or specify *NONE*. 
+20 In the drawing area, specify the insertion point of the stair. You can move or hide the Properties palette to expose more of the drawing area. 
+21 Specify the endpoint of the stair. 22 Continue adding stairs, or press ENTER. 
+Creating a Spiral Stair with User-Specified Settings 
+Use this procedure to create a circular sweeping and spiral stair. A spiral stair revolves about a common center point from bottom to top. 
+You can specify a radius directly or on the screen only when the arc constraint is free. Otherwise, the radius is determined from the specified tread length and arc constraint. In that case, you need to adjust the tread length to achieve the desired radius. 
+Creating a spiral stair 
+
+To create a spiral stair with the specified tread depth (T) that occurs at a specified distance from the inner edge, first construct the stair with a width equal to twice the required distance (A). Next, use Customized Edges to offset the outer edge to the desired total width B. The offset distance is equal to B ­2A. 
+Creating a spiral stair with a specified tread depth at a specified distance 
+
+TIP To ensure that the Properties palette is displayed before you select a tool, click Home tab . Build panel . Tools drop-down . Properties. 
+1 Open the tool palette that you want to use, and select a stair tool. If necessary, scroll to display the tool that you want to use. 
+NOTE Alternatively, click Home tab . Build panel . Stair drop-down . Stair
+ . 
+2 On the Properties palette, click the Design tab, expand Basic, and expand General. 
+3 Select a style. 
+4 For Shape, select Spiral. 
+5 Specify the horizontal orientation of the stair: 
+If you want to… Then… 
+draw the spiral stair in a counter-select Counterclockwise for Hori­clockwise direction zontal Orientation. 
+draw the spiral stair in a clockwise select Clockwise for Horizontal Ori­direction entation. 
+Specifying the horizontal orientation for a spiral stair 
+
+6 Specify the vertical orientation of the stair: 
+If you want to… Then… 
+draw the stair from this floor to the select Up for Vertical Orientation. floor above 
+If you want to… Then… 
+draw the stair from this floor to the select Down for Vertical Orienta­floor below tion. 
+NOTE If Terminate with is set to Landing, the vertical orientation is up and cannot be changed. 
+7 Expand Dimensions. 8 Specify stair width, height, and justification: 
+If you want to… Then… 
+specify the width of the stair enter a value for Width. 
+specify the floor-to-floor height of enter a value for Height. the stair 
+specify the justification of the stair enter a value for Justify. The Justify value you select controls the inser­tion point when you place the stair (inside, center, or outside) at the beginning of the stair run. 
+9 Specify the stair termination: 
+If you want to… Then… 
+end the stair run with a riser select Riser for Terminate with. 
+
+NOTE Stairs that end with a riser will have an overall height that is one tread thickness less than the floor-to-floor height specified. 
+If you want to… Then… 
+end the stair run with a tread select Tread for Terminate with. 
+
+end the stair run with a landing select Landing for Terminate with. 
+
+NOTE If the vertical orientation is set to Down, Terminate with is set to Riser and cannot be changed. 
+10 Specify the radius of the stair: 
+If you want to… Then… 
+specify the exact radius for the select No for Specify On Screen and spiral stair enter a value for Radius. 
+define the radius for the stair dynam-select Yes for Specify On Screen. ically 
+11 Select the type of arc constraint to use when creating the spiral stair: 
+If you want to… Then… 
+create a spiral stair run with no select Free for Arc constraint. constraints 
+create a spiral stair with a specific  select Total degrees for Arc con- 
+number of degrees for the stair  straint, and enter a value for Arc  
+flight  
+
+If you want to… Then… 
+angle. This includes the terminal landing or tread. 
+create a spiral stair with a specific select Degrees per tread for Arc degree for each tread in the stair constraint, and enter a value for Arc angle. 
+12 Click 
+next to Calculation rules, and 
+if you want to… then… 
+specify the overall linear length of the stair 
+enter values for Straight Length and Riser Count, then click OK. 
+¦ 
+When Straight Length is set to
+
+
+ (automatic), the value is calculated based on the tread size and riser count. 
+
+¦ 
+When Straight Length is set to
+
+
+ (user-defined), the stair length is equal to the dimen­sion entered, and the other three values are adjusted within the code limits. 
+
+¦ 
+When Riser Count is set to (user-defined), the tread depth is increased or decreased to ac­commodate the stair. 
+
+
+
+specify the total number of stair  enter a value for Riser Count, then  
+risers  click OK.  
+¦ When Riser Count is set to  
+(automatic), the number of  
+risers is based on the overall  
+length and overall height of the  
+stair and the code limits spe­ 
+cified on the Design Rules tab.  
+The Straight Length value of  
+
+if you want to… then… 
+the stair is adjusted automatic­ally. 
+¦ When Riser Count is set to (user-defined), you can specify a value that is used to calculate the tread depth and riser height. If these values fall out­side the stair limits, an error message is displayed. 
+
+specify the height of each riser in set all fields to 
+(automatic),the stair flight click the icon for Riser to change it 
+to 
+(user-defined), and enter a value for Riser. Click OK. 
+specify the tread depth for each set all fields to 
+(automatic),tread in the stair flight click the icon next to Tread to 
+change it to 
+(user-defined), and enter a value for Tread. You can also specify the Riser count when you set the tread depth. Click OK. 
+NOTE If a value is set to user-defined on the Calculation rules worksheet, it can be modified directly in the Properties palette. 
+NOTE If 
+is displayed next to a field in the Calculation Rules dialog box, that field can’t be changed until another field is changed from
+
+ (user-defined) to 
+(automatic). 
+13 Expand Advanced. 14 Specify the Floor Settings: 
+If you want to… Then… 
+change the thickness of the floor enter a value for Top offset. finish material at the top of the stair 
+If you want to… Then… 
+change the depth of the structure enter a value for Top depth. at the top of the stair 
+change the thickness of the floor enter a value for Bottom offset. finish material at the bottom of the stair 
+15 Set the minimum height or amount of risers in a stair flight, or specify *NONE*. 
+16 Set the maximum height or number of risers in a stair flight, or specify *NONE*. 
+17 Specify the center point for the spiral stair. 
+18 Specify the location of the stair. 
+19 Continue adding stairs, or press ENTER. 
+Creating a Custom Stair from Linework 
+Use this procedure to create a custom stair from linework. You can model irregularly shaped stairs and treads, and specify multiple flights at varying angles with a custom stair. You can select or create linework defining stair edges and tread edges. Create a custom stair to model complex existing stair conditions for analysis and explore non-code compliant conditions, or generate stair types that are not possible to create using regular AutoCAD Architecture stair commands. 
+The stairs outline component of a custom stair is delineated by the left and right stair sides, the nosing of the first tread, and the front of the last tread or landing. 
+Stair stringers can be selected as linework, or they can be automatically generated by AutoCAD Architecture. After you create a custom stair, you can replace stringer paths. You can add or modify stringers by editing the stair style. The stair style applied to the custom stair must have stringers defined in that particular stair style. If the stair style does include stringers, the left and right stringer path lines are converted to appropriate stringer geometry. The current stair properties govern the appearance of stair components in various representations. 
+IMPORTANT The overall outline of the stair must not overlap at any point, or a Solution Tip will appear. 
+Create the linework for your custom stair using lines, light-weight polylines, or arc segments. All tread lines must intersect with the sides of the stair. Graphics representing the stringer paths must be continuous throught the path of the stair. 
+
+Linework for custom stairs can represent the following components: 
+¦ 
+left and right stair sides (required) 
+
+¦ 
+stair path (optional) 
+
+¦ 
+left, right, and center stair stringers (optional) 
+
+¦ 
+first tread at current level (required) 
+
+¦ 
+remaining treads (required) 
+
+
+NOTE A custom stair must have a minimum of 2 treads. At least 2 lines must be selected for remaining treads when creating a custom stair. 
+Creating a Custom Stair from Linework 1 Open the tool palette that contains the stair tool that you want to use, and select the tool. You may have to scroll to display the desired tool. 
+TIP To ensure that the Properties palette is displayed before you select a tool, click Home tab . Build panel . Tools drop-down . Properties. 
+2 Verify that your current drawing includes a stair style with defined stringers. 3 Right-click the stair tool and click Apply Tool Properties to . Linework. 4 Select the linework that represents the left and right sides of the 
+custom stair. Only lines, light-weight polylines, or arc segments that intersect all treads can be selected for the stair sides. 
+5 Select the linework that represents the stair path, or press ENTER to have it generated automatically. 
+
+Only single or multi-segment light-weight polylines or arc segments that intersect all treads can be selected for the stair path. 
+6 Select the linework that represents the left, right, and center stair stringers, or press ENTER to have the left, right, and center stair stringers generated automatically. 
+
+7 Select the linework that represents the first tread at the current 
+level. Only lines, light-weight polylines, or arc segments that intersect the stair sides can be selected for the stair treads. 
+8 Select the remaining treads. 
+
+9 In the Convert to Stair dialog, verify or change the parameter values for Style, Height, Vertical Orientation, and Terminate with. 
+Specify a style with defined stringers. Specify whether to erase the layout geometry, then click OK. 
+NOTE The Standard stair style does not have defined stringers. 
+
+IMPORTANT You cannot convert a custom stair to a ramp stair style. 
+The custom stair from linework is generated. 
+
+Once you create a custom stair, you can convert any part of it to a landing. See Modifying Custom Stairs on page 2117 to do this. 
+Creating a Custom Stair from Tread Profiles 
+Use this procedure to create a custom stair from tread profiles. Use defined profiles generated from closed polylines for custom stair treads. All tread profiles in each stair run must either intersect or overlap. 
+The stairs outline component of a custom stair is delineated by the left and right stair sides, the nosing of the first tread, and the front of the last tread or landing. 
+IMPORTANT The overall outline of the stair must not overlap at any point, or a Solution Tip will appear. 
+Stair stringers can be selected as linework or they can be automatically generated by AutoCAD Architecture. After you create a custom stair, you can replace stringer paths. You can add or modify stringers by editing the stair style. The current stair properties govern the appearance of stair components in various representations. 
+
+Linework and profiles for custom stairs can represent the following components: 
+¦ 
+stair path (required) 
+
+¦ 
+left and right stair stringers (optional) 
+
+¦ 
+first tread profile at current level (required) 
+
+¦ 
+remaining treads (required) 
+
+
+Creating a Custom Stair from Tread Profiles 1 Open the tool palette that contains the stair tool that you want to use, and select the tool. You may have to scroll to display the desired tool. 
+TIP To ensure that the Properties palette is displayed before you select a tool, click Home tab . Build panel . Tools drop-down . Properties. 
+2 Right-click the stair tool and click Apply Tool Properties to . Linework. 
+3 Enter T for Treadprofile. 
+4 Select the linework that represents the stair path. Only single or multi-segment light-weight polylines or arc segments that intersect all treads can be selected for the stair path. 
+5 Select the linework that represents the left, right, and center stair stringers, or press ENTER to have the left, right, and center stair stringers generated automatically. 
+
+6 Select the linework that represents the first tread profile at the current level. Only defined profiles can be selected for stair treads. 
+7 Select the remaining treads. 
+
+IMPORTANT You cannot covert a custom stair to a ramp stair style. 
+8 In the Convert to Stair dialog, verify or change the parameter values for Style, Height, Vertical Orientation, and Terminate with. Specify whether to erase the layout geometry, then click OK. 
+
+IMPORTANT You cannot convert a custom stair to a ramp stair style. 
+The custom stair from tread profiles is generated. 
+
+Once you create a custom stair, you can convert any part of it to a landing. See Modifying Custom Stairs on page 2117 to do this. 
+Modifying Custom Stairs 
+Use these procedures to perform the following modifications for custom stairs: 
+¦ 
+Edit the faces of treads and risers 
+
+¦ 
+Match treads and risers to source components 
+
+¦ 
+Convert a tread to a landing and back again 
+
+¦ 
+Replace an existing stringer path with a new stringer path by selecting linework 
+
+
+IMPORTANT When adding or changing the shape of treads, the overall outline of the stair must not overlap at any point, or a Solution Tip will appear. 
+Edit a Custom Stair Tread 1 Use this procedure to convert the edge of a custom stair tread to 
+an arc. Select the custom stair that you want to change and click Stair tab . Custom Stair panel . Edit Tread/Riser
+ . 
+
+A grip appears at the midpoint of each tread and riser. 
+2 Select the bottom Edit Tread grip. You can select either edge or vertex grips to modify the face of the tread. The following grips are displayed for editing the face of a custom stair tread: 
+
+3 Move the cursor over the front Edge grip. A tooltip with the following options is displayed: 
+¦ 
+Offset 
+
+¦ 
+Add Vertex 
+
+¦ 
+Convert to Arc 
+
+¦ 
+Offset All 
+
+
+4 Select the Edge grip, and press CTRL twice to cycle to the Convert to Arc option. 
+5 Specify a new location for the Edge grip. 
+
+Match Tread/Riser 
+1 Use this procedure to modify a custom stair tread by matching an existing tread on another custom stair. 
+Create 2 custom stairs: one with a source tread to match, and one as the destination custom stair. 
+2 Select the custom stair that you want to change, and click Stair 
+tab . Custom Stair panel . Match Tread/Riser
+ . 
+3 Specify tread to match. You have the option of matching a tread, a riser, or both. 
+4 Select the tread to match on the source custom stair. 
+5 Select the tread on the destination custom stair to replace. 
+
+Toggle Tread/Landing 1 Use this procedure to convert a custom stair tread to a landing, 
+or convert a custom stair landing to a tread. Select the custom stair that you want to change, and click Stair tab . Custom Stair panel . Set To Tread/Landing
+ . 
+2 Select the tread to convert to a landing. 
+When you use a stair style that has defined stringers, you can see that the stringer is parallel to the landing and sloping for the duration of the tread. 
+NOTE This feature does not override the Terminate with option. If Terminate with Landing is specified, you cannot use this feature to convert the landing to a tread. 
+
+Replace Stringer Path 
+1 Use this procedure to replace an existing custom stair stringer path with a new stringer path by selecting linework. The linework must occur within the stair to be valid for selection as a replacement stringer path, and must follow the entire length of the stair. 
+Select the custom stair that you want to change, and click Stair 
+tab . Custom Stair panel . Replace Stringer Path
+ . 
+2 Specify the left, right, or center stringer path (depending on the custom stair configuration) to replace. 
+3 Select the linework to represent the new stringer path. 
+
+Creating a Ramp 
+Use this procedure to create a ramp using stairs. The Ramp-Concrete style (in the Stair Styles drawing) includes the correct settings for creating a ramp. 
+TIP For a listing of the location of all styles and support drawings, see Styles and Support Files on page 134. 
+The ramp stringer type should be used for creating ramps. The stringer facets display component provides the landing lines for ramps, and an End with 
+tread setting makes the connection to the next level work correctly, instead of having one riser height between the ramp and the surface it should meet. 
+TIP To ensure that the Properties palette is displayed before you select a tool, click Home tab . Build panel . Tools drop-down . Properties.. 
+1 Import the ramp style from the Stair Styles drawing. For information about copying styles into your drawing, see Copying Styles Between Drawings on page 863. 
+2 Open the tool palette that you want to use, and select a stair tool. If necessary, scroll to display the tool that you want to use. 
+NOTE Alternatively, click Home tab . Build panel . Stair drop-down . Stair
+ . 
+3 On the Properties palette, expand Basic, and expand General. 4 Select the Ramp-Concrete style. 5 Specify stair settings, such as shape, turn type, and so on. 6 Specify the location of the stair. 7 Continue adding stairs, or press ENTER. 
+Creating a U-shaped concrete ramp 
+
+Creating a Stair Tool 
+Use this procedure to create a stair tool and add it to a tool palette. You may want to create your own stair tools if you are placing multiple stairs of a specific style and they all have the same property. 
+1 Open the tool palette on which you want to add a tool. 2 Create the tool: 
+If you want to… Then… 
+create a tool from a stair in the select the stair, and drag it to the drawing tool palette. 
+create a tool from a stair style in the  Click Manage tab . Style & Display  
+Style Manager  panel . Style Manager  . Locate  
+the style you want to copy, and  
+drag it to the tool palette. Click OK  
+to close the Style Manager.  
+
+If you want to… Then… 
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool  open the other tool palette, right- 
+palette  click the tool, and click Copy. Re­ 
+open the palette where you want  
+to add the tool, right-click, and click  
+Paste.  
+
+copy a tool from a tool catalog open the catalog in the Content Browser, and locate the tool you want to copy. Position the cursor over the i-drop handle, and drag the tool to the tool palette. 
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. This description is used as the tooltip on the tool palette, and to describe the tool if it is stored in a tool catalog. 
+6 Expand Basic, and expand General. 
+7 Click 
+next to Description, enter a description of the stair created from this tool, and click OK. 
+8 Specify a layer key and any layer key overrides if you do not want to use the layer assignments specified in the layer key style used in the drawing. 
+9 Select a stair style. 
+NOTE If a multi-landing or u-shaped stair is selected, the turn type can be set. If the turn type is 1/2 or 1/4 turn, the winder style can be set. 
+10 Select the drawing file containing the style used for this stair. 11 Click OK. 
+Editing Stairs 
+You can edit stairs by changing the style of the stair, the width and height of the stair, the size of the tread, and the justification. You can also change constraints, components, landing extensions, and location, in addition to the style and dimensions. 
+AutoCAD Architecture offers several methods for editing stairs: 
+¦ 
+You can directly edit stairs using grips for dimensions and other physical characteristics. 
+
+¦ 
+For grip edit operations where you are changing a dimension or an angle, the Dynamic Input feature lets you enter a precise value instead of moving a grip. When this feature is active (click DYN on the application status bar), selecting a grip displays a text box in which you can enter the desired value for the associated dimension or angle. For more information, see “Use Dynamic Input” in AutoCAD Help. 
+
+¦ 
+You can change stair settings on the Properties palette. 
+
+¦ 
+You can use editing commands from the contextual ribbon tab for a selected stair. 
+
+
+Using Grips to Edit Stairs 
+When you use grips to edit stairs, the stairway continues to be constrained by the design limits and length specified when the stair was created, if Automatic Length is set to No. This is the case for all stairs in earlier- version drawings. If you move beyond those limits, a solution tip icon is displayed. 
+Stair with solution tip icon 
+
+You can use grips to create multi-landing stairs that have skewed landings and angled stair runs. Changing the configuration of a landing may result in changes to the stair run. 
+You can increase or decrease the overall width of the stair run for U-shaped stairs. 
+The radius and start point can be changed for spiral stairs. You can use grips to increase or decrease the overall width of the stair run for spiral stairs. If you change the width of the stair after grip-editing a side, the changes are lost. 
+NOTE You cannot use any of the plan representation grips to alter the floor-to-floor height. Select the stair in a view direction other than TOP to use a grip to change the floor-to-floor height. 
+Each stair shape has different grips associated with it. 
+Using Grips to Edit Straight Stairs 
+Refer to the illustrations and steps in this topic to use straight stair grips to edit stairs. 
+Grip Description Animation 
+(Length) Lets you change the length of a Changing the Straight Stair straight stair run. Length with Grips animation 
+(Height) Lets you change the height of a Changing the Straight Stair straight stair run. Height with Grips Animation 
+(Flight Taper)  Lets you change the fight taper of  Changing the Straight Stair  
+a straight stair run.  Flight Taper with Grips Anim­
+ 
+ation  
+
+(Edge)  Lets you change the flight width of  Changing the Straight Stair  
+a straight stair run by adding an  Flight Width Add Edge Grip  
+edge.  Animation  
+
+(Edge)  Lets you change the flight width of  Changing the Straight Stair  
+a straight stair run by moving an  Flight Width Move Edge Grip  
+edge.  Animation  
+
+Grip Description Animation 
+(Construction  Lets you change the construction  Changing the Straight Stair  
+Line Location)  line location of a straight stair run.  Construction Line Location  
+Grip Animation  
+
+(Graphics Path  Lets you change the graphics path  Changing the Straight Stair  
+Location)  location of a straight stair run.  Graphics Path Location Grip  
+Animation  
+
+Editing Stair Dimensions 
+1 Select the straight stair. 2 Select the grip for the dimension you want to change. Straight stair Flight Start and End, Location, and Lengthen Stair grips 
+
+3 Move the grip until the dimension value you want is displayed, and click once; or enter a value. 
+NOTE The Lengthen Stair grips move a straight stair unless it ends with a landing. 
+4 Click the Edit Edges grip to access the edges edit mode (flight width and flight taper). 
+NOTE Alternatively, click Stair tab . Modify panel . Customize Edge drop-down . Edit. 
+Straight stair Flight Taper, Flight Width, and Exit Edit Edges grips 
+
+5 When you have finished editing the stair edges, click the Exit Edit Edges grip to return to the default stair edit mode. 
+6 Continue edting, or right-click and click Deselect All to turn off grips. 
+Changing the Location or Position of a Straight Stair 
+1 Select the straight stair. 
+2 Select the appropriate grip to change the location of the stair, its start point, construction line, graphics path, or endpoint. 
+Straight stair Flight Start and End, Lengthen Stair, and Location grips 
+
+Straight stair Construction Line Location, Graphics Path Location, and Edit Edges grips 
+
+3 Move the stair to the desired location, and click once; or enter a value, and press ENTER. 
+If you want to enter a specific value for the second direction in any edit mode (for example, in the Y direction when editing along the XY plane), press TAB to cycle to the second direction. 
+You can also lock the movement of the stair along a specific direction. If you enter a value for either dimension direction in the current edit mode, and then press TAB, the movement of the stair is constrained to the second dimension direction. When editing along the XY plane, for example, you can enter a value for X dimension, and then press TAB. The X dimension is locked at that value, and movement of the stair is constrained to the Y dimension direction. 
+4 Right-click, and click Deselect All to turn off grips. 
+Changing the Height of a Straight Stair 
+1 Select the straight stair. 2 Move the Height grip to change the height of the stair. 
+NOTE This grip displays only in 3D views of the stair. Height cannot be edited in Plan view. 
+Straight stair Height grip 
+
+3 Right-click, and click Deselect All to turn off grips. 
+Using Grips to Edit Multi-Landing Stairs 
+Refer to the illustrations and steps in this topic to use multi-landing stair grips to edit stairs. 
+Grip Description Animation Grip Description Animation 
+(Move Flight)  Lets you move the flight of a multi- Moving the Multi-landing  
+landing stair.  Stair Flight with Grips anima­
+ 
+tion  
+
+(Turn Point)  Lets you move the turn point of a  Moving the Multi-landing  
+multi-landing stair.  Stair Turn Point with Grips  
+Animation  
+
+(Flight Taper)  Lets you change the fight taper of  Changing the Multi-landing  
+a multi-landing stair.  Stair Flight Taper with Grips  
+Animation  
+
+(Edge)  Lets you change the flight width of  Changing the Multi-landing  
+a multi-landing stair run by moving  Stair Flight Width Move Edge  
+an edge.  Grip Animation  
+
+(Construction  Lets you change the construction  Changing the Multi-landing  
+Line Location)  line location of a multi-landing stair.  Stair Construction Line Loca­
+ 
+tion Grip Animation  
+
+(Graphics Path  Lets you change the graphics path  Changing the Multi-landing  
+Location)  location of a multi-landing stair.  Stair Graphics Path Location  
+Grip Animation  
+
+Editing Multi-Landing Stair Dimensions 1 Select the multi-landing stair. 2 Select the grip for the dimension you want to change. Multi-landing stair landing Edge and Vertex, and Exit Edit Edges grips 
+
+3 Move the grip until the dimension value you want is displayed, and click once; or enter a value. 
+4 Click the Edit Edges grip to access the edges edit mode (flight width and flight taper). 
+NOTE Alternatively, click Stair tab . Modify panel . Customize Edge drop-down . Edit. 
+Multi-landing stair Flight Taper and Flight Width, and Landing Width grips 
+
+5 When you have finished editing the stair edges, click the Exit Edit Edges grip to return to the default stair edit mode. 
+6 Continue edting, or right-click, and click Deselect All to turn off grips. 
+Changing the Location or Position of a Multi-Landing Stair 
+1 Select the multi-landing stair. 
+2 Select the appropriate grip to change the location of the stair, its start point, construction line, graphics path, or endpoint. 
+Multi-landing stair Flight Start and End, Move Flight, Move Multi-Landing, and Lengthen Stair grips 
+
+Multi-landing stair Landing Turn Point, Construction Line Location, Graphics Path Location, and Edit Edges grips 
+
+3 Move the stair to the desired location, and click once; or enter a 
+value, and press ENTER. If you want to enter a specific value for the second direction in any edit mode (for example, in the Y direction when editing along the XY plane), press TAB to cycle to the second direction. 
+You can also lock the movement of the stair along a specific direction. If you enter a value for either dimension direction in the current edit mode, and then press TAB, the movement of the stair is constrained to the second dimension direction. When editing along the XY plane, for example, you can enter a value for X dimension, and then press TAB. The X dimension is locked at that value, and movement of the stair is constrained to the Y dimension direction. 
+4 Right-click, and click Deselect All to turn off grips. 
+Changing the Shape of Landings for Multi-Landing Stair 
+1 Select the multi-landing stair. 
+2 Select the Edit Edges grip to access the edges edit mode (landing width, landing edges, and landing vertices). 
+NOTE Alternatively, click Stair tab . Modify panel . Customize Edge drop-down . Edit. 
+Multi-landing stair Flight Taper and Flight Width, and Landing Width grips 
+
+Multi-landing stair Landing Edge and Vertex, and Exit Edit Edges grips 
+
+3 Move the appropriate grip to change the shape of the landing of the stair. 
+NOTE Once a landing edge has been customized by moving any of the vertex or edge grips, the landing width grips are no longer displayed. 
+4 When you have finished editing the landing edges, click the Exit Edit Edges grip to return to the default stair edit mode. 
+5 Right-click, and click Deselect All to turn off grips. 
+Changing the Location of a Landing for a Multi-Landing Stair 
+1 Select the multi-landing stair. 
+2 Move the appropriate grip to change the location of the landing by changing the location of the turn point for each side of the landing, or by moving the entire landing. 
+3 Right-click, and click Deselect All to turn off grips. 
+Changing the Construction Line or Graphics Path of a Multi-Landing Stair 
+1 Select the multi-landing stair. 
+2 Move the Construction Line or Graphics Path grip. 
+Multi-landing stair landing Turn Point, Construction Line Location, Graphics Path Location, and Edit Edges grips 
+
+NOTE Only one of the Construction Line or Graphics Path can be displayed at a time. This is controlled on the Other tab of the current plan display representation. For information about this setting, see Specifying the Display of Other Characteristics of a Stair on page 2241. 
+3 Right-click, and click Deselect All to turn off grips. 
+Changing the Height of a Multi-Landing Stair 
+1 Select the multi-landing stair. 2 Move the Height grip to change the height of the stair. 
+NOTE This grip displays only in 3D views of the stair. 
+Multi-landing stair Height grip 
+
+3 Right-click, and click Deselect All to turn off grips. 
+Using Grips to Edit U-Shaped Stairs 
+Refer to the illustrations and steps in this topic to use U-shaped stair grips to edit stairs. 
+Grip Description Animation 
+(Flight Start)  Lets you change the flight start  Changing the U-shaped Stair  
+point of a u-shaped stair.  Flight Start Point with Grips  
+animation  
+
+(Flip End) Lets you flip the end of a u-shaped Flipping the U-shaped Stair stair. End with Grips Animation 
+(Flip Side) Lets you flip the side of a u-shaped Flipping the U-shaped Stair stair. Side with Grips Animation 
+(Flight Taper)  Lets you change the fight taper of  Changing the U-shaped Stair  
+a u-shaped stair.  Flight Taper with Grips Anim­
+ 
+ation  
+
+Grip Description Animation 
+(Edge)  Lets you change the flight width of  Changing the U-shaped Stair  
+a u-shaped stair by adding an edge.  Flight Width Add Edge Grip  
+Animation  
+
+(Edge)  Lets you change the flight width of  Changing the U-shaped Stair  
+a u-shaped stair by moving an  Flight Width Move Edge Grip  
+edge.  Animation  
+
+(Construction  Lets you change the construction  Changing the U-shaped Stair  
+Line Location)  line location of a u-shaped stair.  Construction Line Location  
+Grip Animation  
+
+(Graphics Path  Lets you change the graphics path  Changing the U-shaped Stair  
+Location)  location of a u-shaped stair.  Graphics Path Location Grip  
+Animation  
+
+(Edge)  Lets you change the landing width  Changing the U-shaped Stair  
+of a u-shaped stair by adding an  Landing Width Add Edge Grip  
+edge.  Animation  
+
+(Edge)  Lets you change the landing width  Changing the U-shaped Stair  
+of a u-shaped stair by moving an  Landing Width Move Edge  
+edge.  Grip Animation  
+
+Editing U-Shaped Stair Dimensions 1 Select the U-shaped stair. 2 Select the Edit Edges grip to access the edges edit mode (flight width, flight taper, and landing width). 
+NOTE Alternatively, click Stair tab . Modify panel . Customize Edge drop-down . Edit. 
+U-shaped stair Flight Taper, Flight Width, and Landing Width grips 
+
+U-shaped stair Landing Vertex and Edge, and Exit Edit Edges grips 
+
+3 Move the grip until the dimension value you want is displayed, and click once; or enter a value. 
+4 When you have finished editing the stair edges, click the Exit Edit Edges grip to return to the default stair edit mode. 
+5 Right-click, and click Deselect All to turn off grips. 
+Changing the Location or Position of a U-Shaped Stair 
+1 Select the U-shaped stair. 
+2 Select the appropriate grip to change the location of the stair, its start point, construction line, graphics path, or endpoint. 
+U-shaped stair Flight Start and End, Flip, and Location grips 
+
+U-shaped stair Graphics Path Location, Construction Line Location, and Edit Edges grips 
+
+3 Move the stair to the desired location, and click once; or enter a 
+value, and press ENTER. If you want to enter a specific value for the second direction in any edit mode (for example, in the Y direction when editing along the XY plane), press TAB to cycle to the second direction. 
+You can also lock the movement of the stair along a specific direction. If you enter a value for either dimension direction in the current edit mode, and then press TAB, the movement of the stair is constrained to the second dimension direction. When editing along the XY plane, for example, you can enter a value for X dimension, and then press TAB. The X dimension is locked at that value, and movement of the stair is constrained to the Y dimension direction. 
+4 Right-click, and click Deselect All to turn off grips. 
+Changing the Shape of Landings for a U-Shaped Stair 1 Select the U-shaped stair. 2 Select the Edit Edges grip to access the edges edit mode (landing width, landing edges, and landing vertices). 
+NOTE Alternatively, click Stair tab . Modify panel . Customize Edge drop-down . Edit. 
+U-shaped stair Flight Taper, Flight Width, and Landing Width grips 
+
+U-shaped stair Landing Vertex and Edge, and Exit Edit Edges grips 
+
+3 Move the appropriate grip to change the shape of the landing of the stair. 
+4 When you have finished editing the landing edges, click the Exit Edit Edges grip to return to the default stair edit mode. 
+5 Right-click, and click Deselect All to turn off grips. 
+Changing the Construction Line or Graphics Path of a U-Shaped Stair 
+1 Select the U-shaped stair. 
+2 Move the Construction Line or Graphics Path grip. 
+U-shaped stair Graphics Path Location, Construction Line Location, and Edit Edges grips 
+
+NOTE Only one of the Construction Line or Graphics Path can be displayed at a time. 
+3 Move the appropriate Flip grip to flip the stair landing from one side of the flight start grip to the other, or to switch the two flights. 
+4 Right-click, and click Deselect All to turn off grips. 
+Changing the Height of a U-Shaped Stair 
+1 Select the U-shaped stair. 2 Move the Height grip to change the height of the stair. 
+NOTE This grip displays only in 3D views of the stair. 
+U-shaped stair Height grip 
+
+3 Right-click, and click Deselect All to turn off grips. 
+Using Grips to Edit Spiral Stairs 
+Refer to the illustrations and steps in this topic to use spiral stair grips to edit stairs. 
+Grip Description Animation 
+(Radius) Lets you change the radius of a Changing the Spiral Stair Ra-spiral stair. dius with Grips animation 
+(Rotate Flight) Lets you rotate the flight of a spiral Rotating the Flight of a Spiral stair. Stair with Grips Animation 
+(Height)  Lets you change the height of a  Changing the Height of a  
+spiral stair.  Spiral Stair with Grips Anima­
+ 
+tion  
+
+Grip Description Animation 
+(Flight Taper)  Lets you change the fight taper of  Changing the Spiral Stair  
+a spiral stair.  Flight Taper with Grips Anim­
+ 
+ation  
+
+(Edge)  Lets you change the flight width of  Changing the Spiral Stair  
+a spiral stair by adding an edge.  Flight Width Add Edge Grip  
+Animation  
+
+(Edge)  Lets you change the flight width of  Changing the Spiral Stair  
+a spiral stair by moving an edge.  Flight Width Move Edge Grip  
+Animation  
+
+(Flip) Lets you flip a spiral stair. Flipping the Spiral Stair Grip Animation 
+(Graphics Path  Lets you change the graphics path  Changing the Spiral Stair  
+Location)  location of a spiral stair.  Graphics Path Location Grip  
+Animation  
+
+Editing Spiral Stair Dimensions 1 Select the spiral stair. 2 Select the Edit Edges grip to access the edges edit mode (flight width and flight taper). 
+NOTE Alternatively, click Stair tab . Modify panel . Customize Edge drop-down . Edit. 
+3 Select the grip for the dimension you want to change. Spiral stair Flight Taper and Width, and Exit Edges Edit grips 
+
+4 Move the grip until the dimension value you want is displayed, and click once; or enter a value. 
+5 When you have finished editing the stair edges, click the Exit Edit Edges grip to return to the default stair edit mode. 
+6 Right-click, and click Deselect All to turn off grips. 
+Changing the Location or Position of a Spiral Stair 
+1 Select the spiral stair. 
+2 Select the appropriate grip to change the location of the stair, its start point, construction line, graphics path, or endpoint. You can also flip the stair around the start point. 
+Spiral stair Radius, Flip, Rotate Flight, and Location grips 
+
+Spiral stair Graphics Path Location and Edit Edges grips 
+
+3 Move the stair to the desired location, and click once; or enter a 
+value, and press ENTER. If you want to enter a specific value for the second direction in any edit mode (for example, in the Y direction when editing along the XY plane), press TAB to cycle to the second direction. 
+You can also lock the movement of the stair along a specific direction. If you enter a value for either dimension direction in 
+the current edit mode, and then press TAB, the movement of the stair is constrained to the second dimension direction. When editing along the XY plane, for example, you can enter a value for X dimension, and then press TAB. The X dimension is locked at that value, and movement of the stair is constrained to the Y dimension direction. 
+4 Right-click, and click Deselect All to turn off grips. 
+Changing the Height of a Spiral Stair 
+1 Select the spiral stair. 2 Move the Height grip to change the height of the stair. 
+NOTE This grip displays only in 3D views of the stair. 
+Spiral stair Height grip 
+
+3 Right-click, and click Deselect All to turn off grips. 
+Changing the Width of a Flight 
+Use this procedure to change width of a stair flight. You can also change the stair width on the Properties palette. 
+For more information about stair grips, see Using Grips to Edit Stairs on page 2126. 
+NOTE If you change the width of the stair after grip-editing a side, the grip changes are lost. 
+1 Select the stair. 
+2 Select a Flight Width grip, move the grip until the width value you want is displayed, and click once. After selecting a grip, you can also enter a precise value to increase 
+or decrease the width of the stair. 
+The entire edge of the flight moves to the selected location. The flight entry width also changes to fit the new stair width. 
+Using grips to change stair flight width 
+
+3 Right-click, and click Deselect All to turn off grips. 
+Changing the Shape of a Flight 
+Use this procedure to change the top and bottom width of a single flight on U-shaped, multi-landing, or spiral-shape stairs. Each side of a flight can be tapered independently using grip points. 
+For more information about stair grips, see Using Grips to Edit Stairs on page 2126. 
+NOTE If you change the width of the stair after grip editing a side, the grip changes are lost. 
+1 Select the stair to modify. 
+2 Select the Flight Taper grip on the stair flight, and move the grip away from stair path to new location. The flight changes to the new shape. 
+Using grips to change stair flight taper 
+
+3 Right-click, and click Deselect All to turn off grips. 
+Changing the Shape of a Landing 
+Use this procedure to change the angles and positions of landing edges on U-shaped and multi-landing stairs. Each edge of a landing can be tapered or moved independently using grip points. 
+For more information about stair grips, see Using Grips to Edit Stairs on page 2126. 
+NOTE If you change the width of the stair after grip-editing a side, the grip changes are lost. 
+1 Select the stair to modify. 
+2 Select a Vertex grip on the landing, and move the grip away from the stair path to a new location. The landing changes to the new shape. If the vertex grip is shared 
+between a landing and flight, the flight moves with the landing. 
+3 Select an Edge grip on the landing, and move the grip perpendicular to the stair path to the new location. The entire edge of the landing moves to the selected location. 
+Using grips to change a stair landing width by adding an edge 
+
+4 Select an Edge grip on the side of a landing, press CTRL, then move the grip away from the stair path. An adjacent edge of the landing is created. 
+5 Right-click, and click Deselect All to turn off grips. 
+Changing the Side of a Stair 
+You can determine the shape of one edge of a stair run that includes flights and landings for straight, U-shaped, multi-landing, or spiral stairs. 
+The size of the landing must be adjusted to prevent overlapping treads when the inner edge of a stair is projected to a profile that lies outside the original stair. The initial size of the landing is determined by projecting the diagonal of the original landing to the profile. 
+Using grips to change a stair landing width 
+
+Pushing one tread into the landing with its grip forces the landing to lengthen in the other direction. Pulling one tread away from the landing does not affect the other end of the landing. The stair is lengthened at its top to accommodate the larger landing. You can modify the length with the top and bottom grips, at the end of the stair walking path. 
+About Projecting the Side of a Stair 
+You can project the edge of a stair to most AEC objects, such as walls or mass elements, but excluding multi-view blocks. 
+Projecting a stair edge to an object 
+
+NOTE When projecting an edge of a stair that has an inner corner, it is clear how to project the outer edge of the stair to the selected object, but projection of the inner corner is ambiguous. Rather than attempting to guess the correct solution, these cases are not projected, and a dialog box is displayed with an explanation that edges of stairs with interior corners can be projected only to objects that extend beyond both ends of the stair. 
+The stair length is extended at its original width when the object (or polyline) does not extend far enough for the stair to project completely. 
+Projecting the Side of a Stair 
+Use this procedure to project the side of a stair to an existing polyline, wall, other AEC object, or solid. Objects to project to must extend the full length of the stair for an interior corner to project properly. 
+For more information about stair grips, see Using Grips to Edit Stairs on page 2126. 
+Projecting stair edges to curved polyline segments 
+
+Projecting stair edges to straight polyline segments 
+
+NOTE If you change the width of the stair after projecting a side, the changes to the projected edge are lost. 
+1 Select a stair, and click Stair tab . Modify panel . Customize Edge drop-down . Project. 
+2 Select the edge of a stair to change. 
+3 Select a polyline, object or profile to project to, and press ENTER. 
+Projecting stair edges to a profile 
+
+Treads are extended using the line of the current front and back edge. 
+NOTE If edges intersect, which can happen with only spiral and winding shapes, a solution tip icon displays. 
+Offsetting the Side of a Stair 
+Use this procedure to offset the side of a stair flight by a specified value. 
+For more information about stair grips, see Using Grips to Edit Stairs on page 2126. 
+NOTE If you change the width of the stair after offsetting a side, the offset changes are lost. 
+1 Select a stair, and click Stair tab . Modify panel . Customize Edge drop-down . Offset. 
+2 Select the edge of a stair to be offset. 
+3 Enter the distance to offset, where positive is out and negative is 
+in, and press ENTER. Treads are extended using the line of the current front and back edge. 
+Offsetting the edge of a stair 
+
+NOTE If edges intersect, which can happen with only spiral and winding shapes, a solution tip icon displays. 
+Generating a Polyline from the Edge of a Stair 
+Use this procedure to generate a polyline from the edge of a stair. The polyline is generated at the stair bottom elevation. 
+For more information about stair grips, see Using Grips to Edit Stairs on page 2126. 
+You can keep some sample polylines in the drawing, and use the final choice to project to. That way, you can project the stair edge, edit the stair, and then generate the polyline, change the stair again, generate another polyline, change the stair again, and, finally, project to the best version you created. 
+Generating a polyline from a stair edge 
+
+1 Select a stair, and click Stair tab . Modify panel . Customize Edge drop-down . Generate Polyline. 
+2 Select the edge of a stair. 
+3 Press ENTER. 
+A polyline is created at the stair bottom elevation along the length of the stair run. 
+Removing Changes from the Side of a Stair 
+Use this procedure to return the selected edge of the stair to its default profile. If the stair is back to its original condition, the width is restored to the original value, rather than *VARIES*. This change affects the treads, risers, and stringers. 
+For more information about stair grips, see Using Grips to Edit Stairs on page 2126. 
+Removing changes made to the side of a stair 
+
+1 Select a stair, and click Stair tab . Modify panel . Customize Edge drop-down . Remove Customization. 
+2 Select the edge of a stair. 
+3 Press ENTER. 
+Changing the Height of a Stair 
+Use this procedure to change the height of a stair. You can also change the stair height on the Properties palette. 
+For more information about stair grips, see Using Grips to Edit Stairs on page 2126. 
+Changing the height of a stair using grips 
+
+1 Select the stair in an isometric view. 
+2 Select the Height grip, move the grip until the value you want is displayed, and click once. After selecting a grip, you can also enter a precise value to increase 
+or decrease the height of the stair. 
+NOTE If you edit the height of a stair with landings, so that a landing would be below the new height, the landing is not displayed. If you edit the height again, and move it to a location above the previous landing, the landing is no longer there. To retain the stair path, which includes the landing, use the AecStairFit command to set Automatic Landings to No. 
+Changing the Justification of a Stair 
+Use this procedure to change the justification of an individual stair. The stair remains in the same location, but changes in the width keep the new justification point constant. 
+For example, a stair with right justification changes the left edge when the width is changed. 
+1 Select the stair you want to change, and double-click it. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand General. 
+3 Select Left, Center, or Right for Justify. This does not change the location of the stair, but changing this value specifies the point from which changes to the width are calculated from now on. 
+Changing the Style of a Stair 
+Use this procedure to select a different stair style for one or more stairs. 
+1 Select the stairs to change, and double-click one of them. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand General. 
+
+3 Select a different style. 
+Changing the Horizontal Direction of a Spiral or U-Shaped Stair 
+Use this procedure to change the orientation of a spiral stair. 
+1 Double-click a spiral or U-shaped stair to open the Properties palette. 
+2 Click the Design tab, expand Basic, and expand General. 
+3 Specify the horizontal orientation of the stair: 
+If you want to… Then… 
+draw the spiral or U-shaped stair in select Counterclockwise for Hori­a counterclockwise direction zontal Orientation. 
+draw the spiral or U-shaped stair in select Clockwise for Horizontal Ori­a clockwise direction entation. 
+NOTE This is equivalent to selecting the Flip grip that mirrors the stair around its start point. 
+Changing the Constraints of a Spiral Stair 
+Use this procedure to control what constrains the spiral stair by specifying the total degrees or the number of degrees per tread to use. These fields are available only when you select a spiral-shaped stair to modify. 
+1 Double-click a spiral stair to open the Properties palette. 2 Click the Design tab, expand Basic, and expand Dimensions. 3 Specify the arc constraint: 
+If you want to… Then… 
+display the spiral stair with no con-select Free for Arc constraint. straint 
+specify the total degrees for the select Total degrees for Arc con-stair flight straint, and enter a value for Arc angle. 
+specify the specific degree for each select Degrees per tread for Arc tread in the stair constraint, and enter a value for Arc angle. 
+4 Specify the Radius of the stair. 
+The radius is measured from the center point of the spiral stair to the selected justification point. 
+
+Changing the Outside Edge of a Spiral Stair 
+Use this procedure to change the outside edge of a spiral stair. You can change the edge in two ways: 
+¦ 
+When you use the Flight Width grip point, you uniformly change the width of the stair along the entire arc. The endpoints of the outer edges of the stair move. This changes the size of the stair. 
+
+¦ 
+When you click the Flight Width grip point and press CTRL, you maintain the center of the stair and the outside grip points. This changes the shape of the stair. 
+
+
+1 Select a spiral stair. 
+2 Change a spiral stair: 
+If you want to… Then… 
+uniformly change the width of a click the Flight Width grip of the spiral stair along the entire arc spiral stair. 
+maintain the center and outside click the Flight Width grip of the grip points while changing the spiral stair and press CTRL. shape of a spiral stair 
+3 Move the grip to change the size or shape of the stair. 
+Using grips to change the flight width of a spiral stair run Using grips to change the shape of a spiral stair run by adding an edge 
+
+
+4 Right-click, and click Deselect All to turn off grips. 
+Changing the Dimensions of a Stair 
+Use this procedure to control the various dimensions associated with calculating the stair. 
+Some of the interacting dimensions can be user-defined and some are automatic, depending upon the combination of fields that are selected. Only 
+logical combinations are available when the rule-based calculator is in effect. When the rule-based calculator is not in effect, either tread or straight length can be user-defined and either riser count or riser height can be user-defined. 
+1 Double-click the stair to open the Properties palette. 2 Click the Design tab, expand Basic, and expand Dimensions. 3 Change any of the dimensions of the stair: 
+If you want to… Then… 
+specify the width of the stair run enter a value for Width. 
+NOTE If you change the width of the stair after grip-editing or otherwise customizing an edge, the changes are lost. 
+specify the floor-to-floor height for enter a value for Height. the stair 
+specify the justification of the stair select Left, Center, or Right for Jus­tify. This does not change the loca­tion of the stair, but changing this value determines the point from which the width is calculated if it is subsequently changed. 
+4 Select 
+next to Calculation rules: 
+
+If you want to… Then… 
+specify the overall linear length of the stair 
+enter values for Straight Length and Riser Count. 
+¦ 
+When Straight Length is set to
+
+
+ (automatic), the value is calculated based on the tread size and riser count. 
+
+¦ 
+When Straight Length is set to
+
+
+ (user-defined), the stair length is equal to the dimen­sion entered, and the other three values are adjusted within the code limits. If these values fall outside the stair limits, an error message is displayed. 
+
+¦ 
+When Riser Count is set to (user-defined), the tread depth is increased or decreased to ac­commodate the stair. 
+
+
+
+specify the total number of stair enter a value for Riser Count. risers 
+¦ When Riser Count is set to (automatic), the number of risers is based on the overall length and overall height of the stair and the code limits spe­cified on the Design Rules tab. 
+
+If you want to… Then… 
+The Straight Length value of the stair is adjusted automatic­ally. 
+¦ When Riser Count is set to (user-defined), you can specify a value that is used to calculate the tread depth and riser height. If these values fall out­side the stair limits, an error message is displayed. 
+
+specify the height of each riser in set all fields to 
+(automatic),the stair flight click the icon to Riser to change it 
+to 
+(user-defined), and enter a riser height value. 
+specify the tread depth for each set all fields to 
+(automatic),tread in the stair flight click the icon next to Tread to 
+change it to 
+(user-defined), and enter a tread depth value. You can also specify the Riser Count when you set the tread depth. 
+NOTE If 
+is displayed next to a field in the Calculation Rules dialog box, that field can’t be changed until another field is changed from
+
+ (user-defined) to 
+(automatic). 
+5 Click OK. 
+Changing the Floor Settings of a Stair 
+Use this procedure to control how the stair interacts with the floor at the beginning and end of the stair run. 
+1 Double-click a stair to open the Properties palette. 
+2 Click the Design tab, expand Advanced, and expand Floor Settings. 
+
+3 Change settings for how the stair meets the top and bottom floors: 
+If you want to… Then… 
+specify the thickness of the floor enter a value for Top Offset. finish material at the top floor of the stair 
+specify the depth of the structure enter a value for Top Depth. at the top floor 
+specify the thickness of the floor enter a value for Bottom Offset. finish material at the bottom floor of the stair 
+specify the depth of the structure enter a value for Bottom Depth. at the bottom floor 
+NOTE The Top and Bottom Depth settings currently have no effect on the stair or stringers. In addition, the Top offset has no visible effect on the stair. Bottom offset extends or truncates any attached stringers. Both offset values affect the rough floor-to-floor height, if it is displayed. 
+Adjusting Stair Length Automatically 
+Use this procedure to adjust stair length automatically with the StairFit setting. 
+With the StairFit setting enabled, a stair adjusts its length to accommodate a height change. With the StairFit setting disabled, a stair does not adjust its length to accommodate a height change. Also, a solution tip icon displays if the stair path is not long enough to accommodate the new height. 
+All newly created stairs have the StairFit setting enabled. All stairs created in versions earlier than Autodesk Architectural Desktop 2004 have the StairFit setting disabled. 
+1 Draw a stair run. 2 On the Command Line, enter StairFit. 3 Select the stair run. 4 Enter Y to enable the StairFit setting or N to disable the StairFit 
+setting. 5 Double-click the stair run to open the Properties palette. 6 Specify a new stair height. 
+The following illustration shows an example of a straight stair run with the StairFit option enabled before and after height changes. 
+Stair run height change with StairFit option enabled 
+
+The following illustration shows an example of a straight stair run with the StairFit option disabled before and after height changes. 
+Stair run height change with StairFit option disabled 
+
+Changing the Length Limits of a Flight 
+Use this procedure to change the limits for the flight of a stair. A flight can have no limits, or limits that are constrained by a minimum number of risers, minimum height, maximum number of risers, or maximum height. 
+Use these settings to create automatic landings in a stair flight. For example, if a stair flight has 18 treads and you set the maximum treads to 15, the stair will have two flights with one landing in the middle, keeping under the 15 maximum risers on either side of the landing. 
+Specifying flight height limits for a stair run 
+
+1 Double-click a stair to open the Properties palette. 
+2 Click the Design tab, expand Advanced, and expand Flight Height. Flight Height with Risers Limit type 
+
+3 Specify the constraints for flight length: 
+If you want to… Then… 
+specify no limits on the flight select None for Minimum Limit type and None for Maximum Limit type. 
+specify a minimum number of risers select Risers for Minimum Limit per flight type, and enter a value for Minim­um risers. 
+specify a minimum height for the select Height for Minimum Limit flight type, and enter a value for Minim­um height. 
+If you want to… Then… 
+specify a maximum number of risers select Risers for Maximum Limit per flight type, and enter a value for Maxim­um risers. 
+specify a maximum height for the select Height for Maximum Limit flight type, and enter a value for Maxim­um height. 
+Anchoring a Stair to a Landing 
+Use this procedure to anchor a stair or other AEC object to an existing landing. 
+1 Draw a stair with a landing and draw a second stair to attach to the landing. For more information about creating stairs, see Using Stair Tools to Create Stairs on page 2079. 
+2 Select the stair with a landing, and click Stair tab . Modify 
+panel . Anchor Object To Stair Landing
+ . 3 Select the stair or other AEC object to anchor to the landing. 4 Select a location on the landing to anchor the center of the start 
+of the stair run. The flight will be perpendicular to the landing 
+edge. Select the insertion point of the AEC object that you are attaching to the landing. The object will be oriented parallel to the edge of the landing. 
+Anchoring a stair run to a landing 
+
+NOTE Stairs created with a vertical orientation of Up go up from the landing, while stairs created with a vertical orientation of Down go down from the landing. 
+The riser numbering feature is helpful in this situation. See Specifying the Riser Numbering Display for Individual Stairs on page 2243. 
+Releasing Anchored Stairs 
+Use this procedure to release stairs anchored to landings. 
+¦ Select the stair to anchor to the landing, right-click, and click Stair Landing Anchor . Release. 
+NOTE The stair remains in the same location, but is no longer anchored to the landing. 
+Editing Winders 
+Three different winder types give you different levels of control for 1/2 turn and 1/4 turn stairs: Balanced, Single Point, and Manual. 
+The Balanced winder style has the total turn distributed evenly throughout the stair run. 
+The Single Point winder styles allow you to align tread edges or riser faces with the winder turn center, and add or remove individual treads from the winder turn. You can also assign a default number of treads to a winder turn, resulting in the specified number of treads appearing in the stair turn zone. 
+Manual winder styles can be based on any winder style, by assigning either a Manual - Tread or Manual - Riser condition to a stair run. Both manual styles allow you to straighten individual treads or risers in the stair run and to move the tread endpoints on either side of individual treads so you can angle tread edges or riser faces to suit your stair design. 
+For information about creating new winder styles, see Creating a Stair Winder Style on page 2271. 
+Winder style examples 
+
+Lengthening a Flight to Align a Tread Edge with a Winder Turn Center 
+Use this procedure to lengthen a flight to align a Single Point winder style tread edge with a winder turn center. 
+The winders within the turn zone are set to an angle converging on the Turn Center grip. 
+1 Select a 1/2 turn or 1/4 turn stair to activate grips. 
+2 If the Winder Style is balanced, select the circular Edit Turns trigger grip. The Select Winder Style dialog box is displayed. 
+NOTE Only the winder styles present in the drawing are displayed. Select Winder Style dialog box 
+
+3 Select a Single Point style from the list, and click OK. 
+NOTE To select the style from the Properties palette, click the Design tab, expand Basic, expand General, and select Single Point for Winder Style. 
+4 Select the Edit Turns trigger grip. Note the initial flight length of the existing stairs. 
+5 Select the Lengthen Flight to Align Tread grip. The flight is lengthened as the tread edge is now aligned with the turn center. 
+Lengthening a Flight to Align a Tread Edge with Turn Center 
+
+NOTE To have the converging point on the edge of the stair, you must clear the Use Riser Lines setting. See Specifying the Stair Winder Style Settings on page 2272 for more information about this setting. 
+6 When you have finished editing the flight length, you can click the Exit Edit Turns grip to return to the default stair edit mode, or right-click and click Deselect All to turn off grips. 
+Aligning a Tread Edge with a Winder Turn Center 
+Use this procedure to align a Single Point winder style tread edge with a winder turn center. 
+The winders within the turn zone are set to an angle converging on the Turn Center grip. 
+1 Select a 1/2 turn or 1/4 turn stair. 
+2 If the Winder Style is balanced, select the circular Edit Turns trigger grip. The Select Winder Style dialog box is displayed. 
+NOTE Only the winder styles present in the drawing are displayed. 
+Select Winder Style dialog box 
+
+3 Select a Single Point style from the list, and click OK. 
+NOTE To select the style from the Properties palette, click the Design tab, expand Basic, expand General, and select Single Point for Winder Style. 
+4 Select the Edit Turns trigger grip. 5 Select the Align with Turn Center grip. The tread edge is now aligned with the turn center, and the grip is no longer displayed. 
+Aligning a tread edge with turn center 
+
+NOTE To have the converging point on the edge of the stair, you must clear the Use Riser Lines setting. For more information about this setting, see Specifying the Stair Winder Style Settings on page 2272. 
+6 When you have finished editing the tread edge alignment, you can click the Exit Edit Turns grip to return to the default stair edit mode, or right-click and click Deselect All to turn off grips. 
+Removing a Tread from a Winder Turn 
+Use this procedure to remove a tread from a winder turn. 
+The winders within the turn zone are set to an angle converging on the Turn Center grip. 
+1 Select a 1/2 turn or 1/4 turn stair. 
+2 If the Winder Style is balanced, select the circular Edit Turns trigger grip. The Select Winder Style dialog box is displayed. 
+NOTE Only the winder styles present in the drawing are displayed. 
+Select Winder Style dialog box 
+
+3 Select a Single Point style from the list, and click OK. 
+NOTE To select the style from the Properties palette, click the Design tab, expand Basic, expand General, and select Single Point for Winder Style. 
+4 Select the Edit Turns trigger grip. 5 Select the Remove Tread from Turn grip. 
+The selected tread is removed from the winder turn. If you continue to remove treads, the stair will eventually display a solution tip icon. Use the Undo command to restore the previous tread configuration. 
+Removing a Tread from a Winder Turn 
+
+NOTE To have the converging point on the edge of the stair, you must clear the Use Riser Lines setting. For more information about this setting, see Specifying the Stair Winder Style Settings on page 2272. 
+6 When you have finished removing treads, you can click the Exit Edit Turns grip to return to the default stair edit mode, or right-click and click Deselect All to turn off grips. 
+Adding a Tread to a Winder Turn 
+Use this procedure to add a tread to a winder turn. 
+The winders within the turn zone are set to an angle converging on the Turn Center grip. 
+1 Select a 1/2 turn or 1/4 turn stair. 
+2 If the Winder Style is balanced, select the circular Edit Turns trigger grip. The Select Winder Style dialog box is displayed. 
+NOTE Only the winder styles present in the drawing are displayed. 
+Select Winder Style dialog box 
+
+3 Select a Single Point style from the list, and click OK. 
+NOTE To select the style from the Properties palette, click the Design tab, expand Basic, expand General, and select Single Point for Winder Style. 
+4 Select the Edit Turns trigger grip. 
+5 Select the Add Tread to Turn grip. A tread is added to the winder turn. If you continue to add treads, the stair will eventually display a solution tip icon. Use the Undo command to restore the previous tread configuration. 
+Adding a tread to a winder turn 
+
+NOTE To have the converging point on the edge of the stair, you must clear the Use Riser Lines setting. For more information about this setting, see Specifying the Stair Winder Style Settings on page 2272. 
+6 When you have finished adding treads, you can click the Exit Edit Turns grip to return to the default stair edit mode, or right-click and click Deselect All to turn off grips. 
+Straightening Treads with the Manual Winder Style 
+Use this procedure to straighten individual treads on stairs assigned either the Manual - Tread or Manual - Riser Balanced winder style. 
+The Straighten Tread grip is located at the intersection of the tread edge or riser face and the stair construction line, based on the Use Riser Line setting in the Stair Winder Style dialog box. For more information, see Specifying the Stair Winder Style Settings on page 2272. 
+1 Select a 1/2 turn or 1/4 turn stair. 
+2 If the Winder Style is balanced, select the circular Edit Turns trigger grip. The Select Winder Style dialog box is displayed. 
+Select Winder Style dialog box 
+
+3 Select either Manual - Tread or Manual - Riser from the list, and click OK. 
+NOTE To select the style from the Properties palette, click the Design tab, expand Basic, expand General, and select either Manual - Tread or Manual - Riser for Winder Style. 
+4 Select the Edit Turns trigger grip. 
+5 Select the Straighten Tread grip on the tread edge or riser face that you want to straighten. The selected tread is straightened. 
+Straightening a tread with a manual riser style 
+
+NOTE Because the tread depth must be the same for each tread, the tread edge line will pivot around the construction line. 
+6 When you have finished straightening treads, you can click the Exit Edit Turns grip to return to the default stair edit mode, or right-click and click Deselect All to turn off grips. 
+Moving Tread Ends with the Manual Winder Style 
+Use this procedure to move the ends of individual treads on stairs assigned either the Manual - Tread or Manual - Riser Balanced winder style. Each tread edge or riser face pivots on a point established by the intersection of the tread edge and the stair’s construction line. Drag the Tread Edge grip to a new location to specify a new angle for the tread edge. 
+The Tread End grips are located at each end of the tread edge or riser face, based on the Use Riser Line setting in the Stair Winder Style dialog box. For more information, see Specifying the Stair Winder Style Settings on page 2272. 
+1 Select a 1/2 turn or 1/4 turn stair. 
+2 If the Winder Style is balanced, select the circular Edit Turns trigger grip. The Select Winder Style dialog box is displayed. 
+Select Winder Style dialog box 
+
+3 Select either Manual - Tread or Manual - Riser from the list, and click OK. 
+NOTE To select the style from the Properties palette, expand Basic, expand General, and select either Manual - Tread or Manual - Riser for Winder Style. 
+4 Select the Edit Turns trigger grip. 
+5 Select the Tread End grip on the tread edge or riser face that you want to move. 
+6 Specify a new location for the Tread End grip. The selected tread is angled as specified. 
+Moving a tread edge with a manual riser style 
+NOTE Because the tread depth must be the same for each tread, the tread edge line will pivot around the construction line. 
+7 When you have finished moving tread ends, you can click the Exit Edit Turns grip to return to the default stair edit mode, or right-click and click Deselect All to turn off grips. 
+Working with Stair Body Modifiers 
+Body modifiers use the three-dimensional (3D) geometry of an object, such as a mass element or a mass group, to add to or subtract from a stair component (tread, riser, or stringer depending on the stair style). Body Modifiers only work on a single instance of a tread, riser, or stringer at a time. 
+After you create a body modifier from an object, you can delete the original object. However, if you have created a complex object, such as a mass group comprising many mass elements, you may want to retain the object in the drawing until you are sure you have the results you want for the stair. 
+Adding a Body Modifier to a Stair Component 
+Use this procedure to create a body modifier and add it to a stair. 
+You can create a three-dimensional (3D) body modifier from a mass element, a mass group, or any other AEC object with mass. You can also create body modifiers from ACIS solids or blocks that form 3D bodies. You must place the object in the location you want in the drawing before defining the object as a body modifier. 
+The following illustration shows you how to use a mass element as a body modifier to add to a stair stringer component. 
+Adding a body modifier to a stair component 
+
+1 Place the object in the location where you want to add the body modifier to the stair. 
+2 Select the stair you want to change with the body modifier, and click Stair tab . Modify panel . Body Modifier drop-down . Add
+
+ . 
+3 Select the object to add to the stair component. 
+4 In the Add Body Modifier dialog box, select Stringer for Stair 
+Component and Additive for Operation. 
+
+5 Enter a description for the body modifier. 
+6 Select Erase Selected Object(s) if you do not want to keep the original object, or clear this option to keep the object in the drawing. 
+7 Click OK. 
+Subtracting a Body Modifier from a Stair Component 
+Use this procedure to create a body modifier and subtract it from a stair component. 
+You can create a three-dimensional (3D) body modifier from a mass element, a mass group, or any other AEC object with mass. You can also create body modifiers from ACIS solids or blocks that form 3D bodies. You must place the object in the location you want in the drawing before defining the object as a body modifier. 
+The following illustration shows you how to use a mass element as a body modifier to subtract from a stair tread component. 
+Subtracting a body modifier from a stair component 
+
+1 Place the object in the location where you want to subtract the body modifier from the stair. 
+2 Select the stair you want to change with the body modifier, and click Stair tab . Modify panel . Body Modifier drop-down . Add
+
+ . 
+3 Select the object to subtract from the stair. 
+4 In the Add Body Modifier dialog box, select Tread for Stair 
+Component and Subtractive for Operation. 
+
+5 Enter a description for the body modifier. 
+6 Select Erase Selected Object(s) if you do not want to keep the original object, or clear this option to keep the object in the drawing. 
+7 Click OK. 
+Replacing a Stair Component with a Body Modifier 
+Use this procedure to create a body modifier to replace a stair component. 
+You can create a three-dimensional (3D) body modifier from a mass element, a mass group, or any other AEC object with mass. You can also create body modifiers from ACIS solids or blocks that form 3D bodies. You must place the object in the location you want in the drawing before defining the object as a body modifier. 
+The following illustration shows you how to use a channel as a body modifier to replace a stair stringer component. 
+Replacing a stair component with a body modifier 
+
+1 Place the object in the location where you want to replace the stair component with the body modifier. 
+2 Select the stair you want to change with the body modifier, and click Stair tab . Modify panel . Body Modifier drop-down . Add
+
+ . 3 Select the object to replace the stair component. 
+4 In the Add Body Modifier dialog box, select Stringer for Stair Component and Replace for Operation. 
+
+5 Enter a description for the body modifier. 
+6 Select Erase Selected Object(s) if you do not want to keep the original object, or clear this option to keep the object in the drawing. 
+7 Click OK. 
+Editing the Geometry of a Body Modifier 
+Use this procedure to edit the shape of a body modifier that is attached to a stair. You can edit the body using grips to edit faces, using Boolean commands to add or remove other objects from the body modifier, and other editing commands to change its shape. 
+1 Select the stair that has the body modifier you want to change, and click Stair tab . Modify panel . Body Modifier 
+drop-down . Edit In Place
+ . A temporary mass element is created for you to edit the geometry of the body modifier. If the stair contains multiple body modifiers, a mass element is created for each body modifier. If the object was not originally a mass element (for example, if you used a slab as a body modifier), the object becomes a temporary Free Form mass element with faces that you can edit. 
+NOTE After you perform an editing task from the contextual Edit in Place ribbon, you may need to select a profile again to perform another editing task. If you do not see the editing commands that you expect on the ribbon, re-select a profile to redisplay the Edit in Place contextual tab. 
+2 Edit the body modifier: 
+If you want to … Then … 
+change the shape of a body modifi­ select the body modifier. Select a  
+er that is a Free Form mass element  Face grip to activate edge grips for  
+the face. Move the grips to the de­ 
+sired locations. Continue editing  
+other faces in the same manner.  
+
+change the shape of a body modifi­er that is a conventional mass ele­ment select the body modifier. Select grips and move them to change the shape of the body modifier. The grips that are available depend on the type of mass element used as a body modifier and the current view direction. 
+add an object to a body modifier 
+place the object in the location where it is needed. Select the body modifier and click Edit in Place: Stair Body Modifier tab . Modify pan­el . Boolean drop-down . Union. Select the object, and press ENTER. Enter y (Yes) to keep the object in the drawing, or press ENTER to erase it. 
+subtract an object from a body modifier 
+place the object in the location where it is needed. Select the body modifier, and click Edit in Place: Stair Body Modifier tab . Modify panel . Boolean drop-down . Subtract. Select the object, and press ENTER. Enter y (Yes) to keep the object in the drawing, or press ENTER to erase it. 
+If you want to … Then … 
+create a body modifier that is the intersection of the original body modifier with another object place the object in the location where it is needed. Select the body modifier, and click Edit in Place: Stair Body Modifier tab . Modify panel . Boolean drop-down . In­tersect. Select the object, and press ENTER. Enter y (Yes) to keep the object in the drawing, or press ENTER to erase it. 
+trim a body modifier 
+select the body modifier, and click Edit in Place: Stair Body Modifier tab . Modify panel . Trim by 
+Plane 
+. Specify the points that define the trim plane, and select the side of the body modifier to be trimmed. The trimmed body modi­fier is converted to a Free Form mass element. 
+divide the face of a body modifier  select the body modifier, and click  
+into two faces  Edit in Place: Stair Body Modifier  
+tab . Modify panel . Split Face 
+ . Specify the points that define  
+the edge created by splitting the  
+faces.  
+
+join two faces that are on the same  select the body modifier, and click  
+plane into a single face  Edit in Place: Stair Body Modifier  
+tab . Modify panel . Join Faces 
+ . Select the edge that separates  
+the coplanar faces.  
+
+remove a body modifier select the object that forms the body modifier, and press DELETE. 
+3 Save or discard the changes: 
+If you want to … Then … 
+restore the body modifier to its ori-select the body modifier, and click ginal shape Edit in Place: Stair Body Modifier tab . Edits panel . Cancel. 
+save the changes to the body  select the body modifier, and click  
+modifier  Edit in Place: Stair Body Modifier  
+tab . Edits panel . Finish. The  
+body modifier uses the edited mass  
+element to define its geometry.  
+
+Managing Body Modifiers 
+Use this procedure to edit or remove three-dimensional (3D) body modifiers from a stair. You can change the component the body modifier is added to and select a different operation. You can also enter or edit the descriptions of body modifiers. 
+NOTE To remove a body modifier from a stair and restore the modifier as a mass element that you can edit or apply to other stairs, see Restoring a Body Modifier to a Mass Element on page 2206. 
+1 Select the stair you want to change, and click Stair tab . Modify panel . Body Modifier drop-down . Body Modifiers
+ . 
+NOTE You can also access the Body Modifiers worksheet for a selected stair on the Properties palette’s Design tab, under Advanced. 
+2 Select a body modifier, and change its settings: 
+If you want to … Then … 
+apply the body modifier to a differ-select a different component for ent stair component Component. 
+If you want to … Then … 
+change the operation used to apply the body modifier to the stair 
+select a different operation for Op­eration: 
+¦ 
+Select Additive to add the body modifier to the stair compon­ent. 
+
+¦ 
+Select Subtract to subtract the shape of the body modifier from the stair component. 
+
+¦ 
+Select Replace to replace the stair component with the body modifier. 
+
+
+delete the body modifier from the select the body modifier, and click stair component
+
+ . 
+enter a description of the body click Description, enter text, and modifier press ENTER. 
+3 Click OK. 
+Restoring a Body Modifier to a Mass Element 
+Use this procedure to remove a body modifier from a stair and add it to the drawing as a mass element. Restoring a body modifier to a mass element enables you to modify the shape as a mass element and then add it to the stair again as a body modifier. You can also restore the body modifier to a mass element while leaving the body modifier still applied to the stair. This is useful if you want to create other stairs with the same shape. 
+If the object used to create the body modifier was a conventional mass element, it is restored to that mass element. For example, a Gable mass element is restored as a Gable mass element. However, if the body modifier was created from another object, such as a slab, or was edited using Boolean operations or face editing commands, the body modifier is restored as a Free Form mass element. 
+1 Select the stair you want to change, and click Stair tab . Modify panel . Body Modifier drop-down . Restore. 
+NOTE This procedure restores all body modifiers attached to a stair. 2 Create mass elements from the body modifiers: 
+If you want to … Then … 
+create mass elements from the body press ENTER. modifiers while keeping the body modifiers attached to the stair 
+remove all body modifiers from the enter y (Yes), and press ENTER. stair, and create mass elements from their shapes 
+Stair Interference Conditions 
+You can control the height and width of a stair’s interference condition with walls, slabs, spaces, curtain walls, and door and window assemblies. When you add an interference condition between a stair and one of the valid objects, a box is cut out around the stair, based on the specified headroom height and side clearance. 
+Creating an Interference Condition in a Wall 
+Use this procedure to create a stair interference area in a wall. When you add an interference condition between a stair and a wall, an opening is created in the wall around the stair, based on the stair’s specified headroom height and left and right side clearances for straight and multi-landing stairs or inside and outside clearances for spiral and U-shaped stairs. 
+Specifying the left and right side clearances for a wall interference condition 
+
+1 Create a stair that intersects with a wall. For information about creating stairs, see Using Stair Tools to Create Stairs on page 2079. 2 Double-click the stair object to open the Properties palette. 3 Click the Design tab, expand Advanced, and expand Interference. 
+
+4 Set the size of the interference condition: 
+If you want to… Then… 
+specify the height above the treads enter a value for Headroom height. for the interference condition 
+specify the left and right side clear-enter values for Left and Right ances for the interference condition Clearance. for straight and multi-landing stairs 
+If you want to… Then… 
+specify the inside and outside enter values for Inside and Outside clearances for the interference con-Clearance. dition for spiral and U-shaped stairs 
+5 Click in the drawing, not on the stair, to remove the selection. 6 Select the wall to intersect, and click Wall tab . Modify 
+panel . Interference Condition drop-down . Add
+ . 7 Select the stair, and press ENTER. 8 Select the shrinkwrap effect, and press ENTER. For more 
+information about shrinkwrapping, see Working with Interference Conditions on page 1278. 
+NOTE Changing the Interference values of the stair changes the size of the intersection with the wall. 
+Creating a wall and stair interference condition 
+
+Removing a Stair Interference Condition from a Wall 
+Use this procedure to remove a stair interference from a wall. 1 Click in the drawing. 
+2 Select the wall from which to remove the interference, and click Wall tab . Modify panel . Interference Condition 
+drop-down . Remove
+ . 3 Select the stair, and press ENTER. 
+Creating an Interference Condition in a Slab 
+Use this procedure to create a stair interference area in a slab. When you add an interference condition between a stair and a slab, a box is cut out around the stair based on the specified headroom height and left and right side clearances for straight and multi-landing stairs or inside and outside clearances for spiral and U-shaped stairs. 
+Specifying the left and right side clearances for a slab interference condition 
+
+Specifying the inside and outside clearances for a slab interference condition 
+
+1 Create a stair that intersects with a slab. For information about creating stairs, see Using Stair Tools to Create Stairs on page 2079. 2 Double-click the stair to open the Properties palette. 3 Click the Design tab, expand Advanced, and expand Interference. 
+
+4 Set the size of the interference condition: 
+If you want to… Then… 
+specify the height above the treads enter a value for Headroom height. for the interference condition 
+specify the left and right side clear-enter values for Left and Right ances for the interference condition Clearance. for straight and multi-landing stairs 
+If you want to… Then… 
+specify the inside and outside enter values for Inside and Outside clearances for the interference con-Clearance. dition for spiral and U-shaped stairs 
+5 Click in the drawing, not on the stair, to remove the selection. 6 Select the slab to intersect, and click Slab tab . Modify 
+panel . Interference Condition drop-down . Add
+ . 7 Select the stair, and press ENTER. 8 Select the shrinkwrap effect, and press ENTER. For more 
+information about shrinkwrapping, see Working with Interference Conditions on page 1278. 
+Creating a slab and stair interference condition 
+
+NOTE Changing the Interference values of the stair changes the size of the intersection with the slab. 
+Removing a Stair Interference Condition from a Slab 
+Use this procedure to remove a stair interference from a slab. 
+1 Select the slab from which to remove the interference, and click Slab tab . Modify panel . Interference Condition 
+drop-down . Remove
+ . 2 Select the stair, and press ENTER. 
+Creating an Interference Condition in a Space 
+Use this procedure to create a stair interference area in a space. When you add an interference condition between a stair and a space, a box is cut out around the stair based on the specified headroom height and side clearance. 
+1 Create a stair that intersects with a space. For information about creating stairs, see Using Stair Tools to Create Stairs on page 2079. 2 Double-click the stair to open the Properties palette. 3 Click the Design tab, expand Advanced, and expand Interference. 
+
+4 Set the size of the interference condition: 
+If you want to… Then… 
+specify the height above the treads enter a value for Headroom height. for the interference condition 
+specify the left and right side clear-enter values for Left and Right ances for the interference condition Clearance. for straight and multi-landing stairs 
+specify the inside and outside enter values for Inside and Outside clearances for the interference con-Clearance. dition for spiral and U-shaped stairs 
+5 Click in the drawing, not on the stair, to remove the selection. 6 Select the space to intersect, and click Space tab . Modify panel . Interference Condition drop-down . Add
+ . 7 Select the stair, and press ENTER. 
+NOTE Changing the Interference values of the stair changes the size of the intersection with the space. 
+Removing a Stair Interference Condition from a Space 
+Use this procedure to remove a stair interference from a space. 
+1 Select the space from which to remove the interference, and click Space tab . Modify panel . Interference Condition 
+drop-down . Remove
+ . 2 Select the stair, and press ENTER. 
+Creating an Interference Condition in a Curtain Wall 
+Use this procedure to create a stair interference area in a curtain wall. When you add an interference condition between a stair and a curtain wall, a box is cut out around the stair based on the specified headroom height and left and right side clearances for straight and multi-landing stairs or inside and outside clearances for spiral and U-shaped stairs. You have the option of cutting the infills, frames and mullions of the curtain wall. 
+Specifying the left and right side clearances for a curtain wall interference condition Specifying the inside and outside clearances for a curtain wall interference condition 
+
+
+1 Create a stair that intersects with a curtain wall. For information about creating stairs, see Using Stair Tools to Create Stairs on page 2079. 
+2 Double-click the stair to open the Properties palette. 
+3 Click the Design tab, then expand Advanced, and expand Interference. 
+
+4 Set the size of the interference condition: 
+If you want to… Then… 
+specify the height above the treads enter a value for Headroom height. for the interference condition 
+specify the left and right side clear-enter values for Left and Right ances for the interference condition Clearance. for straight and multi-landing stairs 
+If you want to… Then… 
+specify the inside and outside enter values for Inside and Outside clearances for the interference con-Clearance. dition for spiral and U-shaped stairs 
+5 Click in the drawing, not on the stair, to remove the selection. 6 Select the curtain wall to intersect, and click Curtain Wall tab . Modify panel . Interference Condition drop-down . Add
+
+ . 7 Select the stair. 8 Specify whether to apply the interference condition to the infill, 
+frames or mullions of the curtain wall. 
+Removing a Stair Interference Condition from a Curtain Wall 
+Use this procedure to remove a stair interference from a curtain wall. 
+1 Click in the drawing, not on the stair, to remove the selection. 2 Select the curtain wall from which to remove the interference, and click Curtain Wall tab . Modify panel . Interference 
+Condition drop-down . Remove
+ . 3 Select the stair, and press ENTER. 
+Creating an Interference Condition in a Door/Window Assembly 
+Use this procedure to create a stair interference area in a door/window assembly. When you add an interference condition between a stair and a door/window assembly, a box is cut out around the stair based on the specified headroom height and side clearance. You have the option of cutting the infills, frames, and mullions of the door/window assembly. 
+1 Create a stair that intersects with a door/window assembly. For information about creating stairs, see Using Stair Tools to Create Stairs on page 2079. 
+2 Double-click the stair to open the Properties palette. 
+3 Click the Design tab, expand Advanced, and expand Interference. 
+
+4 Set the size of the interference condition: 
+If you want to… Then… 
+specify the height above the treads enter a value for Headroom height. for the interference condition 
+specify the left and right side clear-enter values for Left and Right ances for the interference condition Clearance. for straight and multi-landing stairs 
+specify the inside and outside enter values for Inside and Outside clearances for the interference con-Clearance. dition for spiral and U-shaped stairs 
+5 Click in the drawing, not on the stair, to remove the selection. 6 Select the door/window assembly to intersect, and click Door/Window Assembly tab . Modify panel . Interference 
+drop-down . Add
+ . 7 Select the stair. 8 Specify whether to apply the interference condition to the infill, 
+frames, or mullions of the door/window assembly. 
+Removing a Stair Interference Condition from a Door/Window Assembly 
+Use this procedure to remove a stair interference from a door/window assembly. 
+1 Click in the drawing, not on the stair, to remove the selection. 2 Select the door/window assembly from which to remove the interference, and click Door/Window Assembly tab . Modify 
+panel . Interference drop-down . Remove
+ . 3 Select the stair, and press ENTER. 
+Changing the Interference Size of a Stair 
+Use this procedure to control the size of the stair interference area. 
+Specifying headroom height and side clearance for a stair and a space object 
+
+1 Double-click the stair to open the Properties palette. 2 Click the Design tab, expand Advanced, and expand Interference. 
+
+3 Set the size of the interference condition: 
+If you want to… Then… 
+specify the height above the treads enter a value for Headroom height. for the interference condition 
+specify the left and right side clear-enter values for Left and Right ances for the interference condition Clearance. for straight and multi-landing stairs 
+specify the inside and outside enter values for Inside and Outside clearances for the interference con-Clearance. dition for spiral and U-shaped stairs 
+Changing the Alignment of a U-Shaped Stair 
+Use this procedure to change the alignment and the alignment offset of a U-shaped stair. These fields are available only when you select a U-shaped stair. 
+1 Double-click a U-shaped stair to open the Properties palette. 2 Click the Design tab, expand Advanced, and expand Constraints. 3 Specify the alignment of a U-shaped stair: 
+If you want to… Then… 
+place the treads and risers where select Free for Alignment type. necessary to complete the stair 
+align the tread of the up flight to select Tread to Tread for Alignment the tread of the down flight type. 
+align the tread of the up flight to select Tread to Riser for Alignment the riser of the down flight type. 
+align the riser of the up flight to the select Riser to Riser for Alignment riser of the down flight type. 
+4 Specify a value for Alignment offset. When you select Tread to Tread, Tread to Riser, or Riser to Riser, you can specify an offset value. A positive offset value means that the down flight tread location is closer to the landing than the up flight tread location. 
+Specifying tread to riser alignment offsets 
+
+5 Specify Upper flight or Lower flight for Extend alignment. 
+6 Specify a value for Uneven tread on. This value specifies which flight will be longer if the total number of treads is uneven. Select 
+Upper flight to place the uneven tread on the upper flight. Select Lower flight to place the uneven tread on the lower flight. 
+Changing the Components of a Flight 
+Use this procedure to change the tread, riser thickness, and nosing length for each stair. You can also turn on or off the display of the tread and riser. 
+NOTE If component settings are unavailable, they are controlled by the stair style, and you cannot change them for individual stairs. 
+1 Double-click the stair to open the Properties palette. 2 Click the Design tab, expand Advanced, and expand Worksheets. 
+3 Click 
+next to Components. 
+
+4 Under Flight Dimensions, select or clear the Plan display of treads 
+and risers. When the tread or riser display is off, the corresponding thickness becomes unavailable. 
+5 Specify the flight dimensions: 
+If you want to… Then… 
+specify the thickness of each tread select Tread, and enter a value for Tread Thickness. 
+specify the thickness of the riser select Riser, and enter a value for Riser Thickness. 
+If you want to… Then… 
+specify the length of the edge of a enter a value for Nosing Length. stair tread that projects over the riser 
+specify sloping risers select Sloping Riser. 
+6 Click OK. 
+Changing the Components of a Landing 
+Use this procedure to change the landing thickness and specify additional width for stair landings. 
+NOTE If component settings are unavailable, they are controlled by the stair style, and you cannot change them for individual stairs. 
+1 Double-click the stair to open the Properties palette. 2 Click the Design tab, expand Advanced, and expand Worksheets. 
+3 Click 
+next to Components. 
+
+4 Enter a value for Landing Thickness. 5 Enter a value for Additional Width. 
+NOTE The setting for additional landing width affects only true landings of Multi-landing and U-shaped stairs. The automatic landings introduced by flight height limits and terminating landings are not affected by this setting. 
+The type of landing and the justification of the stair determine where the additional width is added to the landing. 
+Adding width to a quarter landing based on stair justification 
+
+Adding width to a half landing based on stair justification 
+
+6 Click OK. 
+About the Dimensions of Landing Components 
+Landing components are specified as part of the style, but apply only to multi-landing and U-shaped stairs. Stringer dimensions are specified for the flight and landing in a single table. The flight stringer type (slab, housed, or saddled) controls what is available for the landing (total depth only for housed and ramp, waist depth for all types). If the flight has no stringers, the landing has none. 
+All landings of a single stair initially use the same dimensions. You can then customize each one separately by grip-stretching or projection. Horizontal positions and the widths of stringers are identical between flights and landings. 
+Landing extension values apply only to U-shaped and multi-landing stairs with flat landings. Landing-specific dimensions are ignored for turn landings. 
+The default values for styles in the Stair Styles drawing are specified in accordance with the most common situation for stairs. 
+If the option to resolve the meeting of flight and landing stringers is off, the flight stringer terminates at the landing. 
+Changing the Extension of a Landing 
+Use this procedure to change the distances between landings and treads and the stringer resolution for stairs. You can differentiate the size of landing components from those used for the stair flights. 
+NOTE If settings for landing extensions are unavailable, they are controlled by the stair style, and you cannot change them for individual stairs. 
+1 Double-click the stair to open the Properties palette. 2 Click the Design tab, expand Advanced, and expand Worksheets. 
+3 Click 
+next to Landing extensions. 
+
+4 Specify the extension distances: 
+If you want to… Then… 
+add to the distance to the first tread enter a value for Distance to First 
+on the down side of the landing Tread DOWN. To extend the land­ing down by a single tread, select Add Tread Depth. 
+If you want to… Then… 
+add to the distance to the first tread enter a value for Distance to First 
+on the up side of the landing Tread UP. To extend the landing up by a single tread, select Add Tread Depth. 
+For more information about landing extensions and stringer resolution, see About the Dimensions of Landing Components on page 2225. 
+5 Under Stringer Resolution, select Extend Landings to Merge Flight Stringers with Landing Stringers to automatically merge the flight stringers with the landing stringers. 
+This provides additional landing extension, if necessary, to make the flight stringers meet the landing stringers without any discontinuity. 
+NOTE Automatic landing settings are always controlled by the stair style. 
+Stairs created in earlier versions of the software have the setting for Extend Landings to Prevent Risers and Treads Sitting Under Landings turned on. This setting should be turned off to achieve flush or rectangular landings, but it will change the position of the top or bottom of the stair, which may require adjusting other building objects. 
+6 Click OK. 
+Specifying Stair Component Display by Cut Plane Elevation 
+Use this procedure to specify the display of stair components in plan view depending on their occurrence above or below the cut plane elevation. You can specify the above cut plane, up, and down component properties for each type of stair component. 
+Cut Plane Elevation Display Properties 
+1 Take a look at the display properties for these kinds of stair components. 
+Select the stair and click Stair tab . General panel . Edit Style 
+drop-down . Stair Style
+ . 
+2 Click the Display Properties tab. 
+3 Verify that Plan is the default Display Representation, and then click 
+(Edit Display Properties). 4 Click the Layer/Color/Linetype tab. 
+
+There are components to support the representation of stair components above the cut plane elevation so that the down stair components are only used to display the stair components that occur below the current level. 
+5 Click the Other tab. 
+
+For stairs created in versions of Autodesk Architectural Desktop earlier than 2004, the Override Display Configuration Cut Plane option is selected by default. In the current version, this option is cleared by default, and the display of stair components is handled automatically by specific display configurations for each level. 
+When the Override Display Configuration Cut Plane option is selected, the cut height elevation is measured from the bottom of each stair run. The up display components and the above cut plane display components above the current level are displayed, and the down display components are not. 
+Specifying cut plane elevation with display configuration override 
+
+When the Override Display Configuration Cut Plane option is cleared, the cut height elevation is measured from the current level. The up display components above the current level are displayed, as are the down display components below the current level. 
+Specifying cut plane elevation without display configuration override 
+
+6 Make changes to the display of stair components as needed, then click OK twice. 
+Specifying Stair Display at Different Levels 
+1 The following procedure provides an example of how to specify the display of stair components at different levels in a stair tower. 
+Create a U-shaped stair, 5’-0” (1520 mm) wide and 12’-0” (3650 
+mm) high to represent the lobby stairs. 
+2 Create a second U-shaped stair, 3’-8” (1120 mm) wide and 10’-0” (3050 mm) high, and locate it 12’-0” (1520 mm) above the lobby stairs. 
+3 Create a third U-shaped stair, 3’-8” (1120 mm) wide and 10’-0” (3050 mm) high, and locate it 10’-0” (3050 mm) above the second set of stairs. 
+The following illustration shows how the stair tower should appear with added floor slabs in a 3D view: 
+3D view of stair tower 
+
+4 Save this stair tower configuration as the base stair drawing file. 5 Create 4 new host drawing files as follows: 
+¦ 
+First Floor 
+
+¦ 
+Second Floor 
+
+¦ 
+Third Floor 
+
+¦ 
+Roof Level 
+
+
+The following illustration shows how the levels should appear in an elevation view: 
+Elevation view of stair tower 
+
+6 Open the First Floor drawing, and attach the base stair as an Xref at an elevation of 0’-0” (0 mm). 7 Verify that the Medium Detail display configuration is current. 8 View the first floor lobby stairs in plan. Stair display components at first floor 
+
+9 The up display components above the first floor are displayed, as are the above cut plane display components, in outline with a dashed linetype. 
+10 Open the Second Floor drawing, and attach the base stair as an Xref at an elevation of -12’-0” (-3650 mm). 
+11 Verify that the Medium Detail Intermediate Level display configuration is current. 
+12 View the second floor stairs in plan. 
+Stair display components at second floor 
+
+13 The up display components above the second floor are displayed, as are the down display components below the second floor. 
+14 Open the Third Floor drawing, and attach the base stair as an Xref at an elevation of -22’-0” (-6700 mm). 15 Verify that the Medium Detail Intermediate Level display configuration is current. 16 View the third floor stairs in plan. Stair display components at third floor 
+
+17 The up display components above the third floor are displayed, as are the down display components below the third floor. 
+18 Open the Roof Level drawing, and attach the base stair as an Xref at an elevation of -32’-0” (-9750 mm). 
+19 Verify that the Medium Detail Top Level display configuration is current. 
+20 View the roof level stairs in plan. 
+Stair display components at roof level 
+
+21 Only the down display components below the roof level are displayed. 
+Changing the Display of an Overlapping Stair 
+Use this procedure to create an overlapping stair and set the display properties to view the overlapped section correctly. For this example, we will display all components of the stair above the overlap section outlined in red. 
+To set the stair display, the Plan Overlapping display representation needs to be turned on and specific components need to be set. For overlapping stairs, in addition to the usual up and down groups, four other groups of display components are available in Plan Overlapping. 
+Display representation group Definition 
+“components” up (above overlap) Stair components below the cut height that are above the overlap section 
+“components” down (above overlap) Stair components above the cut height that are above the overlap section 
+“components” up (below overlap) Stair components below the cut height that are below the overlap section 
+“components” down (below overlap) Stair components above the cut height that are below the overlap section 
+1 Open the tool palette that you want to use, and select a stair tool. If necessary, scroll to display the tool that you want to use. 
+NOTE Alternatively, click Home tab . Build panel . Stair drop-down . Stair
+ . 
+2 On the Properties palette, click the Design tab, expand Basic, and expand General. 
+3 Select a style. 
+4 In Shape, select Multi-landing. 
+5 Specify the 1/2 landing for Turn type. 
+6 Draw a multi-landing stair that overlaps itself. 
+Viewing an overlapping stair condition 
+
+7 Click Manage tab . Style & Display panel . Display Manager . 8 Expand Sets, and select the current (bold) display set. 9 Click the Display Representation Control tab. 10 Scroll to the Stair object. 11 Turn on Plan Overlapping in addition to the current display representation. 12 Click OK. 13 Select the stair, right-click, and click Edit Object Display. 14 Click the Display Properties tab. 
+
+15 Click Object Override for Plan, Plan Low Detail, or Plan High Detail (whichever is displayed in the current display set). Select all the components, turn off visibility, and click OK. 
+16 Click Object Override for Plan Overlapping. Select the desired components and turn on visibility. For this example, turn on visibility for Riser up, Nosing up, Path up, Outline up, Riser down, Nosing down, Path down, Outline down, Riser down (above overlap), Nosing down (above overlap), Path down (above overlap), Outline down (above overlap), Riser down (below overlap), Nosing down (below overlap), Path down (below overlap), and Outline down (below overlap). 
+17 Select Riser down (above overlap), Nosing down (above overlap), Path down (above overlap), and Outline down (above overlap). Select any of the colors from the selected components; then select red in the Select Color dialog box. 
+NOTE If the stair style includes stringers, they should be added to the set of components. 
+18 Click OK twice. 
+Applying Tool Properties to an Existing Stair 
+Use this procedure to apply the properties of a stair tool to one or more existing stairs. The properties include the stair style and any other settings specified in the tool you select. 
+1 Open the tool palette that you want to use. If necessary, scroll to display the tool that you want to use. 
+2 Right-click a stair tool, and click Apply Tool Properties to Stair. 3 Select the stairs, and press ENTER. 4 Edit the properties of the stairs in the Properties palette, if 
+necessary. 
+NOTE Some tool properties cannot be applied to existing stairs. For example, stair shape and turn type do not change. In addition, some properties may be incompatible with existing stairs. For example, a stair that has a vertical orientation of Down cannot terminate with a landing. 
+Changing the Location of a Stair 
+Use this procedure to relocate a stair by changing the coordinate values of its insertion point. The stair also has an orientation with respect to the WCS or the current UCS. For example, if the top and bottom of the stair are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the stair by aligning its normal with another axis. You can also rotate the stair on its plane by changing the rotation angle. 
+For information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use Coordinates and Coordinate Systems” in AutoCAD help. 
+1 Double-click the stair you want to change. 2 In the Properties palette, click the Design tab, expand Basic, and expand Location. 
+3 Select 
+next to Additional information. 4 Specify the location of the stair: 
+If you want to… Then… 
+relocate the stair enter new coordinate values under Insertion Point. 
+locate the stair on the XY plane make the normal of the stair parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the stair on the YZ plane make the normal of the stair parallel to the X axis: under Normal, enter 1 for X, and enter 0 for Y and Z. 
+locate the stair on the XZ plane make the normal of the stair parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the stair enter a new value for Rotation Angle. 
+5 Click OK. 
+Specifying the Materials of a Stair 
+Use this procedure to select a different material for components of an individual stair. 
+To change the materials assigned to all stairs of the same stair style, see Assigning Materials to a Stair Style on page 2261. 
+NOTE If a material assignment does not determine the display properties of a stair component, you can change the properties of the display component as described in Specifying the Display Properties of a Stair Style on page 2262. 
+1 Select the stair you want to change, right-click and click Edit Object Display. 
+2 To verify that the material assignment determines the display properties of the component, click the Display Properties tab, select the display representation where you want the changes to 
+appear, and click 
+. 
+NOTE Only the Model display representation supports properties By Material. 
+3 Click the Layer/Color/Linetype tab, verify that By Material is selected for the component, and click OK. 
+4 Click the Materials tab. 
+5 Select the component you want to change, select Object Override, and select a different material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a 
+component. 
+WARNING Although you can edit a material definition from this dialog box, any changes you make to the material definition apply to all objects that are assigned the material. 
+6 Click OK. 
+Changing the Display Properties of Individual Stairs 
+In most cases, you want the appearance of stairs that belong to the same style to be consistent throughout a drawing. However, in certain instances, you may need to override a display property for an individual stair to achieve a specific result. All the display properties that you can specify in stair styles are available for individual stairs. You can override the following specifications: 
+¦ Whether the display properties of stair components are determined by material assignments 
+¦ 
+The layer, color, and linetype of the display components of the stair 
+
+¦ 
+The cut plane height and the display of components relative to the cut plane 
+
+¦ 
+Other specific stair display information, such as riser numbering 
+
+
+When you change the display properties of an individual stair, the changes apply only to that stair. Other stairs of the same style are not affected. To change the display properties of all stairs of a specific stair style, see Stair Styles on page 2247. 
+Specifying the Layer, Color, and Linetype of a Stair 
+Use this procedure to change the following display properties of the components of an individual stair: 
+¦ 
+Visibility (component is on or off) 
+
+¦ 
+By Material (a material assigned to the display component determines its display properties) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+To change these display properties for all stairs of the same stair style, see Specifying the Display Properties of a Stair Style on page 2262. 
+NOTE If a material assignment determines the properties of a stair display component, you can change the properties of the display component by clearing By Material or by overriding the material assignment with a different material. For more information, see Specifying the Materials of a Stair on page 2236. 
+1 Select the stair you want to change, right-click, and click Edit Object Display. 
+NOTE You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+2 Click the Display Properties tab. 
+3 Select the display representation where you want the changes to appear, and select Object Override. The display representation in bold is the current display 
+representation. 
+4 If necessary, click 
+. 5 Click the Layer/Color/Linetype tab. 6 Select the component to change, and select a different setting for 
+the property. 7 Click OK twice. 
+Specifying the Cut Plane Display of a Stair 
+Use this procedure to specify the properties of one or more cut planes for an individual stair. Cut plane display properties apply only to display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Double-click the stair you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all stairs in the drawing, select Drawing default setting. To apply changes to all stairs of this style, select Stair Style:<style name>. For more information on styles, see Stair Styles on page 2247. 
+5 If necessary, expand Object Display Properties . Cut Plane. 
+6 For Override cut plane, specify whether you want to override the global cut plane defined for the current display configuration. 
+7 If you selected Yes for Override cut plane, enter a value for Height to define the cut plane for this object. 8 For Cut line angle, enter a value to specify the angle between the stair cut lines. 9 For Cut line distance, enter a value to specify the distance between the 2 cut lines. 
+10 If you selected No for Override cut plane, for Show entire stair down, specify whether you want to display the stair’s down display components (Stringer down, Riser down, Nosing down, and so on; for more information, see Specifying Stair Component Display by Cut Plane Elevation on page 2227). 
+You can also access and modify these same cut plane settings through the stair’s context menu, as follows: 
+1 Select the stair you want to change, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the display representation where you want the changes to 
+appear, and select Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 5 Click the Other tab. 
+
+6 In the Cut Plane panel, change the settings as needed. 
+7 Click OK twice. 
+Specifying the Display of Other Characteristics of a Stair 
+Use this procedure to specify other display properties for an individual stair, such as how to display the arrow in the path, which Display Path to show, and what type of break mark to use in the stair display. These display properties apply only to display representations, such as Plan, that are used in the Top view (plan view) of a drawing. 
+1 Double-click the stair you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all stairs in the drawing, select Drawing default setting. To apply changes to all stairs of this style, select Stair Style:<style name>. For more information on styles, see Stair Styles on page 2247. 
+5 If necessary, expand Object Display Properties . Advanced, and click 
+next to Additional properties. 6 Specify the additional display properties for the stair: 
+If you want to… Then… 
+change the display size of the arrow enter a value for Size. and break mark 
+change the offset location of the enter a value for Offset. arrow display 
+If you want to… Then… 
+change the dimension style used for the arrow display 
+select a style for Dim Style. 
+NOTE If a dimension style oth­er than Standard is used for the arrow, and you want the arrow size to be controlled by the di­mension style, select Arrow Size from Dimension Style Only. This is the default for all previous version drawings. If you do not select this option, the size of the arrow is multiplied by the arrow size setting. 
+change the shape of the stair line select a shape for Shape. Curved adds an arc when the stair line changes. Straight displays an angle when the stair line changes. 
+display the arrow at the end of each select Cut Plane - Parallel for Apply cut plane pointing in the same dir-to and make sure that Draw for ection throughout the length of the Each Flight is not selected. stair 
+display the arrow at the end of each select Cut Plane - Parallel for Apply cut plane and at the end of each to and make sure that Draw for flight pointing in the same direction Each Flight is selected. 
+display the arrow at the end of the select Entire Stair for Apply to and entire stair make sure that Draw for Each Flight is not selected. 
+display the arrow on each side of select Cut Plane - Opposite for Ap­the cut plane ply to. 
+change which stair line is displayed select Graphics path or Construc­tion line for Display Path. 
+change the type of break mark that under Break Mark, select a mark for is displayed at the cut plane Type. 
+If you want to… Then… 
+specify a custom break mark to dis-select Custom Shape for Type, and play at the cut plane then select a block for Block. 
+7 Click OK. 
+You can also access and modify these same settings through the stair’s context menu, as follows: 
+1 Select the stair you want to change, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the display representation where you want the changes to 
+appear, and select Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 5 Click the Other tab. 
+
+6 Specify the additional display properties as needed. 7 Click OK twice. 
+Specifying the Riser Numbering Display for Individual Stairs 
+Use this procedure to define and display riser numbers for individual stairs. 
+1 Double-click the stair you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all stairs in the drawing, select Drawing default setting. To apply changes to all stairs of this style, select Stair Style:<style name>. For more information on styles, see Stair Styles on page 2247. 
+5 If necessary, expand Object Display Properties . Advanced, and click 
+next to Riser numbering. 6 Specify the riser numbering display properties for the stair: 
+If you want to… Then… 
+change the text style of the riser select a style for Text Style, or click numbers
+
+ to edit the text style. 
+change the alignment of the riser select an alignment for Text Align-numbers ment. 
+change the orientation of the riser select an orientation for Text Orient-numbers ation. 
+change the text height of the riser enter a value for Text Height. numbers 
+change the location to which the select Left, Center or Right for Justi­numbers are justified fy to. 
+change the location of the numbers enter a value for X Offset. This is along the length of the stair flight relative to the selected position of the riser. 
+change the location of the numbers enter a value for Y Offset. This is re-to the left or right lative to the selected position of the riser. 
+If you want to… Then… 
+set the first number for the riser enter a value for First Riser Number. numbering 
+number the last riser in the stair select Number Final Riser. 
+7 Click OK. 
+You can also access and modify these same cut plane settings through the stair’s context menu, as follows: 
+1 Select the stair you want to change, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the display representation where you want the changes to 
+appear, and select Object Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 5 Click the Riser Numbering tab. 
+
+6 Specify riser numbering settings as needed. 7 Click OK twice. 
+Attaching Hyperlinks, Notes, or Files to a Stair 
+Use this procedure to attach hyperlinks, notes, or files to a stair. You can also edit hyperlinks and notes, and edit or detach reference files from a stair. 
+1 Select the stair to which you want to attach information. 2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click 
+next to Hyperlink, and specify the 
+link. For more information about adding hyperlinks, see “Add Hyperlinks to a Drawing” in AutoCAD help. 
+4 Click OK. 
+5 To add a note, click 
+next to Notes, and enter the note. 6 Click OK. 
+7 To add a reference file, click 
+next to Reference documents, and attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file click, select a file, click Open and click OK. 
+edit the description of a reference click the document’s Description file field. Enter the description, and click OK. 
+edit a reference file 
+double-click the reference file name to start its application. 
+NOTE If the referenced file is an AutoCAD drawing, you must click OK in the Reference Docs dialog before the drawing is displayed. 
+detach a reference file 
+select the file name, and click . 
+
+8 Click OK. 
+Stair Styles 
+A stair style is a group of properties assigned to a stair that determines the appearance and other characteristics of the stair. 
+You can use a stair style to control properties for all stairs that use that style, rather than changing properties for each stair in the drawing. Various styles exist in the templates for common stair configurations, such as steel-pan, ramp - concrete, and wood-housed. Within the stair style, you can specify the dimensions, landing extensions, components, and display properties of the stair. 
+Stair Components and Design Rules 
+In a stair style, you specify these properties of stair components: 
+¦ 
+risers and treads 
+
+¦ 
+stringers 
+
+¦ 
+landings 
+
+¦ 
+landing extensions 
+
+
+Design rules determine the code limits for maximum, optimum, and minimum slopes for the stair style. 
+Display Components of Stairs 
+Display components determine the graphical characteristics, such as color and linetype, of stair components. Other display properties you can change for a stair style include cut plane, stair line, arrow properties, and the break mark. 
+Using Materials in Stair Styles 
+You can use materials to control how stairs of each style are displayed in a drawing. You assign materials to the stair components in the style. The components are then displayed using the display properties of the assigned materials. 
+Creating Tools from Stair Styles 
+You can create a stair tool from any stair style. You can drag the style from the Style Manager onto a tool palette. You can then specify default settings 
+for any stair created from the tool. For more information, see Creating a Stair Tool on page 2124. 
+Managing Stair Styles 
+To create, copy, or purge styles, you access the Style Manager. The Style Manager provides a central location in AutoCAD Architecture for working with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+Creating a Stair Style 
+Use this procedure to create a stair style. You can create a style that uses default style properties by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Architectural Objects, and expand Stair Styles. 3 Create a stair style: 
+If you want to… Then… 
+create a style with default properties right-click Stair Styles, and click New. 
+create a style from an existing style right-click the stair style you want to copy, and click Copy. Right-click, and click Paste. 
+4 Enter a name for the new stair style. 5 Edit the new stair style: 
+If you want to… Then… 
+specify design rules for the style see Specifying the Design Rules of a Stair Style on page 2249. 
+specify the stringer properties for see Specifying the Stringers of a the style Stair Style on page 2251. 
+If you want to… Then… 
+specify the thicknesses and widths see Specifying the Components of of treads, risers, and landings for a Stair Style on page 2256. the style 
+specify the landing extension prop-see Specifying the Landing Exten­
+erties of the style sion of a Stair Style on page 2258. 
+specify display properties, such as see Specifying the Layer/Color/Line­
+layer, color, and linetype, for the type of a Stair Style on page 2263. components of the style 
+specify cut plane properties, arrow see Specifying the Display of Other properties, and other display prop-Characteristics of a Stair Style on erties of the style page 2265. 
+add notes and files to the style see Adding Notes and Files to a Stair Style on page 2270. 
+6 When you finish specifying the properties of the stair style, click OK. 
+7 If you want to assign the style to a stair tool, drag the style from 
+the Style Manager to a tool palette. You can later rename the tool and specify other properties for it as described in Creating a Stair Tool on page 2124. 
+8 Click OK. 
+Specifying the Design Rules of a Stair Style 
+Use this procedure to specify the minimum, maximum, and optimal code limits for the riser height and tread depth, and to specify the stair calculator rules. 
+Specifying stair design rules 
+
+1 Open a tool palette that has a stair tool. 2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the stair style you want to change. 4 Click the Design Rules tab. 
+
+5 Specify the default Riser Height and Tread Depth for Minimum Slope, Optimum Slope, and Maximum Slope. 
+NOTE Use values that represent the actual dimensions of the tread and riser components you want to create, and not just the ratios of these dimensions. 
+Subject to the constraints of the calculator rules and the fact that the tread heights must be an even divisor of the floor-to-floor height, the software gets as close as possible to the selected optimal tread length and riser height. 
+6 To change the default stair calculator, select Use Rule Based 
+Calculator. The fields in the Calculator Rule section become available for editing. 
+7 When you finish changing the properties of the stair style, click OK. 
+Specifying the Stringers of a Stair Style 
+Use this procedure to include stringers with the stair style. A stair style can have one or more stringers. You can specify the properties of each stringer. If the style uses stringers, you can specify the depth of the waist at flights and landings, as well as have center stringers with mitered or curved corners at landing turns. For Ramp or Housed stringers, you can also specify the total depth at flights and landings. 
+1 Open a tool palette that has a stair tool. 2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the stair style you want to change. 
+4 Click the Stringers tab. 
+
+If the style does not use stringers, proceed to step 6. 5 Add or remove stringers: 
+If you want to… Then… 
+add a stringer to the stair style click Add. 
+add an identical stringer to the list select the stringer you want to du­plicate, and click Copy. 
+delete a stringer from the list select the stringer, and click Re­move. 
+6 Specify the properties of each stringer: 
+If you want to… Then… 
+specify the name of a stringer select the current name, and enter a new name. 
+specify the type of stringer click the current Type, and select Saddled or Housed. 
+specify the alignment of a stringer click the current alignment, and select Align Left, Align Right, Cen­ter, or Full Width. 
+If you want to… Then… 
+specify the width of a stringer enter a value for Width. 
+specify the offset of a stringer enter a value for Offset. 
+specify the flight waist under Flight, enter a value for Waist. 
+specify the flight total under Flight, enter a value for Total. 
+specify the landing waist under Landing, enter a value for Waist. 
+specify the landing total under Landing, enter a value for Total. 
+stop the stringer at a landing select Truncate for Cleanup. 
+allow the stringer to continue under select Cleanup for Cleanup. a landing 
+specify mitered corners for a center clear Curve center stringer at turns stringer at a turn or landing 
+7 Click Slab for Type to edit the slab settings: 
+If you want to… Then… 
+specify the thickness of the slab at under Flight, enter a value for flights Waist. 
+specify the thickness of the slab at under Landings, enter a value for landings Waist. 
+8 When you finish changing the properties of the stair style, click OK. 
+Specifying Mitered Corners for Center Stringers 
+Use this procedure to specify mitered corners for center stringers at landings and turns. You can specify this option when working with multi-landing, 
+u-shaped, and custom stairs. You cannot specify this option when working with straight or spiral stairs. 
+1 Open a tool palette that has a stair tool. 
+2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the stair style you want to change. 4 Click the Stringers tab. 5 Clear Curve center stringers at turns. 
+
+6 Click OK. 
+Curved and mitered center stringers at landing turns 
+
+With the Curve center stringers at turns option cleared, the center stringer is mitered to match the angle of the landing turn. In most cases, this will be a right angle, but any other angle is also possible. 
+Mitered center stringers at angled landing turns 
+
+Specifying the Components of a Stair Style 
+Use this procedure to specify the display of treads and risers and edit the thicknesses and widths of treads, risers, and landings. Also, you can specify whether these properties of the style are allowed to vary with individual stairs. 
+1 Open a tool palette that has a stair tool. 2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the stair style you want to change. 
+4 Click the Components tab. 
+
+5 Specify whether stairs of this style can vary: 
+If you want to… Then… 
+specify flight dimensions, such as select Allow Each Stair to Vary. tread thickness, riser thickness, and nosing length, when you add or modify stairs 
+require that all stairs of this style use clear Allow Each Stair to Vary. the flight dimension settings of the style 
+NOTE If Allow Each Stair to Vary is checked, changes on this tab do not affect existing stairs. To make these stairs match the style settings, select the stair, display its properties, display the Components worksheet, and click Reset to Style Values. 
+6 Turn the display of treads and risers on or off. If tread is off, the tread thickness and landing thickness become unavailable. 
+7 Specify the flight dimensions: 
+If you want to… Then… 
+specify the thickness of treads enter a value for Tread Thickness. 
+specify the thickness of risers enter a value for Riser Thickness. 
+specify the length of the edge of a enter a value for Nosing Length. stair tread that projects over the riser 
+specify sloping risers select Sloping Riser. 
+8 Specify the landing dimensions: 
+If you want to… Then… 
+specify the thickness of landings enter a value for Landing Thickness. 
+specify additional width for landings enter a value for Additional Width. 
+9 When you finish changing the properties of the stair style, click OK. 
+Specifying the Landing Extension of a Stair Style 
+Use this procedure to change the distances between landings and treads and the stringer resolution of stairs. You can differentiate the size of landing components from those used for the stair flights. 
+1 Open a tool palette that has a stair tool. 2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the stair style you want to change. 4 Click the Landing Extensions tab. 
+
+5 Specify whether stairs of this style can vary: 
+If you want to… Then… 
+specify stringer resolution and exten-select Allow Each Stair to Vary. sion dimensions, such as distance to first tread up and distance to first tread down, when you add or modify stairs 
+require that all stairs of this style use clear Allow Each Stair to Vary. the extension dimension settings of the style 
+6 Specify extension distances: 
+If you want to… Then… 
+increase the distance to the first enter a value for Distance to First tread on the down side of the Tread DOWN. To extend the land-landing ing down by a single tread, select 
+Add Tread Depth. 
+increase the distance to the first enter a value for Distance to First tread on the up side of the landing Tread UP. To extend the landing up 
+If you want to… Then… 
+by a single tread, select Add Tread Depth. 
+7 Select Extend Landings to Merge Flight Stringers with Landing 
+Stringers. This option extends the landing to merge the flight stringers with the landing stringers. 
+8 Select Extend Landings to Prevent Risers and Treads Sitting Under 
+Landings. This option is on by default for all stairs from earlier-release drawings. Clear it to allow the creation of flush rectangular landings. 
+9 When landings are placed automatically, their length and location are specified in Landing Length and Landing Location. 
+If you want to… Then… 
+set the size of automatic landings enter a value for Landing Length. 
+set the placement of automatic select Top, Middle, or Bottom for landings Landing Location. 
+10 When you finish changing the properties of the stair style, click OK. 
+Assigning Materials to Components in a Stair Style 
+A stair consists of a number of components whose display properties can be determined by the materials assigned to each component. You assign one material to each physical component of the stair; for example, you assign a wood or metal material to treads, concrete to a concrete component, and so on. You assign materials to components in each display representation where you want the materials to be used. 
+If you want to use the display properties of the stair style instead of material display properties, you can turn off the material assignments in the display properties of the stair style. 
+Material definitions consist of display components that correspond to component types of objects. For example, the 3D body component of a material is used for all linework in model views. 
+Stair Materials and Display Components 
+The following table identifies the material component that corresponds to each stair component. 
+Stair Component Material Component 
+Model 
+Stringer 3D Body 
+Tread 3D Body 
+Landing 3D Body 
+Riser 3D Body 
+Assigning Materials to a Stair Style 
+Use this procedure to assign materials to the individual components of a stair style. When By Material is selected for a component, the component uses the display properties of the material instead of the style display properties. 
+You can assign a material to any physical component of the stair. Custom components and components that are only symbolic graphics do not use materials for their display properties. For example, a riser is a physical component that can be assigned a material while the graphics path is a symbol that cannot be assigned a material. 
+NOTE If a material assignment does not determine the display properties of a stair component, you can change the display properties of the stair style as described in Specifying the Display Properties of a Stair Style on page 2262. 
+1 Open a tool palette that has a stair tool. 2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+NOTE Only the Model display representation uses materials. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select By Material for any component to which you want to assign 
+a material, and click OK. If the setting for By Material is not available, the display of this component cannot be determined by a material. 
+9 Click the Materials tab. 
+10 Select the component you want to change, and select a different material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a component. 
+WARNING Although you can edit a material definition from this dialog box, any changes you make to the material definition apply to all objects that are assigned the material. 
+11 Click OK. 
+Specifying the Display Properties of a Stair Style 
+In most cases, you can assign materials to stair components so that the appearance of stairs that belong to the same style is consistent throughout a drawing and with other stairs and objects that use the same materials. 
+If a component cannot be assigned a material, or if you do not want to use materials but still want consistency among stairs of the same style, you can specify the following display properties of the stair components in the stair style: 
+¦ 
+The layer, color, and linetype of stair components 
+
+¦ 
+The cut plane height and the display of components relative to the cut plane 
+
+¦ 
+Stair cut line extensions and ramp arrows 
+
+¦ 
+Other specific stair display information, such as riser numbering 
+
+
+Specifying the Layer/Color/Linetype of a Stair Style 
+Use this procedure to specify how the various components of the stair are displayed in a particular view. You can change the following display properties of the components of a stair style: 
+¦ 
+Visibility (on or off) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+¦ 
+Plot style (if the drawing uses style-based rather than color-based plotting) 
+
+
+Plan views of stairs include stringers, risers, nosing, path symbols, and stair outlines. You can specify the visibility of these components for above and below the cut plane of the stair. Isometric (model) views of stairs include stringers, treads, and risers. 
+To change these display properties for an individual stair, see Changing the Display Properties of Individual Stairs on page 2237. 
+NOTE If a material assignment determines the display properties of components in the stair style, you can change the properties of the display component by clearing By Material. You can also override the material assignment with a different material. For more information, see Assigning Materials to a Stair Style on page 2261. 
+1 Open a tool palette that has a stair tool. 2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the stair style that you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select the component to change, and select a different setting for 
+the property. 9 Click OK. 
+
+Specifying the Stair Cut Line Extension Distance 
+Use this procedure to specify the display of stair cut line extension distance in plan view. 
+You can specify the stair cut line extension distance between the edge of the stair and end of the stair cut line. In the Display Manager, access the appropriate Stair display representation and then specify the stair cut line extension distance. A distance of 0 (zero) means the cut line does not extend past the edge of the stair. 
+
+1 Click Manage tab . Style & Display panel . Display Manager . 2 Expand Representation by Object, and scroll to the Stair object. 
+
+3 Expand Stair, and select the appropriate Plan display representation. 
+4 Click the Other tab. 
+5 Under Cut Plane, specify a distance for Cut Line Extension. 
+Specifying the Display of Ramp Arrows 
+Use this procedure to specify the display of ramp arrows in plan view. 
+In the Display Manager, access the appropriate Stair display representation and then specify the display of a ramp arrow. 
+
+1 Click Manage tab . Style & Display panel . Display Manager . 2 Expand Representation by Object, and scroll to the Stair object. 3 Expand Stair, and select the appropriate Plan display representation. 4 Click the Other tab. 5 Under Stair Line, select Display Ramp Arrows. 
+
+Specifying the Display of Other Characteristics of a Stair Style 
+Use this procedure to specify settings for the cut plane and related symbols. 
+Plan views of stairs includes stringers, risers, nosing, path symbols, and stair outlines. You can specify the visibility of these components for above and below the cut plane of the stair. 
+1 Open a tool palette that has a stair tool. 2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the stair style that you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Click Override Display Configuration Cut Plane to change the 
+elevation of the Display Configuration cut plane for the stair. 
+NOTE When the Display Configuration Cut Plane is used, stairs display only from the current floor elevation up to the cut height, and from the current floor elevation down to the appropriate cut height of the level below. 
+9 Enter a value for Elevation. 10 Enter a value for Cut Line Distance to change the space between the two cut plane lines. 11 Enter a value for Cut Line Angle to change the angle of the stair cut lines. 12 Specify the display of the cut plane: 
+If you want to… Then… 
+specify the height of the cut plane enter a value for Elevation. The measured from the beginning of space for the cut plane is centered the stair on the closest tread. 
+specify the width of the cut plane enter a value for Cut Line Distance. 
+specify the angle of the cut plane enter a value for Cut Line Angle. 
+13 Specify the display of the arrow and the stair line: 
+If you want to… Then… 
+change the display size of the arrow enter a value for Size. 
+If you want to… Then… 
+change the offset location of the enter a value for Offset. arrow display 
+change the dimension style used for the arrow display 
+select a style for Dim Style. 
+NOTE If a dimension style oth­er than Standard is used for the arrow, and you want the arrow size to be controlled by the di­mension style, select Arrow Size from Dimension Style Only. This is the default for all previous version drawings. If you do not select this option, the size of the arrow is multiplied by the arrow size setting. 
+change the shape of the stair line select a shape for Shape. Curved adds an arc when the stair line changes. Straight displays an angle when the stair line changes. 
+display the arrow at the end of each select Cut Plane - Parallel for Apply cut plane pointing in the same dir-to and make sure that Draw for ection throughout the length of the Each Flight is not selected. stair 
+display the arrow at the end of each select Cut Plane - Parallel for Apply cut plane and at the end of each to and make sure that Draw for flight pointing in the same direction Each Flight is selected. 
+display the arrow at the end of the select Entire Stair for Apply to and entire stair make sure that Draw for Each Flight is not selected. 
+display the arrow at the end of each select Entire Stair for Apply to and flight pointing in the same direction make sure that Draw for Each Flight is selected. 
+display the arrow on each side of select Cut Plane - Opposite for Ap­the cut plane ply to. 
+If you want to… Then… 
+change which stair line is displayed select Graphics path, or Construc­tion line, for Display Path. 
+change the type of break mark that under Break Mark, select a mark for is displayed at the cut plane Type. 
+specify a custom break mark to dis-select Custom Shape for Type, and play at the cut plane then select a block for Block. 
+14 Specify the display of the break mark: 
+If you want to… Then… 
+change the style of the break mark select an option for Type. The available options are None, Curved, Zigzag, and Custom Shape. 
+specify a custom shape for the select Custom Shape for Type, and break mark select the desired name for Block. 
+15 Click OK twice. 
+Specifying the Riser Numbering Display of a Stair Style 
+Use this procedure to define the display of riser numbers for a stair style. 1 Open a tool palette that has a stair tool. 2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the stair style that you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Riser Numbering tab. 
+8 Select the riser numbering display properties for the stair style: 
+If you want to… Then… 
+change the text style of the riser select a style for Text Style, or click numbers
+
+ to edit the text style. 
+change the alignment of the riser select an alignment for Text Align-numbers ment. 
+change the orientation of the riser select an orientation for Text Orient-numbers ation. 
+change the text height of the riser enter a value for Text Height. numbers 
+change the location to which the select Left, Center or Right for Justi­numbers are justified fy to. 
+change the location of the numbers enter a value for X Offset. This is along the length of the stair flight relative to the selected position of the riser. 
+change the location of the numbers enter a value for Y Offset. This is re-to the left or right lative to the selected position of the riser. 
+set the first number for the riser enter a value for First Riser Number. numbering 
+number the last riser in the stair select Number Final Riser. 
+9 Click OK twice. 
+Specifying Classifications for a Stair Style 
+Use this procedure to specify classifications for any classification definition applied to a stair style. 
+For more information about creating and applying classification definitions, see Classification Definitions on page 3834. 
+1 Open a tool palette that has a stair tool. 2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the style that you want to change. 
+4 Click the Classifications tab. By default, the classification for all classification definitions is Unspecified. If no classification definitions are listed, none are applied to stair styles. 
+5 For each classification definition, select the classification you want to apply to the current stair style. 
+6 Click OK. 
+Adding Notes and Files to a Stair Style 
+Use this procedure to enter notes and attach reference files to a stair style. You can also edit notes and edit or detach reference files attached to the style. 
+1 Open a tool palette that has a stair tool. 2 Right-click a stair tool, and click Stair Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Stair Styles
+ . 
+3 Select the stair style that you want to change. 4 Click the General tab. 5 To add a description to the stair style, enter it for Description. 6 Click Notes. 7 To add a note, click the Text Notes tab, and enter the note. 8 Click the Reference Docs tab, and attach, edit, or detach a 
+reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+If you want to… Then… 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+9 Click OK. 
+Stair Winder Styles 
+A stair winder style is a group of properties assigned to a stair winder that determines the type of winder used in stairs that contain 1/4 turn or 1/2 turns. 
+To create, copy, or purge styles, you access the Style Manager. The Style Manager provides a central location in AutoCAD Architecture for working with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+Creating a Stair Winder Style 
+Use this procedure to create a stair winder style. You can create a style that uses default style properties by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Architectural Objects, and expand Stair Winder Styles. 3 Create a stair winder style: 
+If you want to… Then… 
+create a style with default properties right-click Stair Winder Styles, and click New. 
+create a style from an existing style right-click the stair winder style you want to copy, and click Copy. Right-click, and click Paste. 
+4 Enter a name for the new stair winder style. 
+5 Edit the new stair winder style. For more information, see Specifying the Stair Winder Style Settings on page 2272. 
+6 When you finish specifying the properties of the stair winder style, click OK. 
+Specifying the Stair Winder Style Settings 
+Use this procedure to determine which type of winder is defined for the selected winder style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Architectural Objects, and expand Stair Winder Styles 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Winder Styles
+ . 
+3 Select a Stair Winder Style. 4 Click the Settings tab. 
+
+5 Specify the stair winder settings: 
+If you want to… Then… 
+use the riser lines to adjust the select Use Riser Line. winders 
+use the tread lines to adjust the clear Use Riser Line. winders 
+have the treads turn continuously select Balanced for Winder Type. 
+along the length of the stair NOTE This is the type used by all earlier-release version stairs with 1/2 or 1/4 turns. 
+adjust each winder separately select Manual for Winder Type. 
+adjust winders based on a single select Single Point for Winder Type. point and a turn zone 
+set a number of winders to use select Adjust Winder Turn and enter when Single Point is selected for a value for Number of Treads in Winder Type Turn. 
+NOTE When using the single point type, it is important to clear Use Riser Line if the turn point will be on the edge or corner of the stair. Otherwise, the treads will overlap and the stair will be defective, causing a solution tip icon to display in the drawing. 
+6 When you finish specifying the properties of the stair winder style, click OK. 
+Adding Notes and Files to a Stair Winder Style 
+Use this procedure to enter notes and attach reference files to a stair winder style. You can also edit notes and edit or detach reference files attached to the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Architectural Objects, and expand Stair Winder Styles. 
+NOTE Alternatively, select a stair in the drawing, and click Stair tab . General panel . Edit Style drop-down . Winder Styles
+ . 
+3 Select a Stair Winder Style. 4 Click the General tab. 5 To add a description to the stair style, enter it for Description. 6 Click Notes. 7 To add a note, click the Text Notes tab, and enter the note. 8 Click the Reference Docs tab, and attach, edit, or detach a 
+reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+9 Click OK. 
+Stair Tower Generator 
+The Stair Tower Generator creates vertically stacked stairs based on a single stair and selected levels in the building. Optionally, slabs and railings can be included in the stair tower. 
+Creating a Stair Tower 
+You create a stair tower from one stair, which is replicated on selected levels in the building. You can create a stair tower with all stair shapes except spiral. The floor-to-floor height and starting elevation of each stair are adjusted to 
+match these values for each selected level. The x,y coordinates for each stair start point are fixed. 
+NOTE The stair must be in a construct with multiple levels for the stair tower to be created. For more information, see Constructs on page 385. 
+1 Create a stair within a construct. 
+2 Click Home tab . Build panel . Stair drop-down . Stair Tower . 3 Select the stair. 
+
+4 Select any slabs or railings to be added to the stair tower. 
+NOTE If you select a slab to include in the stair tower, the slab should be at the top of the selected stair. 
+5 In the Select Levels dialog box, select the levels on which the stair 
+tower generates the stairs. You can include anchored railings by clicking Include Anchored Railings, even if they have not been selected in step 3. 
+6 If the stair you created was U-shaped, you can select Keep Landing Location while Adjusting U-Shaped Stair to maintain the landing position instead of the start point of the stair when it is edited. 
+7 Click OK. 
+The stair tower is created by adding stairs to the selected levels. 
+Generating a Stair Tower From and Existing U-Shaped Stair Run 
+
+NOTE If the stair height is different than the floor to floor height, the height of the stair is changed to match the floor height. 
+Modifying a Stair Tower 
+Once a stair tower has been created, you can modify each stair individually. You can also change one stair and propagate that change throughout the stair tower. 
+1 Select a stair in the tower. 
+2 Modify the stair. For more information about modifying stairs, see Editing Stairs on page 2126. 
+3 Select the edited stair, right-click, and then click Stair Tower Generate. 
+4 Select any slabs or railings to be added to the stair tower. 
+NOTE If you select a slab to include in the stair tower, the slab should be at the top of the selected stair. 
+5 In the Select Levels dialog box, select the levels on which to 
+change the existing stairs. You can include anchored railings by selecting Include Anchored Railings. 
+6 If the stair you created was U-shaped, you can select Keep Landing Location while Adjusting U-Shaped Stair to maintain the landing position instead of the start point of the stair when it is edited. 
+7 Click OK. 
+Each selected stair is changed to match the modified stair. 
+Railings 
+28 
+Railings are objects that interact with stairs and other objects. You can add railings to existing stairs, or you can create freestanding railings. 
+Railings 
+Railings are objects that interact with stairs and other objects. You can add railings to existing stairs, or you can create freestanding railings. 
+Railing Components 
+Railings can have guardrails, handrails, posts, balusters, and one or more bottom rails. Additionally, you can add custom blocks to railings. 
+Railing components 
+
+Railing Shapes 
+You can attach railings to one or both sides of a stair, and you can wrap them around a landing. You can also attach railings to any other type of AEC object, like a massing element. You can create a custom railing by converting a polyline. Therefore, railings can have a variety of shapes and can be anchored to a straight stair, a multi-landing stair, a U-shaped stair, or a spiral stair. 
+Custom Railings 
+You can create custom railings by specifying custom blocks and profiles to be used for individual railing components. You can assign profiles to railing components by style so that you can reuse the custom portion to create detailed railings. 
+Railing Styles and Their Properties 
+You can use a railing style to control properties for all railings that use that style, rather than changing properties for each railing in the drawing. Various styles exist in the templates for common railing configurations, such as guardrail pipe, handrail grip, and handrail round. Within the railing style, you can specify the rail locations and height, post locations and intervals, components and profiles, extensions, material assignments, and display properties of the railing. 
+Materials in Railings 
+In AutoCAD Architecture, you can assign materials to a railing. These materials are displayed in wireframe and working shade views, or when rendered. Materials have specific settings for the physical components of a railing, such as the various types of rails and posts, and the baluster. You could, for example, create a wooden railing with a stainless steel handrail and bottomrail. 
+Railing in 2D wireframe model and rendered views 
+
+AutoCAD Architecture provides a number of predefined materials for common design purposes, which contain settings for railings. You can use these predefined materials “as is”, or modify them to your special designs. You can also create your own materials from scratch. 
+For more information, see Specifying the Materials of a Railing Style on page 2339. 
+Using Railing Tools to Create Railings 
+Tools provided with AutoCAD Architecture let you quickly place railings using a railing tool with specific predefined properties. You can use the default settings of the tool, or you can change the properties. You can also use railing tools to convert linework to railings and to apply the settings of a railing tool to existing railings. 
+Tool palettes containing railing tools 
+
+The default tool palettes in the workspace contain sample railing tools that you can use and customize as needed. In addition, the following catalogs provided with the software contain railing tools that you can add to your tool palettes: 
+¦ 
+Stock Tool catalog 
+
+¦ 
+AutoCAD Architecture Sample Palette catalog 
+
+
+Custom palettes created by your CAD manager or other users may also contain railing tools with railing styles and properties that are customized for your projects or office standards. 
+Creating a Railing 
+Use this procedure to add a new railing that has the properties specified in the railing tool that you select. To specify settings when you add a railing, see Creating an Attached Railing with User-Specified Settings on page 2282 and Creating a Freestanding Railing with User-Specified Settings on page 2286. 
+1 Open the tool palette that you want to use, and select a railing tool. 
+NOTE Alternatively, you can click Home tab . Build panel . Stair drop-down . Railing
+ . 
+2 Specify the start point of the railing. You can move or hide the Properties palette to expose more of the drawing area. 
+3 Specify the endpoint of the railing. 4 Continue adding railings, and press ENTER. 
+Creating an Attached Railing with User-Specified Settings 
+Use this procedure to create a railing that is attached to a stair and that has the settings that you specify. 
+Creating a railing attached to a stair 
+
+1 Open the tool palette that you want to use, and select a railing tool. 
+NOTE Alternatively, you can click Home tab . Build panel . Stair drop-down . Railing
+ . 
+2 On the Properties palette, expand Basic, and expand General. 3 Select a style. 4 Expand Dimensions. 5 Click the setting for Rail Locations. 
+NOTE If the settings in the Rail Locations worksheet are read-only, the rail locations have been set in the style, and cannot be overridden here. For more information, see Specifying the Upper Rails of a Railing Style on page 2330 and Specifying the Bottom Rails of a Railing Style on page 2332. 
+6 Specify the parameters for the guardrail or the handrail: 
+If you want to… Then… 
+specify the height of the guardrail enter a value for Horizontal Height. or the handrail 
+specify the height of guardrail or enter a value for Sloping Height. the handrail while it is on a stair flight 
+specify the distance that the enter a value for Offset from Post. guardrail or the handrail is offset from the posts 
+specify the side of the post for the select Center, Left, Right, or Auto offset, based on the direction the for Side for Offset. Side for Offset is stair (or railing) was drawn available only when there is an off­
+set value. 
+Auto is useful only for railings attached to the edges of stairs. A positive value is toward the center of the stair, while a negative value is toward the outside edge. Side for Offset for handrails also has a selection of Both, so you can specify a handrail on both sides of the railing. 
+If you select Auto, and the railing is not attached to or is along the center of a stair, the offset is to the right. 
+7 Specify the settings for bottom rails: 
+If you want to… Then… 
+specify the height of the lowest rail enter a value for Horizontal. when it is horizontal 
+specify the height of the lowest rail enter a value for Sloping. when it is on a stair flight 
+specify the distance that the bottom-enter a value for Offset from Post. rail is offset from the posts 
+specify the side of the post for the select Center, Left, Right, or Auto offset, based on the direction the for Side for Offset. (Side for Offset stair (or railing) was drawn is available only when there is an 
+offset value.) 
+designate more than one bottom enter a value for Number of Rails. 
+rail When you designate multiple bot­tom rails, you can enter a value for Spacing of Rails. 
+8 If you want to revert to the rail settings defined in the style, click Reset To Style Values. 9 Click OK to return to the Properties palette. 10 Click the setting for Post Locations. 
+NOTE If the settings in the Post Locations worksheet are read-only, the post locations have been set in the style, and cannot be overridden here. For more information, see Specifying Posts of a Railing Style on page 2333. 
+11 Specify the post locations: 
+If you want to… Then… 
+include fixed posts at the beginning select Fixed Posts. and end of the railing 
+specify the distance above or below enter a value for Extension of ALL the top rail for all posts Posts from Top Railing. 
+If you want to… Then… 
+specify the height of all posts from enter a value for Extension of ALL the floor Posts from Floor Level. 
+include fixed posts at the corners select Fixed Posts at Railing Corners. of the railing 
+include dynamic posts with the select Dynamic Posts. You can then railing enter a value for Maximum Center to Center Spacing. 
+include balusters with the railing select Balusters. 
+specify the height of all balusters enter a value for Extension of Bal­from the floor usters from Floor Level. 
+specify the maximum distance enter the appropriate value for between the balusters Maximum Center to Center Spa­cing. 
+override the number of balusters on  select Stair Tread Length Override.  
+each stair tread  You can then enter a value for  
+Number per Tread. (This applies  
+only to railings that are attached to  
+stairs.)  
+
+12 If you want to revert to the post settings defined in the style, click Reset To Style Values. 13 Click OK to return to the Properties palette. 14 Expand Location. 15 For Attached to, select Stair or Stair Flight. 16 To offset the railing in or out from the side of the stair, enter an 
+offset value. Positive values are in toward the center of the stair and negative values are out from the center of the stair. If the railing is center justified, a positive value is to the right and a negative value is to the left. 
+17 To attach the railing automatically to the full length of the stair or the stair flight, select Yes for Automatic Placement. 
+NOTE This option is available only if you have selected to attach the railing to a whole stair. If you are attaching the railing to a stair flight, it is always attached to the full length of the stair flight. 
+18 Select the stair or stair flight in the drawing to which you want to attach the new railing. 
+19 Select a side of a stair or a stair flight to place the railing. 
+20 If you have selected no automatic placement for the stair, define the contour of the desired railing by selecting points in the drawing. Then press ENTER. 
+Creating a Freestanding Railing with User-Specified Settings 
+Use this procedure to create a freestanding railing in the drawing. 
+Creating a freestanding railing 
+
+1 Open the tool palette that you want to use, and select a railing tool. 
+NOTE Alternatively, you can click Home tab . Build panel . Stair drop-down . Railing
+ . 
+2 On the Properties palette, expand Basic, and expand General. 3 Select a style. 4 Expand Dimensions. 5 Click the setting for Rail Locations. 
+NOTE If the settings in the Rail Locations worksheet are read-only, the rail locations have been set in the style, and cannot be overridden here. For more information, see Specifying the Upper Rails of a Railing Style on page 2330 and Specifying the Bottom Rails of a Railing Style on page 2332. 
+6 Specify the parameters for the guardrail or the handrail: 
+If you want to… Then… 
+specify the height of the guardrail enter a value for Horizontal Height. or the handrail 
+specify the height of the guardrail enter a value for Sloping Height. or the handrail while it is on a stair flight 
+specify the distance that the enter a value for Offset from Post. guardrail or the handrail is offset from the posts 
+specify the side of the post for the select Center, Left, Right, or Auto offset, based on the direction the for Side for Offset. (Side for Offset stair (or railing) was drawn is available only when there is an 
+offset value.) 
+Auto is useful only for railings attached to the edges of stairs. A positive value is toward the center of the stair, while a negative value is toward the outside edge. Side for Offset for handrails also has a selection of Both, so you can specify a handrail on both sides of the railing. 
+If you select Auto, and the railing is not attached to a stair, or, if the railing is along the center of a stair, the offset is to the right. 
+7 Specify the settings for bottom rails: 
+If you want to… Then… 
+specify the height of the lowest rail enter a value for Horizontal. when it is horizontal 
+specify the height of the lowest rail enter a value for Sloping. when it is on a stair flight 
+specify the distance that the bottom-enter a value for Offset from Post. rail is offset from the posts 
+specify the side of the post for the select Center, Left, Right, or Auto offset, based on the direction the for Side for Offset. (Side for Offset stair (or railing) was drawn is available only when there is an 
+offset value.) 
+designate more than one bottom enter a value for Number of Rails. 
+rail When you designate multiple bot­tom rails, you can enter a value for Spacing of Rails. 
+8 If you want to revert to the rail settings defined in the style, click Reset To Style Values. 9 Click OK to return to the Properties palette. 10 Click the setting for Post locations. 
+NOTE If the settings in the Post Locations worksheet are read-only, the post locations have been set in the style, and cannot be overridden here. For more information, see Specifying Posts of a Railing Style on page 2333. 
+11 Specify the post locations: 
+If you want to… Then… 
+include fixed posts at the beginning select Fixed Posts. and end of the railing 
+specify the distance above or below enter a value for Extension of ALL the top rail for all posts Posts from Top Railing. 
+If you want to… Then… 
+specify the height of all posts from enter a value for Extension of ALL the floor Posts from Floor Level. 
+include fixed posts at the corners select Fixed Posts at Railing Corners. of the railing 
+include dynamic posts with the select Dynamic Posts. You can then railing enter a value for Maximum Center to Center Spacing. 
+include balusters with the railing select Balusters. 
+specify the height of all balusters enter a value for Extension of Bal­from the floor usters from Floor Level. 
+specify the maximum distance enter the appropriate value for between the balusters Maximum Center to Center Spa­cing. 
+override the number of balusters on  select Stair Tread Length Override.  
+each stair tread  You can then enter a value for  
+Number per Tread. (This applies  
+only to railings that are attached to  
+stairs.)  
+
+12 If you want to revert to the post settings defined in the style, click Reset To Style Values. 
+13 Click OK to return to the Properties palette. 
+14 Expand Location. 
+15 For Attached to, select NONE. 
+16 Specify the start point of the railing. 
+17 Specify further points for the railing. 
+18 Press ENTER. 
+Creating a Railing from a Polyline 
+Use this procedure to convert a polyline to a railing that has the properties of the railing tool you select. You can edit these properties after creating the railing. 
+Converting a polyline to a railing 
+
+1 Open the tool palette that you want to use. If necessary, scroll to display the tool that you want to use. 
+2 Right-click a railing tool, and click Apply Tool Properties . Polyline. 
+3 Select the polyline to convert, and press ENTER. 
+4 When prompted to erase the original geometry, press ENTER to keep the linework, or enter y (Yes) to erase it. 
+5 Edit the properties of the railing in the Properties palette, if needed. 
+Creating a Railing Tool 
+Use this procedure to create a railing tool and add it to a tool palette. You may want to create your own railing tools if you are placing multiple railings of a specific style that all have the same properties. 
+1 Open the tool palette on which you want to add a tool. 
+2 Create the tool: 
+If you want to… Then… 
+create a tool from a railing in the select the railing, and drag it to the drawing tool palette. 
+create a tool from a railing style in  Click Manage tab . Style & Display  
+the Style Manager  panel . Style Manager  . Locate  
+the style you want to copy, and  
+drag it to the tool palette. Click OK  
+to close the Style Manager.  
+
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool  open the other tool palette, right- 
+palette  click the tool, and click Copy. Re­ 
+open the tool palette where you  
+want to add the tool, right-click,  
+and click Paste.  
+
+copy a tool from a tool catalog open the catalog in the Content Browser, and locate the tool you want to copy. Position the cursor over the i-drop handle, and drag the tool to the tool palette. 
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. 6 Expand Basic, and expand General. 7 Click the setting for Description, enter a description of the railing 
+created from this tool, and click OK. 8 Specify a layer key and any layer key overrides if you do not want to use the layer assignments specified in the layer key style used in the drawing. 
+9 Select a railing style. 
+10 Select the drawing file containing the style used for this railing. 
+11 Expand Location. 
+12 Select whether railings created from this tool should be attached to a stair, a stair flight, or be freestanding (**NONE**). 
+13 Click OK. 
+Editing Railings 
+You can edit railings by changing the style of the railing, the inclusion and location of various rails and posts, and the insertion point. You can also specify the height and offset of guardrails and handrails, and the extension and spacing of posts. 
+Methods of Editing Railings 
+AutoCAD Architecture offers several methods for editing railings: 
+¦ 
+You can directly edit railings using grips for dimensions and other physical characteristics. 
+
+¦ 
+For grip edit operations where you are changing a dimension or an angle, the Dynamic Input feature lets you enter a precise value instead of moving a grip. When this feature is active (click DYN on the application status bar), selecting a grip displays a text box in which you can enter the desired value for the associated dimension or angle. For more information, see “Use Dynamic Input” in AutoCAD Help. 
+
+¦ 
+You can change railing settings on the Properties palette. You can also use the Display tab of the Properties palette to change the display property settings for a selected object display component in the current display representation. For more information, see Using the Properties Palette to Change Display Properties on page 779. 
+
+¦ 
+You can use editing commands from the contextual Railing ribbon tab and shortcut menu for a selected railing. 
+
+
+Using Grips to Edit Railings 
+Use these procedures to edit railings using grips. 
+Editing Railing Dimensions 
+1 Select the railing. 
+2 Select the grip for the dimension you want to change. 
+
+

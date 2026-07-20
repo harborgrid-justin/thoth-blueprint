@@ -7,6 +7,9 @@ import {
   isSpatialElement,
   networkFromPath,
   unionBounds,
+  findMatchingKey,
+  formatDescription,
+  DEFAULT_DESCRIPTION_KEYS,
   type ElementKind,
   type Layer,
   type NetworkEdge,
@@ -44,6 +47,11 @@ export interface WorkspaceState {
   /** Set when the site diverges from the last saved server state. */
   dirty: boolean;
   lastSavedAt: string | null;
+
+  viewFrames: any[];
+  matchLines: any[];
+  setViewFrames(frames: any[], matchLines: any[]): void;
+  addDrawingSet(set: any): void;
 
   // --- lifecycle ---
   loadProject(project: Project): void;
@@ -210,6 +218,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     selection: [],
     dirty: false,
     lastSavedAt: null,
+    viewFrames: [],
+    matchLines: [],
 
     loadProject(project) {
       set({
@@ -222,6 +232,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         selection: [],
         dirty: false,
         lastSavedAt: project.updatedAt,
+        viewFrames: [],
+        matchLines: [],
       });
     },
 
@@ -236,6 +248,20 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         activeLayerId: null,
         dirty: false,
         lastSavedAt: null,
+        viewFrames: [],
+        matchLines: [],
+      });
+    },
+
+    setViewFrames(viewFrames, matchLines) {
+      set({ viewFrames, matchLines });
+    },
+
+    addDrawingSet(setObj) {
+      mutate((site) => {
+        if (!site.drawingSets) site.drawingSets = [];
+        site.drawingSets.unshift(setObj);
+        return site;
       });
     },
 
@@ -383,8 +409,32 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     addPointElement(kind, position) {
       const { site, activeLayerId } = get();
       if (!site) return null;
-      const layerId = activeLayerId ?? elementMeta(kind).defaultLayerId;
-      const element = createPointElement(site, kind, position, layerId);
+      const rawDesc = prompt("Enter COGO Point Description (e.g. TR-Oak, MH-Storm, BM-Main):") || "";
+      let layerId = activeLayerId ?? elementMeta(kind).defaultLayerId;
+      let finalKind = kind;
+      let finalDesc = rawDesc || `${kind.toUpperCase()}`;
+      let matchedSym = undefined;
+
+      const matchingKey = findMatchingKey(rawDesc, DEFAULT_DESCRIPTION_KEYS);
+      if (matchingKey) {
+        layerId = matchingKey.layerId;
+        finalKind = matchingKey.elementKind as "note" | "tree" | "spot";
+        finalDesc = formatDescription(rawDesc, matchingKey.format);
+        if (matchingKey.symbolName) {
+          matchedSym = matchingKey.symbolName;
+        }
+      }
+
+      const element: any = createPointElement(site, finalKind, position, layerId);
+      element.description = rawDesc;
+      element.label = finalDesc;
+      if (finalKind === "tree") {
+        element.species = finalDesc;
+      }
+      if (matchedSym) {
+        element.symbol = matchedSym;
+      }
+
       mutate((s) => ({ ...s, elements: [...s.elements, element] }));
       set({ selection: [element.id] });
       return element.id;

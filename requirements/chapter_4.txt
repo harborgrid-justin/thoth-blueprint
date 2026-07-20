@@ -1,0 +1,855 @@
+[MIGRATED TO RTM_PART_74.md - DRAWING SETTINGS & CUT PLANES]
+[MIGRATED TO RTM_PART_38.md - DRAWING SETUP & UNITS]
+current versions. If you copy styles from the current version to legacy drawing, you have to save the legacy drawing under a new name and in the current release file format. 
+¦ Open and save a legacy drawing in the current version if you want to be able to edit it in DesignCenter®. 
+IMPORTANT Any time you combine a drawing from a previous version with a drawing from the current version, you should first open the previous version drawing and save it. For example, before inserting a drawing as a block or attaching it as an xref, open the drawing and save it to promote all the objects to the current version. 
+
+Saving a Drawing to a Previous Release File Format 
+When you save a drawing to a previous release file format, not all objects and properties will be supported. You can do one of the following: 
+¦ 
+Save the drawing to the current release format: All objects and properties will be saved correctly, but the drawing may become incompatible with earlier releases. 
+
+¦ 
+Save the drawing as AutoCAD-only objects. For more information, see Exporting a Drawing to AutoCAD on page 214. To view AutoCAD objects in a previous release, verify that the latest Object Enabler is installed, as available on http://www.autodesk.com\enablers. 
+
+¦ 
+Save the drawing to a previous version with Proxy Graphics. If you open the drawing in the previous version, you can view AEC objects as Proxy Graphics, but cannot edit them. For more information, see Generating Proxy Graphics on page 213. 
+
+
+
+Setting Up a Drawing 
+When you create a drawing from a template, the drawing setup options are predefined. You can use these settings or customize them as needed. For example, you may want to use different drawing scales for different drawings. 
+When you create a drawing without a template, settings such as layer standards and layer key styles are imported into the drawing. For more information, see Creating a Drawing Without a Template on page 189. 
+You can specify the drawing units, drawing scale, and layer options as the default settings for any drawing that you start, with or without a template. If you save the settings specified as the default, they override settings in the template. 
+If you are unfamiliar with the display system or layer management, you may want to read more in Display System on page 777 and Managing Drawing Layers on page 706 before specifying the layering and display options. 
+Specifying the Drawing Units 
+Use this procedure to specify the drawing units in a new or existing drawing. If you change the drawing units, you can specify whether existing objects in the drawing are scaled to the new units or retain their original size. You can also specify whether objects inserted from a drawing that uses different units are scaled to the units in the current drawing, or retain their original size. 
+You can specify the unit type and precision for linear, angular, area, and volume units. The precision values specify only the number of decimal places displayed in the interface. They do not determine the number of decimal places used in the software to make calculations. 
+When you change the drawing units, the default options under Area and Volume change to reflect the new drawing units. The drawing scale options on the Scale tab also change to reflect the new drawing units. 
+1 Click 
+. Utilities . Drawing Setup. 2 Click the Units tab. 
+Specifying default units options for the current drawing 
+
+3 Under Drawing Units, select the desired units. Various imperial and metric units are available. The units that you select determine the unit of measurement that each unit in your drawing represents. For example, if you select Inches, each drawing unit equals one inch. 
+4 To scale objects that you insert into the current drawing from drawings with different drawing units, select Scale Objects Inserted from Other Drawings. 
+Clear this option to insert objects at their original size without scaling. For example, if an item that is one inch long were inserted into a drawing set to millimeters, this setting would scale the item to 25.4 mm in length when enabled. With this setting disabled, it would remain one unit long, (which would now be only one millimeter rather than one inch). 
+5 Under Length, select a unit type and desired precision. 
+6 Under Angle, select an angle type and desired precision. If you want to measure angles clockwise instead of counterclockwise, select Clockwise. 
+7 Under Base Angle, enter a value for the default 0 angle direction. 
+The default is 0 degrees (East) and a counter-clockwise direction. Imported survey drawings may include drafting instructions where changing the base angle might be desirable to properly orient the data. 
+The following values match these directions: 
+Value Direction 
+0 East 
+90 North 
+180 West 
+270 South 
+8 Under Area, select an area type and precision. If you do not want to use the default suffix that is displayed for the drawing units that you specify, enter a new suffix. 
+9 Under Volume, select a volume type and precision. If you do not want to use the default suffix that is displayed for the drawing units that you specify, enter a new suffix. 
+10 Under Lighting Units, select a lighting unit type. 11 Save the units settings: 
+
+If you want to… Then… 
+save the units settings as default select Save as Default. Settings on settings for new drawings that you the Scale and Layering tabs are also start from scratch or from templates saved as default settings. that do not contain drawing setup information 
+save the units settings only for the clear Save as Default, and then click current drawing Apply. 
+NOTE You can save one default drawing units set per unit type with the Save as Default option. Define a set of imperial drawing units defaults, and click Save as Default. Then, define a set of metric default units, and click Save as Default again. When you start a drawing without a template with imperial units, the imperial default settings will be used. When you start a drawing without a template with metric units, the metric default settings will be used. If you start a new drawing with a template, the settings saved within that template file will be used regardless of the saved default settings. 
+12 Click OK. You are prompted to specify whether existing objects in the current drawing should be scaled for the new units. 13 Specify scaling of existing Model Space and Paper Space objects: 
+
+If you want to… Then… 
+scale all existing objects in the select Rescale modelspace and pa-drawing to reflect the new units perspace objects. 
+scale objects in Model Space to re-select Rescale only modelspace ob­flect the new units jects. 
+leave all objects at their current select Don’t rescale any existing scale objects. 
+
+
+Creating Annotation Scales and Assigning them to Display Configurations 
+In the Scale tab, you can do the following things: 
+¦ 
+Display the available annotation scales 
+
+¦ 
+Create new annotation scales 
+
+¦ 
+Assign an annotation scale to a display configuration. 
+
+
+NOTE You cannot set the annotation scale used for this drawing here. For information on setting the scale, see Specifying Annotation Scale on page 3640. 
+The annotation scale determines how many drawing units in the drawing represent one inch (for imperial drawings) or one millimeter (for metric drawings) in the plotted drawing. A drawing scale of 1/8”=1’-0” (or 1:96 - eight eighths per inch times 12 inches per foot) in a drawing that has inches as default drawing units means that 8 feet in the drawing are represented by 1 inch on the plotted out plan. Likewise, if a drawing has a scale of 1:200 and a drawing unit of millimeters, then 200 millimeters in the drawing will be represented by one millimeter on the plotted out plan. 
+Annotation plot size, multiplied by the scale factor, determines the height of plotted annotation text. Scale-dependent objects in a drawing are scaled automatically upon insertion to reflect the units that are specified in a drawing. Any content that you create can be built to take advantage of these settings and is thus scaled appropriately. 
+
+1 Click . Utilities . Drawing Setup. 2 Click the Scale tab. Specifying default scale options for the current drawing 
+
+3 Under Scale, the available annotation scales are displayed. 
+NOTE The scale values in the list reflect the current drawing units. To change the drawing units, see Specifying the Drawing Units on page 192. 
+4 To assign an annotation scale to a specific display configuration, first select the desired annotation scale from the Scale list, and then select the display configuration to associate it with from the Display Configurations list. 
+Under Scale value, the currently used annotation scale for this 
+display configuration is displayed. 
+5 To edit an existing scale or add a new scale, click Edit Scale List. 
+¦ 
+To edit an existing scale, select it, and click Edit. 
+
+¦ 
+To add a new scale, click Add, and enter a display name and scale values. 
+
+¦ 
+To rearrange the order of the scale entries, use the Move up and Move down buttons. 
+
+
+6 Click OK. 
+7 Select Automatically Create Dimscale Override, if you want to make the dimension scale match your drawing scale. The override applies a scale factor to the dimension style 
+properties. 
+NOTE AEC dimensions added with tools are not affected by the dimension scale override because an AEC dimension style depends on which display representation is active. For more, see AEC Dimensions on page 3349. 
+If you clear Automatically Create Dimscale Override, the software is prevented from automatically applying an override to the current dimension scale style in the drawing. 
+8 Enter a value for Annotation Plot Size. The annotation plot size is always measured in millimeters for metric drawings and in inches for imperial drawings. Annotation plot size, multiplied by the drawing scale factor, determines the height of plotted annotation text. 
+9 Save the scale settings: 
+If you want to… Then… 
+save the scale settings as default select Save as Default. Settings on settings for new drawings that you the Units and Layering tabs are also start from scratch or from templates saved as default settings. that do not contain drawing setup information 
+save the scale settings only for the clear Save as Default, and then click current drawing Apply. 
+NOTE You can save one default drawing scale set per unit type with the Save as Default option. Define a set of imperial drawing scale defaults, and click Save as Default. Next, define a set of metric scale defaults, and click Save as Default again. When you start a drawing without a template with imperial units, the imperial default scale will be used. When you start a drawing without a template with metric units, the metric default scale will be used. If you start a new drawing with a template, the settings saved within that template file will be used regardless of the saved default settings. 
+10 Click OK. If you also changed the drawing units, you are prompted to specify whether existing objects in the current drawing should be scaled for the new units. For more information, see Specifying the Drawing Units on page 192. 
+
+
+Specifying a Layer Standard and a Layer Key Style 
+Use this procedure to specify the layer standard and layer key style to determine the layers on which objects are placed in a drawing. You can specify the layer key style to use in the current drawing. You can also specify a layer standard and a layer key style to be imported when you set up a new drawing. 
+There are a number of layer standards and layer key styles in AecLayerStd.dwg, located in C:\ProgramData\Autodesk\ACA 2011\enu\Layers. 
+By default, AecLayerStd.dwg (located in the Layers folder mentioned above) is loaded automatically. This file contains layer standards and layer key styles. 
+NOTE If you are unfamiliar with layer keying, you may want to read the overview of layer keying before specifying layering options. For more information, see Working with Layer Keys on page 745. 
+1 Do any of the following: 
+¦ Click Home tab . Layers panel .
+. Select Layer Standard . 
+¦ 
+Click . Utilities . Drawing Setup, and click the Layering tab. 
+
+
+
+
+2 Specifying default layering options for the current drawing 
+
+3 Under Layer Standards/Key File to Auto-Import, enter the name of the layer standards drawing (DWG or DWT) you want to use. 
+You can click 
+to navigate to a file. 
+4 Under Default Layer Standard, select the layer key style that you want to use in your drawing. 
+5 To re-import the layer key style from the layer standard you specified at the start of each drawing session, select Always import Layer Key Style when first used in drawing. 
+Selecting this option has the effect of checking the current drawing to see if the selected layer key style exists. If it does exist, the date and time stored on it are compared with the external file. If the external layer key style drawing is newer, then it re-imports the layer key style and standard. This action occurs each time the drawing file is opened; therefore, to force a re-import of the layer key style, you must close and reopen the drawing. 
+6 Define the on/off behavior of secondary components within an object. You can place different components of an AEC object on different layers. This is accomplished with the object’s display properties. For example, the current layer key style might place a wall on the layer named A-Wall, while the wall’s material definitions place its internal boundaries on the layer named A-Wall-Comp. Turning off the layer A-Wall would typically make the entire wall (including its internal boundaries) invisible, even though those components were assigned to a different layer. Selecting Immediate and independent layer on/off control of display components allows the internal boundary components on A-Wall-Comp to remain visible, even though the primary object’s layer (A-Wall in this case) is off. This behavior can be desirable in some plan representations. 
+NOTE Freezing the primary object’s layer (A-Wall in this case) makes the entire wall, including its internal boundaries, invisible regardless of the value of this setting. This setting applies only to the Off layer state. 
+If you want to… Then… 
+turn off secondary object compon-clear Immediate and independent ents on different layers when the layer on/off control of display com-main component layer is turned ponents. off 
+turn on and off secondary object select Immediate and independent components independently of the layer on/off control of display com-main object component layer set-ponents. tings 
+7 IMPORTANT If you select Save as Default, the layer key style you select is the default layer key style for all new drawings created without a template or from templates that do not have different default layer key standards assigned. 
+Save the layer settings: 
+
+If you want to… Then… 
+save the layers settings as default select Save as Default, and click OK. settings for all new drawings that Settings on the Units and Scale tabs you start without a template or are also saved as default settings. from templates that do not contain drawing setup information 
+save the layer settings only for the clear Save as Default, click Apply, current drawing and then click OK. 
+If you also changed the drawing units, you are prompted to specify whether existing objects in the current drawing should be scaled for the new units. For more information, see Specifying the Drawing Units on page 192. 
+
+
+Specifying the Default Display Representations 
+Use this procedure to specify the default display representations of AEC objects. You can also specify the default display configuration for the Model tab and new viewports. In addition, you can specify whether the drawing uses its own display configurations or those of a host drawing when the drawing is referenced as an overlay xref. 
+You may find it easier to select and modify display representations using the Display Manager. For more information about the display system, see Display System on page 777. For more information about using the Display Manager, see The Display Manager on page 800. 
+NOTE Changes you make on the Display tab apply only to the current drawing. New drawings are not affected. Save as Default has no effect on this tab. 
+
+1 Click . Utilities . Drawing Setup. 2 Click the Display tab. 
+Specifying default display options for the current drawing 
+
+3 To make changes to a display representation for an object type, select it, and click Edit. For general information about display representations, see Display Representations on page 789. For information about the display properties of an object type, see the chapter about the relevant object. For example, for information about wall display properties, see Specifying the Display Properties of a Wall Style on page 1302. 
+4 Select a display configuration for Default Display Configuration. The display configuration is applied to the Model tab and new viewports in paper space layouts. 
+5 To use the display configurations in the current drawing when the drawing is referenced as an overlay xref in a host drawing, select When used as an Xref Overlay, use this drawing’s default display configuration initially. 
+Clear this option if you want objects in the current drawing to use the display configurations of the host drawing when the current drawing is an overlay xref. 
+For information about overlaying xrefs in drawings, see “Reference Other Drawing Files (Xrefs)” in AutoCAD Help. 
+6 Click OK. If you also changed the drawing units, you are prompted to specify whether existing objects in the current drawing should be scaled for the new units. For more information, see Specifying the Drawing Units on page 192. 
+
+
+Specifying AEC Options 
+There are several tabs in the AutoCAD Options dialog box where you can select specific AEC options. You can use these settings to specify default values for some architectural objects, to specify the location and type of content files, and to control performance while you are working in architectural drawings. 
+Changing the AEC Editor Settings 
+Use this procedure to specify settings to control the following aspects of the software: 
+¦ 
+the display of diagnostic messages and solution tips 
+
+¦ 
+the placement of dialog boxes and viewers on the screen 
+
+¦ 
+whether objects retain their layer, color, and linetype when you export them to an AutoCAD or DXF file 
+
+
+To improve drawing performance, you can limit the snap points provided by certain display representations, and decrease the layer loading time of the Layer Manager. 
+You can also specify settings for grip colors, and specify whether dynamic dimensions appear when you select and move grips to change the geometry of an object. 
+The AEC Editor settings that you specify are saved in the Windows® registry. 
+
+1 Click . Options. You can also display the Options dialog box by right-clicking in the command line area, and clicking Options. 2 Click the AEC Editor tab. 
+Specifying default AEC Editor options for the current drawing 
+
+3 Under Diagnostic Messages, select options for displaying diagnostic messages on the command line: 
+If you want to… Then… 
+display data about the relationship select Object Relationship Graph. between objects in the drawing 
+display Display System errors select Display Management System. 
+display object geometry-specific select Geometry. data 
+All diagnostic messages are off by default. 
+4 Under Similar-Purpose Dialogs, select options for the default position of dialog boxes and viewers: 
+
+If you want to… Then… 
+use a common position on the select Use Common Position. Some screen for similar dialog boxes dialog boxes, such as those contain­ing style properties, are always dis­
+
+If you want to… Then… 
+played in the center of the screen, regardless of this setting. 
+use a common position for similar-select Use Common Viewer Position purpose viewers and Size. Some viewers are not controlled by this setting. 
+5 Under Optimize for Speed, select Object Snap to limit certain display representations to respond only to the Node and Insert object snaps. 
+This setting affects stair, railing, space boundary, multi-view block, masking block, slice, and clip volume result (building section) objects. 
+6 Under Object Conversions, choose Apply Common Property Sets to New Objects if you wish to have common property sets automatically applied to new objects when applying tool properties. 
+When you apply the properties of a tool to an object in the drawing, the result can often be a new object. For instance, when you apply the tool properties of a door to an existing window, a new door object is created in place of the existing window. With this setting enabled, any property sets that were assigned to the existing window will automatically be preserved and applied to the new door provided that the property set definitions in question applies to both types of objects (in this case, both doors and windows are selected on the property set’s applies to tab). 
+7 Under Solution Tips, specify whether you want solution tips to be displayed during the listed activities. Drafting is selected by default. Plotting/Publishing is cleared by default. For more information, see Solution Tips on page 67. 
+8 Under Dynamic Dimensions Linetype, select either Continuous or Dot. The dimensions identify the current value of the dimension being edited, such as the length of a wall, the difference between the current value and the new dimension based on the position of the grip, and the total value. For example, when you select and move a Lengthen grip on a wall, the dimensions shown are the current length, the difference between the current length and the length based on where you moved the grip, and the total new 
+length of the wall. 
+The dynamic dimensions will display in either continuous or dot linetype based on your selection. 
+9 Under Export to AutoCAD, select Use Insert Method when Binding xrefs if you want all objects from an xref drawing referenced in the file you export to be incorporated into the host drawing. 
+If you select this option, the names of the xref drawings are discarded when the exported drawing is created. In addition, their layers and styles are incorporated into the host drawing. For example, all exploded walls, regardless of their source (host or xref) are located on the same layer. 
+Clear Use Insert Method when Binding xrefs if you want to retain the xref identities, such as layer names, when you export a file to AutoCAD or to a DXF file. For example, the blocks that define walls in the host drawing are located on A-Wall in the exploded drawing. Walls in an attached xref drawing are located on a layer whose name is created from the drawing name and the layer name, such as Drawing1$0$A-Wall. 
+10 Enter a prefix or a suffix to be added to the drawing file name when the drawing is exported to an AutoCAD drawing or to a DXF file. 
+11 Under Block Properties of Exploded Objects, select Maintain Resolved Layer, Color, Linetype to maintain the layer, color, and linetype of AEC objects when you explode them. 
+When you explode an AEC object, you create several primitive objects grouped in a block definition. If this option is selected, any objects whose component layer, color, and linetype properties are set to ByBlock take the layer, color, and linetype of the parent object. If this option is cleared, when you explode an object, properties that are ByBlock remain ByBlock. Clear this option if you want to explode the block definition even further. 
+12 Under Unselected Grip Colors, select the colors you want to use for each type of grip. 
+13 To specify the units of measure for AutoCAD drawings when they are opened in the software, select Metric or Imperial for Units for Legacy Drawings. 
+This option enables the software to ignore the value for the AutoCAD MEASUREMENT variable to ensure that the software respects the correct units when an AutoCAD drawing is opened in the software. Select Automatic if you want AutoCAD drawings to use the units that are current in the software. 
+14 Click OK. 
+
+
+Changing the AEC Content Settings 
+Use this procedure to specify the location of the content files accessed by the Custom View in AutoCAD DesignCenter, to choose between imperial and metric content, and to specify whether the Edit Property Data dialog box is displayed when you insert schedule tags. You can also specify the location of dependent files, such as styles for tools. 
+The AEC Content settings that you specify are saved in the Windows® registry. 
+
+1 Click . Options. You can also display the Options dialog box by right-clicking in the command line area, and clicking Options. 
+2 Click the AEC Content tab. Specifying default AEC Content options for the current drawing 
+
+3 Under AEC DesignCenter Content Path, edit the path and location of your content files, or click Browse to locate content files. 
+4 To display the Edit Property Data dialog box when you insert a schedule tag in the drawing, select Display Edit Property Data Dialog During Tag Insertion. 
+When this option is chosen, a worksheet will display after each tag is placed, allowing you to edit property set values. If you clear this option, no worksheet will appear during tagging. 
+5 Under Tool Catalog Content Root Path, edit the path and location 
+of your style drawings, or click Browse to locate files. The variable, %AECCONTENT_DIR%, used for tool-dependent file references, is updated to use the path you specify. For example, <Style href=“%AECCONTENT_DIR%\Door Styles\DoorStyles.dwg”/>. 
+6 Click Add/Remove next to Detail Component Databases to add or remove additional Detail Component Databases. 
+7 Click Add/Remove next to Keynote Databases to add or remove additional Keynote Databases. 
+8 Click OK. 
+
+Specifying AEC Object Settings 
+Refer to the following topics to specify AEC options for walls, stairs, spaces, and the display of curved objects: 
+¦ 
+Wall Parameters on page 1233 
+
+¦ 
+Specifying AEC Options for Stairs on page 2078 
+
+¦ 
+Setting Up Adjacency Relations between Space Surfaces on page 3055 
+
+¦ 
+Specifying the Display Resolution of Objects with Facets on page 208 
+
+
+
+Specifying the Display Resolution of Objects with Facets 
+Use this procedure to specify the facet deviation and the maximum number of facets that can be used to display a curved object, such as a Cylinder mass element or a curved wall. The values you specify apply to the current drawing. 
+The number you specify for facet deviation defines the maximum distance from the chord to the arc, the chord being an edge that is created from faceting the curve to the true mathematical arc. The facet deviation must be greater than zero (0). It has no upper limit. 
+
+1 Click . Options. You can also display the Options dialog box by right-clicking in the command line area, and clicking Options. 2 Click the AEC Object Settings tab. Specifying default AEC Object Settings options for the current drawing 
+
+3 Under AEC Display Resolution, enter a value for Facet Deviation. 
+The default value is 1/2'' for drawings created from imperial 
+templates and 12.7 mm for drawings created from metric 
+templates. The value you enter is stored in the AecFacetDev 
+variable. 
+4 Enter the maximum number of facets that can be used to draw 
+curved objects. 
+You can enter a value between 100 and 10,000. The value you 
+enter is stored in the AecFacetMax variable. 
+The default value is 128 for new drawings. 
+5 Click OK. 
+
+Changing the AEC Project Defaults 
+Use this procedure to specify the default folders in which the software searches for projects, palettes, templates, and other project files. These settings are used to create new projects without using a template. If a new project is created from a template project, the settings of the template project are used instead. 
+
+1 Click . Options. You can also display the Options dialog box by right-clicking in the command line area, and clicking Options. 
+2 Click the AEC Project Defaults tab. Specifying default AEC Project Defaults options for the current drawing 
+
+3 Expand a category, and select a path. 4 Change, add, or remove a path: 
+If you want to… Then… 
+change the current path select the path, and click Browse. Navigate to the new path, and click OK. 
+add a path to the list of paths select the category, and click Add. Specify the new path, and click OK. If Add is unavailable, you can spe­cify only one path for this category. 
+remove a path select the path, and click Remove. If Remove is unavailable, you can edit the path but you cannot delete it. 
+5 Select Show Project Browser at startup if you want the Project Browser to open when you open the software. 
+6 To launch the Create Sheet Set wizard, click the Create Sheet Set 
+Template. This will launch a wizard to assist you in creating your own Sheet Set Template to use for your projects. 
+7 Click OK. 
+
+
+
+Sharing Drawings with AutoCAD Users 
+There are 2 methods for making drawings available to users who are working with AutoCAD: 
+¦ 
+Working with Proxy Graphics 
+
+¦ 
+Exporting drawings to AutoCAD DWG or DXF 
+
+
+The method you choose depends on the software the others are using, on how exactly the drawing must match the original drawing, and on the particular views the other users require. 
+Turning on Proxy Graphics 
+When you turn on proxy graphics in a drawing, users who do not have AutoCAD Architecture but do have another AutoCAD-based product (AutoCAD 2000 or newer), can view and plot AEC objects and design data. 
+
+Exporting to AutoCAD Drawings and DXF Files 
+You can export drawings created with the software to AutoCAD drawings for the following versions: 
+¦ AutoCAD 2007 
+¦ AutoCAD 2004 (including 2005 and 2006) 
+¦ AutoCAD 2000 (including 2000i and 2002) 
+¦ AutoCAD R14 
+You can also export a drawing to a drawing interchange format (DXF) file. A DXF file is a text or binary file that contains drawing information that can be read by other CAD systems. For more information about DXF files, see “DXF Files” in AutoCAD Help. 
+TIP The quickest way to locate and view an AutoCAD topic is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+You can export drawings to the following DXF formats: 
+¦ 
+AutoCAD 2007 DXF 
+
+¦ 
+AutoCAD 2004 DXF (including 2005 and 2006) 
+
+¦ 
+AutoCAD 2000 DXF (including 2000i and 2002) 
+
+¦ 
+AutoCAD Release 12 DXF 
+
+
+Exporting a drawing to an AutoCAD drawing or to a DXF file creates a separate drawing in which all AEC objects, such as walls, doors, windows, and roofs, are exploded to AutoCAD primitive objects, such as lines, arcs, and 3D faces. The resulting AutoCAD objects cannot be restored to AutoCAD Architecture objects. Export AutoCAD Architecture drawings to DXF instead of saving them as DXF files. 
+NOTE You can open DXF files generated in earlier versions of the software if the files do not contain any AEC objects. DXF files that contain AEC objects cannot be imported into the software. 
+
+Comparing Methods of Sharing Drawings 
+The following table lists the features of the various methods of sharing drawings with AutoCAD users: 
+Use Case Proxy Graphics Object Enabler Export to Auto-CAD (DWG or DXF) 
+Use of AEC objects in other  View, plot AEC  View, plot, copy,  View, plot, ma- 
+AutoCAD-based applications  objects and  manipulate AEC  nipulate ex- 
+design data; no  objects and  ploded AEC ob- 
+manipulation of  design data  jects  
+objects  
+
+Status of AEC objects in  AEC objects are  AEC objects are  No AEC objects  
+other applications  displayed as  maintained as in- 
+proxy graphics  telligent objects  
+with no intelli­ 
+gence  
+
+Multiple representations of  No  Yes  Separate ex- 
+objects in different view­ ploded copies  
+ports  are generated  
+
+AEC objects still exist when Yes Yes No reopened in the software 
+Drawings used in a previous Yes No Yes version 
+
+Generating Proxy Graphics 
+Use this procedure to create proxy graphics in a drawing to be made available to users who do not have the software. 
+Proxy graphics store the last-viewed image of AEC objects, which lets users view your drawing without modifying the original objects. Proxy graphics store only the display representation for the currently active viewport. 
+NOTE Depending on its complexity and density, a drawing saved with proxy graphics turned on can become extremely large and can slow drawing performance. It is recommended that you make a copy of the drawing before turning proxy graphics on if you want to share the drawing with other users. 
+1 Arrange the view for which you want to create proxy graphics. 2 At the command line, enter proxygraphics. 3 Enter 1. 4 Save the drawing. 5 To turn off proxy graphics, enter proxygraphics, and then enter 
+0. 
+
+Exporting a Drawing to AutoCAD 
+Use this procedure to export a drawing created in the software to AutoCAD. This process creates a new AutoCAD drawing with all AEC objects exploded. The original drawing is not affected. 
+Depending on the size and complexity of the original drawing, the resulting AutoCAD drawing may contain a large number of primitive objects, which can affect drawing performance. 
+NOTE When you export a drawing to an AutoCAD drawing, all AEC objects are exploded to AutoCAD primitive objects. Reopening the file in the software does not restore these primitive objects to AEC objects. 
+WARNING If you export a drawing that has Mviews to AutoCAD R14, only the layout active at the time of exporting will be preserved in AutoCAD R14. Any non-rectangular (polygonal or object) Mviews are converted to rectangular Mviews. 
+1 Choose whether to export a single representation of the AEC objects or all visible representations. 
+If you want to… Then… 
+export the currently active repres-activate the Model tab. Only those entation of the AEC objects in the representations in the currently drawing active view will be generated. 
+If you want to… Then… 
+export all representations of the AEC objects in the drawing  activate any layout tab. The repres­entations for all layouts will be generated.  
+TIP This will usually result in duplicate graphics on the Model tab, which makes the drawing less useful.  
+
+For example, when creating a drawing for a consultant to use as an xref-attached background, you should display a top view in the active Model tab viewport. When creating a drawing to be used to produce a rendering, you should display an isometric view in the active Model tab viewport. 
+To create a drawing that includes the exact graphics used in all layout tab viewports, activate any layout tab. These drawings can be sent to a printing service, for example, to make plots without the need for AutoCAD Architecture or the Object Enabler. 
+2 Press F2 to display the command window. 
+3 On the command line, enter -ExportToAutocad. A list with the currently active export settings from the AEC Editor options page is displayed: 
+¦ 
+File Format 
+
+¦ 
+Bind Xrefs 
+
+¦ 
+Bind Type 
+
+¦ 
+Filename prefix 
+
+¦ 
+Filename suffix 
+
+
+4 Alternatively, enter AecToAcad on the command line. For more information, see “ExportToAutoCAD” in AutoCAD Help. 
+5 To change the AutoCAD file format to which the drawing should be exported, enter F (Format) and press ENTER. The following AutoCAD file format versions are available: 
+¦ AutoCAD 2007 
+¦ AutoCAD 2004 (including 2005 and 2006) 
+¦ AutoCAD 2000 (including 2000i and 2002) 
+¦ AutoCAD R14 
+6 To specify whether to bind xrefs when exporting a drawing, enter B (Bind Xrefs), press ENTER, and select Y (Yes) or N (No). 
+NOTE If you want to retain visual fidelity in the exported drawing, selecting Yes is recommended. Visual fidelity can be affected by exporting individual drawings and binding them later, because when opened individually the xref may appear differently than it does in the host drawing. 
+7 To select the desired bind type for xrefs when exporting the drawing, enter T (bind Type), and choose one of the following: 
+
+If you want to… Then… 
+discard the names of the xref enter I (Insert). drawings and incorporate their lay-In this case, for example, all ex­ers and styles into the host drawing ploded walls, regardless of their when the exported drawing is cre-source (host or xref) are located on ated the same layer. 
+retain the xref identities when binding xrefs, such as layer names, when exporting the drawings enter B (Bind). In this case, for example, the blocks that define walls in the host draw­ing are located on A-Wall in the ex­ploded drawing. Walls in an at­tached xref drawing are located on a layer whose name is created from the drawing name and the layer name, such as Drawing1$0$A-Wall. 
+IMPORTANT If you want to export drawings with multiple xrefs in them, the bind option is recommended. If xref layers have the same name, but different visibility settings, then the layers will be merged when using the insert option, and use the settings of the first layer found. This can lead to unexpected results in the exported drawings, for example with objects disappearing from the drawing. The bind option will retain the layers and their settings and thereby ensure that visibility settings stay identical to the source drawing. 
+8 To specify whether the object properties in the exported AutoCAD drawing should be maintained, enter M (Maintain) and press ENTER: 
+¦ 
+If you want the object properties to be resolved and be directly assigned to the exploded objects, enter Y (Yes). 
+
+¦ 
+If you want objects to remain in blocks and have their properties set ByLayer and ByBlock, enter N (No). 
+
+
+9 To select a prefix or suffix for the drawing name, enter P (Prefix) or S (Suffix), press ENTER, and type in the desired prefix or suffix. 10 To enter a name for the exported AutoCAD drawing and start the export, press ENTER, and type in a file name. 
+
+TIP You can also start an export to AutoCAD by clicking 
+. Export . AutoCAD, and then selecting the desired export format. In that case, the export settings defined on the AEC Editor tab of the Options dialog are used for exporting. For more information, see Changing the AEC Editor Settings on page 203. 
+IMPORTANT The -AecExportToAutoCAD command has been added to the Object Enabler in the software, enabling you to export a drawing to an AutoCAD format from within AutoCAD or other AutoCAD based vertical applications. 
+
+
+Exporting a Drawing to a DXF File 
+Use this procedure to export a drawing created in AutoCAD Architecture to a drawing interchange format (DXF) file. A DXF file is a text file that contains drawing information that can be read by other CAD systems. For more information about DXF files, see “DXF Files” in AutoCAD Help. 
+You can export drawings to the following DXF formats: 
+¦ AutoCAD 2007 
+¦ 
+AutoCAD 2004 DXF (including 2005 and 2006) 
+
+¦ 
+AutoCAD 2000 DXF (including 2000i and 2002) 
+
+¦ 
+AutoCAD Release 12 DXF 
+
+
+Exporting AutoCAD Architecture drawings to a DXF format provides more consistent results than saving drawings as DXF files. Exporting creates a new DXF file with all AEC objects exploded. The original drawing is not affected. 
+Depending on the size and complexity of the original drawing, the resulting AutoCAD drawing may contain a large number of primitive objects, which can affect drawing performance. 
+NOTE When you export a drawing to a DXF file, all AEC objects are exploded to AutoCAD primitive objects. Reopening the file in the software does not restore these primitive objects to AEC objects. 
+
+1 Click . Export . AutoCAD. 
+2 Select the DXF format you want to use. 
+3 Enter a file name, and specify a path, if necessary. The default file name includes any prefix or suffix that you specified on the AEC Editor tab of the Options dialog box. For more information, see Changing the AEC Editor Settings on page 203. 
+4 Click Save. 
+
+
+
+Interoperability with Other Applications 
+5 
+AutoCAD Architecture 2011 is compatible with other Autodesk software applications (such as Autodesk® Land Desktop and Autodesk® DWF™ Viewer) as well as applications that are IFC certified. Interoperability features expand the usability of AutoCAD Architecture. For example, you can import LandXML data and use the topographical information to site your building appropriately. 
+Importing and Exporting IFC Files 
+Based on established, international standards for common objects in the building industry, the Industry Foundation Classes (IFC) file format provides an interoperability solution between different software applications. Using IFC reduces the loss of information when files are transmitted. 
+AutoCAD Architecture is IFC-certified for importing and exporting version 2x3 IFC files. IFC files from versions 2x2 and 2x can also be imported if the data is compatible with 2x3 and is consistent with implementation agreements as defined for the IFC 2x3 coordination view. For more detailed information, go to http://www.iai-international.org and search for IfcWiki Web resource. 
+IFC certification enhances your ability to share project information across disciplines and technical applications over the life of the project. Using the IFC format, you can export these drawings to other IFC-certified applications that could not otherwise open a DWG file. For example, building models drawn in AutoCAD Architecture are saved to a DWG file format. You can export the drawing using the IFC format. Likewise, you can import an IFC file to create and work in a DWG that was originally created in a format other than DWG. 
+Visual fidelity for three-dimensional (3D) objects is maintained in model views. This means that dimensions are maintained for 3D objects exported to IFC. 
+Objects must be dimensionally accurate in the single IFC model because it is shared by diverse applications. 
+For information about other methods of sharing drawings with external users, see Sharing Drawings with AutoCAD Users on page 211. 
+General Information for Exporting Drawing Files to IFC 
+Only a currently active drawing can be exported to IFC. The export process generates 2 files: 
+¦ 
+An IFC file that contains information specified for project number and name, file path, and external references (xrefs). 
+
+¦ 
+A LOG file that contains data about information (objects and geographic location) in the drawing. This file is stored in the same location as the IFC file. 
+
+
+The current display configuration for the drawing being exported is what defines the graphical information and geometry for the IFC file. Objects that would typically display in the current display configuration are exported regardless of whether their layers are frozen or turned off. For more information, see Display Representations on page 789. 
+You can export a property set as an IfcElementQuantity if an object with a property set definition has a suffix of IfcElementQuantity. The property set definition must also include at least one property name with a value, such as IfcQuantityArea, IfcQuantityCount, or IfcQuantityLength. This information displays on the Extended Data tab of the Properties palette. For more information, see Property Sets and Property Set Definitions on page 3705. 
+You can use the IfcBaseProperty property set to specify the name and object type for each IFC entity exported. This information is also preserved in the same property set when importing an IFC file. 
+Spaces and their boundaries must be set to Associative if you want to export space boundary information. When there is a virtual boundary—a boundary between spaces or a space with nothing in it—draw a line along the expected boundary, and set Bound spaces as Yes. This space will be exported as a Virtual space boundary in IFC. For more information, see Making a Space Associative or Non-Associative on page 2936. 
+A value must be specified in the Geographic Location dialog if you want to export to true North. For more information, see View the Geographic Location Information in the AutoCAD Help. 
+
+AutoCAD Architecture Project Drawings 
+When you export a drawing file from an AutoCAD Architecture project folder, the drawing file is mapped to (Ifc)Site by default if the drawing includes at least one xref. The (Ifc)Site drawing may contain building objects and site geometry as well as xrefs. 
+Identifying information displays by default in the project, including project number, project name, and level assignments of xrefs, when you select a project drawing for export. 
+You control which xrefs in the project file are exported and how they display in the IFC file by either accepting the default level assignments or by specifying a different label. All drawings that are assigned to the same IFC Structure are exported into an IfcBuildingStorey in the IFC file.For more information about working with AutoCAD Architecture projects, see Concepts of Drawing Management on page 291. 
+
+
+Exporting a Drawing from an AutoCAD Architecture Project 
+Use this procedure to export a project drawing as an IFC file. Select the drawing from the Constructs, Views, or Sheets tab of Project Navigator. 
+Xrefs contained in the drawing being exported are listed in the tree view below the drawing name. If they were unloaded in the drawing, they are shaded in the Export to IFC dialog. For more information, see Before You Begin: External References on page 300. 
+If the drawings were assigned to levels as part of the AutoCAD Architecture project, a corresponding label is displayed by default under IFC Structure. Otherwise, they are mapped to Level 1 by default. 
+If there are objects you want to classify as a different type of object for export, the drawing with the classified objects must have been previously saved. For more information, see Classifying AEC Objects for Export on page 234. 
+1 On the Constructs, Views, or Sheets tab in Project Navigator, open the drawing that you want to export as an IFC file. 
+2 Click 
+. Export . IFC (Industry Foundation Classes). 
+Alternatively, on the command line, enter -IfcExport, and select 
+export options. 
+
+3 In the Export to IFC dialog, the project number and project name display by default. Modify these if necessary. 
+4 If you want to change the default value for Create IFC File Named, enter a new name; or click Browse, navigate to the file, and select it. 
+5 Under Drawing Files, select the drawing files to be exported. If you select an xref at the top level, all xrefs nested within this drawing are selected as well. Expand the top level, and select xrefs individually if necessary. 
+6 If you want to change the labels for the drawing files selected, click the label in the IFC Structure column, and select a different level from the drop-down list, or enter text in the field. 
+
+If you want xrefs to display as a distinct level within the IFC file, specify different identifying labels under IFC Structure. You can specify the same identifier, such as Level (1), for multiple xrefs to combine the objects within those xrefs into one IfcBuildingStorey. 
+7 Enter a description of the file for export. You can select multiple drawing files and change all labels or descriptions at the same time. 
+Specify Export Options 
+8 Click Options, and click the Header tab. 
+
+The name of the drawing active on your screen displays on the Header tab of the IFC Export Options dialog. You can add information about the drawing file to be exported, such as a description of the drawing, the author and company name, authorization data, and the geographic location of the building. For example, you could enter the description of a structural drawing as Structure for Commercial Building 152 on the Header tab. This information displays in the header of the IFC file when the file is viewed. 
+Other data is exported with the drawing by default and includes the name of the source drawing file and the name and version of the application in which it was created. 
+9 Enter information to include, then click the Objects tab. 
+
+You can select or exclude objects for export with the drawing file. When the IFC file is viewed, the only objects included will be those that you selected. For example, you could select Slab and Structural Member and exclude all other objects from exporting. 
+When you specify export options for your objects, the following constraints apply: 
+¦ 
+The classification of an object takes precedence over the object type. For example, if you classify a mass element as a ramp and then export the drawing without Mass Element selected on the Objects tab, the newly-classified mass element is not included in the export process. 
+
+¦ 
+Any changes you make to either tab in the IFC Export Options dialog, become the new default settings. 
+
+¦ 
+For selected objects to be exported, their display representations must be active in the current display configuration. 
+
+
+10 Select objects to include, and click OK. 11 Click Export. 
+
+
+Exporting Standalone Drawings 
+Drawings created outside of an AutoCAD Architecture project can be exported to an IFC file with or without xrefs. 
+¦ 
+If you are exporting a drawing file that contains xrefs, the host drawing file is mapped to (Ifc)Site by default. The (Ifc)Site file may contain building objects and site geometry as well as xrefs. 
+
+¦ 
+If you are exporting a drawing that does not contain any xrefs, all of the objects in the drawing are contained in (Ifc)Building. The IFC file will not contain an IfcSite or an IfcBuildingStorey. Without IfcSite, geographic location information, such as longitude and latitude, cannot be exported. This information is tracked in the LOG file. For more information, see General Information for Exporting Drawing Files to IFC on page 220. 
+
+
+
+Exporting a Drawing with External References 
+Use this procedure to export a drawing as an IFC file and include selected xrefs. The drawing for export must be active on your drawing screen. It is mapped to (Ifc)Site by default. 
+If there are objects you want to classify as a different type of object for export, the drawing with the classified objects must have been previously saved. For more information, see Classifying AEC Objects for Export on page 234. 
+Xrefs contained in this drawing are listed in the tree view below the drawing name, and are mapped to Level (1) by default. If the xrefs are missing in the drawing, they are unavailable in the Export to IFC dialog. The icon next to the file name indicates if the xref is unloaded in the host drawing. 
+
+1 Open the drawing that you want to export as an IFC file. 
+2 Click 
+. Export . IFC (Industry Foundation Classes). 
+Alternatively, on the command line, enter -IfcExport, and select 
+export options. 
+
+3 In the Export to IFC dialog, for Project Number, enter a project number for the drawing. 
+4 The name of the drawing being exported displays for Project Name by default. Modify this, if necessary. 
+5 To change the default value for Create IFC File Named, click Browse, navigate to the desired file, and select it. 
+6 Under Drawing Files, select the drawing files to be exported. If you select an xref at the top level, all xrefs nested within this drawing are selected as well. Expand the top level, and select xrefs individually if necessary. 
+7 To change the label in the IFC Structure column, select or add a different level from the drop-down list, or enter text in the field. If you want xrefs to display as a distinct level within the IFC file, specify different identifying labels. You can specify the same identifier, such as Level (1), for multiple xrefs to combine the objects within those xrefs into one IfcBuildingStorey. 
+
+8 Enter a description of the file for export. You can select multiple drawing files and change all labels or descriptions at the same time. 
+
+Specify Export Options 9 Click Options, and click the Header tab. 
+
+The name of the drawing active on your screen displays on the Header tab of the IFC Export Options dialog. You can add information about the drawing file to be exported, such as a description of the drawing, the author and company name, authorization data, and the geographic location of the building. For example, you could enter the description of a structural drawing as Structure for Commercial Building 152 on the Header tab. This information displays in the header of the IFC file when the file is viewed. 
+Other data is exported with the drawing by default and includes the name of the source drawing file and the name and version of the application in which it was created. 
+10 Enter information, then click the Objects tab. 
+
+You can select or exclude objects for export with the drawing file. When the IFC file is viewed, the only objects included will be those that you selected. For example, you could select Slab and Structural Member and exclude all other objects from exporting. 
+When you specify export options for your objects, the following constraints apply: 
+¦ 
+The classification of an object takes precedence over the object type. For example, if you classify a mass element as a ramp and then export the drawing without Mass Element selected on the Objects tab, the newly-classified mass element is not included in the export process. 
+
+¦ 
+Any change you make to either tab in the IFC Export Options dialog, become the new default settings. 
+
+¦ 
+For selected objects to be exported, their display representations must be active in the current display configuration. 
+
+
+11 Select the objects for export, and click OK. 12 Click Export. 
+
+Exporting a Drawing Without External References 
+Use this procedure to export a drawing as an IFC file when the drawing does not contain xrefs. The drawing for export must be active on your drawing screen. It is mapped to (Ifc)Building by default. 
+If there are objects you want to classify as a different type of object for export, the drawing with the classified objects must have been previously saved. For more information, see Classifying AEC Objects for Export on page 234. 
+1 Open the drawing that you want to export as an IFC file. 
+2 Click 
+. Export . IFC (Industry Foundation Classes). Alternatively, on the command line, enter -IfcExport, and select export options. 
+3 In the Export to IFC dialog, for Project Number, enter a project number for the drawing. 4 The name of the drawing being exported displays for Project Name by default. Modify this, if necessary. 5 If you want to change the default value of where the IFC file is exported, click Browse, navigate to the desired file, and select it. 
+
+6 Enter a description of the file for export. You can select multiple drawing files and change all labels or descriptions at the same time. 
+Specify Export Options 7 Click Options, and click the Header tab. 
+
+The name of the drawing active on your screen displays on the Header tab of the IFC Export Options dialog. You can add information about the drawing file to be exported, such as a description of the drawing, the author and company name, authorization data, and the geographic location of the building. For example, you could enter the description of a structural drawing as Structure for Commercial Building 152 on the Header tab. This information displays in the header of the IFC file when the file is viewed. 
+Other data is exported with the drawing by default and includes the name of the source drawing file and the name and version of the application in which it was created. 
+8 Enter information, and click the Objects tab. 
+
+You can select or exclude objects for export with the drawing file. When the IFC file is viewed, the only objects included will be those that you selected. For example, you could select Slab and Structural Member and exclude all other objects from exporting. 
+When you specify export options for your objects, the following constraints apply: 
+¦ 
+The classification of an object takes precedence over the object type. For example, if you classify a mass element as a ramp and then export the drawing without Mass Element selected on the Objects tab, the newly-classified mass element is not included in the export process. 
+
+¦ 
+Any changes you make to either tab in the IFC Export Options dialog, become the new default settings. 
+
+¦ 
+For selected objects to be exported, their display representations must be active in the current display configuration. 
+
+
+9 Select the objects for export, and click OK. 10 Click Export. 
+
+Classifying AEC Objects for Export 
+Using classification definitions allows you to assign three-dimensional AEC objects as different object types. This is helpful if you want to export the object in your drawing as something different for the IFC file. For example, you can draw a mass element, and classify it as a specific object type. For more information about assigning classifications to objects, see Classification Definitions on page 3834. 
+A drawing file of classifications (that can be used for objects at export) is available in the software and can be found in ProgramData\Autodesk\ACA 2011\enu\Styles\IfcPropertySet_Definition.dwg. 
+IMPORTANT IfcSiteGeometry is a unique classification. This classification can be applied to any object, but the object must be in an IfcSite drawing for the classification to be retained when exported. If it is not an IfcSite drawing (the IFC structure for drawings with xrefs attached), the IfcSiteGeometry classification is not preserved when exported to IFC. 
+Use this procedure to classify an AEC 3D object to display as something different in the IFC file. 
+1 Open the drawing that contains the objects you want to classify for export. 
+2 Click Manage tab . Style & Display panel . Style Manager
+ . 
+3 In Style Manager, click 
+(open drawing). 4 In the Open drawing dialog, navigate to 
+C:\ProgramData\Autodesk\ACA 2011\enu\Styles\IfcPropertySet_Definition.dwg, and click Open. 5 In the Style Manager, expand the IFC drawing file, expand Multi-Purpose Objects, and expand Classification Definitions. 
+
+6 Right-click Classification Definitions, and click Copy. 7 Select the drawing into which to add the IFC classifications (the 
+drawing opened in step 1), right-click, and click Paste. 8 Click OK to close Style Manager. 9 In the drawing area, select the objects to classify, open the 
+Properties palette, and click the Extended Data tab. 
+10 Click 
+next to IFCObjectClassification. 
+
+11 In the Select Classification dialog, select the classification, and click OK. 
+12 Save your drawing before continuing to export it to an IFC file. For more information, see General Information for Exporting Drawing Files to IFC on page 220. 
+IMPORTANT Save this drawing file with the classifications before exporting the file as either the host drawing or an xref. 
+
+How IFC Files Are Imported 
+When you import an IFC file, drawing files are created that correspond to each part of the IFC project structure. The files are xrefed together into a main host file that represents the entire IFC file. The import process also creates a LOG file which contains object and geographic location information. This file is stored in the same location as the imported IFC file. IFC files can be imported into an AutoCAD Architecture project or as standalone drawings. 
+
+You may need to turn on some display components of objects (such as surfaces of spaces) for them to display after you import an IFC file. For more information, see Display Representations on page 789. 
+When you import an IFC file, you specify a name for the drawing that is being created from the IFC file. This drawing contains xrefs only. For example, importing an IFC file and naming it Small Office Building, creates a DWG file called Small Office Building.dwg, which contains all of the xrefs that correspond to each part of the project structure contained in the IFC file. During the import process, the following occurs: 
+¦ A site drawing is created with field information if it existed in the IFC file. If the IfcSite file does not have a name assigned, a site drawing file is created with –Site appended. If there is an IfcSite name specified in the IFC file, a default drawing is created with the name of Site.dwg. The geographic location is imported by default if the IfcSite file contained the latitude and longitude of the site. (The geographic information for a drawing with multiple xrefs is determined by the host drawing.) You can see this information in the Geographic Location dialog. For more information, see View the Geographic Location Information in the AutoCAD Help. 
+¦ The import process applies a name to the project or drawing file: 
+If the IFC file is imported Then… as… 
+an AutoCAD Architecture pro- the IfcBuilding name is used with the name of the  
+ject  project. (Note that AutoCAD Architecture uses the  
+project name (that you specified in the Export to  
+IFC dialog) as the IfcBuilding name. This is notice­ 
+able if you are importing an IFC file that originated  
+in AutoCAD Architecture.)  
+
+standalone drawings the drawing is created with the original project name appended. Using the Small Office Building example, the drawing name would be Small Office Building-Commercial Project.dwg because Commer­cial Project was the IfcBuilding name in the IFC file. 
+¦ 
+A drawing is created for each IfcBuildingStorey contained in the IFC file. The files are created using the drawing name with the name of the IfcStorey appended. These files are referenced into the project file. 
+
+¦ 
+Objects in files with colors specified as 0, 0, 0 or 255, 255, 255 display with the AutoCAD Color Index (ACI) 7 assigned by default. 
+
+
+
+Architectural Objects and IFC 
+As shown in the following table, most common building objects imported from an IFC file are created as the corresponding AutoCAD Architecture objects in the resulting drawing file. However, in the case of an IFC object with complex geometry that does not directly correspond to the components of its AutoCAD Architecture counterpart, a custom display block is created in the model display representation. Therefore, 3D geometry in the Model display representation may not always correspond exactly to the Plan display representation. For more information, see Display Representations on page 789. 
+When you import an… AutoCAD Architecture creates a… 
+IfcBeam Beam 
+IfcColumn Column 
+IfcCurtainWall Curtain wall 
+IfcDoor Door 
+IfcElementAssembly Multi-view block 
+IfcOpening Opening 
+IfcMember Brace 
+IfcRailing Multi-view block 
+IfcRamp Multi-view block 
+IfcRoof (object with geometry) Multi-view block 
+IfcSlab Slab 
+IfcSlab (object with predefined type of Roof slab Roof or an aggregate of slabs such as a gabled roof) 
+IfcSpace Space 
+IfcStair Multi-view block 
+IfcWall Wall 
+IfcWallStandardCase (an upright wall Wall with uniform thickness) 
+IfcWindow Window 
+IfcBuildingElementProxy (for example, Multi-view block IFC objects that represent furniture) 
+When you import all other IFC objects with a 3D geometric representation (for example, IFC objects that represent pipes or ducts), AutoCAD Architecture creates a multi-view block. 
+
+
+Options for Importing AEC Objects 
+When you import an IFC file, you can specify objects to import. For example, if you want to create a drawing file that displays only the curtain walls from the IFC file, you can clear all other objects listed in the IFC Import Options dialog. When the drawing is viewed, the only objects included will be those that you selected. 
+
+Style names stored in the IFC file display on the Properties palette and in Style Manager. If there are no specific style names in the IFC file, style names are created incrementally, such as IFCSTYLE(0). 
+You can specify how and when styles are created if there are multiple styles with the same name in the IFC file. They can either display incrementally with a number suffix or display with the name first encountered, regardless of whether the styles are the same, during the import. 
+
+
+Importing an IFC File 
+Use this procedure to import an IFC file. When you select an IFC file to import, you specify whether to create the drawings in an AutoCAD Architecture project or as a set of standalone drawings. 
+1 Click 
+. Open . IFC (Industry Foundation Classes). 
+
+2 In the Import IFC File and Create Drawings dialog, click Browse for IFC file to import, navigate to the desired IFC file, and select it. 
+3 Specify if the imported file is to be part of a project: 
+If you want to… Then… 
+import the file and create a project and project drawings select Create a project, and enter a folder name for Create project under folder; or click Browse, navigate to the desired folder, and select it. The drawings are imported with the structure of an AutoCAD Architecture project. For more information, see Concepts of Drawing Man­
+agement on page 291. 
+import the file as stan­ enter a drawing name for Create drawings  
+dalone drawings  named; or click Browse, navigate to the de­ 
+sired file, and select it.  
+Unless you specify otherwise, the drawing is  
+created at the same location as the IFC file.  
+
+4 If you want to change the default value for Create Drawings from Template, click Browse, navigate to the desired DWT file, and select it. 
+If the template (DWT file) you select does not have the same units as the IFC file being imported, you are given the choice to continue with that template or select a different template. If you choose to continue with the selected template, the units in the IFC file will override the units in the template file. 
+
+NOTE The template you select becomes the new default template. 5 Click Options to specify import options, then click OK: 
+If you want to… Then… 
+change the default value  under Select objects to import from IFC file,  
+of importing all objects to  check the objects to import or clear objects  
+selecting specific objects  to omit. Click Select All and Clear All to assist  
+to import  with the selection. For more information, see  
+Options for Importing AEC Objects on page  
+239.  
+
+have a new style name created to correspond with each instance of the style name in the IFC file 
+select Create new style with unique name. For more information, see Options for Import­
+ing AEC Objects on page 239. If multiple occurrences of the same style name exist, a number displays incrementally at the end of the name. 
+
+If you want to… Then… 
+use the first instance of  select Use the first style encountered with  
+the style name for all ob- the same name. For more information, see  
+jects  Options for Importing AEC Objects on page  
+239.  
+
+6 Click Create: 
+
+If you… Then… 
+specified Create project  the Project Navigator opens on your drawing  
+drawings when you im­ screen. Use Project Navigator to browse the  
+ported the IFC file  project drawings created at import. For more  
+information, see Workflow for a Project Envir­
+ 
+onment on page 289.  
+
+created standalone draw-click Yes. ings and want to view the top-level drawing 
+created drawings outside click No. of an AutoCAD Architec­ture project and want to view a different drawing 
+If there is a component of an object that does not display after you import an IFC file, open the display representation for the object, and on the Layer/Color/Linetype tab, turn on the display component by selecting the light bulb icon under Visible. For more information, see Display Representations on page 789. 
+IMPORTANT If AutoCAD Architecture runs out of memory during import, a message displays on the command line, and the import process fails. Continuing to use AutoCAD Architecture under these conditions may affect subsequent work. The correct procedure is to close and then restart the application. You can then retry the import after: 
+¦ 
+Closing all other applications. 
+
+¦ 
+Limiting the objects for import in the IFC Import Options dialog. 
+
+¦ 
+Switching to a 64-bit system. 
+
+
+
+
+
+Importing Building Components from Autodesk Inventor 
+AutoCAD Architecture 2011 can import data from Autodesk Inventor. This capability allows designers of manufactured mechanical building system components and architectural elements to export digital design geometry without the loss of data. This data can then be imported by architects designing buildings and mechanical systems with AutoCAD Architecture. 
+Previously, exporting a building component from Inventor incurred some loss of information when the data was imported into AutoCAD Architecture. Such information loss may be necessary to protect the intellectual property of the designer of the manufactured item, or to reduce the complexity and size of the data being passed to the architectural or engineering model. To achieve the desired level of information in the exported data, Inventor now employs a custom data reduction of the architectural or engineering model. 
+Export Requirements in Autodesk Inventor 
+In order for a building component to be correctly imported into AutoCAD Architecture, it must be prepared for export in Autodesk Inventor, and be saved as a Bulding Component Autodesk Exchange file (*.adsk). For more information, consult the Inventor User Guide. 
+
+Import Format 
+When you import an Inventor building component into AutoCAD Architecture, you can choose whether the component is imported as a multi-view block or a block. 
+
+Changing the UCS During Import 
+When importing building components from Inventor into AutoCAD Architecture, you can change the original UCS. For example, a building component could have been designed in Inventor using a coordinate system with the X and Z axes as the horizontal ground plane axes and the Y axis as the vertical axis. When importing into AutoCAD Architecture however, a different coordinate system with the X and Y axes as the horizontal ground plane axes and the Z axis as the vertical axis is needed, in order to avoid importing the component lying on its back. In this case, the UCS can be changed during the import of the part. 
+
+Re-Importing Components 
+If a building component has been imported into AutoCAD Architecture, and then a change is made to the original file, then on re-import you can choose 
+whether the existing multi-view block or block is overwritten with the updated component, or whether the new version should be imported as a new block or multi-view block. 
+
+Importing a Building Component into AutoCAD Architecture 
+Use this procedure to import an Inventor building component into AutoCAD Architecture. 
+1 Click Insert tab . Content panel . Content Browser 
+drop-down . Building Component
+ . 
+Inserting an Inventor component as a multi-view block 
+
+2 In the Import Building Component dialog, select the Autodesk Exchange Format file (*.adsk) that you want to import. 3 Select if you want to import the component as a block or a 
+multi-view block. This opens the Import dialog where you can specify a name, description, and change the orientation of the block or multi-view block during insertion. 
+
+4 When inserting a single block, the image in the viewer will be the block that is inserted, i.e front, top, etc. Any axonometric view will insert the 3D block. 
+If necessary, use the ViewCube in the preview window to display the component in the desired view. 
+5 Use the Rotate buttons to rotate the model around its X, Y, or Z axis when inserted into the drawing. 
+6 Do one of the following: 
+¦ 
+If you are inserting a multi-view block, click Add. Then specify the insertion point in the drawing. 
+
+¦ 
+If you are inserting a block, click either Insert (to insert the block reference), or Insert All (to insert the block reference plus separate graphical representations of all the view directions). This is recommended if you want to build a block library and add the block to that. Then, specify the insertion point, the X and Y scale, and the rotation. 
+
+
+Depending on whether the component was inserted as a block or multi-view block, you have different options for editing it in AutoCAD Architecture. For information on multi-view blocks, see Multi-View Blocks on page 2855. For information on blocks, see “Create and Use Blocks (Symbols)” in the AutoCAD Online help. 
+
+
+Importing LandXML 
+LandXML data can be imported and converted to objects. LandXML is the standard XML data format for civil engineering and survey data used in the land development and transportation industries. LandXML provides a data format suitable for long-term data archiving and offers a standard format for electronic design submission. 
+With LandXML, building professionals can extend the downstream value of their data from design to construction, and for scheduling and maintenance by using a format that can be read by many applications. 
+LandXML files are based on the LandXML schema, an XML schema definition for civil and survey data. 
+Residential area layout from Autodesk® Land Desktop 
+
+NOTE For more information about LandXML, visit http://www.landxml.org. 
+You cannot convert AutoCAD Architecture objects to LandXML data or export DWG files to the LandXML format. 
+Schema Version 
+To import LandXML files, create them with the LandXML schema version 
+1.1. Note that LandXML files created with earlier versions of LandXML (for example version 0.88) cannot be imported. You can download the latest version of the LandXML schema from http://www.landxml.org. 
+
+Supported Data Types 
+AutoCAD Architecture can read and convert the following LandXML data types: 
+¦ 
+Parcels 
+
+¦ 
+COGO points 
+
+¦ 
+Surfaces 
+
+
+Parcels 
+Parcels are two-dimensional shapes created from closed lines, arcs, and polylines. When a parcel is imported, the parcel name and the lines (segments) and curves (arcs) that make up the parcel boundary are used for the conversion. 
+Parcels in a street layout from Autodesk® Land Desktop 
+
+You can convert parcels to spaces or polylines. When you convert parcels to spaces, you can define a space style that is applied to the spaces generated from the parcels, and the parcel name is used as the space name. When the parcel is converted to a polyline, the parcel name is lost. 
+Parcel data in LandXML 
+
+
+
+COGO (Coordinate Geometry) Points 
+You can import LandXML COGO (Coordinate Geometry) points and convert them to AutoCAD points. 
+Civil engineers create COGO points to locate crucial surveying locations. A COGO point can be a project benchmark point - a common datum that the entire civil team works off and from which all critical dimensions are located. 
+NOTE A LandXML file usually contains a large number of COGO points. In most cases, you need only a small set to work within the drawing. You do not need to import all COGO points, only those that have a special meaning for the drawing. 
+COGO points are the foundation for any civil engineering or surveying project. In Land Desktop, you can use description keys to place points in the drawing with symbols on specific layers. When importing a LandXML file you can map selected points to the appropriate layer. 
+When a COGO point is imported it is defined by its coordinates in the form of “northing easting” or “northing easting elevation.” 
+For example, a COGO point could be represented as: <CgPOINT NAME="1" DESC="MYPOINT">248.04605951 359.53997314 1.000000</CgPOINT>. 
+COGO points on a map 
+
+NOTE Autodesk Land Desktop uses two coordinate systems for locating points: X,Y and northing/easting. When you start a new project, these values all default to 0 so that the Y coordinate is the same as the northing, and the X coordinate is the same as the easting. Unless you change that in Land Desktop before exporting a drawing to LandXML, the exported northing value will be identical to Y and the exported easting value will be identical to X. 
+
+Surfaces 
+In most surveying and civil engineering operations, you gather information about elevations to generate surface contours that represent a model of the ground surface. The surfaces in LandXML are made up of many faces which are either TINs (Triangular Irregulated Networks) or quadrilaterals. Points or contours are usually a primary part of the original surface information and are supplemented with break lines and boundaries. You can create a surface in LandXML, and then import it. It is converted to a Free Form mass element. 
+In the following cases, importing surfaces can create errors or fail altogether: 
+¦ 
+Surfaces with vertical faces 
+
+¦ 
+Surfaces with tiny gaps between the individual faces 
+
+¦ 
+Surfaces with very narrow faces 
+
+
+If the import fails, an error message is displayed on the command line, such as “Failed to create mass element from terrain.” 
+Surface model in Autodesk® Land Desktop 
+
+A surface model is usually a complex structure with many defining points and faces. When you convert a surface model to a Free Form mass element, the points and faces are merged into one composite mass element body. 
+Surface model detail 
+
+A Free Form mass element contains a large number of grips. Displaying all grips can slow down the performance and be unnecessary for using the mass element. There are two ways to control the display of grips on mass elements: 
+¦ 
+By default, the grips on a Free Form mass element are only displayed if their number does not exceed 2000 grips per element. 
+
+¦ 
+You can turn off the display of grips in the drawing altogether if you click 
+
+
+
+. Options, then click the Selection tab, and under Grips, clear Enable Grips. 
+A surface in the LandXML Schema contains information about the surface name, type, 2D and 3D area, and the maximum and minimum elevations. It also contains information about each of the points and faces that comprise the surface. The surface information is merged into one composite mass element body, which can have thousands of faces. Applying a surface hatch or texture map to a complex mass element can be quite time-consuming. 
+Surface data in LandXML 
+
+
+
+
+File Validation 
+When you import a LandXML file, the file is automatically validated before it is imported and opened. The LandXML file has to conform to the LandXML 
+1.1 schema definition to be used. 
+
+Importing LandXML Data 
+Use this procedure to import LandXML data. 
+
+

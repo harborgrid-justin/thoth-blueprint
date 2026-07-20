@@ -1,0 +1,625 @@
+[MIGRATED TO RTM_PART_40.md - DETAIL CALLOUTS & SHEET SETS]
+a question mark. To resolve them, the model space view needs to be placed onto a sheet, as described in Resolving Fields in Callout Symbols on page 3689. 
+Placing Elevation Callouts 
+You can use callouts to create elevations of the building model. With the callout tools of AutoCAD Architecture, you can create interior and exterior elevations. When you create an interior elevation, you can select spaces as the elevation boundary. 
+4 model space exterior elevations 
+
+AutoCAD Architecture comes with a number of predefined elevation callout symbols. For a list, see Callout Tools in AutoCAD Architecture on page 3652. 
+Placing a Single Elevation Callout 
+Use this procedure to place a callout that creates a single elevation. 
+NOTE The 2D section/elevation style and the display set for the model space view containing the elevation are set in the elevation callout tool. For more information, see Setting the Properties of a Callout Tool on page 3663. 
+
+1 On the Quick Access toolbar, click Project Navigator 2 Click the Views tab. 3 Select the view drawing in which you want to place an elevation 
+callout, right-click, and click Open. 
+4 On the Tool Palettes, click 
+(Properties), and click Document. 5 Click the Callouts palette. 6 Select a single elevation callout tool. 
+Alternatively, you can click Annotate tab . Callouts 
+panel . Elevations drop-down . Elevation (Single)
+ , or Annotate tab . Callouts panel . Elevations 
+drop-down . Elevation (Single, Inverted Text)
+ . 
+7 Select the location for the elevation mark in the drawing. 8 Specify the direction of the elevation. 
+
+9 Under New Model Space View Name, enter a name for the new model space view containing the elevation. 10 Verify that Generate Section/Elevation is selected. 11 If you want to add a title mark to the new model space view, select Place Titlemark. 12 Select the scale for the model space view. 
+13 Select where to place the elevation: 
+If you want to… Then… 
+place the elevation in the view click Current Drawing. drawing in which you placed the callout 
+place the elevation in an exist- click Existing View Drawing and follow  
+ing elevation view drawing  the instructions in Creating a Section  
+in an Existing Drawing on page 3674.  
+
+place the elevation in a new el- click New View Drawing and follow the  
+evation drawing  instructions in Creating a Section in a  
+New Drawing on page 3677.  
+
+14 In the drawing, select the first corner of the elevation region. 15 Select the opposite corner of the elevation region. 16 Define the insertion point of the elevation result. 
+NOTE If you chose to place the elevation in a different drawing, you still select the insertion point in the current drawing. The elevation view however, will be inserted in the drawing you have specified. 
+Once the model space view has been placed, the field placeholders in the elevation tool change to a question mark. To resolve them, the model space view needs to be placed onto a sheet, as described in Resolving Fields in Callout Symbols on page 3689. 
+Placing a Four-Way Interior Elevation Callout 
+Use this procedure to place a callout that creates a four-way interior elevation. 
+When you create a four-way interior elevation, you can define the elevation region either by specifying its corner points in the drawing, or by selecting spaces as the elevation boundary. 
+NOTE The 2D section/elevation style and the display set for the model space views containing the elevations are set in the elevation callout tool. For more information, see Setting the Properties of a Callout Tool on page 3663. 
+1 On the Quick Access toolbar, click Project Navigator
+ . 
+2 Click the Views tab. 3 Select the view drawing in which you want to place an elevation callout, right-click, and click Open. 
+4 On the Tool Palettes, click 
+(Properties), and click Document. 5 Click the Callouts palette. 6 Select a four-way interior elevation callout tool. 
+Alternatively, you can click Annotate tab . Callouts panel . Elevations drop-down . Elevation (Interior. 1, 2, 3, 4) 
+
+or Annotate tab . Callouts panel . Elevations 
+drop-down . Elevation (Interior. N, S, E, W)
+ . 
+7 Select the location for the elevation mark in the drawing. 8 Specify the direction of the first elevation number. 
+
+9 Under New Model Space View Name, enter a name for the model space view containing the first of the four elevations. 10 Verify that Generate Section/Elevation is selected. 11 If you want to add a title mark to the new model space view, select Place Titlemark. 12 Select the scale for the model space view. 
+13 Select where to place the elevation: 
+If you want to… Then… 
+place the elevation in the view click Current Drawing. drawing in which you placed the callout 
+place the elevation in an exist- click Existing View Drawing and follow  
+ing elevation view drawing  the instructions in Creating a Section  
+in an Existing Drawing on page 3674.  
+
+place the elevation in a new el- click New View Drawing and follow the  
+evation drawing  instructions in Creating a Section in a  
+New Drawing on page 3677.  
+
+14 In the drawing, select the elevation region: 
+If you want to… Then… 
+define the elevation region with select the space, and press ENTER. a space 
+define the elevation region by  press ENTER. Then, select the two  
+picking two boundary points  boundary points of the elevation re­ 
+gion.  
+
+15 Specify the depth of the elevations. 16 Specify the height of the elevations. 17 Specify the insertion point of the elevations. 
+NOTE If you chose to place the elevations in a different drawing, you still select the insertion point in the current drawing. The elevations, however, will be inserted in the drawing you specified. 
+18 Specify the distance between the elevations and their orientation. 
+Once the model space views have been placed, the field 
+placeholders in the elevation callouts change to a question mark. 
+To resolve them, the model space views need to be placed onto 
+sheets, as described in Resolving Fields in Callout Symbols on 
+page 3689. 
+Placing a Four-Way Exterior Elevation Callout 
+Use this procedure to place a callout that creates a four-way exterior elevation. 
+NOTE The 2D section/elevation style and the display set for the model space views containing the elevations are set in the elevation mark tool. For more information, see Setting the Properties of a Callout Tool on page 3663. 
+1 On the Quick Access toolbar, click Project Navigator
+ . 2 Click the Views tab. 3 Select the view drawing in which you want to place an elevation 
+callout, right-click, and click Open. 
+4 On the Tool Palettes, click 
+(Properties), and click Document. 
+5 Click the Callouts palette. 
+6 Select a four-way exterior elevation callout tool. 
+Alternatively, you can click Annotate tab . Callouts 
+panel . Elevations drop-down . Elevation (Exterior)
+ . 
+7 Specify the first corner of the elevation region. 8 Specify the opposite corner of the elevation region. 
+
+9 Under New Model Space View Name, enter a name for the model space view containing the first elevation. 10 Verify that Generate Section/Elevation is selected. 
+11 If you want to add a title mark to the new model space views, select Place Titlemark. 
+12 Select the scale for the model space view. 
+13 Select where to place the elevation: 
+If you want to… Then… 
+place the elevation in the view click Current Drawing. drawing in which you placed the callout in 
+place the elevation in an exist- click Existing View Drawing and follow  
+ing elevation view drawing  the instructions in Creating a Section  
+in an Existing Drawing on page 3674.  
+
+place the elevation in a new el- click New View Drawing and follow the  
+evation drawing  instructions in Creating a Section in a  
+New Drawing on page 3677.  
+
+14 Specify the height of the elevations. 15 Specify the insertion point of the elevations. 
+NOTE If you chose to place the elevations in a different drawing, you still select the insertion point in the current drawing. The elevations however, will be inserted in the drawing you specified. 
+16 Specify the distance between the elevations and their orientation. Once the model space views have been placed, the field placeholders in the callout change to a question mark. To resolve them, the model space views need to be placed onto sheets, as described in Resolving Fields in Callout Symbols on page 3689. 
+Placing a Callout Without a Model Space View 
+Use this procedure to place a callout that is not connected to a model space view. 
+Placing a callout that is not referenced to a model space view might be useful if you have legacy view drawings that are not yet referenced to a callout. You can create a standalone callout in a building model, and then reference it to an existing model space view or sheet view in the project. 
+When you insert a callout without a referenced model space view in a drawing, the field placeholders in the callout are not connected to a view. Therefore, the field placeholders are displayed in the callout by their names; for example “Viewnumber,” or “Sheetnumber.” 
+1 On the Quick Access toolbar, click Project Navigator
+ . 2 Click the Views tab. 3 Select the view drawing in which you want to place a callout, 
+right-click, and click Open. 
+4 On the Tool Palettes, click 
+(Properties), and click Document. 5 Click the Callouts palette. 6 Select a callout tool. 
+For a description of the callout tools shipped with AutoCAD Architecture, see Callout Tools in AutoCAD Architecture on page 3652. 
+Alternatively, you can click Annotate tab . Callouts panel, and select a callout tool. 
+7 Add the callout tool to the drawing, following the instructions for the type of tool you selected. 
+
+8 Click Callout Only. An unconnected callout symbol is inserted in the drawing. 
+Referencing a Callout to an Existing View 
+Use this procedure to reference a callout to an existing model space view or to an existing sheet view in the project. For information on creating model space views, see Creating a Model Space View on page 454. For information on creating sheet views, see Creating a Sheet View on page 483. 
+1 On the Quick Access toolbar, click Project Navigator
+ . 2 Click the Views tab. 3 Select the view drawing that contains the callout, right-click, and 
+click Open. 4 Select the callout. 5 In the Project Navigator, navigate to the model space view or 
+sheet view you want to reference to the callout: 
+If you want to… Then… 
+reference the callout to an  click the Views tab, and navigate to the  
+existing model space view  view drawing containing the model space  
+view. Then, expand the view drawing.  
+
+reference the callout to an existing sheet view 
+click the Sheets tab, and click 
+. Navig­ate to the sheet containing the sheet view, and expand the sheet. 
+NOTE If a sheet view already exists, you can reference the callout to either the sheet view or the model space view. 
+6 Drag the callout from the drawing onto the model space view or 
+the sheet view in the Project Navigator. If you referenced the callout to a model space view, the field placeholders in the callout change to question marks. For information on resolving field placeholders in callouts, see Resolving Fields in Callout Symbols on page 3689. 
+If you have connected the callout to a sheet view, the field placeholders in the callout are resolved with the sheet information. 
+Opening a Model Space View 
+Use this procedure to open a model space view. 
+When you create a model space view that is referenced to a callout, the model space view can be placed in the drawing in which the callout was placed, into an existing project view drawing, or in a new project view drawing. 
+Model space views are displayed and opened in the Views tab of the Project Navigator. 
+Exterior elevation model space views in Project Navigator 
+
+1 On the Quick Access toolbar, click Project Navigator
+ . 
+2 In the Project Navigator, navigate to the view drawing containing the model space view. It is not important whether the drawing is already open. 
+3 If necessary, expand the view drawing to display the model space views contained in it. 4 Select the model space view you want to open, and double-click 
+it. Alternatively, you can select the model space view in the Project Navigator, right-click, and click Open. 
+Deleting a Model Space View 
+Use this procedure to delete a model space view. 
+When you delete a model space view, any callout symbols and title marks associated with the view are not deleted automatically. After deleting the model space view, you need to manually delete the callout symbol and title mark from the source drawing. 
+1 On the Quick Access toolbar, click Project Navigator
+ . 2 Click the Views tab. 3 Select the view drawing that contains the model space view you 
+want to delete, and expand it. 4 Select the model space view to delete, right-click, and click Delete. 
+Resolving Fields in Callout Symbols 
+Use this procedure to place a model space view on a sheet and resolve its field placeholders. 
+The predefined callout tools in AutoCAD Architecture contain field placeholder information about the sheet number and the view number. This information can be resolved only when the model space view created by the callout is referenced into a sheet. As long as the model space view is not placed on a sheet, the information is unresolved, and a question mark is displayed. 
+Unresolved (left) and resolved (right) elevation callout symbols 
+
+Once the model space view is placed on a sheet, and the sheet information in the callout is resolved, a link is created between the field information in the model space view and the sheet on which it is placed. When you CTRL-click the sheet number, the corresponding sheet drawing is opened. 
+1 Create a model space view referenced to a callout, as described in Placing Detail Callouts on page 3665, Placing Section Callouts on page 3671, or Placing Elevation Callouts on page 3679. 
+
+2 In the Project Navigator, click the Sheets tab, and click 
+3 In the Sheet Set View, locate the sheet onto which you want to place the model space view. 
+4 Open the sheet in one of these ways: 
+¦ 
+Select the sheet, right-click, and click Open. 
+
+¦ 
+Double-click the sheet. 
+
+
+The drawing containing the sheet is opened in the drawing area of AutoCAD Architecture. The sheet you selected is the active layout. 
+5 In the Project Navigator, click the Views tab. 
+6 Select the model space view you want to place onto the sheet, and place it in one of these ways: 
+¦ 
+Select the model space view, and drag it from the Project Navigator to the drawing area of the sheet. 
+
+¦ 
+Select the model space view, right-click, and click Place on Sheet. Then, select an insertion point on the sheet. 
+
+
+When you open the model space view, you can see that the sheet information has been updated. 
+Working with Callouts Outside a Project 
+Model space views are based on the concepts of the Drawing Management feature. A model space view normally is created from a project view drawing and referenced into a project sheet drawing. 
+You can use a part of the callout functionality outside a project, in a standalone DWG file, with the following limitations: 
+¦ 
+You can place model space views only within the current drawing. 
+
+¦ 
+You can access model space views only from the Named Views dialog of AutoCAD. 
+
+¦ 
+You cannot templates for details, sections, or elevations. 
+
+¦ 
+Field placeholders containing information about views and sheets are not automatically resolved. You must enter values manually. 
+
+
+Placing a Callout in a Non-Project Drawing File 
+Use this procedure to place a callout in a drawing that does not belong to a Drawing Management project. 
+1 On the Tool Palettes, click 
+(Properties), and click Document. 2 Click the Callouts palette. 3 Select a callout tool. 
+Alternatively, you can click Annotate tab . Callouts panel, and 
+select a callout tool. 
+4 Insert the callout into the drawing. 
+If you want to… Then… 
+place a detail callout insert the tool as described in Creating a Detail in the Current View Drawing on page 3665. 
+place a section callout insert the tool as described in Creating a Section in the Current Drawing on page 3672. 
+place a single elevation cal-insert the tool as described in Placing a lout Single Elevation Callout on page 3679. 
+place a four-way interior el- insert the tool as described in Placing a  
+evation callout  Four-Way Interior Elevation Callout on page  
+3681.  
+
+If you want to… Then… 
+place a four-way exterior  insert the tool as described in Placing a  
+elevation callout  Four-Way Exterior Elevation Callout on page  
+3684.  
+
+
+5 Under New Model Space View Name, enter a name for the new model space view. 
+6 If you want to add a title mark to your model space view, select Place Titlemark. 
+7 Select the scale for the model space view. 
+8 Under Create in, select Current Drawing. A model space view is placed in the current drawing. 
+Opening Model Space Views in a Non-Project Drawing File 
+Use this procedure to open a model space view in a drawing that does not belong to a Drawing Management project. 
+1 Place a callout in the drawing, as described in Placing a Callout in a Non-Project Drawing File on page 3691. 
+2 Click View tab . Appearance panel . Views drop-down . View Manager. 
+
+In the View Manager, the model space view you created is listed under Views. 
+3 Select the model space view you want to open, and click Set Current. 
+4 Click OK. 
+Deleting Model Space Views in a Non-Project Drawing File 
+Use this procedure to delete a model space view from a drawing that does not belong to a Drawing Management project. 
+1 Open the drawing containing the model space view you want to delete. 
+2 On the command line, enter view. The model space views contained in the drawing are listed under Model Views. 
+3 Select the model space view you want to delete, right-click, and click Delete. 
+4 Click OK. 
+Creating New Callout Tools 
+AutoCAD Architecture provides a number of predefined callout tools. You can also create callout symbols with user-defined visuals and content. 
+Using Fields in Callout Tools 
+Fields enhance the documentation capabilities within a drawing file. A field is updatable text that is set up to display data that may change during the life cycle of the drawing. When the field is updated, the latest value of the field is displayed. Usually, you use property set data for this type of updatable information about the building model. However, property set data can be used only in MV-blocks. Fields can be inserted into manual properties in property set definitions, text, MText, attribute definitions and AutoCAD table cells. 
+For detailed information about fields, see “Use Fields in Text” in AutoCAD Help. 
+There are a number of predefined fields for sheet set information. Most of the fields refer to the current sheet, and should be inserted only in a sheet drawing. 
+When you are creating a callout tool, you will often use a field from the Sheet Set Placeholder category: These fields let you define a field as a placeholder in a callout for a referenced sheet. The fields are resolved when the callout is referenced into a sheet. For more information, see Resolving Fields in Callout Symbols on page 3689. 
+¦ 
+Current Sheet Custom: You can select an AutoCAD custom property defined for the current sheet here. 
+
+¦ 
+Current Sheet Description 
+
+¦ 
+Current Sheet Number 
+
+¦ 
+Current Sheet Number and Title 
+
+¦ 
+Current Sheet Set 
+
+¦ 
+Current Sheet Set Custom: You can select an AutoCAD custom property defined for the current sheet here. 
+
+¦ 
+Current Sheet Set Description 
+
+¦ 
+Current Sheet Subset 
+
+¦ 
+Current Sheet Title 
+
+
+¦ 
+Sheet Set: You can select any sheet from a sheet set as the field content; available properties are sheet title, sheet number and sheet description. 
+
+¦ 
+Sheet Set Placeholder: You can insert a placeholder representing information of a sheet. This placeholder is resolved when the callout is referenced into a sheet. The following fields are available as placeholders: 
+
+¦ 
+Sheet Number and Title 
+
+¦ 
+Sheet Title 
+
+¦ 
+Sheet Number 
+
+¦ 
+Sheet Description 
+
+¦ 
+Sheet custom: You can select an AutoCAD custom property defined for the referenced sheet here. 
+
+¦ 
+(Model Space) View Number and Title 
+
+¦ 
+(Model Space) View Title 
+
+¦ 
+(Model Space) View Number 
+
+¦ 
+(Model Space) Viewport Scale 
+
+
+
+
+NOTE The fields for sheet title, sheet number, sheet description, view title, and view number can be associated with a hyperlink that jumps to the sheet or model space view referenced. 
+¦ Sheet View: You can select any sheet view from a sheet set as the field content here; available properties are sheet view number, sheet view title, and sheet view viewport scale. 
+NOTE The fields for sheet view number and sheet view title can be associated with a hyperlink that jumps to the sheet view referenced. 
+Creating a Callout Tool 
+You can create callout tools that display information specific to the sheet set. Callouts can be referenced to model space views and can contain fields that point to a sheet or sheet view. When the model space view is placed onto into a sheet, the field is resolved and displays the sheet information. 
+For a list of available project and sheet set related fields, see Using Fields in Callout Tools on page 3694. 
+Process Overview: Creating a Callout Tool 
+Creating a callout tool consists of these basic steps: 
+1 Open the drawing in which you want to store the callout block. 
+NOTE By default, callout blocks are placed in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial\Callouts (Imperial).dwg. You can save your callout blocks there, or create your own callout drawings. 
+2 Add callout attributes to the drawing. 3 Create a block from the attributes. 4 Create a callout tool on a tool palette. 
+Adding Callout Attributes 
+Use this procedure to create attributes for a callout tool. 
+1 Click Insert tab . Attributes panel . Define Attributes. 2 Define the first attribute for the callout tool. 3 Enter a name in the Tag field. 
+4 Under Value, click 5 Under Field category, select the desired category. 
+
+
+TIP The Sheet Set category contains fields for views and sheets. 
+
+6 Under Field names, select the field you want to insert. Some fields require additional information, like a file name or property information. 
+7 Select the text format for the field text. 8 Click OK. 9 Proceed to adding the attribute as described in “Attribute 
+Definition Dialog Box” in AutoCAD help. 
+NOTE An attribute can contain only one sheet set field. If you want to create a callout line that reads, for example, View Number - View Title, you must define two separate attributes. 
+10 Repeat steps 1–3 for each attribute to add to the callout tool. 11 Complete the attribute block with lines, borders, and other desired components. 
+The result is have a number of attributes and graphic elements in your drawing. Your callout attributes might look like this: 
+Callout attribute block 
+
+Creating a Callout Block 
+Use this procedure to create a block that contains the attributes you added in the previous step. 
+1 Click Insert tab . Block panel . Create Block
+ . 2 Enter a name for the block. 3 Click Select Objects, and select the attributes and additional 
+graphics to include in the title block. 4 From the Drag-and-drop units list, select Unitless. 5 Proceed to creating the block as described in “Block Definition 
+Dialog Box” in AutoCAD help. 6 Save the drawing containing the callout block. 
+NOTE If you are creating a callout tool that will be used by multiple users, make sure that the drawing is located in a folder all users have access to. Otherwise, the tool won’t be able to be used by all users. 
+Creating a Callout Tool on a Tool Palette 
+Use this procedure to create the callout tool on a tool palette. 
+1 On the Tool Palettes, click 
+(Properties), and click Document. 2 Click the Callouts palette. 3 Select the callout tool most similar to the tool you want to create. 
+For example, if you want to create a detail tool, select one of the existing detail tools. 
+4 Right-click, and click Copy. Then, right-click, and click Paste. A copy of the selected tool is placed on the Callouts palette. 
+5 Select the copied tool, right-click, and click Properties. 6 Rename the tool as desired. 7 Under Tag location, select the drawing you have saved the callout 
+block in. 8 Under Tag name, select the block you created. 9 Change other properties as needed; for example, add a new title 
+mark or change the 2D section/elevation style. 10 Click OK. 
+Schedules and Display Themes 
+49 
+Schedules can be inserted in your drawings to display information about selected components in your building. The information is extracted from objects in the drawing based on information attached to objects and object styles. 
+Display themes provide another way to present data by using color, fills, and hatches. For example, you can specify that all 2-hour fire-rated walls appear with a red fill. A display theme legend identifies the correlation. 
+Data for display themes is also extracted from information attached to objects or object styles. Display themes and schedule tables are style-based annotation objects, for which styles can be created and modified in the Style Manager. For more information, see Style Manager Overview on page 856. 
+Schedules 
+Schedules are tables you can insert in drawings to list information about selected objects in your building model. Objects are made up of properties that contain data. Schedule tags provide an efficient tool of collecting the property data attached to the objects for display in a schedule table. You can create schedules with varying levels of detail by defining and attaching sets of properties to object styles or to individual objects and then extracting and displaying the data in a schedule table. 
+You can produce basic schedule tables using the default tools provided with the software. Before you perform more complex tasks such as creating your own schedule tables, classifications, or working with formulas in your project, it is important to understand how property data, property sets, and property set definitions interact. We recommend the following topics: 
+¦ Property Sets and Property Set Definitions on page 3705 
+¦ 
+Property Data Formats on page 3764 
+
+¦ 
+Property Set Data on page 3772 
+
+¦ 
+Property Set Definitions on page 3785 
+
+If you want to add simple tags and schedules for common objects like doors using one of the default tools, refer to the following topics: 
+
+¦ 
+Basic Schedules on page 3709 
+
+¦ 
+Schedule Tags on page 3716 
+
+If you want to manage the format and other display properties of schedules, refer to the following topics about schedule table styles: 
+
+¦ 
+Working with Schedule Table Styles on page 3731 
+
+¦ 
+Specifying the Display Properties of a Schedule on page 3755 
+
+If you want to work with more advanced scheduling tasks, such as adding classifications and formulas, refer to the following topics for information about identifying and collecting detailed information from your objects: 
+
+¦ 
+Property Set Data on page 3772 
+
+¦ 
+Understanding Formulas on page 3792 
+
+¦ 
+Classification Definitions on page 3834 
+
+
+Each section gives you conceptual as well as procedural information for the tasks you want to accomplish. Cross-references to additional supporting information are provided throughout. For answers to various questions about working with schedules, see Troubleshooting Schedule Tables on page 3860 and Troubleshooting Schedule Table Styles on page 3863. 
+Schedule Table Terminology in AutoCAD Architecture 
+You can add basic schedules to your drawings using tools provided with the software. These tools have predefined styles and properties. You can schedule additional details about objects, such as door hardware, by customizing an existing schedule table style or creating a new style. The following terms apply to creating and managing schedules: 
+Schedule Tags 
+You can use project-based or standard schedule tags in your drawings to graphically display the property data of an object. By linking the schedule tag to a property in a property set, such as the width of a door, you report property data of the object, such as 3'-0''. When you anchor the tag to an object to which the property set is applied, the value of the property displays in the tag. The information in the tag is updated if the object or property change. For more information, see Schedule Tags on page 3716. 
+Schedule Tools 
+The software provides default tools for project-based and standard wall, door, and window schedules on the Scheduling tool palette and in the Content Browser. Selecting one of these tools that has a style and other properties predefined, lets you quickly place a schedule table in your drawing. You can also apply the properties of a schedule table tool to existing schedule tables. You can create schedule table tools from schedule table styles. For more information, see Adding Schedules Using Schedule Table Tools on page 3709. 
+Schedule Styles 
+A schedule table style specifies the properties that can be included in a table for a particular object type. The style also controls the table formatting, such as text height and spacing, columns, and headers. Display properties in the style control the visibility, layer, color, linetype, lineweight, and linetype scale of table components. For more information, see Working with Schedule Table Styles on page 3731. 
+Options in schedule table styles let you create both regular and matrix schedules (also called dot schedules). You can also specify a matrix format for individual columns in a regular schedule. 
+Property Data 
+Property data is information about properties of an object. For example, width and height are typical properties of a door. The data collected on these properties might reflect 3'-0" for width and 7'-0" for height. This property data is contained within a property set. For more information, see Property Sets and Property Set Definitions on page 3705. 
+NOTE Property data values are not contained in the schedule or schedule tag, but on the object itself. The schedule and schedule tag simply displays values retrieved directly from the object to which it is anchored. 
+Property Sets 
+A property set is a user-definable group of related object properties. When you attach a property set to an object or a style, the property set becomes the container for the property data associated with the object. Property sets are specified using property set definitions (see below). For more information, see Property Set Definitions on page 3785 and Property Set Data on page 3772. 
+Property Set Definitions 
+A property set definition is a documentation object that specifies the characteristics of a group of properties that can be tracked with an object or style. For example, you could create a property set definition named DoorProps that contains property definitions for DoorNumber, DoorWidth, and FireRating. Each property has a name, description, data type, data format, and default value. For more information, see Property Set Definitions on page 3785. 
+Property Data Formats 
+A property data format is specified for each property definition within a property set definition to control how the data for that property displays in a schedule table, in a schedule tag, or on the property palette. For example, you can use property data formats to display a door that is three feet wide, with a raw value of 36 units in a drawing, with inch units as 3'-0", or 3', or 3 ft. Property set definitions and schedule table styles use property data formats to control the display format of values for each property. For more information, see Property Data Formats on page 3764. 
+Workflow to Annotate Drawings with Tags and Schedules 
+If you use the annotation tools provided with the software, the definitions and formats are already created for you. 
+
+Open a drawing. If you are working in a structured AutoCAD Architecture project, open a view on page 447 from the Project Navigator. 
+
+Open the Document tool palette on page 78 set or the Documentation Tool Catalog in the Content Browser on page 137 to find the tag. 
+
+Add tags on page 3718 that are not designated as project-based to objects in the drawing. If you are working in a structured AutoCAD Architecture project, you can add project-based tags on page 516 which collect additional information for the objects. 
+
+Attach property set data on page 3772 to objects on page 3773 in the drawing. If you are working in a structured AutoCAD Architecture project, creating property set definitions on page 522 allows you to group specific property data from objects for a schedule on page 518. 
+Edit the fields on page 3775 on the tag. 
+
+Add a schedule table on page 3709 to display property data collected from objects in your drawing or from objects in an externally-referenced drawing on page 3758. 
+Property Sets and Property Set Definitions 
+The data reported in a schedule table is collected from property sets that you attach to the objects or object styles you are scheduling. The properties contained in a property set are determined by the property set definition, which also specifies the object type, style, and definition to which the property set can be applied. 
+NOTE If you are using both AutoCAD Architecture and Revit MEP, locks may appear on some property set definitions and property definitions when you open legacy engineering drawings. Data that is programmatically set cannot be modified and is protected and identified by locks: 
+¦ 
+selections on the Applies To tab and names for property set definitions 
+
+¦ 
+anything that affects the value of underlying data and names for property definitions 
+
+
+A property set definition is a group of related properties of the objects and object styles to be reported in the schedule. Once attached to an object or its style, a property set becomes the container for the property data associated with the object. Values for properties are obtained directly from the object or are entered manually for the object or the style. 
+A property set definition for a door object 
+
+Automatic and Manual Properties 
+Properties for AEC object types fall into two categories: 
+¦ 
+Automatic properties are built into objects and styles when you create the object. Examples are width, length, height, and data retrieved from other sources, such as the project or the object’s material. For more information, see Understanding Automatic Properties on page 3788. 
+
+¦ 
+Manual properties are those that you enter explicitly, such as fire rating, manufacturer, or finish. For more information, see Adding a Manual Property Definition to a Property Set Definition on page 3807. 
+
+
+Automatic properties are available to include in your property set definitions. You create and enter values for manual properties. 
+Applying Property Set Definitions to Objects and Styles 
+You can create a property set definition for either objects or styles and definitions (like multi-view block definitions). Manual properties that are likely to be different for each instance of an object belong in an object-based property set definition that is applied by object. 
+Property set definition that applies to door objects 
+
+Manual properties that will be the same for all instances of a style belong in a style-based property set definition that is applied to a style (such as a wall style) or a definition (such as a multi-view block definition). 
+
+Property set definition that applies to multi-view block definition 
+Automatic properties are dynamically retrieved from the object. Most automatic properties should be put in a style-based property set definition, even if values may vary for each instance of the object. For example, the properties “Door Width” and “Door Height” are extracted automatically from door objects. Placing these properties in a style-based property set definition provides a value for each door object of that style, and is more efficient than putting them in an object-based property set definition that you then attach to each door. 
+NOTE A mismatch of data can occur if, after you create a schedule table with property set data added, you change from an object-based property set definition to a style-based definition. To correct this, remove the property sets and update the schedule table. For more information, see Removing Property Set Data from an Object on page 3776 and Removing Property Set Data from a Style or Definition on page 3782. 
+Fields in Property Set Data 
+You can enter AutoCAD fields in a manual property attached to an object or style. Fields enhance the documentation capabilities within a drawing file because the values they display update whenever the associated property changes. Fields can also be associated with hyperlinks. For example, if you insert a field pointing to a drawing using a hyperlink in a manual property, and create a schedule table that contains that property, you can jump from the table cell with the field property in it to the drawing to which it is linked. 
+For more information, see Entering Manual Properties and Fields for Objects on page 3774 and Adding a Field to a Property Set Definition on page 3809. 
+Lists in Property Set Data 
+List items are created in a list definition and are attached to a manual property definition. With a predefined list of valid items, you can select an item from the list for a manual property either in the property set definition or on the Extended Data tab of the Properties palette. This reduces the redundancy of entering values that are commonly used. For more information, see Creating a List Definition for a Manual Property Definition on page 3831 and Adding a Field to a Property Set Definition on page 3809. 
+Predefined Content for Schedules 
+There are predefined styles and properties for schedule table tools, schedule tag tools, and property set definitions provided with the software. The tools are located on the Scheduling tool palette in the Document tool palette set, and the property set definitions are in Style Manager under Documentation Objects. 
+You can also access default schedule table styles, schedule tags, and property set definitions in C:\ProgramData\Autodesk\ACA 2011\enu\Styles\<Imperial or Metric>\Schedule Tables.dwg. You can use any of this content to create additional schedules or as the basis for creating custom schedules, tags, and property set definitions. 
+Basic Schedules 
+You have everything you need to add schedule tables and perform common documentation tasks, such as tagging objects, when you open the software. Schedule tables are objects. As with other objects in your drawing, properties of schedule tables are displayed on the Properties palette when you add a schedule or if you select a schedule. For more information, see The Properties Palette on page 115. 
+Schedule table tools with predefined styles and properties are provided with the software. Using these tools you can add door, window, space, and room schedules to your drawing. They are located on the Scheduling tool palette in the Document tool palette set. 
+Additional schedule table tools are located in the Documentation Tool Catalog in the Content Browser. You can add tools from the Content Browser to any tool palette. For more information, see Content Browser on page 137. 
+IMPORTANT The contextual tab for schedule tables includes a Convert to Table option, which creates a copy of your AutoCAD Architecture schedule table that can be inserted as an AutoCAD® table. AutoCAD Architecture commands, such as Update or Add All Property Sets cannot be used on the converted table. Also be aware that you may get unexpected results if you use special characters in your schedule headings, such as equal signs (=). Avoid this problem by adding an apostrophe (‘) in front of the character before doing the conversion. For more information about working with AutoCAD® tables, see “Create and Modify Tables” in AutoCAD Help. 
+Adding Schedules Using Schedule Table Tools 
+Use this procedure to add a schedule table to a drawing with a schedule table tool. You can specify properties on the Properties palette when you add a schedule table, or you can modify the schedule table later. 
+When you use default tools, it is not necessary to make changes to the style before you begin to capture data in your drawing. Property set data is already attached to objects. For more information, see Working with Schedule Table Styles on page 3731 and Property Set Data on page 3772. 
+1 Open the tool palette that contains the schedule table tool you want to use, and select the tool. 
+Alternatively, you can click Annotate tab . Scheduling panel, 
+and select one of the schedule table tools there. 
+2 Select the objects to include in the schedule table, or press ENTER 
+to schedule an external drawing. For more information, see Changing External Source Properties of a Schedule on page 3758. 
+You can use a selection window or a crossing window to select objects. Objects that are not of the type specified for the schedule table are filtered out. 
+3 In the drawing area, specify the insertion point for the upper-left corner of the schedule table. 
+4 Specify the lower-right corner of the table, or press ENTER to scale the schedule table to the current drawing scale. 
+¦ 
+If the schedule table contains question marks in any cells, the property set containing that property is not attached to an object or style. 
+
+¦ 
+Empty cells or dashes in cells indicate that the property set is attached, but data is not available or is not entered for that object or style. 
+
+
+For more information about attaching property sets for property set data, see Property Set Data on page 3772. 
+Creating a Schedule Table Tool 
+Use this procedure to create a schedule table tool and add it to a tool palette. You may want to create your own schedule table tools if you are placing multiple schedule tables of specific styles that have the same properties. 
+1 Open the tool palette on which you want to create a tool. 
+2 Create the tool: 
+If you want to… Then… 
+create a tool from a schedule table select the object, and drag it to the in the drawing tool palette. 
+create a tool from a schedule table  click Manage tab . Style & Display  
+style in the Style Manager  panel . Style Manager  . Locate  
+the style you want to copy, and  
+drag it to the tool palette. Click OK  
+to close the Style Manager.  
+
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool  open the other tool palette, right- 
+palette  click the tool, and click Copy. Re­ 
+open the palette where you want  
+to add the tool, right-click, and click  
+Paste.  
+
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. 
+6 Expand General, and specify general properties for the schedule table: 
+If you want to… Then… 
+add a description enter text for Description. 
+specify the layer key select Layer Key. 
+specify layer overrides select Layer Overrides. 
+specify the schedule table style select Style. 
+specify an external drawing file select Style Location or Browse to source for the style specify a location. 
+change the schedule table scale enter a value for Scale. 
+If you want to… Then… 
+automatically update the schedule select Yes for Update automatically. table when data in the drawing changes 
+manually update the schedule table select No for Update automatically. when the drawing changes 
+NOTE Turning on the automatic update feature may slow drawing performance, especially in large drawings. For information about updating schedules manually, see Property Set Data on page 3772. 
+7 Expand Selection, and specify how to add objects to the schedule table: 
+If you want to… Then… 
+automatically add new objects to select Yes for Add new objects the schedule table as they are ad-automatically. ded to the drawing 
+manually add new objects to the select No for Add new objects schedule table automatically. 
+include objects from xref drawings select Yes for Scan xrefs. in the schedule table 
+exclude objects from xref drawings select No for Scan xrefs. in the schedule table 
+include objects from block refer-select Yes for Scan block references. ences in the schedule table 
+exclude objects from block refer-select No for Scan block references. ences in the schedule table 
+apply a layer filter to the table specify a layer wild card. 
+NOTE When adding a schedule table that must scan xrefs or blocks, use a layer filter that includes both the name of the layer that contains the xref or block and the name of the layer of the object inside the xref or block. You can separate multiple layer wild cards with a comma. You cannot select individual objects within an xref drawing or a block reference. For more information, see Working with Layer Groups on page 719. 
+8 Click OK. 
+Adding Objects to a Schedule 
+Use this procedure to add objects to an existing schedule table. 
+1 Select the schedule. 
+2 Click Schedule Table tab . Scheduled Objects panel . Add
+ . 
+3 In the drawing, select the objects to add to the schedule, and press ENTER. Use a window or a crossing window to select multiple objects. 
+Objects that are already in the table are not added. 
+NOTE You cannot add objects to a schedule table through RefEdit. Although the command appears to work during the RefEdit session, as soon as changes are saved back, the rows disappear from the schedule table. This is because you are actually selecting temporary copies of the objects in the file. In order to have objects that are in an xref or block display in a schedule table, select the xref. To include only selected objects from the xref or block, use a layer filter with the schedule table. For more information, see Editing Style-Based Property Sets Attached to Objects in External References on page 3780. 
+Removing Objects from a Schedule 
+Use this procedure to remove objects from a schedule table. 1 Select the schedule table. 2 Click Schedule Table tab . Scheduled Objects panel . Remove . 3 In the drawing, select the objects to remove from the table, and press ENTER. 
+
+Reselecting Objects for a Schedule 
+Use this procedure to reselect objects to include in a schedule table. After reselection, the table contains only the newly-selected objects. 
+1 Select the schedule table. 2 Click Schedule Table tab . Scheduled Objects panel . Reselect
+
+ . 3 In the drawing, select the objects to include in the table, and press ENTER. 
+Turning Off the Out-of-Date Marker 
+Use this procedure if you do not want the out-of-date marker to display when an object, object style, or attached property set data has changed but the schedule is not updated. This appears by default. 
+With the out-of-date marker display component turned on in the General schedule display representation of your drawing, a line is drawn through the schedule to indicate that the information tracked by the schedule has changed. For example, a line is drawn through the schedule if an object tracked in the schedule is moved or deleted, or if its dimensions are edited. The line is removed when you update the schedule. For more information about display components, see Display System Structure on page 787. 
+Displaying an out-of-date schedule 
+
+NOTE If this display component is on, it can slow drawing performance, especially in large drawings. 
+1 Select the schedule table, right-click, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the General display representation. 
+4 If necessary, click 
+. 
+5 Scroll to display the Out-of-Date Marker component, and click Visible. 
+6 Click OK twice. 
+Updating a Schedule Manually 
+You can update a schedule table at any time by selecting it, and clicking 
+Schedule Table tab . Modify panel . Update 
+. This updates the values in a schedule table when the automatic update option is turned off. Always update schedule tables before plotting the drawings that contain them. 
+When you update a table manually, the table is refreshed to reflect any changes to objects or to property set data attached to objects or object styles. Objects added to the drawing after creating the schedule table are not included in the table unless Add Objects Automatically is specified in the table properties. To add objects manually, see Adding Objects to a Schedule on page 3713. To change the numbering in a schedule table, see Renumbering Property Set Data on page 3727. To ensure that the table contains accurate information, close and re-open your drawing before plotting schedule tables. Certain changes to drawings, such as reference editing, are reflected in schedule tables only when a drawing is reopened. 
+NOTE You can specify that a schedule table updates automatically whenever changes are made to data for scheduled objects. This is managed on the Properties palette. For more information, see Changing General Schedule Properties on page 3756. 
+Locating and Viewing Scheduled Objects in a Drawing 
+Use this procedure to highlight objects in the drawing that are included in a schedule table. 
+1 Select the schedule table. 
+2 Click Schedule Table tab . Scheduled Objects panel . Show . 
+
+3 Select the border of the schedule table to show all the objects in the table, or select a specific cell to show only the object contained on that row. 
+The selected objects are highlighted in the drawing. 
+Schedule Tags 
+Schedule tags are symbols that connect building objects with lines of data in a schedule table. Schedule tags display data about the objects to which they are attached. There are schedule tag tools with predefined properties provided with the software on the Scheduling tool palette in the Document tool palette set and in the Documentation Tool Catalog in the Content Browser. For more information, see Tools on page 93 and Content Browser on page 137. 
+You can also create schedule tags to display specific property set data for objects in the building. After you create a schedule tag, you can drag it to any tool palette to create a schedule tag tool. For more information, see Creating a Schedule Tag on page 3719 and Creating a Schedule Tag Tool on page 3722. 
+Tags in an AutoCAD Architecture Project Environment 
+It is recommended that you tag objects in view drawings if you are working in a project environment. You can use one of the default project-based schedule tags, or you can create project-specific tags that display the project information you define. A project-based schedule tag recognizes the location of the object (the level in the building project). A standard schedule tag does not. When you want this additional information captured, work in a project environment and use a project-based schedule tag. For more information about working in AutoCAD Architecture projects, see Workflow for a Project Environment on page 289. 
+Tags as Multi-View Block Definitions 
+Tag tools have predefined properties. Each tag is a multi-view block with attributes. Values from the property set data of the object can be transferred to the tag attributes if, when the tag is added, the tag attributes include the names of the property set definition and the property definition. An example of an attribute definition tag for a door is DoorStyles:DoorHeight. Attribute definition tags cannot have extended names (names that contain spaces). If you use extended names for your property set or property definitions, you cannot display those objects automatically through the use of a tag anchor. 
+Because tag attributes are linked to property set data, the tag attributes change when the property set data changes. For example, the number displayed in a door tag associated with a door is updated when the number property of the door is renumbered. To edit the information that displays in the tag, edit the property set data. For more information, see Entering Manual Properties and Fields for Objects on page 3774. 
+Schedule tags are organized as multi-view block definitions under Multi-Purpose Objects in the Style Manager. For more information, see Style Manager Overview on page 856. 
+Connection Between Tags and Objects 
+Tags are constrained (anchored) to objects by default. This is controlled in the properties for the tag tool. It is possible to turn on the graphic that displays the connection between tags and objects. The Anchor Tag To Entity graphic controls the display for tags that are not constrained to objects, and the Anchor Extended Tag to Entity graphic controls the display for tags that are constrained to objects. For more information, see Viewing the Connection Between Tags and Objects on page 3726 . 
+Tags for Multiple Objects 
+Select one object at a time when using the multiple tag option in order to control the numbering sequence of the tags. The sequence of auto-incrementing is undefined if you use a crossing window or another multiple selection tool. 
+When you use the same schedule tag tool to tag multiple objects, it ensures that the same property set is attached to each object. When adding schedule tags to objects in an external reference (xref), you can avoid broken links by selecting Attach as the Reference Type instead of Overlay. For more information, see “Reference Other Drawing Files” in AutoCAD Help. 
+Placement and Position of Tags 
+When you are tagging multiple objects, tag a single object first. The placement of the first tag relative to the object you are tagging is used to determine the placement of subsequent tags. Tags are positioned relative to the objects being tagged. 
+¦ 
+For walls, the tag (or the end of its leader) is positioned relative to the midpoint of the wall. 
+
+¦ 
+For spaces, the tag (or the end of its leader) is positioned relative to the center of the geometric extents of the space. 
+
+¦ 
+For all other objects, a tag with a leader is placed with the end of the leader at the geometric center of the object. Tags without leaders are placed at the same distance and direction as the first tag, relative to the center of the object. 
+
+
+Adding Tags Using Schedule Tag Tools 
+One of the most frequent uses of annotation in a project is tagging the individual objects. Adding schedule tags to your drawings can be done simply and quickly with schedule tag tools that are provided with the software. 
+NOTE When you insert schedule tags into drawings, use the appropriate base units for the tag to match the drawing scale properly. For more information, see Units in Property Data Formats on page 3766. 
+Adding Tags to Objects 
+Use this procedure to add schedule tags to objects, a block reference, or a multi-view block reference, such as equipment or furniture. You can use one of the predefined tag tools provided with the software, or you can create a new tool for a tag you define. For more information, see Creating a Schedule Tag on page 3719. 
+If you are working in a structured project environment in AutoCAD Architecture, project-based tags recognize additional information about the objects if you tag objects in view drawings. There are predefined, project-based tags provided. 
+1 Open the tool palette that contains the tag tool you want to use, and select it. 
+Alternatively, you can click Annotate tab . Scheduling panel, 
+and select one of the tag tools there. 
+Additional predefined tag tools are located in the Documentation Catalog in the Content Browser. You can add these tools to any tool palette. 
+2 Select the object to which to attach the tag. 3 Specify the location of the tag. 
+NOTE Different object tags may have different prompts. The steps below may not correspond exactly to those for the object tag you are placing. 
+4 If prompted, enter property set data on the Edit Property Set Data worksheet, and click OK. 
+

@@ -1,0 +1,1171 @@
+[MIGRATED TO RTM_PART_32.md - SURVEY GRIDS & COORDINATES]
+If you choose to add columns, you can specify the dimensions of the column: 
+¦ 
+Start offset 
+
+¦ 
+End offset 
+
+¦ 
+Logical length 
+
+¦ 
+Justify 
+
+¦ 
+Justify using overall extents 
+
+
+TIP After specifying the desired settings, you can move or hide the Properties palette to expose more of the drawing area. 
+8 In the drawing area, specify the insertion point of the column grid. 9 Specify the rotation angle of the grid, and press ENTER. 10 Continue adding column grids, and press ENTER. 
+Creating a Column Grid from a Layout Grid 
+Use this procedure to convert a two-dimensional (2D) layout grid to a column grid that has the properties of the structural column grid tool you select. You can edit these properties after creating the column grid. 
+1 Open the tool palette that contains the column grid tool you want to use. 
+TIP You may have to scroll to display the desired tool. After selecting it, you can move or hide the Properties palette to expose more of the drawing area. 
+2 Right-click the tool, and click Apply Tool Properties to . Layout Grid 2D. 
+3 Select the layout grid to convert, and press ENTER. 
+4 When prompted to erase the original geometry, press ENTER to keep the linework, or enter y (Yes) to erase it. 
+5 Edit the properties of the column grid in the Properties palette, if necessary. 
+Creating a Column Grid Dynamically 
+Use this procedure to create column grids dynamically by specifying their dimensions on screen as you draw them. 
+1 Open the tool palette that contains the column grid tool you want to use. 
+Alternatively, you can click Home tab . Build panel . Column 
+Grid drop-down . Column Grid
+ . 
+2 On the Properties palette, expand Dimensions, and select Yes for Specify on screen. 
+3 To add columns to the grid during insertion, expand Column, and select the desired column style. 
+TIP After specifying the desired settings, you can move or hide the 
+Properties palette to expose more of the drawing area. 
+4 Specify the insertion point for the grid in the drawing. 
+5 Specify the overall size of the grid by dragging the cursor to the desired size and clicking once. 
+6 Drag the crosshairs inside the resulting shape vertically and horizontally to define the correct number of bays in the column grid. 
+NOTE The closer the crosshairs go to the left and bottom of the grid, the more spaces are created. 
+7 Click once to confirm the number of vertical and horizontal bays. 8 Specify the rotation angle of the grid, and press ENTER. 
+The column grid is inserted into the drawing according to your specifications. 
+Creating a Structural Column Grid Tool 
+Use this procedure to create a structural column grid tool and add it to a tool palette. You may want to create your own structural column grid tools if you are placing multiple column grids of a specific style, and they all have the same properties. 
+1 Open the tool palette on which you want to add a tool. 
+2 Create the tool: 
+If you want to… Then… 
+create a tool from a column grid in select the object, and drag it to the the drawing tool palette. 
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool  open the other tool palette, right- 
+palette  click the tool, and click Copy. Re­ 
+open the palette where you want  
+to add the tool, right-click, and click  
+Paste.  
+
+copy a tool from a tool catalog click Home tab . Build pan­el . Tools drop-down . Content 
+Browser 
+, and locate the tool you want to copy. Position the cursor over the i-drop handle, and drag the tool to the tool palette. 
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. 6 Expand Basic, and expand General. 7 Click the setting for Description, enter a description of the column 
+grid created from this tool, and click OK. 8 Specify a layer key and any layer key overrides if you do not want to use the layer assignments specified in the layer key style used in the drawing. 9 Select a column grid shape. 10 Specify the settings for the dimensions of the grid. For more information, see Creating a Column Grid on page 2699. 
+11 Click OK. 
+Creating a Custom Column Grid from Linework 
+You can create a custom column grid based on linework. Since the resulting grid has a custom shape, the ability to edit it after creation is limited to general properties and location properties. You cannot change the number or spacing of grid lines, and neither can automatically label the grid lines. 
+Custom grid from linework 
+
+1 Create the linework you want to convert to a column grid. 
+2 Open the tool palette that contains the column grid tool you want to use. 
+TIP You may have to scroll to display the desired tool. After selecting it, you can move or hide the Properties palette to expose more of the drawing area. 
+3 Right-click a structural column grid tool, and click Apply Tool Properties to . Linework. 
+4 Select the linework to convert, and press ENTER. 
+5 When prompted to erase the original linework, press ENTER to keep the linework, or enter y (Yes) to erase it. 
+6 Edit the properties of the column grid in the Properties palette, if necessary. 
+Creating Enhanced Custom Column Grids 
+With the Enhanced Custom Column Grid dialog you can define a number of aspects not user-definable for other column grids. 
+Variable Grid Lines for Each Grid Side 
+You can define a different number of grid lines for each of the four grid sides: 
+
+For information on how to generate variable grid lines, see Creating an Enhanced Grid with Varying Grid Lines for each side on page 2741. 
+Using Primary and Secondary Grid Numbering 
+You can use primary and secondary numbering when labeling a grid. 
+Inserting a grid line with secondary numbering 
+
+You can add grid lines with a secondary numbering scheme during the grid creation, or add them later on. For more information, see Defining the Numbering Scheme for Secondary Grid Lines on page 2748. 
+Selective Grid Numbering per Grid Side 
+You can define the display of labels for each individual grid side. You make this decision during the grid insertion, or you can add grid labels later. For more information, see Defining the Display of Grid Numbering when Inserting the Grid on page 2745 and Adding Labels to an Enhanced Custom Column Grid after Insertion on page 2763. 
+
+Grid Properties 
+In addition, the Enhanced Custom Column Grid dialog lets you control the following properties of the column grid: 
+¦ 
+Orthogonal or radial grid shape 
+
+¦ 
+number of grid lines 
+
+¦ 
+vertical and horizontal bay size 
+
+¦ 
+inner grid radius (radial grid) 
+
+¦ 
+clockwise or counter-clockwise grid direction (radial grid) 
+
+¦ 
+multi-view block for grid label 
+
+¦ 
+grid label numbering/lettering scheme 
+
+¦ 
+prefixes for grid labels 
+
+¦ 
+grid extension 
+
+¦ 
+grid label extension 
+
+
+Creating a Rectangular Grid 
+Rectangular grids are defined by their width, height, and number of grid lines. 1 Click Home tab . Build panel . Column Grid drop-down . Enhanced Custom Grid. Alternatively, you can select the Enhanced Custom Column Grid tool on the Design Tool Palette. 2 In the Column Grid dialog, click the Orthogonal radio button. 3 Click the Top tab. 
+
+4 By default the first line of the grid is already present. 
+5 To add the first bay to the grid, determine the desired size (for example 3000 mm) and click the corresponding value in the value list on the left. 
+TIP You can either directly edit the bay size value after entering it, or you can edit the list of preconfigured default values. For more information, see Editing the List of Preconfigured Bay Sizes on page 2739. 
+6 For a grid with regularly sized bays, you have these options of generating grid Bays: 
+¦ 
+Under Number, enter the number of grid bays you would like to see in the grid. This will generate the specified number of identically sized bays. This is the quickest way, but it does not allow you set different grid numbering types for individual lines, or change the width of one specific bay after insertion. 
+
+¦ 
+Click on the right side of the last row. This adds a new row with the same settings as the last one. 
+
+
+TIP You can also select a whole row (click on the left side of the row), right-click, and use the copy-and-paste commands. 
+
+7 Under Type, select if the grid line associated with the bay should be labelled as primary grid line or secondary grid line. By default, primary grid lines are chosen. (For more information about primary and secondary grid lines, see Defining the Numbering Scheme for Secondary Grid Lines on page 2748). 
+NOTE The Label column is a read-only column showing you the grid label for the associated grid line. You can change the labeling of the grid under Bubble Parameters below. 
+8 Proceed to the Left tab and add grid lines there with the same method. 
+IMPORTANT For a regular grid that has the same grid line layout on both sides (Top/Bottom), Left/Right), you do not need to make any settings on the Right and Bottom tabs. By default the Top and Left side settings are mirrored to the Bottom and Right sides, if they are not separately defined. 
+9 If needed, set further properties for your grid: 
+¦ 
+Editing the List of Preconfigured Bay Sizes on page 2739 
+
+¦ 
+Defining the Display of Grid Numbering when Inserting the Grid on page 2745 
+
+¦ 
+Defining the Numbering and Lettering Scheme for Grid Bubbles on page 2747 
+
+¦ 
+Defining the Numbering Scheme for Secondary Grid Lines on page 2748 
+
+
+10 Press ENTER and insert the grid in the drawing. This will result in grid bay spacing like in the below example: 
+
+Creating a Radial Grid 
+1 Click Home tab . Build panel . Column Grid 
+drop-down . Enhanced Custom Grid. Alternatively, you can select the Enhanced Custom Column Grid tool on the Design Tool Palette. 
+2 In the Column Grid dialog, click the Radial radio button. 3 Click the Radial tab. 
+
+4 To add the first bay to the grid, determine the desired angle (for example 15°) and click the corresponding value in the value list on the left. 
+TIP You can either directly edit the bay angle value after entering it, or you can edit the list of preconfigured default values. For more information, see Editing the List of Preconfigured Bay Sizes on page 2739. 
+5 For a grid with regular angles, you have two options of generating grid Bays: 
+¦ 
+Under Number, enter the number of grid bays you would like to see in the grid. This will generate the specified number of identically angled bays. This is the quickest way, but it does not allow you set different grid numbering types for individual lines, or change the width of one specific bay after insertion. 
+
+¦ 
+Click on the right side of the last row. This adds a new row with the same settings as the last one. 
+
+
+TIP You can also select a whole row (click on the left side of the row), right-click, and use the copy-and-paste commands. 
+6 Under Type, select if the grid line limiting the bay should be labelled as primary grid line or secondary grid line. By default, primary grid lines are chosen. (For more information about primary and secondary grid lines, see Defining the Numbering Scheme for Secondary Grid Lines on page 2748). 
+NOTE The Label column is a read-only column showing you the grid label for the associated grid line. You can change the labeling of the grid under Bubble Parameters below. 
+7 Enter a value for the inner radius of the grid. 8 Define if the grid should be developed in clockwise or counter-clockwise direction. 9 Proceed to the Arcs tab and add grid bays there with the same method. 10 If needed, set further properties for your grid: 
+¦ 
+Editing the List of Preconfigured Bay Sizes on page 2739 
+
+¦ 
+Defining the Display of Grid Numbering when Inserting the Grid on page 2745 
+
+¦ 
+Defining the Numbering and Lettering Scheme for Grid Bubbles on page 2747 
+
+¦ 
+Defining the Numbering Scheme for Secondary Grid Lines on page 2748 
+
+
+11 Press ENTER and insert the grid in the drawing. This will result in grid bay spacing like in the below example: 
+
+Editing the List of Preconfigured Bay Sizes 
+If the preconfigured values in the list of bay sizes does not contain the values you need, you can change the list. 
+If you want to re-use the same set of values across drawings, you can export an edited list as an XML file. 
+Editing the list of values 
+1 Click Home tab . Build panel . Column Grid 
+drop-down . Enhanced Custom Grid. Alternatively, you can select the Enhanced Custom Column Grid tool on the Design Tool Palette. 
+2 Click the 
+Edit button. 3 Select the value in the list you want to change and overwrite it. 
+Then, press ENTER. 4 Repeat this step for all preconfigured values you want to change. 5 To exit the editing mode, click the Edit button again. 
+Exporting a list of values 
+6 Click the Export button 
+. 
+7 In the Export Profile dialog, choose a name and location for the exported list and click Save. The list is saved as an XML file. 
+Importing a list of values 
+8 Click the Import button 
+. 
+9 In the Import Profile dialog, select the file to import and click Open. 
+Creating an Enhanced Grid with Different Sized Grid Bays 
+You can create a grid with differently sized grid bays. 
+
+1 Click Home tab . Build panel . Column Grid drop-down . Enhanced Custom Grid. Alternatively, you can select the Enhanced Custom Column Grid tool on the Design Tool Palette. 
+2 In the Column Grid dialog, click the Orthogonal or Radial radio buttons. 
+3 Click the Top or Radial tab. 
+4 Under Bay Size/Bay Angle enter the first grid bay by clicking the desired value in the preconfigured values list. 
+5 For a grid with different sized bays, you need to add one row for each bay. To add a new row for a bay, select the desired value in the list on the left and click it. 
+TIP If the preconfigured values do not contain the size you need, you can either directly edit the row after adding it, or you can edit the list of preconfigured default values. For more information, see Editing the List of Preconfigured Bay Sizes on page 2739. 
+6 Proceed to the Left or Arcs tab and add grid bays there with the same method. 
+7 If needed, set further properties for your grid: 
+¦ 
+Editing the List of Preconfigured Bay Sizes on page 2739 
+
+¦ 
+Defining the Display of Grid Numbering when Inserting the Grid on page 2745 
+
+¦ 
+Defining the Numbering and Lettering Scheme for Grid Bubbles on page 2747 
+
+¦ 
+Defining the Numbering Scheme for Secondary Grid Lines on page 2748 
+
+
+8 Press ENTER and insert the grid in the drawing. 
+Creating an Enhanced Grid with Varying Grid Lines for each side 
+You can define a different number of grid lines for each of the four grid sides. 
+
+1 Click Home tab . Build panel . Column Grid drop-down . Enhanced Custom Grid. Alternatively, you can select the Enhanced Custom Column Grid tool on the Design Tool Palette. 
+2 First, generate the grid layout for the side that has the larger set of grid lines. For example, if you want to create a grid that has lines 1,2,3,4,5 on top, and 1,3,4, 5 on the bottom, you first select the Top tab and enter 4 grid bays at the desired distance. 
+
+3 Then switch to the Bottom tab. You will see, that although no grid bays have been defined yet, all grid lines from the Top side have been drawn through to the bottom. This is the default setting. 
+
+TIP The preview window displays all grid lines defined in the currently selected tab in purple. Grid lines defined previously in a currently non-active tab are displayed in black. 
+4 Now, start adding bays for the bottom part of the grid with the same bay size as the top ones. You will see that the color of the grid lines changes from black to purple, indicating that these lines are defined in the bottom part. 
+NOTE The first and the last lines of the grid extend to both sides by default. 
+At this point, you have an incomplete set of grid bays for the Bottom tab. If this already gives you the configuration you need (as in the example below), you can now either place the grid in the drawing, or switch to the Left/Right tabs, in order to define the horizontal lines. 
+
+5 If this does not give you the desired result, proceed filling in the bottom part of the grid, until you have one grid bay less than in the top part. (You have to do this because the final grid line always is drawn at both sides). In this example, we added 4 bays (5 grid lines) for the top. If you want to have one less for the bottom, add only three bays for the bottom part: 
+
+6 In order to leave out one line, you must enlarge the bay to double its size. For example, if you want to leave out grid line 2, then the first bay must be doubled from 3000 mm to 6000 mm: 
+Grids
+
+Now, the first bay spans two bays at the bottom, and as a result, you have only four grid lines instead of five. You can now either switch to the Left tab to edit the other grid axis, or you can press ENTER to place the grid in the drawing. 
+NOTE You can also work the other way around and create the full set of grid lines on the Top tab, copy-and-paste them to the Bottom tab, and then start to delete and edit individual rows as necessary. 
+Defining the Display of Grid Numbering when Inserting the Grid 
+You can define for which grid side to display the labels during insertion. You can insert a grid with partial or no grid numbering, but later add grid numbering to it. For more information, see Adding Labels to an Enhanced Custom Column Grid after Insertion on page 2763. 
+
+1 Click Home tab . Build panel . Column Grid drop-down . Enhanced Custom Grid. Alternatively, you can select the Enhanced Custom Column Grid tool on the Design Tool Palette. 
+2 Define the grid as described in Creating a Rectangular Grid on page 2734 or Creating a Radial Grid on page 2737. 
+3 Under Bubble Parameters, click Generate Bubbles to activate the generation of grid bubbles. 
+4 Turn the grid labeling selectively on and off for different grid axes and directions with the four individual checkboxes. 
+NOTE You can switch off the grid labels fully or partially during insertion of the grid, but switch them back on later. For more information, see Adding Labels to an Enhanced Custom Column Grid after Insertion on page 2763. 
+5 Click Advanced Settings, and set the following parameters: 
+¦ 
+Under Bubble Extension, define the extension of the labels from the grid. 
+
+¦ 
+Under Grid Extension, define the extension of the grid lines beyond the grid. 
+
+¦ 
+Under Grid End Space, define how far a grid line that does not extend in this direction should be removed from the grid extents. 
+
+
+6 To define a different bubble, click Bubble and select a different multi-view block as the bubble definition. 
+7 If needed, set further properties for your grid: 
+¦ 
+Defining the Numbering and Lettering Scheme for Grid Bubbles on page 2747 
+
+¦ 
+Defining the Numbering Scheme for Secondary Grid Lines on page 2748 
+
+
+8 Press ENTER and add the grid to the drawing. 
+Defining the Numbering and Lettering Scheme for Grid Bubbles 
+1 Click Home tab . Build panel . Column Grid 
+drop-down . Enhanced Custom Grid. Alternatively, you can select the Enhanced Custom Column Grid tool on the Design Tool Palette. 
+2 Define the grid as described in Creating a Rectangular Grid on page 2734 or Creating a Radial Grid on page 2737. 
+3 Define the content of the grid bubbles by selecting the desired 
+labeling scheme under X-Labeling (X-axis) and Y-Labeling (Y-axis). By default, you can choose between a number scheme (1, 2, 3) or a lettering scheme (A, B, C). In order to generate more advanced labeling schemes, select Define Custom. 
+
+4 Use the Custom Label setting dialog to fine-tune the following labeling aspects: 
+¦ 
+Define a prefix. 
+
+¦ 
+Select a different numbering scheme, for example using small letters or composite numbers or letters. 
+
+¦ 
+Define the sequence of continuation after the end of the regular list. 
+
+¦ 
+Define if the numbering/lettering should go in the left to right, bottom to top directions (default value), or rather go from right to left or top to bottom. 
+
+
+5 Click OK. 
+6 If you want to exclude certain numbers or letters from grid labels, list them under Skip Characters and separate them with commas. For example, you may want to exclude the letter O because it can 
+be confused with a zero. 
+IMPORTANT If you exclude a character or number that you have defined as a custom label value, the Skip setting will override the custom label setting, and the character will not be displayed in the grid. 
+7 If needed, set further properties for your grid: 
+¦ 
+Defining the Display of Grid Numbering when Inserting the Grid on page 2745 
+
+¦ 
+Defining the Numbering Scheme for Secondary Grid Lines on page 2748 
+
+
+Defining the Numbering Scheme for Secondary Grid Lines 
+You can use primary and secondary numbering when labeling an enhanced custom grid. 
+Using primary and secondary numbering in a grid 
+
+You can add grid lines with secondary numbers during the grid creation, or add them later on. 
+1 Click Home tab . Build panel . Column Grid 
+drop-down . Enhanced Custom Grid. Alternatively, you can select the Enhanced Custom Column Grid tool on the Design Tool Palette. 
+2 When you create grid lines with secondary numbering, the label contains the following components: 
+¦ 
+Number of the primary grid line after which the secondary line is inserted 
+
+¦ 
+Number of the secondary grid line 
+
+¦ 
+Delimiter 
+
+
+When you insert secondary lines, you can build up the numbering either to primary number - delimiter - secondary number, or the other way around as secondary number - delimiter - primary number: 
+
+3 In order to use the primary grid number - delimiter - secondary grid number order, select Primary for Format. 
+4 In order to use the secondary grid number - delimiter - primary grid number order, select Secondary for Format. 
+5 Select a delimiter. 
+6 If needed, set further properties for your grid: 
+¦ 
+Defining the Display of Grid Numbering when Inserting the Grid on page 2745 
+
+¦ 
+Defining the Numbering and Lettering Scheme for Grid Bubbles on page 2747 
+
+
+7 Use the Preview window to verify that all grid settings are correct, and then click OK to place the grid in the drawing area. 
+Editing Column Grids and Custom Column Grids 
+The following editing operations can be applied to a tool-based column grid, and where marked, also to custom column grids. 
+Labeling Column Grids 
+You can label existing column grids in the X direction and the Y direction. 
+NOTE A custom line-based grid cannot be labelled automatically. 
+1 Select the column grid you want to label. 
+2 Click Column Grid tab . Label panel . Label
+ . 3 Specify the grid location for labels: 
+If you want to… Then… 
+add labels to the X axis of the grid click the X - Labeling tab. 
+add labels to the Y axis of the grid click the Y - Labeling tab. 
+4 Enter a starting number or letter for the label under Number in 
+the table. Each grid line in the X direction or the Y direction is listed in the table. If Automatically Calculate Values for Labels is selected, numbers or letters are consecutively assigned to the remaining grid lines in the order you specify (ascending or descending). 
+NOTE To renumber a grid, enter a new value in the first location. The remaining values are updated if Automatically Calculate Values for Labels is selected. 
+5 If you do not want to use certain characters in the sequence, select Never Use Characters, and enter the characters, separated by commas. 
+6 To change the label symbol, click Bubble. 
+7 Select a new label symbol from the MvBlockDef Select dialog box, and click OK. Any multi-view block currently defined in the drawing can be 
+used. 
+8 Click Generate New Bubbles On Exit to update the bubbles. 9 Specify the location of bubbles: 
+If you want to… Then… 
+place bubbles in the X direction of select Top and/or Bottom. the grid 
+If you want to… Then… 
+place bubbles in the Y direction of select Left and/or Right. the grid 
+10 Enter a value for Extension. Extension is the length of the bubble lines from the grid to the bubble. 11 Click OK. 
+NOTE If you want to control the extension of non-labelled grid lines beyond the grid rectangle, you need to create an enhanced custom column grid, as described in Creating a Rectangular Grid on page 2734. 
+Labeling a column grid 
+
+Dimensioning Column Grids with Automatic AEC Dimensions 
+Use this procedure to dimension column grids and set the distance between the dimensions and the grid. For this, you can use the automatic AEC Dimension. 
+When you dimension a column grid with an automatic AEC dimension, the resulting dimension is associative. When you update the grid, the dimension is updated accordingly. Also, you can choose an AEC dimension style. For more information, see AEC Dimensions on page 3349. 
+NOTE Custom column grids cannot be dimensioned automatically. To dimension a custom column grid, follow the instruction in Associative Dimensions From Picked Points on page 3364 and Creating an AEC Dimension with User-Specified Settings on page 3370. 
+With an AEC dimension, you cannot display angle dimensions or edit individual dimension chains. 
+1 Select the column grid you want to dimension. 
+2 Click Column Grid tab . General panel . Dimension
+ . 3 On the Properties palette, expand Basic, and expand General. 4 Select a style. 
+NOTE Be sure to select an AEC dimension style that contains dimensioning points for grids. For more information about AEC dimension contents, see Associative Dimensions from Objects on page 3355. 
+5 Click to specify the position of the AEC dimension. The dimension can, for example, be placed above or below the column grid. 
+¦ 
+To set the direction of the dimension, drag the mouse. The extension lines are drawn in the opposite direction. 
+
+¦ 
+If you want to align the dimension, enter a on the command line, and select the geometry to align to. 
+
+¦ 
+If you want a user-defined angle for the dimension, enter r and enter the rotation angle on the command line. 
+
+
+NOTE The angle you specify here is calculated in relation to the UCS, and not to the dimensioned grid. 
+Changing the Dimensions of a Column Grid 
+Use this procedure to change the overall dimensions of a column grid. A rectangular grid is defined by its width and depth. A radial grid is defined by its radius, angle, and optionally, its inner radius. 
+1 Double-click the column grid to which you want to make changes. 
+2 Expand General, and expand Dimensions. 3 Modify the desired settings: 
+If you want to… Then… 
+change the dimensions of a rectan-enter new values for X - Width and gular column grid Y - Depth. 
+change the dimensions of a radial enter new values for X - Width and column grid A - Angle. 
+TIP You can also change the size of a grid by dragging its grip points. When you have a manual grid, you drag the individual lines, and not the grid. 
+Changing the Lines of a Column Grid or Custom Column Grid 
+Apart from the overall dimensions of a column grid, you can also change the number and position of grid lines on the X and Y axes. There are 3 different layout types that control the spacing of lines in a grid. Layout type is specified separately for the X and Y planes on the Properties palette for the grid. 
+¦ 
+Manual: You specify the position of each line on the grid. 
+
+¦ 
+Repeat (Fixed Bay Size): You specify equidistant spacing between lines on the grid. The number of lines is determined by the size of the grid. As the size of the grid changes, lines are added or subtracted accordingly. The distance between lines remains fixed. 
+
+¦ 
+Space Evenly: You specify the number of lines on the grid. The space between lines is determined by the size of the grid. As the size of the grid changes, the spacing between lines is lengthened or shortened accordingly. The number of lines remains fixed. 
+
+
+NOTE By default, grids are inserted with evenly spaced lines. 
+The procedures for adding or removing grid lines vary depending on the Layout type in effect, as explained in the following sections. 
+Adding Lines to a Column Grid 
+In some cases, you need to add lines to an existing grid. Depending on the Layout type in effect, you do this in different ways. 
+Adding Lines to a Column Grid with Evenly Spaced Lines 
+Use this procedure to add lines to a grid with evenly spaced lines. The lines will always be distributed evenly along the grid axis. If you need non-regular lines with different spacing between them, open the grid’s Properties palette, and change the Layout type to Manual. 
+1 Select the column grid to which you want to add lines. 2 Add grid lines: 
+If you want to… Then… 
+add grid lines to the X axis  click Column Grid tab . X Axis panel . Add  
+of the grid  Grid Line  . Click the grid X axis. The  
+number of grid lines increases by one while  
+the overall size of the grid remains the same.  
+
+add grid lines to the Y axis  click Column Grid tab . Y Axis panel . Add  
+of the grid  Grid Line  .Click the grid Y axis. The  
+number of grid lines increases by one while  
+the overall size of the grid remains the same.  
+
+Alternatively, you can add grid lines by increasing the value of Number of Bays for X axis and Y axis on the Properties palette. 
+Adding Grid Lines to a Manual Column Grid 
+Use this procedure to add lines to a manual grid. A manual grid allows maximum control over the grid, but requires that you define the exact number and position of grid lines. 
+1 Select the column grid to which you want to add lines. 
+2 Add grid lines: 
+If you want to… Then… 
+add grid lines to the X axis of the click Column Grid tab . X Axis grid 
+panel . Add Grid Line 
+. Then, specify the position on the X axis where you want to add a line. 
+add grid lines to the Y axis of the click Column Grid tab . Y Axis grid 
+panel . Add Grid Line
+ . Then, specify the position on the Y axis where you want to add a line. 
+3 Alternatively, on the Properties palette, click Bays 
+for the X and Y axis, and change the number of lines in the Bays worksheet. 
+4 To add a line, click under the last number in the Bays list. A new line is inserted with default values for distance and spacing. You can edit these values by clicking them and entering new values. 
+NOTE You cannot enter a line number for the new line. The line number is provided by the application after you close the worksheet. 
+5 Click OK. 
+Adding Grid Lines to a Column Grid with Fixed Bay Size 
+Use this procedure to add lines to a grid with bays of a fixed size. Normally, in a grid with fixed bays, the distance between the grid lines is more important than the number of grid lines. 
+To add lines to a grid with a fixed bay size, you have 2 options: 
+¦ 
+Enlarge the overall grid size (for more information, see Changing the Dimensions of a Column Grid on page 2752). 
+
+¦ 
+Decrease the size of the bays. 
+
+
+TIP In cases where the number of lines is important for the grid, change the Layout type of the grid from Repeat to Space evenly or Manual. 
+1 Double-click the column grid to which you want to add lines. 2 Expand Dimensions. 3 Add grid lines: 
+If you want to… Then… 
+add grid lines to the X axis of the expand X Axis, and enter a value grid for Bay size. 
+add grid lines to the Y axis of the expand Y Axis, and enter a value for grid Bay size. 
+If you enter a value that reduces the size of the bays, the number of grid lines increases as the extra bays are added to the grid. 
+Adding Lines to a Custom Column Grid 
+Use this procedure to add grid lines to a line-based custom column grid that was created by applying tool properties to linework. 
+1 Draw the new line or lines in the desired position. 2 Select the column grid. 3 Click Column Grid tab . Custom Grid panel . Add Grid Lines 4 Select the linework to be added, and press ENTER. 5 Press ENTER again to keep the linework, or enter y (Yes) to erase 
+it. 
+Removing Lines from a Column Grid 
+You can remove individual grid lines from regular column grids. The method used will depend on the layout type of the specific column grid. 
+Removing Lines from a Column Grid with Evenly Spaced Lines 
+Use this procedure to remove lines from a grid with evenly spaced lines. The lines will always be distributed evenly along the grid axis. To remove a particular line and have all the other lines stay in their original places, open the grid’s Properties palette, and change the Layout type to Manual. 
+1 Select the column grid from which you want to remove lines. 
+2 Remove grid lines: 
+If you want to… Then… 
+remove grid lines from the X axis  click Column Grid tab . X Axis  
+of the grid  panel . Remove Grid Line  .  
+Then, click on the X axis. The num­ 
+ber of grid lines decreases by one,  
+while the overall size of the grid re­ 
+mains the same.  
+
+remove grid lines from the Y axis of  Click Column Grid tab . Y Axis  
+the grid  panel . Remove Grid Line  .  
+Then, click on the Y axis. The num­ 
+ber of grid lines decreases by one,  
+while the overall size of the grid re­ 
+mains the same.  
+
+Removing Grid Lines from a Manual Column Grid 
+Use this procedure to remove grid lines from a manual grid. On a manual grid, 
+you can remove each line individually. 
+1 Select the column grid from which you want to remove lines. 
+2 Remove grid lines: 
+If you want to… Then… 
+remove grid lines from the X axis click Column Grid tab . X Axis of the grid 
+panel . Remove Grid Line
+ . Then, click on the grid line on the X axis you want to remove. 
+remove grid lines from the Y axis of Click Column Grid tab . Y Axis the grid 
+panel . Remove Grid Line
+ . Then, click on the grid line on the Y axis you want to remove. 
+NOTE The Bays worksheet lists all bays on the selected axis, their distance from the start point of the grid, and the spacing between the grid lines that define the bays. You can also remove manual grid lines here. 
+Removing Lines from a Column Grid with Fixed Bay Size 
+Use this procedure to remove lines from a grid with fixed bays. Normally, in a grid with fixed bays, the distance between the grid lines is more important than the number of grid lines. 
+To remove lines from a grid with a fixed bay size, you have 2 options: 
+¦ 
+Decrease the overall grid size (for more information, see Changing the Dimensions of a Column Grid on page 2752). 
+
+¦ 
+Increase the size of the bays 
+
+
+TIP In cases where the number of lines is important for the grid, change the Layout type of the grid from Repeat to Space evenly or Manual. 
+1 Double-click the column grid from which you want to remove lines. 
+2 Expand Dimensions. 
+3 Remove grid lines: 
+If you want to… Then… 
+remove grid lines from the X axis expand X Axis, and enter a value of the grid for Bay size. 
+remove grid lines from the Y axis of expand Y Axis, and enter a value for the grid Bay size. 
+If you enter a value that increases the size of the bays, the number of grid lines decreases as the extra bays are removed from the grid. 
+Removing Lines from Custom Column Grids 
+Use this procedure to remove grid lines from a custom column grid that was created by applying tool properties to linework. 
+1 Select the column grid. 
+2 Click Column Grid tab . Custom Grid panel . Remove Grid Lines 
+3 Select the linework to be removed, and press ENTER. The linework remains visible in the drawing but is no longer part of the grid. You can select it and delete it if desired. 
+Changing the Position of Column Grid Lines 
+You can change the position of individual lines in column grids for which the Layout type is Manual. (Grids with a Layout type of Repeat or Space evenly calculate line position according to the number of bays or the size of the grid.) A manual grid has grip points for every line. You can use either the grip points or the Bays worksheet to change the position of a grid line. 
+Using Grip Points to Move Column Grid Lines 
+Use this procedure to move a column grid line by dragging the grip points of the line. Manual grids have a pair of grip points for the start point and endpoint of each line. 
+1 Select the grid where you want to move grid lines. For each line in the grid, a pair of grip points (start point and endpoint) is displayed. 
+TIP If your grid displays only four lines for the corners of the grid, the Layout type needs to be changed to Manual on the grid’s Properties palette. 
+2 Use the grip points to drag the lines in either a horizontal or vertical direction. 
+¦ 
+If you move a grid line beyond the grid border, the grid is enlarged accordingly. 
+
+¦ 
+If you move one of the border lines to the inside of the grid, the grid is decreased accordingly. 
+
+
+Changing the Position of Column Grid Lines by Editing Grid Bays 
+Use this procedure to reposition grid lines by editing the number and spacing of grid bays using the Bays worksheet. 
+1 Double-click the column grid where you want to move lines. 2 Expand Dimensions. 3 Edit grid bays: 
+If you want to… Then… 
+edit grid bays along the X axis expand X Axis, and click the value for Bays. 
+edit grid bays along the Y axis expand Y Axis, and click the value for Bays. 
+The Bays worksheet lists all bays on the selected axis, their distance from the start point of the grid, and the spacing of each bay. 
+4 To change a bay, click one of its measuring values in the list, and edit the value. 
+5 Click OK. 
+The line positions have changed according to your specifications. 
+Editing Enhanced Custom Column Grids 
+The following editing operations can be applied to an enhanced custom column grid. 
+Adding Lines to an Enhanced Custom Column Grid 
+You can manually add lines to an enhanced custom column grid. 
+A grid line that is added to an existing grid can be either a primary grid line or a secondary grid line. A primary line fits into the numbering/lettering order of the existing lines, whereas a secondary line is a compound of the primary grid number and the secondary grid number. For information on defining the format of secondary grid numbers, see Defining the Numbering Scheme for Secondary Grid Lines on page 2748. 
+Adding primary and secondary grid line 
+
+NOTE When you add a grid line before the first line of the grid or after the last line of the grid, the endpoints of the intersecting grid lines are extended automatically to the new line. Non-intersecting grid lines will not be affected. 
+1 Select the enhanced custom column grid. 
+2 Click Column Grid tab . Custom Column Grid panel . Offset Grid Line. 
+3 Select a grid line that serves as a reference for to offset the new grid line from. 
+4 Do one of the following: 
+¦ 
+Press T (Through) and specify the insertion point of the new line in the drawing area. 
+
+¦ 
+Enter the distance of the new line from the reference line, and press ENTER. Then click in the drawing area to define the direction of the new line in relation to the selected reference line. 
+
+
+5 If the new grid line should be a primary grid line press N (No). 
+6 If the new grid line should be a secondary grid line, press Y (Yes). The numbering of the grid is updated automatically. 
+Removing Lines from an Enhanced Custom Column Grid 
+You can remove lines from an enhanced custom column grid. 
+NOTE When you remove the first line of the grid or last line of the grid, the endpoints of the intersecting grid lines are shortened automatically to the next existing grid line. Non-intersecting grid lines will not be affected. 
+1 Select the enhanced custom column grid. 
+2 Click Productivity Extension tab . Custom Column Grid panel . Remove Grid Lines. 
+3 Select the grid lines to remove, and press ENTER. The numbering of the grid is updated automatically. 
+Dimensioning an Enhanced Custom Column Grid 
+You can dimension an enhanced custom column grid. The dimension command on the contextual column grid tab will create a 2-chain grid dimension for the overall grid extent and the grid bays. 
+
+NOTE The dimension command on the contextual Grid tab inserts AutoCAD dimensions. 
+1 Select the enhanced custom column grid. 2 Click Column Grid tab . Custom Column Grid 
+panel . Dimension Grid. 
+3 Select the grid. 
+4 Define the offset of the dimension from the grid. By default, a set of rotated dimensions with the Annotative dimension style are created. If you want to change the dimension 
+style, select the dimensions and set a different dimension style in the Properties palette. 
+Adding Labels to an Enhanced Custom Column Grid after Insertion 
+You can label an enhanced custom column grid after inserting it in the drawing area. Sometimes you may not want to add the labeling at the beginning of the schematic design phase when the arrangement of the grid lines is not yet finalized. The grid in this phase is drawn as a reference to align the structure, and the grid line spacing may still need to be adjusted and modified during design exploration. When the design then is finalized and the grid line layout is settled, you can add the labeling. 
+NOTE The direction of the numbering (left to right or right to left; top to bottom or bottom to top) cannot be changed after insertion. These need to be correctly set when creating the grid. 
+For information on suppressing the label generation when creating an enhanced custom column grid, see Defining the Display of Grid Numbering when Inserting the Grid on page 2745. 
+
+1 Select the enhanced custom column grid. 
+2 Click Column Grid tab . Custom Column Grid panel . Add Labels. 
+3 Re-select the column grid to label. 
+Editing Labels on an Enhanced Custom Column Grid 
+You can change the labeling for an enhanced custom grid. 
+Manually changing the labeling for a grid can be useful for example when you are adding secondary grid lines before the first main grid line, and would like to change the formatting for the preceding secondary lines, but not for the secondary lines within the grid: 
+Using the same numbering format before and within grid 
+
+Using a different numbering format (preceding zero) before the grid 
+
+You can change one label individually or you can define a range of labels for changing. 
+1 Select the enhanced custom column grid. 
+2 Click Column Grid tab . Custom Column Grid panel . Edit Labels. 
+3 Do one of the following: 
+¦ 
+To change the labels for a range of grid lines, select the start and end lines for the editing range. 
+
+¦ 
+To change a single label, select the line, and enter e (Edit) on the command line. 
+
+
+4 Enter the value for the label. If you have selected a range of grid lines to update, then the value will be logically progressed through the range. For example, if you select the value of “A”, then the following labels will read “B”, “C” etc. 
+Dimensioning Individual Grid Bays 
+You can dimension individual grid bays, or a range of multiple grid bays on an enhanced custom column grid. 
+NOTE This command inserts a rotated AutoCAD dimension with the Annotative dimension style. 
+
+1 Select the enhanced custom column grid. 2 Click Column Grid tab . Custom Column Grid 
+panel . Dimension Bay. 
+3 Select the grid line from which to start the dimension. 
+4 Select the grid line on which to end the dimension, and place the 
+dimension as desired. 
+Editing General Column Grid Properties 
+The following editing operations can be applied to all types of column grids. 
+Attaching Clipping Profiles to Column Grids 
+You can attach a clipping profile to define a mask around a column grid or to make a hole in a column grid. You could, for example, create a mask to 
+define a column grid for an irregularly shaped room, or exclude parts of a room from the column grid. 
+NOTE To attach a clipping profile, you must first draw a closed polyline with the desired boundary or hole shape. 
+Masking Column Grids 
+Use this procedure to mask a column grid. A mask is a polyline shape that defines the boundaries of a column grid. Those parts of the grid outside the boundary are not displayed. 
+1 Draw a closed polyline with the boundary or hole shape you want. 2 Select the grid you want to mask. 
+3 Click Column Grid tab . Clipping panel . Set Boundary
+ . 4 Select the column grid, and press ENTER. 5 Select the closed polyline you want to use as a mask. 
+The parts of the column grid that are outside the masking polyline are no longer displayed. 
+TIP If columns are connected to the invisible part of the grid, they are still displayed after masking. If necessary, you can delete them. 
+TIP If you want to restore the original grid shape, go to the Properties palette, and select None for Boundary. 
+Creating Holes in Column Grids 
+Use this procedure to create a hole in an existing column grid. The hole is created from a closed polyline placed within the boundaries of the grid. Any parts of the grid inside the hole are not displayed. 
+1 If it does not already exist within the boundaries of the grid, draw a closed polyline in the shape of the desired hole. 
+2 Select the grid. 
+3 Click Column Grid tab . Clipping panel . Add Hole
+ . 4 Select the column grid, and press ENTER. 5 Select a closed polyline for the hole. 
+A hole is cut in the column grid. 6 Press ESC to end the command. 
+TIP If columns are connected to the hole in the grid, they are still displayed. If necessary, you can delete them. 
+Removing Holes from Column Grids 
+Use this procedure to remove holes you have created in column grids. 
+1 Select the grid from which you want to remove holes. 
+2 Click Column Grid tab . Clipping panel . Remove Hole 
+. 3 Select the grid again, and press ENTER. 4 Select the closed polyline of the hole. 
+The hole is removed from the layout grid. The polyline, however, remains in the drawing. If necessary, you can delete it. 
+Attaching Hyperlinks, Notes, or Files to a Column Grid 
+Use this procedure to attach hyperlinks, notes, or files to a column grid. You can also edit hyperlinks and notes, and edit or detach reference files from a column grid. 
+1 Select the column grid to which you want to attach information. 2 On the Properties palette, click the Extended Data tab. 3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. For more information, see “Add Hyperlinks to a Drawing” in AutoCAD Help. 
+TIP The quickest way to locate and view an AutoCAD topic is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+4 Click OK. 5 To add a note, click the setting for Notes, and enter the note. 6 Click OK. 
+7 To add a reference file, click the setting for Reference documents, and attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+8 Click OK twice. 
+Changing the Location of Column Grids 
+Use this procedure to change the location of column grids. You can relocate a column grid by changing the coordinate values of its insertion point. The column grid also has an orientation with respect to the world coordinate system (WCS) or the current user coordinate system (UCS). For example, if the top and bottom of the column grid are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the column grid by aligning its normal with another axis. You can also rotate the column grid on its plane by changing the rotation angle. 
+For more information about the world coordinate system, see “Use World and User Coordinate Systems in 3D” in AutoCAD Help. 
+TIP The quickest way to locate and view an AutoCAD topic referenced is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+1 Select the column grid that you want to change. 2 On the Properties palette, expand Basic, and expand Location. 3 Select Additional information. 
+4 Specify the location of the column grid: 
+If you want to… Then… 
+relocate the column grid enter new coordinate values under Insertion Point. 
+locate the column grid on the XY make the normal of the column 
+plane grid parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the column grid on the YZ make the normal of the column 
+plane grid parallel to the X axis: under Normal, enter 1 for X, and enter 0 for Y and Z. 
+locate the column grid on the XZ make the normal of the column 
+plane grid parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the column enter a new value for Rotation grid Angle. 
+5 Click OK. 
+Changing the Display of Column Grids 
+Use this procedure to change any of the following display properties for lines, node markers, or cell markers in a column grid: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+1 Select the column grid you want to change, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 4 Click the Layer/Color/Linetype tab. 5 Select the component to change, and select a different setting for 
+the property. 6 Click OK twice. 
+Changing the Node Radius for a Column Grid 
+Use this procedure to change the node radius for a column grid by editing its display properties. 
+1 Double-click the column grid you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all column grids in the drawing, select Drawing default setting. 
+5 If necessary, expand Object Display Properties . Advanced. 6 Click the value for Node radius, and enter a new value. 
+(Alternatively, you can click 
+and specify 2 points in the drawing area to set the new radius.) 
+You can also access and modify the node radius property through the column grid’s context menu, as follows: 
+1 Select the column grid, right-click, and click Edit Object Display. 2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 
+4 In the Display Properties dialog, click the Other tab, and then change the radius as needed. 
+5 Click OK twice. 
+Using Ceiling Grid Tools to Create Ceiling Grids 
+Tools in the software let you quickly place ceiling grids using a ceiling grid tool with a specific ceiling grid style and other predefined properties. You can use the default settings of the tool, or you can change its properties. You can also use ceiling grid tools to convert linework to ceiling grids and to apply the settings of a ceiling grid tool to existing ceiling grids. 
+Tool palettes containing ceiling grid tools 
+
+The default tool palettes in the workspace contain sample ceiling grid tools that you can use and customize as needed. In addition, the following catalogs provided with the software contain ceiling grid tools that you can add to your tool palettes: 
+¦ 
+AutoCAD Architecture Stock Tool catalog 
+
+¦ 
+AutoCAD Architecture Sample Palette catalog 
+
+
+Custom palettes created by your CAD manager or other users may also contain ceiling grid tools with ceiling grid properties that are customized for your projects or office standards. 
+Creating a Ceiling Grid 
+Use this procedure to add a new ceiling grid that has the properties specified in the ceiling grid tool that you select. To specify settings when you add a ceiling grid, see Creating a Ceiling Grid with User-Specified Settings on page 2772. 
+1 Open the tool palette that contains the ceiling grid tool you want to use, and select the tool. 
+Alternatively, you can click Home tab . Build panel . Ceiling 
+Grid
+ . 
+2 Specify the insertion point of the ceiling grid. 3 Specify the rotation of the ceiling grid, and press ENTER. 4 Continue adding ceiling grids, and press ENTER. 
+Creating a Ceiling Grid with User-Specified Settings 
+Use this procedure to add a ceiling grid with settings that you specify on the Properties palette. Spaces and closed polylines can be used as boundaries for ceiling grids. 
+1 Open the tool palette that you want to use, and select a ceiling grid tool. 
+Alternatively, you can click Home tab . Build panel . Ceiling 
+Grid
+ . 
+2 On the Properties palette, expand Basic, and expand General. 3 Select a boundary: 
+If you want to… Then… 
+place a ceiling grid within a space click Select object for Boundary, and select a space in the drawing. 
+place a ceiling grid within a closed click Select object for Boundary, polyline and select a closed polyline in the drawing. 
+4 Expand Dimensions, and select No for Specify on screen. 5 Specify the settings: 
+If you want to… Then… 
+define the width of the grid enter a value for X - Width. 
+define the depth of the grid enter a value for Y - Depth. 
+lay out the grid with evenly spaced expand X Axis, select Space evenly bays along the X direction for Layout type, and enter a value for Number of bays. 
+lay out the grid with a fixed bay size expand X Axis, select Repeat for along the X direction Layout type, and enter a value for Bay size. 
+specify the offset distance from the expand X Axis, and enter a value start point along the X direction of for Start offset. The offset distance the grid may be used to reduce the effective 
+grid size. 
+specify the offset distance from the expand X Axis, and enter a value endpoint along the X direction of for End offset. The offset distance the grid may be used to reduce the effective 
+grid size. 
+lay out the grid with evenly spaced expand Y Axis, select Space evenly bays along the Y direction for Layout type, and enter a value for Number of bays. 
+lay out the grid with a fixed bay size expand Y Axis, select Repeat for along the Y direction Layout type, and enter a value for Bay size. 
+specify the offset distance from the expand Y Axis, and enter a value for start point along the Y direction of Start offset. The offset distance may the grid be used to reduce the effective grid 
+size. 
+specify the offset distance from the expand Y Axis, and enter a value for endpoint along the Y direction of End offset. The offset distance may the grid be used to reduce the effective grid 
+size. 
+
+TIP After specifying the desired settings, you can move or hide the Properties palette to expose more of the drawing area. 
+6 In the drawing area, specify the insertion point of the ceiling grid. 7 Specify the rotation angle of the grid, and press ENTER. 8 Continue adding ceiling grids, and press ENTER. 
+Creating a Ceiling Grid from a Layout Grid 
+Use this procedure to convert a two-dimensional (2D) layout grid to a ceiling grid that has the properties of the ceiling grid tool you select. You can edit these properties after creating the ceiling grid. 
+1 Open the tool palette that contains the ceiling grid tool you want to use. (You may have to scroll to display the desired tool.) 
+2 Right-click the ceiling grid tool, and click Apply Tool Properties to . Layout Grids. 
+3 Select the layout grid to convert, and press ENTER. 
+4 When prompted to erase the original geometry, press ENTER to erase the linework, or enter n (No) to keep it. 
+5 Edit the properties of the ceiling grid in the Properties palette, if necessary. 
+Creating a Custom Ceiling Grid from Linework 
+Use this procedure to convert custom linework to a ceiling grid that has the properties of the ceiling grid tool you select. You can edit these properties after creating the ceiling grid. 
+1 Open the tool palette that contains the ceiling grid tool you want to use. (You may have to scroll to display the desired tool.) 
+2 Right-click a ceiling grid tool, and click Apply Tool Properties to . Linework. 
+3 Select the linework to convert, and press ENTER. 
+4 When prompted to erase the original linework, press ENTER to keep the linework, or enter y (Yes) to erase it. 
+5 Edit the properties of the ceiling grid in the Properties palette, if necessary. 
+Creating a Ceiling Grid Dynamically 
+Use this procedure to create ceiling grids dynamically by specifying their dimensions on the screen as you draw them. 
+1 Open the tool palette that contains the ceiling grid tool you want to use, and select the tool. 
+Alternatively, you can click Home tab . Build panel . Ceiling 
+Grid
+ . 
+2 On the Properties palette, expand Dimensions, and select Yes for Specify on screen. 
+3 Expand X Axis and Y Axis, and specify the settings: 
+If you want to… Then… 
+lay out the grid with evenly spaced select Space evenly for Layout type, bays along the X direction and enter a value for Number of bays. 
+lay out the grid with a fixed bay size select Repeat for Layout type, and along the X direction enter a value for Bay size. 
+specify the offset distance from the enter a value for Start offset. The start point along the X direction of offset distance may be used to re-the grid duce the effective grid size. 
+specify the offset distance from the enter a value for End offset. The endpoint along the X direction of offset distance may be used to re-the grid duce the effective grid size. 
+lay out the grid with evenly spaced select Space evenly for Layout type, bays along the Y direction and enter a value for Number of bays. 
+lay out the grid with a fixed bay size enter a value for Bay size. along the Y direction 
+If you want to… Then… 
+specify the offset distance from the enter a value for Start offset. The start point along the Y direction of offset distance may be used to re-the grid duce the effective grid size. 
+specify the offset distance from the enter a value for End offset. The endpoint along the Y direction of offset distance may be used to re-the grid duce the effective grid size. 
+4 Specify an insertion point in the drawing. 5 Specify the overall size of the grid by dragging the cursor to the desired size and clicking once. 6 Specify the rotation angle for the grid, and press ENTER. 
+Creating a Ceiling Grid with a Clipping Boundary 
+Use this procedure to create a ceiling grid within a closed polyline or a space object. If the ceiling grid is within a space, the grid is created at the ceiling height of the space. 
+1 Open the tool palette that contains the ceiling grid tool you want to use, and select the tool. (You may have to scroll to display the desired tool.) 
+2 On the Properties palette, expand Basic, and expand General. 3 Click the setting for Boundary. 4 Click Select object, and then select an existing space or a closed 
+polyline in the drawing. 5 Specify an insertion point in the drawing. 
+NOTE The insertion point of the ceiling grid is the lower-left corner of the ceiling grid if the rotation is set to 0 degrees. 
+6 Specify the overall size of the grid by dragging the cursor to the 
+desired size and clicking once. Drag the cursor along the X axis to specify the number of bays along the X direction, and drag the cursor along the Y axis to specify the number of bays along the Y direction. 
+7 Specify the rotation angle of the grid, and press ENTER. 
+The grid is displayed only within the space or closed polyline. 
+Creating a ceiling grid from a polyline 
+
+NOTE In some templates, the ceiling grid object is turned off in a number of plan views. It is displayed in most model views, however, so if you cannot see your grid in top view, switch to a model view to make sure it is there. For more information about turning on the display of ceiling grids in plan view, see Display System on page 777. 
+Creating a Ceiling Grid Tool 
+Use this procedure to create a ceiling grid tool and add it to a tool palette. You may want to create your own ceiling grid tools if you are placing multiple ceiling grids of a specific style, and they all have the same properties. 
+1 Open the tool palette on which you want to add a tool. 2 Create the tool: 
+If you want to… Then… 
+create a tool from a ceiling grid in select the object, and drag it to the the drawing tool palette. 
+copy a tool in the current tool right-click the tool, and click Copy. palette Right-click, and click Paste. 
+copy a tool from another tool open the other palette, right-click 
+palette the tool, and click Copy. Reopen the palette where you want to add the tool, right-click, and click Paste. 
+copy a tool from a tool catalog click Home tab . Build pan­el . Tools drop-down . Content 
+Browser 
+, and locate the tool you want to copy. Position the 
+If you want to… Then… 
+cursor over the i-drop handle, and drag the tool to the tool palette. 
+3 Right-click the new tool, and click Properties. 4 Enter a name for the tool. 5 Click the setting for Description, enter a description of the tool, 
+and click OK. 6 Expand Basic, and expand General. 7 Click the setting for Description, enter a description of the ceiling 
+grid created from this tool, and click OK. 8 Specify a layer key and any layer key overrides if you do not want to use the layer assignments specified in the layer key style used in the drawing. 9 Specify the settings for the dimensions of the grid. For more information, see Creating a Ceiling Grid with User-Specified Settings on page 2772. 
+10 Click OK. 
+Editing Ceiling Grids 
+You can change existing ceiling grids in different ways. You can change the overall dimensions of the grid, the number and position of grid lines, and the location of the grid within the drawing. You can also specify a clipping boundary for the grid and use that to mask the grid or insert a hole into the grid. 
+Changing the Dimensions of a Ceiling Grid 
+Use this procedure to change the overall dimensions of a ceiling grid. A ceiling grid is defined by its width and depth. 
+1 Double-click the ceiling grid you want to change. 2 Expand General, and expand Dimensions. 3 Modify the values for X - Width or Y - Depth. 
+TIP You can also change the size of a grid by dragging its grip points. Note that when you have a manual grid, you are dragging the individual lines, and not the grid. 
+Changing the Lines of a Ceiling Grid 
+Apart from the overall dimensions of a ceiling grid, you can also change the number and position of grid lines on the X and Y axes. There are 3 different layout types that control the spacing of lines in a grid. Layout type is specified separately for the X and Y planes on the Properties palette for the grid. 
+¦ 
+Manual: You specify the position of each line on the grid. 
+
+¦ 
+Repeat (Fixed Bay Size): You specify equidistant spacing between lines on the grid. The number of lines is determined by the size of the grid. As the size of the grid changes, lines are added or subtracted accordingly. The distance between lines remains fixed. 
+
+¦ 
+Space Evenly: You specify the number of lines on the grid. The space between lines is determined by the size of the grid. As the size of the grid changes, the spacing between lines is lengthened or shortened accordingly. The number of lines remains fixed. 
+
+
+NOTE By default, grids are inserted with evenly spaced lines. 
+The procedures for adding or removing grid lines vary depending on the Layout type in effect, as explained in the following sections. 
+Adding Lines to a Ceiling Grid 
+In some cases, you need to add lines to an existing grid. Depending on the Layout type in effect, you do this in different ways. 
+Adding Lines to a Ceiling Grid with Evenly Spaced Lines 
+Use this procedure to add lines to a grid with evenly spaced lines. The lines will always be distributed evenly along the grid axis. If you need non-regular lines with different spacing between them, open the grid’s Properties palette, and change the Layout type to Manual. 
+1 Select the ceiling grid to which you want to add lines. 
+2 Add grid lines: 
+If you want to… Then… 
+add grid lines to the X axis  click Ceiling Grid tab . X Axis panel . Add  
+of the grid  Grid Line  . Then, click on the X axis of  
+the grid. The number of grid lines increases  
+by one, while the overall size of the grid re­ 
+mains the same.  
+
+add grid lines to the Y axis  click Ceiling Grid tab . Y Axis panel . Add  
+of the grid  Grid Line  . Then, click on the Y axis of  
+the grid. The number of grid lines increases  
+by one, while the overall size of the grid re­ 
+mains the same.  
+
+Your grid has been updated accordingly, with the new number of grid lines distributed evenly along the grid axis. 
+Adding Lines to a Manual Ceiling Grid 
+Use this procedure to add lines to a manual grid. A manual grid allows maximum control over the grid, but requires that you specify the exact number and position of grid lines. 
+1 Select the ceiling grid to which you want to add lines. 2 Add grid lines: 
+If you want to… Then… 
+add grid lines to the X axis of the  click Ceiling Grid tab . X Axis  
+grid  panel . Add Grid Line  . Then,  
+click the location on the X axis  
+where the new grid line should ap­ 
+pear.  
+
+add grid lines to the Y axis of the click Ceiling Grid tab . Y Axis pan-grid 
+el . Add Grid Line
+ . Then, click the location on the X axis where the new grid line should appear. 
+The Bays worksheet lists all of the bays on the selected axis, their distance from the start point of the grid, and the spacing between the grid lines that define the bays. 
+3 Alternatively, on the Properties palette, click Bays 
+for the X and Y axis, and change the number of lines in the Bays worksheet. 
+4 To add a line, click under the last number in the Bays list. A new line is inserted with default values for distance and spacing. You can edit these values by clicking them and entering new values. 
+NOTE You cannot enter a line number for the new line. The line number is provided by the application after you close the worksheet. 
+5 Click OK. 
+TIP To add lines to the ceiling grid, you can also right-click the grid, and click X Axis/Y Axis . Add Grid Line. 
+Adding Lines to a Ceiling Grid with Fixed Bay Size 
+Use this procedure to add lines to a grid with fixed bays. Normally, in a grid with fixed bays, the distance between the grid lines is more important than the number of grid lines. 
+To add lines to a grid with a fixed bay size, you have 2 options: 
+¦ 
+Enlarge the overall grid size (for more information, see Changing the Dimensions of a Ceiling Grid on page 2778). 
+
+¦ 
+Decrease the size of the bays 
+
+
+TIP In cases where the number of lines is important for the grid, change the Layout type of the grid from Repeat to Space evenly or Manual. 
+1 Double-click the ceiling grid to which you want to add lines. 2 Expand Dimensions. 
+3 Add grid lines: 
+If you want to… Then… 
+add grid lines to the X axis of the expand X Axis, and enter a value grid for Bay size. 
+add grid lines to the Y axis of the expand Y Axis, and enter a value for grid Bay size. 
+If you enter a value that reduces the size of the bays, the number of grid lines increases as the extra bays are added to the grid. 
+A number of new lines have been added by decreasing the size of the individual bays. 
+Adding Lines to Custom Ceiling Grids 
+Use this procedure to add grid lines to a custom ceiling grid that was created by applying tool properties to linework. 
+1 Draw the new line or lines in the desired position. 2 Select the ceiling grid. 3 Click Ceiling Grid tab . Custom Grid panel . Add Grid Lines 4 Select the linework to be added, and press ENTER. 5 Press ENTER again to keep the linework, or enter y (Yes) to erase 
+it. 
+Removing Lines from a Ceiling Grid 
+In the same way that lines can be added to a ceiling grid, they can also be removed. 
+Removing Lines from a Ceiling Grid with Evenly Spaced Lines 
+Use this procedure to remove lines from a grid with evenly spaced lines. The lines will always be distributed evenly along the grid axis. To remove a particular line and have all the other lines stay in their original places, open the grid’s Properties palette, and change the Layout type to Manual. 
+1 Double-click the ceiling grid from which you want to remove lines. 
+2 Expand Dimensions. 
+3 Remove grid lines: 
+If you want to… Then… 
+remove grid lines from the X  click Ceiling Grid tab . X Axis pan- 
+axis of the grid  el . Remove Grid Line  . Then, click  
+anywhere on the X axis. The number of  
+grid lines is decreased by one.  
+
+remove grid lines from the Y  click Ceiling Grid tab . Y Axis panel . Re- 
+axis of the grid  move Grid Line  . Then, click any­ 
+where on the Y axis. The number of grid  
+lines is decreased by one.  
+
+Your grid has been updated accordingly, with the new number of grid lines distributed evenly along the grid axis. 
+Removing Lines from a Manual Ceiling Grid 
+Use this procedure to remove grid lines from a manual grid. On a manual grid, you can remove each line individually. 
+1 Select the ceiling grid from which you want to remove lines. 2 Remove grid lines: 
+If you want to… Then… 
+remove grid lines from the X axis click Ceiling Grid tab . X Axis of the grid 
+panel . Remove Grid Line
+ . Then, click on the grid line on the X axis to remove. 
+remove grid lines from the Y axis of click Ceiling Grid tab . Y Axis pan-the grid 
+el . Remove Grid Line
+ . Then, click on the grid line on the Y axis to remove. 
+3 Alternatively, on the Properties palette, click Bays 
+for the X and Y axis, and change the number of lines in the Bays worksheet. 
+4 To remove a line, click the bay number in the Bays list, and click Remove. 
+5 Click OK. 
+The bay is deleted from the grid, and the grid size is reduced accordingly. 
+Removing Lines from a Ceiling Grid with Fixed Bay Size 
+Use this procedure to remove lines from a grid with bays of fixed size. Normally, in a grid with fixed bays, the distance between the grid lines is more important factor than the number of grid lines. 
+To remove lines from a grid with a fixed bay size, you have 2 options: 
+¦ 
+Decrease the overall grid size (for more information, see Changing the Dimensions of a Ceiling Grid). 
+
+¦ 
+Increase the size of the bays. 
+
+
+TIP In cases where the number of lines is important for the grid, change the 
+Layout type of the grid from Repeat to Space evenly or Manual. 
+1 Double-click the ceiling grid from which you want to remove lines. 
+2 Expand Dimensions. 
+3 Remove grid lines: 
+If you want to… Then… 
+remove grid lines from the X axis expand X Axis, and enter a value of the grid for Bay size. 
+remove grid lines from the Y axis of expand Y Axis, and enter a value for the grid Bay size. 
+If you enter a value that increases the size of the bays, the number of grid lines decreases as the extra bays are removed from the grid. 
+A number of lines have been removed by increasing the size of the individual bays. 
+Removing Lines from Custom Column Grids 
+Use this procedure to remove grid lines from a custom ceiling grid that was created by applying tool properties to linework. 
+1 Select the ceiling grid. 2 Click Ceiling Grid tab . Custom Grid panel . Remove Grid Lines 3 Select the linework to be removed, and press ENTER. 
+The linework remains visible in the drawing but is no longer part of the grid. You can select it and delete it if desired. 
+Changing the Position of Ceiling Grid Lines 
+You can change the position of individual lines in ceiling grids for which the Layout type is Manual. (Grids with a Layout type of Repeat or Space evenly calculate line position according to the number of bays or the size of the grid.) A manual grid has grip points for every line. You can use either the grip points or the Bays worksheet to change the position of a grid line. 
+Using Grip Points to Move Ceiling Grid Lines 
+Use this procedure to move a ceiling grid line by dragging the grip points of the line. Manual grids have a pair of grip points for the start point and end point of each line. 
+1 Select the grid where you want to move grid lines. For each line in the grid, a pair of grip points (start point and end point) is displayed. 
+TIP If your grid displays only four lines for the corners of the grid, the Layout type needs to be changed to Manual on the grid’s Properties palette. 
+2 Use the grip points to drag the lines in either horizontal or vertical direction. 
+¦ 
+If you move a grid line beyond the grid border, the grid is enlarged accordingly. 
+
+¦ 
+If you move one of the border lines of the grid to the inside of the grid, the grid is decreased accordingly. 
+
+
+Changing the Position of Ceiling Grid Lines by Editing Grid Bays 
+Use this procedure to reposition grid lines by editing the number and spacing of grid bays using the Bays worksheet. 
+1 Double-click the ceiling grid where you want to move lines. 2 On the Properties palette, expand Dimensions. 3 Edit grid bays: 
+If you want to… Then… 
+edit grid bays along the X axis expand X Axis, and click the value for Bays. 
+edit grid bays along the Y axis expand Y Axis, and click the value for Bays. 
+The Bays worksheet lists all bays on the selected axis, their distance from the start point of the grid, and the spacing of each bay. 
+4 To change a bay, click one of its measuring values in the list, and edit the value. 
+5 Click OK. 
+The line positions have changed according to your settings. 
+Attaching Clipping Profiles to Ceiling Grids 
+You can attach a clipping profile to define a mask around a ceiling grid or to make a hole in a ceiling grid. You could, for example, create a mask to define a ceiling grid for an irregularly shaped room, or exclude parts of a room from the ceiling grid. 
+For a mask, you can use closed polylines and spaces. For more information, see Creating a Ceiling Grid with a Clipping Boundary on page 2776. 
+NOTE To attach a clipping profile, you must first draw a closed polyline or space with the desired boundary or hole shape. 
+Masking Ceiling Grids 
+Use this procedure to mask a ceiling grid. A mask is a polyline shape or space that defines the boundaries of a ceiling grid. Those parts of the grid outside the boundary are not displayed. 
+1 Draw a closed polyline with the boundary or hole shape you want. 2 Select the grid you want to mask. 
+3 Click Ceiling Grid tab . Clipping panel . Set Boundary
+ . 4 Select the closed polyline or space you want to use as a mask. 
+The parts of the ceiling grid that are outside the masking polyline or space are no longer displayed. 
+TIP If you want to restore the original grid shape, go to the Properties palette and select None for Boundary. 
+Creating Holes in Ceiling Grids 
+Use this procedure to create a hole in an existing ceiling grid. The hole is created from a closed polyline or AEC object placed within the boundaries of the grid. Any parts of the grid inside the hole are not displayed. 
+1 If it does not already exist within the boundaries of the grid, draw a closed polyline in the shape of the desired hole. 2 Select the ceiling grid to which you want to add a hole. 
+3 Click Ceiling Grid tab . Clipping panel . Add Hole 
+. 4 Select a closed polyline or AEC object for the hole. A hole is cut in the ceiling grid. 
+5 Press ENTER to end the command. 
+Adding a hole to a ceiling grid 
+
+Removing Holes from Ceiling Grids 
+Use this procedure to remove holes you have created in ceiling grids. 1 Select the grid from which you want to remove holes. 
+2 Click Ceiling Grid tab . Clipping panel . Remove Hole 
+. 3 Select the closed polyline of the hole. The hole is removed from the ceiling grid. The polyline, however, remains in the drawing. If necessary, you can delete it. 
+Removing a hole from a ceiling grid 
+
+Attaching Hyperlinks, Notes, or Files to a Ceiling Grid 
+Use this procedure to attach hyperlinks, notes, or files to a ceiling grid. You can also edit hyperlinks and notes, and edit or detach reference files from a ceiling grid. 
+1 Select the ceiling grid to which you want to attach information. 2 On the Properties palette, click the Extended Data tab. 3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. For more information, see “Add Hyperlinks to a Drawing” in AutoCAD Help. 
+TIP The quickest way to locate and view an AutoCAD topic is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+4 Click OK. 5 To add a note, click the setting for Notes, and enter the note. 6 Click OK. 7 To add a reference file, click the setting for Reference documents, 
+and attach, edit, or detach a reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+8 Click OK twice. 
+Changing the Location of Ceiling Grids 
+Use this procedure to change the location of ceiling grids. You can relocate an existing ceiling grid by changing the coordinate values of its insertion point. The ceiling grid also has an orientation with respect to the world coordinate system (WCS) or the current user coordinate system (UCS). For example, if the top and bottom of the ceiling grid are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the ceiling grid by aligning its normal with another axis. You can also rotate the ceiling grid on its plane by changing the rotation angle. 
+For more information about the world coordinate system, see “Use World and User Coordinate Systems in 3D” in AutoCAD help. 
+TIP The quickest way to locate and view an AutoCAD topic is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type in the AutoCAD topic name, and click List Topics. 
+1 Select the ceiling grid that you want to change. 2 On the Properties palette, expand Basic, and expand Location. 3 Select Additional information. 4 Specify the location of the ceiling grid: 
+If you want to… Then… 
+relocate the ceiling grid enter new coordinate values under Insertion Point. 
+locate the ceiling grid on the XY make the normal of the ceiling grid 
+plane parallel to the Z axis: under Normal, enter 1 for Z and enter 0 for X and Y. 
+locate the ceiling grid on the YZ make the normal of the ceiling grid 
+plane parallel to the X axis: under Normal, enter 1 for X, and enter 0 for Y and Z. 
+locate the ceiling grid on the XZ make the normal of the ceiling grid 
+plane parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+If you want to… Then… 
+change the rotation of the ceiling enter a new value for Rotation grid Angle. 
+5 Click OK. 
+Changing the Display of Ceiling Grids 
+Use this procedure to change any of the following display properties for lines, node markers, or cell markers in a ceiling grid: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+1 Select the ceiling grid you want to change, right-click, and click Edit Object Display. 
+2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already selected, click 
+at the upper-right corner of the tab. 4 Click the Layer/Color/Linetype tab. 
+5 Select the component to change, and select a different setting for the property. 
+6 Click OK twice. 
+Changing the Node Radius for a Ceiling Grid 
+Use this procedure to change the node radius for a ceiling grid by editing its display properties. 
+1 Double-click the ceiling grid you want to change. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all ceiling grids in the drawing, select Drawing default setting. 
+5 If necessary, expand Object Display Properties . Advanced. 6 Click the value for Node radius, and enter a new value. 
+(Alternatively, you can click 
+and specify 2 points in the 
+drawing area to set the new radius.) 
+You can also access and modify the node radius property through the ceiling grid’s context menu, as follows: 
+1 Select the ceiling grid, right-click, and click Edit Object Display. 
+2 In the Object Display dialog, click the Display Properties tab. The current display representation is displayed in bold. 
+3 Select the display representation where you want the changes to appear, and select Object Override. If Object Override is already 
+selected, click 
+at the upper-right corner of the tab. 
+4 In the Display Properties dialog, click the Other tab, and then change the radius as needed. 
+5 Click OK twice. 
+Detail Drafting Tools 
+35 
+AutoCAD Architecture includes a number of easily accessible tools designed to help you work more intuitively and effectively with linework in detail drawings. 
+Construction Lines 
+Construction lines (also known as xlines) are temporary linework entities that can be used as references when creating and positioning other objects or linework. For example, you can use construction lines to prepare multiple views of the same item, or create temporary intersections to serve as object snaps. 
+Construction lines are either circles or straight lines that extend to infinity in both directions. In either case, they do not change the total area of the drawing and have no effect on zooming or viewports. You can move, rotate, copy, or delete construction lines just like other objects. 
+The regular AutoCAD construction line functionality is still available via the XLINE command. However, the AutoCAD Architecture construction line feature is designed to give you a more intuitive way of drawing construction lines based on the geometry of existing objects or linework. No command line entry is required. 
+In most cases, you would probably want to draw construction lines based on segments of existing objects, but you can also draw them by specifying any two points in the drawing area, without regard to existing objects or linework. 
+Creating Construction Lines From Existing Objects/Linework 
+Use this procedure to create a construction line based on the geometry of any straight, arced, or circular segment of any object or linework, except hatches, splines, and ellipses. If based on a straight segment, the resulting construction line is a straight line that extends to infinity in both directions; if based on an arced or circular segment, the construction line is a circle. 
+1 Click Home tab . Draw panel . Line drop-down . Construction 
+Line
+ . 2 In the drawing area, move the cursor over the segment on which 
+you want to base your construction line (the “construction line base”). A preview of the construction line is displayed. 
+3 Click to display an offset indicator, which dynamically shows the distance between the preview line and the construction line base. 
+4 Either drag the preview line to the desired distance, and click to position the construction line, or enter the desired distance and press ENTER. 
+Drawing a construction line at a zero offset based on a straight wall segment 
+
+Drawing a construction line at a zero offset based on a arc wall segment 
+
+Drawing a construction line at a specified offset based on a straight wall segment 
+
+The resulting construction line displays three grips when selected. You can move the line by moving the middle grip, or you can change its orientation by moving either of the end grips. 
+Creating Construction Lines Independently 
+Use this procedure to create a straight construction line that passes through any two points of your choice. 
+1 Click Home tab . Draw panel . Line drop-down . Construction 
+Line
+ . 2 Press ENTER. 3 In the drawing area, specify the first point that you want the 
+construction line to pass through. (This will be the root or conceptual midpoint of the construction line.) 4 Specify a second point. Drawing a construction line by specifying points 
+
+The construction line is displayed. If you select it, three grips are displayed. You can move the line by moving the middle grip, or you can change its orientation by moving either of the end grips. 
+Hatch Productivity Tools 
+The context menu for hatches includes options that allow you to easily reposition hatches relative to their origins, generate AEC Polygons to provide boundaries for non-bounded hatches, and redefine hatch boundaries based on other selected closed-boundary linework. 
+Repositioning a Hatch 
+Use this procedure to align brick and masonry hatch patterns within a boundary so that whole units display along a particular edge. 
+1 Select the hatch. 2 Right-click, and click Set Origin. 3 Specify an endpoint on the boundary, and press ENTER. 
+The hatch is repositioned with its origin at the endpoint you specified. 
+Repositioning a hatch within a boundary 
+
+Generating a Hatch Boundary 
+Use this procedure to generate a boundary for a hatch whose original boundary has been deleted or moved during the course of other drawing operations. The boundary generated by this procedure is a polyline. Polylines are also created for any islands within the selected hatch. These polylines remain selected after you generate the boundary, so you can directly manipulate them into the desired configuration. You can then apply the hatch to the new boundary configuration using the Set Boundary option, as described under Redefining a Hatch Boundary on page 2798. 
+1 Select the hatch. 
+2 Right-click, and click Generate Boundary. 
+All grips are displayed for any polylines created. 
+Generating a hatch boundary 
+
+Redefining a Hatch Boundary 
+Use this procedure to redefine the boundaries of associative or non-associative hatches based on any selected closed-boundary linework. In cases where a non-associative hatch originally filled closed-boundary linework, but the linework was subsequently stretched or moved, this procedure lets you expand or reposition the hatch to fill the new boundary. 
+You can also use this procedure to extend or move a hatch from one boundary to others. (If you do not also select the linework currently bounding the hatch, the hatch is moved from the original boundary to the other boundaries that you select.) The linework you select for the new hatch boundaries can be AEC Polygons, closed polylines, circles, text, or multiline text (Mtext). 
+1 Select the hatch. 2 Right-click, and click Set Boundary. 3 Select the linework, and press ENTER. 4 Press ENTER to keep the selected linework, or enter y (Yes) to erase 
+it. 
+The selected hatch is applied within all selected boundaries. 
+Transferring a hatch from one boundary to another 
+
+Moving a hatch back to original boundary Resizing a hatch to fill a boundary Copying a hatch from one boundary to another 
+
+
+
+NOTE If a hatch was originally created as associative, its associativity is not transferred to other linework to which the hatch is applied using the Set Boundary option. And if the original boundary itself is one of the boundaries selected during the operation, the association between the boundary and the hatch is discontinued. 
+AEC Modify Tools 
+You can perform a variety of editing operations on linework components and certain architectural objects using AEC Modify tools. AEC Modify tools can be used on any of the following objects: 
+¦ 
+Hatches 
+
+¦ 
+Polylines 
+
+¦ 
+Circles 
+
+¦ 
+Arcs 
+
+
+

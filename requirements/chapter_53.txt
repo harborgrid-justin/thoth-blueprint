@@ -1,0 +1,533 @@
+[MIGRATED TO RTM_PART_69.md - VISUAL AUDIT]
+Reference AEC Objects 
+54 
+You can create reference copies of objects that are updated automatically when you change the original object. You can add identical objects, such as columns, to your drawing. 
+Creating an AEC Entity Reference 
+An AEC entity reference is a reference copy of an object. These entity references update when you change the original object. When you select an object to reference, you must specify a point on the original object as an insertion point for the marker of the entity reference. A reference marker is displayed in the drawing to mark the insertion point. 
+You can place the entity reference in the drawing at any location or rotation angle. The distance between the entity reference and the reference marker remains equal to the distance between the original object and the insertion point specified. You can change this distance by specifying a new insertion point at a new location in relation to the original object. 
+When you change the properties of the original object or edit it with grips, the reference object reflects the changes. For example, if you want to add custom-shaped mass elements to a drawing, you can add one mass element and reference it. If you make changes to the original, the entity reference is updated. 
+Adding a Reference to an Object 
+Use this procedure to create an entity reference from another object. 
+1 Open the tool palette that you want to use, and select an AEC entity reference tool. 
+An AEC entity reference tool is located in the Helper Tools category of the AutoCAD Architecture 2011 Stock Tool catalog. For more information, see Content Browser Overview on page 137. 
+2 Enter ad (Add), and press ENTER. 3 Select the object that you want to reference. 4 Specify a point on the original object to use as the insertion point 
+for the entity reference marker. 5 Specify a location for the entity reference in the drawing. The distance between the entity reference and the reference marker is equal to the distance between the original object and the insertion point that you specified. 
+6 Enter a rotation angle for the entity reference, or press ENTER for zero rotation. 7 Press ENTER. 
+The entity reference and reference mark are placed in the drawing at the specified location and rotation angle. If you edit the original object, the same changes are made to the entity reference. 
+Attaching an Object to an Existing Entity Reference 
+Use this procedure to attach an object to an existing entity reference. 
+1 Open the tool palette that you want to use, and select an AEC 
+entity reference tool. An AEC entity reference tool is located in the Helper Tools category of the AutoCAD Architecture 2011 Stock Tool catalog. For more information, see Content Browser Overview on page 137. 
+2 Enter at (Attach), and press ENTER. 3 Select the reference marker that you want to use. 4 Select the new object that you want to use to replace the entity 
+referenced, and press ENTER. 
+The new entity reference replaces the former entity reference. The original object is unchanged. 
+Attaching Hyperlinks, Notes, and Files to an Entity Reference 
+Use this procedure to attach hyperlinks, enter notes, or attach reference files to an entity reference in a drawing. You can also edit notes and edit or detach reference files from an entity reference. 
+1 Double-click the entity reference to which to attach information. 2 On the Properties palette, click the Extended Data tab. 
+3 To add a hyperlink, click 
+next to Hyperlink, and specify the 
+link. For more information about adding hyperlinks, see “Add Hyperlinks in a Drawing” in AutoCAD Help. 
+4 To add or edit a note, click 
+next to Notes, enter text, and click OK. 
+5 Click 
+next to Reference documents, and attach, detach, or edit a reference file: 
+If you want to … Then … 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file 
+select the file name, and click . 
+
+6 Click OK twice. 
+Changing the Location of an Entity Reference 
+Use this procedure to relocate an existing entity reference by changing the coordinate values of its insertion point. The entity reference also has an orientation with respect to the world coordinate system (WCS) or the current user coordinate system (UCS). For example, if the top and bottom of the reference object are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the entity reference by aligning its normal with another axis. You can also rotate the entity reference on its plane by changing the rotation angle. 
+For more information about the world coordinate system and the user coordinate system, see “Use Coordinates and Coordinate Systems” in AutoCAD Help. 
+1 Double-click the entity reference you want to relocate or reorient. 2 On the Properties palette, click the Design tab, expand Basic, and 
+expand Location. 3 Click Additional information. 4 Specify the location of the entity reference: 
+If you want to … Then … 
+relocate the entity reference enter new coordinate values under Insertion Point. 
+locate the entity reference on the make the normal of the entity refer-
+XY plane ence parallel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the entity reference on the make the normal of the entity refer-
+YZ plane ence parallel to the X axis: under Normal, enter 1 for X and enter 0 for Y and Z. 
+locate the entity reference on the make the normal of the entity refer-
+XZ plane ence parallel to the Y axis: under Normal, enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the entity enter a new value for Rotation reference Angle. 
+5 Click OK. 
+Customizing and Adding New Content for Detail 
+55 
+Components 
+The details feature in AutoCAD Architecture has a framework for content that can be customized and extended in several different ways. Detail components are stored in Microsoft® Access databases, which end users can modify or even create using the Detail Component Manager, as described under Creating and Modifying Detail Component Databases on page 3515. 
+Developers may prefer to work on detail component databases using Microsoft Access directly, in which case they will definitely need to refer to the descriptions and code samples in this appendix. However, it is recommended that any user be familiar with this information before attempting to create or customize a detail component database. 
+Introduction 
+AutoCAD Architecture detail components are not custom objects in AutoCAD. They are made up of simple entities like line, arc, polyline, block, and hatch. Usually, the various entities that make up a detail component are grouped as an anonymous block so that they can easily be copied or moved like a single entity. But a detail component can also be as simple as a polyline boundary with a hatch interior. This accommodates the type of component for which it is natural to use the STRETCH command. The exact makeup of the component is left to the discretion of the developer. 
+Each Detail Component is also stamped with “Xdata” (Extended Entity Data) that identifies where it came from in the original database of components. This data can be used later to retrieve additional information or create another component of the same type. 
+Detail components are integrated with the Property palette and Tool palette systems. However, the details framework handles this interaction automatically, and an author of a new detail component only has to provide a simple description of what type of data should appear. 
+The details framework includes four main components: 
+¦ 
+Database of Components and Sizes 
+
+¦ 
+Recipe Specification 
+
+¦ 
+Recipe Implementation 
+
+¦ 
+Framework Utilities 
+
+
+These framework components are described individually in the following sections. 
+Database of Components and Sizes 
+The AEC Detail Component database is a Microsoft® Access database, which contains a size table for each available component, as well as several related tables that support the overall structure of the database. End users can add or modify existing component tables through the user interface provided by the Detail Component Manager dialog box, but more advanced customization requires Microsoft Access. 
+Recipe Specification 
+A Recipe Specification (RecipeSpec) is an XML file that describes the different Recipes that can be used to create a particular component in AutoCAD. For each Recipe, it identifies the types of controls (prompts) that should appear in the Properties palette and specifies how to call the function that implements the given Recipe. The RecipeSpec also provides view-specific information such as the layers and hatch patterns to use when creating the component. 
+Recipe Implementation 
+A Recipe Implementation is (usually) a small piece of code that creates the component in AutoCAD. The Recipe Implementation can be written in ObjectARX C++, VBA (Visual Basic for Applications), or any Microsoft .NET language (such as C# or Visual Basic .NET). The Recipe can be as easy as a simple block insert, or it can involve more complex operations, such as bringing up a dialog box with many choices. 
+Framework Utilities 
+The Framework utilities make the job of implementing a Recipe much easier. They provide many of the common functions to look up data from the database and from the user controls that populate the Properties palette. These utilities also provide a number of common “Jigs” that help place the component once it is created. For more information on Jigs, see Jigs and JigEnts on page 3941. 
+A Walkthrough of the Process 
+As with a real recipe, the ingredients for a detail component Recipe can come from many places. As the recipe author, you have the freedom to put the ingredients together however you choose. Nonetheless, the following walkthrough of the process the user goes through to insert a detail component in a drawing should help give you a better understanding of how all the pieces fit together. 
+1 The user chooses a detail component to create, either by selecting one from the Detail Component Manager dialog box, or by clicking on a tool that has been configured to insert that component. 
+
+2 The RecipeSpec that is assigned to the selected detail component is read, and the information within it is displayed on the Properties palette, as shown below. The Category, Type, and Description values all come from the user’s selection of the component. The Receipe can then retrieve other information it needs directly from the database. The user can change any of the values displayed on the Properties palette to affect the currently running Recipe. 
+
+3 The RecipeSpec may have one or more Recipes defined within it, each associated with a different View setting on the Properties palette. By selecting a View (or accepting the default) the user in effect selects the Recipe that is responsible for creating that view of the component. When a particular Recipe is selected, the Recipe Implementation function described in the XML RecipeSpec is called. 
+The three controls shown under Specifications (Hatch block, Grout fill cores, and Show mortar) are defined by the <Controls> section of the RecipeSpec. Their values can be retrieved by the Recipe function and used to control the basic parameters of the component. 
+In this example, Mortar is a subcomponent of the CMU component, as specified in its RecipeSpec. Values and options for all mortar components are retrieved from the database and displayed on this section of the Properties palette. The final three controls under Mortar (Left joint type, Right joint type, and Hatch mortar), are specified in the subcomponent’s RecipeSpec, and their values can be retrieved by the subcomponent’s 
+Recipe function. 
+4 The Recipe Implementation then does whatever it needs to in order to create the component. It has access to the size data in the database, the data in the RecipeSpec, and user input provided through the Properties palette. It also has access to a host of utility functions that can help create and place the component. 
+The layering and hatch properties for the component come from the <Data> section of the RecipeSpec. Specific options for the Jig to use come from the <Options> section of the RecipeSpec. 
+Component Databases 
+A detail component database contains a size table for each available component and several related tables that support the overall structure of the Microsoft® Access database. A component database has references to external files, such as Recipe Specifications and preview image files. For this reason, it is suggested that the database and all of its external references be located in the same tree structure of the file system. For example: 
+MyContent/ MyComponentDb.mdb MajorComponentGroup1/
+*.xml, *.dwg, *.png, etc. supporting this group of components MajorComponentGroup2/ *.xml, *.dwg, *.png, etc. supporting this group of components 
+Such a structure makes installing or moving the content a much easier task because all of the external content can use relative paths from the main database. 
+Database Schema 
+Several tables must be present in order for the Recipe system to function correctly. When creating a new database, you should start with either the standard database (AecDtlComponents.mdb) or with the empty template database (AecDtlComponents-Template.mdb). 
+Fingerprint Table 
+This table uniquely identifies a component (or keynote) database with a Global Unique IDentifier (GUID). It also provides information that can be displayed 
+in the user interface. All detail components placed in a drawing, and all detail component tools used in Tool palettes record this database GUID. If your database changes location in the directory structure, the tools and components can still find the database using the unique GUID. 
+The Type field should contain either the string “Component” or “Keynote” depending on which type of database you are creating. 
+To obtain a GUID for your database, simply delete the existing GUID from the database you are using as a template, and a new GUID will be generated automatically. 
+Groups Table 
+The Groups table defines the hierarchical organization of components within the database. This hierarchy determines the order in which component groups are displayed in the tree view of the Detail Component Manager dialog box. To set up this table, you simply need to make a Group entry for each collection of like components, and then, for each Group, define its Parent, which is either another Group or the root node (\ - *). The following fields apply to each row in the table: 
+ID A unique number within the given table that identifies the particular row in the table used to create a component. Once created, this number should never change. Components that have already been placed in the drawing are stamped with this ID and must be able to consistently reference this row in the database. 
+Parent The group that is the parent of the group identified in the Group field. 
+Group The text string used to display the name of this group. 
+PathKey An entry from the DirKeys table (described later in this section). DirKeys tell the system where to find the files external to the database for this given component. 
+SearchKey A comma-delimited list of keywords used by the Detail Component Manager to search for components. When a keyword is specified for a group, any component within that group is considered a match for a search on that keyword. 
+MODIFIED A Boolean flag indicating whether this row has been changed since it was originally created. If the user modifies the row using the Detail Component Manager dialog box, this field is marked so that future versions of the database can merge in the changes. The notion of “modified” is relative to the version of the database. For instance, if you are copying an existing database and changing all the values, it would be considered the first version of the new database, and all MODIFIED fields should be set to FALSE. 
+PICTURE This column allows you to specify a unique picture when this Group node is selected in the Detail Component Manager. It is recommended that you use an image file of type PNG. The location of the image file is usually specified by appending the filename to the path assigned to the DirKey for this Group. 
+Components Table 
+The Components table is the main “map” of how all the information about a given component is tied together. The following fields apply to each row in the table: 
+ID A unique number within this table that identifies the particular component within this database. Once created, this number should never change. Components that have already been placed in the drawing are stamped with this ID and must be able to consistently reference this row in the database. 
+GroupName The parent Group of this component. This establishes the place of the component in the overall hierarchy of components. 
+Name The text string used for display purposes in the Detail Component Manager and on the Properties palette. 
+TableName The name of the size table for this component (Component Size Tables are described in the following section). 
+Keynote This value references an entry in a keynotes database. This is the default keynote to be used for all sizes of this component, but it can be overridden if a size-specific keynote is defined in the size table. 
+SubComponentKey This value identifies the component as a valid subcomponent for the context specified. For example, the Recipes for Brick and CMU allow for a subcomponent of mortar. The Recipe system will search for all components in the database that identify themselves as being valid subcomponents for mortar. 
+RecipeSpec This value specifies the XML file to use as the RecipeSpec for this component. The RecipeSpec has instructions for how to actually create and place the component in the drawing. The RecipeSpec is found by searching in the directory specified by the PathKey for the Group in which this component resides. For more information, see the subsequent section on Recipe Specifications. 
+SearchKey A comma-delimited list of keywords used by the Detail Component Manager to search for components. 
+Units This value specifies the unit of measure for the size table for this component. 
+MODIFIED A Boolean flag indicating whether this row has been changed since it was originally created. If the user modifies the row using the Detail Component Manager, this field is marked so that future versions of the database can merge in the changes. The notion of “modified” is relative to the version of the database. For instance, if you are copying an existing database and changing all the values, it would be considered the first version of the new database, and all MODIFIED fields should be set to FALSE. 
+PICTURE This column allows you to specify a unique picture to display when this particular row is selected in the Detail Component Manager. If the field is left blank, then the picture specified at the Component level is used. If no picture is specified in the Components table, the picture specified for the component’s Group is used. 
+It is recommended that you use an image file of type PNG. 
+Component Size Tables 
+For each component in the database, there should be a corresponding size table. A size table can be named anything you desire, but must include the following columns: 
+Description A textual description of the item, which is used as a display string in the Properties palette. 
+ID A unique number within the given table that identifies the particular row in the table used to create a component. Once created, this number should never change. Components that have already been placed in the drawing are stamped with this ID and must be able to consistently reference this row in the database. 
+MODIFIED A Boolean flag indicating whether this row has been changed since it was originally created. If the user modifies the row using the Detail Component Manager, this field is marked so that future versions of the database can merge in the changes. The notion of “modified” is relative to the version of the database. For instance, if you are copying an existing database and changing all the values, it would be considered the first version of the new database, and all MODIFIED fields should be set to FALSE. 
+PICTURE This column allows you to specify a unique picture to display when this particular row is selected in the Detail Component Manager. If the field 
+is left blank, then the picture specified at the Component level is used. If no picture is specified in the row of a given size table, the picture specified for the Component in general is used. 
+It recommended that you use an image file of type PNG. 
+The location of the image file is usually specified by appending the filename to the path assigned to the DirKey for this component’s Group. If the component is created by doing a simple Block insertion, you can have 
+the preview image created dynamically by drawing the referenced block. For these types of components, set the Picture value to _blockthumbnail. 
+Keynote This value references an entry in a Keynotes database. As with the PICTURE column, if no value is specified here at the Size level, the one specified at the Component level is used. 
+Units Table 
+This table defines the units of measure available to assign to individual component size tables. It currently includes only inches and millimeters. However, centimeters, meters, and feet should also work. In the Components table, each entry must specify the unit in which the assigned size table is defined. 
+DirKeys Table 
+This table defines directory keys, which are shortcut aliases to use in identifying the directory structure of the user’s file system. Typically, there is one directory for each major division in your component hierarchy. You can match the component hierarchy in the database with the external files stored on the file system. 
+DirKeys are referenced in the PathKey field of the Groups table and from the XML RecipeSpec files. They are intended to allow you to easily reorganize the internal hierarchy, the external hierarchy, or both. 
+ColumnDisplay Table 
+Column names used in component size tables cannot be localized in other languages because these names are referenced programmatically. However, these column names also need to appear in the user interface. The ColumnDisplay table serves as a lookup for user interface components, so that user-friendly, localized names for the columns can be displayed. 
+GlobalName This is the fixed name of the column in a given component size table. It is the lookup key used to find the local name. 
+LocalName This is the translated, user-friendly display string to use for a column of this global name. 
+TableId If left blank, then any column with the given GlobalName uses the LocalName for display purposes. In some cases, however, the same column name may have two different translations depending on its context. Specify a size table if the translation only applies to a specific context. 
+Hidden Some columns, such as ID and MODIFIED, are not intended to be seen by the user in the Detail Component Manager. These can be hidden by checking this box. Note, however, that this only applies when the database is marked as read-only. A database that is being edited from the Detail Component Manager must show all columns so that a valid row can be entered. 
+Modified A Boolean flag indicating whether this row has been changed since it was originally created. 
+Hatches Table 
+This table defines a set of hatch aliases. Individual components that create hatches can reference an alias instead of specifying the pattern, scale, and angle directly. This allows you to standardize the look of certain materials across the entire database. For instance, you can have all components that are made of concrete use the “concrete” alias. If you want to change the look of all concrete components, simply edit the entry in the Hatches table to change the look of any component that references that alias. 
+NOTE For a description of the database schema for keynotes, see Keynote Database Schema on page 3611. 
+Recipe Specifications 
+A Recipe Specification (RecipeSpec) is an XML file that describes which views (section, elevation, and so on) are available for a given detail component and how those views are to be created and placed within the drawing. 
+Here is a simple example of a RecipeSpec. 
+<?xml version="1.0" encoding="UTF-8"?> <AecRecipeSpec defaultUnit="in"> 
+<Recipe idStr="side"> <Label>Side</Label><Implementation> 
+<ObjectARX> <AppName>AecDtl50</AppName> <RcpFunc>AecDtlRcpColumnCapCCSide</RcpFunc> 
+</ObjectARX> </Implementation><Data> 
+<Item idStr="block"> <AcadEntityProps> <Layer ref="layerKey">THIN</Layer> 
+</AcadEntityProps> </Item><Item idStr="boundary"> </Item> <Item idStr="holes"> </Item> <Item idStr="hidden"> 
+<AcadEntityProps><Layer ref="layerKey">FINE</Layer> <Linetype>HIDDEN</Linetype> 
+</AcadEntityProps> </Item> 
+</Data> </Recipe><Recipe idStr="end"> 
+<Label>End</Label> <Implementation> 
+<ObjectARX> <AppName>AecDtl50</AppName> <RcpFunc>AecDtlRcpColumnCapCCEnd</RcpFunc>
+</ObjectARX> </Implementation> <Data> 
+<Item idStr="block"> <AcadEntityProps> <Layer ref="layerKey">THIN</Layer>
+</AcadEntityProps> </Item> <Item idStr="boundary"> 
+</Item> 
+<Item idStr="holes"> 
+</Item> 
+</Data>
+</Recipe> 
+</AecRecipeSpec> 
+A RecipeSpec is composed of one or more Recipes. Each Recipe is responsible for creating a single view of the component. In the example above, the first Recipe creates a side view of the drawing, and the second creates an end view. When the component is inserted in a drawing, the user-configurable View setting on the Properties palette determines which recipe is used. 
+Each Recipe contains the following four major sections: 
+¦ 
+Implementation: This section identifies the function to call and includes information specific to the particular language in which it is implemented. In short, it specifies how to call the Recipe function (RcpFunc). 
+
+¦ 
+Controls: This section defines controls that will be added to the Properties palette. The control can be defined directly here, or it can reference a globally defined control in the <ControlDefs> section that is part of the overall RecipeSpec. 
+
+¦ 
+Data: This section has customization data that the Recipe function can retrieve to help control how the component is drawn, such as layer and hatch pattern information. 
+
+¦ 
+Options: This section specifies options for the Jig or JigEnt that is used to place the component. 
+
+
+In short, the <Data> and <Controls> sections help define what the basic component looks like, and the <Options> section helps define how the component is placed. In many cases, you will not need an <Options> section, because the default behavior of the Jig is sufficient. 
+Each of these sections is described in more detail further on in this section. 
+Id Strings 
+Everything in the RecipeSpec that needs to be identifiable programmatically has an idStr attribute. The idStr value should never change and should be unique within the file (or at least within a given element type). The Rcp function will be expecting ID strings with certain values, so when writing a RecipeSpec, you need to know the implied contract from the Rcp function. 
+NOTE One way to find out the implied contract of the Rcp function is to turn on logging. For more information, see Recipe Logging on page 3949. 
+Display Strings 
+Elements with the tag <Label> or <Description> are intended to be translated. These will be displayed in the Properties palette and other user interface constructs, but will never be used to refer to anything and will never be referenced from the code (that is the job of the idStr). 
+References 
+Within the Recipe Spec, the value of an item appears between the element tags. It is taken as a literal value unless the ref attribute is specified. In this case, the value between the element tags is considered a lookup value and is used to retrieve the actual value. 
+ref [Optional] 
+Specifies that the value between the element tags is to be used as a lookup key. It can have one of the following values: 
+layerKey (AutoCAD Architecture LayerKey) 
+dbTable (Column in the table from component database) 
+control (idStr of a <Control>) 
+NOTE The layerKey reference type is only valid within the element <Layer>. 
+The dbTable reference will use the value as the column name within the size table for the current component. Consider the following two examples. 
+<Data> <Item idStr="block"> 
+<AcadBlockProps> <BlockName dwgLib="dwgs/AecDtlLib_BlockTest.dwg">Jimbo</Block Name> <Scale>6.0</Scale> 
+</AcadBlockProps> <AcadEntityProps><Layer>DOOR</Layer> </AcadEntityProps> </Item> </Data> 
+In the first case, the <Scale> and <Layer> values have been specified literally. This component, regardless of what row was selected in the database, will have a scale factor of 6.0. Likewise, regardless of what Layer Key style is current within AutoCAD Architecture, this component will go on the DOOR layer (not the layer assigned to the LayerKey “DOOR”). 
+<Data> <Item idStr="block"> 
+<AcadBlockProps> <BlockName dwgLib="dwgs/AecDtlLib_BlockTest.dwg">Jimbo</Block Name> <Scale ref="dbTable">SCALE</Scale> 
+</AcadBlockProps> <AcadEntityProps><Layer ref="layerKey">DOOR</Layer> </AcadEntityProps> </Item> </Data> 
+In this example, references were used to look up the values dynamically. The <Scale> will be set to the value in the SCALE column of the current row in the component’s size table. Likewise, the reference “DOOR” is the Layer Key to use to look up the Layer, not the actual Layer name itself. There is also a reference of type “control,” which lets you use the idStr of a control defined within the Recipe. The value of that control is then used as the actual value of the Element. 
+Units 
+Each Recipe Spec has a default unit that applies to the entire XML file. Any unit-dependent value that appears within the XML file is automatically converted from the default unit to the current drawing unit when the value is retrieved from XML. 
+To specify the default unit, use the following syntax in the root node of the RecipeSpec. 
+<?xml version="1.0" encoding="UTF-8"?> <AecRecipeSpec defaultUnit="mm"> <Recipe idStr="section"> <….. omitted ….> </Recipe> </AecRecipeSpec> 
+The defaultUnit attribute must be one of the values: in, ft, mm, cm, dm, or 
+m. If no value is speciifed, “in” is used by default. 
+In some cases, a simple hard conversion from Metric to Imperial (or vice versa) is not good enough. For instance, the <GapSpacing> between paver bricks should be a logical distance for each measurement system instead of an arbitrary distance created by a hard conversion. You can specify a unit-specific element by including the “unit” attribute, as in the following example. 
+<Data> <Item idStr="block"> <AcadEntityProps> <Layer ref="layerKey">THIN</Layer> 
+</AcadEntityProps> </Item> <Item idStr="head"> 
+<Params> <Overhang unit="in">0.25</Overhang> <Overhang unit="mm">6.5</Overhang> <Depth unit="in">0.375</Depth> <Depth unit="mm">10.0</Depth> 
+</Params> </Item><Item idStr="tip"> 
+<Params> <Depth unit="in">0.0625</Depth> <Depth unit="mm">1.5</Depth> 
+</Params> </Item><Item idStr="shaft"/> <Item idStr="hidden"> 
+<AcadEntityProps> <Linetype>HIDDEN2</Linetype> <!--override the Linetype for hidden components --> 
+</AcadEntityProps></Item> </Data> 
+In this case, different values are given depending upon whether the current drawing is Imperial or Metric. 
+NOTE if you have unit-specific values, you must include an element for both Imperial and Metric. You cannot include two entries from the same unit system (for example, “mm” and “cm”). A hard conversion will be done for any units specified within the same unit system. 
+<Implementation> Section 
+The Implementation section can look like any of the following examples (<ObjectARX>, <VBA>, and <ManagedDotNet>): 
+<ObjectARX> 
+<Implementation> 
+<ObjectARX> <AppName>AecDtl50</AppName><RcpFunc>AecDtlRcpColumnCapCCSide</RcpFunc> 
+</ObjectARX> </Implementation> 
+Where... Is... 
+AppName the logical appname that appears in the Registry for an ObjectARX application. 
+<RcpFunc> the name of a Recipe function that is imple­mented within the ObjectARX module and is registered using the AecRcpBase frame­work object AecRcpFuncTable. The function signature should take no arguments and must return a value of type RcpStatus 
+<VBA> 
+<Implementation> <VBA projectName="M:/Juneau/bin/TestDtl_VBA.dvb" macro Name="DrawRectangle"/> 
+</Implementation> 
+Where... Is... 
+projectName 
+the pathname of the VBA project file that contains the macro. This can be a full pathname, a partial path relative to the location of the XML file, or it can use the “dirKey” attribute to specify a path from the DirKeys table in the component data­base. 
+macroName The VBA macro name to call. This macro should take no arguments and returns no value. It needs to call the function aecDtl­SetRcpReturnStatus()before returning. 
+<ManagedDotNet> 
+<Implementation> <ManagedDotNet moduleName="M:/Juneau//bin/TestDtl_VB.dll" fun cRcp="DrawRectangle"/>
+</Implementation> 
+Where... Is... 
+moduleName the DLL pathname where the function ex­ists. This can be a full pathname, a partial path relative to the location of the XML file, or it can use the “dirKey” attribute to specify a path from the DirKeys table in the component database. 
+funcRcp the name of a Recipe function that is imple­mented within the ObjectARX module and is registered usingn the AecRcpBase framework object AecRcpFuncTable. The function signature should take no argu­ments and must return a value of type RcpStatus 
+<Controls> Section 
+The Controls section contains a list of control definitions that will be added to the Properties palette, or prompted for on the command line. All controls must have an idStr attribute that the program can use to reference it. It must also have a <Label> element to display in the Properties palette. Optionally, controls can have a <Description> element to use as a “tip” string in the bottom of the Properties palette when this control has focus. If no <Description> element is present, the <Label> element will be used. 
+Each specific type of control is listed below. 
+<ComboBox> 
+This type of control is used to present a list of choices. It is a simple single-selection list. 
+<ComboBox idStr="head"> <Label>Head type</Label><Description>Head type to use for bolt</Description> <ComboBoxValue idStr="blkHeadHex"> 
+<Label>Hex</Label> </ComboBoxValue> <ComboBoxValue idStr="blkHeadSq"> 
+<Label>Square</Label></ComboBoxValue> <ComboBoxValue idStr="blkHeadRnd"> 
+<Label>Round</Label> </ComboBoxValue> <Default>blkHeadHex</Default> 
+</ComboBox> 
+A ComboBox has a list of <ComboBoxValue> nodes that simply specify an idStr used to uniquely identify that item in the list. Each <ComboBoxValue> must also have a <Label> element to display within the list. 
+
+If the <ComboBox> has a <Default> element, the listed idStr will be used as the default <ComboBoxValue>. If no <Default> element is present, the first <ComboBoxValue> will be used as the default. 
+<Default> [Optional] 
+The <ComboBoxValue> idStr to use as the default selection in the list. 
+<CheckBox> 
+This type of control is used for Boolean values. 
+<CheckBox idStr="doStagger"><Label>Stagger columns</Label> <Default>0</Default> 
+</CheckBox> 
+It can have the following elements: 
+Element Description 
+<Default> [Optional] The default Boolean value. It can be spe­cified as any of the following values: “1”, “0”, “true”, or “false.”. 
+<EditBoxAngle> 
+This type of control corresponds to the AecEditBoxAngle class in AutoCAD Architecture and has the same basic options. 
+<EditBoxAngle idStr="slope"> <Label>Slope angle</Label><Default>0.0</Default> <Validation>range</Validation> <RangeLow>-45.0</RangeLow> <RangeHigh>45.0</RangeHigh> 
+</EditBoxAngle> 
+It can have the following elements: 
+Element Description 
+<Default> [Optional] The default angle value. This value is spe­cified in degrees: 
+<Validation> [Optional] Specifies what type of validation rule is used. Possible values are: “Any”, “NoZero”, or “Range”. If not specified, “Any” is used by default. 
+<RangeLow> [Optional, except when valid-The lower end of the range of allowable ation="Range"] values. 
+<RangeHigh> [Optional, except when val-The high end of the range of allowable idation="Range"] values. 
+<EditBoxDistance> 
+This type of control corresponds to the AecEditBoxDist class in AutoCAD Architecture and has the same basic options. 
+<EditBoxDistance idStr="rowSpacing" unitDep="true"> <Label>Y-Axis</Label> <Description>Spacing between bolts in Y direction</Description><Default>2.0</Default> <Validation>NoNeg</Validation> 
+</EditBoxDistance> 
+It can have the following attributes: 
+Attribute Description 
+unitDep [Optional] This attribute indicates whether the value of this control needs to be scaled to the current unit in the drawing. A value of “1” or “true” will cause the value to be scaled. A value of “0” or “false” will leave the value as specified 
+The <EditBoxDistance> control can have the following elements: 
+Element Description 
+<Default> [Optional] The default distance value. 
+<Validation> [Optional] Specifies what type of validation rule is used. Possible values are: “Any”, “NoNeg”, “NoZero”, or “Range”. If not specified, “Any” is used by default. 
+<RangeLow> [Optional, except when valid-The lower end of the range of allowable ation="Range”] values. 
+<RangeHigh> [Optional, except when val-The high end of the range of allowable idation="Range"] values. 
+<EditBoxInt> 
+This type of control corresponds to the AecEditBoxDist class in AutoCAD Architecture (with precision set to “0”) and has the same basic options. 
+<EditBoxInteger idStr="cols"> <Label>Columns</Label> <Description>Number of bolts in Y direction</Description> <Default>2</Default><Validation>NoNegNoZero</Validation> 
+</EditBoxInteger> 
+It can have the following elements: 
+Element Description 
+<Default> [Optional] The default integer value. 
+Element Description 
+<Validation> [Optional] Specifies what type of validation rule is used. Possible values are: “Any”, “NoNeg”, “NoZero”, “NoNegNoZero”, or “Range”. If not specified, “Any” is used by default. 
+<RangeLow> [Optional, except when valid-The lower end of the range of allowable ation="Range"] values. 
+<RangeHigh> [Optional, except when val-The high end of the range of allowable idation="Range"] values. 
+<Picture> 
+A Picture control is used to display a static image in the Properties palette. It has a list of <PictureValue> elements that may be used to fill the Picture control under certain conditions. 
+<Picture idStr="end_conditions_illustration" rowHeight="5"> <Label>End conditions illustration</Label> <Default>plain_plain</Default> <Varies>plain_plain</Varies> <PictureValue idStr="regular_regular" idFile="Images/cmu_regu lar_regular.png">
+<ParentControl idRef="leftEndStyle" idStr="regular"/> 
+<ParentControl idRef="rightEndStyle" idStr="regular"/> </PictureValue> <PictureValue idStr="regular_plain" idFile="Images/cmu_regu lar_plain.png"> 
+<ParentControl idRef="leftEndStyle" idStr="regular"/> <ParentControl idRef="rightEndStyle" idStr="plain"/> </PictureValue> </Picture> 
+A Picture control can have the following attributes: 
+Attribute Description 
+rowHeight [Optional] The number of rows that this control should occupy in the Properties palette. The default value is 3. 
+A Picture control can have the following elements: 
+Element Description 
+<Default> [Optional] The idStr of the <PictureValue> to show by default. 
+<Validation> [Optional] The idStr of the <PictureValue> to show under a multiple selection condition in the Properties palette. If not specified, the <Default> is used. 
+Specifying Controls 
+When the same control is used by different Recipes within the same RecipeSpec, you can define them in the <ControlDefs> section and then reference them within the <Controls> section of a specific Recipe. 
+<ControlRef idRef="head"/> 
+Simply use the idRef attribute to refer to the idStr of the Control that is defined in the <ControlDefs> section. 
+The following example shows a control defined at the <RecipeSpec> level that can be referenced from any <Recipe>. It also shows a control that is defined local to a specific <Recipe>. 
+<?xml version="1.0" encoding="UTF-8"?><AecRecipeSpec defaultUnit="in"> <ControlDefs> 
+<CheckBox idStr="hatchBlock"> <Label>Hatch block</Label> <Description>Specifies whether to hatch the block. </Descrip tion> <Default>1</Default> 
+</CheckBox> </ControlDefs> <Recipe idStr="section"> <Label>Section</Label> <Implementation>
+<ObjectARX> <AppName>AecDtl50</AppName> <RcpFunc>ConcreteUnit2CoreSection</RcpFunc> 
+</ObjectARX> </Implementation> <Controls> 
+<ControlRef idRef="hatchBlock"/> 
+<CheckBox idStr="hatchCores"> <Label>Grout fill cores</Label> <Description>Specifies whether to hatch the cores solid with 
+grout.</Description> <Default>0</Default></CheckBox> </Controls> 
+<Data> Section 
+This section has customization data that is used by the Rcp function. This includes things like simple Layer/Color/Linetype properties, hatch pattern information, spacing parameters, and so on. It is the Rcp function’s responsibility to look back to this section and find any data that may be relevant. 
+There is an implicit contract between the Rcp function and the RecipeSpec. The Rcp function can decide what is allowed to be in the <Data> section, but it will usually contain a set of commonly seen elements. You can put virtually anything in the <Data> section, but if the Rcp function is not expecting it, it will be ignored. 
+The data within this section is divided into <Item> sections. Each Item section can contain virtually anything that the Recipe dictates. An Item section usually defines the data for a portion of the overall component, such as “boundary”, “infill”, and “hidden”. 
+The following standard types of information appear regularly within an Item section: 
+¦ 
+<AcadEntityProps> 
+
+¦ 
+<AcadBlockProps> 
+
+¦ 
+<AcadMInsertProps> 
+
+¦ 
+<AcadHatchProps> 
+
+¦ 
+<Params> 
+
+
+These standard information elements are described individually in the following sections. 
+<AcadEntityProps> 
+This Element specifies the Layer/Color/Linetype properties of an entity. All the items are optional and are only used if specifically listed. If they are not listed, the Rcp function should use either ByBlock or ByLayer (or whatever the appropriate setting is) as the default. Here are four examples: 
+<AcadEntityProps> <Layer ref="layerKey">FINE</Layer><Linetype>HIDDEN</Linetype> 
+</AcadEntityProps> 
+<AcadEntityProps> <Layer>Jimbo</Layer> <ColorIndex>1</ColorIndex> <Linetype>DASHED</Linetype><LinetypeScale>3.0</LinetypeScale> <Lineweight>53</Lineweight> 
+</AcadEntityProps> 
+<AcadEntityProps> <Layer>Jimbo</Layer> <Color> 
+<Red>73</Red> <Green>179</Green> <Blue>157</Blue> 
+</Color> <Linetype>DASHED</Linetype> 
+</AcadEntityProps> 
+The following Elements can be specified within <AcadEntityProps>: 
+¦ 
+<Layer> [Optional] 
+
+¦ 
+<ColorIndex> [Optional] 
+
+¦ 
+<Color> [Optional] 
+
+¦ 
+<Linetype> [Optional] 
+
+¦ 
+<LinetypeScale> [Optional] 
+
+¦ 
+<Lineweight> [Optional] 
+
+
+NOTE Either <Color> or <ColorIndex> can appear, but not both. If <Color> is used, it should have <Red>, <Green>, and <Blue> sub-elements, as in the example above. 
+<AcadBlockProps> 
+This Element specifies the properties of a block reference. Here are a few examples: 
+<AcadBlockProps> <BlockName dwgLib="dwgs/AecDtlLib_BlockTest.dwg"
+remapLayers="true">Jimbo</BlockName> <ScaleX ref="dbTable">SCALE_X</ScaleX> <ScaleY ref="dbTable">SCALE_Y</ScaleY> <ScaleZ ref="dbTable">SCALE_Z</ScaleZ> 
+</AcadBlockProps> <AcadBlockProps><BlockName dwgLib="dwgs/AecDtlLib_BlockTest.dwg" remapLayers="true">Jimbo</BlockName> 
+<Scale>6.0</Scale> <!--This one uses uniform scale--> </AcadBlockProps> <AcadBlockProps> 
+<BlockName dwgLib="dwgs/AecDtlLib_TrenchDrains.dwg" remapLay ers="true" ref="dbTable">R_BLOCK</BlockName> </AcadBlockProps> 
+The following Elements can be specified within <AcadBlockProps>: 
+¦ 
+<BlockName> 
+
+¦ 
+<Scale> [Optional] 
+
+¦ 
+<ScaleX> [Optional] 
+
+¦ 
+<ScaleY> [Optional] 
+
+¦ 
+<ScaleZ> [Optional] 
+
+¦ 
+<Rotation> [Optional] 
+
+
+The <BlockName> element tells the name of the block definition to use and can include the following attributes providing instructions on how to load the block if it is not found in the current drawing: 
+Attribute Description 
+dwgLib [Optional] The pathname of the library DWG file where the block is defined. If a relative path is specified, it is relative to the XML Re­cipeSpec’s location. 
+Attribute Description 
+dirKey [Optional] A directory key to look up in the detail component database. The dwgLib attribute value is then appended to the dirKey value to form the full pathname. 
+remapLayers [Optional] 
+A Boolean value specifying whether the layers for entities within the block are to be searched for LayerKeys. If a LayerKey is found as the value of the Layer, the Layer is remapped to that LayerKey. This value should only be specified as true if you know for certain that there are LayerKeys defined within the block. 
+ref [Optional] If specified, the block name is a lookup value to find the real block name. 
+If <Scale> is used, it is a uniform scale for each axis of the block reference. 
+<AcadMInsertProps> 
+This element specifies the additional values that an MInsert can have above and beyond a Block Reference. Anything common to both MInserts and Block References will thus appear in the <AcadBlockProps> section. 
+<AcadMInsertProps> <Rows>2</Rows> <RowSpacing>5.0</RowSpacing> <Columns>3</Columns> <ColumnSpacing>6.0</ColumnSpacing>
+</AcadMInsertProps> 
+<AcadMInsertProps> <Rows ref="dbTable">ROWS</Rows> <RowSpacing>5.0</RowSpacing> <Columns ref="dbTable">COLUMNS</Columns> <ColumnSpacing>6.0</ColumnSpacing>
+</AcadMInsertProps> 
+The following Elements can be specified within <AcadMInsertProps>: 
+¦ 
+<Scale> [Optional] 
+
+¦ 
+<Rows> [Optional] 
+
+
+¦ 
+<RowSpacing> [Optional] 
+
+¦ 
+<Columns> [Optional] 
+
+¦ 
+<ColumnSpacing> [Optional] 
+
+
+<AcadHatchProps> 
+This Element specifies the properties of a hatch. Here are a few examples: 
+<AcadHatchProps>
+<HatchAlias>brick</HatchAlias> 
+</AcadHatchProps> 
+<AcadHatchProps> 
+<HatchAlias ref="dbTable">PAT_ALIAS</HatchAlias> 
+</AcadHatchProps> 
+<AcadHatchProps>
+<PatternName>Escher</PatternName> <PatternScale>4.0</PatternScale> <PatternAngle>45.0</PatternAngle> 
+</AcadHatchProps> 
+The following Elements can be specified within < AcadHatchProps >: 
+Element Description 
+<HatchAlias> [Optional] 
+The name of an Alias from the Detail Component database’s Hatches table. This table is used so that you can centrally define the Pattern, Scale, and Angle for representative materials used throughout the database. Most RecipeSpecs will use a Hatch Alias to define all the parameters of the Hatch. However, you can specify these values directly by using the other elements. 
+<PatternType> [Optional] Possible values are: “PreDefined” (the de­fault), “User”, or “Custom”. 
+<PatternName> [Optional] If the <PatternName> specified (or indir­ectly referenced from <HatchAlias>) does not exist, the pattern “ANSI31” is used. 
+<PatternScale> [Optional] 
+Element Description 
+<PatternMultiplier> [Optional] 
+<PatternAngle> [Optional] 
+<PatternDouble> [Optional] 
+<PatternSpace> [Optional] 
+<Params> 
+This Element specifies the parameters specific to this particular Recipe. These are typically values that the Recipe needs, but that are not hardwired into the code, and thus are customizable. Here are a few examples: 
+<Item idStr="boundary">
+<Params> <Tongue>0.125</Tongue> <GrooveSpacing>0.03125</GrooveSpacing> 
+</Params> </Item> <Item idStr="boundary">
+<Params> <Chamfer>0.5</Chamfer> </Params> </Item> 
+The Element names are defined by the Rcp function itself and must be known in advance of editing them in the Recipe Spec. 
+NOTE One way to find out the implied contract of the Rcp function is to turn on logging. For more information, see Recipe Logging on page 3949. 
+<Options> Section 
+This section provides customization data that is used by the placement phase (Jig) of the Rcp function. In most cases, Recipe functions divide their labor into two phases: 
+1 Creation of the component 
+2 Placement of the component The job of placing the component is usually handled by a standard Jig that may be controlled by elements specified in the <Options> section. You must, of course, have advanced knowledge of which Jig and JigEnt are used by a Recipe function in order to take advantage of this. 
+The example below is from the Brick Pavers component group. It uses the LinearArrayJig to repeat a row of blocks at a specified spacing. 
+<?xml version="1.0" encoding="UTF-8"?> <AecRecipeSpec defaultUnit="in"> 
+<Recipe idStr="section"> <Label>Section</Label><Implementation> 
+<ObjectARX logicalAppname="AecDtl50" funcRcp="AecDtlRcpUnit 
+Paver"/> </Implementation> <Controls> 
+<CheckBox idStr="doHatch"> <Label>Hatch item</Label> <Default>1</Default> 
+</CheckBox> </Controls> <Data> 
+<Item idStr="block"> <AcadEntityProps> <Layer ref="layerKey">MED</Layer> 
+</AcadEntityProps> </Item> <Item idStr="boundary"> 
+<Params> <Chamfer>0.0</Chamfer> 
+</Params> </Item> <Item idStr="infill"> 
+<AcadHatchProps> 
+<HatchAlias>brick</HatchAlias></AcadHatchProps> <AcadEntityProps> 
+<Layer ref="layerKey">HATCH</Layer> </AcadEntityProps> 
+</Item> </Data><Options> 
+<JigEnt> 
+<GapSpacing>0.25</GapSpacing> </JigEnt> <Jig> 
+<PromptCount>Number of courses</PromptCount></Jig> </Options> </Recipe> 
+</AecRecipeSpec> 
+In the <Options> section, it tells the JigEnt to put a ¼" spacing between each paver, and it changes the prompt string for one of the prompts issued by the Jig. 
+For more information about which options are available for specific Jigs and JigEnts, see Jigs and JigEnts on page 3941. 
+Jigs and JigEnts 
+A “Jig” is a programming construct that defines how the user adds objects to the drawing. You can think of it as an “Add” command that gives visual feedback as you are specifying what the object looks like. For instance, the simple Arc Jig in AutoCAD dynamically sketches out the potential arc while you input various values. 
+A “JigEnt” is the object used to draw the visual feedback. In AutoCAD and AutoCAD Architecture, this is usually the same type of object that is being created (for example, the Wall Jig would use a Wall object). In the Recipe framework, most components are not represented by an object type, but by a collection of AutoCAD primitive objects such as hatch, polyline, and block. In this case, a JigEnt is a temporary in-memory object that is used to draw during the lifetime of the Jig, but is then thrown away when the real objects are added to the drawing. 
+The Recipe framework uses a system that plugs specific JigEnts into common Jigs. This allows a single Jig that is responsible for linear components (that is, one that prompts for “Start point” and “Endpoint”) to look completely different depending upon the JigEnt being used (for example, a row of bricks vs. a metal joist). 
+Although development of new Jigs and JigEnts is currently available only to ObjectARX programmers, many aspects of the existing Jigs and JigEnts can be controlled via lightweight customization techniques. In order to understand this, it is helpful to have an idea of how the existing Jigs and JigEnts are programmed. 
+Hierarchy of Jigs 
+AecEdJigRcp AecEdJigCircle AecEdJigLine 
+AecEdJigLineBlockBasedAecEdJigLinearArray AecEdJigStretch 
+AecEdJigLineOriented AecEdJigLineExtend AecEdJigSurface 
+AecEdJigRectangleAecEdJigStamp 
+NOTE The level of indentation shows the inheritance. For example, if you want to know the behavior and options for AecEdJigLinearArray, you can see that it inherits all the behavior and options for AecEdJigLineBlockBased, AecEdJigLine, and AecEdJigRcp. 
+Hierarchy of JigEnts 
+AecEdJigRcp AecEdJigEntCircle AecEdJigEntLine
+AecEdJigEntLineBlockBased AecEdJigEntBookends AecEdJigEntLinearArray AecEdJigEntStretch 
+AecEdJigEntLineOriented AecEdJigEntLineExtendAecEdJigEntSurface 
+AecEdJigEntSurfaceHlines AecEdJigEntMeasure AecEdJigEntRectangle 
+As you can see, Jigs and JigEnts correspond pretty closely at the upper levels. However, there are extra JigEnts that can re-use the same Jig. The ones listed here are only the common JigEnts. There are many specific JigEnts derived off of these. For example, there is a specific JigEnt for each type of wood and metal joist, all derived off AecEdJigEntLineExtend to get the majority of their behavior. No special Jig is needed for each of these, because they all ask for the same sequence of information. If all the internal programmed objects for detail components were listed, you would see many more JigEnts, but not many more Jigs. 
+

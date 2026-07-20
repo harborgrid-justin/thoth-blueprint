@@ -1,0 +1,1019 @@
+[MIGRATED TO RTM_PART_59.md - RAILINGS]
+Viewing railing Start, End, Location, and Reverse Direction grips 
+
+3 Move the grip until the dimension value you want is displayed, and click once; or enter a value. 
+Viewing railing Fixed Post Position and Lengthen grips 
+
+Changing the Location or Position of a Railing 1 Select the railing. 2 Move the appropriate grip to change the location of the railing, its start point, or its endpoint. 
+Reversing the direction of the Railing 1 Select the railing. 2 Click the direction grip (arrow grip). 
+Adding a Post to a Railing 
+Use this procedure to add a post to a railing. The post is placed at a selected point on the railing. 
+Adding a post to a railing 
+
+1 Select a railing. 
+2 Click Railing tab . Posts panel . Add
+ . 3 Select a location for a new post. 4 Press ENTER. 
+Removing a Post from a Railing 
+Use this procedure to remove posts you have added to railings. You can only remove fixed posts. You cannot remove dynamic posts. The manually added post closest to the selected point is removed from the railing. If two posts are equidistant from the selected point, the post closer to the starting point of the railing is removed. If the current first fixed post is removed, then the next post becomes the first fixed post. Likewise, if the current last fixed post is removed, then the next post from the last becomes the last fixed post. If all but one post is removed from a railing, then the sole remaining post becomes the first fixed post. 
+1 Select a railing. 
+2 Click Railing tab . Posts panel . Remove
+ . 3 Select the railing post to remove. 4 Continue removing railing posts, or press ENTER. 
+Redistributing Posts on a Railing 
+Use this procedure to reposition dynamic posts to account for posts that have been added or removed. You cannot redistribute displayed posts to account for hidden posts. 
+You may also want to redistribute posts after dragging the endpoints (start and end offset) of a railing attached to a stair. If posts are lost after trimming a railing, use the Redistribute Posts command to restore the posts. 
+If you have created a railing that is so short that only one post can be created, grip-editing and dragging the railing does not create another post. You must use the Redistribute Posts command to add another post to the end of the railing. 
+1 Select an existing railing. 
+2 Click Railing tab . Posts panel . Redistribute
+ . 
+Hiding Posts 
+Use this procedure to hide posts in a railing. It is useful to hide posts in plan view so that the railing is visible as a solid component. These posts are not deleted; they are merely hidden from view. You can only hide fixed posts. You cannot hide dynamic posts. If the current first or last fixed post is hidden, then it remains the first or last fixed post regardless of its visibility. 
+1 Select a railing. 
+2 Click Railing tab . Posts panel . Hide
+ . 3 Select the railing post to hide. 4 Continue selecting railing posts, or press ENTER. 
+Showing Hidden Posts 
+Use this procedure to show hidden posts. 
+1 Select a railing. 
+2 Click Railing tab . Posts panel . Show
+ . 
+Reversing the Direction of the Railing 
+Use this procedure to reverse the direction of the railing to change the location of railing components. The direction in which the railing is drawn affects the behavior of the railing and its components. 
+NOTE You can also reverse the direction of a railing by clicking its direction grip (arrow grip). 
+1 Select a railing. 
+2 Click Railing tab . Anchor panel . Reverse
+ . 
+Anchoring an Existing Railing to a Stair 
+Use this procedure to anchor an existing railing to a stair. Once attached, the railing stays where it is located in the drawing, but it moves when the attached stair is moved. This allows you to create free-form paths for a railing along a stair. For example, you might want to create a curved railing in the middle of a straight stair. 
+Railings attached to stairs respect the stair cut plane. The height of the railing follows the slope of the stair, no matter where the posts are placed on the treads. 
+Attaching a railing to a stair 
+
+Railings that are attached to a stair or to a stair flight when created are anchored to the stair, at either side of the stairs or at the centerline. 
+1 Select a railing. 
+2 Click Railing tab . Anchor panel . Set To Stair
+ . 3 Select a stair. 
+Anchoring an Existing Railing to an Object 
+Use this procedure to anchor an existing railing to an AEC object other than a stair. Once attached, the railing stays where it is located in the drawing, but it moves when the attached object is moved. This allows you to create free-form paths for a railing along a stair or other object. 
+Railings attached to objects other than stairs follow the height of the centerline of each post. 
+Attaching a railing to an AEC object 
+
+1 Select a railing. 
+2 Click Railing tab . Anchor panel . Set To Objects
+ . 3 Select an AEC object other than a stair, and press ENTER. 4 If you want to clean up the railing posts with the surface of the 
+object to which it is attached, enter y (Yes) on the command line. 5 Define the contour of the railing: 
+If you want to… Then… 
+adapt only the posts to the surface press ENTER to specify At Post Loca­of the attached object, and have tions Only for Calculate Height. straight segments between the posts 
+If you want to… Then… 
+adapt the whole railing to the sur-enter f to Follow Surface for Calcu­face of the attached object, late Height. 
+Releasing an Anchored Railing 
+Use this procedure to release an anchored railing from a stair. After the railing is released, it is independent of the stair. The railing and the stair can then be moved separately. 
+NOTE When a railing that is anchored to a stair is released, any changes to the railing (such as grip-editing or changing properties) may cause the railing to lose its slope. Be sure to correct the appearance of the railing before releasing it from the stair. 
+1 Select a railing. 
+2 Click Railing tab . Anchor panel . Release
+ . 3 The railing is no longer anchored to the stair. 
+Center a Railing Using Modify Tools 
+Use this procedure to center a railing on a specified axis or between any two specified points. 
+1 Select the railing to center. 
+2 Click Railing tab . Modify panel . Center
+ . 
+3 Select an existing axis line on which to center the railing, or press ENTER and then specify two points between which to center the railing. 
+Create a Railing Array Using Modify Tools 
+Use this procedure to create an array of identical railings along a stair, or as free-standing railings. 
+1 Select the railing to array. 
+
+2 Click Railing tab . Modify panel . Array 
+3 Select an edge from which to start the array that is perpendicular to the array axis, then drag in the direction of the array. Do one of the following: 
+¦ 
+Offset: start the railing array a specified offset distance from the edge. 
+
+¦ 
+Clear Distance: specify a clear distance between each arrayed railing. 
+
+¦ 
+Pick Array Distance: specify a distance between arrayed railings. 
+
+¦ 
+Enter Count: specify the number of railings to appear in the array. 
+
+
+Alternatively, you can press ENTER and then specify two points 
+between which to array the railing. 
+Repositioning a Railing with Modify Tools 
+Use this procedure to reposition a railing. 
+1 Select the railing to reposition. 
+2 Click Railing tab . Modify panel . Reposition From
+ . 
+3 Select an existing stair edge or another specified boundary from which to reposition the railing, or specify two points to define a reference edge. 
+Spacing Railings Evenly with Modify Tools 
+Use this procedure to space railings evenly along a stair or in a free-standing layout. 
+1 Select the railing to space evenly. 
+2 Click Railing tab . Modify panel . Space Evenly
+ . 
+3 Select an edge as the axis along which to space all the railings evenly, and specify a start point and an endpoint along the edge. Alternatively, press ENTER and specify two points between which 
+the railings will be spaced evenly from each other. 
+Specifying the Display of Custom Block Components of a Railing 
+Use this procedure to specify the display of custom block components for an individual railing in any of the display representations used for model views. If you are going to use custom graphics for a new component, draw the component and save it as a block before you start this procedure. 
+1 Double-click the railing. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all railings in the drawing, select Drawing default setting. To apply changes to all railings of this style, select Railing Style:<style name>. For more information on styles, see Railing Styles on page 2327. 
+5 For Display representation, verify that the desired display representation is selected. 
+6 If necessary, expand Object Display Properties . Advanced, and 
+for Custom block display, click 
+(the number in parentheses indicates the number of blocks currently attached to the railing). 7 If you want to turn off the display of custom blocks for this railing without removing them, select Disable Custom Blocks. 8 Specify whether to add, edit, or remove a block component: 
+If you want to… Then… 
+add a new block component click Add, and then click Select Block, select the block, and click OK. 
+edit an existing block component select the component to edit, and click Edit. 
+remove an existing block compon-select the block, click Remove, and ent click OK. 
+9 When adding or editing a block component, specify the scale of the custom block: 
+If you want to… Then… 
+use the block at its drawn size clear all options under Scale to Fit. 
+scale the custom block to the width select Width. of the object to which it is attached 
+scale the custom block to the depth select Depth. of the object to which it is attached 
+scale the custom block to the select Height. height of the object to which it is attached 
+lock the XY shape of the object select Lock Ratio. If the object is scaled in one direction to fit another criterion for Scale to Fit, the whole custom block is scaled equally. 
+add the selected block to the rail-select Between Comp. Baluster, ings between the selected compon-Fixed Post, and Dynamic Posts are ents the only valid component selec­
+tions. 
+10 Specify the Mirror In direction, if necessary: 
+If you want to… Then… 
+create a mirror of the component select Mirror X. in the X direction, along the length of the railing 
+create a mirror of the component select Mirror Y. in the Y direction, across the width of the railing 
+create a mirror of the component select Mirror Z. in the Z direction 
+11 Specify the location of the insertion point in relation to the object: 
+If you want to… Then… 
+specify the location of the X inser-select Left, Center, or Right for X. tion point 
+specify the location of the Y inser-select Front, Center, or Back for Y. tion point 
+specify the location of the Z inser-select Bottom, Middle, or Top for tion point Z. 
+Specify the post orientation relative to the up and down directions on a stair run in plan view as shown in the following illustration: 
+
+Specify the post orientation relative to the up and down directions on a stair run in elevation view as shown in the following illustration: 
+
+12 Specify the insertion offset for the component in the X, Y, and Z directions. 
+13 Specify the type of railing component that the block represents: 
+If you want to… Then… 
+represent balusters with the block select Baluster for Component. 
+represent fixed posts with the block select Fixed Post for Component. 
+If you want to… Then… 
+represent dynamic posts with the select Dynamic Post for Compon­block ent. 
+replace the current baluster, fixed select Replace. post, or dynamic post with the block 
+represent a guardrail with the block select Guardrail for Component. 
+represent a handrail with the block select Handrail for Component. 
+represent a bottom rail with the select Bottomrail for Component. block 
+The two groups of components are mutually exclusive, so selecting an object from one column makes the other unavailable. You can select more than one object in each column to apply the block to each selected component. For example, you can use the same block for the fixed posts and dynamic posts. 
+14 Specify where the block is applied to the components: 
+If you want to… Then… 
+apply the block to all instances of select All for Attach to. the selected components 
+apply the block to the first instance select First for Attach to. of the selected component, based on the direction the railing was drawn 
+apply the block to the last instance select Last for Attach to. of the selected component, based on the direction the railing was drawn 
+apply the block to a selected num-select Selection for Attach to. The 
+ber of components components are numbered in the order the railing was drawn, begin­ning with 1. 
+15 Click OK. 
+You can also specify custom block display properties through the 
+railing’s context menu, as follows: 
+1 Right-click the railing, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the display representation where you want the changes to 
+appear, and select Object Override. 
+4 If necessary, click 
+. 5 Click the Other tab. 6 Add, edit, or remove custom blocks as explained in the previous 
+procedure. 
+Specifying Cleanup Settings for a Railing 
+Use this procedure to specify the cleanup settings for a railing in display representations used for model views. 
+1 Double-click the railing. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all railings in the drawing, select Drawing default setting. To apply changes to all railings of this style, select Railing Style:<style name>. For more information on styles, see Railing Styles on page 2327. 
+5 For Display representation, verify that the desired display representation is selected. 
+6 If necessary, expand Object Display Properties . Advanced, and 
+click 
+Cleanup properties. 7 Specify whether you want to disable the cleanup of rails at post. 8 Specify whether you want to disable the cleanup of balusters at 
+rails. 9 Click OK. 
+You can also access and modify the same cleanup settings through the railing’s context menu, as follows: 
+1 Select the railing you want to change, right-click, and click Edit Object Display. 
+2 Click the Display Properties tab. 
+3 Select the desired display representation, and select Object 
+Override. The display representation in bold is the current display representation. 
+4 If necessary, click 
+. 5 Click the Other tab. 6 Under Cleanup, adjust the settings as desired, and click OK twice. 
+Adding a Custom Profile to a Railing Component 
+Use this procedure to add a custom profile to a railing component. 
+Guardrails, handrails, bottom rails, and fixed and dynamic posts can be defined by a custom profile. You can add a profile to a railing component either in the railing style, as described in Specifying the Components of a Railing Style on page 2335 or directly on screen. When you add a custom profile on screen, the new profile is automatically saved back to the railing style. You can also add, remove, or edit custom profiles from the Properties palette, as described in Specifying the Display of a Custom Profile Component of a Railing on page 2311. 
+1 Create the necessary profile definition, as described in Creating a Profile for a Custom Railing Component on page 2337. 
+2 Select the railing. 
+3 Click Railing tab . Profile panel . Add Profile
+ . 
+4 Select the railing component to which you want to add a profile. You can select guardrails, handrails, bottom rails, fixed posts, and dynamic posts. 
+NOTE If you have difficulty selecting the correct component, switch to another view that makes the selection easier. For example, to select a bottom rail, switch to a Model view. 
+Adding a custom profile to a railing post 
+
+5 Select the profile for the railing component. 
+6 Either save the custom profile to the railing style immediately, or proceed with editing the profile: 
+If you want to… Then… 
+save the new profile to the railing click OK. style 
+edit the new profile click Continue Editing, and then click OK. For information on editing a custom profile, see Editing a Cus­
+tom Profile of a Railing Component on page 2307. 
+Editing a Custom Profile of a Railing Component 
+Use this procedure to edit a custom profile of a railing component. 1 Select the railing with a custom profile you want to edit. 
+2 Click Railing tab . Profile panel . Edit In Place
+ . This command is available only if you have profile-based components in the railing. 
+3 Select the component you want to edit. 
+NOTE If you have difficulty selecting the correct component, switch to another view that makes the selection easier. For example, to select a bottom rail, switch to a Model view. 
+
+You have begun an in-place editing session, depicted by the magenta-colored grips and light blue hatch of the temporary in-place editing profile, as well as the faded color of other objects in the drawing. Note that while you are editing in-place, you have limited access to other commands in the drawing. Before working on other objects, you should first end the in-place editing session. 
+4 Use the grips or the ribbon in order to make any of the following changes to the profile: 
+If you want to… Then… 
+use grips to edit the profile move the edge or vertex grips as needed. The Edge grip has three edit modes: Offset, Add Vertex, and Convert to Arc. The default mode is Offset, which offsets the selected edge in a direction that is perpendicular to the midpoint of the edge. Depend­ing on the shape of the profile and the edge you choose to modify, neighboring lines are extended or trimmed, and new lines are added as necessary. Use the Add Vertex edit mode to add a vertex to the selected edge, and create a new edge. If the selec­ted edge is an arc, the new edge is an arc as well. Convert to Arc changes the selected edge to an arc and stretches the midpoint of the edge. The edge 
+If you want to… Then… 
+grip for an arc also has a Stretch mode, so that you can stretch the midpoint of the edge after it has been converted to an arc. 
+add a vertex to the profile ¦ Grips: Select an Edge grip, and press CTRL to switch to the Add Vertex edit mode. Move the edge to the desired location, and click; or enter a value, and press ENTER. 
+¦ Ribbon: Click Edit In Place tab . Profile panel . Add Ver­
+tex 
+, and then select a point to add. 
+remove a vertex from the profile 
+¦ 
+Grips: Select the Vertex grip for the vertex you want to remove, and press CTRL to switch to the Remove edit mode. Move the cursor off the selected vertex, and click. 
+
+¦ 
+Ribbon: Click Edit In Place tab . Profile panel . Remove 
+
+
+Vertex 
+, and then select a point to remove. 
+add a ring to a profile 
+select the profile, and click Edit In Place tab . Profile panel . Add 
+Ring 
+. Then select a closed polyline, spline, ellipse, or circle for an additional ring. Specify if you want to erase the source linework, and press ENTER. 
+remove a ring from a profile select the profile, and click Edit In Place tab . Profile panel . Remove 
+If you want to… Then… 
+Ring 
+. Then select the ring you want to remove. 
+NOTE You cannot remove the last ring from a profile. 
+replace a ring on a profile select the profile, and click Edit In Place tab . Profile panel . Replace 
+Ring 
+. Then select a closed polyline, spline, ellipse, or circle for the replaced ring. Specify if you want to erase the source linework, and press ENTER. 
+5 Save the changes to the profile: 
+If you want to… Then… 
+change the existing profile defini-click Edit In Place tab . Edits pan­tion to reflect the new shape 
+el . Finish 
+. 
+create a new profile definition with  click Edit In Place tab . Edits pan- 
+the shape you have created  el . Save As  .Enter a name for  
+the new profile, and click OK. The  
+in-place edit session closes and the  
+new profile definition is available in  
+the Style Manager.  
+
+discard all changes on the profile click Edit In Place tab . Edits pan-and revert to the previous shape 
+el . Cancel 
+
+Specifying the Display of a Custom Profile Component of a Railing 
+Use this procedure to add, remove, or edit a custom profile component for an individual railing in any of the display representations used for plan views. If you are adding a new profile, you must first create the necessary profile definition, as described in Creating a Profile for a Custom Railing Component on page 2337. 
+1 Double-click the railing. 2 On the Properties palette, click the Display tab. 3 Under the General category, for Display component, verify that 
+*NONE* is selected. 4 For Display controlled by, select This object. 
+NOTE To apply your changes to all railings in the drawing, select Drawing default setting. To apply changes to all railings of this style, select Railing Style:<style name>. For more information on styles, see Railing Styles on page 2327. 
+5 For Display representation, verify that the desired display representation is selected. 
+6 If necessary, expand Object Display Properties . Advanced, and 
+for Custom profile display, click 
+(the number in parentheses indicates the number of profiles currently attached to the railing). 7 If you want to turn off the display of custom profiles for this railing without removing them, select Disable Custom Profiles. 8 Specify whether to add, edit, or remove a profile component: 
+If you want to… Then… 
+add a new profile component click Add, and then click Select Profile, select the profile, and click OK. 
+edit an existing profile component select the component to edit, and click Edit. 
+remove an existing profile compon-select the component, click Re­ent move, and click OK. 
+9 Specify the scale of the custom profile: 
+If you want to… Then… 
+use the profile at its drawn size clear all options under Scale to Fit. 
+scale the custom profile to the select Width. width of the object to which it is attached 
+scale the custom profile to the select Depth. depth of the object to which it is attached 
+scale the custom profile to the select Height. height of the object to which it is attached 
+lock the XY shape of the object select Lock Ratio. If the object is scaled in one direction to fit another criterion for Scale to Fit, the entire custom profile is scaled equally. 
+add the selected profile to the rail-select Between Comp. (Baluster, ings between the selected compon-Fixed Post, and Dynamic Posts are ents the only valid component selec­
+tions.) 
+10 Specify the Mirror In direction, if necessary: 
+If you want to… Then… 
+create a mirror of the component select Mirror X. in the X direction, along the length of the railing 
+create a mirror of the component select Mirror Y. in the Y direction, across the width of the railing 
+11 Specify the angle to rotate the component in the Z direction, if necessary. 
+12 Specify the location of the insertion point in relation to the object: 
+If you want to… Then… 
+specify the location of the X inser-select Left, Center, or Right for X. tion point 
+specify the location of the Y inser-select Front, Center, or Back for Y. tion point 
+Specify the post orientation relative to the up and down directions on a stair run in plan view as shown in the following illustration: 
+
+Specify the post orientation relative to the up and down directions on a stair run in elevation view as shown in the following illustration: 
+
+13 Specify the insertion offset for the component in the X and Y directions. 
+14 Specify the type of railing component that the profile represents: 
+If you want to… Then… 
+represent balusters with the selec-select Baluster for Component. ted profile 
+represent fixed posts with the selec-select Fixed Post for Component. ted profile 
+represent dynamic posts with the select Dynamic Post for Compon­selected profile ent. 
+If you want to… Then… 
+replace the current baluster, fixed select Replace. post, or dynamic post with the se­lected profile 
+add a guardrail to the selected pro-select Guardrail for Component. file 
+add a handrail to the selected pro-select Handrail for Component. file 
+add a bottom rail to the selected select Bottomrail for Component. profile 
+The two groups of components are mutually exclusive, so selecting an object from one column makes the other unavailable. You can select more than one object in each column, and apply the profile to each selected component. For example, you can use the same profile for the fixed posts and dynamic posts. 
+15 Specify where the profile is applied to the components: 
+If you want to… Then… 
+apply the profile to all instances of select All for Attach to. the selected components 
+apply the profile to the first instance select First for Attach to. of the selected component, based on the direction the railing was drawn 
+apply the profile to the last instance select Last for Attach to. of the selected component, based on the direction the railing was drawn 
+apply the profile to a selected select Selection for Attach to. The number of components components are numbered in the order the railing was drawn. 
+16 Click OK. 
+You can also specify custom profile display properties through the railing’s context menu, as follows: 1 Right-click the railing, and click Edit Object Display. 2 Click the Display Properties tab. 3 Select the display representation where you want the changes to appear, and select Object Override. 
+4 If necessary, click 
+. 5 Click the Other tab. 6 Add, edit, or remove custom profiles as explained in the previous 
+procedure. 
+Changing the Style of a Railing 
+Use this procedure to change the style associated with existing railings. 1 Select the railings for which you want to change the style, and double-click one of them. 2 On the Properties palette, click the Design tab, then expand Basic, and expand General. 3 Under Style, select a different style. 
+Changing the Upper Rails 
+Use this procedure to change the following settings for an individual railing: 
+¦ 
+guardrails 
+
+¦ 
+handrails 
+
+¦ 
+height 
+
+¦ 
+sloping height ¦ offset from posts 
+
+¦ 
+side for offset 
+
+
+NOTE If these settings are unavailable, they are controlled by the railing style. You cannot modify them for individual railings. 
+1 Double-click the railing for which you want to change the upper rails. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Dimensions. 
+3 Click the setting for Rail Locations. 
+4 Select whether to include guardrails or handrails. 
+NOTE A railing must have a guardrail or a handrail. Both cannot be turned off. 
+5 Specify the parameters for the guardrail or the handrail: 
+If you want to… Then… 
+specify the height of the guardrail enter a value for Horizontal Height. or the handrail 
+specify the height of guardrail or enter a value for Sloping Height. the handrail while it is on a stair flight 
+specify the distance that the enter a value for Offset from Post. guardrail or the handrail is offset from the posts 
+specify the side of the post for the select Center, Left, Right, or Auto offset, based on the direction the for Side for Offset. (Side for Offset stair (or railing) was drawn is available only when there is an 
+offset value.) 
+Auto is useful only for railings attached to the edges of stairs. A positive value is toward the center of the stair, while a negative value is toward the outside edge. Side for Offset for handrails also has a selection of Both, so you can specify a handrail on both sides of the railing. 
+If you select Auto, and the railing is not attached to or is along 
+the center of a stair, the offset is to the right. 
+6 If you want to undo your changes and revert to the values set in the railing style, click Reset to Style Values. 
+7 Click OK. 
+Changing the Bottom Rails 
+Use this procedure to change the following settings for the bottom rails of an individual railing: 
+¦ 
+whether to use bottom rails 
+
+¦ 
+number of bottom rails 
+
+¦ 
+distance between rails 
+
+¦ 
+height of lowest rail 
+
+
+NOTE If these settings are unavailable, they are controlled by the railing style. You cannot modify them for individual railings. 
+1 Double-click the railing for which you want to change the bottom rails. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Dimensions. 
+3 Click the setting for Rail Locations. 
+4 Select Bottomrail to add bottom rails to the railing. 
+5 Specify the settings for bottom rails: 
+If you want to… Then… 
+specify the height of the lowest rail enter a value for Horizontal Height. when it is horizontal 
+specify the height of the lowest rail enter a value for Sloping Height. when it is on a stair flight 
+specify the distance that the bottom-enter a value for Offset from Post. rail is offset from the posts 
+specify the side of the post for the select Center, Left, Right, or Auto offset, based on the direction the for Side for Offset. (Side for Offset stair (or railing) was drawn is available only when there is an 
+offset value.) 
+designate more than one bottom enter a value for Number of Rails. 
+rail When you designate multiple bot­tom rails, you can enter a value for Spacing of Rails. 
+6 If you want to undo your changes and revert to the values set in the railing style, click Reset to Style Values. 
+7 Click OK. 
+Changing the Posts 
+Use this procedure to change the following settings for the posts of an individual railing: 
+¦ 
+type of posts 
+
+¦ 
+number of posts that extend above the railing 
+
+¦ 
+maximum center-to-center spacing between posts 
+
+¦ 
+maximum center-to-center spacing between balusters 
+
+¦ 
+number of balusters per tread for railings that are attached to stairs 
+
+
+NOTE If these settings are unavailable, they are controlled by the railing style. You cannot modify them for individual railings. 
+1 Double-click the railing for which you want to change the post locations. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Dimensions. 
+3 Click the setting for Post locations. 
+4 Specify the post locations: 
+If you want to… Then… 
+include fixed posts at the beginning select Fixed Posts. and end of the railing 
+specify the distance above or below enter a value for Extension of ALL the top rail for all posts Posts from Top Railing. 
+specify the height of all posts from enter a value for Extension of ALL the floor Posts from Floor Level. 
+include fixed posts at the corners select Fixed Posts at Railing Corners. of the railing 
+If you want to… Then… 
+include dynamic posts with the select Dynamic Posts. You can then railing enter a value for Maximum Center to Center Spacing. 
+include balusters with the railing select Balusters. 
+specify the height of all balusters enter a value for Extension of Bal­from the floor usters from Floor Level. 
+specify the maximum distance enter the appropriate value for between the balusters Maximum Center to Center Spa­cing. 
+override the number of balusters on  select Stair Tread Length Override.  
+each stair tread  You can then enter a value for  
+Number per Tread. (This applies  
+only to railings that are attached to  
+stairs.)  
+
+5 If you want to undo your changes and revert to the values set in the railing style, click Reset to Style Values. 
+6 Click OK. 
+Changing the Railing Extensions at Floor Levels 
+Use this procedure to control the length of the handrail and guardrail extensions at the top and bottom of stair flights. If a bottom rail exists, it extends as far as the railing above it. 
+NOTE If these settings are unavailable, they are controlled by the railing style. You cannot modify them for individual railings. 
+1 Double-click the railing for which you want to change the extensions. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Dimensions. 
+3 Click the setting for Railing Extensions. 
+4 Specify the railing extension properties: 
+If you want to… Then… 
+use values in this dialog box to under At Floor Levels, clear Use Stair specify extensions Landing Extension. 
+specify the length of the handrail under Top of Entire Stair, enter val-and guardrail at the top of an entire ues for Handrail and Guardrail. Se-stair lect + T next to the value to add the tread length to the extension value. 
+specify the length of the handrail under Bottom of Entire Stair, enter and guardrail at the bottom of an values for Handrail and Guardrail. entire stair Select + T next to the value to add 
+the tread length to the extension value. 
+5 If you want to undo your changes and revert to the values set in the railing style, click Reset to Style Values. 
+6 Click OK. 
+Changing the Railing Extensions at Landings 
+Use this procedure to control the length of the handrail and guardrail extensions at landings. If a bottom rail exists, it extends as far as the railing above it. 
+NOTE If these settings are unavailable, they are controlled by the railing style. You cannot modify them for individual railings. 
+1 Double-click the railing for which you want to change the extensions. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Dimensions. 
+3 Click the setting for Railing Extensions. 
+4 Specify the railing extension properties: 
+If you want to… Then… 
+use values in this dialog box to clear Use Stair Landing Extension specify extensions under At Landings. 
+If you want to… Then… 
+specify the length of the handrail under Top of Flight, enter values for 
+and guardrail at the top of a flight Handrail and Guardrail. Select + T next to the value to add the tread length to the extension value. 
+specify the length of the handrail under Bottom of Flight, enter values and guardrail at the bottom of a for Handrail and Guardrail. Select + flight T next to the value to add the tread 
+length to the extension value. 
+5 If you want to undo your changes and revert to the values set in the railing style, click Reset to Style Values. 
+6 Click OK. 
+Changing the Anchor Properties of a Railing 
+Use this procedure to change the justification of a railing and the side, start, and end offsets. These properties apply only to railings attached to stairs. 
+1 Double-click the railing for which you want to change the anchor properties. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Location. 
+3 Click Anchor. 
+
+4 Change the justification of the railing. 
+5 Change the side offset from the stair: 
+¦ 
+A value of zero places the start and end fixed posts exactly at the ends of the stair. 
+
+¦ 
+Positive values move the start/end onto the stair. 
+
+¦ 
+Negative values extend the railing beyond the stair bounds. 
+
+
+NOTE If Automatic is selected, the start and end offset options are not available. 
+6 Change the start offset from the top of the stair. 7 Change the ending offset at the bottom of the stair. 8 Click Redistribute Posts to change the existing posts. 
+NOTE If you edit a railing using grips so that the railing does not end on a post, you can use Redistribute Posts to move a post to the end of the edited railing. 
+9 Click OK. 
+Specifying Perpendicular Railing Orientation 
+Use this procedure to specify perpendicular or vertical railing orientation relative to a stair flight. By default, railing have a vertical orientation when you create them. 
+Specifying perpendicular railings 
+
+1 Double-click the railing. 2 On the Properties palette, click the Design tab. 
+3 Under Dimensions, select Yes for Perpendicular Posts. 4 Under Location, select Yes for Automatic Cleanup. Once a perpendicular railing orientation has been specified, you can use grips to change first and last posts to a vertical orientation. 
+Specifying perpendicular railings 
+
+1 Select the perpendicular railing. 
+2 Select the Make Vertical grip. The Make vertical grip changes to a Make perpendicular grip once you have specified a vertical orientation for the railing post. Select the Make perpendicular grip to return the post to a perpendicular orientation. 
+Viewing post orientation grips 
+
+When a stair has a landing, you also have the option of specifying the orientation of landing posts. 
+Specifying landing post orientation 
+
+1 Double-click the railing, and on the Properties palette, click the Design tab. 
+2 Under Dimensions, select Yes for Perpendicular Posts, and Yes for Maintain Sloping Posts at Landings. 
+3 Under Location, select Yes for Automatic Cleanup. 
+Changing the Location of a Railing 
+Use this procedure to relocate a railing by changing the coordinate values of its insertion point. The railing also has an orientation with respect to the WCS or the current UCS. For example, if the top and bottom of the railing are parallel to the XY plane, its normal is parallel to the Z axis. You can change the orientation of the railing by aligning its normal with another axis. You can also rotate the railing on its plane by changing the rotation angle. 
+For information about the world coordinate system (WCS) and the user coordinate system (UCS), see “Use Coordinates and Coordinate Systems” in AutoCAD help. 
+NOTE You can change the location of freestanding railings only. The location of a railing attached to a stair is defined by the stair. 
+1 Select the railings you want to relocate, and double-click one of them. 
+2 On the Properties palette, click the Design tab, expand Basic, and expand Location. 
+3 Enter a value for Rotation. 
+4 Enter a value for Elevation. 
+5 Click Additional Information for further location properties: 
+If you want to… Then… 
+relocate the railing enter new coordinate values under Insertion Point. 
+locate the railing on the XY plane make the normal of the railing par­allel to the Z axis: under Normal, enter 1 for Z, and enter 0 for X and Y. 
+locate the railing on the YZ plane make the normal of the railing par­allel to the X axis: under Normal, enter 1 for X, and enter 0 for Y and Z. 
+locate the railing on the XZ plane make the normal of the railing par­allel to the Y axis: enter 1 for Y, and enter 0 for X and Z. 
+change the rotation of the railing enter a new value for Rotation Angle. 
+6 Click OK. 
+Applying Tool Properties to an Existing Railing 
+Use this procedure to apply the properties of a railing tool to one or more existing railings. The properties include the railing style and any other settings specified in the tool you select. 
+1 Open the tool palette that you want to use. If necessary, scroll to display the tool that you want to use. 
+2 Right-click a railing tool, and click Apply Tool Properties to . Railing. 3 Select the railings, and press ENTER. 4 Edit the properties of the railing in the Properties palette, if necessary. 
+Attaching Hyperlinks, Notes, and Files to a Railing 
+Use this procedure to attach hyperlinks, text notes, and files to a railing. 
+1 Double-click the railing to which you want to attach information. 2 On the Properties palette, click the Extended Data tab. 3 To add a hyperlink, click the setting for Hyperlink, and specify 
+the link. For more information about adding hyperlinks, see “Add Hyperlinks to a Drawing” in AutoCAD help. 
+4 Click the setting for Notes, and add a note. Then click OK. 5 Click the setting for Reference Documents. 6 Attach or detach reference files: 
+If you want to … Then … 
+attach a reference file 
+click 
+, select a file, and click Open. 
+edit the description of a reference enter text under Description. file 
+edit a reference file double-click the reference file name to start its application. 
+If you want to … Then … 
+detach a reference file select the file name, and click . 
+
+7 Click OK. 
+Railing Styles 
+A railing style is a group of properties assigned to a railing that determines the appearance and other characteristics of the railing. 
+Railing Components 
+In a railing style, you specify the following properties of railing components: 
+¦ 
+guardrails 
+
+¦ 
+handrails 
+
+¦ 
+bottom rails 
+
+¦ 
+first fixed post 
+
+¦ 
+last fixed post 
+
+¦ 
+interior fixed posts 
+
+¦ 
+dynamic posts 
+
+¦ 
+balusters 
+
+
+You can specify the height of rails and posts, the spacing between posts, the spacing between rails, and the width and depth of components. You can specify the display of different first and last posts, as well as different interior fixed posts. You can also create custom railing components by assigning custom profiles to replace standard railing components. 
+Custom Railing Components and Special Conditions 
+To create custom extruded components (railings, posts, or balusters) in a railing style, you define a profile and select it to replace a component on the Components tab of the railing style in the Style Manager. The resulting component is displayed appropriately in all views and does not have to be added to the display properties. 
+You can create a custom block to represent a complex design for a component that cannot be created from a profile, such as an elaborate wrought iron design in place of balusters, or an unusually shaped component. That block is used to represent the component in model views. You can create a profile to represent the custom component in plan views. 
+You can also use the custom blocks and profiles features of the display properties to represent additional railing components other than posts, rails, and balusters. In such cases, the component is added to the component rather than replacing it. For example, you can create a custom block for Model views and a profile for Plan views of a curved-railing return piece that ends by attaching to a wall. You can then add the block or profile to the rail components. 
+Using Materials in Railing Styles 
+You can use materials to control how railings of each style are displayed in a drawing. You assign materials to the railing components in the style. The components are then displayed using the display properties of the assigned materials. 
+AutoCAD Architecture provides a number of predefined materials for common design purposes. You can use these materials “as is,” or modify them for your project requirements. You can also define new materials. For more information about materials and how to define them, see Materials on page 871. 
+Creating Tools from Railing Styles 
+You can create a railing tool from any railing style. You can drag the style from the Style Manager onto a tool palette. You can then specify default settings for any railing created from the tool. For more information, see Creating a Railing Tool on page 2290. 
+Managing Railing Styles 
+To create, copy, or purge styles, you access the Style Manager. The Style Manager provides a central location in AutoCAD Architecture, for working with styles from multiple drawings and templates. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+Creating a Railing Style 
+Use this procedure to create a railing style. You can create a style using default style properties or by copying an existing style. After you create the style, you edit the style properties to customize the characteristics of the style. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Architectural Objects, and expand Railing Styles. 
+NOTE Alternatively, you can select a railing in the drawing, then click Railing tab . General panel . Edit Style drop-down . Railing Styles
+
+ . 
+3 Create a railing style: 
+If you want to… Then… 
+create a style with default properties right-click Railing Styles, and click New. 
+create a style from an existing style right-click the railing style you want to copy, and click Copy. Right-click, and click Paste. 
+4 Right-click the new style name, and click Rename. Enter a name for the new railing style, and press ENTER. 
+5 Edit the new railing style: 
+If you want to… Then… 
+specify default dimensions and off-see Specifying the Upper Rails of a sets for upper rails of the style Railing Style on page 2330. 
+specify default dimensions and off-see Specifying the Bottom Rails of sets for bottom rails of the style a Railing Style on page 2332. 
+specify the location and interval of see Specifying Posts of a Railing posts and balusters for the style Style on page 2333. 
+specify the structural components see Specifying the Components of of the style a Railing Style on page 2335. 
+If you want to… Then… 
+specify railing extensions at floor see Specifying the Railing Exten­
+levels and at landings sions of a Railing Style on page 2337. 
+assign materials to the components see Assigning Materials to a Railing of the railing style Style on page 2341. 
+add classifications to a railing style see Specifying Classifications for a Railing Style on page 2343. 
+specify display components of the see Specifying the Display Compon­
+style ents of a Railing Style on page 2342. 
+add notes and files to the style see Attaching Notes and Files to a Railing Style on page 2343. 
+6 If you want to assign the style to a railing tool, drag the style from 
+the Style Manager to a tool palette. You can later rename the tool and specify other properties for it as described in Creating a Railing Tool on page 2290. 
+7 Click OK. 
+Specifying the Upper Rails of a Railing Style 
+Use this procedure to change the following settings for guardrails and handrails in a railing style: 
+¦ 
+sloping height ¦ offset from posts 
+
+¦ 
+side for offsets 
+
+
+1 Select a railing. 
+2 Click Railing tab . General panel . Edit Style drop-down . Railing Styles
+ . 3 Select the style you want to edit. 
+4 Click the Rail Locations tab. 
+
+5 Specify whether upper rail properties of this railing style can be overridden for individual railing objects: 
+If you want to… Then… 
+specify guardrail and handrail select Allow Each Railing to Vary. properties, such as horizontal height, sloping height, and offset distance, when you add or modify railings 
+require that all railings of this style clear Allow Each Railing to Vary. use the upper rail settings of the style 
+NOTE Changes to guardrails and handrails do not affect existing railings of this style unless Allow Each Railing to Vary is cleared. 
+6 Select whether to include guardrails and handrails. A railing must have a guardrail or handrail. Both cannot be turned off. 7 Specify the following parameters for the guardrail or the handrail: 
+If you want to… Then… 
+specify the height for the guardrail enter a value for Horizontal Height. or the handrail 
+specify the height for the guardrail enter a value for Sloping Height. or the handrail while it is on a stair flight 
+specify the distance that the enter a value for Offset from Post. guardrail or the handrail is offset from the posts 
+If you want to… Then… 
+specify the side of the post for the select Center, Left, Right, or Auto offset, based on the direction the for Side for Offset. (Side for Offset stair (or railing) was drawn is available only when there is an 
+offset value.) 
+Auto is useful only for railings attached to the edges of stairs. A positive value is toward the center of the stair, while a negative value is toward the outside edge. Side for Offset for handrails also has a selection of Both, so you can specify a handrail on both sides of the railing. 
+If you select Auto, and the railing is not attached to a stair or is along the center of a stair, the offset is to the right. 
+8 Click OK. 
+Specifying the Bottom Rails of a Railing Style 
+Use this procedure to change the following settings for bottom rails in a railing style: 
+¦ 
+number of bottom rails 
+
+¦ 
+distance between rails 
+
+¦ 
+height of lowest rail 
+
+
+1 Select a railing. 2 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 
+3 Select the style you want to edit. 
+4 Click the Rail Locations tab. 
+
+5 Specify whether bottom rail properties of this railing style can be overridden for individual railing objects: 
+If you want to… Then… 
+specify bottom rail properties, such select Allow Each Railing to Vary. as horizontal height, sloping height, and number of rails, when you add or modify railings 
+require that all railings of this style clear Allow Each Railing to Vary. use the bottom rail settings of the style 
+6 Select Bottomrail to add bottom rails to the railing. 
+NOTE Changes to bottom rails do not affect existing railings of this style unless Allow Each Railing to Vary is cleared. 
+7 Specify the parameters for bottom rails: 
+If you want to… Then… 
+specify the height of the lowest rail enter a value for Horizontal. when it is horizontal 
+specify the height of the lowest rail enter a value for Sloping. when it is on a stair flight 
+designate more than one bottom enter a value for Number of Rails. 
+rail When you designate multiple bot­tom rails, you can enter a value for Spacing of Rails. 
+8 Click OK. 
+Specifying Posts of a Railing Style 
+Use this procedure to change the following settings for posts in a railing style: 
+¦ 
+type of posts (first fixed, last fixed, fixed, dynamic, and balusters) 
+
+¦ 
+distance the posts extend above railings 
+
+
+¦ 
+maximum spacing between posts and balusters 
+
+¦ 
+number of balusters for each tread for railings that are attached to stairs 
+
+
+First fixed posts and last fixed posts are attached at the beginning and end of each railing, respectively. Additional fixed posts and dynamic posts are added to the railing between the first and last fixed posts. Balusters are closely spaced supports for a railing. You can specify the spacing between dynamic posts and between balusters. 
+1 Select a railing. 2 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 3 Select the style you want to edit. 4 Click the Post Locations tab. 
+
+5 Specify whether the post properties of this railing style can be overridden for individual railing objects: 
+If you want to… Then… 
+specify post properties, such as select Allow Each Railing to Vary. fixed posts, dynamic posts, and balusters, when you add or modify railings 
+require all railings of this style to use clear Allow Each Railing to Vary. the post settings of the style 
+NOTE Changes to posts do not affect existing railings of this style unless Allow Each Railing to Vary is cleared. 
+6 Specify the post locations: 
+If you want to… Then… 
+include fixed posts at the beginning select Fixed Posts. and end of the railing 
+specify the distance above or below enter a value for Extension of ALL the top rail for all posts Posts from Top Railing. 
+specify the height of all posts from enter a value for Extension of ALL the floor Posts from Floor Level. 
+include fixed posts at the corners select Fixed Posts at Railing Corners. of the railing 
+include dynamic posts with the select Dynamic Posts. You can then railing enter a value for Maximum Center to Center Spacing. 
+include balusters with the railing select Balusters. You can then enter a value for Maximum Center to Center Spacing. 
+override the number of balusters on  select Stair Tread Length Override.  
+each stair tread  You can then enter a value for  
+Number per Tread. This applies  
+only to railings that are attached to  
+stairs.  
+
+7 Click OK. 
+Specifying the Components of a Railing Style 
+Use this procedure to specify the shape of the railing components, and the width, depth, and rotation of each component for each railing style. 
+You can use profiles to create railing components with custom shapes. The custom profile replaces a component on the Components tab of the railing style in the Style Manager. For more information, see Creating a Profile for a Custom Railing Component on page 2337. 
+1 Select a railing. 2 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 3 Select the style you want to edit. 4 Click the Components tab. 
+
+5 Select the component to change. 6 Select the profile you want to use for the selected component. The default profiles are circular and rectangular. Any profiles in the current drawing are also displayed. 
+7 Click Width, and enter a width for the selected component. 8 Click Depth, and enter a depth for the selected component. Depth is not available for the default circular profile. 
+9 Click Rotation, and enter a rotation for the selected component. Rotation is not available for rail components, or when the default circular profile is used for posts. 
+10 Click OK. 
+Creating a Profile for a Custom Railing Component 
+Use this procedure to create a profile from a closed polyline. You can then use the profile to define a custom railing component. The custom shape is extruded from the profile along the length of the component. 
+The height and the width of the polyline you use to create the profile define the height and the width of the railing component. You can change the scale and dimensions of the profile as you add it. 
+1 Draw a closed polyline of the height and the depth needed for the resulting railing component. 
+2 Click Manage tab . Style & Display panel .
+. Profile 
+Definitions
+ . 
+3 Right-click Profiles, and click New. 
+4 Enter a name for the profile. 
+5 In Style Manager, right-click the new profile, and click Set From. 
+6 Select the profile in the drawing area. 
+7 When prompted to add another ring, press ENTER. 
+8 Press ENTER to accept Centroid as the insertion point of the profile. 
+9 Click OK. 
+You can now use the profile to replace a railing component. For more information, see Adding Custom Railing Blocks and Profiles to a Railing Style on page 2344. 
+Specifying the Railing Extensions of a Railing Style 
+Use this procedure to control the length of the handrail and guardrail extensions at the top and bottom of stair flights. If a bottom rail exists, it extends as far as the railing above it. If railing extensions are not allowed to vary, the endpoint cannot be grip-edited. 
+1 Select a railing. 2 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 3 Select the style you want to edit. 
+4 Click the Extensions tab. 
+
+5 Specify whether railing extensions of this railing style can be overridden for individual railing objects: 
+If you want to… Then… 
+specify railing extension properties, select Allow Each Railing to Vary. such as handrails and guardrails at the top and bottom of entire stairs, when you add or modify railings 
+require that all railings of this style clear Allow Each Railing to Vary. use the extension settings of the style 
+NOTE Changes to railing extensions do not affect existing railings of this style unless Allow Each Railing to Vary is cleared. 
+6 Specify the properties of railing extensions: 
+If you want to… Then… 
+use values in this dialog box to clear Use Stair Landing Extension specify extensions at floor levels. under At Floor Levels. 
+specify the length of the handrail under At Floor Levels, enter values and guardrail at the top of an entire for Handrail and Guardrail. Select + stair T next to the value to add the tread 
+length to the extension value. 
+If you want to… Then… 
+specify the length of the handrail under At Floor Levels, enter values and guardrail at the bottom of an for Handrail and Guardrail. Select + entire stair T next to the value to add the tread 
+length to the extension value. 
+use values in this dialog box to clear Use Stair Landing Extension specify extensions at landings. under At Landings. 
+specify the length of the handrail under At Landings, enter values for 
+and guardrail at the top of a flight Handrail and Guardrail. Select + T next to the value to add the tread length to the extension value. 
+specify the length of the handrail under At Landings, enter values for and guardrail at the bottom of a Handrail and Guardrail. Select + T flight next to the value to add the tread 
+length to the extension value. 
+7 Click OK. 
+Specifying the Materials of a Railing Style 
+A railing consists of a number of components whose display properties can be determined by the materials assigned to each component. You assign one material to each physical component of the railing. For example, you assign a wood material to the balusters of a railing and a stainless steel material to the handrail and bottomrail. You assign materials to components in each display representation where you want the materials to be used. 
+If you want to use the display properties of the railing style, instead of using material display properties, you can turn off the material assignments in the display properties of the railing style. 
+Material definitions consist of display components that correspond to component types of objects. For example, the Linework component of a material is used for all linework in plan view. The Surface Hatch component of a material is used to hatch all object surfaces in three dimensional (3D) model views and in elevations. 
+Railing Materials and Display Components 
+The following table identifies the material component that corresponds to each railing component. 
+Railing Component Material Component 
+Plan, Plan Screened, Plan High Detail 
+Posts Linework 
+
+Guardrail Linework 
+Handrail Linework 
+Bottomrail Linework 
+Plan Low Detail 
+Posts Linework 
+Guardrail Linework 
+Handrail Linework 
+Model, Model ByBlock, Model Mono­chrome 
+Baluster 3D Body 
+Posts 3D Body 
+Guardrail 3D Body 
+Handrail 3D Body 
+Bottomrail 3D Body 
+Assigning Materials to a Railing Style 
+Use this procedure to assign materials to the individual components of a railing style. The component uses the display properties of the material instead of the style display properties. 
+You can assign a material to any physical component of the railing. Custom components and components that are only symbolic graphics do not use materials for their display properties. 
+NOTE If a material assignment does not determine the display properties of a railing component, you can change the display properties of the railing style as described in Specifying the Display Components of a Railing Style on page 2342. 
+1 Select a railing. 2 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select By Material for any component to which you want to assign 
+a material, and click OK. If the setting for By Material is not available, the display of this component cannot be determined by a material. 
+9 Click the Materials tab. 
+10 Select the component you want to change, and select a different material definition. You can select any material definition in the current drawing, or 
+click 
+to create a new material definition and assign it to a component. 
+WARNING Although you can also edit a material definition from this dialog box, any changes you make to the material definition apply to all objects that are assigned the material. 
+11 Click OK. 
+Specifying the Display Components of a Railing Style 
+Use this procedure to change the following properties of the display components of a railing style: 
+¦ 
+Visibility (display component is on or off) 
+
+¦ 
+By Material (material assigned to the display component determines its display properties) 
+
+¦ 
+Layer 
+
+¦ 
+Color 
+
+¦ 
+Linetype 
+
+¦ 
+Lineweight 
+
+¦ 
+Linetype scale 
+
+
+NOTE If a material assignment determines the display properties of components in the railing style, you can change the properties of the display component by clearing By Material. You can also override the material assignment with a different material. For more information, see Specifying the Materials of a Railing Style on page 2339. 
+1 Select a railing. 
+2 Click Railing tab . General panel . Edit Style drop-down . Railing Styles
+ . 3 Select the style you want to edit. 
+4 Click the Display Properties tab. 
+5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select the component to change, and select a different setting for 
+the property. 9 Click OK. 
+Specifying Classifications for a Railing Style 
+Use this procedure to specify classifications for any classification definition applied to a railing style. 
+For more information about creating and applying classification definitions, see Classification Definitions on page 3834. 
+1 Select a railing. 2 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 3 Select the style that you want to change. 4 Click the Classifications tab. 
+By default, the classification for all classification definitions is Unspecified. If no classification definitions are listed, none are applied to area styles. 
+5 For each classification definition, select the classification you want to apply to the current railing style. 6 Click OK. 
+Attaching Notes and Files to a Railing Style 
+Use this procedure to enter notes and attach reference files to a railing style. You can also edit notes and edit or detach reference files from a railing style. 
+1 Select a railing. 2 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 3 Select the style you want to edit. 4 Click the General tab. 5 To add a description to the railing style, enter the description 
+under Description. 6 Click Notes. 7 To add a note, click the Notes tab, and enter the note. 8 Click the Reference Docs tab, and attach, edit, or detach a 
+reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+If you want to… Then… 
+edit the description of a reference select the file, and click Edit. Edit file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. Click OK when you finish editing. 
+detach a reference file select the file name, click Delete, and click OK. 
+9 Click OK. 
+Adding Custom Railing Blocks and Profiles to a Railing Style 
+You can specify custom blocks and profiles to add to or replace individual railing components. You can add to or replace posts, dynamic posts, and balusters can be added to or replaced, and you can add to (but not replace) other railing components. 
+When you add a custom block and profile, you can specify several rules for positioning and scaling the new component. Each custom block or profile is also added to the display properties so that you can control its layer, color, and linetype. Be sure that the objects used to create the custom blocks are created with their properties designated as ByBlock. Otherwise, they cannot be controlled through the display properties. For more information about ByBlock, see “Control the Color and Linetype Properties in Blocks” in AutoCAD help. 
+After you create custom blocks and profiles, you can attach them to railing styles. Using custom blocks and profiles, railing styles can provide a much richer and more flexible set of railing graphics. 
+Adding a Custom Block to a Railing Style 
+Use this procedure to add a custom block to a railing style. The block can replace a railing component, such as a baluster, or be added to a component. You attach the block in display representations, such as Model, that show the railing in three dimensions. 
+Assigning a custom block as a baluster component to a railing 
+
+You can use a block to replace a component on the Components tab of a railing style in the Style Manager, or you can use a block to represent additional railing components in the display of railings. You add a block to the display components of a style; a component that you replace on the Components tab is already a part of the display properties. 
+1 Create a block to represent the component to add to the railing. Create the block in the same plane as the railing to which you will attach it. Be sure that the objects used to create the custom blocks are created with their properties designated as ByBlock. Otherwise, they cannot be controlled through the display properties. 
+2 Select a railing. 3 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 4 Select the style you want to edit. 5 Click the Display Properties tab. 6 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+NOTE You can add a custom block to a railing only in Model-based display representations. 
+
+7 If necessary, click 8 Click the Other tab. 9 Under Custom Block Display, click Add. 
+10 In the Custom Block dialog box, click Select Block. 
+11 Select the block to use, and click OK. 
+12 Specify the scale of the custom block: 
+If you want to… Then… 
+use the block at its drawn size clear all options under Scale to Fit. 
+scale the custom block to the width select Width. of the object to which it is attached 
+scale the custom block to the depth select Depth. of the object to which it is attached 
+scale the custom block to the select Height. height of the object to which it is attached 
+lock the XY shape of the object select Lock Ratio. If the object is scaled in one direction to fit another criterion for Scale to Fit, the whole custom block is scaled equally. 
+add the selected block to the rail-select Between Comp. Baluster, ings between the selected compon-Fixed Post, and Dynamic Posts are ents the only valid component selec­
+tions. 
+13 Specify the Mirror In direction, if necessary: 
+If you want to… Then… 
+create a mirror of the component select Mirror X. in the X direction, along the length of the railing 
+create a mirror of the component select Mirror Y. in the Y direction, across the width of the railing 
+If you want to… Then… 
+create a mirror of the component select Mirror Z. in the Z direction 
+14 Specify the location of the insertion point in relation to the object: 
+If you want to… Then… 
+specify the location of the X inser-select Left, Center, or Right for X. tion point 
+specify the location of the Y inser-select Front, Center, or Back for Y. tion point 
+specify the location of the Z inser-select Bottom, Middle, or Top for tion point Z. 
+Specify the post orientation relative to the up and down directions on a stair run in plan view as shown in the following illustration: 
+
+Specify the post orientation relative to the up and down directions on a stair run in elevation view as shown in the following illustration: 
+
+15 Specify the insertion offset for the component in the X, Y, and Z directions. 
+16 Specify the type of railing component that the block represents: 
+If you want to… Then… 
+represent balusters with the block select Baluster for Component. 
+represent fixed posts with the block select Fixed Post for Component. 
+represent dynamic posts with the select Dynamic Post for Compon­block ent. 
+replace the current baluster, fixed select Replace. post, or dynamic post with the block 
+represent a guardrail with the block select Guardrail for Component. 
+represent a handrail with the block select Handrail for Component. 
+represent a bottom rail with the select Bottomrail for Component. block 
+The two groups of components are mutually exclusive, so selecting an object from one column makes the other unavailable. You can select more than one object in each column to apply the block to each selected component. For example, you can use the same block for the fixed posts and dynamic posts. 
+17 Specify where the block is applied to the components: 
+If you want to… Then… 
+apply the block to all instances of select All for Attach to. the selected components 
+apply the block to the first instance select First for Attach to. of the selected component, based on the direction the railing was drawn 
+apply the block to the last instance select Last for Attach to. of the selected component, based on the direction the railing was drawn 
+If you want to… Then… 
+apply the block to a selected num-select Selection for Attach to. The 
+ber of components components are numbered in the order the railing was drawn, begin­ning with 1. 
+18 Click OK twice. After adding the block to the style, you can specify the layer, color, and linetype of the block. For more information, see Specifying the Display Components of a Railing Style on page 2342. 
+Adding a Custom Profile to a Railing Style 
+Use this procedure to add a custom profile to a railing style in the Plan display representation. You can replace one or more railing components with a custom profile, or you can assign different custom profiles to different railing components. 
+You can use a profile to replace a component on the Components tab of the railing style in the Style Manager, or you can use a profile to represent additional railing components in the display of railings. You add a profile to the display properties of a style; a component that you replace on the Components tab is already a part of the display properties. 
+For more information about creating profiles for railing components, see Creating a Profile for a Custom Railing Component on page 2337. 
+Assigning a profile to a baluster in a railing 
+
+1 Create a profile to represent the component to add to the railing. Create the profile in the XY plane. 
+2 Select a railing. 
+3 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 4 Select the style you want to edit. 5 Click the Display Properties tab. 6 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+NOTE You can add a custom profile to a railing only in Plan-based 
+display representations. 
+7 If necessary, click 
+. 8 Click the Other tab. 9 Under Custom Profile Display, click Add. 
+10 In the Custom Profile dialog box, click Select Profile. 
+11 Select the profile, and click OK. 
+12 Specify the scale of the custom profile: 
+If you want to… Then… 
+use the profile at its drawn size clear all options under Scale to Fit. 
+If you want to… Then… 
+scale the custom profile to the select Width. width of the object to which it is attached 
+scale the custom profile to the select Depth. depth of the object to which it is attached 
+scale the custom profile to the select Height. height of the object to which it is attached 
+lock the XY shape of the object select Lock Ratio. If the object is scaled in one direction to fit another criterion for Scale to Fit, the entire custom profile is scaled equally. 
+add the selected profile to the rail-select Between Comp. Baluster, ings between the selected compon-Fixed Post, and Dynamic Posts are ents the only valid component selec­
+tions. 
+13 Specify the Mirror In direction, if necessary: 
+If you want to… Then… 
+create a mirror of the component select Mirror X. in the X direction, along the length of the railing 
+create a mirror of the component select Mirror Y. in the Y direction, across the width of the railing 
+14 Specify the angle to rotate the component in the Z direction, if necessary. 
+15 Specify the location of the insertion point in relation to the object: 
+If you want to… Then… 
+specify the location of the X inser-select Left, Center, or Right for X. tion point 
+If you want to… Then… 
+specify the location of the Y inser-select Front, Center, or Back for Y. tion point 
+Specify the post orientation relative to the up and down directions on a stair run in plan view as shown in the following illustration: 
+
+Specify the post orientation relative to the up and down directions on a stair run in elevation view as shown in the following illustration: 
+
+16 Specify the insertion offset for the component in the X and Y directions. 
+17 Specify the type of railing component that the profile represents: 
+If you want to… Then… 
+represent balusters with the selec-select Baluster for Component. ted profile 
+represent fixed posts with the selec-select Fixed Post for Component. ted profile 
+represent dynamic posts with the select Dynamic Post for Compon­selected profile ent. 
+replace the current baluster, fixed select Replace. post, or dynamic post with the se­lected profile 
+If you want to… Then… 
+add a guardrail to the selected pro-select Guardrail for Component. file 
+add a handrail to the selected pro-select Handrail for Component. file 
+add a bottom rail to the selected select Bottomrail for Component. profile 
+The two groups of components are mutually exclusive, so selecting an object from one column makes the other unavailable. You can select more than one object in each column, and apply the profile to each selected component. For example, you can use the same profile for the fixed posts and dynamic posts. 
+18 Specify where the profile is applied to the components: 
+If you want to… Then… 
+apply the profile to all instances of select All for Attach to. the selected components 
+apply the profile to the first instance select First for Attach to. of the selected component, based on the direction the railing was drawn 
+apply the profile to the last instance select Last for Attach to. of the selected component, based on the direction the railing was drawn 
+apply the profile to a selected select Selection for Attach to. The number of components components are numbered in the order the railing was drawn. 
+19 Click OK twice. 
+Turning Off a Custom Block or Custom Profile in a Railing Style 
+Use this procedure to turn off the display of all custom blocks or profiles without actually removing them from the railing style. 
+You can selectively turn off the visibility of individual display blocks on the Layer/Color/Linetype tab. This is one way to switch between alternate blocks. For more information, see Specifying the Display Components of a Railing Style on page 2342. 
+1 Select a railing. 2 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+NOTE Custom blocks are added and turned off in Model-based display representations; Custom profiles are added and turned off in Plan-based display representations. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Disable the custom component: 
+If you want to… Then… 
+turn off a custom block click Disable Custom Blocks. 
+turn off a custom profile click Disable Custom Profiles. 
+9 Click OK. 
+Removing a Custom Block from a Railing Style 
+Use this procedure to delete custom components from a railing style. 1 Select a railing. 
+2 Click Railing tab . General panel . Edit Style 
+drop-down . Railing Styles
+ . 3 Select the style you want to edit. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. 
+NOTE Custom blocks are added and removed in Model-based display representations; Custom profiles are added and removed in Plan-based display representations. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Select the component to remove, and click Remove. 9 Click OK. 
+Roofs 
+29 
+Roofs are AEC objects that model an entire roof surface. You can create roofs independently of other objects, or you can select a polyline shape and place a roof on that shape. You can also select closed walls and place a roof on the walls, change the slope of a roof, and edit its edges and faces. 
+Roofs 
+Roofs are AEC objects that you can use to model an entire multiple-face roof surface. You can create roofs independently of other objects, or you can place a roof on a shape defined by a polyline or by a closed set of walls. After creating the roof, you can change its overall dimensions and slope, or edit its edges and faces individually. For more flexibility in customizing a roof, you can convert it to a collection of individual roof slabs. 
+Roof Slabs 
+A roof slab models a single face of a roof. Roof slab objects also differ from roof objects in that each roof slab is a separate entity with no direct connection to other entities. When you use multiple roof slabs to model an entire roof surface, you have more flexibility in editing the roof, but the combined topology (3D geometry) of the roof is not calculated automatically. For this reason, it is recommended that when you design complex roofs, you start with a roof object. Then, when the design is substantially complete, but you need more flexibility for customizing edges and other details, you can convert the roof to individual roof slabs. For information on creating and editing roof slabs, see Slabs and Roof Slabs on page 2379. 
+While roof slabs do not dynamically interact with each other, they do allow significant control over the roof geometry. For example, you can trim roof slabs individually, extend them, and miter them with other roof slabs. You can also cut holes in roof slabs, add or subtract mass elements, and apply detailed fascia and soffit profiles to any edge at any angle and orientation. Because roof slabs are style-based, you can apply design changes globally. 
+Materials in Roofs 
+You can assign materials to a roof. Materials are displayed in wireframe and working shade views, or when rendered. Materials have specific settings for the physical components of a roof, such as slab. For more information see Material Components and Display Properties on page 884. 
+Viewing roofs in 2D wireframe and rendered views 
+
+AutoCAD Architecture provides predefined materials for common design purposes. These materials contain settings for roof components. You can use the predefined materials as they are, or modify them for your designs. You can also create your own materials. Object styles provided with the software have appropriate materials already assigned to them. For more information, see Slab/Roof Slab Materials and Display Components on page 2471 and Material Components and Display Properties on page 884. 
+Using Roof Tools to Create Roofs 
+Tools provided with AutoCAD Architecture let you quickly place roofs by selecting a roof tool with a specific roof style and other predefined properties. You can use the tool with all of its default settings, or you can change any properties that are not controlled by the style. You can create roofs with single 
+

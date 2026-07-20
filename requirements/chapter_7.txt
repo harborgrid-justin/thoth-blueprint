@@ -1,0 +1,202 @@
+[MIGRATED TO RTM_PART_45.md - RENOVATION]
+of changing the layer name. These settings can be saved to the Layer Assignment Style selected in the Renovation Options dialog. 
+
+
+Style, Blocks, and Materials Design Rules 
+Design rules for the names of existing, demolished, or new objects can be appended with a prefix or suffix to the Renovation style name. This identifies the Renovation style specifically by category. With a prefix or suffix defined, naming conflicts are avoided between objects in different Renovation categories. 
+For example, if an existing wall with style name Brick is moved to another position in Renovation mode, the original wall displays as demolished, and a new one is created. Therefore, the existing wall is renamed in the Existing category, the demolished wall is renamed in the Demolition category, and the new wall is renamed in the New category. Specifying a design rule allows automatic renaming for the wall and any objects in the wall instead of manually renaming each object. 
+The new Renovation styles with the specified prefix or suffix display in Style Manager. For more information, see Style Manager Overview on page 856. 
+When you specify that material definitions are duplicated, a copy of the material is generated and assigned to the building object (like Masonry.Unit Masonry.Brick.Modular.Flemish_New) and the corresponding color settings displays. Objects can be viewed correctly by category in 2D sections and elevations, and associative 2D sections and elevations display building objects according to their renovation category. 
+
+
+Interactions Between Building Objects 
+In Renovation mode, building objects are automatically categorized as Existing, Demolition, or New. Objects interact based on their Renovation category. For example, objects categorized as Existing and New interact with each other, but objects categorized as Demolition and New objects do not. Therefore, if you have walls that are categorized as Demolition and walls that are categorized as New, and you want to have them intersect, you can modify them manually. For more information, see Making Manual Modifications on page 575. 
+NOTE If an opening endcap is changed for a door, window, opening, or door/window assembly object while in Renovation mode, a new object is created. If the object is to be kept, the opening endcap must be changed outside of Renovation mode. 
+Working on Your Drawings with Renovation Mode Active 
+
+Making Manual Modifications 
+You can make modifications to your wall objects by temporarily suspending Renovation mode. This may be necessary if walls of different renovation categories do not intersect correctly. 
+For example, you may have a plan that includes walls categorized as existing and walls categorized as demolition with wall edges that need to be corrected. While working in an active Renovation mode, objects categorized as New do not interact with objects categorized as Demolition. When you make a manual correction, you temporarily interrupt Renovation mode by freezing the walls you want to modify and then correcting the edges. The changes are not considered Renovation. The option to freeze or thaw walls is only available when Renovation mode is active. 
+1 With the Renovation drawing open in an active Renovation mode, 
+click 
+ (Freeze Walls) on the Renovation panel. 2 Select the walls, and press Enter. 
+Renovation mode is temporarily suspended. 
+3 Correct the wall edges, and click 
+ (Thaw Walls). Renovation mode resumes. 
+
+Working with Renovation Categories 
+Renovation categories include Existing, Demolition, and New. In Renovation mode, objects are automatically assigned to these categories. Categories of building objects display according to the display settings specified in the 
+Renovation Options dialog. You can manually assign objects to categories, and select or display objects by category. 
+
+Assigning Objects to Renovation Categories 
+In Renovation mode, you can manually assign an object’s Renovation category to Existing, Demolished, or New. The display properties change according to the category. Manually categorizing objects may be necessary for 2D, multi-view block, or block objects because these objects are automatically assigned to the Existing category when you begin a Renovation session. For more information, see Working in Renovation Mode on page 567. 
+1 With the Renovation drawing open in an active Renovation mode, click the Assign (Existing, Demo, or New) tool on the Renovation panel. 
+If you want to… Then… 
+add objects to the Demoli­tion category 
+click 
+
+add objects to the New category 
+click 
+
+add objects to the Existing category 
+click 
+
+2 Select the objects in the drawing to be assigned, and press ENTER. 
+The selected objects are now assigned to the category specified, and they display as the category is defined on the Display tab in the Renovation Options dialog. 
+
+
+Selecting Objects by Renovation Category 
+In Renovation mode, you can select all objects assigned to a specific Renovation category. 
+1 With the renovation drawing open in an active Renovation mode, click the Select (Existing, Demo, or New) tool on the Renovation panel. 
+If you want to… Then… 
+select all objects in the Existing category 
+click 
+
+select all objects in the Demolition category click 
+
+select all objects in the New category 
+click 
+
+2 With the objects selected, you can complete a command such as Delete. 
+
+
+Displaying Objects by Renovation Category 
+In Renovation mode, you can use the Show/Hide tool to display or hide all objects by category. Depending on the current state of the objects, this tool turns the category on or off. 
+The show/hide status of objects is saved in the drawing and should be considered when closing and reopening a drawing. If you are not sure if objects are hidden, select the tool and watch what happens. 
+. With the Renovation drawing open in an active Renovation mode, click a Show/Hide tool. 
+If you want to… Then… 
+show or hide all objects in the Demolition category click 
+
+show or hide all objects in the New category click 
+
+
+
+Making Minor Adjustments 
+You can freeze and thaw walls to manually edit wall edges. Selecting the Freeze Walls tool temporarily interrupts the active Renovation mode and allows you to manually edit wall edges. For more information, see Making Manual Modifications on page 575. 
+1 With the Renovation drawing open in an active Renovation mode, 
+click 
+ (Freeze Walls) on the Renovation panel. 2 Select the walls, and press Enter. 
+3 Correct the edges of the wall, and then click 
+ (Thaw Walls). Renovation mode resumes. 
+
+Customizing Renovation Design Rules 
+Design rules control how objects display in the drawing, the layer to which they are assigned, whether a prefix or suffix is added to the layer or style name, and whether material definitions are duplicated for viewing objects in 2D sections and elevations. These settings are saved in the drawing. For more information, see Renovation Settings for Objects on page 571. 
+
+Modifying the Renovation Display 
+You can change how properties of objects within specific categories are displayed in the drawing by unlocking them, changing them individually per object type, and saving them as the Renovation display style. Modifications made are saved to the current drawing. 
+The lock icon to the left of the property signals whether this property can be changed. For example, in the locked position, the property retains the original display and is not changed. If the property is unlocked, any changes made to the display is reflected in the drawing. 
+1 With the Renovation drawing open in an active Renovation mode, 
+click 
+(Options) on the Renovation panel. The Renovation Options dialog displays. 
+
+2 On the Display tab, select the display style to apply to the current 
+drawing, and enter a description. Renovation styles can be modified and saved, deleted, and imported from and exported to an external catalog. 
+3 Select the object type for the design rules. 
+4 Select the checkbox to the left of each property value for the category you want to change. 
+TIP Press Shift or Ctrl to change multiple properties of different design rules at the same time. 
+5 Modify the properties as desired. 
+6 Select Prompt for objects to update. 
+7 Select the objects to modify, or press Enter to select all objects. Changes to the selected properties for the specified object type are applied in the current drawing. 
+
+Modifying the Renovation Layer Assignments 
+Modify Renovation design rules to rename or reassign layers for objects based on their object type and Renovation category. These changes are saved in the current drawing. For more information, see Renovation Settings for Objects on page 571. 
+1 With the Renovation drawing open in an active Renovation mode, 
+click 
+(Options) on the Renovation panel. 
+The Renovation Options dialog displays. 
+
+2 Click the Layer tab, select the Layer Assignment Style to apply to 
+the current drawing, and enter a description. Renovation styles can be modified and saved, deleted, and imported from and exported to an external catalog. 
+
+3 Select the object type for the design rules. 
+4 Select the desired Renovation categories and modify the layer assignments. 
+If you want to… Then… 
+append a prefix to the select Add Prefix to layer name, and specify layer name the prefix. 
+append a suffix to the lay-select Add Suffix to layer name, and specify er name the suffix. 
+apply a different, existing select Use layer named, and select the name. layer to the objects 
+5 Click OK. 
+
+
+Renaming Style and Block Names by Renovation Category 
+Modify Renovation design rules to automatically append a prefix or suffix to style and block names based on their object’s Renovation category. If you do not predefine a prefix or suffix, and the same style or block name exists in another category in the drawing, an alert displays, and you can manually enter a new name. For more information, see Style, Blocks, and Materials Design Rules on page 573. 
+1 With the Renovation drawing open in an active Renovation mode, 
+click 
+(Options) on the Renovation panel. 
+The Renovation Options dialog displays. 
+2 Click the Styles, Blocks and Materials tab. 
+3 Select the desired Renovation categories, and specify a prefix or suffix to append to the style/block name in the current drawing. 
+
+4 Select or clear Duplicate material definitions to specify whether to duplicate material definitions in 2D sections and elevations. 
+5 Click OK. 
+
+Renovation Styles Catalog 
+The Renovation styles catalog contains display and layer assignment styles. AutoCAD Architecture-based styles for objects, such as walls and windows, are managed with Style Manager. 
+By default, the Renovation styles catalog (AecRenovation.dwg) is installed in ProgramData\Autodesk\ACA 2011\enu\Styles. If the Renovation styles catalog is renamed or moved, the styles are disabled and cannot be accessed. Use the Renovation Styles Catalog Settings dialog to specify a valid catalog. 
+1 With the Renovation drawing open in an active Renovation mode, 
+click 
+(Styles Catalog) from the Options drop-down menu on the Renovation panel. The Renovation Styles Catalog Settings dialog displays. 
+
+2 Select the Import renovation styles from catalog checkbox for drawings to be populated with all Renovation styles in the specified catalog. 
+Clear the Import renovation styles from catalog checkbox for new drawings to include standard styles only. 
+3 Browse to the location of the Renovation styles catalog you want to use. 
+4 Click OK. 
+
+
+
+Project Standards 
+8 
+The Project Standards feature lets you establish, maintain and synchronize standards across all drawings in an AutoCAD Architecture project. Project standards include standard styles, display settings, and AutoCAD standards that are used across all project drawings. Standard styles and display settings are specified in one or more standards drawings associated with the project. Project drawings can then be synchronized with these standards throughout the project lifecycle, either automatically, or on demand. In addition, you can designate tool palettes and a Content Browser library that are associated with the project. 
+Project Standards Terminology 
+project drawing A drawing file belonging to an AutoCAD Architecture project. A drawing must be part of a project to access and be synchronized with project standards. 
+standards drawing A file (DWG, DWT, DWS) that contains standard styles and display settings associated with the project. Standards drawings can be placed in a folder within the project folder, if they contain project-specific standards, or outside the project folder if they contain department-specific or company-wide standards. 
+Standards drawings can be included in e-transmit and archiving packages. 
+standard style or display setting A style or display setting that has been defined as a standard for a certain project. To be defined as a standard style or display setting, it needs to be contained in a standards drawing. Standard style types and display settings include the following: 
+¦ object styles (for example, wall styles, door styles, and so on) 
+¦ 
+property set definitions 
+
+¦ 
+property data formats 
+
+¦ 
+schedule table styles 
+
+
+¦ 
+classification definitions 
+
+¦ 
+display theme styles 
+
+¦ 
+layer key styles 
+
+¦ 
+mask block definitions 
+
+¦ 
+material definitions 
+
+¦ 
+multi-view block definitions 
+
+¦ 
+profile definitions 
+
+¦ 
+display properties 
+
+¦ 
+display sets 
+
+¦ 
+display configurations 
+
+
+Not standardized style or display setting A style or display setting in a project drawing for which no corresponding object can be found in the project standards drawings. 
+version The process of recording changes to project standard styles and display settings. Standard styles and display settings should be versioned when they are changed in a standards drawing. When a new version is created, the next synchronization recognizes the style or display setting as changed and lets you update the project drawing accordingly. 
+Nonstandard version of a standard style or display setting Standard styles and display settings in a project are versioned when they are changed either in a project drawing or a project standards drawing. A version of a standard style could for example have the date of July 14, 2006. The previous version could be a week earlier from July 7, 2006. 
+When the synchronization detects a version of the style or display setting in a project drawing that has a version date not found in the project standards drawing (for example, a version dated July 12, 2006), this version is labeled a “nonstandard version” of a project standard style or display setting. 
+older version of a standard style or display setting When the synchronization in the above example detects a version of the style or display setting dated July 7, 2006 in the project drawing, this is labeled as an “older version”, because the version exists in the project standards drawing, but has been updated by a newer one from July 14, 2006. 
+synchronization The process of checking a drawing or project against its associated standards to identify and remove version discrepancies between 
+

@@ -23,6 +23,9 @@ import {
   Square,
   Sun,
   Tag,
+  SlidersHorizontal,
+  HardHat,
+  Mountain,
 } from "lucide-react";
 import type { Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
@@ -36,6 +39,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { PresenceBar } from "./PresenceBar";
 import { ImportExportMenu } from "@/features/interop/ImportExportMenu";
+import { NamedViewsMenu } from "./NamedViewsMenu";
 
 interface TopBarProps {
   project: Project | null;
@@ -144,11 +148,30 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         <Separator orientation="vertical" className="mx-1 h-6" />
 
         <ImportExportMenu />
+        <NamedViewsMenu />
         <Button variant="ghost" size="sm" onClick={() => openPlat(null)}>
           <ScrollText className="h-4 w-4" /> <span className="hidden md:inline">Plat</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={() => setAlignmentOpen(true)}>
           <Spline className="h-4 w-4" /> <span className="hidden lg:inline">Stationing</span>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setSuperelevationOpen(true)}>
+          <SlidersHorizontal className="h-4 w-4" /> <span className="hidden xl:inline">Superelevation</span>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setCorridorOpen(true)}>
+          <HardHat className="h-4 w-4" /> <span className="hidden xl:inline">Corridor</span>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setGradingOpen(true)}>
+          <Mountain className="h-4 w-4" /> <span className="hidden xl:inline">Grading</span>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setProfileOpen(true)}>
+          <LayoutTemplate className="h-4 w-4" /> <span className="hidden lg:inline">Profile &amp; Sections</span>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setPipeOpen(true)}>
+          <Files className="h-4 w-4" /> <span className="hidden lg:inline">Pipes Audit</span>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setProductionOpen(true)}>
+          <LayoutTemplate className="h-4 w-4" /> <span className="hidden lg:inline">Framing Wizard</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={() => setSheetOpen(true)}>
           <LayoutTemplate className="h-4 w-4" /> <span className="hidden lg:inline">Sheet</span>

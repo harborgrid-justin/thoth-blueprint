@@ -1,0 +1,339 @@
+[MIGRATED TO RTM_PART_71.md & RTM_PART_77.md - AEC CONTENT & CATALOGS]
+the Content Browser, the Properties palette opens so that you can enter properties for the new object. Tools can have preset parameters so that you can add an object with one click. There is no need to change properties before placement. For detailed information, see Content Browser Overview on page 137. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 
+2 The Content Browser opens in a window outside the drawing area. To see both the drawing and the Content Browser, reduce the size of drawing and the Content Browser on your screen. 
+3 Click the catalog that contains the category of tools you want to use. 
+4 Click the category that contains the tool. 
+5 Drag the i-drop® icon for the tool into the drawing area to add the content to your drawing. 
+6 Define properties for the content on the Properties palette, if necessary. For more information, see Properties Palette on page 52. 
+7 Press ENTER. 
+Adding Content from DesignCenter 
+Use this procedure to add DesignCenter content to a drawing. You can also drag AEC content onto a tool palette for direct access or to create a custom tool. For more information see Moving Content Between DesignCenter and the Content Browser on page 3877. 
+1 Click Insert tab . Content panel . Content Browser 
+drop-down . Design Center
+ . 
+2 Click the AEC Content tab. 
+3 Under Custom Applications, expand AutoCAD Architecture, and 
+expand Imperial or Metric. 
+4 Expand the folder containing the content you want to place in the drawing. 
+5 Drag the desired image or file icon from the content area (the top right pane) to the desired location in the drawing area. (Alternatively, you can double-click the content item, or right-click 
+it and click Insert, and then specify a location in the drawing area.) 
+The content is placed in your drawing using the current display configuration. For more information about display configurations, see Display System Structure on page 787. 
+Adding Fixture Layouts from DesignCenter 
+Use this procedure to place fixture layouts in your drawing. For more information, see Fixture Layouts in DesignCenter on page 3873 and Modifying Fixture Layouts on page 3892. 
+1 Click Insert tab . Content panel drop-down . Design Center
+
+ . 2 Click the AEC Content tab. 3 Under Custom Applications, expand AutoCAD Architecture, and 
+expand Imperial or Metric. 4 Expand Design, and expand one of the following layouts: 
+¦ 
+For imperial content, expand Mechanical\Plumbing Fixtures\Layouts. 
+
+¦ 
+For metric content, expand Bathroom\Layouts. 
+
+
+5 Double-click a layout. 6 Use the Insert dialog box to control the placement of the layout. 7 Specify a rotation angle or a scale to mirror the layout. 
+Enter -1 for X or -1 for Y to mirror the content. 
+8 Click OK. 9 Specify a location for the fixture layout. 
+NOTE You can also add the layout by dragging it to the drawing, or by right-clicking and clicking Insert. You have the most control over the insertion if you use the double-click or right-click methods. 
+Moving Content Between DesignCenter and the Content Browser 
+When you want to create a tool from AEC content in DesignCenter™, you drag and drop the selected content item from the AEC Content tab in DesignCenter onto a tool palette. From the tool palette, you can drag and drop the newly created tool into a catalog in the Content Browser. You cannot drag AEC content from a DesignCenter folder directly into the Content Browser or drag tools from the Content Browser into DesignCenter. 
+For more information about creating your own tool palettes or working with content in catalogs, see Working with Tool Palettes on page 78. 
+Creating a Tool from AEC Content in DesignCenter 
+Use this procedure to create a tool by dragging an AEC content item from DesignCenter™ onto a tool palette. 
+NOTE You can also create tools from blocks in DesignCenter, but they have slightly different tool options. 
+Adding AEC DesignCenter content to a tool palette 
+
+1 Open the tool palette where you want to add a new tool. 2 Click Insert tab . Content panel drop-down . Design Center
+
+ . 3 On the AEC Content tab, navigate to the folder for the AEC content from which you want to create a tool. 4 Drag the content onto the tool palette. A new tool is inserted on the tool palette. To change the icon of the tool, see Changing a Tool Icon on page 98. 
+5 Define additional properties for the tool, if necessary. For more information, see Changing the Tool Properties on page 97. 
+Creating Custom AEC Content 
+When you want to create custom content to represent unique or frequently used objects that are not currently included in either the Content Browser or DesignCenter™, use the AEC Content Wizard to construct the content. The AEC Content Wizard is designed specifically for working within DesignCenter. After you create the content in DesignCenter, you can move it onto a tool palette. For more information, see Adding AEC Content to Drawings on page 3874. 
+Using the AEC Content Wizard 
+The AEC Content Wizard helps you create custom content. You can create blocks, drawings, and commands from data existing in the current drawing. 
+AEC Content Wizard 
+
+To create custom content, you first select the content type. Next, you specify options to be used when content is inserted into a drawing. The final step is to specify the output file and other parameters that control how DesignCenter™ displays the content. 
+When creating content in an existing AEC file (that is, a drawing generated from the AEC Content Wizard), the default values for each page of the wizard are set to the value used to create the drawing. The default settings provide an easy way for you to make small modifications to existing content files. 
+Creating an AEC Content Block for DesignCenter 
+Use this procedure to create an AEC content block and add it to DesignCenter™. You create the new block from an existing block in the current drawing. The block is saved in a new drawing that can be accessed from DesignCenter. 
+1 On the command line, enter AecCreateContent. 2 Select Block for Content Type. All the defined blocks in the current drawing are displayed under Current Drawing. 
+3 Select a block for Current Drawing, and click Add. Only one block at a time can be selected for Current Drawing and added to Content File. 
+4 Click Next. 5 Specify an insertion method for Insert Options: 
+If you want to… Then… 
+explode the block when you add it select Explode on Insert. to your drawing 
+have the block remain a block when clear Explode on Insert. you add it to your drawing 
+specify an elevation for the block enter a value for Preset Elevation. when you add it to your drawing 
+specify an anchor type to use when select a type of anchor for Anchor you add the block to your drawing Type. 
+6 Specify an insertion scale factor for Scale: 
+If you want to… Then… 
+scale the block instance using a co-enter values for X, Y, and Z for ordinate (X, Y, Z) direction Scale. 
+apply no additional scaling method select None for Additional Scaling. to the block instance 
+If you want to… Then… 
+scale the block instance by the an-select Annotation for Additional notation scale of the drawing you Scaling. are adding the block to 
+scale the block instance by the select Drawing for Additional Scal­drawing units of the drawing you ing. are adding the block to 
+scale the block definition by the select Enable AEC Unit Scaling. drawing units of the drawing you are adding the block to 
+7 If the block has attributes, specify a text style for Attribute Text Style: 
+If you want to… Then… 
+use the default text style of content select As Defined by Content. in the current drawing 
+use the text style of the target select Target Drawing Text Style. drawing 
+8 If the block has attributes, specify an angle for Attribute Text Angle: 
+If you want to… Then… 
+use the rotation angle of the block select As Inserted. as the attribute text angle 
+set the angle of the attribute text select Force Horizontal. to zero 
+be able to read the attribute text select Right Reading. from the right direction 
+9 Click Select Layer Key, select a layer key, and click OK. 
+You can also enter a layer name for Layer Key. 10 Click Next. 11 Enter a name for File Name, or click Browse. 
+If you want to save the current drawing as the content file, select Current Drawing. 
+12 Select an image for Icon to represent the block in DesignCenter: 
+If you want to… Then… 
+specify an existing bitmap image click New Icon, select an image, and click OK. 
+specify the default image of the click Default Icon. block itself 
+13 Enter a description for Detailed Description. 
+14 If you want to save the drawing objects in the content file, select Save Preview Graphics. 
+15 Click Finish. 
+Creating an AEC Content Drawing for DesignCenter 
+Use this procedure to create an AEC content drawing and add it to DesignCenter™. The content drawing can then be inserted into a drawing with all of its content, including styles, blocks, layers, and linetypes. 
+1 On the command line, enter AecCreateContent. 2 Select Drawing for Content Type, and click Next. 3 Specify an insertion method for Insert Options: 
+If you want to… Then… 
+specify an elevation enter a value for Preset Elevation. 
+specify an anchor type select a type of anchor for Anchor Type. 
+4 Specify an insertion scale factor for Scale: 
+If you want to… Then… 
+scale the drawing instance using a enter values for X, Y, and Z for coordinate (X, Y, Z) direction Scale. 
+apply no additional scaling method select None for Additional Scaling. to the drawing instance 
+If you want to… Then… 
+scale the drawing instance by the select Annotation for Additional annotation scale of the drawing you Scaling. are adding the block to 
+scale the drawing instance by the select Drawing for Additional Scal­drawing units of the drawing you ing. are adding the block to 
+scale the drawing definition by the select Enable AEC Unit Scaling. drawing units of the drawing you are adding the block to 
+5 Specify an angle for Attribute Text Angle: 
+If you want to… Then… 
+assign the angle of the attribute select As Inserted. text to be the same as the rotation angle of the drawing 
+set the angle of the attribute text select Force Horizontal. to zero 
+be able to read the attribute text select Right Reading. from the right direction 
+6 Click Select Layer Key, select a layer key, and click OK. You can also enter a layer name for Layer Key. 
+7 Click Next. 8 Enter a name for File Name, or click Browse. If you want to save the current drawing as the content file, select Current Drawing. 
+9 Select an image for Icon to represent the drawing in DesignCenter: 
+If you want to… Then… 
+specify an existing bitmap image click New Icon, select an image, and click OK. 
+If you want to… Then… 
+specify the default image of the click Default Icon. drawing itself 
+10 Enter a description for Detailed Description. 11 Click Finish. 
+Creating an AEC Content Multi-View Block for DesignCenter 
+Use this procedure to create an AEC multi-view block and add it to DesignCenter™. You define the multi-view block from view blocks created in your drawing that represent different views of your custom object. The block is saved in a new drawing that can be accessed from DesignCenter. For more information, see Creating View Blocks on page 2857. 
+1 On the command line, enter AecCreateContent. 2 Select Multi-View Block for Content Type. All the defined blocks in the current drawing are displayed in Current Drawing. 
+3 Select a multi-view block under Current Drawing, and click Add. Only one block at a time can be selected for Current Drawing and added to Content File. 
+4 Click Next. 5 Specify an insertion method for Insert Options: 
+If you want to… Then… 
+explode the multi-view block when select Explode on Insert. you add it to your drawing 
+have the multi-view block remain a clear Explode on Insert. block when you add it to your drawing 
+specify an elevation for the multi-enter a value for Preset Elevation. view block when you add it to your drawing 
+If you want to… Then… 
+specify an anchor type to use when select a type of anchor for Anchor you add the multi-view block to Type. your drawing 
+6 Specify an insertion scale factor for Scale: 
+If you want to… Then… 
+scale the multi-view block instance enter values for X, Y, and Z for using a coordinate (X, Y, Z) direc-Scale. tion 
+apply no additional scaling method select None for Additional Scaling. to the multi-view block instance 
+scale the multi-view block instance select Annotation for Additional by the annotation scale of the Scaling. drawing you are adding the block to 
+scale the multi-view block instance select Drawing for Additional Scal­by the drawing units of the drawing ing. you are adding the block to 
+scale the multi-view block definition select Enable AEC Unit Scaling. by the drawing units of the drawing you are adding the block to 
+7 If the block has attributes, specify a text style for Attribute Text Style: 
+If you want to… Then… 
+use the default text style of content select As Defined by Content. in the current drawing 
+use the text style of the target select Target Drawing Text Style. drawing 
+8 If the block has attributes, specify an angle for Attribute Text Angle: 
+If you want to… Then… 
+use the rotation angle of the multi-select As Inserted. view block as the attribute text angle 
+set the angle of the attribute text select Force Horizontal. to zero 
+be able to read the attribute text select Right Reading. from the right direction 
+9 Click Select Layer Key, select a layer key, and click OK. You can also enter a layer name for Layer Key. 
+10 Click Next. 11 Enter a name for File Name, or click Browse. If you want to save the current drawing as the content file, select Current Drawing. 
+12 Select an image for Icon to represent the multi-view block in DesignCenter: 
+If you want to… Then… 
+specify an existing bitmap image click New Icon, select an image, and click OK. 
+specify the default image of the click Default Icon. multi-view block itself 
+13 Enter a description for Detailed Description. 14 Click Finish. 
+Creating an AEC Content Masking Block for DesignCenter 
+Use this procedure to create a custom AEC masking block that you can add to your drawing using DesignCenter™. You create the new masking block from an existing masking block in the current drawing. The masking block is saved in a new drawing that can be accessed from DesignCenter. For more information about using masking blocks, see Mask Blocks on page 2831. 
+1 On the command line, enter AecCreateContent. 2 Select Masking Block for Content Type. All the defined blocks in the current drawing are displayed in Current Drawing. 
+3 Select a masking block for Current Drawing, and click Add. Only one block at a time can be selected for Current Drawing and added to Content File. 
+4 Click Next. 5 Specify an insertion method for Insert Options: 
+If you want to… Then… 
+specify an elevation enter a value for Preset Elevation. 
+specify an anchor type select a type of anchor for Anchor Type. 
+6 Specify an insertion scale factor for Scale: 
+If you want to… Then… 
+scale the masking block in-enter values for X, Y, and Z for Scale. stance using a coordinate (X, Y, Z) direction 
+apply no additional scaling select None for Additional Scaling. method to the masking block instance 
+scale the masking block in-select Annotation for Additional Scaling. stance by the annotation scale of the drawing you are adding the block to 
+scale the masking block in-select Drawing for Additional Scaling. stance by the drawing units of the drawing you are adding the block to 
+scale the masking block defini-select Enable AEC Unit Scaling. tion by the drawing units of 
+If you want to… Then… 
+the drawing you are adding the block to 
+7 If the block has attributes, specify a text style for Attribute Text Style: 
+If you want to… Then… 
+use the default text style of select As Defined by Content. content in the current drawing 
+use the text style of the target select Target Drawing Text Style. drawing 
+8 If the block has attributes, specify an angle for Attribute Text Angle: 
+If you want to… Then… 
+use the rotation angle of the select As Inserted. masking block as the attribute text angle 
+set the angle of the attribute select Force Horizontal. text to zero 
+be able to read the attribute select Right Reading. text from the right direction 
+9 Click Select Layer Key, select a layer key, and click OK. You can also enter a layer name for Layer Key. 
+10 Click Next. 11 Enter a name for File Name, or click Browse. If you want to save the current drawing as the content file, select Current Drawing. 
+12 Select an image for Icon to represent the masking block in DesignCenter: 
+If you want to… Then… 
+specify an existing bitmap im-click New Icon, select an image, and age click OK. 
+specify the default image of click Default Icon. the drawing itself 
+13 Enter a description for Detailed Description. 14 Click Finish. 
+Creating an AEC Content Custom Command for DesignCenter 
+Use this procedure to create a custom command that you can add to your drawing environment using DesignCenter™. In the AEC Content Wizard, select one or more content blocks, specify a command string, and save a new drawing that contains all the content of the current drawing. When the custom command is added to a target drawing from DesignCenter, the set of content blocks is copied into the target drawing and the routine is executed, enabling the custom command. 
+Following is a detailed example of a custom command that you can create in the AEC Content Wizard. This custom command string adds a schedule tag to a room symbol and creates the leader and tag with the desired style. 
+AecAnnoScheduleTagAdd "C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial\Schedule Tables (Imperial).dwg" _symbol aec3_room_tag _leader _none _dimstyle _current 
+The equivalent prompts on the command line are as follows; however, entering text for custom commands on the command line is not recommended. Custom commands should be created with the AEC Content Wizard. 
+AnnoScheduleTagAdd 
+Property set definitions drawing <C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial\Schedule Tables (Imperial).dwg> 
+Select object to tag [Symbol/Leader/Dimstyle/Edit/Constrain/Rotation]:Symbol 
+Enter tag symbol name <>: Aec3_Room_Tag_ 
+Select object to tag [Symbol/Leader/Dimstyle/Edit/Constrain/Rotation]:Leader 
+Enter leader type [None/STraight/SPline] <None>:None 
+Select object to tag [Symbol/Leader/Dimstyle/Edit/Constrain/Rotation]:Dimstyle 
+Enter leader dimstyle CURRENT <Aec-Arch-I-96>: Current 
+Select object to tag [Symbol/Leader/Dimstyle/Edit]: 
+1 On the command line, enter AecCreateContent. 2 Select Custom Command for Content Type. All the defined blocks in the current drawing, regardless of type, are displayed in Current Drawing. 
+3 Select one or more blocks for Current Drawing, and click Add. 4 Enter the command string for Custom String. 
+You can also click Expand to display the Custom Command String dialog box, and enter the command string. The command string is limited to 255 characters. 
+5 Click Next. 6 Specify an insertion method for Insert Options: 
+If you want to… Then… 
+specify an elevation enter a value for Preset Elevation. 
+specify an anchor type select a type of anchor for Anchor Type. 
+7 Specify an insertion scale factor for Scale: 
+If you want to… Then… 
+scale the drawing instance using a enter values for X, Y, and Z for coordinate (X, Y, Z) direction Scale. 
+apply no additional scaling method select None for Additional Scaling. to the drawing instance 
+scale the drawing instance by the select Annotation for Additional annotation scale of the drawing you Scaling. are adding the block to 
+If you want to… Then… 
+scale the drawing instance by the select Drawing for Additional Scal­drawing units of the drawing you ing. are adding the block to 
+scale the drawing definition by the select Enable AEC Unit Scaling. drawing units of the drawing you are adding the block to 
+8 Specify an angle for Attribute Text Angle: 
+If you want to… Then… 
+assign the angle of the attribute select As Inserted. text to be the same as the rotation angle of the drawing 
+set the angle of the attribute text select Force Horizontal. to zero 
+be able to read the attribute text select Right Reading. from the right direction 
+9 Click Select Layer Key, select a layer key, and click OK. You can also enter a layer name for Layer Key. 
+10 Click Next. 11 Enter a name for File Name, or click Browse. If you want to save the current drawing as the content file, select Current Drawing. 
+12 Select an image for Icon to represent the drawing in DesignCenter: 
+If you want to… Then… 
+specify an existing bitmap image click New Icon, select an image, and click OK. 
+specify the default image of the click Default Icon. drawing itself 
+13 Enter a description for Detailed Description. 14 Click Finish. 
+Editing AEC Content 
+You can edit AEC content that was added to the drawing from DesignCenter™. For information about editing tools in the Content Browser, see Customizing a Tool on page 174. 
+Modifying DesignCenter Content with the AEC Content Wizard 
+Use this procedure to edit DesignCenter content with the AEC Content Wizard. 
+1 Click Insert tab . Content panel drop-down . Design Center
+
+ . 2 Click the AEC Content tab. 3 Under Custom Applications, expand AutoCAD Architecture, and 
+expand Imperial or Metric. 4 Expand the folder containing the content you want to edit. 5 Select the content item you want to modify, right-click and click 
+Edit. The AEC Content Wizard opens and the content type is displayed. 
+6 Follow the screens in AEC Content Wizard to make your modifications. 
+Modifying Fixture Layouts 
+Use this procedure to modify the components of fixture layouts with the Edit Block in-place option. This method is more efficient than exploding the layout. For example, if you drop a toilet stall into your drawing and then explode it, the stall walls are wall objects, the door to the stall is a door object, and the toilet is a multi-view block. When you use Edit Block in-place, the layout remains a single piece of content. You can also drag the fixture layouts onto a tool palette to create custom tools. 
+NOTE After you create your custom fixture layout, save the layout as Custom Design Content for easy placement in future drawings. 
+For more information about fixture layout content, see Fixture Layouts in DesignCenter on page 3873. 
+1 Select a layout. 
+2 click Insert tab . Reference panel .
+. Edit Reference. The Reference Edit dialog box opens. 
+3 Click OK. 
+The components can now be edited separately. 
+For more information, see “Reference Edit Dialog Box” in 
+AutoCAD Help. 
+TIP The quickest way to locate and view an AutoCAD topic is to click the Search tab in the Help window, select the Search titles only option, and then copy and paste or type the AutoCAD topic name, and click List Topics. 
+Turning Off the Dimension Scale Override 
+Use this procedure to prevent the software from automatically applying an override to the current dimension scale style in the drawing. This control is on by default, and it overrides the active dimension scale style. With the override on, dimensions added to the drawing are scaled based on the current drawing scale. For more information, see “Set Plot Scale” in AutoCAD Help. 
+If you want to make the dimension scale match your drawing scale, leave Automatically Create Dimscale Override selected. The override applies a scale factor to the dimension style properties. 
+WARNING Any time you close the Drawing Setup dialog box by selecting OK or Apply, an override is applied if Automatically Create Dimscale Override is selected, regardless of the tab that was originally opened. 
+AEC dimensions added with tools are not affected by the dimension scale override because an AEC dimension style depends on which display representation is active. For more information about AEC Dimensions, see Dimension Options and Uses on page 3351. 
+
+1 Click . Utilities . Drawing Setup. 2 Click the Scale tab. 3 Clear Automatically Create Dimscale Override. 
+When you clear this setting, you can adjust the dimension scale independently of the drawing scale. 
+4 Select Save As Default if you want subsequent drawings to use these settings, or clear Save As Default to save your settings in the current drawing only. 
+5 Click OK. 
+Other Utilities 
+Cameras 
+51 
+The camera is a visualization tool, modeled after a real camera. It uses a point-and-shoot process to help you view the drawing as if you were standing within the building model. You can add any number of camera views to your drawing and create a video dry run of your design with a camera. For more information about working with cameras, see “Overview of Cameras” in the AutoCAD Help. 
+You can save perspective views of your drawing using a camera. By adjusting the position of your camera, you can change these views incrementally. 
+Adjusting the Camera Position 
+Use this procedure to incrementally change the position of the camera. This changes your views. 
+1 Click Render tab . Camera panel .
+. Adjust. 2 Select the camera to adjust. 
+
+3 Click the appropriate button to adjust the view. 
+¦ 
+Change the Step value: This value controls how far each click of the following buttons moves the camera: Forward, Back, Left, Right, Up, and Down. 
+
+¦ 
+Change the Angle value: This value controls how far each click of the following buttons moves the camera angle: Turn Left, Turn Right, Look Up, and Look Down. 
+
+¦ 
+Change the Zoom percentage: This value controls how far each click of the button zooms the camera for Zoom In and Zoom Out. 
+
+¦ 
+Click Hide to view the drawing with hidden lines removed. 
+
+
+If the view in the drawing wasn’t the camera’s view, then the first selected button places the drawing into the camera’s view. 
+As you click each button, the view changes in increments determined by values in the Adjustment Increments section. If Auto View is selected, you can see the change after you click each button. If Auto View is cleared, click View to see the changes. 
+4 Click OK. 
+Converting Objects to 3D Solids 
+52 
+You can convert objects to 3D solids when preparing to use CNC machining applications to create a physical building model from a computer-generated building model. You may also want to convert objects to 3D solids if the objects are to interact with other 3D solids. 
+Converting Objects to 3D Solids 
+You can convert objects to 3D solids when preparing to use CNC machining applications to create a physical building model from a computer-generated building model. You may also want to convert objects to 3D solids if the objects are to interact with other 3D solids. 
+You cannot convert the following objects or blocks: 
+¦ 
+Objects with no integral 3D presence, such as building grids or cameras 
+
+¦ 3D sections 
+
+¦ 
+Objects in a block or an external reference 
+
+¦ 
+Custom display blocks created from 3D solids 
+
+
+For more information, see “Create 3D Solids” in AutoCAD Help. 
+Converting Objects to 3D Solid Objects 
+Use this procedure to convert objects such as walls, doors, and mass elements into three-dimensional (3D) solid AutoCAD objects. 
+TIP Convert custom display blocks to Free Form mass elements, and then convert the mass elements to 3D solids. 
+1 Open the tool palette that contains the Convert to 3D Solid tool 
+you want to use, and select the tool. A default Convert to 3D Solid tool is located with the Modeling Tools in the AutoCAD Architecture Stock Tools catalog. You can add this tool to any tool palette. For more information, see Content Browser Overview on page 137. 
+2 Select the objects to convert, and press ENTER. 
+3 Enter y (Yes) to erase the selected geometry after conversion, or enter n (No) to keep the geometry in the drawing Any selected objects that cannot be converted are filtered out 
+during the conversion. Highly-faceted objects, such as curved railings and stairs, may take a longer time to convert. 
+After you convert an object to a solid, you can convert it to a Free Form mass element and modify it using grips or the Properties palette. You can then convert the Free Form mass element back to a 3D solid. For more information, see Using the Model Explorer to Create Mass Models on page 1073. 
+Visual Audit 
+53 
+Visual Audit is a utility that helps you manage the integrity of your design data by identifying non-AEC objects, such as AutoCAD® objects and exploded AEC objects, in your drawings. 
+Working with Visual Audit 
+When you perform a visual audit, all of the AEC objects in the drawing are temporarily removed from the display, leaving only non-AEC objects in view. You can inspect the remaining objects more closely to see if they should be replaced with AEC objects. 
+To add clarity to the audit, a visual audit also removes single and multi-line text, leaders, and dimension objects from the display. Attribute text remains visible in the drawing. All objects are displayed again when you end the visual audit. 
+In the following illustration, the railing, door, and the framed opening are exploded AEC objects. 
+Performing a visual audit with AEC and non-AEC objects in the drawing 
+
+Performing a Visual Audit 
+Use this procedure to perform a visual audit on your drawing. 
+NOTE For best results, perform a visual audit in a 2D wireframe view. 
+1 Click Home tab . Inquiry panel .
+. Show AutoCAD Entities . 2 All AEC objects are removed from the display. Attribute text remains visible in the drawing. 3 Pan and zoom to inspect the drawing: 
+
+If you want to… Then… 
+access zoom options enter ‘z (Zoom). You can use real time zoom or right-click to access additional zoom options. 
+access pan options enter ‘p (Pan). You can pan or right-click to access pan options. 
+4 Press ENTER. All objects are restored to the display. 
+

@@ -1,0 +1,1485 @@
+[MIGRATED TO RTM_PART_76.md - DISPLAY REPRESENTATIONS & SETS]
+[MIGRATED TO RTM_PART_48.md - DISPLAY SYSTEM]
+these objects, but uses the Plan display representation for other objects, such as structural members, that appear the same in plan and reflected views. 
+A display set can contain more than one display representation for an object. For example, a display set for plotting a floor plan might include the Plan and Threshold Plan display representations for doors. 
+¦ 
+The Plan display representation contains components for the door panel, frame, stop, and swing. 
+
+¦ 
+The Threshold Plan display representation contains components for the inner and outer thresholds of the door. 
+
+
+Plan and Threshold Plan display representations used alone and together to display a door 
+
+If a display set contains no display representations for an object, the object is not displayed when that display set is used. For example, a display set for a reflected ceiling plan does not need representations for railings, which typically are not shown in these drawings. 
+
+Display Sets and View Direction 
+A display set is not dependent on view direction, although it usually is designed with a specific view in mind. For example, a Reflected display set is intended to be used to display objects from the Top view direction in a reflected ceiling plan. 
+Similarly, a Plan display set might contain Plan display representations for a number of objects intended for two-dimensional (2D) top views. A three-dimensional (3D) model display set might contain the Model display 
+representation for a number of objects. The display representations included in a display set depend on what representations are available for each object, and whether objects need to be drawn differently from different view directions. 
+
+Default Display Sets 
+Drawings based on templates provided with AutoCAD Architecture contain display sets for many purposes. All drawings, even those that are not created from templates, contain the following default display sets: Elevation, Model, Model High Detail, Model Low Detail, Plan, Plan High Detail, Plan Low Detail, and Reflected. These display sets contain display representations for each object based on the most common design situations. 
+
+
+Display Configurations 
+A display configuration is a collection of display sets assigned to view directions. 
+Display Configurations, Viewports, and Templates 
+A display configuration typically is created for a specific design task or drawing type. To use a display configuration, you assign it to a viewport. Drawings based on templates provided with AutoCAD Architecture contain layout tabs with viewports to which appropriate display configurations are assigned. You can use the configuration assigned to a viewport, assign a different one, or customize the configuration. 
+
+Display Sets Assigned to View Directions 
+You can identify the display set assigned to each view direction using the Display Manager. The Display Manager is a utility for managing elements of the display system. The following illustration shows a drawing with two display configurations, Medium Detail and Standard. 
+Sample display configurations in the Display Manager 
+
+In the Display Manager, the active viewport in the drawing (in bold type) is assigned the Medium Detail display configuration. In the left pane, the display sets used are listed below the configuration name. An icon next to each display set indicates the view direction to which the display set is applied. The Configuration tab in the right pane shows the view direction to which each display set is mapped. In this example, the current view direction in the drawing is Top, which uses the Plan display set. Objects in the active viewport are shown using the display representations in the Plan display set. 
+If the view direction in the active viewport is changed to Front, the objects are shown using the display representations in the Section_Elev display set. This is also true when the view direction in the active viewport is changed to Right, Left, or Back. 
+The display set assigned to the Default view direction is used when any view direction other than the six orthogonal views is selected, or when a view direction is not assigned a display set. If the view direction of the active viewport is changed to Bottom, objects are shown using the display set assigned to the Default view direction—the Model display set. 
+For more information about the Display Manager, see The Display Manager on page 800. 
+
+Displaying Objects in a Viewport 
+The display configuration, the current viewport, and the object interact in the following manner to determine what is shown in a viewport: 
+¦ 
+The active viewport has a current view direction and a current display configuration. For example, the view direction is Top, and the display configuration is Medium Detail. 
+
+¦ 
+The display configuration has one or more display sets and uses the display set that is assigned to the current view direction. For example, in the Medium Detail display configuration, the Plan display set is assigned to the Top view. 
+
+¦ 
+The display set has associated display representations and it selects the representation(s) associated with the object that needs to be shown. For example, in the Plan display set, doors, windows, and walls use their Plan display representations. 
+
+¦ 
+The object is shown in the active viewport using the appropriate display representation(s) and display properties. 
+
+
+
+Examples of View Directions That Use Different Display Sets 
+A display configuration assigns display sets to specific view directions. When a view direction is selected, the display representations in the display set determine how each object is displayed in the viewport. 
+For example, the following illustration shows a viewport assigned the Plot display configuration and the Top view direction. In this illustration, the objects are shown with a Plan display representation. 
+Objects from Top view using a display set for plan views 
+
+If the Front view direction is selected in this viewport, the same objects are displayed with an Elevation display representation. 
+Objects from Front view using a display set for elevation views 
+
+If the SW Isometric view direction is selected, the same objects are displayed with a three-dimensional (3D) representation. 
+Objects from SW isometric view using a display set for model views 
+
+
+Default Display Configuration 
+The display configurations in a drawing depend on the template used to create the drawing. A drawing that is not created from a template contains the Standard display configuration, which includes the Plan and Model display sets. 
+
+
+The Display Manager 
+The Display Manager is the central location of display system information for your drawing in AutoCAD Architecture. You use the Display Manager to create and modify display configurations, display sets, and display representations. You can also assign a display configuration to a viewport and view how objects are displayed in different representations. You can resize the Display Manager window and the left and right panes as needed to view display information. 
+Left Pane of the Display Manager 
+The left pane of the Display Manager organizes the display information for your drawings in a hierarchical tree view. You can add, purge, rename, copy, and send display system components in the tree view. As you select items in the left pane, the right pane is updated appropriately. 
+Left pane showing a tree view of display configurations and their components 
+
+
+Right Pane of the Display Manager 
+The information displayed in the right pane of the Display Manager depends on what you select in the left pane. You can view the display sets and mapped view directions associated with each display configuration. You can view the display representations of different objects and access the default graphical display properties of objects in your drawings. You can also preview how an object is displayed. 
+Right pane showing details of a selected display configuration 
+
+
+View Direction Icons in the Display Manager 
+The icons used with display sets and view directions identify how a display set is used in a configuration. When you expand a display configuration, the display sets used in it are shown. The icon next to each display set indicates the view direction to which it is applied in the display configuration. 
+In the following example, the Model display set is applied to the default view direction. The right pane shows that the Section_Elev display set is applied to the front, back, left, and right view directions. The Plan display set is applied to the top view direction. In the right pane, icons correspond to the six orthogonal view directions and the default view direction. 
+Using icons to identify view directions to which display sets are applied 
+
+
+Opening the Display Manager 
+Use this procedure to open the Display Manager. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Move and resize the Display Manager or resize the left and right panes as needed to view display information. 
+
+Viewing Display Configurations 
+Use this procedure to view the display configurations available in the current drawing. The display configurations depend on the template used to create the drawing. A drawing not created from a template contains the Standard display configuration, which includes the Model and Plan display sets. 
+The following icons can be assigned to a display configuration: 
+Icon Description 
+
+Multiple view display configuration 
+
+Fixed view display configuration 
+
+Multiple view display configuration (drawing default) 
+
+Fixed view display configuration (drawing default) 
+
+Default display set used in the display configuration. This set is used for all views that are not otherwise connected to a display set. 
+
+Display set used for the top view of the display configuration. 
+
+Display set used for the bottom view of the display configur­ation. 
+
+Display set used for the left side view of the display configur­ation. 
+
+Display set used for the right side view of the display config­uration. 
+
+Display set used for the front view of the display configuration. 
+
+Display set used for the back view of the display configuration. 
+
+Display set used for the multiple views of the display config­uration, but not as the default display set. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Configurations, and select a configuration. 
+3 Click the Configuration tab. The left pane lists the display sets included in the configuration. The right pane lists the display sets assigned to each view direction. If a display set is not listed next to a view direction, the display set for the Default view direction is used when that view direction is selected. The Default view direction is also used for any view directions other than the six orthogonal views. 
+4 Click the Cut Plane tab. The Cut Plane tab contains settings for the height of the cut plane and the height above and below the cut plane that are included in views when you assign this display configuration. 
+If you are working with a project, you can also calculate the cut plane based on the level heights from the project. For more information, see Global Cut Planes on page 536. 
+5 If you are working with a project and use project standards, you can use the Version History tab to modify the version history of the display configuration. 
+For more information, see Project Standards on page 585. 
+6 Click OK. 
+
+
+Viewing Display Sets 
+Use this procedure to view the display sets in the current drawing. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Sets, and select a display set. The icons next to the display set names in the left pane indicate whether a display set is used in a display configuration within the current drawing. The icon with a green check mark indicates that a display set is assigned. The icon with a green dot indicates that a display set is a standard set. Although standard sets can be renamed, they cannot be deleted. 
+3 Click the Display Representation Control tab. The right pane contains a matrix that lists each object and display representation. A check mark under a display representation indicates that the display set uses this representation to show the 
+corresponding object. For example, in the Model display set, most objects use the Model display representations. 
+Display representations selected for each object in the Model display set 
+
+Display sets can have different icons depending on their function in the drawing: 
+Icon Description 
+
+The display set is a standard display set and cannot be deleted. 
+
+The display set is currently used in a display configuration in the drawing. 
+
+The display set is a standard display set and is currently used in a display configuration in the drawing. 
+
+The display set is neither a standard display set nor is it used in a display configuration in the drawing. 
+4 Click the Display Options tab. Settings on this tab enable you to filter objects by their classification. In addition, you can specify settings that affect how materials are displayed when you generate a live section view of a building model. 
+Display options specified for a selected display set 
+
+5 If you are working with a project and use project standards, you can use the Version History tab to modify the version history of the display set. 
+For more information, see Project Standards on page 585. 
+6 Click OK. 
+
+
+Viewing Display Representations 
+Use this procedure to view the display representations in the current drawing. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Representations by Object, and select an object. 
+Display representations can have different icons depending on their function in the drawing: 
+Icon Description 
+
+Standard display representation with properties that the user can set. 
+
+User-defined display representation with proper­ties the user can set. 
+
+Display representation without user-definable properties. 
+In the right pane, rows list the display representations that exist for that object, and columns list display sets. A check mark under a display set indicates that the display representation is used in that display set. A display representation can be used in multiple display sets. 
+Curtain wall display representations used in display sets 
+
+The icon next to the display representation name indicates 
+whether it is a predefined display representation ( 
+) or custom 
+display representation ( 
+). 3 Click OK. 
+
+
+Viewing an Object in a Display Representation 
+Use this procedure to see how an object appears in different display representations and view directions. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Click 
+. 3 Reposition the Floating Viewer and the Display Manager so that 
+both are visible. 4 Expand Representations by Object, and select an object. 5 In the right pane, select a display representation. 
+NOTE Overrides to the default display representation, made in the display properties of an object style or an individual object, do not show in the Display Manager. 
+The Floating Viewer displays the object in the display representation. 
+Floating Viewer displaying a curtain wall 
+
+6 Use the controls in the Floating Viewer to view the object from different view directions and with hidden lines removed or with shading. 
+7 Repeat steps 4 and 5 to view objects in various display representations. 
+8 Click 
+ to close the viewer. 
+
+Viewing the Display Representation of an Object in a Display Set 
+Use this procedure to see how an object appears in the display representation used object in a selected display set. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Click 
+. 3 Reposition the Floating Viewer and the Display Manager so that 
+both are visible. 4 Expand Sets, and select a display set. 5 Click the Display Representation Control tab. 6 Select an object. 
+NOTE Overrides to the default display representation, made in the display properties of an object style or an individual object, do not show in the Display Manager. 
+The Floating Viewer displays the object in the display 
+representation selected for it in the display set. 
+7 Use the controls in the Floating Viewer to view the object from different view directions and with hidden lines and shading. 8 Repeat steps 6 and 7 to view other objects in the display representation used in the display set. 9 Select another display set, and repeat steps 6 and 7 to view objects as they appear in that display set. 
+10 Click 
+ to close the viewer. 11 Click OK. 
+
+Accessing the Default Display Properties of an Object 
+Use this procedure to access and view the default display properties of a display representation of an object. Default display properties apply to all instances of the object in the drawing unless the properties are overridden by the object style or an individual object. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Representations by Object. 
+3 Expand an object, and select a display representation. The right pane of the Display Manager shows the default display properties of the object for the selected display representation. 
+NOTE Overrides to the default display representation, made in the display properties of an object style or an individual object, do not appear in the default display properties in the Display Manager. 
+4 Click OK. 
+
+
+Creating and Editing Display Configurations 
+A display configuration is a collection of display sets that controls the representation of objects viewed from different directions in a drawing. You apply a display configuration to the viewport in which you want the objects to appear. You can also select a display configuration to use as the default for model space and new viewports. 
+Drawings based on templates provided with AutoCAD Architecture contain display configurations for common tasks and drawing types. You can modify them and their display sets and display representations to meet your needs. You can also copy these elements of the display system to use as the basis for custom display configurations. 
+Process Overview: Creating a Display Configuration 
+AutoCAD Architecture templates provide display configurations for common design, drafting, and production tasks. You can also create custom display configurations. 
+The process of creating a display configuration has the following steps: 
+1 Create a display configuration with default properties. 
+2 Create display sets to associate with different view directions. Although you can assign display sets to any view direction, you usually create them with specific view directions in mind. For example, you may want to create display sets for plan, elevation, and model views of a building model. You can add more display representations to the display sets later. 
+3 Create or modify display representations for each object you want to 
+display. You create a new display representation by duplicating an existing display representation for an object. Use a display representation that is similar to the one you want to create so that you have fewer settings to modify. Although you can use display representations in any view direction, you usually create them with specific view directions in mind. 
+4 Assign new, modified, or existing display representations to display sets. A display set can include any display representation that you specify. Objects can use more than one representation in a display set. Remember that you need to include at least one display representation for every object that is to appear in a viewport. 
+5 Assign display sets to view directions in the display configuration. You add display sets to a display configuration by assigning them to any of the six orthogonal view directions or to the Default view direction. The display set assigned to the Default view direction is used if no display set is assigned to a view direction. 
+6 Assign the display configuration to a viewport. The display configuration becomes active when you assign it to a viewport. You can assign a display configuration to multiple viewports. You can also export display configurations to other drawings. 
+
+Tips for Working with Display Configurations, Sets, and Representations 
+This topic provides suggestions for working effectively with display configurations and their elements. 
+¦ Templates provided with AutoCAD Architecture and the drawings based on those templates contain display configurations for common design, drafting, and production tasks and various drawing types. If your drawing does not contain these display configurations, you can import them. For more information, see Display Configurations on page 796. Templates and the drawings based on them contain layout tabs with display configurations assigned to viewports for specific tasks. Examine your building model in these different layouts to see if objects are displayed as you want them to appear. 
+¦ 
+Before creating or modifying display configurations, review the predefined configurations to see if they meet your needs or if you can readily adapt them for your project. 
+
+¦ 
+When possible, use a predefined display configuration as the basis for configurations you create. Starting with a display configuration that is similar to what you need helps you to work efficiently. You can modify only the settings that need to change, rather than creating everything from scratch. 
+
+¦ 
+When you modify a display representation, the changes affect every display set and display configuration that use that representation. To apply changes more selectively, create a new display representation for the object and assign it to the display sets in which the changes are to appear. 
+
+¦ 
+Similarly, when you modify a display set, the changes appear in every display configuration that uses the display set. And if you modify a display configuration, the changes appear in every viewport to which the configuration is assigned. To apply the changes more selectively, create custom display sets and configurations. 
+
+¦ 
+Remember that changes made to display representations through the Display Manager apply only to the default display properties of objects. Changes to the display properties of object styles and individual objects override the default display properties. In addition, if the default display properties assign a material to object components, the display properties of the material determine the appearance of the object. 
+
+
+
+Creating a Display Configuration 
+Use this procedure to create a display configuration. You can create a display configuration using standard default properties or by creating a duplicate of an existing configuration. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Configurations. 3 Create a display configuration: 
+If you want to … Then … 
+create a display configura­
+tion with default proper-click Configurations, and click New 
+. ties (containing no display sets) 
+create a display configura-click the display configuration you want to tion from an existing dis­play configuration copy, and click New 
+. 
+4 Enter a name for the new display configuration, and press ENTER. 5 Specify the display sets and display representations to use in this display configuration: 
+
+If you want to … Then … 
+create a display set for this see Creating a Display Set on page 813. configuration 
+create display representa­ see Creating a Display Representation for an  
+tions to use in this display  Object on page 814 and Assigning a Display  
+configuration  Representation to a Display Set on page 817.  
+
+assign display sets to view see Assigning a Display Set to a View Direc­
+directions tion on page 821. 
+6 Click OK. 
+
+
+Creating a Display Set 
+Use this procedure to create a display set. You can create a display set using standard default properties or by creating a duplicate of an existing display set. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Sets. 
+3 Create a display set: 
+If you want to … Then … 
+create a display set with 
+default properties (contain-click Sets, and click New 
+. ing no display representa­tions) 
+create a display set from click the display set you want to copy, and an existing display set 
+click New 
+. 
+4 Enter the name for the new display set, and press ENTER. 5 Specify the display representations to use in this display set: 
+
+If you want to … Then … 
+create display representa­ see Creating a Display Representation for an  
+tions to use in this display  Object on page 814.  
+set  
+
+assign display representa-see Assigning a Display Representation to a tions to this display set Display Set on page 817. 
+add this display set to a see Assigning a Display Set to a View Direc­
+display configuration tion on page 821. 
+use this display set as one see Specifying a Display Set as a Default Dis-of the default display sets play Set on page 822. 
+6 Click OK. 
+
+
+Creating a Display Representation for an Object 
+Use this procedure to create a display representation for a selected object. You create a display representation by duplicating an existing one for the object. 
+Each object has one or more display representations, depending on whether the object needs to change in different views. Select an existing representation that is similar to the one you want to create. That way, the display properties are available for you to customize in the new representation. 
+For example, to create a display representation for stairs and use a custom break mark, duplicate a plan display representation for stairs that contains settings for the break mark. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Representations by Object. 
+3 In the left pane of the Display Manager, select the object for which to create the new display representation. 
+4 In the right pane, right-click the display representation to duplicate, and click Duplicate. 
+5 Enter a name for the new display representation, and press ENTER. The new display representation has the display properties of the representation you duplicated. 
+The display representation created in the right pane is not listed in the Representations by Object directory in the left pane until you close and reopen the Display Manager. 
+6 Double-click the new display representation to edit its properties. For more information about editing display properties, see Editing a Display Representation on page 815. 
+7 Assign the display representation to the display sets in which they 
+will be used. For more information, see Assigning a Display Representation to a Display Set on page 817. 
+8 Click OK. You can click Apply instead of OK to save the changes and continue working in the Display Manager. 
+
+Editing a Display Representation 
+Use this procedure to change the following default display properties of a display representation: 
+¦ 
+Visibility (on or off), and whether the display of a component is controlled by its material assignment 
+
+¦ 
+Layer, color, linetype, and lineweight 
+
+
+¦ Display properties that are specific to the object and the display representation, such as the stair line and break mark in plan display representations of stairs 
+By default, the layer of object components is layer 0. The default color and linetype are ByBlock. With these defaults, the object components inherit the color and linetype properties of the “parent” object. For example, when the color and linetype of the door frame component are ByBlock, the door frame has the color and linetype of the door object. Object components cannot exist outside their parent object as can typical AutoCAD block objects. 
+Changes made to a display representation apply to every display set and display configuration that use the display representation. To apply changes more selectively, create a display representation based on the representation you want to modify. You can then change the display properties of the new representation and assign it to specific display sets. For more information about creating display representations, see Creating a Display Representation for an Object on page 814. 
+NOTE Changes you made to a display representation using this procedure apply only to the default display properties for the object. Changes to the display properties of object styles or of individual objects override the default display properties. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Representations by Object. 
+3 Expand the object that contains the display representation you want to edit. 
+4 Select the display representation to edit. The display properties you can edit depend on the object and the display representation that you select. For example, a wall in a model representation displays only the Layer/Color/Linetype tab; a wall in a plan representation displays two additional tabs to specify display properties for hatching and cut plane components. 
+5 Click the Layer/Color/Linetype tab to change the AutoCAD properties, including visibility of the object components and whether their display is controlled by the material assignment. 
+6 If applicable, click tabs such as Hatching or Other to change object-specific display properties. 
+For more information about object-specific display properties, see the procedures for specifying display properties of an object style in the Help topic for each object. For example, to specify the display properties of wall styles, see Specifying the Display Properties of a Wall Style on page 1302. 
+7 When you finish editing display properties, click OK. 
+
+Assigning a Display Representation to a Display Set 
+Use this procedure to add or remove display representations in a display set. Changes made to a display set affect every display configuration that uses the display set. 
+Keep the following points in mind when you add or remove display representations in a display set: 
+¦ 
+A display set can use more than one display representation for an object. For example, some display sets for plan views include both Plan and Threshold Plan display representations for doors. 
+
+¦ 
+To use a display representation for an object other than the current one, be sure to clear the current display representation after selecting the new one. Otherwise, the display set uses the display properties of both display representations. 
+
+¦ 
+If no display representation is selected for an object, the object does not appear when the display set is active in a viewport. 
+
+¦ 
+If no check box appears under a display representation for an object, the object does not have the display representation. For example, objects such as layout curves and layout grids have only one display representation. 
+
+¦ 
+You can compare two display sets to view the differences in display representation assignments. For more information, see Comparing Display Representations Between Display Sets on page 819. 
+
+
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Sets. 
+3 Select the display set you want to edit. 
+4 Click the Display Representation Control tab. 
+Editing a display set 
+
+5 In the right pane, add or remove display representations: 
+If you want to … Then … 
+add a display representa­ scroll through the list to find the object. Se­ 
+tion for an object to the  lect a display representation to use. If no  
+display set  check box appears under a display represent­ 
+ation, the object does not have the display  
+representation.  
+
+remove a display repres­ scroll through the list to find the object. Clear  
+entation for an object in  the display representation you want to re- 
+the display set  move.  
+
+use the same display rep- right-click the name of the display represent­ 
+resentation for all objects  ation, and click Select All. Be sure to clear  
+in the display set  any other display representations for the ob­ 
+jects in this display set.  
+
+If you want to … Then … 
+remove an object from a  scroll through the list to find the object.  
+display set  Right-click the object name, and click Clear  
+All.  
+
+add all display representa­ right-click in the Objects heading area, and  
+tions to all objects in the  click Select All Display Representations.  
+display set  
+
+clear all display represent- right-click in the Objects heading area, and  
+ations from all objects in  click Clear All Display Representations.  
+the display set  
+
+NOTE You can use these steps to assign display representations from the Representation by Objects directory. Expand Representations by Object in the left pane, select an object, and add or remove display representation assignments. 
+6 Click OK. 
+
+
+Comparing Display Representations Between Display Sets 
+Use this procedure to view the differences in display representation assignments between two display sets. 
+The Compare Sets dialog box displays two lists. Each list contains display representations that are assigned to that particular display set, but are not assigned to the display set in the adjacent column. 
+Comparing display sets to view different display representation assignments 
+
+You can use the Compare Sets dialog box to assign one or more display representations to either display set. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Click Sets. 
+3 In the right pane, hold down the CTRL key and select the two display sets you want to compare. 
+4 Right-click one of the selected display set names, and click Compare Sets. 
+NOTE The Compare Sets command is available only when two display set names are selected. You cannot compare more than two display sets at a time. 
+5 Each list shows the display representation assignments that are different from the other display set. 
+6 To assign display representations: 
+If you want to … Then … 
+assign a display represent-select the display representation name under ation on the left side to 
+the display set on the left side, and clickthe display set on the .right side 
+
+
+If you want to … Then … 
+assign a display represent-select the display representation name under ation on the right side to the display set on the right side, and click the display set on the left
+
+ .
+side 
+assign all display represent-Click 
+.
+ations to the other display set so both sets have identical assignments 
+7 Click OK twice. 
+
+
+Assigning a Display Set to a View Direction 
+Use this procedure to specify the display set assigned to each view direction in a display configuration. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Configurations. 
+3 Select the display configuration you want to edit. 
+4 Click the Configuration tab. 
+5 Under Display Representation Set, select the appropriate display 
+set for each view direction. The display set becomes active when the view direction is selected in the viewport in which the display configuration is assigned. The display set assigned to Default is used for view directions to which you do not assign a display set and for the four isometric views. 
+6 Click OK. To see the results of your changes, you must assign the display configuration to a viewport. For more information, see Assigning a Display Configuration to a Viewport on page 822. 
+
+Assigning a Display Configuration to a Viewport 
+Use this procedure to assign a display configuration to a viewport. You can specify a display configuration for a viewport, model space, or tiled viewport at any time during the design process. 
+NOTE You can also assign a display configuration to the current viewport in the Display Manager. Right-click the display configuration, and click Set To Current Viewport. 
+1 Select the viewport for which you want to assign a display configuration. 
+2 In the drawing status area, select the setting for Display Configuration. 
+Displaying the configurations you can assign to the current viewport 
+
+3 Select the display configuration that you want to use. 
+4 If necessary, click View tab . Appearance panel . Regenerate drop-down . Regenerate Drawing And Viewports to update the display to show the new display configuration. 
+NOTE Alternatively, you can enter rea (Regenerate All) at the command prompt. 
+
+Specifying a Display Set as a Default Display Set 
+Use this procedure to change the display sets defined as default display sets. For more information about default display sets, also known as standard sets, see Display Sets on page 794. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Right-click Sets, and click Standard Sets Adjustment. 
+The Standard Sets Types column lists the default display sets for the drawing. The Sets column lists the display set specified for each default display set. 
+3 Locate the standard set you want to change, and click its display set name in the Sets column. 
+4 Select the display set name to use for the standard set type. Specifying a display set for the Model standard set type 
+
+5 Click OK twice. 
+
+Specifying the Default Display Configuration 
+Use this procedure to specify the default display configuration applied to new viewports, model space, or tiled viewports in the current drawing. Existing viewports with assigned display configurations are not affected. 
+NOTE You can also assign the default display configuration in the Display Manager. Right-click the display configuration, and click Set as Drawing Default. 
+
+1 Click . Utilities . Drawing Setup. 2 Click the Display tab. 3 Under Drawing Default Display Configuration, select the display 
+configuration to apply to new viewports, or when the TILEMODE system variable is set to 1. 
+4 Click OK. 
+5 If necessary, click View tab . Appearance panel . Regenerate drop-down . Regenerate Drawing And Viewports to update the display to show the new display configuration. 
+NOTE Alternatively, you can enter rea (Regenerate All) at the command prompt. 
+
+Specifying the Display Configurations Used in Xref Overlays 
+Use this procedure to specify whether the objects in an xref drawing are to use the display configurations in the xref when the drawing is referenced as an overlay by the host drawing. 
+By default, objects in both overlay and attached xref drawings use the display configurations assigned in the host drawing. This procedure describes how to specify that an xref overlay use only its own display configurations and not those in the host drawing. If you do not turn on this option, objects in the xref drawing can use their own display configurations or those of the host drawing. Xref drawings that are referenced as attachments can use either group of display configurations. For more information, see Changing the Display Configuration Used in Xref Drawings on page 825. 
+In the following example, the objects in the xref drawing inserted as an overlay use the Screened display configuration (north and east walls, doors, and windows). The host drawing uses the Medium Detail display configuration (south and west walls, doors, and windows). 
+An xref overlay that does not use the active display configuration in the host drawing 
+
+1 Open the drawing that you want to reference in another drawing. 
+
+2 Click . Utilities . Drawing Setup. 3 Click the Display tab. 4 Under Drawing Default Display Configuration, select When used 
+as an Xref Overlay, use this drawing’s default display configuration 
+initially. Clear this option if you want the xref drawing to use either its own display configurations or the display configurations in the host drawing. 
+Specifying that objects use display configurations only from the current drawing 
+
+5 Click OK. 
+
+Changing the Display Configuration Used in Xref Drawings 
+Use this procedure to change the display configuration of an xref drawing that is referenced as either an attachment or an overlay in a host drawing. 
+NOTE If you specified that the drawing should always use its own display configurations when inserted as an xref overlay, you cannot change the display configuration used to display the xref objects in the host drawing. For more information, see Specifying the Display Configurations Used in Xref Overlays on page 824. 
+1 Open the host drawing that contains the xref drawing for which to specify a different display configuration. 
+2 Select the xref drawing you want to change, right-click, and click Edit Object Display. 
+3 Click the Xref Display tab. 
+If the settings on the tab are unavailable, you cannot change the 
+display configuration used for this xref overlay. 
+4 Select Override the display configuration set in the host drawing. 5 Select the display configuration that you want to use. 
+Selecting a display configuration from those in the xref drawing 
+
+The list of display configurations are those available in the xref drawing. Select Drawing Default if you want to use the default display configuration specified in the host drawing. 
+6 Click OK. 
+7 If necessary, click View tab . Appearance panel . Regenerate drop-down . Regenerate Drawing And Viewports to update the display to show the new display configuration. 
+NOTE Alternatively, you can enter rea (Regenerate All) at the command prompt. 
+
+Displaying Objects by Classification 
+Use this procedure to hide or show objects in a display set based on the classification of the objects. For example, if you classify objects by construction status (new, existing, or demo), you can exclude objects with the demo classification from the display. When the display is used in the drawing, those objects do not appear. 
+Objects filtered from the display are not removed from the drawing. Their display is turned off only in viewports using the display set in which they are filtered. You can change the filter to display them again. Because the objects still exist in the drawing, the display of other objects does not change. For example, if you filter doors from a floor plan, the walls in which they are placed are still cut in the space occupied by the doors. 
+For more information about defining classifications and assigning them to object styles, see Classification Definitions on page 3834. 
+1 Click Manage tab . Style & Display panel . Display Manager . 2 Expand Sets. 3 Select the display set you want to edit. 
+
+4 Click the Display Options tab. The classification filter lists all classifications in the current drawing. All classifications are selected by default. 
+5 To hide objects of a specified classification, clear the check box 
+under Classification Filter. For example, to hide all doors and walls classified as A1010 and A1020, clear the check boxes for A1010 and A1020 under Uniformat II. 
+Hiding objects based on their classification 
+
+To redisplay objects in a classification that were hidden, select 
+the classification. 
+6 Click OK. 
+
+Specifying Settings for Live Sections and Materials 
+Use this procedure to specify how live sections and materials are displayed when the selected display set is active in a viewport and a live section view of the building model is enabled. These settings let you refine the appearance of a section. For example, you can remove surface hatching that may obscure details in the section. 
+For more information about materials, see Materials on page 871. For more information about live sections, see Creating and Editing a Live Section View on page 3237. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Sets. 
+3 Select the display set you want to change, and click the Display Options tab. 
+Specifying display options for live sections and materials 
+
+4 Under Live Sections and Materials, specify display settings: 
+If you want to … Then … 
+use the display range of  select Section AEC Objects by Display Range  
+the display configuration  defined in Display Configuration. If you want  
+to determine the vertical  to graphically indicate where objects in the  
+extents of a live section  model extend below the display range, select  
+view  Show Materials where Display Range Inter­ 
+sects AEC Objects.  
+WARNING You should clear this setting  
+for Plan display sets. If this setting is se­ 
+lected, any 2D sections inserted in Plan  
+view will not be displayed.  
+
+remove the display of the select Hide Sectioned Body Component. portion of sectioned ob­jects beyond the bound­ing box of the live section 
+remove surface hatching select Hide Surface Hatching. on sectioned objects 
+5 Click OK. 
+
+
+
+Managing Display Configurations 
+The Display Manager is a utility for managing display configurations, display sets, and display representations: renaming them or deleting them, copying them between drawings, emailing them to other users, and purging unused elements from drawings. 
+Renaming a Display Configuration or a Display Set 
+Use this procedure to rename a display configuration or a display set. You cannot rename the Standard display configuration. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Select a display configuration or a display set: 
+If you want to … Then … 
+rename a display configur-expand Configurations, right-click the display ation configuration, and click Rename. 
+rename a display set expand Sets, right-click the display set, and click Rename. 
+3 Enter the new name, and press ENTER. 4 Click OK. 
+
+
+Renaming a Display Representation 
+Use this procedure to rename a display representation. You can rename any display representation that you create as well as some that are provided in AutoCAD Architecture templates. You cannot rename predefined display representations. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Representations by Object. 
+3 Select the object for which to rename a display representation. 
+4 In the right pane, right-click the display representation to rename, 
+and click Rename. If Rename is unavailable on the context menu, the display representation is predefined. Predefined display representations 
+have this icon 
+next to their names. 
+5 Enter the new name, and press ENTER. 6 Click OK. 
+Deleting a Display Configuration or a Display Set 
+Use this procedure to delete a display configuration or a display set. 
+Keep the following points in mind when you delete display configurations or display sets: 
+¦ 
+You cannot delete the display configuration assigned to the current viewport. 
+
+¦ 
+You cannot delete predefined display configurations, indicated by a red check mark to the left of the configuration name. 
+
+¦ 
+You cannot delete a display set used in a display configuration, nor can you delete the Standard display configuration. 
+
+
+NOTE Deleting a display configuration does not delete the display sets and display representations used in it. Deleting a display set does not delete the display representations used in it. For more information, see Deleting a Display Representation on page 831. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+2 Select a display configuration or a display set: 
+
+If you want to … Then … 
+delete a display configura-expand Configurations, click the display tion 
+configuration, and click Delete 
+. 
+delete a display set expand Sets, click the display set, and click Delete 
+. 
+3 Click OK. 
+
+
+Deleting a Display Representation 
+Use this procedure to delete a display representation that is not assigned to a display set. You can delete display representations that you create as well as some that are provided in AutoCAD Architecture templates. User-defined 
+display representations have this icon 
+ next to their names. You cannot delete predefined display representations. Predefined display representations 
+have this icon 
+next to their names. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Representations by Object. 
+3 Select the object for which to delete a display representation. 
+4 To remove the display representation from all display sets, right-click the display representation, and click Clear All. 
+5 Right-click the display representation to delete, and click Delete. You will receive an error message if you try to delete a predefined display representation or one that is assigned to a display set. 
+The name of the display representation deleted in the right pane is listed in the Representations by Object directory in the left pane until you close and reopen the Display Manager. 
+6 Click OK. 
+
+Adding Notes and Reference Files to a Display Configuration or a Display Set 
+Use this procedure to enter notes and attach reference files to a display configuration or a display set. You can also edit notes and edit or detach reference files. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Select a display configuration or a display set: 
+If you want to … Then … 
+add notes or files to a dis-expand Configurations, and select the display play configuration configuration. 
+add notes or files to a dis-expand Sets, and select the display set. play set 
+3 Click the General tab. 4 To add a description to the display configuration, enter it for 
+Description. 
+5 Click Notes. 
+6 To add a note, click the Notes tab, and enter the note. 
+7 Click the Reference Docs tab, and attach, edit, or detach a reference file: 
+
+If you want to … Then … 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a select the file, and click Edit. Enter the descrip­reference file tion, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click Delete. 
+8 Click OK twice. 
+
+
+Using Display Settings in Multiple Drawings 
+You can use your display configurations, display sets, and display representations in multiple drawings. 
+You can copy display configurations, display sets, and display representations between drawings. When you copy a display configuration, the display system also copies any display sets and display representations included in the selected configuration that do not exist in the destination drawing. Similarly, if you copy a display set, the display system copies any display representations that do not exist in the destination drawing. 
+If a display set or a display representation with the same name exists in the destination drawing, it is not overwritten with the new display information. To transfer the new information, rename the existing display set or representation in the destination drawing before copying display configurations or display sets. 
+For example, you might want to copy a display set named New Reflected, which contains a display representation for doors named Reflected Screened. The current drawing also contains a display representation for doors named Reflected Screened. You must rename the Reflected Screened display representation in the current drawing before copying the new display set and its display representations. 
+Emailing Display Configurations 
+If your system has email, you can email display configurations to other users from the Display Manager. You can send the entire display system in your drawing to another user of AutoCAD Architecture. The Display Manager copies the display system information to a new drawing, and attaches the drawing to a new email message created using your email program. Users of AutoCAD Architecture who receive your display system by email can import it into their drawings, open the attached drawing file, and export your display system to their drawings; or they can use the attached drawing file as a template for new drawings. For further information about importing and exporting display systems, see Sending Display Configurations to Other Users on page 836. 
+
+
+Copying Display Settings Between Drawings 
+Use this procedure to copy display configurations, display sets, and display representations from the current drawing to another drawing. You can copy display settings between existing drawings. You can also copy them from an existing drawing to a new drawing. 
+NOTE You can also drag and drop display configurations, display sets, and display representations between drawings. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 In the Display Manager, open the drawing into which you want to copy the display representation, display set, or display configuration, if necessary: 
+If you want to… Then… 
+copy the display configuration, dis-in the Display Manager, click 
+play set, or display representation File . Open, select the drawing you to a drawing that is not open in the want, and click Open. Display Manager 
+copy the display configuration, dis-in the Display Manager, click play set, or display representation File . New drawing, enter a name to a new drawing for the drawing, and click Save. 
+3 Expand the Configurations, Sets, or Representations by Object folder. 
+4 Select the display configurations, display sets, or display representations that you want to copy: 
+
+If you want to… Then… 
+copy an individual display configur-right-click the display configuration, ation, display set, or display repres-display set, or display representa­entation tion, and click Copy. 
+copy all display configurations, dis-right-click the Configurations, Sets, play sets, or display representations or Display Representations folder, and click Copy. 
+5 In Display Manager, right-click the drawing into which you want to paste the display settings, and click Paste. The display configurations, display sets, or display representations are pasted into the selected drawing. If the drawing already contains a setting with the same name, the duplicate name is displayed in the Import/Export - Duplicate Names Found dialog box. 
+6 Resolve duplicate names, if prompted: 
+
+If you want to… Then… 
+prevent the Display Manager from select Leave Existing, and click OK. overwriting the existing display configuration, display set, or display representation with the new item of the same name 
+replace the existing display config-select Overwrite Existing, and click uration, display set, or display rep-OK. resentation with the new item 
+keep the existing display configura-select Rename to Unique, and click tion, display set, or display repres-OK. The Display Manager appends entation and add the new item with a number to the name of the new a different name setting. Right-click a setting, and 
+click Rename to change the name. 
+7 Click OK. 
+
+
+Sending Display Configurations to Other Users 
+Use this procedure to email all the display configurations and their elements in a drawing to other users of AutoCAD Architecture. The software creates a new drawing that contains only the display information from the current drawing and attaches the drawing to an email message. Objects, layers, and other drawing content and settings are not included in the new drawing. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Right-click the drawing name, and click Send. An email message with the subject “AutoCAD Architecture Display System,” is created using your email program. A drawing file containing the display information is attached to the message. 
+If email is not available on your system, the Send option is not 
+available. 
+3 Complete and send the message in your email program. 4 Click OK. 
+
+Purging a Display Configuration 
+Use this procedure to purge unused display configurations from a drawing. 
+You cannot purge a display configuration assigned to a viewport or model space, or predefined display configurations such as Standard. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Click Configurations, and click Purge 
+. All display configurations that you can purge are selected in the Purge Display Configurations dialog box. 
+3 Clear any display configurations that you do not want to purge, and click OK twice. 
+Purging a Display Set 
+Use this procedure to purge unused display sets from a drawing. 
+You cannot purge a display set assigned to a display configuration, or predefined display sets such as Standard, Model, or Plan. 
+TIP To find out if a display set is assigned to any display configurations, select Configurations in the left pane. The right pane lists each display configuration and the display sets it uses. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Click Sets, and click Purge 
+. All display sets that you can purge are selected in the Purge Display Sets dialog box. 
+3 Clear any display sets that you do not want to purge, and click OK twice. 
+
+Purging a Display Representation 
+Use this procedure to purge unused display representations from a drawing. You cannot purge a display representation assigned to a display set, or predefined display representations such as Model or General. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Representations by Object. 
+3 Select the display representations to purge: 
+If you want to … Then … 
+purge unused display rep-click the object name, and click Purge 
+.
+resentations for a specific object 
+purge all unused display click Representations by Object, and click representations in the 
+Purge 
+.
+drawing 
+All display representations that you can purge are selected in the Purge Display Representations dialog box. 
+4 Clear any display representations that you do not want to purge, and click OK twice. 
+
+
+
+Working with Standard Display Settings 
+The Project Standards feature provides a mechanism for users to establish, maintain and synchronize display settings across an AutoCAD Architecture project. Within a project, you can define standard display settings that are used across all project drawings. 
+For more information about projects and project standards, see Drawing Management on page 289 and Project Standards on page 585. 
+Standard display settings are organized in a standards drawing that is assigned to the project. Once a group of display settings have been defined as project standard settings, and introduced in the project drawings, they have a link to the standards and can be synchronized with them. With the same link, display settings from a project drawing can update the standard display settings, too. 
+Standard display settings can be accessed, edited, synchronized, copied, and updated in Display Manager. 
+Standard settings in Display Manager 
+
+Standard Icons 
+Standard display settings are displayed in Display Manager. Depending on their status with regards to the project standards, there are a number of different icons to differentiate them. 
+Icon Description 
+
+Standard display setting When a light blue icon appears on a display setting in a project drawing or project standards drawing, the display setting is a standard setting 
+
+Icon Description 
+and is in synch with the standard. No update or synchronization is necessary. 
+
+Standard display setting that is outdated When this icon appears on a display setting in a project drawing, the display setting is a standard setting, but is out of date. This means that the corresponding display setting in the project standards drawing has a newer GUID than the one in the project drawing. To update the display setting in the project drawing, see Synchronizing Individual Display Settings with AEC Standards on page 650. 
+
+Standard display setting that has a non-standard (newer) version When this icon appears on a display setting in a project drawing, the setting is a standard setting, but has a version GUID that cannot be found in the project standards. If you encounter this icon, you can either overwrite the non-standard version with the current version from the standards drawing, as described in Synchronizing Individual Display Settings with AEC Standards on page 650, or you can update the standards with the version from the project drawing, as described in 
+Updating Standard Display Settings in the Project Standards Drawing from a Project Drawing on page 844. 
+
+Standard display setting that is excluded from synchronization When this icon appears on a display setting, the setting is excluded from synchronization. For more information, see Excluding Display Settings from Synchronization on page 841. 
+
+Standard display setting that has no version information When this icon appears on a display setting in a project standards drawing, the display setting has no version information. Version inform­ation can be deleted, as described in Purging the Version Information from a Project Standards Drawing on page 675. To add version information to a display setting, see Updating Standard Display Settings in a Project Standards Drawing on page 841. 
+
+Standard display setting that has been changed, but not versioned When this icon appears on a display setting in a project standards drawing, the setting has been modified, but not versioned yet. In order for the changes to be included in the synchronization, the setting must be versioned, as described in Updating Standard Display Settings in a Project Standards Drawing on page 841. 
+
+Icon Description 
+This icon appears only in project standards drawings. Changes in pro­ject drawings are versioned automatically when you click Apply or OK in Display Manager. 
+
+Non-standardized display setting When a dark blue icon appears on a display setting in a project drawing, this setting has no equivalent in the project standards. 
+
+
+Synchronizing Individual Display Settings with AEC Standards 
+Use this procedure to synchronize display settings in a project drawing with the project standards. 
+1 Open a project drawing. For more information about projects and project standards, see Drawing Management on page 289 and Project Standards on page 585. 
+2 Click Manage tab . Style & Display panel . Display Manager . 3 In the Display Manager tree, navigate to the display setting you want to synchronize. You can synchronize the following items: 
+
+¦ 
+display configurations 
+
+¦ 
+display sets 
+
+¦ 
+display representations 
+
+
+4 Select the item in the tree, right-click, and select Synchronize with Project Standards. 
+5 In the Synchronize Drawing with Project Standards dialog box, select the items to synchronize, as described in Synchronizing a Project Drawing with AEC Standards on page 643. 
+6 Click OK to start the synchronization process. 
+
+Excluding Display Settings from Synchronization 
+Use this procedure to specify individual display settings that you want to be ignored during synchronization. 
+Specified display settings will not be overwritten with standards during automatic synchronization and will not be displayed as version mismatches during semi-automatic or manual synchronization, unless you select the Show objects set to ignore during project standards synchronization check box in the Synchronization dialog box. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Navigate to the display configuration, display set, or display representation to be excluded, right-click, and click Ignore During Synchronization. 
+Note that the Ignore During Synchronization option now has a check mark next to it. If you click the option again, the check mark disappears and the selected display setting is removed from the list of components to be ignored. 
+
+Updating Standard Display Settings in a Project Standards Drawing 
+Use this procedure to change and version a standard display setting in the project standards display drawing. 
+Display settings in the project standards display drawing and in the project drawings are versioned. The version is used to determine whether a display setting needs to be updated during synchronization. The version information includes the GUID (Global Unique Identifier), the date and time of the last modification, the windows login name of who last modified the item, and an optional comment. 
+When you change a standard display setting in the open standards drawing, you are not automatically prompted to version the change.You can make multiple changes, save and close the drawing, reopen it, and then version the display setting when its is ready for propagating in the project. As long as the changes are saved to the project standards drawing, no edits will be lost, even without versioning in between. 
+NOTE When you make changes to the display standards drawing, you need to update the standard styles drawings with the new setting as described in Synchronizing Project Standards with Each Other on page 850. Otherwise, inconsistent display of objects might occur. 
+As long as your changes are saved, but not versioned, any synchronizations taking place during that time will not recognize the display settings as changed, since the object comparison is performed on the version GUID, and not the actual object properties. As a consequence, changed but unversioned display settings in the project standards will not be updated in the project drawings. To have the changes synchronized with the project, you need to version the display settings first. 
+Project standards in Display Manager 
+
+Updating a standard display setting 1 Open the standards display drawing of the current project. 2 Click Manage tab . Style & Display panel . Display Manager . 
+
+TIP The standard display drawings in Display Manager are listed 
+under the project node ( 
+). If no project node is displayed, the current drawing is not part of a project. 
+3 Select the display setting you want to edit, and make your changes. 4 Click the Version History tab of the changed display setting. 
+
+5 Click Version. 
+
+6 If necessary, enter a comment for the new version. 7 Click OK. The new version is appended to the Version History tab. 
+8 To version multiple display settings in a project standards drawing, select a group of settings and version them: 
+
+9 Select the display settings that should be versioned. 10 If desired, enter a comment. The comment will be applied to all objects selected for versioning. 
+11 Click OK. 
+
+Updating Standard Display Settings in the Project Standards Drawing from a Project Drawing 
+You can change a standard display setting in the project standards display drawing by overwriting it with the corresponding display setting from a project drawing. When you have updated a project standard display setting from a project drawing, the project needs to be synchronized to use the updated display setting. For information, see Synchronizing a Project with the Standards on page 633. 
+NOTE When you make changes to the display standards drawing, you need to update the standard style drawings with the new setting as described in Synchronizing Project Standards with Each Other on page 850. Otherwise, inconsistent display of objects might occur. 
+1 Open a project drawing. 
+2 Click Manage tab . Style & Display panel . Display Manager . 
+
+3 Expand the node of the project drawing, and select the standard display setting with which you want to update the project standards. 
+NOTE A standard display setting in a project drawing can be recognized by a blue icon. 
+4 Right-click, and click Update Standards from Drawing. 
+NOTE Alternatively, click Manage tab . Project Standards panel . 
+
+. Update Standards From Drawing
+ . 
+NOTE You can also select to update multiple display settings here. 
+
+The selected display setting is listed in the top panel. 
+5 To update the project standards from the project drawing, select Update Project Standards from the Action drop-down list of the display settings. 
+6 To not update the project standards from the display setting in the project drawing, select Do not Update Project Standards from the Action drop-down list of the display settings. 
+In this case, the version in the project standards drawing is not overwritten with the version in the project drawing. During the next synchronization of the project drawing, the display setting will be displayed as out of synch with the project standards. 
+7 To ignore the out of synch version of the display setting, select 
+Ignore from the Action drop-down list. In this case, the item will not be displayed in future updates, except when you select Show objects set to ignore during project standards synchronization or remove the Ignore flag from the display setting in Display Manager, as described in Excluding Display Settings from Synchronization on page 841. 
+8 Click OK. 9 In Display Manager, click OK or Apply. 
+10 Click Yes to save the updated project standards drawing. 
+
+Adding Standard Display Settings from a Project Drawing to a Project Standards Drawing 
+You can add non-standardized display settings from the current project drawing to the project standards. You can do this, for example, if you have created a complex display configuration in a project drawing and want to include that into your standards. 
+After copying a display setting to the project standards, you need to synchronize the project to use the new standard setting. 
+1 Open a project drawing from Project Navigator. 
+2 Click Manage tab . Style & Display panel . Display Manager . 3 Add a new display setting to the current project drawing. 4 Select the new setting, right-click, and click Update Standards from Drawing. 
+
+NOTE Alternatively, click Manage tab . Project Standards panel . 
+
+. Update Standards From Drawing
+ . 
+NOTE You can select multiple display settings here. 
+
+The new setting is listed in the lower panel, which lists styles and display settings in the project drawing that do not exist in the project standards. 
+5 To add the display setting to a project standards drawing, and thereby make it a standard setting, select Add to Project Standards in the Action drop-down list. 
+6 To skip over the non-standardized display setting, select Skip from 
+the Action drop-down list. In this case, the non-standardized display setting remains in the project drawing, and is not entered in the standards. 
+7 To ignore the display setting, select Ignore from the Action 
+drop-down list. In this case, the non-standardized display setting will not be listed again in future updates, except if you select Show objects set to ignore during project standards synchronization or remove the Ignore flag from the display setting in Display Manager, as 
+described in Excluding Display Settings from Synchronization on page 841. 
+8 Click OK. 9 In Display Manager, click OK or Apply. 
+10 Click Yes to save the updated project standards drawing. 
+
+Editing the Version History of a Standard Display Setting 
+Each display setting in a project standards drawing has a version history. The version history displays the unique version identifier, date and time of the modification, user name and any additional comments entered by the user. 
+You can edit the history by selectively removing individual versions, or removing all versions. You cannot remove the current version. 
+1 Open a project standards drawing. 
+2 Click Manage tab . Style & Display panel . Display Manager . 3 Select a standard display setting from the project node. 4 Click the Version History tab. 
+
+
+5 To add a new version, click Version, and enter the versioning information. 
+6 To remove an existing version, select the version from the Version History list, and click Remove. 
+To remove all versions in one step, click Remove All. 
+7 If you want the display setting to be ignored during synchronization of standards, select Ignore during project standards synchronization. 
+8 Click OK. 
+
+Purging the Version History from a Project Standards Drawing 
+You can remove the version history from all standard styles and display settings in a project standards drawing with one command. Purging the version history will remove all versions except the current one from the standard styles and display settings. You can do that to avoid cluttering your styles and display settings. 
+When you purge the version history, no version GUID except for the current one remains. That means that the synchronization can no longer separate between an older version of a standard display setting and a non standard version of a standard display setting. Each display setting in a project drawing that does not have the current GUID of the corresponding standard display setting, will be labeled a “non-standard”, or newer version. 
+1 Open the project standards drawing. 
+2 On the command line, enter AecClearVersionHistory. The version history is removed from all standard styles and display settings in the drawing. 
+
+Purging the Version Information from a Project Standards Drawing 
+You can remove the version information from all standard styles and display settings in a project standards drawing. When you remove the version information, the version history and the current version information is deleted. 
+When you run a synchronization, the standard style or display setting still participates in the synchronization and is considered the “latest version” when comparing with versions of the object in project drawings. No attempt is made during synchronization to automatically create a version GUID or history list. If you want to add version information to the standard style or display setting, you need to manually version the object as described in Updating Standard Objects in a Project Standards Drawing on page 665. 
+1 Open the project standards drawing from which you want to remove the version information. 
+2 On the command line, enter AecPurgeVersion. The version information is removed from all standard styles and display settings in the drawing. 
+
+Synchronizing Project Standards with Each Other 
+Project standard styles and display settings can be distributed among multiple standards drawings, and depend on each other. For example, the styles in a styles drawing should use the display settings from the standard display drawing. If display changes are introduced in a standard styles drawing, and not synchronized with the standard display drawing, styles can display inconsistently across the project. Therefore, you should synchronize project standards drawings with each other when changes have been made to individual standards drawings. 
+You can synchronize project standards drawings with each other either from the project node in Display Manager or from the Manage tab on the ribbon. 
+When project standards drawings are synchronized with each other, the following criteria are used to determine how the components are updated: 
+¦ 
+Standards drawing type: The display settings in the standard display drawing update the display settings in all standard styles drawings. 
+
+¦ 
+Assigned style types: When a drawing has in the standards configuration setup been associated to a style type, the styles in this drawing will update all other standards drawings that may contain standard styles of that type. For example, if the standards drawing “Door Styles.dwg” has been associated with the Door style type, the styles in that drawing will overwrite any existing door standard styles in all of the other standards drawings. Note that in most cases, you will not place standard styles anywhere but in the designated standards drawing for that style type. 
+
+¦ 
+Search order: When more than one standards drawings in the standards configuration setup have been associated to a style type, the first standards drawing in the search order will update all other drawings associated to that style type. 
+
+
+Synchronizing project standards drawings with each other is an automatic synchronization process, where no user interaction is possible. That means 
+that no styles or display settings can be excluded from the synchronization process. 
+1 Verify that the project of which you want to synchronize the standards is the current project. 
+2 Click Manage tab . Style & Display panel . Display Manager . 3 Select the Project Standards node in the tree view, right-click, and click Synchronize Project Standards Drawings. 4 When the synchronization is finished, click OK to exit Display Manager. 
+
+NOTE Alternatively, you can click Manage tab . Project Standards panel .
+. Synchronize Project Standards
+ . 
+
+
+Troubleshooting the Display System 
+If you have problems displaying objects in your drawing, use the following troubleshooting suggestions. 
+Object Not Displayed in a Viewport 
+Why isn’t my object displayed? 
+When AEC objects in your model do not display correctly in a viewport, the following actions might help to solve the problem. 
+¦ 
+In the drawing status area, verify the name of the selected display configuration. Select a different display configuration, and see if the problem is resolved. 
+
+¦ 
+In the Display Manager, find out what display set is being used in the display configuration assigned to the viewport in question. The name of the current display configuration is highlighted. The name of the current display set is also highlighted. 
+
+¦ 
+In the detailed view of the display sets in the Display Manager, make sure that a display representation for the object is selected in that display set. 
+
+¦ 
+Is the object hidden because objects of its classification are filtered in the current display set? On the Display Options tab, verify that objects are not hidden. 
+
+
+¦ 
+If a display representation is selected in the current display set, look at the display properties of the display representation. Are the display components turned off? Are components on layers turned off? 
+
+¦ 
+Is the display of components controlled by the material assigned (is ByMaterial selected in the display properties)? If so, look at the display properties of the material assigned to object components to determine the settings. 
+
+¦ 
+Is the object drawn on a layer that is turned off? 
+
+
+
+
+Viewport Not Updating Properly 
+Why isn’t my viewport updating? 
+Under certain circumstances, such as when you switch view directions in shade modes other than 2D wireframe, the display is not restored correctly. 
+In such cases, click View tab . Appearance panel . Regenerate drop-down . Regenerate Model, and either select the problem AEC object or press ENTER to select all the AEC objects. This forces the display system to regenerate all the current display representations. 
+NOTE Alternatively, enter objrelupdate on the command line. 
+
+
+Objects Copied from Another Drawing Display Differently 
+I dragged objects to another drawing. Why do they look different now? 
+Objects dragged or copied from one drawing to another use the display properties of the display configuration assigned to the viewport in the destination drawing. The display configuration in the original drawing is not copied with the objects. 
+
+
+Verifying the Existence of Objects Not Displayed in a Drawing 
+Is there a quick way to verify that an object exists in a drawing but is not displayed? 
+Enter DisplayDxfName on the command line to label each object in the drawing with its name. Labels appear even for objects that are not displayed. For example, if you created a display set that did not include a display representation for doors, and you then assigned the display set to a display configuration used in the current viewport, doors would not be displayed in 
+that viewport. An object can also exist in a drawing and not be displayed if the object was filtered by its classification in the current display set. 
+DisplayDxfName can help you determine whether the objects are simply not displayed or if they are not present. 
+1 At the command line, enter displaydxfname. 2 Enter y (Yes). 3 Click View tab . Appearance panel . Regenerate 
+drop-down . Regenerate Drawing And Viewports. 
+NOTE Alternatively, enter rea on the command prompt. 
+Displaying the names of objects, including those that are not shown 
+
+4 To turn off object names, enter displaydxfname. 5 Enter n (No). 
+
+
+Object Linetype Displayed Incorrectly 
+Why doesn’t the linetype for my object display the way I expect? 
+The linetype scale for components of AEC objects works with the AutoCAD linetype scale specified in the LTSCALE variable to control the linetype of AEC objects. The default value for linetype scale of all components of AEC objects is 1.0. This value is multiplied by the current value for LTSCALE to produce the linetype scale of object components. 
+For example, if the LTSCALE value is 48.0, and the linetype scale in the display properties of an object is 1.0 for an object component, then the linetype scale of the component is 48.0. If you change the linetype scale in the display properties to 2.0, the linetype scale of the component is effectively 96, or 2.0 x 48. 
+
+
+
+
+Style Manager 
+12 
+The Style Manager is an AutoCAD Architecture utility that provides a central location for working with the styles that determine the function and appearance of objects in your drawing. 
+What Are Styles? 
+Styles are sets of parameters that determine the function and appearance of objects in AutoCAD Architecture drawings. For example, a door style specifies a door’s type (single or double, bi-fold or hinged) and shape (rectangular or arched), as well as its default frame dimensions, standard sizes, materials, and display properties. 
+Each object in a drawing is an instance of a particular style. You use the same style for all objects that are to have the same characteristics. For example, you might use one door style for all office doors in a building and another for all fire doors. 
+Generally a style is applied to an object through the tool you use to create the object. After the object is created, you can apply a different style to it or edit the style, either in the Style Manager or in a dialog accessed from the object’s context menu. When you edit a style, the changes apply to all instances of that style in your drawing, making this an efficient way of modifying a large number of objects at once. 
+AutoCAD Architecture uses styles to define objects in 3 different categories: 
+¦ 
+Architectural objects, such as walls, doors, and windows 
+
+¦ 
+Documentation objects, such as 2D sections/elevations, dimensions, and schedule tables 
+
+¦ 
+Multi-purpose objects, such as layer keys, mass elements, and material definitions 
+
+
+Where Are Styles Located? 
+For most architectural, documentation, or multi-purpose objects, there is a default standard style, which you can access and customize through the Style Manager. The default tool palettes also provide tools representing many specific styles. For example, the Doors tool palette includes tools for creating door objects of the Bifold - Double style, the Bifold - Single style, the Cased Opening style, and so on. As soon as you use one of these tools to add an object to your drawing, the associated style is added to the list of styles for that drawing in the Style Manager, where you can view and edit the properties that define the style. 
+Additional predefined styles are provided in the Stock Tools catalogs accessible through the Content Browser. All styles are defined in Styles drawings located in the C:\ProgramData\Autodesk\ACA 2011\enu\Styles\Imperial or Metric folder. 
+For more information about specifying the location of files at installation, see “Install AutoCAD Architecture 2011” in the AutoCAD Architecture 2011 Installation Guide. 
+
+Styles in External References 
+You cannot change an object style in an external reference while refediting it from its host drawing. You can open Style Manager and make changes, but they will not be saved when the external reference is saved and closed in the host drawing. To make changes to styles in external references, you need to open the external reference drawing directly, make the changes there, and save it. The external reference should then be reloaded to update the changes. 
+
+
+Style Manager Overview 
+The Style Manager is an AutoCAD Architecture utility that provides a central location where you can view and work with the styles that determine the appearance and function of objects in drawings. 
+You can also manage layer key styles, schedule data formats, and definitions for cleanup groups, mask blocks, multi-view blocks, profiles, and property sets. 
+The Style Manager allows you to readily create or customize styles and share them with other users. In the Style Manager, you can perform the following tasks: 
+¦ 
+Access styles from open drawings and intranet sites 
+
+¦ 
+Drag styles onto a palette to create tools 
+
+
+¦ 
+Set up new drawings and templates by copying styles from other drawings or templates 
+
+¦ 
+Sort and view the styles in your drawings and templates by drawing or by style type 
+
+¦ 
+Preview an object with a selected style 
+
+¦ 
+Create and edit styles 
+
+¦ 
+Delete unused styles from drawings and templates 
+
+¦ 
+Send styles to other AutoCAD Architecture users by email 
+
+
+Opening the Style Manager 
+To open the Style Manager, click Manage tab . Style & Display panel . Style Manager
+ . You can also access the Style Manager by right-clicking any style-based object 
+tool on a tool palette and clicking <object type> Styles. 
+The Style Manager 
+
+The Style Manager is split into 2 resizable panes and has a menu bar, a toolbar, and a status bar. When you open the Style Manager, all drawings and templates 
+that are open in the current session are displayed in the tree view in the left pane. 
+
+Left Pane of the Style Manager 
+The left pane of the Style Manager displays the styles in all open drawings and templates in a hierarchical tree view that you can navigate by expanding and collapsing the different levels in the tree. By default, styles in the tree view are sorted by the drawing that contains them, but you can also sort them by style type. The tree view is always displayed in the left pane, regardless of how you sort the styles. 
+Styles are organized into 3 categories: Architectural Objects, such as Door Styles; Documentation Objects, such as Schedule Table Styles; and Multi-Purpose Objects, such as Layer Key Styles. Within each category, styles are listed alphabetically. To filter the tree view so that only styles of one style type are displayed, select a style type, and on the Style Manager toolbar, click
+
+ . To redisplay all styles, click 
+again. 
+NOTE If drawings or templates are read-only, their read-only status is indicated by a lock on the folder next to the drawing in the tree view and also by a lock icon on the status bar. 
+
+Right Pane of the Style Manager 
+The style information displayed in the right pane depends on what you select in the tree view in the left pane. For example, when the tree view is sorted by drawing, and a style category is selected, the right pane lists the style types in the category. If a style type is selected, the right pane lists the styles within the type. If an individual style is selected, the right pane displays a series of tabs on which you can edit the properties of the style and preview how an object will display using that style. When the tree view is sorted by style, you can select a style type to view the distribution of the styles within that type across all drawings and templates that are open in the Style Manager. 
+
+Style Manager Menu Bar and Toolbar 
+The top of the Style Manager includes a menu bar and a toolbar for quick access the menu commands. Pause the mouse over a toolbar icon to display a tooltip describing the associated command. 
+
+Status Bar 
+The status bar at the bottom of the Style Manager indicates how styles are sorted in the tree view (by drawing or by style), the name of the drawing, and the currently selected style type and style. 
+
+
+Sorting Styles in the Style Manager 
+Use this procedure to change the way styles are sorted in the Style Manager. By default, the names of open drawings and templates are displayed in the tree view in the left pane. When you expand a drawing in the tree view, the individual styles within the drawing are grouped into 3 categories: Architectural Objects, Documentation Objects, and Multi-Purpose Objects. If you expand a category, the individual styles are listed alphabetically by style type. 
+Styles sorted by drawing 
+
+To see the styles available in each drawing for a particular style type, such as door styles, you can sort by style. Styles are then grouped by category, and organized by type and then by drawing. 
+Styles sorted by style type 
+
+The status bar at the bottom of the Style Manager indicates whether the styles are sorted by drawing or by style type. 
+To switch how styles are sorted in the Style Manager 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . By default, styles are sorted by drawing. 
+2 On the toolbar of the Style Manager, click 
+to sort styles by 
+style type. Alternatively, on the menu bar of the Style Manager, click View menu . Explore . By Style. 
+3 If you want to view the styles available in a drawing, expand a category, a style type, and then the drawing. 
+4 To restore the by-drawing sort order, click 
+again. 
+
+
+Creating a Style from the Style Manager 
+If you want to create a new style or definition for a particular type of object, you can start with the default style properties for that object type, or you can copy an existing style that has most of the properties you want. In either case you then edit the style properties as needed to specify the desired object characteristics. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager displays with all open drawings listed in the tree view and the current drawing expanded. 
+2 Expand the object category (Architectural, Documentation, or Multi-Purpose) and object type for which you want to create a style. 
+3 Choose a method: 
+If you want to… Then… 
+create a style with default properties right-click the style type, and click New. 
+create a style from an existing style expand the style type, right-click the style you want to copy, and click Copy. Right-click, and click Paste. 
+4 On the General tab, enter a name and description for the new style. 
+5 Click other tabs as needed to view and edit the properties. For detailed information about specifying the properties of a style for a particular object, see the Help topics associated with that object type. 
+6 When you finish specifying the properties of the style, click OK. The new style will be listed if you open the Style Manager again while the drawing remains open, but it is not saved until you save the drawing. 
+After you have created a style, you can drag it from the Style Manager onto a tool palette to create a tool. For more information, see Creating a Tool from a Style on page 862. 
+
+
+Creating a Style from an Object 
+Use this procedure to create a new style for an object by copying and modifying its current style. This method lets you change style properties for the selected object without affecting other objects that use the same style. The new style 
+can then be assigned to other objects as needed. This functionality can save you time if you need to create many styles, or if you need to create templates or styles draw 
+1 In the drawing area, select an object with the style you want to copy. 
+2 Click <Object> tab . General panel . Copy Style
+ . 
+3 On the General tab of the <object type> Style Properties dialog, enter a name for the new style, or accept the default, which is the original style name suffixed with an incremental number in parentheses. 
+4 Change other properties of the new style as desired. For more information about changing the properties of an object style, refer to the appropriate section in the Help. For example, for information about wall styles, see Wall Styles on page 1282. 
+5 Click OK. The new style has been assigned to the object. You can access the new style in the Style Manager under the appropriate object style type. 
+
+Creating a Tool from a Style 
+Use this procedure to create a tool from a style. You can create tools from the following styles and definitions: AEC polygon, curtain wall, curtain wall unit, door, door/window assembly, mask block, mass elements, multi-view block, railing, roof slab, schedule table, slab, space, stair, structural member, wall, window, zone template, and zone. 
+You can create object tools by dragging a style from the Style Manager to a tool palette. When you drag a style onto a tool palette, a reference is created that associates the tool to the style. The reference location can be the current drawing, another drawing, or a remote location. If you edit the style in the Style Manager, the tool automatically uses the updated style. 
+If an existing tool references a style from another drawing, the style is not added to the current drawing until you add an object of that style to the drawing. The reference location is used only if the current drawing has been saved. 
+For detailed information about creating and customizing tools, see Tools on page 93. 
+1 Open the tool palette on which you want to create a tool. 
+2 Click Manage tab . Style & Display panel . Style Manager
+ . 
+3 Locate the style you want to copy, and drag it to the tool palette. The default tool name is the name of the referenced style. The image that identifies the new tool uses the view direction last 
+used in the Properties palette for the selected object type. 
+4 Click OK. 
+
+Renaming a Style 
+Use this procedure to change the name of a style in an open drawing. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 In the tree view of the Style Manager, right-click the style you 
+want to rename, and click Rename. 
+3 On the General tab, enter a new name for the style. 
+4 Click OK. 
+The new name will display if you open the Style Manager again while the drawing remains open, but it is not saved until you save the drawing. 
+
+Copying Styles Between Drawings 
+Use this procedure to copy styles or definitions from the current drawing to another drawing. You can copy styles and definitions between existing drawings. You can also copy them from an existing drawing to a new drawing. 
+If a style references other styles, those styles are also copied to the other drawing. For example, if you copy a wall style into a new drawing, the wall endcap style used in the wall style is also copied to the new drawing. 
+NOTE You can also drag and drop styles and style types between drawings. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+The Style Manager displays with all open drawings listed in the 
+tree view and the current drawing expanded. 
+2 If the drawing to which you want to copy the style is not listed, open it or create a new drawing: 
+If you want to… Then… 
+copy the style to a drawing that is in the Style Manager, click 
+not open in the Style Manager File . Open Drawing, select the drawing you want, and click Open. 
+copy the style to a new drawing in the Style Manager, click File . New drawing, enter a name for the drawing, and click Save. 
+3 Expand a category, and expand a style type. 4 Select the styles or definitions that you want to copy: 
+
+If you want to… Then… 
+copy an individual style or definition right-click the style or definition, and click Copy. 
+copy all styles or definitions of a se­ right-click the style or definition  
+lected type, such as all wall styles  type, and click Copy. If your styles  
+are sorted by style type, right-click  
+the drawing name under the selec­ 
+ted style or definition type, and  
+click Copy.  
+
+5 Right-click the drawing into which you want to copy the style(s), 
+and click Paste. The styles or definitions are pasted into the selected drawing. If the drawing already contains a style with the same name, the duplicate name is displayed in the Import/Export - Duplicate Names Found dialog. 
+6 Resolve duplicate style names, if prompted: 
+
+If you want to… Then… 
+prevent the Style Manager from select Leave Existing, and click OK. overwriting the existing style with the new style of the same name 
+replace the existing style with the select Overwrite Existing, and click new style OK. 
+
+If you want to… Then… 
+keep the existing style and add the  select Rename to Unique, and click  
+new style with a different name  OK. The Style Manager appends a  
+number to the name of the new  
+style. Right-click a style, and click  
+Rename to change a style name.  
+
+7 Click OK. 
+
+
+Sending Styles to Other Users 
+Use this procedure to email styles or definitions to other users of AutoCAD Architecture. The software creates a new drawing that contains only the style information from the current drawing and attaches the drawing to an email message. If email is not available on your system, the Send option is not available. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand a category. 3 Select the styles or definitions you want to send: 
+If you want to… Then… 
+send an individual style or definition right-click the style or definition, and click Send. 
+send all styles or definitions of a se­ right-click the style or definition  
+lected type, such as all wall styles  type, and click Send. If your styles  
+are sorted by style type, right-click  
+the drawing name under the selec­ 
+ted style or definition type, and  
+click Send.  
+
+send all styles or definitions in the right-click the drawing name, and drawing (styles must be sorted by click Send. drawing) 
+A new email message with the subject AutoCAD Architecture Styles is created using your email program. A drawing file containing the styles and definitions you selected is added to the message as a file attachment. 
+4 Complete and send the message in your email program. 5 Click OK. 
+
+
+Purging Styles 
+Use this procedure to remove unused styles and definitions from a drawing. You can purge any styles that are not applied to an object in the drawing and not used in another style. You can purge either a single unused style or definition or all those within a selected type. For example, you can purge all unused wall styles. 
+Referenced styles or definitions are not purged when you purge the style that uses them. For example, if you purge a wall style, the wall endcap style and cleanup group definition used in the wall style are not purged. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed, with the current drawing expanded in the tree view. 
+NOTE You can also purge a selected style or style type by pressing 
+DELETE. 
+2 Expand a category, and expand a style type. 3 Purge styles or definitions: 
+If you want to… Then… 
+purge one unused style or definition right-click the style or definition you want to remove, and click Purge. 
+purge all unused styles or defini­ right-click the style or definition  
+tions of a selected type  type, and click Purge. When  
+prompted, verify that the styles you  
+want to purge are selected, and  
+click OK.  
+
+If a style or definition you selected to purge remains in the list after purging, the style or definition is currently applied to an object or is used in another style. For example, you cannot purge a wall endcap style that is used in a wall style or that is applied to an individual wall. 
+4 Click OK. 
+
+
+Working with Drawings and Templates in the Style Manager 
+When you first open the Style Manager, any drawings or templates that are open in AutoCAD Architecture are displayed in the tree view. You can also open other drawings or templates and create new drawings or templates within the Style Manager. 
+Opening Drawings in the Style Manager 
+When you create a new drawing or template in the Style Manager, or open an existing one, that drawing or template is open for use only within the Style Manager, and not in your drawing session. You need to exit the Style Manager before you can open the drawing or template in the drawing session. 
+
+Determining the Status of a Drawing 
+To determine whether a drawing or template is open in the software or only within the Style Manager, look at the icon next to the drawing or template in the tree view. 
+Drawing icon Drawing status 
+
+Drawing is open in the software and in the Style Manager. 
+
+Drawing is open only in the Style Manager. 
+
+Drawing is locked. 
+A drawing may be locked in the Style Manager for any of the following reasons: 
+¦ 
+The drawing is read-only. 
+
+¦ 
+The drawing was created in a previous version of the software. 
+
+¦ 
+The drawing is referenced into a drawing that is currently open. 
+
+¦ 
+The drawing is open in another application. 
+
+¦ 
+The drawing file is locked on a network. 
+
+
+To view a tooltip stating the reason for the lock, select the drawing in the tree view, and pause the cursor over the lock icon on the Style Manager status bar . 
+TIP You can save your styles in a read-only source drawing and copy them to other drawings as necessary. 
+
+
+Closing Drawings in the Style Manager 
+Any drawings and templates that you create or open in the Style Manager are listed in the tree view every time you open the Style Manager until you close them from within the Style Manager. 
+
+Starting a New Drawing or Template in the Style Manager 
+Use this procedure to start a new drawing or template in the Style Manager. The new drawing or template does not contain any styles and is open for use in the Style Manager only. It is not open in the AutoCAD Architecture session. You can open the new drawing or template in the software after you exit the Style Manager. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 On the Style Manager menu bar, click File . New Drawing, or on 
+the Style Manager toolbar, click 
+. 
+3 In the New Drawing dialog, for File Name, enter the new drawing name. 
+4 For Files of Type, select Drawing (*.dwg) to create a drawing, or 
+select Drawing Template (*.dwt) to create a template. 
+5 Click Save. 
+6 Click OK. 
+
+Opening a Drawing or Template in the Style Manager 
+Use this procedure to open a drawing or template in the Style Manager. The drawing or template will be open only within the Style Manager; that is, it will not be open in the AutoCAD Architecture drawing session. You can open the drawing in the software after you exit the Style Manager. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 
+2 In the Style Manager, click File . Open Drawing, or on the Style 
+Manager toolbar, click 
+. 3 Select one or more files, and click Open. 4 Click OK. 
+
+Dragging a Drawing into the Style Manager 
+Use this procedure to open a drawing or template in the Style Manager by dragging it from Microsoft® Windows® Explorer. The drawing or template will be open only within the Style Manager; that is, it will not be open in the AutoCAD Architecture session. You can open the drawing in the software after you exit the Style Manager. 
+1 In the Style Manager, sort the styles by drawing. 2 Start Microsoft Windows Explorer. 3 In Windows Explorer, select the drawing or template that you 
+want to open in the Style Manager. 4 Drag the drawing into the tree view in the Style Manager. 5 Click OK. 
+
+Closing Drawings and Templates in the Style Manager 
+Use this procedure to close a drawing or template that is open only in the Style Manager. If a drawing is open in the AutoCAD Architecture session, you cannot close it in the Style Manager. 
+1 In the Style Manager, sort the styles by drawing. 2 Select the drawing or template that you want to close. 3 In the Style Manager, click File . Close. 4 Click OK. 
+
+
+
+Materials 
+13 
+A material in AutoCAD Architecture corresponds to a specific finish material in a building model, such as brick, concrete, or glass. Materials are useful for illustrating plans, sections, elevations, and renderings in the design process. Materials also provide a way to manage the display properties of object styles. 
+Materials 
+A material in AutoCAD Architecture corresponds to a specific finish material in a building model, such as brick, concrete, or glass. Materials are useful for illustrating plans, sections, elevations, and renderings in the design process. Materials also provide a way to manage the display properties of object styles. 
+Viewing a building model corner showing materials 
+
+Simplifying the Design Process 
+Using materials makes displaying objects more realistic. You define the display of a material, such as brick or glass, only once in the drawing or the drawing template, and then assign it to the component of an object where you want the material to display. For example, you can define a material “Glass” and then assign it to any number of windows, glass door insets or cubicle walls. You typically assign materials to components in the style of an object, such as the brick in a wall style. Then, whenever you add a wall of that style to your drawing, the brick of that wall displays consistently. 
+Defining materials in an object style can provide control for the display of objects across the whole project. When the characteristics of a material change, you change them just once in the material definition and all objects that use that material are updated. With the material tool you can apply a material to a single instance of the object. 
+
+Visual Styles and Render Materials 
+You can take advantage of Visual Styles, Rendering Materials, Lights, and Cameras in AutoCAD Architecture. In Content Browser, a Visualization catalog lets you access a number of predefined tools for lights, rendering materials, cameras, and visual styles. For more information about these visualization features, see “Create Realistic Images and Graphics” in the AutoCAD help. 
+
+Predefined Materials 
+AutoCAD Architecture provides a number of predefined material definitions for common design purposes, making it easy for you to start with new drawings. You can use these predefined material definitions “as is” or modify them to fit your designs. You can also create your own material definitions. Object styles provided with the software already have material definitions assigned to them. 
+
+Surface Hatching 
+Materials provide the ability to assign surface hatches to objects. Surface hatches can be displayed in model, section and elevation views. You can control the placement and orientation of the hatch for each object face. 
+
+Section Hatching 
+Materials are helpful to clearly illustrate sections and elevations. The section hatch is specified independently of the surface hatch. Special material components allow a realistic or schematic display of rendered live section views, section cuts, and section bodies. 
+For more information about live section views, see Creating and Editing a Live Section View on page 3237. 
+Rendered live section view with transparent outside material 
+
+
+Material Tool 
+You create a material tool from a material definition. You can then use this tool in the same way that you would use any other tool in your project. For more information about working with tools, see Tools on page 93. This is the most efficient method of applying a material definition to an object or the component of an object. For more information, see Creating a Material Tool from a Material Definition in Style Manager on page 879. 
+
+
+Objects That Support Materials 
+Objects to which you assign materials are typically three-dimensional (3D) objects. Two-dimensional (2D) objects, such as areas, grids, or AEC polygons, are more like symbolic representations and drawing aids than actual building objects. 
+Not all components of an object can take on a material definition. For example, a door swing is a symbolic graphic, therefore, it does not support a material assignment. The appearance of a door swing is specified in the display properties of a door style. The door frame, however, is a physical part of the door, and a material definition can be assigned to it. 
+Object Components that support materials 
+Curtain Walls/Curtain Wall Units infills, frames, mullions 
+
+Object Components that support materials 
+Doors frames, panels, stops, insets, muntins 
+Door/Window Assemblies infills, frames, mullions 
+Mass Elements mass element body 
+Mass Groups mass group body 
+Railings guardrails, handrails, bottom rails, posts, bal­usters 
+Roof roof body 
+Slabs/Roof Slabs slab body, slab edge, fascias slab, edge soffits 
+Space Boundaries interior boundary, exterior boundary 
+Spaces floor, ceiling 
+Stairs tread, riser, landing 
+Structural Members beam, brace, column body 
+Walls wall body, wall shrinkwrap, wall components 
+Windows glass, frames, sashes, muntins 
+
+Assigning Materials to Objects and Object Styles 
+The most efficient way to use materials is to apply them to a style. Any object of that style inherits those definitions or the relevant properties. As you add new objects of a style to your project, each will have the same materials assigned to them. 
+You can also assign materials directly to an object. You may want to do so in these cases: 
+¦ 
+You want to override the existing material for a specific object. 
+
+¦ 
+The object in question does not support styles, but does support materials. (This is the case for AEC polygons.) 
+
+
+
+Examples of Material Assignments 
+Assigning a material to components of an object will change how the object displays in plan, isometric, section, and elevation views. 
+For example, if you want to draw a brick exterior wall, you can assign a material that displays a brick surface hatch in model view and a realistic brick display for a rendered view. 
+Brick wall in hidden line and rendered views 
+
+If there are special insulation components in a wall, you can assign a light, half-transparent material to them. For sectioning the wall, you can assign a specific section hatch pattern or fill that differs from the regular brick surface hatch. 
+Section fill material in a rendering 
+
+In another example, you can assign materials to the floor and ceiling components of a space such as a carpet material to the floor and tile to the ceiling. 
+
+
+Working with Material Tools 
+You can apply materials to objects in 2 different ways: 
+¦ 
+Assign material definitions to individual components of an object through the display properties of its style. For more information, see Process Overview: Creating and Assigning Materials on page 903. 
+
+¦ 
+Use a material tool to apply a material definition directly to an object component in the drawing. For more information, see Using the Material Tool to Add Materials to Objects on page 877. 
+
+¦ 
+Apply a render material from an AEC material definition to an AutoCAD object. For more information, see Creating a Material Tool from a Render Material in the Content Browser on page 881. 
+
+
+The Design tool palette includes the default Material tool, which references the Material Definitions file and allows you to apply any of those material definitions. Many of these material definitions can also be applied through material-specific tools located on the Materials tool palette in the Visualization palette group. 
+You can also create custom material tools from other existing tools, from material definitions in Style Manager, or from render materials in the Content Browser. For more information, see Creating Custom Material Tools on page 879. 
+Using the Material Tool to Add Materials to Objects 
+Use this procedure to configure the default Material tool and use it to apply an existing material definition to a component of an AEC object in a drawing. By default, the tool applies the Standard material definition, but you can modify the tool properties to specify any of the materials defined in the Material Definitions (Imperial).dwg or Material Definitions (Metric).dwg files. 
+1 Click Home tab . Build panel . Tools drop-down . Design Tools
+
+ . 
+
+2 On the Design palette, do one of the following: 
+If you want to… Then… 
+apply the Standard material defini-click the Material tool. tion 
+select a different material definition right-click the Material tool, and click Properties. Expand Ba­sic . General, click the value for 
+
+If you want to… Then… 
+Definition name, and select the de­sired definition. Then click OK, and click the Material tool. 
+TIP A number of prefabricated material tools are available on the Materials palette in the Visualization palette group. 
+The cursor symbol changes to a small square. As you move it over an object component, the component highlights and a tooltip identifies the component and the material to be applied to it. 
+
+If a component does not support materials in the current view direction, does not support materials at all, or is in an xref, the tooltip informs you the material cannot be applied, and the cursor changes to a slashed red circle until you move it off that component. 
+
+NOTE For information about which objects can have materials assigned, see Objects That Support Materials on page 873. 
+3 Move the cursor over the object in the drawing until the desired component is identified in the tool tip, and then click to apply the material. 
+4 If you want the material to be applied to this component in all objects of this style, press ENTER. If you want it applied only to this component in the current object, enter O, and press ENTER. (Applying the material to the style is the default option for the first use of the tool on any component; if you choose to apply the material only to the current object, that becomes the default option, and you would need to enter S to apply the material to the style the next time you use the tool on that component. In other words, whichever option you choose becomes the default for the next use of the tool.) 
+NOTE For non-style based objects, such as a roof, the material definition (or the render material part of it in the case of an AutoCAD object) is applied to the object as soon as you click. You are not prompted about applying the material to the style, and you do not have to press ENTER. 
+
+
+Creating Custom Material Tools 
+In addition to using the standard Material tool on the Design tools palette, or the material-specific tools on the Materials tools palette in the Visualization tool palette group, you can create your own material tools in a number of ways, as explained in the following topics. 
+
+Creating a Material Tool from a Material Definition in Style Manager 
+You can create a new material tool from a material definition in Style Manager. 
+NOTE You can create a material tool from Style Manager only if the drawing containing the material definition has been previously saved. 
+1 Create a material definition as described in Creating and Editing Material Definitions on page 905 2 Make the tool palette active on which you want to place the new material tool. 
+3 Click Manage tab . Style & Display panel . Style Manager
+ . 4 Expand Multi-Purpose Objects, and expand Material Definitions. 5 Select the material definition that you have created, and drag it 
+from Style Manager to the active tool palette. 6 Close Style Manager. 
+The material definition has been added as a material tool to the tool palette. You can use it to apply the material to objects, as described in Using the Material Tool to Add Materials to Objects on page 877. 
+NOTE The material tool uses the material definition you selected in Style Manager. The style location of the material tool is the drawing containing the definition. This means that when using this material tool you have access to all material definitions contained in the drawing. 
+
+Copying a Material Tool on a Tool Palette 
+You can create a new material tool by copying and pasting an existing tool on a tool palette. 
+1 Select a material tool from one of these locations on the tool palettes set: 
+¦ 
+the Design tool palette (contains the default material tool) 
+
+¦ 
+the Materials tool palette (in the Visualization tool palette group) 
+
+¦ 
+user-defined palettes and tools 
+
+
+2 Select the material tool, right-click, and click Copy. 3 If you want to paste it onto a different palette, make the palette 
+active. 4 On the palette, right-click, and click Paste. 5 Select the tool, right-click, and click Properties. 6 To change the associated material definition, select a different 
+definition under Definition Name. 7 To select a different source drawing, click Browse under Style Location. 8 In the Select a location File dialog box, select a source drawing, and click Open. 9 Select a material definition from the selected source file. 10 To update the material tool icon with the new material, select the icon under Image in the top left corner, right-click, and click Refresh Image. 
+11 Click OK. 
+
+Creating a Material Tool from a Render Material in the Content Browser 
+You can create a material tool by dragging a render material from Content Browser to AutoCAD Architecture. 
+Creating a new material tool in a drawing entails the creation of a new material definition in Style Manager. The material definition is used to create the material tool, but can also be used for different purposes in the drawing, like using the material definition to create object styles. 
+1 Click Home tab . Build panel . Tools drop-down . Content 
+Browser
+ . 2 Open the Visualization catalog and navigate to the Render Material category. Then, select the material you require. 3 Move the pointer over the i-drop® icon next to the tool so that 
+the pointer image changes to an eyedropper ( 
+). 4 Click and hold the i-drop® icon until it is full. 5 Use one of the following options to copy the render material to 
+AutoCAD Architecture: 
+¦ Drag the material from Content Browser into an AutoCAD Architecture drawing. If you drag a render material from Content Browser directly into an AutoCAD Architecture drawing, an AutoCAD Architecture material definition is created from it. You cannot directly create an AutoCAD Architecture material tool this way. The new material definition is listed in Style Manager, where you can create a material tool from it, as described in 
+Creating a Material Tool from a Material Definition in Style 
+Manager on page 879. 
+¦ 
+Drag the material from Content Browser onto an AutoCAD Architecture palette. If you drag a render material to an AutoCAD Architecture palette, a “temporary” material tool is created. 
+
+¦ 
+For AEC Material to use as a Template, select an existing material definition that contains the parameters you want to use. 
+
+
+6 If you have dragged the render material directly into an drawing, the Create AEC Material worksheet is displayed. 
+
+NOTE The material definition you select as template will define all initial material settings except for the rendering material. These include the layer, color, and linetype settings, hatching, surface hatch assignments, and the behavior of the material when used in a section. 
+¦ 
+Enter a name for the new material definition. 
+
+¦ 
+Click OK. 
+
+
+The option to automatically create a material tool from the new material definition is grayed out. To create a material tool, see 
+Creating a Material Tool from a Material Definition in Style Manager on page 879. 
+7 If you have dragged the render material onto an AutoCAD Architecture palette, finish the creation of the AEC Material tool. 
+¦ 
+Select the temporary icon on the tool palette. 
+
+¦ 
+In the Create AEC Material Worksheet, select an existing material definition for AEC Material to use as a Template. 
+
+
+
+NOTE The material definition you select as template will define all initial material settings except for the rending material. These include the layer, color, and linetype settings, hatching, surface hatch assignments, and the behavior of the material when used in a section. 
+¦ 
+Enter a name for the new material definition. 
+
+¦ 
+Verify that Convert to AEC Material tool is selected. 
+
+¦ 
+Click OK. A notification message appears, reminding you to save the drawing after dismissing the notification so that the material tool is saved with the current drawing. 
+
+
+8 If you have created a material tool by dragging a render material to a tool palette, update the tool image to display the AutoCAD Architecture material tool icon. 
+9 Select the material tool on the palette, right-click, and click 
+Properties. You can see that the icon preview is different from the Viewer preview. 
+
+10 Select the icon preview under Image, right-click, and click Refresh 
+Image. Then, click OK. The material tool is now represented on the palette by the AutoCAD Architecture cube icon with correct material display. 
+
+
+Material Components and Display Properties 
+Each material definition has the following display components that determine the appearance of object components to which a material has been assigned: 
+¦ 
+Linework 
+
+¦ 
+Plan Hatch 3D Body 
+
+¦ 
+Surface Hatch 
+
+¦ 
+Section Hatch 
+
+¦ 
+Sectioned Body and Boundary 
+
+
+After you have specified display components of an object to be By Material, then you can no longer change the display component properties of that object. 
+The material components correspond to groups of object display properties or to display property types. For example, the material Linework component determines the appearance of linework components in 2D plan views, such 
+
+

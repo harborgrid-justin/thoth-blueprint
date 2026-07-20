@@ -1,0 +1,783 @@
+[MIGRATED TO RTM_PART_49.md - MATERIALS]
+as wall shrinkwraps, mass element boundaries or door frames. Surface Hatch determines the appearance of all surface hatching on objects in model and elevation views. 
+When you specify that the component of an object is displayed by material, the component uses the display properties of the associated material, instead of the display properties of the object. Only object components that correspond to a physical component of the object can be assigned material definitions. For more information, see Objects That Support Materials on page 873. 
+Material definitions cannot be assigned to a custom display block, but objects that are within custom display blocks may have material definitions assigned. 
+For a detailed list of object components mapped to material components, see the Help topics for the objects. 
+Linework Material Component 
+The Linework component is used for object components representing linework in 2D plan and elevation views, such as wall boundaries, door frames, or mass element boundaries. 
+Viewing wall plan view linework material components 
+
+
+Plan Hatch Material Component 
+The Plan Hatch component is used for hatching display components in plan views, such as wall component hatches, mass element hatches, and slab hatches. 
+Viewing wall plan view hatching material components 
+
+
+3D Body Material Component 
+The Body component is used for object components representing linework in 3D model views, such as wall bodies, mass element boundaries, door frames, and window frames. 
+Viewing 3D body material components 
+
+
+Surface Hatch Material Component 
+The Surface Hatch component is used for hatching display components in 3D model views, sections, and elevations. Section hatching is used on the cut face of a sectioned object or component. 
+Viewing surface hatching material on a wall elevation 
+
+You can specify the faces of an object that display the surface hatch within the material definition. For example, you can specify that the hatch be on only the front and left side of the object. 
+Specifying wall face surface hatching assignments 
+
+For more information about surface hatch faces, see Specifying the Surface Hatch Pattern of a Material Definition on page 909. 
+
+2D Section/Elevation Linework 
+The 2D Section/Elevation Linework component is used specifically for 2D building sections or building elevations. All linework in a 2D section/elevation can be controlled by this component. For more information about using material definitions in elevations, see Surface Hatch Linework in Elevations on page 3338. 
+Viewing 2D elevation linework on a wall 
+
+
+Section Hatch Material Component 
+The Section Hatch component is used specifically for building sections. It is used for hatches on object faces cut by a section line. Section hatches can be applied to 2D sections, 3D sections, and live section views. For more information about using material definitions with sections, see Section Hatch Linework on page 3273. 
+Viewing a 2D wall section with section hatch 
+
+
+Sectioned Body and Sectioned Boundary 
+The Sectioned Body and Sectioned Boundary components display only in live section views. Live section views are special section views of a 3D building model. The building objects are not converted into a section object but are retained as individual objects in the section. They keep their properties and display components and may be edited in the section. The display of the views exterior to the live section is changed to be Sectioned Body. This display can be semi-transparent or hidden. 
+Material Component Description 
+Sectioned Body the objects or object parts outside the sec­tion 
+Sectioned Boundary the outline of the cut line created by the section 
+For detailed information about live section views, see Creating and Editing a Live Section View on page 3237. 
+Live section view with sectioned body (gray) and sectioned boundary (red) 
+
+
+
+
+Displaying Materials in a Drawing 
+Use this procedure to turn on material definitions in a display representation if they are assigned to objects but are not displayed in the drawing. For more information, see Display System Structure on page 787. 
+1 Click Manage tab . Style & Display panel . Display Manager . 
+
+2 Expand Configurations. The current display configuration is marked in bold. 
+3 Expand the current display configuration. 
+4 Select a display set in the current display configuration. 
+5 Click the Display Representation Control tab. 
+6 Scroll to Material Definition and select a display representation. By default, material definitions have only a General display representation. If this is the only available display representation listed, select it. If you created another display representation for material definitions, you can select that representation instead. 
+NOTE Make sure that you select only one display representation for material definitions in each display set. You should also verify that the component’s object layer is turned on. 
+7 Repeat steps 4–6 to select a display representation for material definitions in the other display sets in the current configuration. 
+8 Click OK. The material assignments you made now display in the drawing. 
+
+Working with Surface Hatches 
+Surface hatches are hatch patterns on three-dimensional (3D) objects that display in 3D model views and elevation views. 
+Each 3D object has a number of faces: Top, Bottom, Left, Right, Front, and Back. You can decide whether an object should carry a surface hatch. For example, if you view a wall in 3D view, you might want to hatch only the side facing you to avoid cluttering the drawing. 
+The faces of an object that carry the surface hatch are specified in the material definition. All objects with that material definition assigned show the same surface hatch assignment, unless you create an individual surface hatch override. 
+Defining the faces on a regular object, such as a wall, slab, or box-shaped mass element, is intuitive. Front, Back, Left, Right, Top and Bottom are clearly defined faces that can easily be assigned material definitions. However, defining the direction in which each face lies can be more complex for different, irregularly shaped objects, such as curved objects, extrusion objects, or Free Form objects resulting from Boolean operations. 
+For information about changing the surface hatch assignments of a material definition, see Specifying the Surface Hatch Pattern of a Material Definition on page 909. 
+For information about surface hatch overrides, see Overriding the Surface Hatch on Individual Objects on page 895. 
+Specifying object face material assignments 
+
+Surface Hatches on Curved Surfaces 
+Curved surfaces do not have all the view directions you can specify in the material definition. It is important to know that the faces are designated on curved surfaces to understand how surface hatching is applied when these objects are assigned material definitions. 
+An object with a vertically curved surface, such as a Barrel Vault mass element, has no front and back faces, as nothing could delineate them. The curved surface of the Barrel Vault mass element is considered to be the top face of the object. 
+Barrel vault mass element with material assigned to top face 
+
+An object with a horizontally curved surface, such as a Cylinder mass element, has no left and right sides, as nothing can delineate them. The curved surface is considered to be the front face. 
+Cylinder mass element with material assigned to front face 
+
+An object that has only one curved surface, such as a Sphere mass element, has only a front face. 
+Sphere mass element with material assigned to front face 
+
+
+
+Surface Hatches on Multiple Faces 
+Irregular and complex objects can have multiple faces in one view direction. If necessary, you can override the surface hatch on all faces with the same view direction, or on individual faces. For information about overriding individual faces, see Overriding the Surface Hatch on Individual Objects on page 895. 
+Stair with material assigned to treads 
+
+
+
+Surface Hatches on Extrusions 
+The surface hatch placement on objects created from an extruded profile depends on two factors: 
+¦ 
+the view directions assigned to the individual edges of the profile 
+
+¦ 
+the direction of the extrusion The desired extrusion direction depends on the object you want to extrude from the profile. A rail, for example, is extruded in the X direction. A railing post is extruded in the Z direction. Custom door and window shapes are extruded in the Y direction. 
+
+
+Face assignments from edges extruded in the X direction 
+
+Face assignments from edges extruded in the Y direction Face assignments from edges extruded in the Z direction 
+
+
+
+Specifying Faces on Extrusions 
+Use this procedure to specify the faces on object components created from extruding a profile. These objects and components include extruded mass elements, wall body modifiers, custom railing components, and other components extruded from a profile. 
+When you create a profile, all the edges are marked for extrusion in the Z direction. These edge positions are calculated based upon the quadrant in which the midpoint of the edge lies. You can change the view direction of edges and the extrusion direction in the profile definition. 
+Determine the direction of the profile edges before creating objects from the profile. For example, if you created a profile for a custom railing baluster and specified the direction of the individual edges, any baluster added to the railing based on that profile has those assignments. If you later change the edge view direction in the profile, existing balusters do not change accordingly. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . 2 Expand Multi-Purpose Objects, and expand Profiles. 3 Select the profile for the extrusion. 4 Click the Profile Edges tab. 
+
+5 Select an extrusion direction. 
+6 For each edge, select a position that corresponds to the view direction you want to assign to the face created from that edge. The edge positions that are available depend on the extrusion 
+direction you selected. 
+7 Click OK. 
+
+Surface Hatches on Free Form Mass Elements 
+Free Form mass elements are created when you perform a Boolean operation on a standard mass element by adding, subtracting or intersecting another mass element. The resulting mass element can be irregularly shaped. For more information, see Mass Elements and Mass Groups on page 989. 
+When a mass element is converted into a Free Form mass element, all previous material assignments of the source mass elements are lost. The new mass element reverts to the Standard material definition. You can assign another definition to the new mass element. 
+
+
+Overriding the Surface Hatch on Individual Objects 
+The surface hatch specified for a material determines the display of objects that are assigned the material in elevation and model views, as well as the appearance in rendered views. The material definition specifies which faces of objects—Top, Bottom, Left, Right, Front, Back—display a surface hatch. 
+However, in some instances, you may want to override the surface hatch for a selected face of an object. For example, you may want to turn off the surface hatch where it could obscure small details of an object when the drawing is plotted. 
+Override Operations 
+You can change the surface hatches for faces of individual objects in the following ways: 
+¦ 
+hide the surface hatch 
+
+¦ 
+change the rotation of the surface hatch 
+
+¦ 
+change the vertical and horizontal offsets of the surface hatch 
+
+
+You can also specify whether the changes are applied only to the selected face or to all faces of the object with the same direction—for example, to all front faces. 
+
+Multiple Surface Hatch Overrides 
+You don’t need to create separate overrides for individual changes; you can create one surface hatch override that is both rotated and offset. In most cases, this is the preferred method of working. However, in some cases, you need to assign more than one override. For example, suppose you want to rotate the surface hatch of all front faces of a column, and you want to offset one individual front face. You first add an override for the rotation and select All Front Faces. Then you add an override for the offset in which you select Only Selected Front Face. 
+
+Hiding a Surface Hatch 
+Use this procedure to hide the surface hatch on an object face. 
+To add an override to a surface hatch, an object needs to have a surface hatch material assigned to it. A surface hatch on an object can come from an assigned material or from the display properties of the object or object style. 
+If a surface hatch comes from the display properties of the object instead of from the material assignment, you cannot override it on individual faces. You receive an error message upon selecting the object face. 
+1 Select the object for which you want to hide an individual surface hatch, then click <Object> tab . Surface Hatch panel . Add 
+Override
+ . 2 Select the object face where you want to hide the surface hatch. A profile surrounds the selected face. 
+Profile defining a face of a wall 
+
+3 Specify where the override applies: 
+If you want to… Then… 
+override only the selected face of  select Only Selected <Direction>  
+the object  Face for Faces. For example, to ap­ 
+ply a surface hatch override only to  
+the selected Front face of a wall,  
+select Only Selected Front Face.  
+
+override all faces of the object in  select All <Direction> Faces for  
+the same view direction  Faces. For example, to apply a sur­ 
+face hatch override to all Top faces  
+of a selected column, select All Top  
+Faces.  
+
+4 Select Hide Surface Hatching. 
+Surface hatch hidden on the front face of a wall 
+
+5 Click OK. 
+
+Displaying a Hidden Surface Hatch 
+Use this procedure to display a previously hidden surface hatch. 
+An object must have a surface hatch material assigned to it in order to add an override to a surface hatch. A surface hatch on an object can come from an assigned material or from the display properties of the object or object style. 
+If a surface hatch comes from the display properties of the object instead of from the material assignment, you cannot override it on individual faces. You receive an error message upon selecting the object face. 
+1 Select the object for which you want to redisplay a hidden individual surface hatch, and click <Object> tab . Surface Hatch 
+panel . Edit Override
+ . 2 Select the profile around the hidden surface hatch. 
+3 Click Edit In Place tab . Profile panel . Edit Hatch Override . 
+
+4 Under Overrides, clear Hide Surface Hatching. 
+5 Click OK. 
+6 Click 
+(Finish) on the Edits panel to save the changes. 
+
+Specifying the Rotation of a Surface Hatch 
+Use this procedure to specify the rotation of a surface hatch. 
+1 Select the object for which you want to rotate an individual surface hatch, and click <Object> tab . Surface Hatch panel . Add Override
+ . 
+2 Select the object face where you want to change the rotation. A profile surrounds the selected face. 
+3 Specify where the override applies: 
+If you want to… Then… 
+override only the selected face of  select Only Selected <Direction>  
+the object  Face for Faces. For example, to ap­ 
+ply a surface hatch override only to  
+the selected Front face of a wall,  
+select Only Selected Front Face.  
+
+override all faces of the object in  select All <Direction> Faces for  
+the same view direction  Faces. For example, to apply a sur­ 
+face hatch override to all Top faces  
+of a selected column, select All Top  
+Faces.  
+
+4 Specify the rotation of the surface hatch. 
+Specifying surface hatch rotation angles 
+
+5 Click OK. 
+
+Specifying the Horizontal and Vertical Offset of a Surface Hatch 
+Use this procedure to specify the horizontal and vertical offset of a surface hatch. 
+An object must have a surface hatch material assigned to it in order to add an override to a surface hatch. A surface hatch on an object can come from an assigned material or from the display properties of the object or object style. 
+If a surface hatch comes from the display properties of the object instead of from the material assignment, you cannot override it on individual faces. You receive an error message upon selecting the object face. 
+Changing the offsets of a surface hatch lets you adjust the hatch pattern on individual faces to align with the face edges or to improve the appearance of the hatch. 
+Specifying surface hatching offset and alignment 
+
+1 Select the object for which you want to change the hatch pattern offset, and click <Object> tab . Surface Hatch panel . Add Override
+ . 
+2 Select the object face where you want to change the hatch pattern offset. A profile surrounds the selected face. 
+3 Specify where the overrides applies: 
+If you want to… Then… 
+override only the selected face of  select Only Selected <Direction>  
+the object  Face for Faces. For example, to ap­ 
+ply a surface hatch override only to  
+the selected Front face of a wall,  
+select Only Selected Front Face.  
+
+override all faces of the object in  select All <Direction> Faces for  
+the same view direction  Faces. For example, to apply a sur­ 
+face hatch override to all Top faces  
+of a selected column, select All Top  
+Faces.  
+
+4 Specify the horizontal and vertical offsets of the surface hatch. 5 Click OK. 
+
+Editing Surface Hatch Overrides 
+Use this procedure to edit a surface hatch override that you applied to an object. 
+1 Select the object that has a surface override you want to change, and click the <Object> tab . Surface Hatch panel . Edit Override
+
+ . 2 Select the profile of the face you want to edit. If you have multiple surface hatch overrides on one object face, be sure to select the override you want to change. 
+3 Click Edit In Place tab . Profile panel . Edit Hatch Override . 
+
+4 Edit the surface hatch override: 
+If you want to… Then… 
+hide a surface hatch select Hide Surface Hatching. 
+re-display a hidden surface hatch clear Hide Surface Hatching. 
+change the rotation of the surface enter a value for Rotation, or click hatch
+
+ and specify the rotation on screen. 
+change the offset of the surface enter a value for X Offset or Y Off-hatch 
+set, or click 
+and specify the offset on screen. 
+5 Click OK. 
+6 Click 
+(Finish) on the Edits panel to save the changes. 
+
+
+
+Displaying a List of Materials 
+Use this procedure to create a list of material definitions and corresponding volumes for the objects that you select. The list includes all material definitions used in the selected objects as well as the total volume of each material definition. You can use the information for preliminary cost estimates. 
+1 On the command line, enter materiallist. 2 Select the objects you want to include in the list, and press ENTER. 3 Press F2. 
+The material definitions list is displayed in the AutoCAD® text window. 
+NOTE You can also select the list of material definitions, and then press CTRL+C to copy it, and CTRL+V to paste it into Microsoft® Word. 
+
+Displaying a Material Query 
+Use this procedure to obtain volume information for a selected material definition. The results of the query include the total volume for all objects with a selected material definition. For example, if you have two brick walls within your selection set, and each has a volume of 8.85 m3, the overall volume of brick objects is listed as 17.7 m3. You can use that information for preliminary cost estimates. 
+1 On the command line, enter materialquery. 
+2 Select the objects you want to include in the query, and press ENTER. 
+3 Select the material definition you want to query. For example, if you want to query for bricks, select Brick from the list. 
+4 Click OK. All objects assigned the selected material definition are highlighted in the drawing. 
+5 Press F2. The volume for the selected material definition is displayed in the AutoCAD® text window. 
+
+Process Overview: Creating and Assigning Materials 
+AutoCAD Architecture offers a number of predefined building material definitions in the drawing templates. You can also create your own custom material definitions. All material definitions used in a project are listed under Material Definitions in the Style Manager. 
+The material definitions are listed in alphabetical order. Devising a naming convention for your material definitions allows you to locate them quickly. For example, you might create glazing definitions named “glass.interior.clear,”“glass.exterior.tinted,” and “glass.exterior.clear.” These would appear in the following order under Material Definitions: 
+¦ 
+glass.exterior.clear 
+
+¦ 
+glass.exterior.tinted 
+
+¦ 
+glass.interior.clear 
+
+
+The following steps describe the process of creating a material definition and assigning it to an object or object style: 
+1 Create a material definition for each material needed and specify the 
+display properties of these definitions. For example, create a brick material definition that shows a dark red surface hatch, matching dark red linework components, an appropriate section hatch, and a brick rendering material. Or, create a glass material definition that has light blue linework, a transparent surface, and a light blue rendering material. 
+For more information, see Creating and Editing Material Definitions on page 905. 
+2 In object styles, assign a material definition to represent each component. For example, in a window style, assign a wood material definition to the frame and the muntins and a glass material definition to the window glass. Or, if you are working with a wall style, assign a brick material definition to the wall body and an insulation material to insulation components. 
+3 Make sure that the corresponding display properties of the object or object style are in all display representations specified as By Material. 
+4 For object components that do not use material definitions, specify the 
+display properties in each display representation. For example, if you want the graphic representation of a door swing to match the dark brown door frame, open the display properties of the door style, and change the color of the door swing to a dark brown. Perform this step for each display representation in which the door swing appears. 
+When you create objects from these styles, their components are displayed as follows: 
+¦ 
+If you have selected By Material in the Display Properties, then the object components that have material definitions assigned show the display properties you specified in the material definition. 
+
+¦ 
+Object components that have no material definitions assigned show the display properties you specified in the object style. 
+
+
+
+Creating and Editing Material Definitions 
+Material definitions are created, edited, copied, or purged in Style Manager. The Style Manager provides a central location in AutoCAD Architecture where you can work with styles from multiple drawings and templates. Material definitions contain settings for the hatching, scale, and color of materials, plus rendering materials. You can find predefined material definitions in 
+C:\ProgramData\Autodesk\ACA 2011\enu\Styles\<Imperial or Metric>\Material Definitions.dwg. For more information about using the Style Manager, see Style Manager Overview on page 856. 
+Creating a Material Definition 
+Use this procedure to create a definition for the material you wish to use. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Material Definitions. 3 Create a material definition: 
+If you want to… Then… 
+create a new definition with default right-click Material Definitions, and properties click New. 
+create a new definition from an ex-right-click the material definition isting definition you want to copy, and click Copy. Right-click, and click Paste. 
+4 Enter a name for the new material definition, and press ENTER. 5 Edit the properties of your new definition: 
+
+If you want to… Then… 
+enter a description of the material click General. Enter a description of definition the material definition. 
+change the layer/color/linetype see Defining the Layer, Color and properties Linetype of a Material Definition on page 906. 
+change the hatching patterns see Specifying the Plan and Section Hatch Patterns of a Material Defini­
+tion on page 907. 
+assign surface hatching to individual see Specifying the Surface Hatch object faces Pattern of a Material Definition on page 909. 
+assign surface and live section ren-see Assigning Render Materials on dering materials page 911. 
+exclude components from 2D see Excluding a Material Definition shrinkwrap from 2D Section Shrinkwrap on page 914. 
+add notes, files, or documents to see Attaching Notes and Files to a the definition Material Definition on page 918. 
+6 When you finish changing the material definition properties, click OK. 
+
+
+Defining the Layer, Color and Linetype of a Material Definition 
+Use this procedure to define the layer, color, and linetype of the material components. For detailed descriptions of the individual material components, see Material Components and Display Properties on page 884. 
+NOTE If you turn off a display component in the material definition, object components assigned that material definition do not display in the drawing. For example, if you turn off the Linework component in a material definition, and assign that definition to a door frame component, the door frame does not display in plan views. 
+
+1 Click Manage tab . Style & Display panel . Style Manager The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Material Definitions. 3 Select the material definition you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and verify that Style Override is checked. The display representation in bold is the current display representation. 
+6 If necessary, click 
+. 7 Click the Layer/Color/Linetype tab. 8 Select the component to change, and select a different setting for 
+the property. 9 Click OK. 
+
+Specifying the Plan and Section Hatch Patterns of a Material Definition 
+Use this procedure to change the patterns for the Plan, Hatch, and Section Hatch components of a material definition. For detailed descriptions of individual hatch components, see Material Components and Display Properties on page 884. 
+For more information about specifying surface hatch patterns, see Specifying the Surface Hatch Pattern of a Material Definition on page 909. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Material Definitions. 3 Select the material definition you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and verify that Style Override is checked. 
+The display representation in bold is the current display 
+representation. 
+6 If necessary, click 
+. 7 Click the Hatching tab. 8 Select Plan Hatch or Section Hatch, and click the setting for 
+Pattern. 9 Select the hatching for the component: 
+If you want to… Then… 
+select a hatching pattern that is select Predefined for Type, and then available in the software select a pattern. 
+select a custom pattern select Custom for Type, and then enter the name of the custom pat­tern. If necessary, click Browse, and navigate to the location where the custom pattern file is located. 
+select single hatching select User-defined for Type, and clear Double Hatch. 
+select double hatching select User-defined for Type, and select Double Hatch. 
+select solid fill select Solid Fill for Type. 
+10 Click OK. 11 Click Scale/Spacing, and enter a value that determines how the 
+selected pattern is repeated. 
+12 Click Angle, and enter the angle for the selected pattern. 
+13 Click Orientation, and specify how the hatching is oriented: 
+
+If you want to… Then… 
+orient the hatching to the object, select Object. regardless of the object rotation 
+orient the hatching to the World select Global. Coordinate System 
+Specifying surface hatching orientation 
+
+14 Click OK. 
+
+
+Specifying the Surface Hatch Pattern of a Material Definition 
+Use this procedure to specify the pattern used for the surface hatch. 
+Specifying material assignment by object face 
+
+NOTE After you assign a material definition to an object, you can edit the surface hatches for the individual faces of the object. For more information about editing surface hatches, see Overriding the Surface Hatch on Individual Objects on page 895. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Material Definitions. 3 Select the material definition you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and verify that Style Override is checked. The display representation in bold is the current display representation. 
+6 If necessary, click 
+. 7 Click the Hatching tab. 8 Select Surface Hatch, and click the setting for Pattern. 9 Select the hatching for the component: 
+
+If you want to… Then… 
+select a hatching pattern that is select Predefined for Type, and then available in the software select a pattern. 
+select a custom pattern select Custom for Type, and then enter the name of the custom pat­tern. If necessary, click Browse, and navigate to the location where the custom pattern file is located. 
+select single hatching select User-defined for Type, and clear Double Hatch. 
+select double hatching select User-defined for Type, and select Double Hatch. 
+select solid fill select Solid Fill for Type. 
+10 Click OK. 11 Click Scale/Spacing, and enter a value that determines how the 
+selected pattern is repeated. 
+12 Click Angle, and enter the angle for the selected pattern. 
+13 Click Orientation, and specify how the hatching is oriented: 
+
+If you want to… Then… 
+orient the hatching to the object, select Object. regardless of the object rotation 
+orient the hatching to the World select Global. Coordinate System 
+Specifying surface hatch orientation 
+
+14 Click the Other tab. 
+15 For Surface Hatch Placement, select the object faces on which the surface hatching is displayed. 
+16 Click OK. 
+
+
+Assigning Render Materials 
+Use this procedure to assign materials for rendering object surfaces. 
+In shaded view and rendered views, objects may display rendering materials instead of the hatch patterns that are displayed in 2D wireframe and hidden line views. The following types of rendering materials are available: 
+Render Material Type Description 
+Surface Rendering Material Any object face that has surface hatching applied displays the hatching in the Auto-CAD renderer 
+Live Section Rendering Material All faces cut by a live section line display the live section rendering material when rendered with the AutoCAD renderer 
+Live Section Sectioned Boundary Rendering All objects and object parts outside the live 
+Material section line display the sectioned boundary material when rendered with the Auto-CAD® renderer 
+You can assign rendering materials to two different types of component: 
+¦ 
+Object surfaces: All object surfaces that have a surface hatch applied to them can also have a rendering material assigned. If you want to assign a rendering material to an object surface, make sure that the Surface Hatch component in the material definition is turned on. 
+
+¦ 
+Live section views: The Sectioned Body component of a live section view as well as the live section cut plane can have special rendering materials assigned. If you want to assign rendering materials to a live section view, make sure that the Sectioned Body component in the material definition is turned on. 
+
+
+Rendered live section view with transparent outside component 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Material Definitions. 3 Select the material definition you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and verify that Style Override is checked. The display representation in bold is the current display representation. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Select rendering materials for the individual material components: 
+
+If you want to… Then… 
+assign a rendering material to ob- select a material for Render Materi­ 
+ject surfaces  al. Then select a mapping type for  
+Mapping:  
+¦ If you select Same as Surface  
+Hatch, only those surfaces selec­ 
+ted under Surface Hatch Place­ 
+ment are rendered.  
+
+
+If you want to… Then… 
+¦ If you select Face Mapping, all surfaces are rendered and any hatch alignment overrides are ignored. 
+assign a rendering material to the select a material for Cut Surface cut plane of a live section view Render Material. 
+assign a rendering material to the select a material for Sectioned Body body component outside the live Render Material. section line 
+If you don’t find the correct rendering material or if you want to see a preview of the material, click the Browse button and browse for the desired material. 
+9 Select a new rendering material, if necessary. 10 Click OK. 
+
+
+Excluding a Material Definition from 2D Section Shrinkwrap 
+Use this procedure to exclude components with a specific material definition assigned to them from the shrinkwrap of a 2D section. 
+When you create a 2D section, you can display a section component named Shrinkwrap. The shrinkwrap is the union of all object faces cut by the section line, merged into one component with one hatch pattern. This is a view frequently used for a 2D section. 
+By default, all components that are assigned material definitions are included in the shrinkwrap. However, you may want to exclude certain material definitions, such as glass, from the shrinkwrap. 
+2D section shrinkwrap with glass excluded (left) 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Material Definitions. 3 Select the material definition you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. The display representation in bold is the current display representation. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Select Exclude from 2D Section Shrinkwrap. 9 Click OK. 
+
+Controlling the Display of Hidden Lines by Material 
+Use this procedure to control whether hidden lines of a material should be displayed in a section or elevation. 
+You could do this, for example, if you want to display concrete walls and footings that are hidden by the ground and by other walls. Another frequent use could be to display structural members that are located behind walls. 
+Displaying hidden foundation walls 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Material Definitions. 3 Select the material definition you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. The display representation in bold is the current display representation. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Under 2D Section/Elevation Rules, select Display Hidden Edges 
+for this Material. 9 Click OK. 
+
+Merging Material Definitions in a 2D Section/Elevation 
+Use this procedure to merge material definitions when creating a 2D section/elevation. 
+Sometimes a single object in real-life is modeled with different objects in AutoCAD Architecture. An example is concrete foundations, which are modeled from slabs and walls. These objects should appear as one foundation object in sections and elevations. The new option to merge common material definitions facilitates this result. When a 2D section/elevation is created, all objects of that material definition are combined into a single object. Edges between coplanar faces are removed. 
+Walls and slabs merged (right) 
+
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Material Definitions. 3 Select the material definition you want to change. 4 Click the Display Properties tab. 5 Select the display representation where you want the changes to 
+appear, and select Style Override. The display representation in bold is the current display representation. 
+6 If necessary, click 
+. 7 Click the Other tab. 8 Under 2D Section/Elevation Rules, select Merge Common 
+Materials. 9 Click OK. 
+
+Attaching Notes and Files to a Material Definition 
+Use this procedure to enter notes and attach reference files to a material definition. You can also edit notes and edit or detach reference files from a material definition. 
+1 Click Manage tab . Style & Display panel . Style Manager
+ . The Style Manager is displayed with the current drawing expanded in the tree view. 
+2 Expand Multi-Purpose Objects, and expand Material Definitions. 3 Select the material definition you want to change. 4 Click the General tab. 5 To add a description to the material definition, enter it for 
+Description. 6 Click Notes. 7 To add a note, click the Notes tab, and enter the note. 8 Click the Reference Docs tab, and attach, edit, or detach a 
+reference file: 
+If you want to… Then… 
+attach a reference file click Add, select a file, and click OK. 
+edit the description of a reference select the file, and click Edit. Enter file the description, and click OK. 
+edit a reference file double-click the reference file name to start its application. 
+detach a reference file select the file name, and click De­lete. 
+9 Click OK. 
+
+
+
+
+Content Creation Guidelines 
+14 
+In this guide the term content refers generically to various types of elements that you can create to customize your installation of AutoCAD Architecture. These elements can be style-based or symbol-based and include items such as plot style tables, layers, layer key styles, layer standards, and drawing template files. While there are many ways in which you can create and structure your custom content, there are several standards and conventions (both documented and de-facto) that you can follow to make your custom tools more efficient and more portable between different environments and organizations. This document is not step-by-step guide for creating custom content; instead it focuses on identifying the relevant standards, conventions and best practices. 
+General Content Standards and Conventions 
+It is important to understand the various types of content, where they are stored and how they are made accessible to users. AutoCAD Architecture includes support for various CAD standards. Understanding how these are applied will assist you in creating your own customized content that works with the existing standards and conventions. 
+Content Types 
+AutoCAD Architecture content takes several forms and can be stored in a variety of locations. 
+¦ Drawing templates: The drawing template file is perhaps the most critical of content items in AutoCAD Architecture. In addition to standard AutoCAD items such as layers and dimension styles, the templates contain critical drawing and display settings. All AutoCAD Architecture model and sheet drawings should start with a template. Drawing templates are usually stored in the folder established in the AutoCAD Options dialog for template file storage. Additionally you can specify a default template to be used whenever the QNEW command is invoked. Finally, a default plot sheet template is usually specified as one of the sheet set properties for an AutoCAD Architecture project. 
+¦ Styles: Most AutoCAD Architecture objects, whether they are geometric objects or documentation objects, are based on styles. Any successful AutoCAD Architecture implementation will most likely consist of several custom styles and definitions. Most styles should be stored in one or more style library drawings, in a location that is accessible by all users. Usually, styles can be easily accessed by users from a tool on a palette or in a tool catalog. 
+NOTE Although some styles may be stored in the drawing template, this should be kept to a minimum and limited to those styles and definitions that are required for other content in the template. 
+¦ Design and General Documentation Symbols: These are best stored as AEC Content, which is created using the Create AEC Content wizard. Palette-based tools can also access these symbols. 
+NOTE Some symbol-based content, such as multi-view blocks used for column grid bubbles, can be stored in the drawing template. As with styles, however, this should be kept to a minimum. Once a symbol is stored as AEC Content, you can access it through Design Center™. 
+¦ 
+Callout Symbols: These are special symbols that use attributes with field values to automate drawing coordination when you are placing keys for elevations, sections and details. The blocks that define callouts are stored in a library drawing and are accessed through palette-based tools. 
+
+¦ 
+Schedule Tags: Based on multi-view block definitions, schedule tags capture and display property set data for objects in a drawing. Like callout symbols, schedule tags are stored in a library drawing and accessed from a palette-based tool. 
+
+¦ 
+Layer Key Styles: While they can be stored in the drawing template, it is better to keep layer key styles in a central library drawing. When setting up a drawing, you can specify that a particular layer key style automatically loads each time a drawing is opened. This way if a layer key style is updated, a drawing that is already in progress will always be using the latest version. 
+
+
+¦ 
+Layer Standards: Defined in the Layer Manager, layer standards are stored in the same library drawing as the layer key style with which they are associated. When the layer key style is imported into a drawing, the layer standard on which it is based will import also. 
+
+¦ 
+Display Configurations: Default display configurations are stored in the drawing template. 
+
+
+TIP Most content types have associated naming conventions that are documented in this guide. As a global convention, it is acceptable to prefix any name with a company or organization name to differentiate your custom content from the default content supplied with AutoCAD Architecture. 
+
+National CAD Standard Compliance 
+The National CAD Standard version 3.1 is a consensus standard compiled from three existing standards and guidelines by NIBS (The National Institute of Building Sciences). These consist of the AIA Layer Guidelines version 3.0, the CSI Uniform Drawing System (UDS) and the Tri-Services Plotting Guidelines. The National CAD Standard v. 3.1 is supported where possible in AutoCAD Architecture through the use of pre-configured Layer Standards, Layer Key Styles, plot style tables and annotation tools. While it is not required that custom content be compliant, when creating new content for use in the United States you should take this support into account. 
+The Imperial templates provided with AutoCAD Architecture are pre-configured to load the AIA Version 3 Layer Key Style by default. This is based on the AIA Version 3 Layer Standard, which is in turn compliant with the AIA Layer Guidelines version 3.0. 
+The AIA v3 Layer Key Style includes line weights and linetypes that are in accordance with the Uniform Drawing System, and the colors that it specifies are compliant with the Tri-Services plotting guidelines. Additionally, the drawing default display representations for all objects in the template files have been configured to adhere to the Tri-Services Guidelines and Uniform Drawing System recommendations by assigning appropriate colors, linetypes, line weights and plot styles to all display components. 
+There are twelve templates that are provided with the AutoCAD Architecture sold in the United States, and each one is pre-configured to use a specific plot style table: 
+Template File Name Description Default Plot Style Table 
+AEC Model (Imperial  Used for model drawings  AIA Standard.ctb  
+Ctb).dwt  with imperial (architectural)  
+units and set up for color- 
+based plotting.  
+
+AEC Model (Imperial  Used for model drawings  AEC Standard.stb  
+Stb).dwt  with imperial (architectural)  
+units and set up for named  
+plot styles.  
+
+AEC Sheet (Imperial  Used for plot sheet draw- AIA Standard.ctb  
+Ctb).dwt  ings with imperial (architec­ 
+tural) units and set up for  
+color-based plotting.  
+
+AEC Sheet (Imperial  Used for plot sheet draw- AEC Standard.stb  
+Stb).dwt  ings with imperial (architec­ 
+tural) units and set up for  
+named plot styles.  
+
+AEC Model (Metric  Used for model drawings  AIA Standard.ctb  
+Ctb).dwt  with metric (decimal) units  
+and set up for color-based  
+plotting.  
+
+AEC Model (Metric  Used for model drawings  AEC Standard.stb  
+Stb).dwt  with metric (decimal) units  
+and set up for named plot  
+styles  
+
+AEC Sheet (Metric Ctb).dwt Used for plot sheet draw-AIA Standard.ctb ings with metric (decimal) units and set up for color-based plotting. 
+AEC Sheet (Metric Stb).dwt Used for plot sheet draw-AEC Standard.stb ings with metric (decimal) 
+Template File Name Description Default Plot Style Table 
+units and set up for named plot styles. 
+Structural (Imperial  Used for structural model  AIA Standard.ctb  
+Ctb).dwt  drawings with imperial (ar­ 
+chitectural) units and set up  
+for color-based plotting.  
+
+Structural (Imperial  Used for structural model  AEC Standard.stb  
+Stb).dwt  drawings with imperial (ar­ 
+chitectural) units and set up  
+for color-based plotting.  
+
+Structural (Metric Ctb).dwt Used for structural model AIA Standard.ctb drawings with metric (decimal) units and set up for color-based plotting. 
+Structural (Metric Stb).dwt Used for structural model AEC Standard.stb drawings with metric (decimal) units and set up for named plot styles. 
+NOTE By default the software is configured to use the AEC Model (Imperial Stb).dwt for model drawings and the AEC Sheet (Imperial Stb).dwt for plot sheet drawings. 
+In addition to the default plot style tables assigned to the imperial and metric templates, there are several additional optional tables provided. Many of these are for use with older legacy templates and drawing files: 
+
+Plot Style Table Description 
+AEC Standard.stb Default plot style for templates using named plot styles. This table uses generic names for plot styles and passes line weight control to the layer and object properties. All objects plot black. 
+AIA Standard.ctb Default plot style for templates set up for color-based plotting. This table maps each color to an explicit line weight according to the Tri-Services guidelines. 
+
+Plot Style Table Description 
+AIA Standard Color.ctb Optional plot style for templates using color-based plotting. All colors are mapped to explicit line weights according to the Tri-Services guidelines. Colors are con­trolled by the objects and layers. 
+AEC Standard Color.stb Optional plot style for templates using named plot styles. This table uses the same names for plot styles as the AEC Stand­ard.stb plot style table, but objects will plot according to their AutoCAD color. 
+AIA Standard.stb Legacy plot style for older templates using named plot styles. This table includes plot styles named according to line weight definitions specified in the Uniform Draw­ing System. 
+AIA LWT by Object.ctb Legacy plot style for older templates using color-based plotting. All colors are mapped to black and line weight control is by layer and object properties. 
+AIA LWT by Object.stb Legacy plot style for older templates using named plot styles. All line weight control is by layer and object properties. 
+AIA Standard Color.stb Legacy plot style for older templates using named plot styles. Plot styles assign line weight explicitly. Colors are controlled by objects and layers. 
+AIA Color LWT by Object.ctb Legacy plot style for older templates using color-based plotting. Color and line weight control is by layer and object properties. 
+AIA Color LWT by Object.stb Legacy plot style for older templates using named plot styles. All plot styles assign color and line weight according to object and layer assignments. 
+Legacy named plot style tables have seemingly redundant plot style names that correspond to UDS line weight names. Many of these tables use the same plot settings for multiple plot styles. This was done to allow for consistency in naming when switching between plot styles. With the newer AEC Standard.stb plot style tables, this complex plot style naming has been abandoned in favor of a much more simplified system. Both the AEC Standard.stb and the AEC Standard Color.stb plot style tables use the same plot style names, however the former will plot all objects black while the latter will plot all objects according to their AutoCAD color. Aside from color vs. monochrome, the plot styles determine saturation: 
+¦ 
+Normal: Default plot style. Because this plot style is not editable, it is typically not used in the AutoCAD Architecture layer key styles or display settings. 
+
+¦ 
+Full Saturation: Objects assigned this plot style will plot either 100 percent black or 100 percent color, depending upon which plot style table is used. 
+
+¦ 
+50 Percent: Objects assigned this plot style will plot with a 50 percent screen. 
+
+¦ 
+25 Percent: Objects assigned this plot style will plot with a 25 percent screen. 
+
+¦ 
+Invisible Ink: This is a unique plot style. Regardless of whether the AEC Standard.stb or AEC Standard Color.stb plot style table is being used, objects on this plot style will plot cyan, to simulate the effect of a blue lead pencil from manual drafting days, which will not typically come through when reproduced on a monochrome copy machine or standard blueline machine. 
+
+
+The Uniform Drawing System also specifies formatting for symbology and annotation. This is supported in AutoCAD Architecture through the content provided in the Documentation Tool Catalogs and in the drawing templates themselves. 
+NOTE For more information on NIBS or to purchase a copy of the National CAD Standard documentation you can visit their web site at http://www.nibs.org/ 
+
+
+
+Content Resources 
+To create and distribute content effectively, it is important to have an understanding of where different types of content are best stored, and the possibilities each one of them provide towards a cohesive, well-managed system of templates, styles, symbols and tools. Careful attention should be paid to ease of user access, centralized storage and automation. 
+Template Drawings 
+There are a variety of things that should be kept in the template, however care should be taken to keeping it as “lean” as possible. Before storing content in a template you should consider other options, choosing to store it in the template only after confirming that it is the best possible location. Normally, the template itself should be stored in the location that is specified in the Options dialog under Template Settings. 
+Setting the template file location in the “Options” dialog box. 
+
+Items that should be included in the template file: 
+¦ 
+Layer definitions: Pre-defined layers should be kept to a minimum. Most layers are created when needed by the layer key style that is loaded into a drawing. Only include pre-defined layers for those other objects and settings that must be in the template before a Layer Key Style is loaded or any objects created. 
+
+¦ 
+Text styles: Include text style definitions to be used for standard notes and dimensions. 
+
+
+¦ 
+Title blocks, layouts and page setups: These should be created in templates intended for use as plot sheet templates. Templates that are intended to be used for sheet sets, especially, should have page setups saved within them to serve as overrides when publishing a sheet set. 
+
+¦ 
+Multi-view blocks: Normally these should be stored as AEC Content or tags, however if you want to use a custom column grid bubble block instead of the default grid bubble, you should store it in the template. 
+
+
+NOTE Custom blocks do not scale correctly if you copy objects to which they are attached (such as doors with door hardware) and paste them in a drawing that has drawing units specified differently. 
+¦ Classification definitions: Those classification definitions that you use frequently are best stored in your drawing template, so that they are readily available when you need to classify either a style or an individual object. 
+
+Items that should not be included in the template file: 
+¦ 
+Most styles: These should be kept in a style library drawing, with an associated palette-based tool that allows users to import the styles into the current quickly and easily on demand. Storing the styles in a style library and providing tool access to them keeps your drawings from becoming unnecessarily bloated due to unused styles in the drawing database. 
+
+¦ 
+Symbol-based content: These items are typically more effectively stored as AEC content or in the case of callouts and schedule tags, a library drawing. Again, palette-based tools provide quick and easy access to them on an as-needed basis. 
+
+¦ 
+Dimension styles: AEC dimensions and the standard AutoCAD dimension styles upon which they depend for their display do not need to be stored in the template. Instead, you can store these in the same way as other style-based content; in a style library drawing, and provide access to them through palette-based tools. 
+
+¦ 
+Layer key styles and layer standards: While these can be stored in the template, it is better to keep them in a library drawing and use the Drawing Setup dialog to make sure that the most current layer key style is automatically imported into a new drawing and any drawings that are already in progress upon opening. This ensures that you are always working with the most up-to-date version. 
+
+
+The layer settings in the Drawing Setup dialog. Note that a layer key style is set to 
+auto-import and that Save as Default is checked. This will ensure that even if you start 
+
+a drawing without a template, the correct layer key style will be loaded. Note also that 
+Always import Layer Key Style when first used in drawing is checked. This is a drawing-based setting and should be set in the template. This will ensure that the most current layer key style will also be used in drawings that are already in progress. 
+
+
+
+
+Style Library Drawings 
+Most style-based content should be kept in a centrally located library drawing, accessible to all users. In most cases, the styles contained in this file can be imported by selecting a tool on a palette. If you anticipate a large quantity of custom styles, you may wish to break your library drawings up by type to keep them more manageable. 
+General Guidelines for Style Library Drawings: 
+¦ 
+Start with a valid template drawing that includes all of your display configurations and correct units. This will allow you to edit or review styles in the library in the context in which they will be used. 
+
+¦ 
+If you are storing your style library on a mapped drive make sure that the drive is mapped identically on every user’s computer. AutoCAD Architecture supports UNC (Universal Naming Convention) pathing. If you are confident that your server names will not be changing you may want to consider 
+
+
+using this method of pathing to your style libraries to avoid drive mapping problems. 
+¦ If you need to restrict users’ ability to make changes to the style library, you can store it in a read-only folder. They will still be able to use the styles that it contains without any problems. 
+
+
+Template Projects 
+A well-planned template project can help you automate office standards and simplify the process of beginning and setting up a new project. Depending upon the type of work you do, your template project may be very complete or it may just form the basic framework for a project. If your work consists of unique designs and your building types vary, you may find that the most efficient template project is minimal in structure. On the other hand, if you work with a typical building type, or if you work with prototypical buildings you might find that a more complete template project that includes more information concerning specific project structure is more effective. 
+Creating a template project is not the same as simply copying and renaming an existing project. In order to properly call for a template, you must specify it at the time that you create your new project. 
+Specifying the template project from the Add Project dialog. This is the only time this can be done. When the new project is created, settings and files from the specified template project will be copied to the new project. 
+
+Template Drawings 
+AutoCAD Architecture projects have, as a project property, template file specifications that determine the drawing templates to use for constructs, elements and views. These template settings are independent from the template settings established in the Options dialog. These templates should be in a location accessible to all users. 
+
+Project Details 
+Accessible from the Project Properties dialog, the detailed information worksheet contains information that can be linked to title blocks via fields or embedded in MTEXT or block attributes. This data is completely user-defined. Include data that is common to all of your projects in the project details of the template project. 
+
+Sheet Sets 
+All AutoCAD Architecture projects include an AutoCAD sheet set (.dst) file. When you use a project as a template, its sheet set file gets copied over to your new project along with all of the other project files and folders, and it is renamed to match your new project. The sheet set file contains a variety of critical information that can be pre-configured as part of your overall project template. 
+Items that can be modified in the sheet set file as part of the template project: 
+¦ 
+Default sheet template file: This should be a sheet that has layouts defined in it to represent all of your standard plot configurations. It should also contain each layout saved as a page setup for use as overrides when publishing. 
+
+¦ 
+Subset structure: You can add and delete subsets to conform to your office’s standard sheet set layout and structure. 
+
+¦ 
+Sheets: You can create sheets in advance to further automate the sheet set structure. 
+
+¦ 
+Sheet set custom properties: You can define standard properties (data fields) that can be linked to your title block MTEXT or attribute fields. 
+
+
+NOTE If you define custom properties that are to be linked to a title block, you may want to consider providing a default value of “----” so that it will be obvious later on (if you have fields without values), and it will be easy to edit them. 
+
+Items that you should NOT include in a sheet set file for AutoCAD Architecture 
+¦ 
+Resource drawing locations: In AutoCAD Architecture your view drawings automatically become your resource drawings. This setting should remain blank in the sheet set properties for an AutoCAD Architecture project. 
+
+¦ 
+Label block for views: This is taken care of by the Title Mark tool on the AutoCAD Architecture tool palettes. These can also be customized to suit office standards. Leave this setting blank. 
+
+¦ 
+Callout blocks: As with title marks, these are taken care of by the various callout tools on the AutoCAD Architecture tool palettes and can be customized to suit office standards. This setting should remain blank. 
+
+
+
+
+Project Standards 
+All settings established in the Configure AEC Project Standards dialog will copy with the template project to become part of the new project. Standards files that are unique to the project, in other words, standards files that reflect project standards that may be supplemental to or override office standards, should be placed in the Standards folder of the template project. These files will be copied and their paths updated in the new project. 
+As with style library drawings, if you are including a non-project based file in your standards files, you need to decide whether to use mapped drives or UNC file pathing. If you are using mapped drive letters, they must be mapped identically on all users’ workstations. If you choose UNC, you need to be sure that the server path will be remaining the same for the foreseeable future. 
+
+Project Tool Catalogs and Palettes 
+In addition to office standard custom tool catalogs, each project has its own Content Browser library, with its own associated project tool catalogs. These can be configured in the template project as well. There are a few simple guidelines that you should follow when creating project tool catalogs. 
+¦ 
+Create your new catalog from the project library view in the Content Browser. The project library can be accessed from the Content Browser button at the bottom of Project Navigator. 
+
+¦ 
+If you create new catalogs in the project library, you should place them in the Standards/Tool Catalogs folder of your template project. 
+
+
+IMPORTANT In order for project catalogs to properly copy when the template project is selected, you must start your template project from one of the templates provided with AutoCAD Architecture. Remember also that even though the project catalog is copied from the template project, the tools within the catalog are unchanged; their paths remain the same as they are in the template. 
+
+Project Structure 
+If you work with a building type that is fairly consistent from one project to another, or a prototypical building type, you may find it advantageous to pre-define some aspects of the project structure itself. None of this is absolutely necessary, and the level to which you choose to pre-define these items is completely optional. 
+Project Structure Items That Can be Established in the Template Project 
+¦ 
+Levels and Divisions 
+
+¦ 
+Constructs and Elements: In addition to defining categories and sub-categories, any actual construct or element drawings will be copied to the new project from the template project. 
+
+¦ 
+Views: If you’ve created constructs and elements as part of your template project structure, you can also create view drawings that reference the constructs. 
+
+
+NOTE AutoCAD Architecture provides you with the choice to use relative xref paths, which are on by default in the project properties. If you choose not to use relative paths and you create constructs, elements, and views as part of your template project, when a new project is created, the these items will be repathed automatically according to the new project’s path. 
+Tool Catalogs 
+The tool catalog is one of the most critical components of any office’s custom content collection. It is the central repository for all tool-based content, which can and should include tools that provide access to styles, AEC content, callouts, schedule tags, and other miscellaneous annotation items. Because it is central to an effective content distribution and management system, you should spend time planning its location, organization, and structure. You should also take steps to protect the contents of the tool catalog from unauthorized or inadvertent modifications. 
+If users are going to manually load the catalog into their content browser library, pathing is not critical; it simply needs to be placed in a location that all users can browse to. If you choose to automate the loading of the palette by creating a catalog install file, you need to ensure that the network location of the catalog file is accessed in the same way by all users. As with other types of network-based content, carefully consider the advantages and disadvantages of both mapped network drives and UNC pathing. 
+If you need to control the ability of users to make modifications to the tool catalog, you can store it in a read-only folder. Users will still be able to access the catalog to use the tools, however only those people with permission to write to that location will actually be able to make changes to it. 
+Display Control 
+The AutoCAD Architecture display control system is flexible and powerful and is drawing-based. Therefore, your default display settings should be established in your template drawing. The templates that come with AutoCAD Architecture already have much of the work involved in setting up a display system done for you. While they may require some adjustments to conform to your office or project standards, you should, in most cases, start with the default templates and make modifications to the existing settings rather than try to create a display system from scratch. 
+Display Hierarchy and By Material Display Control 
+Display control of individual objects can occur at three levels: drawing default, style overrides, and object overrides. When you define an object style you should only apply style overrides when absolutely necessary. Frequently, you can use material assignments to control the display of linework and hatching components of objects. For this reason, many objects have By Material set as a drawing default for their display representations. 
+Display Control Customization 
+Like most aspects of AutoCAD Architecture, the display system can be customized. There are a few things that you should keep in mind before doing so, however. 
+Best Practices for Customizing the Display System 
+¦ Start with one of the default templates. Creating a display system from scratch can be laborious and time-consuming. It is better to start with a template that is relatively close to what you need and make modifications to it. 
+¦ 
+Modify existing display configurations and display sets before creating new ones. 
+
+¦ 
+Do not create new display representations for objects unless you absolutely have to. Many times you can find an existing display representation that you are not using that you can modify to suite your needs. Remember that every display representation that you create is one that you have to manage. 
+
+
+NOTE Remember that display control is drawing-specific. Changes that you intend to be part of your office standard should be made in the drawing template. You can use the Display Manager to copy display configurations, display sets, and display representations between drawings. 
+IMPORTANT If you create a new display configuration that uses an existing display representation that has been modified, you must remember to copy both the display configuration and the modified display representation to your template. When you copy the display configuration to the template the associated display representations and display sets will only be copied with it if they do not already exist in the template. When you manually copy a display set or a display representation into a template that already contains display sets and representations with the same name, you will be prompted to overwrite the existing definitions. 
+Level of Detail 
+Level of detail should always be a consideration when creating new content objects and new display representations. By default there are three display configurations that address level of detail provided in the AutoCAD Architecture template drawings. 
+Display Configuration Design Scale [Metric Units in Brack­ets] 
+High Detail 1/4”=1’-0” [1:50]or greater 
+Medium Detail 1/8”=1’-0” [1:100] 
+Low Detail 1/16”=1’-0” [1:200] or smaller 
+NOTE You may decide that the default display configurations are not appropriate for your preferred graphic standards. You can create additional display configurations and modify the existing ones to accommodate your own standards. 
+
