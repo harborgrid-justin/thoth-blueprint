@@ -106,8 +106,10 @@ export interface BuildingModel {
 
 /** The straight centreline direction (start→end) of a wall. */
 export function wallDirection(wall: Wall): Point {
-  const a = wall.baseline[0];
-  const b = wall.baseline[wall.baseline.length - 1];
+  const pts = wall.baseline;
+  if (pts.length < 2) return { x: 1, y: 0 };
+  const a = pts[0];
+  const b = pts[pts.length - 1];
   return normalize(subtract(b, a));
 }
 
