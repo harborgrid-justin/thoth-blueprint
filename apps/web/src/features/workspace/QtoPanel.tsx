@@ -7,8 +7,13 @@ import {
   runRenovationAudit,
   calculateStairGeometry,
   calculateCurtainWallGeometry,
+  calculateDoorGeometry,
+  calculateWindowGeometry,
+  compileUnitSchedule,
   type Stair,
   type CurtainWall,
+  type DoorElement,
+  type WindowElement,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { Button } from "@/components/ui/button";
@@ -34,7 +39,7 @@ export function QtoPanel() {
     { elementId: "building-lot", payItemId: "201-100", formula: "area * unitCost" },
   ];
 
-  const [activeTab, setActiveTab] = React.useState<"earthwork" | "payitems" | "renovation" | "stairs" | "curtainwalls">("earthwork");
+  const [activeTab, setActiveTab] = React.useState<"earthwork" | "payitems" | "renovation" | "stairs" | "curtainwalls" | "assemblies">("earthwork");
 
   if (!site) {return null;}
 
@@ -102,6 +107,12 @@ export function QtoPanel() {
             className={cn("px-1.5 py-0.5 rounded text-[10px]", activeTab === "curtainwalls" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
           >
             Curtains
+          </button>
+          <button
+            onClick={() => setActiveTab("assemblies")}
+            className={cn("px-1.5 py-0.5 rounded text-[10px]", activeTab === "assemblies" ? "bg-primary text-primary-foreground" : "text-muted-foreground")}
+          >
+            Doors/Wins
           </button>
         </div>
       </div>
@@ -462,6 +473,96 @@ export function QtoPanel() {
                 return (
                   <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2 text-[10px] text-emerald-500">
                     Curtain wall panel dimensions are within structural limits.
+                  </div>
+                );
+              }
+              return (
+                <div className="flex flex-col gap-1.5 max-h-[140px] overflow-y-auto pr-1">
+                  {warnings.map((w, idx) => (
+                    <div key={idx} className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium">
+                      {w}
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+
+      {activeTab === "assemblies" && (
+        <div className="flex flex-col gap-3">
+          {/* Door & Window Schedules (REQ-UNIMP-050) */}
+          <div className="rounded-md border border-border bg-card p-2">
+            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+              <span>Door &amp; Window Unit Schedule</span>
+              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] h-4">REQ-UNIMP-050</Badge>
+            </h4>
+            {(() => {
+              const schedule = compileUnitSchedule(site.elements);
+              if (schedule.length === 0) {
+                return (
+                  <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
+                    No door or window elements drafted in the current site plan.
+                  </div>
+                );
+              }
+              return (
+                <div className="flex flex-col gap-3 max-h-[220px] overflow-y-auto pr-1">
+                  {schedule.map((item) => (
+                    <div key={item.id} className="border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                      <div className="font-semibold text-foreground mb-1 flex justify-between">
+                        <span>{item.name} ({item.kind})</span>
+                        <span className="text-muted-foreground text-[9px] capitalize">{item.type}</span>
+                      </div>
+                      <table className="w-full text-left text-[10px]">
+                        <tbody>
+                          <tr className="border-b border-border/30">
+                            <td className="py-0.5 text-muted-foreground">Dimensions (WxH)</td>
+                            <td className="py-0.5 text-right font-medium">{item.width.toFixed(2)}m x {item.height.toFixed(2)}m</td>
+                          </tr>
+                          <tr className="border-b border-border/30">
+                            <td className="py-0.5 text-muted-foreground">Hardware / Frame</td>
+                            <td className="py-0.5 text-right font-medium text-amber-500">{item.hardware}</td>
+                          </tr>
+                          <tr>
+                            <td className="py-0.5 text-muted-foreground">Fire / Sound / Glazing</td>
+                            <td className="py-0.5 text-right font-medium text-emerald-500">{item.fireRating} / STC {item.stc} / {item.safety}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* Natural Lighting & ADA Egress Code Compliance (REQ-UNIMP-049) */}
+          <div className="rounded-md border border-border bg-card p-2">
+            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+              <span>Glazing &amp; Egress Code Auditing</span>
+              <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[9px] h-4">REQ-UNIMP-049</Badge>
+            </h4>
+            {(() => {
+              const warnings: string[] = [];
+              const doors = site.elements.filter((e) => e.kind === "door") as DoorElement[];
+              const windows = site.elements.filter((e) => e.kind === "window") as WindowElement[];
+
+              doors.forEach((door) => {
+                const geom = calculateDoorGeometry(door);
+                geom.warnings.forEach((w) => warnings.push(`${door.name}: ${w}`));
+              });
+
+              windows.forEach((win) => {
+                const geom = calculateWindowGeometry(win);
+                geom.warnings.forEach((w) => warnings.push(`${win.name}: ${w}`));
+              });
+
+              if (warnings.length === 0) {
+                return (
+                  <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2 text-[10px] text-emerald-500">
+                    All doors and windows comply with ADA clearances and glazing area parameters.
                   </div>
                 );
               }

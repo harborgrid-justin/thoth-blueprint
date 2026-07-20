@@ -1,4 +1,4 @@
-import type { Door, Window, Point } from "../spatial/types.js";
+import type { DoorElement, WindowElement, Point } from "../spatial/types.js";
 
 export interface DoorGeometryResults {
   swingPath: Point[];
@@ -16,7 +16,7 @@ export interface WindowGeometryResults {
   warnings: string[];
 }
 
-export function calculateDoorGeometry(door: Door): DoorGeometryResults {
+export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
   const warnings: string[] = [];
 
   let pLeft = { x: 0, y: 0 };
@@ -152,7 +152,7 @@ export function calculateDoorGeometry(door: Door): DoorGeometryResults {
   };
 }
 
-export function calculateWindowGeometry(win: Window): WindowGeometryResults {
+export function calculateWindowGeometry(win: WindowElement): WindowGeometryResults {
   const warnings: string[] = [];
 
   let pLeft = { x: 0, y: 0 };
@@ -266,7 +266,7 @@ export function compileUnitSchedule(siteElements: any[]): UnitScheduleItem[] {
   
   siteElements.forEach((el) => {
     if (el.kind === "door") {
-      const door = el as Door;
+      const door = el as DoorElement;
       schedule.push({
         id: door.id,
         kind: "door",
@@ -280,7 +280,7 @@ export function compileUnitSchedule(siteElements: any[]): UnitScheduleItem[] {
         safety: door.safetyGlazing || "none",
       });
     } else if (el.kind === "window") {
-      const win = el as Window;
+      const win = el as WindowElement;
       schedule.push({
         id: win.id,
         kind: "window",

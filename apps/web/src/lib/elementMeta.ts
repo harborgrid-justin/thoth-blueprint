@@ -160,6 +160,22 @@ const META: Record<ElementKind, ElementKindMeta> = {
     fill: "#38bdf8",
     namePrefix: "Curtain Wall",
   },
+  door: {
+    kind: "door",
+    label: "Door Assembly",
+    defaultLayerId: "layer-buildings",
+    stroke: "#b45309",
+    fill: "#f59e0b",
+    namePrefix: "Door",
+  },
+  window: {
+    kind: "window",
+    label: "Window Assembly",
+    defaultLayerId: "layer-buildings",
+    stroke: "#0891b2",
+    fill: "#22d3ee",
+    namePrefix: "Window",
+  },
 };
 
 export function elementMeta(kind: ElementKind): ElementKindMeta {

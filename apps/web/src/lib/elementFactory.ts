@@ -112,6 +112,42 @@ export function createSpatialElement(
         structuralTieSpacing: 1.2,
         frameRValue: 2.5,
       };
+    case "door":
+      return {
+        ...base,
+        kind,
+        width: 0.9,
+        height: 2.1,
+        depth: 0.15,
+        doorOperation: "swing",
+        swingAngle: 90,
+        sillThickness: 0.05,
+        sillOverhang: 0.03,
+        thresholdHeight: 0.01,
+        weatherstripping: true,
+        hardwareTrim: "lever",
+        fireRating: "none",
+        stcRating: 32,
+        safetyGlazing: "none",
+        frameProfile: "wood",
+      };
+    case "window":
+      return {
+        ...base,
+        kind,
+        width: 1.2,
+        height: 1.2,
+        depth: 0.15,
+        windowType: "single-hung",
+        sillThickness: 0.06,
+        sillOverhang: 0.04,
+        thresholdHeight: 0.0,
+        weatherstripping: true,
+        fireRating: "none",
+        stcRating: 35,
+        safetyGlazing: "tempered",
+        frameProfile: "vinyl",
+      };
   }
 }
 

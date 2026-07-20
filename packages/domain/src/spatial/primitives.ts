@@ -28,8 +28,10 @@ import {
   type Stair,
   type CurtainWall,
   type CurtainWallGrid,
-  type Door,
-  type Window,
+  type DoorElement,
+  type WindowElement,
+  type RoofElement,
+  type Dormer,
 } from "./types.js";
 
 // Re-export type definitions for downstream consumers
@@ -60,8 +62,10 @@ export type {
   Stair,
   CurtainWall,
   CurtainWallGrid,
-  Door,
-  Window,
+  DoorElement,
+  WindowElement,
+  RoofElement,
+  Dormer,
 };
 
 /** Element kinds represented by a single point rather than a boundary. */

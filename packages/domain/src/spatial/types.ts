@@ -107,7 +107,8 @@ export type ElementKind =
   | "stair"
   | "curtainwall"
   | "door"
-  | "window";
+  | "window"
+  | "roof";
 
 /** A named, orderable grouping of elements that can be shown, hidden, or locked. */
 export interface Layer {
@@ -358,7 +359,7 @@ export interface CurtainWall extends ElementBase {
   frameRValue?: number; // thermal resistance
 }
 
-export interface Door extends ElementBase {
+export interface DoorElement extends ElementBase {
   kind: "door";
   width: number;
   height: number;
@@ -376,7 +377,7 @@ export interface Door extends ElementBase {
   frameProfile?: "wood" | "metal" | "vinyl";
 }
 
-export interface Window extends ElementBase {
+export interface WindowElement extends ElementBase {
   kind: "window";
   width: number;
   height: number;
@@ -390,6 +391,25 @@ export interface Window extends ElementBase {
   stcRating?: number;
   safetyGlazing?: "tempered" | "wire" | "none";
   frameProfile?: "wood" | "metal" | "vinyl";
+}
+
+export interface Dormer {
+  type: "gable" | "hip" | "shed";
+  width: number;
+  offset: number;
+}
+
+export interface RoofElement extends ElementBase {
+  kind: "roof";
+  roofType: "gable" | "hip" | "shed" | "mansard" | "flat";
+  pitch: number; // Vertical rise per 12 horizontal units (e.g. 4 for 4:12)
+  overhang?: number; // Eaves projection width (default 0.3m)
+  soffitWidth?: number;
+  thickness?: number; // structural thickness (default 0.2m)
+  shingleMaterial?: "asphalt" | "slate" | "metal" | "tile";
+  gutters?: boolean;
+  soffitVents?: boolean;
+  dormers?: Dormer[];
 }
 
 /** Any spatial planning element (everything carrying a boundary polygon). */
@@ -409,8 +429,9 @@ export type SpatialElement =
   | GradeRegion
   | Stair
   | CurtainWall
-  | Door
-  | Window;
+  | DoorElement
+  | WindowElement
+  | RoofElement;
 
 /** Any point-based element (anchored at a position, no boundary). */
 export type PointElement = PlanNote | Tree | SpotElevationPoint;

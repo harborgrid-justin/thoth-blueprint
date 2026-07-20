@@ -22,6 +22,8 @@ import {
   traceWaterDropPath,
   calculateStairGeometry,
   calculateCurtainWallGeometry,
+  calculateDoorGeometry,
+  calculateWindowGeometry,
   type Bounds,
   type ElevationGrid,
   type InfrastructureNetwork,
@@ -31,6 +33,8 @@ import {
   type SpatialContext,
   type Stair,
   type CurtainWall,
+  type DoorElement,
+  type WindowElement,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
@@ -1316,6 +1320,73 @@ function ElementShape({
                   strokeWidth={1}
                 />
               );
+            })}
+          </g>
+        );
+      })()}
+      {element.kind === "door" && (() => {
+        const doorGeom = calculateDoorGeometry(element as DoorElement);
+        return (
+          <g className="pointer-events-none">
+            {/* 1. Threshold */}
+            {(() => {
+              const sThresh = doorGeom.thresholdPolygon.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sThresh.length < 2) return null;
+              return <path d={`M ${sThresh.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={0.75} strokeDasharray="2 2" />;
+            })()}
+
+            {/* 2. Sill */}
+            {(() => {
+              const sSill = doorGeom.sillPolygon.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sSill.length < 2) return null;
+              return <path d={`M ${sSill.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={1} />;
+            })()}
+
+            {/* 3. Door Panel */}
+            {(() => {
+              const sPanel = doorGeom.doorPanelPolygon.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sPanel.length < 2) return null;
+              return <path d={`M ${sPanel.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={1.5} />;
+            })()}
+
+            {/* 4. Swing Path Arc */}
+            {(() => {
+              const sPath = doorGeom.swingPath.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sPath.length < 2) return null;
+              return <path d={`M ${sPath.map(p => `${p.x} ${p.y}`).join(" L ")}`} fill="none" stroke={strokeColor} strokeWidth={1} strokeDasharray="3 3" />;
+            })()}
+
+            {/* 5. Hardware Knob */}
+            {(() => {
+              const sKnob = worldToScreen({ x: doorGeom.hardwareAnchor.x + shift.x, y: doorGeom.hardwareAnchor.y + shift.y }, viewport);
+              return <circle cx={sKnob.x} cy={sKnob.y} r={2} fill="none" stroke={strokeColor} strokeWidth={1} />;
+            })()}
+          </g>
+        );
+      })()}
+      {element.kind === "window" && (() => {
+        const winGeom = calculateWindowGeometry(element as WindowElement);
+        return (
+          <g className="pointer-events-none">
+            {/* 1. Sill */}
+            {(() => {
+              const sSill = winGeom.sillPolygon.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sSill.length < 2) return null;
+              return <path d={`M ${sSill.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={1} />;
+            })()}
+
+            {/* 2. Glazing Panes */}
+            {winGeom.glazingPolygons.map((poly, idx) => {
+              const sPoly = poly.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sPoly.length < 2) return null;
+              return <path key={`win-glass-${idx}`} d={`M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="#22d3ee" fillOpacity={0.25} stroke={strokeColor} strokeWidth={0.75} />;
+            })}
+
+            {/* 3. Sash frames */}
+            {winGeom.sashPolygons.map((poly, idx) => {
+              const sPoly = poly.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
+              if (sPoly.length < 2) return null;
+              return <path key={`win-sash-${idx}`} d={`M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={1} />;
             })}
           </g>
         );

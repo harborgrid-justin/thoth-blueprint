@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import type { Door, Window } from "../spatial/types.js";
+import type { DoorElement, WindowElement } from "../spatial/types.js";
 import { calculateDoorGeometry, calculateWindowGeometry, compileUnitSchedule } from "./doorwindow.js";
 
 describe("Door & Window Assemblies Calculations Engine", () => {
   it("should calculate swing door arc paths and knob anchors", () => {
-    const door: Door = {
+    const door: DoorElement = {
       id: "door-1",
       name: "Entrance Swing Door",
       layerId: "layer-base",
@@ -20,6 +20,7 @@ describe("Door & Window Assemblies Calculations Engine", () => {
       depth: 0.15,
       doorOperation: "swing",
       swingAngle: 90,
+      thresholdHeight: 0.01,
     };
 
     const res = calculateDoorGeometry(door);
@@ -30,7 +31,7 @@ describe("Door & Window Assemblies Calculations Engine", () => {
   });
 
   it("should generate folding bi-fold panels and flag egress warnings", () => {
-    const narrowDoor: Door = {
+    const narrowDoor: DoorElement = {
       id: "door-2",
       name: "Narrow Closet Door",
       layerId: "layer-base",
@@ -53,7 +54,7 @@ describe("Door & Window Assemblies Calculations Engine", () => {
   });
 
   it("should calculate window sills and flag natural light compliance checks", () => {
-    const win: Window = {
+    const win: WindowElement = {
       id: "win-1",
       name: "Small Living Window",
       layerId: "layer-base",
