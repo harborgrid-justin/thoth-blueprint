@@ -59,14 +59,14 @@ export function PlatSheetDialog() {
   const setOpen = useUiStore((s) => s.setSheetOpen);
   const site = useWorkspaceStore((s) => s.site);
   const svgRef = React.useRef<SVGSVGElement>(null);
-  if (!site) return null;
+  if (!site) {return null;}
 
   const plugin = getRegionPlugin(site.jurisdictionId) ?? US_PLSS_DEFAULT;
   const caps = resolveCapabilities(plugin);
 
   function exportSvg() {
     const svg = svgRef.current;
-    if (!svg) return;
+    if (!svg) {return;}
     const src = new XMLSerializer().serializeToString(svg);
     const blob = new Blob([`<?xml version="1.0" encoding="UTF-8"?>\n${src}`], {
       type: "image/svg+xml;charset=utf-8",
@@ -229,7 +229,7 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
         {site.elements
           .filter((e) => e.kind === "lot" || e.kind === "parcel")
           .map((el) => {
-            if (!isSpatialElement(el)) return null;
+            if (!isSpatialElement(el)) {return null;}
             const ring = densifyBoundary(el.boundary, el.arcs, 2);
             const c = ring.reduce((a, p) => ({ x: a.x + p.x, y: a.y + p.y }), { x: 0, y: 0 });
             const center = project({ x: c.x / ring.length, y: c.y / ring.length });
@@ -247,7 +247,7 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
         {/* Alignment offset bands (edge of pavement, R/W). */}
         {(site.alignments ?? []).map((a) => {
           const r = resolveAlignment(a);
-          if (!r) return null;
+          if (!r) {return null;}
           return (a.offsets ?? []).map((off, oi) => {
             const path = offsetAlignmentPath(r, off.distance).map(project);
             return (
@@ -266,11 +266,11 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
         {/* Alignment centerlines. */}
         {(site.alignments ?? []).map((a) => {
           const r = resolveAlignment(a);
-          if (!r) return null;
+          if (!r) {return null;}
           const pts: Point[] = [];
           for (const el of r.elements) {
             if (el.kind === "tangent") {
-              if (pts.length === 0) pts.push(el.from);
+              if (pts.length === 0) {pts.push(el.from);}
               pts.push(el.to);
             } else {
               const c = el.curve;

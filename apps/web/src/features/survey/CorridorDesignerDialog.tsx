@@ -49,18 +49,18 @@ export function CorridorDesignerDialog() {
     }
   }, [open, alignments]);
 
-  if (!site) return null;
-
-  const alignment = alignments.find((a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
-  const profile = profiles.find((p) => p.id === selectedProfileId) ?? profiles[0] ?? null;
-
   // Resolve current assembly profile outline coordinates
   const offsetPoints = React.useMemo(() => {
     return resolveAssemblyOffset(assembly, -0.02, -0.02);
   }, [assembly]);
 
+  if (!site) {return null;}
+
+  const alignment = alignments.find((a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
+  const profile = profiles.find((p) => p.id === selectedProfileId) ?? profiles[0] ?? null;
+
   function handleExtrude() {
-    if (!alignment || !profile) return;
+    if (!alignment || !profile) {return;}
 
     // Simulate 3D corridor build
     const corridor = {

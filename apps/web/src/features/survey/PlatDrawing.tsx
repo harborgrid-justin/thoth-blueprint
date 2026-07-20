@@ -30,7 +30,7 @@ const CW = W - M.left - M.right;
 const CH = H - M.top - M.bottom;
 
 function niceNumber(value: number): number {
-  if (value <= 0) return 1;
+  if (value <= 0) {return 1;}
   const mag = Math.pow(10, Math.floor(Math.log10(value)));
   const r = value / mag;
   return (r >= 5 ? 5 : r >= 2 ? 2 : 1) * mag;
@@ -97,7 +97,7 @@ export function PlatDrawing({
 
   function exportSvg() {
     const svg = svgRef.current;
-    if (!svg) return;
+    if (!svg) {return;}
     const source = new XMLSerializer().serializeToString(svg);
     const blob = new Blob([`<?xml version="1.0" encoding="UTF-8"?>\n${source}`], {
       type: "image/svg+xml;charset=utf-8",
@@ -163,7 +163,7 @@ export function PlatDrawing({
             const out = outwardNormal(a, b, c);
             const pos = offset(project(midWorld), out, 16);
             let angle = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
-            if (angle > 90 || angle < -90) angle += 180;
+            if (angle > 90 || angle < -90) {angle += 180;}
             if (edge.arc && course.curve) {
               const cv = course.curve;
               return (
@@ -298,7 +298,7 @@ interface View {
 }
 
 function buildView(boundary: Point[]): View | null {
-  if (boundary.length < 3) return null;
+  if (boundary.length < 3) {return null;}
   const bb = boundsOf(boundary);
   const bw = Math.max(bb.maxX - bb.minX, 1e-6);
   const bh = Math.max(bb.maxY - bb.minY, 1e-6);
@@ -330,7 +330,7 @@ function outwardNormal(a: Point, b: Point, c: Point): Point {
   const e = unit({ x: b.x - a.x, y: b.y - a.y });
   let nrm = { x: -e.y, y: e.x };
   const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-  if (nrm.x * (mid.x - c.x) + nrm.y * (mid.y - c.y) < 0) nrm = { x: -nrm.x, y: -nrm.y };
+  if (nrm.x * (mid.x - c.x) + nrm.y * (mid.y - c.y) < 0) {nrm = { x: -nrm.x, y: -nrm.y };}
   return nrm;
 }
 

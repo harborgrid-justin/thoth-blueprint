@@ -35,10 +35,10 @@ export function AlignmentReportDialog() {
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    if (open) setSelectedId(alignments[0]?.id ?? null);
+    if (open) {setSelectedId(alignments[0]?.id ?? null);}
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!site) return null;
+  if (!site) {return null;}
   const selected = alignments.find((a) => a.id === selectedId) ?? alignments[0] ?? null;
 
   return (
@@ -96,7 +96,7 @@ function AlignmentReport({
 }) {
   const r = React.useMemo<ResolvedAlignment | null>(() => resolveAlignment(alignment), [alignment]);
   const u = unitLabel(spatial.units);
-  if (!r) return <p className="text-sm text-muted-foreground">This baseline needs at least two PIs.</p>;
+  if (!r) {return <p className="text-sm text-muted-foreground">This baseline needs at least two PIs.</p>;}
 
   return (
     <div className="flex flex-col gap-4">

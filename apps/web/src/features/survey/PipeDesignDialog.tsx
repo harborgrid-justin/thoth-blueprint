@@ -59,14 +59,15 @@ export function PipeDesignDialog() {
     }
   }, [open, networks, site, terrainSurface]);
 
-  if (!site) return null;
   const activeNet = networks.find((n) => n.id === selectedNetId) ?? networks[0] ?? null;
 
   // Run validation
   const validation = React.useMemo(() => {
-    if (!activeNet || !terrainSurface) return null;
+    if (!activeNet || !terrainSurface) {return null;}
     return validatePipeNetwork(activeNet, terrainSurface, rules, inverts);
   }, [activeNet, terrainSurface, rules, inverts]);
+
+  if (!site) {return null;}
 
   function handleInvertChange(nodeId: string, val: number) {
     setInverts({ ...inverts, [nodeId]: val });

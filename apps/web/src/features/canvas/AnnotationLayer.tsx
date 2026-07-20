@@ -35,7 +35,7 @@ export function SectionBubble({ x, y, r = 11, label, sub }: { x: number; y: numb
  */
 export function AnnotationLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const ann = site.annotations;
-  if (!ann) return null;
+  if (!ann) {return null;}
   const project = (p: Point) => worldToScreen(p, viewport);
   const keynoteNumber = (id: string) => ann.keynotes?.find((k) => k.id === id)?.number ?? "?";
 

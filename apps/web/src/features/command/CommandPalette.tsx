@@ -24,7 +24,7 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
 
   const results = React.useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return commands;
+    if (!q) {return commands;}
     return commands.filter((c) =>
       `${c.title} ${c.group} ${c.keywords ?? ""}`.toLowerCase().includes(q),
     );
@@ -49,7 +49,7 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
   }, [index]);
 
   function run(cmd: Command | undefined) {
-    if (!cmd) return;
+    if (!cmd) {return;}
     setOpen(false);
     // Defer so the dialog's focus teardown doesn't swallow tool-driven focus.
     requestAnimationFrame(() => cmd.run());

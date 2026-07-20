@@ -253,7 +253,7 @@ function formatSingleValue(v: number, unit: DimUnit, precision: number, suppress
         ft += 1;
         inch = 0;
       }
-      if (suppressZero && inch === 0) return `${ft}'`;
+      if (suppressZero && inch === 0) {return `${ft}'`;}
       return `${ft}'-${inch}"`;
     }
     case "ft-dec":
@@ -399,8 +399,8 @@ function measureAngular(dim: AngularDimension, style: DimensionStyle): MeasuredD
   const angA = Math.atan2(va.y, va.x);
   const angB = Math.atan2(vb.y, vb.x);
   let sweep = angB - angA;
-  while (sweep <= -Math.PI) sweep += 2 * Math.PI;
-  while (sweep > Math.PI) sweep -= 2 * Math.PI;
+  while (sweep <= -Math.PI) {sweep += 2 * Math.PI;}
+  while (sweep > Math.PI) {sweep -= 2 * Math.PI;}
   const deg = Math.abs((sweep * 180) / Math.PI);
   const mid = angA + sweep / 2;
   const r = dim.radius;
@@ -411,7 +411,7 @@ function measureAngular(dim: AngularDimension, style: DimensionStyle): MeasuredD
     arcPts.push({ x: dim.vertex.x + r * Math.cos(t), y: dim.vertex.y + r * Math.sin(t) });
   }
   const lines: [Point, Point][] = [];
-  for (let i = 1; i < arcPts.length; i++) lines.push([arcPts[i - 1], arcPts[i]]);
+  for (let i = 1; i < arcPts.length; i++) {lines.push([arcPts[i - 1], arcPts[i]]);}
   lines.push([dim.vertex, { x: dim.vertex.x + r * Math.cos(angA), y: dim.vertex.y + r * Math.sin(angA) }]);
   lines.push([dim.vertex, { x: dim.vertex.x + r * Math.cos(angB), y: dim.vertex.y + r * Math.sin(angB) }]);
   const decimals = Math.max(0, style.precision - 1);
@@ -464,8 +464,8 @@ function measureArcLength(dim: ArcLengthDimension, style: DimensionStyle, spatia
   const a = subtract(dim.start, dim.center);
   const b = subtract(dim.end, dim.center);
   let sweep = Math.atan2(b.y, b.x) - Math.atan2(a.y, a.x);
-  while (sweep <= -Math.PI) sweep += 2 * Math.PI;
-  while (sweep > Math.PI) sweep -= 2 * Math.PI;
+  while (sweep <= -Math.PI) {sweep += 2 * Math.PI;}
+  while (sweep > Math.PI) {sweep -= 2 * Math.PI;}
   const arcLen = Math.abs(sweep) * dim.radius;
   const steps = Math.max(2, Math.ceil((Math.abs(sweep) * 180) / Math.PI / 5));
   const start = Math.atan2(a.y, a.x);
@@ -476,7 +476,7 @@ function measureArcLength(dim: ArcLengthDimension, style: DimensionStyle, spatia
     pts.push({ x: dim.center.x + rr * Math.cos(t), y: dim.center.y + rr * Math.sin(t) });
   }
   const lines: [Point, Point][] = [];
-  for (let i = 1; i < pts.length; i++) lines.push([pts[i - 1], pts[i]]);
+  for (let i = 1; i < pts.length; i++) {lines.push([pts[i - 1], pts[i]]);}
   const mid = start + sweep / 2;
   return {
     value: arcLen,
@@ -522,14 +522,14 @@ export function formatSlope(
   format: "percent" | "ratio" = "percent"
 ): string {
   const dist2d = distance(a, b);
-  if (dist2d < 1e-9) return "0.00%";
+  if (dist2d < 1e-9) {return "0.00%";}
   
   const dz = (b.z ?? 0) - (a.z ?? 0);
   const slopeVal = Math.abs(dz) / dist2d;
   if (format === "percent") {
     return `${(slopeVal * 100).toFixed(2)}%`;
   } else {
-    if (slopeVal < 1e-9) return "Flat";
+    if (slopeVal < 1e-9) {return "Flat";}
     const h = 1 / slopeVal;
     return `${h.toFixed(1)}:1`;
   }

@@ -64,7 +64,7 @@ export function MonumentSymbol({
 /** Renders the site's survey monuments with standard symbology and stamps. */
 export function MonumentLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const monuments = site.monuments;
-  if (!monuments || monuments.length === 0) return null;
+  if (!monuments || monuments.length === 0) {return null;}
 
   return (
     <g className="pointer-events-none">

@@ -41,7 +41,7 @@ app.post("/api/workspace/reset", (req, res) => {
     store.threads = [];
   }
   db.writeStore(store);
-  res.json({ message: "Workspace reset complete." });
+  return res.json({ message: "Workspace reset complete." });
 });
 
 // 3. List projects
@@ -60,7 +60,7 @@ app.get("/api/projects/:id", (req, res) => {
   if (!project) {
     return res.status(404).json({ error: "Project not found" });
   }
-  res.json(project);
+  return res.json(project);
 });
 
 // 5. Create project
@@ -86,7 +86,7 @@ app.post("/api/projects", (req, res) => {
 
   store.projects.push(project);
   db.writeStore(store);
-  res.status(201).json(project);
+  return res.status(201).json(project);
 });
 
 // 6. Rename/patch project metadata
@@ -98,12 +98,12 @@ app.patch("/api/projects/:id", (req, res) => {
     return res.status(404).json({ error: "Project not found" });
   }
 
-  if (name !== undefined) project.name = name;
-  if (description !== undefined) project.description = description;
+  if (name !== undefined) {project.name = name;}
+  if (description !== undefined) {project.description = description;}
   project.updatedAt = new Date().toISOString();
 
   db.writeStore(store);
-  res.json(project);
+  return res.json(project);
 });
 
 // 7. Delete project
@@ -120,7 +120,7 @@ app.delete("/api/projects/:id", (req, res) => {
   store.threads = store.threads.filter((t) => t.projectId !== req.params.id);
 
   db.writeStore(store);
-  res.status(204).end();
+  return res.status(204).end();
 });
 
 // 8. Save/autosave project site layout
@@ -140,7 +140,7 @@ app.post("/api/projects/:id/save", (req, res) => {
   project.updatedAt = new Date().toISOString();
 
   db.writeStore(store);
-  res.json(project);
+  return res.json(project);
 });
 
 // 9. List checkpoints
@@ -177,7 +177,7 @@ app.post("/api/projects/:id/checkpoints", (req, res) => {
 
   store.checkpoints.push(checkpoint);
   db.writeStore(store);
-  res.status(201).json(checkpoint);
+  return res.status(201).json(checkpoint);
 });
 
 // 11. Restore project to checkpoint
@@ -199,7 +199,7 @@ app.post("/api/projects/:id/checkpoints/:checkpointId/restore", (req, res) => {
   project.updatedAt = new Date().toISOString();
 
   db.writeStore(store);
-  res.json(project);
+  return res.json(project);
 });
 
 // 12. Delete checkpoint
@@ -214,7 +214,7 @@ app.delete("/api/projects/:id/checkpoints/:checkpointId", (req, res) => {
 
   store.checkpoints.splice(index, 1);
   db.writeStore(store);
-  res.status(204).end();
+  return res.status(204).end();
 });
 
 // 13. List comment threads
@@ -264,7 +264,7 @@ app.post("/api/projects/:id/threads", (req, res) => {
   }
 
   db.writeStore(store);
-  res.status(201).json(thread);
+  return res.status(201).json(thread);
 });
 
 // 15. Resolve comment thread
@@ -279,7 +279,7 @@ app.post("/api/projects/:id/threads/:threadId/resolve", (req, res) => {
 
   thread.resolved = true;
   db.writeStore(store);
-  res.json(thread);
+  return res.json(thread);
 });
 
 app.listen(PORT, () => {

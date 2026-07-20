@@ -29,7 +29,7 @@ export function calculateSectionArea(section: CrossSection): SectionArea {
     const x0 = existing[i].offset;
     const x1 = existing[i + 1].offset;
     const w = x1 - x0;
-    if (w <= 0.0001) continue;
+    if (w <= 0.0001) {continue;}
 
     // Difference proposed - existing (positive is fill, negative is cut)
     const d0 = proposed[i].elevation - existing[i].elevation;
@@ -103,7 +103,7 @@ export interface MassHaulPoint {
  * Generates cumulative mass haul volume lines along consecutive section intervals.
  */
 export function calculateMassHaul(sections: CrossSection[]): MassHaulPoint[] {
-  if (sections.length === 0) return [];
+  if (sections.length === 0) {return [];}
   const sorted = _.sortBy(sections, "station");
 
   const points: MassHaulPoint[] = [{ station: sorted[0].station, cumulativeVolume: 0 }];
@@ -191,7 +191,7 @@ export function parsePayItemListCsv(csvContent: string): PayItem[] {
   const lines = csvContent.split(/\r?\n/);
   for (const line of lines) {
     const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("ID,Name")) continue;
+    if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("ID,Name")) {continue;}
 
     // Handle standard CSV commas split
     const parts = trimmed.split(",");

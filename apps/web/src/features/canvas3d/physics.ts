@@ -34,7 +34,7 @@ export class ThothPhysicsEngine {
 
   /** Synchronize the physics world with the current plan state */
   syncWorld(site: Site, exaggeration: number): void {
-    if (!this.initialized) return;
+    if (!this.initialized) {return;}
 
     // Clear existing colliders and their rigid bodies to prevent memory leaks in WASM
     for (const collider of this.colliders.values()) {
@@ -49,7 +49,7 @@ export class ThothPhysicsEngine {
     this.elementIdsByHandle.clear();
 
     const extent = siteExtent(site);
-    if (!extent) return;
+    if (!extent) {return;}
 
     const center = boundsCenter(extent);
     const terrain = buildTerrainModel(site);
@@ -92,10 +92,10 @@ export class ThothPhysicsEngine {
 
     // 2. Create Building Footprint Colliders
     for (const el of site.elements) {
-      if (el.kind !== "building" || !isSpatialElement(el)) continue;
+      if (el.kind !== "building" || !isSpatialElement(el)) {continue;}
 
       const boundary = el.boundary;
-      if (boundary.length < 3) continue;
+      if (boundary.length < 3) {continue;}
 
       // Extract footprint elevations conforming to terrain at centroid
       const centroid = polygonCentroid(boundary);
@@ -147,7 +147,7 @@ export class ThothPhysicsEngine {
    */
   checkCollisions(): Set<string> {
     const collidingIds = new Set<string>();
-    if (!this.initialized) return collidingIds;
+    if (!this.initialized) {return collidingIds;}
 
     // Step the physics simulation to update contact/intersection pairs
     this.world.step();

@@ -33,10 +33,10 @@ export function LayerPanel() {
   const addLayer = useWorkspaceStore((s) => s.addLayer);
   const [editingId, setEditingId] = React.useState<string | null>(null);
 
-  if (!site) return null;
+  if (!site) {return null;}
   const layers = [...site.layers].sort((a, b) => b.order - a.order);
   const counts = new Map<string, number>();
-  for (const el of site.elements) counts.set(el.layerId, (counts.get(el.layerId) ?? 0) + 1);
+  for (const el of site.elements) {counts.set(el.layerId, (counts.get(el.layerId) ?? 0) + 1);}
 
   return (
     <div className="flex flex-col">
@@ -77,8 +77,8 @@ export function LayerPanel() {
                     setEditingId(null);
                   }}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") (e.target as HTMLInputElement).blur();
-                    if (e.key === "Escape") setEditingId(null);
+                    if (e.key === "Enter") {(e.target as HTMLInputElement).blur();}
+                    if (e.key === "Escape") {setEditingId(null);}
                   }}
                   onClick={(e) => e.stopPropagation()}
                 />

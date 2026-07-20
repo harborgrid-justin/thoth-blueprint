@@ -64,7 +64,7 @@ export function CreateProjectDialog({
   }, [open]);
 
   async function handleCreate() {
-    if (!name.trim()) return;
+    if (!name.trim()) {return;}
     setBusy(true);
     try {
       const project = await api.createProject({ name: name.trim(), description: description.trim(), template });

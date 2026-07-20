@@ -60,10 +60,10 @@ export function GradingSolverDialog() {
     }
   }, [open, padElevation, gradingPad, terrainSurface]);
 
-  if (!site) return null;
+  if (!site) {return null;}
 
   function runBalanceSolver() {
-    if (!terrainSurface) return;
+    if (!terrainSurface) {return;}
     setSolving(true);
     setTimeout(() => {
       const balancedElev = solveBalancedElevation(gradingPad, terrainSurface, targetVolume, 5);

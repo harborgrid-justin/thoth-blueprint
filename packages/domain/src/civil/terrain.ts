@@ -56,8 +56,8 @@ export function elevationRange(grid: ElevationGrid): { min: number; max: number 
   let min = Infinity;
   let max = -Infinity;
   for (const h of grid.heights) {
-    if (h < min) min = h;
-    if (h > max) max = h;
+    if (h < min) {min = h;}
+    if (h > max) {max = h;}
   }
   return { min, max };
 }
@@ -122,7 +122,7 @@ function idw(spots: SpotElevation[], p: Point, power: number): number {
   let den = 0;
   for (const s of spots) {
     const d2 = (s.point.x - p.x) ** 2 + (s.point.y - p.y) ** 2;
-    if (d2 < 1e-9) return s.z; // exactly on a control point
+    if (d2 < 1e-9) {return s.z;} // exactly on a control point
     const w = 1 / Math.pow(d2, power / 2);
     num += w * s.z;
     den += w;
@@ -168,7 +168,7 @@ type Edge = "T" | "R" | "B" | "L";
  * surface's min and max elevation, using marching squares.
  */
 export function contourLevels(grid: ElevationGrid, interval: number): ContourLevel[] {
-  if (interval <= 0) return [];
+  if (interval <= 0) {return [];}
   const { min, max } = elevationRange(grid);
   const levels: ContourLevel[] = [];
   const start = Math.ceil(min / interval) * interval;
@@ -179,7 +179,7 @@ export function contourLevels(grid: ElevationGrid, interval: number): ContourLev
         marchCell(grid, c, r, level, segments);
       }
     }
-    if (segments.length) levels.push({ level: round(level), segments });
+    if (segments.length) {levels.push({ level: round(level), segments });}
   }
   return levels;
 }
@@ -197,7 +197,7 @@ function marchCell(
   const bl = nodeHeight(grid, c, r + 1);
   const idx = (tl >= level ? 8 : 0) | (tr >= level ? 4 : 0) | (br >= level ? 2 : 0) | (bl >= level ? 1 : 0);
   const pairs = MS_TABLE[idx];
-  if (pairs.length === 0) return;
+  if (pairs.length === 0) {return;}
 
   const xL = grid.origin.x + c * grid.cellSize;
   const xR = xL + grid.cellSize;
@@ -217,7 +217,7 @@ function marchCell(
     }
   };
 
-  for (const [a, b] of pairs) out.push([point(a), point(b)]);
+  for (const [a, b] of pairs) {out.push([point(a), point(b)]);}
 }
 
 function frac(a: number, b: number, level: number): number {
@@ -318,17 +318,17 @@ export function slopeStats(
     for (let c = 0; c < grid.cols; c++) {
       if (region) {
         const p = { x: grid.origin.x + c * grid.cellSize, y: grid.origin.y + r * grid.cellSize };
-        if (!pointInPolygon(p, region)) continue;
+        if (!pointInPolygon(p, region)) {continue;}
       }
       const pct = slopeAtNode(grid, c, r).percent;
       min = Math.min(min, pct);
       max = Math.max(max, pct);
       sum += pct;
-      if (pct <= buildableMaxPercent) buildable += 1;
+      if (pct <= buildableMaxPercent) {buildable += 1;}
       n += 1;
     }
   }
-  if (n === 0) return { minPercent: 0, maxPercent: 0, meanPercent: 0, buildableFraction: 0, samples: 0 };
+  if (n === 0) {return { minPercent: 0, maxPercent: 0, meanPercent: 0, buildableFraction: 0, samples: 0 };}
   return {
     minPercent: min,
     maxPercent: max,
@@ -348,7 +348,7 @@ export function gradePad(grid: ElevationGrid, polygon: Polygon, targetZ: number)
   for (let r = 0; r < grid.rows; r++) {
     for (let c = 0; c < grid.cols; c++) {
       const p = { x: grid.origin.x + c * grid.cellSize, y: grid.origin.y + r * grid.cellSize };
-      if (pointInPolygon(p, polygon)) heights[r * grid.cols + c] = targetZ;
+      if (pointInPolygon(p, polygon)) {heights[r * grid.cols + c] = targetZ;}
     }
   }
   return { ...grid, heights };
@@ -392,7 +392,7 @@ export function cutFill(
         x: existing.origin.x + (c + 0.5) * existing.cellSize,
         y: existing.origin.y + (r + 0.5) * existing.cellSize,
       };
-      if (region && !pointInPolygon(center, region)) continue;
+      if (region && !pointInPolygon(center, region)) {continue;}
       const dz =
         (diff(existing, proposed, c, r) +
           diff(existing, proposed, c + 1, r) +
@@ -400,8 +400,8 @@ export function cutFill(
           diff(existing, proposed, c + 1, r + 1)) /
         4;
       const volume = dz * cellArea;
-      if (volume > 0) fill += volume;
-      else cut += -volume;
+      if (volume > 0) {fill += volume;}
+      else {cut += -volume;}
       cells += 1;
     }
   }

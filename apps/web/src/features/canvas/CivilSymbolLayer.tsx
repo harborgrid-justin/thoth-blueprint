@@ -71,7 +71,7 @@ export function CivilSymbolGlyph({ type, subtype }: { type: CivilSymbolType; sub
 /** Renders the site's placed civil/erosion-control symbols. */
 export function CivilSymbolLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const symbols = site.civilSymbols;
-  if (!symbols || symbols.length === 0) return null;
+  if (!symbols || symbols.length === 0) {return null;}
   const project = (p: Point) => worldToScreen(p, viewport);
   return (
     <g className="pointer-events-none">

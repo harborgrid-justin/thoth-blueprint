@@ -162,7 +162,7 @@ function reindexArcsAfterInsert(
   const out: Record<string, number> = {};
   for (const [k, v] of Object.entries(arcs)) {
     const i = Number(k);
-    if (i === afterIndex) continue;
+    if (i === afterIndex) {continue;}
     out[String(i > afterIndex ? i + 1 : i)] = v;
   }
   return out;
@@ -182,7 +182,7 @@ function reindexArcsAfterDelete(
   const out: Record<string, number> = {};
   for (const [k, v] of Object.entries(arcs)) {
     const i = Number(k);
-    if (i === index || i === removedPrev) continue;
+    if (i === index || i === removedPrev) {continue;}
     out[String(i > index ? i - 1 : i)] = v;
   }
   return out;
@@ -208,7 +208,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
   /** Apply a pure change to the site, recording the previous state for undo. */
   function mutate(recipe: (site: Site) => Site) {
     const { site, history } = get();
-    if (!site) return;
+    if (!site) {return;}
     const nextSite = recipe(snapshot(site));
     const past = [...history.past, site].slice(-HISTORY_LIMIT);
     set({ site: nextSite, history: { past, future: [] }, dirty: true });
@@ -269,7 +269,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     addDrawingSet(setObj) {
       mutate((site) => {
-        if (!site.drawingSets) site.drawingSets = [];
+        if (!site.drawingSets) {site.drawingSets = [];}
         site.drawingSets.unshift(setObj);
         return site;
       });
@@ -310,26 +310,26 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     selectAll() {
       const { site } = get();
-      if (!site) return;
+      if (!site) {return;}
       set({ selection: site.elements.map((e) => e.id) });
     },
 
     copySelection() {
       const { site, selection } = get();
-      if (!site || selection.length === 0) return;
+      if (!site || selection.length === 0) {return;}
       const ids = new Set(selection);
       clipboard = site.elements.filter((e) => ids.has(e.id)).map((e) => snapshot(e));
     },
 
     cutSelection() {
-      if (get().selection.length === 0) return;
+      if (get().selection.length === 0) {return;}
       get().copySelection();
       get().deleteSelection();
     },
 
     paste() {
       const { site, activeLayerId } = get();
-      if (!site || clipboard.length === 0) return;
+      if (!site || clipboard.length === 0) {return;}
       const fallback = activeLayerId ?? site.layers[0]?.id ?? "";
       const layerExists = (id: string) => site.layers.some((l) => l.id === id);
       const off = pasteOffset(clipboard);
@@ -342,10 +342,10 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     duplicateSelection() {
       const { site, selection, activeLayerId } = get();
-      if (!site || selection.length === 0) return;
+      if (!site || selection.length === 0) {return;}
       const ids = new Set(selection);
       const originals = site.elements.filter((e) => ids.has(e.id));
-      if (originals.length === 0) return;
+      if (originals.length === 0) {return;}
       const fallback = activeLayerId ?? site.layers[0]?.id ?? "";
       const layerExists = (id: string) => site.layers.some((l) => l.id === id);
       const off = pasteOffset(originals);
@@ -372,7 +372,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
-          if (e.id !== id || !isSpatialElement(e)) return e;
+          if (e.id !== id || !isSpatialElement(e)) {return e;}
           const boundary = e.boundary.slice();
           boundary.splice(afterIndex + 1, 0, point);
           const arcs = e.arcs ? reindexArcsAfterInsert(e.arcs, afterIndex) : undefined;
@@ -393,7 +393,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
-          if (e.id !== id || !isSpatialElement(e) || e.boundary.length <= 3) return e;
+          if (e.id !== id || !isSpatialElement(e) || e.boundary.length <= 3) {return e;}
           const arcs = e.arcs ? reindexArcsAfterDelete(e.arcs, index, e.boundary.length) : undefined;
           return { ...e, boundary: e.boundary.filter((_, i) => i !== index), arcs };
         }),
@@ -412,10 +412,10 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
-          if (e.id !== id || !isSpatialElement(e)) return e;
+          if (e.id !== id || !isSpatialElement(e)) {return e;}
           const arcs: Record<string, number> = { ...(e.arcs ?? {}) };
-          if (Math.abs(bulge) < 1e-4) delete arcs[String(edgeIndex)];
-          else arcs[String(edgeIndex)] = bulge;
+          if (Math.abs(bulge) < 1e-4) {delete arcs[String(edgeIndex)];}
+          else {arcs[String(edgeIndex)] = bulge;}
           return { ...e, arcs };
         }),
       }));
@@ -440,7 +440,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     addDrawnElement(kind, boundary) {
       const { site, activeLayerId, renovationMode, activeRenovationCategory } = get();
-      if (!site) return null;
+      if (!site) {return null;}
       let layerId = activeLayerId ?? elementMeta(kind).defaultLayerId;
 
       // Demolition layer auto-routing (REQ-UNIMP-002)
@@ -475,7 +475,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     addPointElement(kind, position) {
       const { site, activeLayerId, renovationMode, activeRenovationCategory } = get();
-      if (!site) return null;
+      if (!site) {return null;}
       const rawDesc = prompt("Enter COGO Point Description (e.g. TR-Oak, MH-Storm, BM-Main):") || "";
       let layerId = activeLayerId ?? elementMeta(kind).defaultLayerId;
       let finalKind = kind;
@@ -532,7 +532,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     addNetworkPath(kind, path, edge) {
       const { site } = get();
-      if (!site || path.length < 2) return null;
+      if (!site || path.length < 2) {return null;}
       const count = (site.networks ?? []).filter((n) => n.kind === kind).length;
       const name = `${kind === "road" ? "Road" : "Main"} ${count + 1}`;
       const network = networkFromPath(createId("net"), name, kind, path, () => createId("nn"), edge);
@@ -542,7 +542,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     addAlignment(pis, radius = 0) {
       const { site } = get();
-      if (!site || pis.length < 2) return null;
+      if (!site || pis.length < 2) {return null;}
       const count = (site.alignments ?? []).length;
       const id = createId("algn");
       const alignment = {
@@ -560,7 +560,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     addElements(elements) {
-      if (elements.length === 0) return;
+      if (elements.length === 0) {return;}
       mutate((s) => ({ ...s, elements: [...s.elements, ...elements] }));
     },
 
@@ -601,7 +601,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     moveSelection(delta) {
       const { selection, site, renovationMode } = get();
-      if (selection.length === 0 || !site) return;
+      if (selection.length === 0 || !site) {return;}
       const ids = new Set(selection);
       if (renovationMode) {
         const hasExisting = site.elements.some((e) => ids.has(e.id) && (e.renovationStatus || "existing") === "existing");
@@ -613,7 +613,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
-          if (!ids.has(e.id)) return e;
+          if (!ids.has(e.id)) {return e;}
           if (isSpatialElement(e)) {
             return { ...e, boundary: e.boundary.map((p) => ({ x: p.x + delta.x, y: p.y + delta.y })) };
           }
@@ -624,7 +624,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     deleteSelection() {
       const { selection, site, renovationMode } = get();
-      if (selection.length === 0 || !site) return;
+      if (selection.length === 0 || !site) {return;}
       const ids = new Set(selection);
       if (renovationMode) {
         const hasExisting = site.elements.some((e) => ids.has(e.id) && (e.renovationStatus || "existing") === "existing");
@@ -697,23 +697,23 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     removeLayer(id) {
       const { site } = get();
-      if (!site || site.layers.length <= 1) return;
+      if (!site || site.layers.length <= 1) {return;}
       const fallback = site.layers.find((l) => l.id !== id)!;
       mutate((s) => ({
         ...s,
         layers: s.layers.filter((l) => l.id !== id),
         elements: s.elements.map((e) => (e.layerId === id ? { ...e, layerId: fallback.id } : e)),
       }));
-      if (get().activeLayerId === id) set({ activeLayerId: fallback.id });
+      if (get().activeLayerId === id) {set({ activeLayerId: fallback.id });}
     },
 
     reorderLayer(id, direction) {
       mutate((s) => {
         const sorted = [...s.layers].sort((a, b) => a.order - b.order);
         const index = sorted.findIndex((l) => l.id === id);
-        if (index < 0) return s;
+        if (index < 0) {return s;}
         const swapWith = direction === "up" ? index - 1 : index + 1;
-        if (swapWith < 0 || swapWith >= sorted.length) return s;
+        if (swapWith < 0 || swapWith >= sorted.length) {return s;}
         const a = sorted[index];
         const b = sorted[swapWith];
         const aOrder = a.order;
@@ -725,7 +725,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     undo() {
       const { site, history } = get();
-      if (!site || history.past.length === 0) return;
+      if (!site || history.past.length === 0) {return;}
       const previous = history.past[history.past.length - 1];
       set({
         site: previous,
@@ -739,7 +739,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     redo() {
       const { site, history } = get();
-      if (!site || history.future.length === 0) return;
+      if (!site || history.future.length === 0) {return;}
       const next = history.future[0];
       set({
         site: next,

@@ -44,7 +44,7 @@ export function resolveVerticalCurve(
   prev?: VerticalPVI,
   next?: VerticalPVI,
 ): ResolvedVerticalCurve | null {
-  if (!pvi.curveLength || pvi.curveLength <= 0 || !prev || !next) return null;
+  if (!pvi.curveLength || pvi.curveLength <= 0 || !prev || !next) {return null;}
 
   const L = pvi.curveLength;
   const g1 = (pvi.elevation - prev.elevation) / (pvi.station - prev.station);
@@ -87,11 +87,11 @@ export function resolveVerticalCurve(
 
 /** Calculate the vertical profile elevation at a given station. */
 export function profileElevationAt(profile: VerticalProfile, station: number): number {
-  if (profile.pvis.length === 0) return 0;
+  if (profile.pvis.length === 0) {return 0;}
   const sorted = _.sortBy(profile.pvis, "station");
 
-  if (station <= sorted[0].station) return sorted[0].elevation;
-  if (station >= sorted[sorted.length - 1].station) return sorted[sorted.length - 1].elevation;
+  if (station <= sorted[0].station) {return sorted[0].elevation;}
+  if (station >= sorted[sorted.length - 1].station) {return sorted[sorted.length - 1].elevation;}
 
   // Find the PVI segment containing this station
   let idx = 0;
@@ -154,7 +154,7 @@ export function sampleCrossSection(
   stepSize = 5,
 ): CrossSection | null {
   const at = pointAtStation(resolved, station);
-  if (!at) return null;
+  if (!at) {return null;}
 
   const { point, bearing } = at;
   const rad = (bearing * Math.PI) / 180;

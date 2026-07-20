@@ -30,7 +30,7 @@ export function TerrainPanel() {
 
   const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
 
-  if (!site) return null;
+  if (!site) {return null;}
 
   const unit = site.spatial.units === "feet" ? "ft" : "m";
 

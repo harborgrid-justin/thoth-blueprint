@@ -57,7 +57,7 @@ export function formatLength(
 export function formatCoord(p: Point, format: CoordFormat, digits = 1): string {
   const x = p.x.toFixed(digits);
   const y = p.y.toFixed(digits);
-  if (format === "survey") return `N ${(-p.y).toFixed(digits)} · E ${x}`;
+  if (format === "survey") {return `N ${(-p.y).toFixed(digits)} · E ${x}`;}
   return `x ${x} · y ${y}`;
 }
 
@@ -67,6 +67,6 @@ export function formatCoord(p: Point, format: CoordFormat, digits = 1): string {
  */
 export function formatDirection(a: Point, b: Point, format: AngleFormat): string {
   const az = azimuth(a, b);
-  if (format === "dd") return `${az.toFixed(1)}°`;
+  if (format === "dd") {return `${az.toFixed(1)}°`;}
   return formatBearing(azimuthToBearing(az));
 }

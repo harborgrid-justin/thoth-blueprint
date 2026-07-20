@@ -24,7 +24,7 @@ function centerlinePoints(r: ResolvedAlignment): Point[] {
   const pts: Point[] = [];
   for (const el of r.elements) {
     if (el.kind === "tangent") {
-      if (pts.length === 0) pts.push(el.from);
+      if (pts.length === 0) {pts.push(el.from);}
       pts.push(el.to);
     } else {
       const c = el.curve;
@@ -45,13 +45,13 @@ function centerlinePoints(r: ResolvedAlignment): Point[] {
  */
 export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const alignments = site.alignments;
-  if (!alignments || alignments.length === 0) return null;
+  if (!alignments || alignments.length === 0) {return null;}
 
   return (
     <g className="pointer-events-none">
       {alignments.map((a) => {
         const r = resolveAlignment(a);
-        if (!r) return null;
+        if (!r) {return null;}
 
         const line = centerlinePoints(r).map((p) => worldToScreen(p, viewport));
         const poly = line.map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ");
@@ -91,7 +91,7 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
             {/* Full-station ticks + labels. */}
             {stations.map((st, i) => {
               const at = pointAtStation(r, st);
-              if (!at) return null;
+              if (!at) {return null;}
               const s = worldToScreen(at.point, viewport);
               const d = dirFor(at.bearing);
               const perp = { x: -d.y, y: d.x };

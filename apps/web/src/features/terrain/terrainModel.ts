@@ -30,9 +30,9 @@ const MIN_CELL = 0.5;
 export function siteExtent(site: Site): Bounds | null {
   const boxes: Bounds[] = [];
   for (const el of site.elements) {
-    if (isSpatialElement(el)) boxes.push(bounds(el.boundary));
+    if (isSpatialElement(el)) {boxes.push(bounds(el.boundary));}
     else if (el.kind === "spot" || el.kind === "tree" || el.kind === "note")
-      boxes.push(bounds([el.position]));
+      {boxes.push(bounds([el.position]));}
   }
   return boxes.length ? unionBounds(boxes) : null;
 }
@@ -66,7 +66,7 @@ export function buildTerrainModel(site: Site): TerrainModel {
 
   const existing = interpolateGrid(spots, extent, { cellSize, padding: cellSize });
   let proposed = existing;
-  for (const g of grades) proposed = gradePad(proposed, g.boundary, g.targetElevation);
+  for (const g of grades) {proposed = gradePad(proposed, g.boundary, g.targetElevation);}
 
   return {
     hasTerrain: true,

@@ -50,8 +50,8 @@ export function SheetSetDialog() {
 
   const baseSet = React.useMemo(() => (site ? ensureDrawingSet(site, plugin) : null), [site, plugin]);
   const set = React.useMemo(() => {
-    if (!baseSet) return null;
-    if (!sizeOverride && !orientOverride) return baseSet;
+    if (!baseSet) {return null;}
+    if (!sizeOverride && !orientOverride) {return baseSet;}
     return {
       ...baseSet,
       sheets: baseSet.sheets.map((s) => ({
@@ -64,11 +64,11 @@ export function SheetSetDialog() {
 
   const sheets = React.useMemo(() => (set ? sortSheets(set) : []), [set]);
   const selected: Sheet | null = React.useMemo(() => {
-    if (!sheets.length) return null;
+    if (!sheets.length) {return null;}
     return sheets.find((s) => s.id === selectedId) ?? sheets[0];
   }, [sheets, selectedId]);
 
-  if (!site || !set || !selected) return null;
+  if (!site || !set || !selected) {return null;}
 
   const unit = plugin.sheetStandards?.unit ?? "in";
   const layout = sheetLayout(selected, unit);
@@ -76,7 +76,7 @@ export function SheetSetDialog() {
 
   function exportSvg() {
     const svg = svgRef.current;
-    if (!svg) return;
+    if (!svg) {return;}
     const src = new XMLSerializer().serializeToString(svg);
     const blob = new Blob([`<?xml version="1.0" encoding="UTF-8"?>\n${src}`], { type: "image/svg+xml;charset=utf-8" });
     const url = URL.createObjectURL(blob);
@@ -88,7 +88,7 @@ export function SheetSetDialog() {
   }
 
   async function exportPdf() {
-    if (!set || !site) return;
+    if (!set || !site) {return;}
     setBusy(true);
     try {
       await exportDrawingSetPdf(set, site, `${site.name.replace(/\s+/g, "-").toLowerCase()}-drawings.pdf`);

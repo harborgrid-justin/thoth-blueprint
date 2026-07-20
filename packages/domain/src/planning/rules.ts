@@ -16,7 +16,7 @@ import type { Building, Lot, Site, Zone } from "../spatial/primitives";
  */
 export function buildableEnvelope(lot: Lot): Polygon | null {
   const setback = lot.setback ?? 0;
-  if (setback <= 0) return lot.boundary.slice();
+  if (setback <= 0) {return lot.boundary.slice();}
   return offsetPolygon(lot.boundary, setback);
 }
 
@@ -50,14 +50,14 @@ export interface SubdivisionOptions {
  */
 export function subdivideGrid(boundary: Polygon, options: SubdivisionOptions): Lot[] {
   const { columns, rows, gap = 0, layerId, makeId, setback } = options;
-  if (columns < 1 || rows < 1) return [];
+  if (columns < 1 || rows < 1) {return [];}
 
   const box = bounds(boundary);
   const totalW = box.maxX - box.minX;
   const totalH = box.maxY - box.minY;
   const cellW = (totalW - gap * (columns - 1)) / columns;
   const cellH = (totalH - gap * (rows - 1)) / rows;
-  if (cellW <= 0 || cellH <= 0) return [];
+  if (cellW <= 0 || cellH <= 0) {return [];}
 
   const lots: Lot[] = [];
   for (let r = 0; r < rows; r++) {
@@ -71,7 +71,7 @@ export function subdivideGrid(boundary: Polygon, options: SubdivisionOptions): L
         { x: x0, y: y0 + cellH },
       ];
       const center: Point = { x: x0 + cellW / 2, y: y0 + cellH / 2 };
-      if (!pointInPolygon(center, boundary)) continue;
+      if (!pointInPolygon(center, boundary)) {continue;}
       lots.push({
         id: makeId(),
         kind: "lot",
@@ -186,7 +186,7 @@ export function checkCompliance(site: Site): ComplianceFinding[] {
 
 function centroidOf(polygon: Polygon): Point {
   const n = polygon.length;
-  if (n === 0) return { x: 0, y: 0 };
+  if (n === 0) {return { x: 0, y: 0 };}
   const sum = _.reduce(polygon, (acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 });
   return { x: sum.x / n, y: sum.y / n };
 }

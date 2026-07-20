@@ -14,7 +14,7 @@ export const POINT_CLOUD_FORMATS: PointCloudFormat[] = ["xyz", "pts", "ply", "la
 /** Read and parse a point-cloud file, inferring the format from its name. */
 export async function importPointCloudFile(file: File): Promise<{ name: string; cloud: PointCloud }> {
   const format = pointCloudFormatFromName(file.name);
-  if (!format) throw new Error(`Unsupported point-cloud file: ${file.name}`);
+  if (!format) {throw new Error(`Unsupported point-cloud file: ${file.name}`);}
   const data = isBinaryPointCloudFormat(format)
     ? await readFileAsArrayBuffer(file)
     : await readFileAsText(file);

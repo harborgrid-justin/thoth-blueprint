@@ -28,6 +28,11 @@ export default tseslint.config(
       ],
       "no-unused-vars": "off",
       "no-console": "warn",
+      "eqeqeq": ["warn", "always"],
+      "curly": ["warn", "all"],
+      "prefer-const": "error",
+      "no-var": "error",
+      "@typescript-eslint/no-explicit-any": "warn",
     },
   }
 );

@@ -152,6 +152,6 @@ export function elementMeta(kind: ElementKind): ElementKindMeta {
 
 /** The canvas color for an element, honoring land-use category when relevant. */
 export function elementColor(kind: ElementKind, category?: LandUseCategory): string {
-  if (kind === "landuse" && category) return landUseColor(category);
+  if (kind === "landuse" && category) {return landUseColor(category);}
   return META[kind].fill;
 }

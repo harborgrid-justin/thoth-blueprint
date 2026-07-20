@@ -40,7 +40,7 @@ function Terminator({ arrow }: { arrow: DimArrow }) {
  */
 export function DimensionLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const dimensions = site.dimensions;
-  if (!dimensions || dimensions.length === 0) return null;
+  if (!dimensions || dimensions.length === 0) {return null;}
 
   const project = (p: Point) => worldToScreen(p, viewport);
   const showLabels = viewport.zoom > 1.2;

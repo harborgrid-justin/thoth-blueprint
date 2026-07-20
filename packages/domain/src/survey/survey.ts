@@ -72,10 +72,10 @@ export function azimuthToBearing(az: number): QuadrantBearing {
   const a = ((az % 360) + 360) % 360;
 
   // Cardinal directions.
-  if (approx(a, 0)) return { ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" };
-  if (approx(a, 90)) return { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "E", cardinal: "E" };
-  if (approx(a, 180)) return { ns: "S", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "S" };
-  if (approx(a, 270)) return { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "W", cardinal: "W" };
+  if (approx(a, 0)) {return { ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" };}
+  if (approx(a, 90)) {return { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "E", cardinal: "E" };}
+  if (approx(a, 180)) {return { ns: "S", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "S" };}
+  if (approx(a, 270)) {return { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "W", cardinal: "W" };}
 
   let ns: "N" | "S";
   let ew: "E" | "W";
@@ -279,7 +279,7 @@ export function traverseClosure(courses: SurveyCourse[]): TraverseClosure {
  */
 export function interiorAngles(polygon: Polygon): number[] {
   const n = polygon.length;
-  if (n < 3) return polygon.map(() => 0);
+  if (n < 3) {return polygon.map(() => 0);}
   const ccw = signedArea(polygon) > 0;
   const angles: number[] = [];
   for (let i = 0; i < n; i++) {
@@ -304,11 +304,11 @@ export function interiorAngles(polygon: Polygon): number[] {
  * the *recorded* (rounded) bearings actually printed on the plat.
  */
 export function bearingToAzimuth(b: QuadrantBearing): number {
-  if (b.cardinal) return { N: 0, E: 90, S: 180, W: 270 }[b.cardinal];
+  if (b.cardinal) {return { N: 0, E: 90, S: 180, W: 270 }[b.cardinal];}
   const angle = b.degrees + b.minutes / 60 + b.seconds / 3600;
-  if (b.ns === "N" && b.ew === "E") return angle;
-  if (b.ns === "S" && b.ew === "E") return 180 - angle;
-  if (b.ns === "S" && b.ew === "W") return 180 + angle;
+  if (b.ns === "N" && b.ew === "E") {return angle;}
+  if (b.ns === "S" && b.ew === "E") {return 180 - angle;}
+  if (b.ns === "S" && b.ew === "W") {return 180 + angle;}
   return 360 - angle; // N…W
 }
 

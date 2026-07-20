@@ -46,7 +46,7 @@ export function PlatReportDialog() {
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    if (!platOpen) return;
+    if (!platOpen) {return;}
     const preferred =
       (platTargetId && surveyable.find((e) => e.id === platTargetId)?.id) ??
       surveyable.find((e) => e.kind === "lot")?.id ??
@@ -55,7 +55,7 @@ export function PlatReportDialog() {
     setSelectedId(preferred);
   }, [platOpen, platTargetId, surveyable]);
 
-  if (!site) return null;
+  if (!site) {return null;}
   const selected = surveyable.find((e) => e.id === selectedId) ?? null;
 
   return (

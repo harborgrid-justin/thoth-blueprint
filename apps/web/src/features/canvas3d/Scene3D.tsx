@@ -37,7 +37,7 @@ export function Scene3D() {
   // --- one-time setup ------------------------------------------------------
   React.useEffect(() => {
     const mount = mountRef.current;
-    if (!mount) return;
+    if (!mount) {return;}
 
     // A fresh camera is created here, so it must be framed again on next content
     // (StrictMode remounts and HMR recreate this effect while refs persist).
@@ -149,7 +149,7 @@ export function Scene3D() {
     animate();
 
     const onResize = () => {
-      if (!mount) return;
+      if (!mount) {return;}
       const w = mount.clientWidth;
       const h = mount.clientHeight;
       renderer.setSize(w, h);
@@ -165,7 +165,7 @@ export function Scene3D() {
       controls.dispose();
       renderer.dispose();
       contentRef.current?.dispose();
-      if (renderer.domElement.parentNode === mount) mount.removeChild(renderer.domElement);
+      if (renderer.domElement.parentNode === mount) {mount.removeChild(renderer.domElement);}
     };
   }, []);
 
@@ -174,7 +174,7 @@ export function Scene3D() {
     const scene = sceneRef.current;
     const camera = cameraRef.current;
     const controls = controlsRef.current;
-    if (!scene || !camera || !controls || !site) return;
+    if (!scene || !camera || !controls || !site) {return;}
 
     if (contentRef.current) {
       scene.remove(contentRef.current.group);
@@ -185,7 +185,7 @@ export function Scene3D() {
     cloudDisposeRef.current = [];
 
     const result = buildScene(site);
-    if (!result) return;
+    if (!result) {return;}
 
     if (physicsRef.current) {
       physicsRef.current.syncWorld(site, result.exaggeration);
@@ -193,7 +193,7 @@ export function Scene3D() {
 
     // Imported point clouds, in scene space (plan-centered, y-up, exaggerated).
     for (const c of clouds) {
-      if (!c.visible) continue;
+      if (!c.visible) {continue;}
       const pts = cloudPoints(c.cloud.points, result.center, result.exaggeration);
       result.group.add(pts.object);
       cloudDisposeRef.current.push(pts.geometry, pts.material);
@@ -201,7 +201,7 @@ export function Scene3D() {
 
     // Imported meshes, seated on the terrain at the plan center.
     for (const m of meshes) {
-      if (!m.visible) continue;
+      if (!m.visible) {continue;}
       m.object.position.set(0, result.baseElevation, 0);
       result.group.add(m.object);
     }

@@ -47,7 +47,7 @@ export function ImportExportMenu() {
     try {
       await fn();
     } catch (e) {
-      // eslint-disable-next-line no-alert
+       
       window.alert(`${label} failed: ${e instanceof Error ? e.message : String(e)}`);
     } finally {
       setBusy(false);
@@ -58,7 +58,7 @@ export function ImportExportMenu() {
 
   async function importMesh() {
     const file = await pickFile(MESH_ACCEPT);
-    if (!file) return;
+    if (!file) {return;}
     await run("Mesh import", async () => {
       const object = await importMeshFile(file);
       addMesh({ id: createId("mesh"), name: file.name, object, visible: true });
@@ -67,12 +67,12 @@ export function ImportExportMenu() {
 
   async function importCloud(asTerrain: boolean) {
     const file = await pickFile(POINT_CLOUD_ACCEPT);
-    if (!file) return;
+    if (!file) {return;}
     await run("Point-cloud import", async () => {
       const { name, cloud } = await importPointCloudFile(file);
       if (asTerrain) {
         const s = site();
-        if (!s) return;
+        if (!s) {return;}
         const layerId = s.layers.find((l) => l.id === "layer-terrain")?.id ?? s.layers[0].id;
         const spots = pointCloudToSpots(cloud, layerId) as SpotElevationPoint[];
         addElements(spots);
@@ -84,32 +84,32 @@ export function ImportExportMenu() {
 
   async function importUnderlay() {
     const file = await pickFile("image/png,image/jpeg,.png,.jpg,.jpeg");
-    if (!file) return;
+    if (!file) {return;}
     await run("Blueprint import", async () => {
       const s = site();
-      if (!s) return;
+      if (!s) {return;}
       setUnderlay(await importUnderlayImage(file, s));
     });
   }
 
   async function exportPng() {
     const s = site();
-    if (!s) return;
+    if (!s) {return;}
     await run("PNG export", () => exportPlanPng(s));
   }
 
   function exportDae() {
     const s = site();
-    if (!s) return;
+    if (!s) {return;}
     void run("COLLADA export", () => exportSiteDae(s));
   }
 
   function exportCloud(format: PointCloudFormat) {
     const s = site();
-    if (!s) return;
+    if (!s) {return;}
     const spots = s.elements.filter((e): e is SpotElevationPoint => e.kind === "spot");
     if (spots.length === 0) {
-      // eslint-disable-next-line no-alert
+       
       window.alert("No terrain spot elevations to export. Add spot elevations or import a point cloud as terrain first.");
       return;
     }
@@ -118,13 +118,13 @@ export function ImportExportMenu() {
 
   async function importDataShortcut() {
     const file = await pickFile(".json");
-    if (!file) return;
+    if (!file) {return;}
     await run("Import Data Shortcut", async () => {
       const text = await file.text();
       const data = JSON.parse(text);
       if (data && Array.isArray(data.alignments)) {
         const s = site();
-        if (!s) return;
+        if (!s) {return;}
         const workspaceStore = useWorkspaceStore.getState();
         for (const item of data.alignments) {
           workspaceStore.addAlignment(item.pis.map((pi: any) => pi.point), item.pis[1]?.radius);
@@ -135,7 +135,7 @@ export function ImportExportMenu() {
 
   function exportDataShortcut() {
     const s = site();
-    if (!s) return;
+    if (!s) {return;}
     const shortcuts = {
       alignments: s.alignments ?? [],
     };

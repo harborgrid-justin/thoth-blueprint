@@ -29,7 +29,7 @@ function isPointInPolygon(p: { x: number; y: number }, polygon: { x: number; y: 
     const xj = polygon[j].x, yj = polygon[j].y;
     const intersect = ((yi > p.y) !== (yj > p.y))
         && (p.x < (xj - xi) * (p.y - yi) / (yj - yi) + xi);
-    if (intersect) inside = !inside;
+    if (intersect) {inside = !inside;}
   }
   return inside;
 }
@@ -51,7 +51,7 @@ function getDistanceToPolygon(p: { x: number; y: number }, polygon: { x: number;
     vec2.sub(ab, p2Vec, p1Vec);
     
     const lenSq = vec2.sqrLen(ab);
-    if (lenSq < 1e-12) continue;
+    if (lenSq < 1e-12) {continue;}
 
     const ap = vec2.create();
     vec2.sub(ap, pVec, p1Vec);
@@ -63,7 +63,7 @@ function getDistanceToPolygon(p: { x: number; y: number }, polygon: { x: number;
     vec2.scaleAndAdd(proj, p1Vec, ab, t);
     
     const dist = vec2.distance(pVec, proj);
-    if (dist < minDist) minDist = dist;
+    if (dist < minDist) {minDist = dist;}
   }
   return minDist;
 }
@@ -205,7 +205,7 @@ export function calculateDaylightLine(
 ): Point3D[] {
   const daylightLine: Point3D[] = [];
   const n = featureLine.length;
-  if (n < 2) return [];
+  if (n < 2) {return [];}
 
   for (let i = 0; i < n; i++) {
     const curr = featureLine[i];
@@ -230,7 +230,7 @@ export function calculateDaylightLine(
     
     const tangent = vec2.fromValues(tx, ty);
     const tangentLen = vec2.len(tangent);
-    if (tangentLen < 1e-4) continue;
+    if (tangentLen < 1e-4) {continue;}
     
     // Left normal vector
     const nx = -tangent[1] / tangentLen;

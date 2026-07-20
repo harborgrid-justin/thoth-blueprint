@@ -30,11 +30,11 @@ export function formatRelativeTime(iso: string): string {
   const now = Date.now();
   const diff = Math.max(0, now - then);
   const mins = Math.floor(diff / 60000);
-  if (mins < 1) return "just now";
-  if (mins < 60) return `${mins} min ago`;
+  if (mins < 1) {return "just now";}
+  if (mins < 60) {return `${mins} min ago`;}
   const hours = Math.floor(mins / 60);
-  if (hours < 24) return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+  if (hours < 24) {return `${hours} hour${hours === 1 ? "" : "s"} ago`;}
   const days = Math.floor(hours / 24);
-  if (days < 30) return `${days} day${days === 1 ? "" : "s"} ago`;
+  if (days < 30) {return `${days} day${days === 1 ? "" : "s"} ago`;}
   return new Date(iso).toLocaleDateString();
 }

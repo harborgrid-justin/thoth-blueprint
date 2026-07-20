@@ -29,20 +29,20 @@ export function MetricsPanel() {
 
   // Metrics scoped to the current selection (FE-METRIC-003).
   const selectionMetrics = React.useMemo(() => {
-    if (!site || selection.length === 0) return null;
+    if (!site || selection.length === 0) {return null;}
     const ids = new Set(selection);
     const subset = site.elements.filter((e) => ids.has(e.id));
-    if (subset.length === 0) return null;
+    if (subset.length === 0) {return null;}
     return computeSiteMetrics({ ...site, elements: subset }, areaUnit);
   }, [site, selection, areaUnit]);
   const community = React.useMemo(() => (site ? computeCommunityMetrics(site) : null), [site]);
   const networks = React.useMemo(() => {
-    if (!site) return [];
+    if (!site) {return [];}
     return (site.networks ?? []).map((n) => networkStats(n, site.spatial));
   }, [site]);
   const findings = React.useMemo(() => (site ? checkCompliance(site) : []), [site]);
 
-  if (!site || !metrics || !community) return null;
+  if (!site || !metrics || !community) {return null;}
 
   const roadMeters = networks.filter((n) => n.kind === "road").reduce((s, n) => s + n.lengthMeters, 0);
   const utilityMeters = networks.filter((n) => n.kind !== "road").reduce((s, n) => s + n.lengthMeters, 0);

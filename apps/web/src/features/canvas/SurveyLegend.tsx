@@ -33,7 +33,7 @@ export function SurveyLegend({ site }: { site: Site }) {
   const monTypes = uniq((monuments).map((m) => m.type));
   const lineTypes = uniq((site.controlLines ?? []).map((l) => l.type));
   const symTypes = uniq((site.civilSymbols ?? []).map((s) => s.type));
-  if (!monuments.length && !lineTypes.length && !symTypes.length && !frameworkRef && !plugin) return null;
+  if (!monuments.length && !lineTypes.length && !symTypes.length && !frameworkRef && !plugin) {return null;}
 
   return (
     <div className="absolute left-3 top-3 flex max-h-[82vh] max-w-[15rem] flex-col overflow-y-auto rounded-md border border-border bg-card/90 px-2.5 py-2 shadow-md backdrop-blur">
@@ -107,6 +107,6 @@ function Row({ label, desc, children }: { label: string; desc: string; children:
 
 function uniq<T>(arr: T[]): T[] {
   const out: T[] = [];
-  for (const x of arr) if (!out.includes(x)) out.push(x);
+  for (const x of arr) {if (!out.includes(x)) {out.push(x);}}
   return out;
 }

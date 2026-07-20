@@ -32,12 +32,12 @@ function mkSheet(
 
 /** The site's own drawing set, or a standard one derived from its contents. */
 export function ensureDrawingSet(site: Site, plugin: RegionPlugin): DrawingSet {
-  if (site.drawingSets && site.drawingSets.length) return site.drawingSets[0];
+  if (site.drawingSets && site.drawingSets.length) {return site.drawingSets[0];}
 
   const sheets: Sheet[] = [mkSheet("G", 0, 1, "Cover Sheet & Drawing Index", plugin)];
 
   const hasSurvey = (site.monuments?.length ?? 0) > 0 || !!site.plss || !!site.landLot;
-  if (hasSurvey) sheets.push(mkSheet("V", 1, 1, "Boundary & Control Survey", plugin));
+  if (hasSurvey) {sheets.push(mkSheet("V", 1, 1, "Boundary & Control Survey", plugin));}
 
   sheets.push(mkSheet("C", 1, 1, "Overall Site Plan", plugin));
   if ((site.controlLines?.length ?? 0) > 0 || (site.civilSymbols?.length ?? 0) > 0) {

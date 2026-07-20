@@ -40,13 +40,13 @@ export function PlanProductionWizard() {
     }
   }, [open, alignments]);
 
-  if (!site) return null;
+  if (!site) {return null;}
   const alignment = alignments.find((a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
 
   function handleSplit() {
-    if (!alignment || !site) return;
+    if (!alignment || !site) {return;}
     const resolved = resolveAlignment(alignment);
-    if (!resolved) return;
+    if (!resolved) {return;}
 
     // Standard ARCH D viewport dimensions in inches: w=30in, h=18in
     const w = 30;
@@ -72,9 +72,9 @@ export function PlanProductionWizard() {
   }
 
   function handleCreateSheets() {
-    if (!alignment || generatedFrames.length === 0 || !site) return;
+    if (!alignment || generatedFrames.length === 0 || !site) {return;}
     const resolved = resolveAlignment(alignment);
-    if (!resolved) return;
+    if (!resolved) {return;}
 
     const w = 30;
     const h = 18;

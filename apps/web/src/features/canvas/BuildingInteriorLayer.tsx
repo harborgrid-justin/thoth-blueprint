@@ -23,7 +23,7 @@ const HALO = "hsl(var(--canvas))";
  */
 export function BuildingInteriorLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const models = site.buildingModels;
-  if (!models || models.length === 0) return null;
+  if (!models || models.length === 0) {return null;}
   const project = (p: Point) => worldToScreen(p, viewport);
   const showTags = viewport.zoom > 1.4;
 
@@ -75,7 +75,7 @@ function BuildingPlan({
       {/* Doors: white jamb gap + leaf + swing arc */}
       {model.doors.map((door) => {
         const wall = findWall(model, door.wallId);
-        if (!wall || !wallIds.has(wall.id)) return null;
+        if (!wall || !wallIds.has(wall.id)) {return null;}
         const [j1, j2] = openingJambs(wall, door);
         const s1 = project(j1);
         const s2 = project(j2);
@@ -95,7 +95,7 @@ function BuildingPlan({
       {/* Windows: glazing line across the jamb gap */}
       {model.windows.map((win: WindowOpening) => {
         const wall = findWall(model, win.wallId);
-        if (!wall || !wallIds.has(wall.id)) return null;
+        if (!wall || !wallIds.has(wall.id)) {return null;}
         const [j1, j2] = openingJambs(wall, win);
         const s1 = project(j1);
         const s2 = project(j2);

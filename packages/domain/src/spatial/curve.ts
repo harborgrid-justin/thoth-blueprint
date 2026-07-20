@@ -48,7 +48,7 @@ export interface Arc {
 
 /** The bulge of edge `i`, or 0 (straight) when absent or non-finite. */
 export function edgeBulge(arcs: EdgeArcs | undefined, i: number): number {
-  if (!arcs) return 0;
+  if (!arcs) {return 0;}
   const b = arcs[String(i)];
   return typeof b === "number" && Number.isFinite(b) ? b : 0;
 }
@@ -66,9 +66,9 @@ function chordNormal(a: Point, b: Point, len: number): Point {
  * zero/degenerate bulge or a zero-length chord (treat those edges as straight).
  */
 export function bulgeToArc(a: Point, b: Point, bulge: number): Arc | null {
-  if (!Number.isFinite(bulge) || Math.abs(bulge) < GEOMETRY_EPSILON) return null;
+  if (!Number.isFinite(bulge) || Math.abs(bulge) < GEOMETRY_EPSILON) {return null;}
   const chordLength = vec2.distance(vec2.fromValues(a.x, a.y), vec2.fromValues(b.x, b.y));
-  if (chordLength < GEOMETRY_EPSILON) return null;
+  if (chordLength < GEOMETRY_EPSILON) {return null;}
 
   const t = Math.abs(bulge);
   const delta = 4 * Math.atan(t); // included angle magnitude
@@ -116,8 +116,8 @@ export function bulgeToArc(a: Point, b: Point, bulge: number): Arc | null {
 /** Normalize an angle to (−π, π]. */
 function normalizeSigned(angle: number): number {
   let a = angle % (2 * Math.PI);
-  if (a <= -Math.PI) a += 2 * Math.PI;
-  if (a > Math.PI) a -= 2 * Math.PI;
+  if (a <= -Math.PI) {a += 2 * Math.PI;}
+  if (a > Math.PI) {a -= 2 * Math.PI;}
   return a;
 }
 
@@ -141,7 +141,7 @@ export function arcAreaTerm(a: Point, b: Point, arc: Arc): number {
  */
 export function densifyArc(a: Point, b: Point, bulge: number, degPerStep = 2): Point[] {
   const arc = bulgeToArc(a, b, bulge);
-  if (!arc) return [];
+  if (!arc) {return [];}
   const steps = Math.max(2, Math.ceil((arc.delta * (180 / Math.PI)) / degPerStep));
   const angA = Math.atan2(a.y - arc.center.y, a.x - arc.center.x);
   const points: Point[] = [];
@@ -180,7 +180,7 @@ export function boundaryEdges(boundary: Polygon, arcs?: EdgeArcs): BoundaryEdge[
 
 /** `true` if any edge of the ring is a circular arc. */
 export function hasArcs(boundary: Polygon, arcs?: EdgeArcs): boolean {
-  if (!arcs) return false;
+  if (!arcs) {return false;}
   return boundaryEdges(boundary, arcs).some((e) => e.arc !== null);
 }
 
@@ -190,11 +190,11 @@ export function hasArcs(boundary: Polygon, arcs?: EdgeArcs): boolean {
  * the ring has no arcs, returns a copy of the original vertices.
  */
 export function densifyBoundary(boundary: Polygon, arcs?: EdgeArcs, degPerStep = 2): Polygon {
-  if (!arcs) return boundary.slice();
+  if (!arcs) {return boundary.slice();}
   const out: Point[] = [];
   for (const edge of boundaryEdges(boundary, arcs)) {
     out.push(edge.from);
-    if (edge.arc) out.push(...densifyArc(edge.from, edge.to, edge.bulge, degPerStep));
+    if (edge.arc) {out.push(...densifyArc(edge.from, edge.to, edge.bulge, degPerStep));}
   }
   return out;
 }
@@ -202,7 +202,7 @@ export function densifyBoundary(boundary: Polygon, arcs?: EdgeArcs, degPerStep =
 /** Exact area of a ring that may mix straight and arc edges, plan units². */
 export function boundaryArea(boundary: Polygon, arcs?: EdgeArcs): number {
   const n = boundary.length;
-  if (n < 3) return 0;
+  if (n < 3) {return 0;}
   let signed = 0;
   for (const edge of boundaryEdges(boundary, arcs)) {
     const { from: a, to: b, arc } = edge;

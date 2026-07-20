@@ -41,7 +41,7 @@ export function buildCorridorSections(
   superelevation?: SuperelevationCurve
 ): CorridorSectionPoint[] {
   const resolved = resolveAlignment(alignment);
-  if (!resolved) return [];
+  if (!resolved) {return [];}
 
   const sections: CorridorSectionPoint[] = [];
   const stationsCount = Math.floor(resolved.length / corridor.frequency);
@@ -50,7 +50,7 @@ export function buildCorridorSections(
     const station = i * corridor.frequency;
     const baseStation = resolved.startStation + station;
     const atStation = pointAtStation(resolved, baseStation);
-    if (!atStation) continue;
+    if (!atStation) {continue;}
 
     // 2. Get profile elevation (Z)
     const zBase = profileElevationAt(profile, station);

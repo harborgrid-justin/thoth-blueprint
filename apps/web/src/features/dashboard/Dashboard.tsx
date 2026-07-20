@@ -59,7 +59,7 @@ export function Dashboard() {
       mode === "empty"
         ? "Clear ALL local projects and start from scratch? This cannot be undone."
         : "Reset to the sample projects? Your local changes will be replaced.";
-    if (!window.confirm(message)) return;
+    if (!window.confirm(message)) {return;}
     await api.resetWorkspace(mode);
     void refresh();
   }

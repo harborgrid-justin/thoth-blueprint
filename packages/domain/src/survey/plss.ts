@@ -119,7 +119,7 @@ export function nominalAliquotAcres(path: Quarter[]): number {
 
 /** Format an aliquot path as "NW1/4 of the SE1/4 of the …". */
 export function formatAliquot(path: Quarter[]): string {
-  if (path.length === 0) return "all";
+  if (path.length === 0) {return "all";}
   // The path is outer→inner; the description reads inner→outer.
   return path
     .slice()
@@ -165,7 +165,7 @@ export function sectionCornerName(corner: Quarter): string {
  * runs west across the top tier, then serpentines down to Section 36 in the SE.
  */
 export function sectionColRow(section: number): { col: number; row: number } | null {
-  if (section < 1 || section > 36) return null;
+  if (section < 1 || section > 36) {return null;}
   const row = Math.floor((section - 1) / 6); // 0 = north tier
   const within = (section - 1) % 6;
   // Odd tiers (row 0,2,4) number east→west; even tiers (row 1,3,5) west→east.

@@ -16,7 +16,7 @@ export function splitPolygonByLine(polygon: Polygon, p1: Point, p2: Point): Poly
   const left: Point[] = [];
   const right: Point[] = [];
   const n = polygon.length;
-  if (n < 3) return null;
+  if (n < 3) {return null;}
 
   const side = (p: Point) => A * p.x + B * p.y + C;
 
@@ -64,8 +64,8 @@ export function splitPolygonByLine(polygon: Polygon, p1: Point, p2: Point): Poly
   const cleanLeft = clean(left);
   const cleanRight = clean(right);
 
-  if (cleanLeft.length < 3 || cleanRight.length < 3) return null;
-  if (Math.abs(polygonArea(cleanLeft)) < 1e-3 || Math.abs(polygonArea(cleanRight)) < 1e-3) return null;
+  if (cleanLeft.length < 3 || cleanRight.length < 3) {return null;}
+  if (Math.abs(polygonArea(cleanLeft)) < 1e-3 || Math.abs(polygonArea(cleanRight)) < 1e-3) {return null;}
 
   return [cleanLeft, cleanRight];
 }
@@ -85,7 +85,7 @@ export interface SlideLineOptions {
  */
 export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions): Lot[] {
   const { targetArea, frontage, angle = 90, layerId, makeId, setback } = options;
-  if (frontage.length < 2 || targetArea <= 0) return [];
+  if (frontage.length < 2 || targetArea <= 0) {return [];}
 
   let remainder = boundary.slice();
   const lots: Lot[] = [];
@@ -98,7 +98,7 @@ export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions)
     // Frontage direction vector using gl-matrix
     const ab = vec2.fromValues(endPt.x - startPt.x, endPt.y - startPt.y);
     const segLen = vec2.len(ab);
-    if (segLen < 1e-4) continue;
+    if (segLen < 1e-4) {continue;}
 
     const dx = ab[0];
     const dy = ab[1];
@@ -113,7 +113,7 @@ export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions)
       const splitPt = { x: startPt.x + t * dx, y: startPt.y + t * dy };
       const p2 = { x: splitPt.x + px, y: splitPt.y + py };
       const split = splitPolygonByLine(remainder, splitPt, p2);
-      if (!split) return null;
+      if (!split) {return null;}
 
       // Line equation to check which side contains the frontage start point
       const lineA = p2.y - splitPt.y;
@@ -203,7 +203,7 @@ export interface SwingLineOptions {
  */
 export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions): Lot[] {
   const { targetArea, pivot, layerId, makeId, setback } = options;
-  if (targetArea <= 0 || boundary.length < 3) return [];
+  if (targetArea <= 0 || boundary.length < 3) {return [];}
 
   // Find pivot vertex index in boundary
   let idx = -1;
@@ -227,7 +227,7 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
       const p2 = boundary[(i + 1) % boundary.length];
       const ab = vec2.fromValues(p2.x - p1.x, p2.y - p1.y);
       const len = vec2.len(ab);
-      if (len < 1e-4) continue;
+      if (len < 1e-4) {continue;}
       const dx = ab[0];
       const dy = ab[1];
       const t = ((pivot.x - p1.x) * dx + (pivot.y - p1.y) * dy) / (len * len);
@@ -257,8 +257,8 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
 
   // Compute interior sweep angle
   let sweepAngle = theta2 - theta1;
-  while (sweepAngle <= -Math.PI) sweepAngle += 2 * Math.PI;
-  while (sweepAngle > Math.PI) sweepAngle -= 2 * Math.PI;
+  while (sweepAngle <= -Math.PI) {sweepAngle += 2 * Math.PI;}
+  while (sweepAngle > Math.PI) {sweepAngle -= 2 * Math.PI;}
 
   const getSplit = (s: number) => {
     const rad = theta1 + s * sweepAngle;
@@ -267,7 +267,7 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
     vec2.scaleAndAdd(p2Pos, vec2.fromValues(pivot.x, pivot.y), dir, 1);
     const p2 = { x: p2Pos[0], y: p2Pos[1] };
     const split = splitPolygonByLine(boundary, pivot, p2);
-    if (!split) return null;
+    if (!split) {return null;}
 
     // Line equation to find which side contains prevPt
     const lineA = p2.y - pivot.y;
@@ -331,7 +331,7 @@ export function mergeLots(lots: Lot[], layerId: string, makeId: () => string): L
   if (lots.length === 0) {
     throw new Error("No lots provided for merge");
   }
-  if (lots.length === 1) return { ...lots[0] };
+  if (lots.length === 1) {return { ...lots[0] };}
 
   interface DirectedEdge {
     from: Point;

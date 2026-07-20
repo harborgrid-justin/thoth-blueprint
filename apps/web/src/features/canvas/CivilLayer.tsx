@@ -10,7 +10,7 @@ interface Sample {
 /** Evenly-spaced samples (point + direction + normal) along a screen polyline. */
 function sampleAlong(pts: Point[], spacing: number): Sample[] {
   const res: Sample[] = [];
-  if (pts.length < 2) return res;
+  if (pts.length < 2) {return res;}
   const segLen: number[] = [];
   let total = 0;
   for (let i = 1; i < pts.length; i++) {
@@ -46,7 +46,7 @@ function polyPoints(pts: Point[]): string {
 /** Renders the site's civil/erosion-control lines with drafting symbology. */
 export function CivilLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const lines = site.controlLines;
-  if (!lines || lines.length === 0) return null;
+  if (!lines || lines.length === 0) {return null;}
   const project = (p: Point) => worldToScreen(p, viewport);
   return (
     <g className="pointer-events-none">
@@ -66,7 +66,7 @@ export function ControlLineShape({
   project: (p: Point) => Point;
 }) {
   const screen = line.path.map(project);
-  if (screen.length < 2) return null;
+  if (screen.length < 2) {return null;}
 
   switch (line.type) {
     case "silt-fence": {

@@ -53,9 +53,23 @@ export function ProfileSectionDialog() {
     }
   }, [open, alignments]);
 
-  if (!site) return null;
   const alignment = alignments.find((a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
   const resolved = alignment ? resolveAlignment(alignment) : null;
+
+  // Sample cross section using the active terrain
+  const crossSection = React.useMemo<CrossSection | null>(() => {
+    if (!resolved || !terrainSurface) {return null;}
+    return sampleCrossSection(
+      terrainSurface,
+      terrainSurface, // use same grid for proposed model in mock
+      resolved,
+      selectedStation,
+      swathWidth,
+      2
+    );
+  }, [terrainSurface, resolved, selectedStation, swathWidth]);
+
+  if (!site) {return null;}
 
   function updatePvi(index: number, field: keyof VerticalPVI, value: number) {
     const updated = [...profile.pvis];
@@ -73,23 +87,10 @@ export function ProfileSectionDialog() {
   }
 
   function removePvi(index: number) {
-    if (profile.pvis.length <= 1) return;
+    if (profile.pvis.length <= 1) {return;}
     const updated = profile.pvis.filter((_, i) => i !== index);
     setProfile({ ...profile, pvis: updated });
   }
-
-  // Sample cross section using the active terrain
-  const crossSection = React.useMemo<CrossSection | null>(() => {
-    if (!resolved || !terrainSurface) return null;
-    return sampleCrossSection(
-      terrainSurface,
-      terrainSurface, // use same grid for proposed model in mock
-      resolved,
-      selectedStation,
-      swathWidth,
-      2
-    );
-  }, [terrainSurface, resolved, selectedStation, swathWidth]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

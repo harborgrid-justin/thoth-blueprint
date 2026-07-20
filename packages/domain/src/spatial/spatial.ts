@@ -33,7 +33,7 @@ export function defaultSpatialContext(overrides: Partial<SpatialContext> = {}): 
 
 /** Convert a length between two units. */
 export function convertLength(value: number, from: Unit, to: Unit): number {
-  if (from === to) return value;
+  if (from === to) {return value;}
   return (value * METERS_PER_UNIT[from]) / METERS_PER_UNIT[to];
 }
 

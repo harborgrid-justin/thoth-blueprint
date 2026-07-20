@@ -39,7 +39,7 @@ const DEFAULT_MATERIAL = () =>
  */
 export async function importMeshFile(file: File): Promise<THREE.Group> {
   const format = meshFormatFromName(file.name);
-  if (!format) throw new Error(`Unsupported mesh file: ${file.name}`);
+  if (!format) {throw new Error(`Unsupported mesh file: ${file.name}`);}
 
   let object: THREE.Object3D;
   switch (format) {
@@ -75,7 +75,7 @@ export async function importMeshFile(file: File): Promise<THREE.Group> {
 
 function applyDefaultMaterial(object: THREE.Object3D) {
   object.traverse((child) => {
-    if (child instanceof THREE.Mesh && !child.material) child.material = DEFAULT_MATERIAL();
+    if (child instanceof THREE.Mesh && !child.material) {child.material = DEFAULT_MATERIAL();}
   });
 }
 
@@ -86,14 +86,14 @@ function normalizeImported(object: THREE.Object3D): THREE.Group {
   group.updateMatrixWorld(true);
 
   const box = new THREE.Box3().setFromObject(group);
-  if (box.isEmpty()) return group;
+  if (box.isEmpty()) {return group;}
   const center = box.getCenter(new THREE.Vector3());
   object.position.x -= center.x;
   object.position.z -= center.z;
   object.position.y -= box.min.y;
 
   object.traverse((child) => {
-    if (child instanceof THREE.Mesh) child.castShadow = true;
+    if (child instanceof THREE.Mesh) {child.castShadow = true;}
   });
   return group;
 }

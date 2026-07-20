@@ -70,7 +70,7 @@ export function generateViewFrames(
     const stationCenter = (stationStart + stationEnd) / 2;
 
     const centerPoint = pointAtStation(resolved, stationCenter);
-    if (!centerPoint) break;
+    if (!centerPoint) {break;}
 
     // View rotation: set viewport horizontal to follow centerline bearing
     // heading is bearing, viewport horizontal aligns perpendicular to left normal
@@ -120,7 +120,7 @@ export function generateViewFrames(
     idx++;
 
     // Prevent infinite loop on edge cases
-    if (stepDistance <= 0.01) break;
+    if (stepDistance <= 0.01) {break;}
   }
 
   return {

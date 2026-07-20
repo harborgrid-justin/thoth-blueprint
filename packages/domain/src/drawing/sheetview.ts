@@ -139,7 +139,7 @@ export function fitScale(
     ["desc"]
   );
   for (const { id, s } of sorted) {
-    if (bw * s <= rect.w && bh * s <= rect.h) return id;
+    if (bw * s <= rect.w && bh * s <= rect.h) {return id;}
   }
   return sorted.length ? sorted[sorted.length - 1].id : candidates[0];
 }
@@ -194,7 +194,7 @@ export interface MatchLine {
 
 /** Unit perpendicular (left normal) of a directed segment, in the −Y-north frame. */
 export function sectionGaze(mark: SectionMark): Point {
-  if (mark.gaze) return mark.gaze;
+  if (mark.gaze) {return mark.gaze;}
   const [a, b] = mark.atLine;
   const v = vec2.fromValues(b.x - a.x, b.y - a.y);
   const len = vec2.len(v) || 1;

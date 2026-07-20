@@ -25,7 +25,7 @@ export async function exportPlanPng(site: Site, options: { maxSize?: number; bac
   const maxSize = options.maxSize ?? 2000;
   const spatial = site.elements.filter(isSpatialElement);
   const extent = spatial.length ? unionBounds(spatial.map((e) => bounds(e.boundary))) : null;
-  if (!extent) throw new Error("Nothing to export — the plan has no drawn geometry.");
+  if (!extent) {throw new Error("Nothing to export — the plan has no drawn geometry.");}
 
   const pad = 0.06;
   const w = extent.maxX - extent.minX;
@@ -39,7 +39,7 @@ export async function exportPlanPng(site: Site, options: { maxSize?: number; bac
   canvas.width = Math.round(worldW * scale);
   canvas.height = Math.round(worldH * scale);
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("Canvas 2D not available");
+  if (!ctx) {throw new Error("Canvas 2D not available");}
 
   const project = (p: Point) => ({
     x: (p.x - extent.minX + padX) * scale,
@@ -61,8 +61,8 @@ export async function exportPlanPng(site: Site, options: { maxSize?: number; bac
     ctx.beginPath();
     el.boundary.forEach((pt, i) => {
       const s = project(pt);
-      if (i === 0) ctx.moveTo(s.x, s.y);
-      else ctx.lineTo(s.x, s.y);
+      if (i === 0) {ctx.moveTo(s.x, s.y);}
+      else {ctx.lineTo(s.x, s.y);}
     });
     ctx.closePath();
     ctx.globalAlpha = el.kind === "building" ? 0.85 : el.kind === "region" ? 0.08 : 0.35;
@@ -82,7 +82,7 @@ export async function exportPlanPng(site: Site, options: { maxSize?: number; bac
     for (const edge of net.edges) {
       const a = nodes.get(edge.from);
       const b = nodes.get(edge.to);
-      if (!a || !b) continue;
+      if (!a || !b) {continue;}
       const sa = project(a);
       const sb = project(b);
       ctx.beginPath();
@@ -93,7 +93,7 @@ export async function exportPlanPng(site: Site, options: { maxSize?: number; bac
   }
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/png"));
-  if (blob) downloadBlob(`${slugify(site.name)}.png`, blob);
+  if (blob) {downloadBlob(`${slugify(site.name)}.png`, blob);}
 }
 
 // ---------------------------------------------------------------------------
@@ -103,7 +103,7 @@ export async function exportPlanPng(site: Site, options: { maxSize?: number; bac
 /** Build COLLADA meshes from the site (terrain + extruded buildings) and download. */
 export function exportSiteDae(site: Site): void {
   const meshes = siteToMeshes(site);
-  if (meshes.length === 0) throw new Error("Nothing to export — add terrain or buildings first.");
+  if (meshes.length === 0) {throw new Error("Nothing to export — add terrain or buildings first.");}
   const dae = writeCollada(meshes);
   downloadText(`${slugify(site.name)}.dae`, dae, "model/vnd.collada+xml");
 }
@@ -144,7 +144,7 @@ export function siteToMeshes(site: Site): SimpleMesh[] {
 
   // Buildings as extruded prisms.
   for (const el of site.elements) {
-    if (el.kind !== "building") continue;
+    if (el.kind !== "building") {continue;}
     const base = elevAt(centroid(el.boundary)) * exag;
     const height = (el.height ?? el.storeys * 3.2) * exag;
     meshes.push(prism(el.name, el.boundary, base, base + height, [0.85, 0.58, 0.35]));
@@ -166,8 +166,8 @@ function prism(
   const indices: number[] = [];
 
   // Bottom ring (0..n-1), top ring (n..2n-1).
-  for (const p of boundary) positions.push(p.x, bottom, p.y);
-  for (const p of boundary) positions.push(p.x, top, p.y);
+  for (const p of boundary) {positions.push(p.x, bottom, p.y);}
+  for (const p of boundary) {positions.push(p.x, top, p.y);}
 
   // Side walls.
   for (let i = 0; i < n; i++) {
@@ -175,9 +175,9 @@ function prism(
     indices.push(i, j, n + i, j, n + j, n + i);
   }
   // Top cap (fan triangulation — fine for convex-ish footprints).
-  for (let i = 1; i < n - 1; i++) indices.push(n, n + i, n + i + 1);
+  for (let i = 1; i < n - 1; i++) {indices.push(n, n + i, n + i + 1);}
   // Bottom cap (reverse winding).
-  for (let i = 1; i < n - 1; i++) indices.push(0, i + 1, i);
+  for (let i = 1; i < n - 1; i++) {indices.push(0, i + 1, i);}
 
   return { name, positions, indices, color };
 }

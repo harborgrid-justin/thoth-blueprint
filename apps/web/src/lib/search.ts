@@ -8,9 +8,9 @@ import { isPointElement, type ElementKind, type PlanElement } from "@thoth/domai
 export function elementSearchText(el: PlanElement): string {
   const parts: string[] = [el.kind];
   if (isPointElement(el)) {
-    if (el.kind === "note") parts.push(el.text);
-    if (el.kind === "tree") parts.push(el.species ?? "");
-    if (el.kind === "spot") parts.push(el.label ?? "");
+    if (el.kind === "note") {parts.push(el.text);}
+    if (el.kind === "tree") {parts.push(el.species ?? "");}
+    if (el.kind === "spot") {parts.push(el.label ?? "");}
   } else {
     parts.push(el.name);
     switch (el.kind) {
@@ -46,8 +46,8 @@ export function elementMatches(
   query: string,
   kind: ElementKind | "all",
 ): boolean {
-  if (kind !== "all" && el.kind !== kind) return false;
+  if (kind !== "all" && el.kind !== kind) {return false;}
   const q = query.trim().toLowerCase();
-  if (!q) return true;
+  if (!q) {return true;}
   return elementSearchText(el).includes(q);
 }

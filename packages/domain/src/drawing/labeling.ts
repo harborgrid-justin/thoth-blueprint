@@ -61,9 +61,9 @@ export function resolveLabelStyle(
   const draggedState = { ...defaultStyle.draggedState };
 
   for (const s of chain) {
-    if (s.general) Object.assign(general, s.general);
-    if (s.layout) Object.assign(layout, s.layout);
-    if (s.draggedState) Object.assign(draggedState, s.draggedState);
+    if (s.general) {Object.assign(general, s.general);}
+    if (s.layout) {Object.assign(layout, s.layout);}
+    if (s.draggedState) {Object.assign(draggedState, s.draggedState);}
   }
 
   return {

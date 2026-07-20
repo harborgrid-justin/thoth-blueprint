@@ -107,7 +107,7 @@ function seed(): Store {
 }
 
 function load(): Store {
-  if (typeof window === "undefined") return seed();
+  if (typeof window === "undefined") {return seed();}
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) {
@@ -124,7 +124,7 @@ function load(): Store {
 }
 
 function persist(store: Store): void {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined") {return;}
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
   } catch {
@@ -145,7 +145,7 @@ export class LocalApiClient implements ApiClient {
 
   private findProject(id: string): Project {
     const project = this.store.projects.find((p) => p.id === id);
-    if (!project) throw new Error(`Project not found: ${id}`);
+    if (!project) {throw new Error(`Project not found: ${id}`);}
     return project;
   }
 
@@ -186,7 +186,7 @@ export class LocalApiClient implements ApiClient {
     const project = this.findProject(id);
     project.name = name;
     project.site.name = name;
-    if (description !== undefined) project.description = description;
+    if (description !== undefined) {project.description = description;}
     project.updatedAt = nowIso();
     this.commit();
     return delay(clone(project));
@@ -236,7 +236,7 @@ export class LocalApiClient implements ApiClient {
     const checkpoint = this.store.checkpoints.find(
       (c) => c.id === checkpointId && c.projectId === projectId,
     );
-    if (!checkpoint) throw new Error(`Checkpoint not found: ${checkpointId}`);
+    if (!checkpoint) {throw new Error(`Checkpoint not found: ${checkpointId}`);}
     project.site = clone(checkpoint.site);
     project.updatedAt = nowIso();
     this.commit();
@@ -288,7 +288,7 @@ export class LocalApiClient implements ApiClient {
 
   resolveThread(projectId: string, threadId: string): Promise<ReviewThread> {
     const thread = this.store.threads.find((t) => t.id === threadId && t.projectId === projectId);
-    if (!thread) throw new Error(`Thread not found: ${threadId}`);
+    if (!thread) {throw new Error(`Thread not found: ${threadId}`);}
     thread.resolved = true;
     this.commit();
     return delay(clone(thread));

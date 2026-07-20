@@ -34,14 +34,14 @@ export function SuperelevationWizardDialog() {
   const alignment = alignments.find((a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
 
   const superCurve = React.useMemo(() => {
-    if (!alignment) return null;
+    if (!alignment) {return null;}
     return calculateSuperelevationRunoff(alignment, designSpeed, eMax, normalCrown);
   }, [alignment, designSpeed, eMax, normalCrown]);
 
-  if (!site) return null;
+  if (!site) {return null;}
 
   function handleSave() {
-    if (!alignment) return;
+    if (!alignment) {return;}
     
     // Update design speed on alignment object
     const patch = {

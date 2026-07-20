@@ -103,7 +103,7 @@ function pointInPoly(p: Pt, poly: Pt[]): boolean {
  * line primitives. Produces true vector hatch shared by SVG and PDF.
  */
 export function hatchLines(poly: Pt[], pattern: HatchPattern): SheetPrimitive[] {
-  if (poly.length < 3) return [];
+  if (poly.length < 3) {return [];}
   const spacing = mmToPt(pattern.spacing);
   const color = pattern.color ?? MUTED;
   const w = 0.4;
@@ -125,7 +125,7 @@ export function hatchLines(poly: Pt[], pattern: HatchPattern): SheetPrimitive[] 
     for (let y = minY; y <= maxY; y += spacing) {
       for (let x = minX; x <= maxX; x += spacing) {
         const p = { x, y };
-        if (pointInPoly(p, poly)) out.push({ t: "circle", c: p, r: 0.5, fill: color });
+        if (pointInPoly(p, poly)) {out.push({ t: "circle", c: p, r: 0.5, fill: color });}
       }
     }
     return out;
@@ -153,10 +153,10 @@ export function hatchLines(poly: Pt[], pattern: HatchPattern): SheetPrimitive[] 
         const ex = p2.x - p1.x;
         const ey = p2.y - p1.y;
         const denom = dx * ey - dy * ex;
-        if (Math.abs(denom) < 1e-9) continue;
+        if (Math.abs(denom) < 1e-9) {continue;}
         const t = ((p1.x - ox) * ey - (p1.y - oy) * ex) / denom;
         const u = ((p1.x - ox) * dy - (p1.y - oy) * dx) / denom;
-        if (u >= 0 && u <= 1) hits.push(t);
+        if (u >= 0 && u <= 1) {hits.push(t);}
       }
       hits.sort((m, n) => m - n);
       for (let i = 0; i + 1 < hits.length; i += 2) {

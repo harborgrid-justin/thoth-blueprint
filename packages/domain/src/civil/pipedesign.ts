@@ -59,7 +59,7 @@ export function validatePipeNetwork(
 
   // Calculate rims and sumps for structures
   const nodeConnectedEdges = new Map<string, NetworkEdge[]>();
-  for (const n of network.nodes) nodeConnectedEdges.set(n.id, []);
+  for (const n of network.nodes) {nodeConnectedEdges.set(n.id, []);}
   for (const e of network.edges) {
     nodeConnectedEdges.get(e.from)?.push(e);
     nodeConnectedEdges.get(e.to)?.push(e);
@@ -85,10 +85,10 @@ export function validatePipeNetwork(
   for (const edge of network.edges) {
     const fromNode = nodesMap.get(edge.from);
     const toNode = nodesMap.get(edge.to);
-    if (!fromNode || !toNode) continue;
+    if (!fromNode || !toNode) {continue;}
 
     const len = distance(fromNode.point, toNode.point);
-    if (len <= 0.0001) continue;
+    if (len <= 0.0001) {continue;}
 
     const startInvert = nodeInverts[edge.from] ?? (elevationAt(terrain, fromNode.point) - 6);
     const endInvert = nodeInverts[edge.to] ?? (elevationAt(terrain, toNode.point) - 6);

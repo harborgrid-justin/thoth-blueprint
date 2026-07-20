@@ -26,7 +26,7 @@ export interface GeoJSONFeatureCollection {
 function parseGeoJSONPolygon(coords: unknown): Point[] {
   const coordsList = coords as Array<Array<[number, number]>>;
   const ring = coordsList[0];
-  if (!ring || ring.length === 0) return [];
+  if (!ring || ring.length === 0) {return [];}
   
   const points: Point[] = [];
   const first = ring[0];
@@ -62,7 +62,7 @@ export function geojsonToElements(
   const elements: PlanElement[] = [];
 
   for (const feature of geojson.features) {
-    if (!feature.geometry) continue;
+    if (!feature.geometry) {continue;}
 
     const properties = feature.properties || {};
     const kind = (properties.kind as string) || getKindFromGeometry(feature.geometry.type);
@@ -73,13 +73,13 @@ export function geojsonToElements(
       if (feature.geometry.type === "Polygon") {
         const rawBoundary = parseGeoJSONPolygon(feature.geometry.coordinates);
         const boundary = reprojectPoints(rawBoundary, sourceCrs, projectCrs);
-        if (boundary.length < 3) continue;
+        if (boundary.length < 3) {continue;}
 
         elements.push(buildPolygonElement(kind, name, layerId, boundary, properties));
       } else if (feature.geometry.type === "LineString") {
         const rawPath = parseGeoJSONLineString(feature.geometry.coordinates);
         const path = reprojectPoints(rawPath, sourceCrs, projectCrs);
-        if (path.length < 2) continue;
+        if (path.length < 2) {continue;}
 
         elements.push(buildLineElement(kind, name, layerId, path, properties));
       } else if (feature.geometry.type === "Point") {
@@ -115,16 +115,16 @@ export function elementsToGeojson(
     };
 
     // Extract type-specific properties
-    if (el.kind === "parcel" && "apn" in el) properties.apn = el.apn;
+    if (el.kind === "parcel" && "apn" in el) {properties.apn = el.apn;}
     if (el.kind === "zone") {
-      if ("designation" in el) properties.designation = el.designation;
-      if ("maxCoverage" in el) properties.maxCoverage = el.maxCoverage;
-      if ("maxFar" in el) properties.maxFar = el.maxFar;
+      if ("designation" in el) {properties.designation = el.designation;}
+      if ("maxCoverage" in el) {properties.maxCoverage = el.maxCoverage;}
+      if ("maxFar" in el) {properties.maxFar = el.maxFar;}
     }
-    if (el.kind === "landuse" && "category" in el) properties.category = el.category;
+    if (el.kind === "landuse" && "category" in el) {properties.category = el.category;}
     if (el.kind === "building") {
-      if ("storeys" in el) properties.storeys = el.storeys;
-      if ("use" in el) properties.use = el.use;
+      if ("storeys" in el) {properties.storeys = el.storeys;}
+      if ("use" in el) {properties.use = el.use;}
     }
 
     // Geometry translation & reprojection
@@ -147,7 +147,7 @@ export function elementsToGeojson(
         type: "Point",
         coordinates: [pos.x, pos.y],
       };
-      if ("z" in el) properties.z = el.z;
+      if ("z" in el) {properties.z = el.z;}
     }
 
     if (geometry) {

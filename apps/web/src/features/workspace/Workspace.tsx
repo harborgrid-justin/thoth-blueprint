@@ -61,14 +61,14 @@ export function Workspace() {
 
   // Load the project into the workspace store.
   React.useEffect(() => {
-    if (!projectId) return;
+    if (!projectId) {return;}
     let cancelled = false;
     setLoading(true);
     setError(null);
     api
       .getProject(projectId)
       .then((p) => {
-        if (cancelled) return;
+        if (cancelled) {return;}
         setProject(p);
         loadProject(p);
       })
@@ -83,7 +83,7 @@ export function Workspace() {
 
   const save = React.useCallback(async () => {
     const current = useWorkspaceStore.getState();
-    if (!projectId || !current.site || !current.dirty) return;
+    if (!projectId || !current.site || !current.dirty) {return;}
     setSaving(true);
     try {
       const updated = await api.saveSite(projectId, current.site);
@@ -96,7 +96,7 @@ export function Workspace() {
 
   // Debounced autosave whenever the site becomes dirty.
   React.useEffect(() => {
-    if (!dirty) return;
+    if (!dirty) {return;}
     const handle = window.setTimeout(() => void save(), AUTOSAVE_MS);
     return () => window.clearTimeout(handle);
   }, [dirty, site, save]);
@@ -104,7 +104,7 @@ export function Workspace() {
   // Focus the inspector when the selection changes to something.
   const prevSelLen = React.useRef(0);
   React.useEffect(() => {
-    if (selection.length > 0 && prevSelLen.current === 0) setTab("inspect");
+    if (selection.length > 0 && prevSelLen.current === 0) {setTab("inspect");}
     prevSelLen.current = selection.length;
   }, [selection]);
 
@@ -126,13 +126,17 @@ export function Workspace() {
         useUiStore.getState().toggleCommand();
         return;
       }
-      if (typing) return;
+      if (typing) {return;}
 
       if (mod) {
         switch (e.key.toLowerCase()) {
           case "z":
             e.preventDefault();
-            e.shiftKey ? ws.redo() : ws.undo();
+            if (e.shiftKey) {
+              ws.redo();
+            } else {
+              ws.undo();
+            }
             return;
           case "s":
             e.preventDefault();

@@ -61,14 +61,14 @@ export function grossFloorArea(site: Site, unit: AreaUnit = "sqm"): number {
  */
 export function coverage(site: Site): number {
   const site_ = siteArea(site, "sqm");
-  if (site_ <= 0) return 0;
+  if (site_ <= 0) {return 0;}
   return clamp01(builtArea(site, "sqm") / site_);
 }
 
 /** Floor Area Ratio: gross floor area ÷ site area. */
 export function floorAreaRatio(site: Site): number {
   const site_ = siteArea(site, "sqm");
-  if (site_ <= 0) return 0;
+  if (site_ <= 0) {return 0;}
   return grossFloorArea(site, "sqm") / site_;
 }
 
@@ -81,7 +81,7 @@ export function dwellingUnits(site: Site): number {
 /** Residential density in dwelling units per acre. */
 export function density(site: Site): number {
   const acres = siteArea(site, "acres");
-  if (acres <= 0) return 0;
+  if (acres <= 0) {return 0;}
   return dwellingUnits(site) / acres;
 }
 
@@ -96,7 +96,7 @@ export function lotCount(site: Site): number {
  */
 export function imperviousRatio(site: Site): number {
   const site_ = siteArea(site, "sqm");
-  if (site_ <= 0) return 0;
+  if (site_ <= 0) {return 0;}
   const landUses = elementsOfKind(site, "landuse") as LandUse[];
   const imperviousLandUse = _.sumBy(
     landUses.filter((l) => landUseDefinition(l.category).impervious),
@@ -110,7 +110,7 @@ export function imperviousRatio(site: Site): number {
 /** Open-space ratio: fraction of site area classified as open space. */
 export function openSpaceRatio(site: Site): number {
   const site_ = siteArea(site, "sqm");
-  if (site_ <= 0) return 0;
+  if (site_ <= 0) {return 0;}
   const landUses = elementsOfKind(site, "landuse") as LandUse[];
   const openSqm = _.sumBy(
     landUses.filter((l) => landUseDefinition(l.category).openSpace),

@@ -31,7 +31,7 @@ import {
 function ramp(size: number, slope: number): ElevationGrid {
   const n = size + 1;
   const heights: number[] = [];
-  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) heights.push(slope * c);
+  for (let r = 0; r < n; r++) {for (let c = 0; c < n; c++) {heights.push(slope * c);}}
   return { origin: { x: 0, y: 0 }, cellSize: 1, cols: n, rows: n, heights };
 }
 

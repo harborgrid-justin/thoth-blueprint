@@ -32,7 +32,7 @@ export function QtoPanel() {
 
   const [activeTab, setActiveTab] = React.useState<"earthwork" | "payitems" | "renovation">("earthwork");
 
-  if (!site) return null;
+  if (!site) {return null;}
 
   // Compute mock takeoffs based on active site components
   const assignedReports = assignments.map((as) => {

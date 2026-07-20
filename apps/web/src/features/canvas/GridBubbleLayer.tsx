@@ -12,7 +12,7 @@ const HALO = "hsl(var(--canvas))";
  */
 export function GridBubbleLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const gridLines = site.annotations?.gridLines;
-  if (!gridLines || gridLines.length === 0) return null;
+  if (!gridLines || gridLines.length === 0) {return null;}
 
   const project = (p: Point) => worldToScreen(p, viewport);
   // Bubble stand-off in model units, so bubbles sit just clear of the line ends.

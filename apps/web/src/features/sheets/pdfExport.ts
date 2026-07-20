@@ -25,7 +25,7 @@ function hexToRgb(hex: string): RGB {
 }
 
 function pathFromPts(pts: Pt[], close: boolean): string {
-  if (!pts.length) return "";
+  if (!pts.length) {return "";}
   const head = `M ${pts[0].x.toFixed(2)} ${pts[0].y.toFixed(2)}`;
   const rest = pts.slice(1).map((p) => `L ${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join(" ");
   return `${head} ${rest}${close ? " Z" : ""}`;
@@ -96,8 +96,8 @@ function drawPrim(page: PDFPage, hPt: number, p: SheetPrimitive, fonts: Fonts): 
       const font = (p.weight ?? 400) >= 600 ? fonts.bold : fonts.regular;
       const width = font.widthOfTextAtSize(p.text, p.size);
       let x = p.at.x;
-      if (p.anchor === "middle") x -= width / 2;
-      else if (p.anchor === "end") x -= width;
+      if (p.anchor === "middle") {x -= width / 2;}
+      else if (p.anchor === "end") {x -= width;}
       // Flip y for PDF (origin bottom-left); baseline ≈ scene y.
       const y = hPt - p.at.y;
       page.drawText(p.text, {
@@ -126,7 +126,7 @@ export async function drawingSetToPdf(set: DrawingSet, site: Site): Promise<Uint
     const layout = sheetLayout(sheet, unit);
     const page = doc.addPage([layout.wPt, layout.hPt]);
     const prims = buildSheetPrimitives(set, sheet, site, plugin);
-    for (const prim of prims) drawPrim(page, layout.hPt, prim, fonts);
+    for (const prim of prims) {drawPrim(page, layout.hPt, prim, fonts);}
   }
   return doc.save();
 }

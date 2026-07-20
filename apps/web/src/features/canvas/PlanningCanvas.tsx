@@ -71,7 +71,7 @@ type Interaction =
 function edgeMidpoint(a: Point, b: Point, bulge: number): Point {
   if (bulge) {
     const arc = bulgeToArc(a, b, bulge);
-    if (arc) return arc.mid;
+    if (arc) {return arc.mid;}
   }
   return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
 }
@@ -81,7 +81,7 @@ function bulgeThroughCursor(a: Point, b: Point, cursor: Point): number {
   const cx = b.x - a.x;
   const cy = b.y - a.y;
   const len = Math.hypot(cx, cy);
-  if (len < 1e-6) return 0;
+  if (len < 1e-6) {return 0;}
   const nx = -cy / len;
   const ny = cx / len;
   const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
@@ -177,7 +177,7 @@ export function PlanningCanvas() {
   // --- size tracking -------------------------------------------------------
   React.useEffect(() => {
     const el = containerRef.current;
-    if (!el) return;
+    if (!el) {return;}
     const observer = new ResizeObserver((entries) => {
       const rect = entries[0].contentRect;
       setSize({ width: rect.width, height: rect.height });
@@ -189,15 +189,15 @@ export function PlanningCanvas() {
 
   // --- fit to bounds on request & first load -------------------------------
   const planBounds = React.useMemo<Bounds | null>(() => {
-    if (!site) return null;
+    if (!site) {return null;}
     const boxes = site.elements.filter(isSpatialElement).map((e) => bounds(e.boundary));
     return boxes.length ? unionBounds(boxes) : null;
   }, [site]);
 
   const didInitialFit = React.useRef(false);
   React.useEffect(() => {
-    if (!size.width || !size.height) return;
-    if (didInitialFit.current) return;
+    if (!size.width || !size.height) {return;}
+    if (didInitialFit.current) {return;}
     didInitialFit.current = true;
     if (planBounds) {
       setViewport(fitBounds(planBounds, size.width, size.height));
@@ -206,24 +206,24 @@ export function PlanningCanvas() {
   }, [size.width, size.height, planBounds]);
 
   React.useEffect(() => {
-    if (fitRequestId === 0 || !size.width || !size.height) return;
-    if (planBounds) setViewport(fitBounds(planBounds, size.width, size.height));
-    else setViewport({ offsetX: size.width / 2, offsetY: size.height / 2, zoom: 3 });
+    if (fitRequestId === 0 || !size.width || !size.height) {return;}
+    if (planBounds) {setViewport(fitBounds(planBounds, size.width, size.height));}
+    else {setViewport({ offsetX: size.width / 2, offsetY: size.height / 2, zoom: 3 });}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fitRequestId]);
 
   // Zoom-to-selection: fit the current selection's extent into view (FE-NAV-004).
   React.useEffect(() => {
-    if (fitSelectionRequestId === 0 || !site || !size.width || !size.height) return;
+    if (fitSelectionRequestId === 0 || !site || !size.width || !size.height) {return;}
     const ids = new Set(useWorkspaceStore.getState().selection);
     const boxes: Bounds[] = [];
     for (const el of site.elements) {
-      if (!ids.has(el.id)) continue;
-      if (isSpatialElement(el)) boxes.push(bounds(el.boundary));
-      else boxes.push({ minX: el.position.x, minY: el.position.y, maxX: el.position.x, maxY: el.position.y });
+      if (!ids.has(el.id)) {continue;}
+      if (isSpatialElement(el)) {boxes.push(bounds(el.boundary));}
+      else {boxes.push({ minX: el.position.x, minY: el.position.y, maxX: el.position.x, maxY: el.position.y });}
     }
     const box = boxes.length ? unionBounds(boxes) : planBounds;
-    if (box) setViewport(fitBounds(padBounds(box), size.width, size.height));
+    if (box) {setViewport(fitBounds(padBounds(box), size.width, size.height));}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fitSelectionRequestId]);
 
@@ -249,20 +249,20 @@ export function PlanningCanvas() {
 
   const hitTest = React.useCallback(
     (world: Point): string | null => {
-      if (!site) return null;
+      if (!site) {return null;}
       const ordered = orderedVisibleElements(site);
       for (let i = ordered.length - 1; i >= 0; i--) {
         const { element, layer } = ordered[i];
-        if (layer?.locked) continue;
+        if (layer?.locked) {continue;}
         if (isSpatialElement(element)) {
           const ring = element.arcs
             ? densifyBoundary(element.boundary, element.arcs, 4)
             : element.boundary;
-          if (pointInPolygon(world, ring)) return element.id;
+          if (pointInPolygon(world, ring)) {return element.id;}
         } else {
           const s = worldToScreen(element.position, viewport);
           const c = worldToScreen(world, viewport);
-          if (Math.hypot(s.x - c.x, s.y - c.y) < 14) return element.id;
+          if (Math.hypot(s.x - c.x, s.y - c.y) < 14) {return element.id;}
         }
       }
 
@@ -270,13 +270,13 @@ export function PlanningCanvas() {
       if (site.alignments) {
         for (const align of site.alignments) {
           const resolved = resolveAlignment(align);
-          if (!resolved) continue;
+          if (!resolved) {continue;}
           for (const el of resolved.elements) {
             if (el.kind === "tangent") {
               const p1 = worldToScreen(el.from, viewport);
               const p2 = worldToScreen(el.to, viewport);
               const c = worldToScreen(world, viewport);
-              if (pointSegmentDistance(c, p1, p2) < 10) return align.id;
+              if (pointSegmentDistance(c, p1, p2) < 10) {return align.id;}
             } else {
               const c = el.curve;
               const steps = Math.max(2, Math.ceil(c.deltaDeg / 2));
@@ -287,7 +287,7 @@ export function PlanningCanvas() {
                 const p1 = worldToScreen(prevPt, viewport);
                 const p2 = worldToScreen(currPt, viewport);
                 const click = worldToScreen(world, viewport);
-                if (pointSegmentDistance(click, p1, p2) < 10) return align.id;
+                if (pointSegmentDistance(click, p1, p2) < 10) {return align.id;}
                 prevPt = currPt;
               }
             }
@@ -337,9 +337,9 @@ export function PlanningCanvas() {
   React.useEffect(() => {
     function onKey(e: KeyboardEvent) {
       const target = e.target as HTMLElement;
-      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return;
-      if (e.key === "Escape") cancelDraft();
-      if (e.key === "Enter" && draft.length >= 2) completeDraft();
+      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {return;}
+      if (e.key === "Escape") {cancelDraft();}
+      if (e.key === "Enter" && draft.length >= 2) {completeDraft();}
       if (e.key === "Backspace" && draft.length > 0) {
         e.preventDefault();
         setDraft((d) => d.slice(0, -1));
@@ -351,11 +351,11 @@ export function PlanningCanvas() {
 
   // --- pointer handlers ----------------------------------------------------
   function onPointerDown(e: React.PointerEvent) {
-    if (!site) return;
+    if (!site) {return;}
     const { world, snapped } = resolveWorld(e.clientX, e.clientY);
     const isMiddle = e.button === 1;
     const isRight = e.button === 2;
-    if (isRight) return;
+    if (isRight) {return;}
 
     // Panning: middle mouse, or the pan tool, or space-drag on any tool.
     if (isMiddle || tool.mode === "pan") {
@@ -470,8 +470,8 @@ export function PlanningCanvas() {
 
     const hitId = hitTest(world);
     if (hitId) {
-      if (!selection.includes(hitId)) select(hitId, e.shiftKey);
-      else if (e.shiftKey) select(hitId, true);
+      if (!selection.includes(hitId)) {select(hitId, e.shiftKey);}
+      else if (e.shiftKey) {select(hitId, true);}
       e.currentTarget.setPointerCapture(e.pointerId);
       interactionRef.current = { type: "moving", startWorld: snapped, delta: { x: 0, y: 0 } };
     } else {
@@ -524,7 +524,7 @@ export function PlanningCanvas() {
   function onPointerUp(e: React.PointerEvent) {
     const interaction = interactionRef.current;
     if (interaction.type === "moving") {
-      if (interaction.delta.x !== 0 || interaction.delta.y !== 0) moveSelection(interaction.delta);
+      if (interaction.delta.x !== 0 || interaction.delta.y !== 0) {moveSelection(interaction.delta);}
     } else if (interaction.type === "vertex") {
       updateBoundary(interaction.elementId, interaction.boundary);
     } else if (interaction.type === "alignmentPI") {
@@ -561,9 +561,9 @@ export function PlanningCanvas() {
       return;
     }
     // Double-click an edge of the selected element to insert a vertex (FE-CANVAS-004).
-    if (tool.mode !== "select" || selection.length !== 1 || !site) return;
+    if (tool.mode !== "select" || selection.length !== 1 || !site) {return;}
     const el = site.elements.find((x) => x.id === selection[0]);
-    if (!el || !isSpatialElement(el)) return;
+    if (!el || !isSpatialElement(el)) {return;}
     const rect = getRect();
     const sc = { x: e.clientX - rect.left, y: e.clientY - rect.top };
     let bestIdx = -1;
@@ -577,10 +577,10 @@ export function PlanningCanvas() {
         bestIdx = i;
       }
     }
-    if (bestIdx >= 0) insertVertex(el.id, bestIdx, resolveWorld(e.clientX, e.clientY).snapped);
+    if (bestIdx >= 0) {insertVertex(el.id, bestIdx, resolveWorld(e.clientX, e.clientY).snapped);}
   }
 
-  if (!site) return null;
+  if (!site) {return null;}
 
   const ordered = orderedVisibleElements(site);
   const interaction = interactionRef.current;
@@ -874,7 +874,7 @@ function pointSegmentDistance(p: Point, a: Point, b: Point): number {
   const dx = b.x - a.x;
   const dy = b.y - a.y;
   const lenSq = dx * dx + dy * dy;
-  if (lenSq === 0) return Math.hypot(p.x - a.x, p.y - a.y);
+  if (lenSq === 0) {return Math.hypot(p.x - a.x, p.y - a.y);}
   let t = ((p.x - a.x) * dx + (p.y - a.y) * dy) / lenSq;
   t = Math.max(0, Math.min(1, t));
   return Math.hypot(p.x - (a.x + t * dx), p.y - (a.y + t * dy));
@@ -987,8 +987,8 @@ function ElementShape({
     if (element.kind === "spot") {
       let spotFill = "#d97706";
       if (renovationMode) {
-        if (renovationStatus === "new") spotFill = "#22c55e";
-        else if (renovationStatus === "demolished") spotFill = "#ef4444";
+        if (renovationStatus === "new") {spotFill = "#22c55e";}
+        else if (renovationStatus === "demolished") {spotFill = "#ef4444";}
       }
       return (
         <g>
@@ -1006,8 +1006,8 @@ function ElementShape({
     // Note.
     let noteFill = "#eab308";
     if (renovationMode) {
-      if (renovationStatus === "new") noteFill = "#22c55e";
-      else if (renovationStatus === "demolished") noteFill = "#ef4444";
+      if (renovationStatus === "new") {noteFill = "#22c55e";}
+      else if (renovationStatus === "demolished") {noteFill = "#ef4444";}
     }
     return (
       <g>
@@ -1068,7 +1068,7 @@ function ElementShape({
   if (element.kind === "lot" && element.setback && element.setback > 0) {
     const shiftedLot = { ...element, boundary };
     const env = buildableEnvelope(shiftedLot);
-    if (env) envelopePath = toPath(env, viewport);
+    if (env) {envelopePath = toPath(env, viewport);}
   }
 
   const patternId = isLine ? null : patternFor(element);
@@ -1158,9 +1158,9 @@ function AlignmentHandles({
   selection: string[];
   viewport: Viewport;
 }) {
-  if (selection.length !== 1) return null;
+  if (selection.length !== 1) {return null;}
   const align = site.alignments?.find((a) => a.id === selection[0]);
-  if (!align) return null;
+  if (!align) {return null;}
   return (
     <g>
       {align.pis.map((pi, idx) => {
@@ -1193,9 +1193,9 @@ function VertexHandles({
   viewport: Viewport;
   preview: { id: string; boundary: Polygon } | null;
 }) {
-  if (selection.length !== 1) return null;
+  if (selection.length !== 1) {return null;}
   const element = site.elements.find((e) => e.id === selection[0]);
-  if (!element || !isSpatialElement(element)) return null;
+  if (!element || !isSpatialElement(element)) {return null;}
   const boundary = preview?.id === element.id ? preview.boundary : element.boundary;
   return (
     <g>
@@ -1228,9 +1228,9 @@ function EdgeHandles({
   selection: string[];
   viewport: Viewport;
 }) {
-  if (selection.length !== 1) return null;
+  if (selection.length !== 1) {return null;}
   const element = site.elements.find((e) => e.id === selection[0]);
-  if (!element || !isSpatialElement(element)) return null;
+  if (!element || !isSpatialElement(element)) {return null;}
   const ring = element.boundary;
   return (
     <g>
@@ -1417,7 +1417,7 @@ function NetworkShape({
       {network.edges.map((e) => {
         const a = nodes.get(e.from);
         const b = nodes.get(e.to);
-        if (!a || !b) return null;
+        if (!a || !b) {return null;}
         const sa = worldToScreen(a.point, viewport);
         const sb = worldToScreen(b.point, viewport);
         const widthPx = isRoad ? Math.max(2, (e.width ?? 15) * viewport.zoom) : 2;
@@ -1461,13 +1461,13 @@ function BoundaryDimensions({
 }) {
   const lengthPref = usePrefsStore((s) => s.lengthUnit);
   const angleFormat = usePrefsStore((s) => s.angleFormat);
-  if (viewport.zoom < 2) return null;
+  if (viewport.zoom < 2) {return null;}
 
   const items = site.elements.filter((e) => isSpatialElement(e) && DIMENSION_KINDS.has(e.kind));
   return (
     <g className="pointer-events-none">
       {items.flatMap((el) => {
-        if (!isSpatialElement(el)) return [];
+        if (!isSpatialElement(el)) {return [];}
         const boundary = el.boundary;
         const n = boundary.length;
         return boundary.map((a, i) => {
@@ -1475,11 +1475,11 @@ function BoundaryDimensions({
           const sa = worldToScreen(a, viewport);
           const sb = worldToScreen(b, viewport);
           const lenPx = Math.hypot(sb.x - sa.x, sb.y - sa.y);
-          if (lenPx < 42) return null;
+          if (lenPx < 42) {return null;}
           const bulge = el.arcs ? el.arcs[String(i)] : 0;
           const mid = { x: (sa.x + sb.x) / 2, y: (sa.y + sb.y) / 2 };
           let angle = (Math.atan2(sb.y - sa.y, sb.x - sa.x) * 180) / Math.PI;
-          if (angle > 90 || angle < -90) angle += 180;
+          if (angle > 90 || angle < -90) {angle += 180;}
           const planLen = Math.hypot(b.x - a.x, b.y - a.y);
           const dist = formatLength(planLen, site.spatial, lengthPref);
           const label = bulge ? `⌒ ${dist}` : `${formatDirection(a, b, angleFormat)}  ${dist}`;
@@ -1516,11 +1516,11 @@ function SurveyEdgeLabels({
 }) {
   const lengthPref = usePrefsStore((s) => s.lengthUnit);
   const angleFormat = usePrefsStore((s) => s.angleFormat);
-  if (selection.length !== 1) return null;
+  if (selection.length !== 1) {return null;}
   const element = site.elements.find((e) => e.id === selection[0]);
-  if (!element || !isSpatialElement(element)) return null;
+  if (!element || !isSpatialElement(element)) {return null;}
   // Only worth showing when the boundary is large enough to read.
-  if (viewport.zoom < 1) return null;
+  if (viewport.zoom < 1) {return null;}
 
   const boundary = preview?.id === element.id ? preview.boundary : element.boundary;
   const n = boundary.length;
@@ -1531,10 +1531,10 @@ function SurveyEdgeLabels({
         const b = boundary[(i + 1) % n];
         const sa = worldToScreen(a, viewport);
         const sb = worldToScreen(b, viewport);
-        if (Math.hypot(sb.x - sa.x, sb.y - sa.y) < 34) return null;
+        if (Math.hypot(sb.x - sa.x, sb.y - sa.y) < 34) {return null;}
         const mid = { x: (sa.x + sb.x) / 2, y: (sa.y + sb.y) / 2 };
         let angle = (Math.atan2(sb.y - sa.y, sb.x - sa.x) * 180) / Math.PI;
-        if (angle > 90 || angle < -90) angle += 180; // keep text upright
+        if (angle > 90 || angle < -90) {angle += 180;} // keep text upright
         const planLen = Math.hypot(b.x - a.x, b.y - a.y);
         const label = `${formatDirection(a, b, angleFormat)}  ${formatLength(planLen, site.spatial, lengthPref)}`;
         return (

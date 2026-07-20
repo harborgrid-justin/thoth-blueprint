@@ -29,7 +29,7 @@ export function snapPoint(
     let best: Point | null = null;
     let bestDist = vertexPx;
     for (const el of elements) {
-      if (!isSpatialElement(el)) continue;
+      if (!isSpatialElement(el)) {continue;}
       for (const v of el.boundary) {
         const s = worldToScreen(v, viewport);
         const d = Math.hypot(s.x - screen.x, s.y - screen.y);
@@ -39,7 +39,7 @@ export function snapPoint(
         }
       }
     }
-    if (best) return { point: best, snappedToVertex: true };
+    if (best) {return { point: best, snappedToVertex: true };}
   }
 
   if (options.snapToGrid) {

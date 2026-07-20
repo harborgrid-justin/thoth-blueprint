@@ -202,7 +202,7 @@ export function subdivisionSite(name: string): Site {
   );
 
   // Street trees along the park frontage.
-  for (let i = 0; i < 5; i++) elements.push(tree(236 + i * 9, 150));
+  for (let i = 0; i < 5; i++) {elements.push(tree(236 + i * 9, 150));}
 
   // A road network running down Maple Street with a stub into the park.
   const roads = networkFromPath(
@@ -576,7 +576,7 @@ export function estateSite(name: string): Site {
 
   // Orchard trees near the homestead.
   for (let r = 0; r < 3; r++)
-    for (let c = 0; c < 6; c++) elements.push(tree(760 + c * 90, 1080 + r * 70, 12));
+    {for (let c = 0; c < 6; c++) {elements.push(tree(760 + c * 90, 1080 + r * 70, 12));}}
 
   // Private access road from the entrance to the homestead and on to the fields.
   const road: InfrastructureNetwork = networkFromPath(

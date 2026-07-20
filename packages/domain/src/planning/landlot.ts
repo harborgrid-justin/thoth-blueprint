@@ -54,7 +54,7 @@ export function landLotRect(nwCorner: Point, acres = LAND_LOT_ACRES_202): Polygo
 export function ordinal(n: number): string {
   const v = Math.abs(Math.trunc(n));
   const tens = v % 100;
-  if (tens >= 11 && tens <= 13) return `${n}th`;
+  if (tens >= 11 && tens <= 13) {return `${n}th`;}
   switch (v % 10) {
     case 1:
       return `${n}st`;

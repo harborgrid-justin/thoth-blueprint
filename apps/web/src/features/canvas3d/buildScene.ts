@@ -41,7 +41,7 @@ const DRAPE_OFFSET = 0.6;
 
 export function buildScene(site: Site): SceneResult | null {
   const extent = siteExtent(site);
-  if (!extent) return null;
+  if (!extent) {return null;}
 
   const terrain = buildTerrainModel(site);
   const center = boundsCenter(extent);
@@ -68,7 +68,7 @@ export function buildScene(site: Site): SceneResult | null {
     let minElev = 0;
     if (surface) {
       minElev = Infinity;
-      for (const h of surface.heights) if (h < minElev) minElev = h;
+      for (const h of surface.heights) {if (h < minElev) {minElev = h;}}
     }
     const span = Math.max(extent.maxX - extent.minX, extent.maxY - extent.minY);
     const geo = new THREE.PlaneGeometry(span * 12, span * 12);
@@ -101,7 +101,7 @@ export function buildScene(site: Site): SceneResult | null {
       }
       continue;
     }
-    if (!isSpatialElement(el)) continue;
+    if (!isSpatialElement(el)) {continue;}
 
     // Tessellate curved edges so arcs render smoothly in 3D.
     const ring = densifyBoundary(el.boundary, el.arcs, 3);
@@ -171,7 +171,7 @@ export function buildScene(site: Site): SceneResult | null {
     for (const edge of net.edges) {
       const a = nodes.get(edge.from);
       const b = nodes.get(edge.to);
-      if (!a || !b) continue;
+      if (!a || !b) {continue;}
       group.add(networkEdge(a, b, center, elevAt, exag, color, edge.width ?? 6, net.kind === "road", disposables));
     }
   }
@@ -208,8 +208,8 @@ function terrainMesh(
   let min = Infinity;
   let max = -Infinity;
   for (const h of grid.heights) {
-    if (h < min) min = h;
-    if (h > max) max = h;
+    if (h < min) {min = h;}
+    if (h > max) {max = h;}
   }
   const span = Math.max(1e-6, max - min);
 
@@ -250,8 +250,8 @@ function shapeFromBoundary(boundary: Polygon, center: Point): THREE.Shape {
     // Flip plan-Y so that after rotateX(-90°) it maps back to +Z = planY − centerY.
     const sx = p.x - center.x;
     const sy = center.y - p.y;
-    if (i === 0) shape.moveTo(sx, sy);
-    else shape.lineTo(sx, sy);
+    if (i === 0) {shape.moveTo(sx, sy);}
+    else {shape.lineTo(sx, sy);}
   });
   shape.closePath();
   return shape;
@@ -341,7 +341,7 @@ function boundaryOutline(
   const pts = ring.map(
     (p) => new THREE.Vector3(p.x - center.x, elevAt(p) * exag + lift, p.y - center.y),
   );
-  if (pts.length) pts.push(pts[0].clone());
+  if (pts.length) {pts.push(pts[0].clone());}
   const geo = new THREE.BufferGeometry().setFromPoints(pts);
   const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.85 });
   disposables.push(geo, mat);
@@ -440,7 +440,7 @@ function buildingInterior(
 
   for (const wall of model.walls) {
     const poly = wallPolygon(wall);
-    if (poly.length < 3) continue;
+    if (poly.length < 3) {continue;}
     const shape = shapeFromBoundary(poly, center);
     const geo = new THREE.ExtrudeGeometry(shape, { depth: wall.height * exag, bevelEnabled: false });
     geo.rotateX(-Math.PI / 2);

@@ -79,7 +79,7 @@ export function regionPerimeter(element: SpatialElement): number {
 
 /** The anchor position of any element (centroid for spatial, position for points). */
 export function elementPosition(element: PlanElement): Point {
-  if (isPointElement(element)) return element.position;
+  if (isPointElement(element)) {return element.position;}
   const b = element.boundary;
   const sum = _.reduce(b, (acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 });
   return { x: sum.x / b.length, y: sum.y / b.length };

@@ -27,7 +27,7 @@ export function PropertiesPanel() {
   const selection = useWorkspaceStore((s) => s.selection);
   const deleteSelection = useWorkspaceStore((s) => s.deleteSelection);
 
-  if (!site) return null;
+  if (!site) {return null;}
 
   if (selection.length === 0) {
     return (
@@ -49,7 +49,7 @@ export function PropertiesPanel() {
             <div className="flex flex-col gap-2">
               {site.alignments.map((align) => {
                 const resolved = resolveAlignment(align);
-                if (!resolved) return null;
+                if (!resolved) {return null;}
                 const checks = validateAlignmentDesignSpeed(align, resolved);
                 const speed = align.designSpeed ?? 35;
                 const violations = checks.filter((c) => c.isViolation);
@@ -107,7 +107,7 @@ export function PropertiesPanel() {
   }
 
   const element = site.elements.find((e) => e.id === selection[0]);
-  if (!element) return null;
+  if (!element) {return null;}
 
   return <SingleElementInspector element={element} />;
 }
@@ -291,7 +291,7 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
 /** Curve editing affordance for a spatial element (see canvas ◇ edge handles). */
 function CurveControl({ element }: { element: PlanElement }) {
   const clearArcs = useWorkspaceStore((s) => s.clearArcs);
-  if (!isSpatialElement(element)) return null;
+  if (!isSpatialElement(element)) {return null;}
   const curveCount = element.arcs
     ? Object.values(element.arcs).filter((b) => typeof b === "number" && Math.abs(b) > 1e-4).length
     : 0;
@@ -432,7 +432,7 @@ function TextField({
         onChange={(e) => setDraft(e.target.value)}
         onBlur={() => draft !== value && onCommit(draft)}
         onKeyDown={(e) => {
-          if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+          if (e.key === "Enter") {(e.target as HTMLInputElement).blur();}
         }}
       />
     </div>
@@ -463,10 +463,10 @@ function NumberField({
         onChange={(e) => setDraft(e.target.value)}
         onBlur={() => {
           const parsed = Number(draft);
-          if (!Number.isNaN(parsed) && parsed !== value) onCommit(parsed);
+          if (!Number.isNaN(parsed) && parsed !== value) {onCommit(parsed);}
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+          if (e.key === "Enter") {(e.target as HTMLInputElement).blur();}
         }}
       />
     </div>

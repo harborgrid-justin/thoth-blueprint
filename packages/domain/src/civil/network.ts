@@ -83,7 +83,7 @@ export function networkLength(
 /** The degree (number of incident edges) of each node. */
 export function nodeDegrees(network: InfrastructureNetwork): Map<string, number> {
   const deg = new Map<string, number>();
-  for (const n of network.nodes) deg.set(n.id, 0);
+  for (const n of network.nodes) {deg.set(n.id, 0);}
   for (const e of network.edges) {
     deg.set(e.from, (deg.get(e.from) ?? 0) + 1);
     deg.set(e.to, (deg.get(e.to) ?? 0) + 1);
@@ -101,8 +101,8 @@ export function junctions(network: InfrastructureNetwork): {
   const deadEnds: NetworkNode[] = [];
   for (const n of network.nodes) {
     const d = deg.get(n.id) ?? 0;
-    if (d >= 3) intersections.push(n);
-    else if (d === 1) deadEnds.push(n);
+    if (d >= 3) {intersections.push(n);}
+    else if (d === 1) {deadEnds.push(n);}
   }
   return { intersections, deadEnds };
 }
@@ -112,17 +112,17 @@ export function connectedComponents(network: InfrastructureNetwork): number {
   const parent = new Map<string, string>();
   const find = (x: string): string => {
     let root = x;
-    while (parent.get(root) !== root) root = parent.get(root)!;
+    while (parent.get(root) !== root) {root = parent.get(root)!;}
     return root;
   };
-  for (const n of network.nodes) parent.set(n.id, n.id);
+  for (const n of network.nodes) {parent.set(n.id, n.id);}
   for (const e of network.edges) {
     const a = find(e.from);
     const b = find(e.to);
-    if (a !== b) parent.set(a, b);
+    if (a !== b) {parent.set(a, b);}
   }
   const roots = new Set<string>();
-  for (const n of network.nodes) roots.add(find(n.id));
+  for (const n of network.nodes) {roots.add(find(n.id));}
   return network.nodes.length === 0 ? 0 : roots.size;
 }
 
@@ -139,7 +139,7 @@ export function corridorArea(network: InfrastructureNetwork): number {
   const nodes = nodeMap(network);
   return _.sumBy(network.edges, (e) => {
     const pts = edgePoints(network, e, nodes);
-    if (!pts) return 0;
+    if (!pts) {return 0;}
     const w = e.width ?? DEFAULT_ROAD_WIDTH[e.roadClass ?? "local"] ?? 0;
     return distance(pts[0], pts[1]) * w;
   });
@@ -151,7 +151,7 @@ export function distanceToNetwork(network: InfrastructureNetwork, p: Point): num
   let best = Infinity;
   for (const e of network.edges) {
     const pts = edgePoints(network, e, nodes);
-    if (!pts) continue;
+    if (!pts) {continue;}
     const c = closestPointOnSegment(p, pts[0], pts[1]);
     best = Math.min(best, distance(p, c));
   }
@@ -168,7 +168,7 @@ export function serviceCoverage(
   points: Point[],
   serviceDistance: number,
 ): number {
-  if (points.length === 0) return 0;
+  if (points.length === 0) {return 0;}
   const served = points.filter((p) => distanceToNetwork(network, p) <= serviceDistance).length;
   return served / points.length;
 }

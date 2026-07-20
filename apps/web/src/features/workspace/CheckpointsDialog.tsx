@@ -39,16 +39,16 @@ export function CheckpointsDialog({
   const [busy, setBusy] = React.useState(false);
 
   const refresh = React.useCallback(async () => {
-    if (!projectId) return;
+    if (!projectId) {return;}
     setCheckpoints(await api.listCheckpoints(projectId));
   }, [projectId]);
 
   React.useEffect(() => {
-    if (open) void refresh();
+    if (open) {void refresh();}
   }, [open, refresh]);
 
   async function handleCreate() {
-    if (!projectId || !site || !name.trim()) return;
+    if (!projectId || !site || !name.trim()) {return;}
     setBusy(true);
     try {
       // Persist the current site so the checkpoint captures the latest edits.
@@ -63,7 +63,7 @@ export function CheckpointsDialog({
   }
 
   async function handleRestore(checkpointId: string) {
-    if (!projectId) return;
+    if (!projectId) {return;}
     setBusy(true);
     try {
       const project = await api.restoreCheckpoint(projectId, checkpointId);
@@ -75,7 +75,7 @@ export function CheckpointsDialog({
   }
 
   async function handleDelete(checkpointId: string) {
-    if (!projectId) return;
+    if (!projectId) {return;}
     await api.deleteCheckpoint(projectId, checkpointId);
     await refresh();
   }

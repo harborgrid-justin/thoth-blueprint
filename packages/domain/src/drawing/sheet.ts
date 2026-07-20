@@ -51,7 +51,7 @@ export function formatSheetNumber(n: SheetNumber): string {
 /** Parse an NCS sheet number like `A-101` or `C-501`; null if malformed. */
 export function parseSheetNumber(text: string): SheetNumber | null {
   const m = /^([A-Z])-?(\d)(\d{2})$/.exec(text.trim().toUpperCase());
-  if (!m) return null;
+  if (!m) {return null;}
   return {
     discipline: m[1] as DisciplineCode,
     type: Number(m[2]) as SheetTypeDigit,
@@ -133,8 +133,8 @@ export function compareSheets(a: Sheet, b: Sheet): number {
   const idxB = DISCIPLINE_ORDER.indexOf(b.number.discipline);
   const da = idxA === -1 ? Infinity : idxA;
   const db = idxB === -1 ? Infinity : idxB;
-  if (da !== db) return da - db;
-  if (a.number.type !== b.number.type) return a.number.type - b.number.type;
+  if (da !== db) {return da - db;}
+  if (a.number.type !== b.number.type) {return a.number.type - b.number.type;}
   return a.number.sequence - b.number.sequence;
 }
 

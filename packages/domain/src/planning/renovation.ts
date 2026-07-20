@@ -89,7 +89,7 @@ export function runRenovationAudit(site: Site): string[] {
 
 // Simple polygon intersection check for centroid / bounding-box overlap or edge crossings
 function polygonsIntersect(polyA: Point[], polyB: Point[]): boolean {
-  if (polyA.length === 0 || polyB.length === 0) return false;
+  if (polyA.length === 0 || polyB.length === 0) {return false;}
 
   const boxA = getBounds(polyA);
   const boxB = getBounds(polyB);
@@ -106,10 +106,10 @@ function polygonsIntersect(polyA: Point[], polyB: Point[]): boolean {
 function getBounds(poly: Point[]) {
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
   for (const p of poly) {
-    if (p.x < minX) minX = p.x;
-    if (p.x > maxX) maxX = p.x;
-    if (p.y < minY) minY = p.y;
-    if (p.y > maxY) maxY = p.y;
+    if (p.x < minX) {minX = p.x;}
+    if (p.x > maxX) {maxX = p.x;}
+    if (p.y < minY) {minY = p.y;}
+    if (p.y > maxY) {maxY = p.y;}
   }
   return { minX, minY, maxX, maxY };
 }

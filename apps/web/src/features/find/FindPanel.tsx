@@ -23,8 +23,8 @@ const RESULT_CAP = 200;
 /** Human label for a search result row. */
 function elementLabel(el: PlanElement): string {
   if (isPointElement(el)) {
-    if (el.kind === "note") return el.text || "Note";
-    if (el.kind === "tree") return el.species || "Tree";
+    if (el.kind === "note") {return el.text || "Note";}
+    if (el.kind === "tree") {return el.species || "Tree";}
     return el.label || "Spot elevation";
   }
   return el.name;
@@ -53,7 +53,7 @@ export function FindPanel() {
 
   const inputRef = React.useRef<HTMLInputElement>(null);
   React.useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (open) {inputRef.current?.focus();}
   }, [open]);
 
   const matches = React.useMemo(
@@ -68,7 +68,7 @@ export function FindPanel() {
     return [...set];
   }, [site]);
 
-  if (!open || !site) return null;
+  if (!open || !site) {return null;}
 
   const selectedSet = new Set(selection);
 

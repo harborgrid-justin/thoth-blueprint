@@ -189,7 +189,7 @@ export function subdivisionSite(name: string): Site {
     ...hillSpots(20, 20, 260, 180, 7, 5, (nx, ny) => 4 + nx * 8 + (1 - ny) * 5),
   );
 
-  for (let i = 0; i < 5; i++) elements.push(tree(236 + i * 9, 150));
+  for (let i = 0; i < 5; i++) {elements.push(tree(236 + i * 9, 150));}
 
   const roads = networkFromPath(
     createId("net"),
@@ -536,7 +536,7 @@ export function estateSite(name: string): Site {
   );
 
   for (let r = 0; r < 3; r++)
-    for (let c = 0; c < 6; c++) elements.push(tree(760 + c * 90, 1080 + r * 70, 12));
+    {for (let c = 0; c < 6; c++) {elements.push(tree(760 + c * 90, 1080 + r * 70, 12));}}
 
   const road: InfrastructureNetwork = networkFromPath(
     createId("net"),

@@ -13,9 +13,9 @@ const ThemeContext = React.createContext<ThemeContextValue | null>(null);
 const STORAGE_KEY = "thoth.theme";
 
 function initialTheme(): Theme {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") {return "dark";}
   const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === "light" || stored === "dark") return stored;
+  if (stored === "light" || stored === "dark") {return stored;}
   return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 }
 
@@ -42,6 +42,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 export function useTheme(): ThemeContextValue {
   const ctx = React.useContext(ThemeContext);
-  if (!ctx) throw new Error("useTheme must be used within a ThemeProvider");
+  if (!ctx) {throw new Error("useTheme must be used within a ThemeProvider");}
   return ctx;
 }

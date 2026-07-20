@@ -107,7 +107,7 @@ export interface BuildingModel {
 /** The straight centreline direction (start→end) of a wall. */
 export function wallDirection(wall: Wall): Point {
   const pts = wall.baseline;
-  if (pts.length < 2) return { x: 1, y: 0 };
+  if (pts.length < 2) {return { x: 1, y: 0 };}
   const a = pts[0];
   const b = pts[pts.length - 1];
   return normalize(subtract(b, a));
@@ -116,7 +116,7 @@ export function wallDirection(wall: Wall): Point {
 /** The length of a wall along its baseline. */
 export function wallLength(wall: Wall): number {
   let total = 0;
-  for (let i = 1; i < wall.baseline.length; i++) total += distance(wall.baseline[i - 1], wall.baseline[i]);
+  for (let i = 1; i < wall.baseline.length; i++) {total += distance(wall.baseline[i - 1], wall.baseline[i]);}
   return total;
 }
 
@@ -126,7 +126,7 @@ export function wallLength(wall: Wall): number {
  */
 export function wallPolygon(wall: Wall): Polygon {
   const pts = wall.baseline;
-  if (pts.length < 2) return [];
+  if (pts.length < 2) {return [];}
   const half = wall.thickness / 2;
   const left: Point[] = [];
   const right: Point[] = [];
@@ -169,8 +169,8 @@ export function doorSwing(wall: Wall, door: Door): { hinge: Point; leafEnd: Poin
   const startAng = Math.atan2(n.y, n.x);
   const endAng = Math.atan2(along.y, along.x);
   let sweep = endAng - startAng;
-  while (sweep <= -Math.PI) sweep += 2 * Math.PI;
-  while (sweep > Math.PI) sweep -= 2 * Math.PI;
+  while (sweep <= -Math.PI) {sweep += 2 * Math.PI;}
+  while (sweep > Math.PI) {sweep -= 2 * Math.PI;}
   const steps = 8;
   for (let i = 0; i <= steps; i++) {
     const t = startAng + (sweep * i) / steps;
