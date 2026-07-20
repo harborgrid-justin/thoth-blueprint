@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { Layers, Mountain, Ruler, SlidersHorizontal, HardHat } from "lucide-react";
+import { Layers, Mountain, Ruler, SlidersHorizontal, HardHat, Waves } from "lucide-react";
 import { api, type Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
@@ -30,6 +30,7 @@ import { ShortcutsDialog } from "@/features/command/ShortcutsDialog";
 import { PreferencesDialog } from "@/features/preferences/PreferencesDialog";
 import { FindPanel } from "@/features/find/FindPanel";
 import { QtoPanel } from "./QtoPanel";
+import { ErosionSimulatorPanel } from "./ErosionSimulator";
 import { ProfileSectionDialog } from "@/features/survey/ProfileSectionDialog";
 import { PipeDesignDialog } from "@/features/survey/PipeDesignDialog";
 import { PlanProductionWizard } from "@/features/survey/PlanProductionWizard";
@@ -251,21 +252,24 @@ export function Workspace() {
           </main>
           <aside className="flex w-[320px] shrink-0 flex-col border-l border-border bg-card">
             <Tabs value={tab} onValueChange={setTab} className="flex min-h-0 flex-1 flex-col">
-              <TabsList className="m-2 grid grid-cols-5">
-                <TabsTrigger value="inspect">
-                  <SlidersHorizontal className="h-3 w-3" /> Inspect
+              <TabsList className="m-2 grid grid-cols-6">
+                <TabsTrigger value="inspect" title="Inspect">
+                  <SlidersHorizontal className="h-3 w-3" />
                 </TabsTrigger>
-                <TabsTrigger value="layers">
-                  <Layers className="h-3 w-3" /> Layers
+                <TabsTrigger value="layers" title="Layers">
+                  <Layers className="h-3 w-3" />
                 </TabsTrigger>
-                <TabsTrigger value="terrain">
-                  <Mountain className="h-3 w-3" /> Terrain
+                <TabsTrigger value="terrain" title="Terrain">
+                  <Mountain className="h-3 w-3" />
                 </TabsTrigger>
-                <TabsTrigger value="metrics">
-                  <Ruler className="h-3 w-3" /> Metrics
+                <TabsTrigger value="metrics" title="Metrics">
+                  <Ruler className="h-3 w-3" />
                 </TabsTrigger>
-                <TabsTrigger value="qto">
-                  <HardHat className="h-3 w-3" /> QTO
+                <TabsTrigger value="qto" title="QTO">
+                  <HardHat className="h-3 w-3" />
+                </TabsTrigger>
+                <TabsTrigger value="erosion" title="Erosion">
+                  <Waves className="h-3 w-3" />
                 </TabsTrigger>
               </TabsList>
               <ScrollArea className="min-h-0 flex-1">
@@ -283,6 +287,9 @@ export function Workspace() {
                 </TabsContent>
                 <TabsContent value="qto" className="mt-0">
                   <QtoPanel />
+                </TabsContent>
+                <TabsContent value="erosion" className="mt-0">
+                  <ErosionSimulatorPanel />
                 </TabsContent>
               </ScrollArea>
             </Tabs>

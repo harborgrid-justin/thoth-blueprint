@@ -40,7 +40,7 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
   const slopeFactor = Math.sqrt(1 + (pitchVal / 12) ** 2); // sec(theta)
 
   // Plan Area
-  let planAreaSqm = 120; // default benchmark
+  let planAreaSqm: number;
   let boundary = roof.boundary || [];
   if (boundary.length >= 3) {
     planAreaSqm = Math.abs(area(boundary));

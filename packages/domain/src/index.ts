@@ -33,6 +33,7 @@ export * from "./planning/stairs";
 export * from "./planning/curtainwall";
 export * from "./planning/doorwindow";
 export * from "./planning/roof";
+export * from "./planning/erosion";
 
 // Civil
 export * from "./civil/alignment";

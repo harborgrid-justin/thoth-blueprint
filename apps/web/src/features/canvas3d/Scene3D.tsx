@@ -5,8 +5,10 @@ import { Sky } from "three/examples/jsm/objects/Sky.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useInteropStore } from "@/store/interopStore";
+import { useErosionStore } from "@/store/erosionStore";
 import { buildScene, type SceneResult } from "./buildScene";
 import { ThothPhysicsEngine } from "./physics";
+import { Erosion3DVisualizer } from "./erosion3d";
 
 // Sun placement (degrees) — a mid-morning light that reads well for massing.
 const SUN_ELEVATION = 34;
@@ -33,6 +35,37 @@ export function Scene3D() {
   const cloudDisposeRef = React.useRef<Array<{ dispose: () => void }>>([]);
   const framedRef = React.useRef(false);
   const physicsRef = React.useRef<ThothPhysicsEngine | null>(null);
+  const visualizerRef = React.useRef<Erosion3DVisualizer | null>(null);
+
+  const currentFrame = useErosionStore((s) => s.currentFrame);
+
+  // Sync erosion frames to ThreeJS visualizer
+  React.useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene || !contentRef.current) {return;}
+
+    // Find terrain mesh inside contentRef.current.group
+    let terrainMesh: THREE.Mesh | null = null;
+    contentRef.current.group.traverse((child) => {
+      if (child instanceof THREE.Mesh && child.geometry instanceof THREE.PlaneGeometry) {
+        terrainMesh = child;
+      }
+    });
+
+    if (!visualizerRef.current) {
+      visualizerRef.current = new Erosion3DVisualizer(
+        contentRef.current.group,
+        contentRef.current.center,
+        contentRef.current.exaggeration,
+      );
+    }
+
+    if (currentFrame) {
+      visualizerRef.current.update(currentFrame, terrainMesh);
+    } else {
+      visualizerRef.current.clearParticles();
+    }
+  }, [currentFrame]);
 
   // --- one-time setup ------------------------------------------------------
   React.useEffect(() => {
@@ -180,6 +213,10 @@ export function Scene3D() {
       scene.remove(contentRef.current.group);
       contentRef.current.dispose();
       contentRef.current = null;
+    }
+    if (visualizerRef.current) {
+      visualizerRef.current.dispose();
+      visualizerRef.current = null;
     }
     cloudDisposeRef.current.forEach((d) => d.dispose());
     cloudDisposeRef.current = [];
