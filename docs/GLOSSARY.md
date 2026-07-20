@@ -90,6 +90,43 @@ language.
   that is impervious, and the ratio of open (unbuilt) space; morphology metrics
   alongside coverage and FAR.
 
+## CAD sheets & drafting
+
+The platform composes site and building models into issued construction-document
+sheet sets. Vocabulary follows the US National CAD Standard (NCS).
+
+- **Sheet** — a single plotted page (see *Sheet Size*) carrying one or more
+  viewports, a title block, and revisions.
+- **Drawing Set** — the ordered, issued collection of sheets for a project (the
+  deliverable). Sheets sort by discipline, then sheet type, then sequence.
+- **Sheet Size** — the physical page: ANSI A–E, ARCH A–E, or ISO A4–A0.
+- **Sheet Number (NCS)** — `AA-NNN`: a *Discipline Designator* letter, a *Sheet
+  Type* digit (0 general, 1 plans, 2 elevations, 3 sections, 5 details, 6
+  schedules, 9 3D), and a two-digit sequence — e.g. `A-101`, `C-501`.
+- **Discipline Designator** — the NCS single-letter discipline: G general, V
+  survey, C civil, L landscape, S structural, A architectural, and so on.
+- **Title Block** — the sheet's identifying block (project, scale, date, sheet
+  number, "n of N"). **Revision** entries + delta tags record issued changes.
+- **Viewport** — a rectangle on a sheet showing the model at a named *Scale*
+  (paper space, distinct from the model's world coordinates).
+- **Dimension** — an annotated measurement (linear, aligned, angular, radial,
+  ordinate, arc-length) with a dimension *style* (ticks or arrows, precision).
+- **Schedule** — a tabular data block (door, window, room, finish, curve, line).
+- **Section / Elevation / Detail** — orthographic views of a building or site; a
+  **Callout** (section/elevation/detail mark) cross-references the view to the
+  sheet it is drawn on. A **Match Line** marks where a plan continues on an
+  adjoining sheet; a **Key Map** indexes the sheets over the whole site.
+- **Grid / Grid Bubble** — a structural/column grid with bubbled, labelled
+  gridlines (digits one way, letters the other) that locate building elements.
+- **Line Weight / Line Type** — plotted stroke width (ISO pen ladder) and dash
+  pattern (continuous, hidden, centre, phantom, …).
+- **CAD Layer** — an NCS/AIA-named plotting layer (`A-WALL`, `C-TOPO`, …) with a
+  colour, line weight, and line type.
+- **Hatch** — a standardized material fill (ANSI31 diagonal, concrete, earth, …).
+- **Level / Wall / Door / Window / Room / Finish** — building-interior primitives:
+  a storey; a thick, tall wall body; wall-hosted openings with marks and swings;
+  a bounded, numbered space; and its floor/base/wall/ceiling finishes.
+
 ## Collaboration & governance
 
 - **Project** — a server-persisted planning workspace containing a site and its

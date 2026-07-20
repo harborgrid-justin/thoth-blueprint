@@ -5,7 +5,9 @@ import {
   elevationAt,
   isPointElement,
   isSpatialElement,
+  wallPolygon,
   type Bounds,
+  type BuildingModel,
   type ElevationGrid,
   type LandUseCategory,
   type Point,
@@ -138,6 +140,11 @@ export function buildScene(site: Site): SceneResult | null {
   outlines.forEach((o) => group.add(boundaryOutline(o.ring, center, elevAt, exag, o.lift, o.color, disposables)));
 
   buildings.forEach((b) => group.add(b));
+
+  // --- Building interiors (walls per level) --------------------------------
+  for (const model of site.buildingModels ?? []) {
+    group.add(buildingInterior(model, center, elevAt, exag, disposables));
+  }
 
   // --- Networks (roads / utilities) ---------------------------------------
   for (const net of site.networks ?? []) {
@@ -374,6 +381,41 @@ function enterpriseBuilding(
   }
 
   g.position.y = baseY;
+  return g;
+}
+
+/**
+ * Building interior walls, extruded per level: each wall's plan poché
+ * ({@link wallPolygon}) is extruded from its level's floor to the wall height,
+ * so the 3D view reads as a real structure with rooms rather than a solid block.
+ */
+function buildingInterior(
+  model: BuildingModel,
+  center: Point,
+  elevAt: (p: Point) => number,
+  exag: number,
+  disposables: Array<{ dispose: () => void }>,
+): THREE.Group {
+  const g = new THREE.Group();
+  const levelBase = new Map(model.levels.map((l) => [l.id, l.elevation]));
+  const mat = new THREE.MeshStandardMaterial({ color: 0xe2e0d8, roughness: 0.7, metalness: 0.04 });
+  disposables.push(mat);
+
+  for (const wall of model.walls) {
+    const poly = wallPolygon(wall);
+    if (poly.length < 3) continue;
+    const shape = shapeFromBoundary(poly, center);
+    const geo = new THREE.ExtrudeGeometry(shape, { depth: wall.height * exag, bevelEnabled: false });
+    geo.rotateX(-Math.PI / 2);
+    disposables.push(geo);
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    const ground = elevAt(wall.baseline[0]) * exag;
+    const floor = (levelBase.get(wall.levelId) ?? 0) * exag;
+    mesh.position.y = ground + floor;
+    g.add(mesh);
+  }
   return g;
 }
 

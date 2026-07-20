@@ -44,6 +44,10 @@ import { CanvasPatterns, patternFor } from "./patterns";
 import { CivilLayer } from "./CivilLayer";
 import { CivilSymbolLayer } from "./CivilSymbolLayer";
 import { MonumentLayer } from "./MonumentLayer";
+import { BuildingInteriorLayer } from "./BuildingInteriorLayer";
+import { DimensionLayer } from "./DimensionLayer";
+import { GridBubbleLayer } from "./GridBubbleLayer";
+import { AnnotationLayer } from "./AnnotationLayer";
 import { FrameworkLayer } from "./FrameworkLayer";
 import { SurveyLegend } from "./SurveyLegend";
 import { formatArea } from "@/lib/format";
@@ -128,6 +132,9 @@ export function PlanningCanvas() {
     showLabels,
     showSurveyLabels,
     showDimensions,
+    showGridBubbles,
+    showAnnotations,
+    showInteriors,
     showNetworks,
     showContours,
     showSlope,
@@ -587,6 +594,18 @@ export function PlanningCanvas() {
             </g>
           );
         })}
+
+        {/* Building interiors: walls, doors, windows, rooms (architectural plan). */}
+        {showInteriors && <BuildingInteriorLayer site={site} viewport={viewport} />}
+
+        {/* CAD dimension entities (linear/aligned/angular/radial/…). */}
+        {showDimensions && <DimensionLayer site={site} viewport={viewport} />}
+
+        {/* Structural / column grid bubbles. */}
+        {showGridBubbles && <GridBubbleLayer site={site} viewport={viewport} />}
+
+        {/* Drafting reference marks (sections, elevations, details, revisions). */}
+        {showAnnotations && <AnnotationLayer site={site} viewport={viewport} />}
 
         {/* Dense metes-and-bounds on every parcel/lot boundary (plat style). */}
         {showDimensions && <BoundaryDimensions site={site} viewport={viewport} />}

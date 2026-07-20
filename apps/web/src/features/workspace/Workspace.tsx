@@ -23,6 +23,7 @@ import { CheckpointsDialog } from "./CheckpointsDialog";
 import { PlatReportDialog } from "@/features/survey/PlatReportDialog";
 import { AlignmentReportDialog } from "@/features/survey/AlignmentReportDialog";
 import { PlatSheetDialog } from "@/features/survey/PlatSheetDialog";
+import { SheetSetDialog } from "@/features/sheets/SheetSetDialog";
 import { TerrainPanel } from "@/features/terrain/TerrainPanel";
 import { CommandPalette } from "@/features/command/CommandPalette";
 import { ShortcutsDialog } from "@/features/command/ShortcutsDialog";
@@ -274,6 +275,7 @@ export function Workspace() {
         <PlatReportDialog />
         <AlignmentReportDialog />
         <PlatSheetDialog />
+        <SheetSetDialog />
         <CommandPalette actions={commandActions} />
         <ShortcutsDialog />
         <PreferencesDialog />

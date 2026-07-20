@@ -75,11 +75,31 @@ Deepen the planning intelligence.
 - ⬜ Scenario comparison (alternatives side by side).
 - ⬜ Community engagement views (simplified, comment-first).
 
+## Phase 6 — CAD sheets & construction documents
+
+Compose the model into issued architecture/engineering sheet sets.
+
+- ✅ Sheet/drawing-set model with NCS sheet numbering (`packages/domain/sheet.ts`).
+- ✅ Sheet sizes (ANSI/ARCH/ISO) and drafting standards — line weights, line types,
+  drawing scales, NCS/AIA CAD layers (`sheetsize.ts`, `drafting.ts`).
+- ✅ Paper-space viewports, dimensioning, schedules, hatches, and drafting
+  symbology — grid bubbles, section/elevation/detail callouts, match lines,
+  revision clouds, keynotes (`sheetview.ts`, `dimension.ts`, `schedule.ts`,
+  `hatch.ts`, `annotation.ts`).
+- ✅ Building-interior model — levels, walls, doors, windows, rooms → floor plans
+  and door/window/room/finish schedules (`building.ts`).
+- ✅ Multi-sheet drawing-set composer with SVG and multi-page vector **PDF** export
+  (`apps/web/src/features/sheets`, `pdf-lib`).
+- 🟡 Region-plugin sheet standards per jurisdiction (default size, scale set,
+  layer standard, dimension style).
+- ⬜ Interactive on-canvas authoring of walls/rooms and dimension placement.
+
 ## Non-goals (for now)
 
 - Mechanical/product CAD (MCAD), parametric part modeling.
 - Full GIS analysis suite — we interoperate with GIS, not replace it.
-- Detailed construction documentation / engineering deliverables.
+- Full BIM (analytical building performance, IFC round-trip). We produce CAD sheet
+  sets (Phase 6); we do not aim to replace a BIM authoring platform.
 
 > Phases are sequenced but not rigid; the domain model (Phase 1) is the gating
 > dependency for most later work. Contributions that advance Phase 1 are the most

@@ -44,6 +44,13 @@ Core concepts (see [GLOSSARY.md](GLOSSARY.md) for definitions):
   `RightOfWay`, `Setback`, and infrastructure networks.
 - **Rules & metrics** — subdivision, setback/envelope computation, land-use
   allocation, density and coverage metrics, and validation of planning constraints.
+- **Survey & civil** — metes-and-bounds, curves, roadway alignment/stationing,
+  PLSS / Georgia land-lot frameworks, monuments, and region plug-ins.
+- **CAD sheets & drafting** — sheet sizes (`sheetsize.ts`), the sheet/drawing-set
+  model with NCS numbering (`sheet.ts`), drafting standards (`drafting.ts`),
+  paper-space viewports (`sheetview.ts`), dimensions (`dimension.ts`), schedules
+  (`schedule.ts`), hatches (`hatch.ts`), and drafting annotations (`annotation.ts`).
+- **Building interiors** — levels, walls, doors, windows, rooms (`building.ts`).
 
 ### `apps/web` — the planning workspace (client)
 
@@ -55,6 +62,13 @@ services over an API and a realtime channel.
 The archived app under `artifact/` is a strong reference for canvas interaction
 (React Flow), state orchestration (Zustand), and import/export ergonomics — reused
 as patterns, re-implemented cloud-first.
+
+**Sheet generation** (`apps/web/src/features/sheets`) uses a render-agnostic
+intermediate representation: a sheet is built once into a list of `SheetPrimitive`
+values (points), which two renderers consume — an SVG renderer for on-screen
+preview and a `pdf-lib` renderer for multi-page vector PDF export. Because both
+read the same primitive scene, the exported PDF is a true vector match of the
+preview. `pdf-lib` is the only client dependency added for this.
 
 ### `services/` — cloud backend
 

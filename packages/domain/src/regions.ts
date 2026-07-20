@@ -12,6 +12,7 @@
  */
 
 import type { MonumentType } from "./monument";
+import type { Orientation, SheetSizeId } from "./sheetsize";
 import type { AreaUnit, CRS, Unit } from "./spatial";
 
 /** The rectangular-survey framework a jurisdiction is described in. */
@@ -37,6 +38,34 @@ export interface Capabilities {
   certificates: boolean;
   /** Interior-angle table. */
   interiorAngles: boolean;
+  /** Multi-sheet drawing-set composer. */
+  sheetSet: boolean;
+  /** Sheet title blocks. */
+  titleBlock: boolean;
+  /** Revision blocks + delta tags. */
+  revisions: boolean;
+  /** Dimensioning (linear/aligned/angular/radial/…). */
+  dimensions: boolean;
+  /** Tabular schedules (door/window/room/finish/curve/line). */
+  schedules: boolean;
+  /** Building sections. */
+  sections: boolean;
+  /** Building elevations. */
+  elevations: boolean;
+  /** Detail callouts + detail views. */
+  details: boolean;
+  /** Structural column grids with bubbled gridlines. */
+  gridBubbles: boolean;
+  /** Keynotes + keynote tags. */
+  keynotes: boolean;
+  /** Match lines + key map for multi-sheet plans. */
+  matchLines: boolean;
+  /** NCS/AIA CAD layer standard. */
+  cadLayers: boolean;
+  /** Building-interior model (walls/doors/windows/rooms → floor plans). */
+  buildingInteriors: boolean;
+  /** Multi-page vector PDF export. */
+  pdfExport: boolean;
 }
 
 /** The full capability set, everything on — the platform's baseline. */
@@ -50,6 +79,20 @@ export const ALL_CAPABILITIES: Capabilities = {
   platComposer: true,
   certificates: true,
   interiorAngles: true,
+  sheetSet: true,
+  titleBlock: true,
+  revisions: true,
+  dimensions: true,
+  schedules: true,
+  sections: true,
+  elevations: true,
+  details: true,
+  gridBubbles: true,
+  keynotes: true,
+  matchLines: true,
+  cadLayers: true,
+  buildingInteriors: true,
+  pdfExport: true,
 };
 
 /** A plat certificate/attestation block (template text with {placeholders}). */
@@ -81,6 +124,18 @@ export interface CurveTableColumn {
   label: string;
 }
 
+/** Sheet/drafting standards a jurisdiction sets for its CAD deliverables. */
+export interface SheetStandards {
+  defaultSize: SheetSizeId;
+  orientation: Orientation;
+  /** Named drawing-scale ids offered for this jurisdiction (from ./drafting). */
+  scaleSet: string[];
+  layerStandard: "ncs" | "aia";
+  /** Default dimension-style id (from ./dimension). */
+  dimStyleId: string;
+  unit: "in" | "mm";
+}
+
 /** Local subdivision / zoning standards a jurisdiction can impose. */
 export interface JurisdictionStandards {
   /** Minimum lot area, acres. */
@@ -110,7 +165,19 @@ export interface RegionPlugin {
   certificates: CertificateSpec[];
   titleBlock: TitleBlockSpec;
   standards?: JurisdictionStandards;
+  /** CAD sheet/drafting standards for this jurisdiction. */
+  sheetStandards?: SheetStandards;
 }
+
+/** Imperial engineering/architectural sheet standards on ARCH D. */
+const IMPERIAL_SHEET_STANDARDS: SheetStandards = {
+  defaultSize: "arch-d",
+  orientation: "landscape",
+  scaleSet: ["eng-10", "eng-20", "eng-30", "eng-40", "eng-50", "eng-100", "arch-1-8", "arch-1-4", "arch-1-2"],
+  layerStandard: "ncs",
+  dimStyleId: "eng-arrow",
+  unit: "in",
+};
 
 /** Resolve a plug-in's effective capabilities against the all-on baseline. */
 export function resolveCapabilities(plugin?: RegionPlugin | null): Capabilities {
@@ -187,6 +254,7 @@ export const US_PLSS_DEFAULT: RegionPlugin = {
     },
   ],
   standards: { minRowWidth: 50 },
+  sheetStandards: IMPERIAL_SHEET_STANDARDS,
 };
 
 /**
@@ -260,6 +328,10 @@ export const NEWTON_COUNTY_GA: RegionPlugin = {
     sideSetback: 15,
     rearSetback: 40,
     minRowWidth: 60,
+  },
+  sheetStandards: {
+    ...IMPERIAL_SHEET_STANDARDS,
+    scaleSet: ["eng-20", "eng-30", "eng-40", "eng-50", "eng-100", "eng-200", "arch-1-4"],
   },
 };
 
