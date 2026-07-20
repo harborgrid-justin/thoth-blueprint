@@ -6,7 +6,9 @@ import {
   isPointElement,
   isSpatialElement,
   networkFromPath,
+  rewriteCrossReferences,
   unionBounds,
+  type DrawingSet,
   type ElementKind,
   type Layer,
   type NetworkEdge,
@@ -17,6 +19,7 @@ import {
   type Point,
   type Polygon,
   type Polyline,
+  type SheetRemap,
   type Site,
 } from "@thoth/domain";
 import type { Project } from "@/api";
@@ -99,6 +102,13 @@ export interface WorkspaceState {
   updateBuildingModel(id: string, patch: Partial<BuildingModel>): void;
   /** Add a CAD dimension entity to the plan. */
   addDimension(dim: Dimension): void;
+  /**
+   * Persist the project's primary CAD sheet set. When a renumber `remap` is
+   * given, every callout, section/elevation/detail mark, and match line in the
+   * site's annotations that referenced the old sheet number is rewritten to the
+   * new one, keeping cross-references valid (FE-SHEETSET-004).
+   */
+  updateSheetSet(next: DrawingSet, remap?: SheetRemap | null): void;
 
   // --- layers ---
   addLayer(name: string): void;
@@ -481,6 +491,27 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     addDimension(dim) {
       mutate((s) => ({ ...s, dimensions: [...(s.dimensions ?? []), dim] }));
+    },
+
+    updateSheetSet(next, remap) {
+      mutate((s) => {
+        const rest = (s.drawingSets ?? []).filter((d) => d.id !== next.id);
+        const drawingSets = [next, ...rest];
+        if (!remap) return { ...s, drawingSets };
+        const ann = s.annotations;
+        if (!ann) return { ...s, drawingSets };
+        return {
+          ...s,
+          drawingSets,
+          annotations: {
+            ...ann,
+            sectionMarks: ann.sectionMarks && rewriteCrossReferences(ann.sectionMarks, remap),
+            elevationMarks: ann.elevationMarks && rewriteCrossReferences(ann.elevationMarks, remap),
+            detailMarks: ann.detailMarks && rewriteCrossReferences(ann.detailMarks, remap),
+            matchLines: ann.matchLines && rewriteCrossReferences(ann.matchLines, remap),
+          },
+        };
+      });
     },
 
     setJurisdiction(id) {

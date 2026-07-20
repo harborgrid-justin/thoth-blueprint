@@ -11,6 +11,7 @@
 
 import { DISCIPLINE_ORDER, disciplineName, type DisciplineCode } from "./drafting";
 import type { Orientation, SheetSizeId } from "./sheetsize";
+import type { CustomProperty, NamedSelection, PageSetup, Subset } from "./sheetset";
 
 /** The NCS sheet-type digit (the first numeral of the sheet number). */
 export type SheetTypeDigit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
@@ -103,6 +104,14 @@ export interface Sheet {
   notes?: string[];
   /** Ids of keynotes (from ./annotation) referenced on this sheet. */
   keynoteIds?: string[];
+  /** Organizing subset (visual folder) this sheet belongs to, if any. */
+  subsetId?: string;
+  /** Free-text sheet description (the SSM "Description" sheet property). */
+  description?: string;
+  /** Per-sheet values for sheet-owned custom properties (name → value). */
+  customValues?: Record<string, string>;
+  /** Named issue set this sheet is currently released under (e.g. "For Permit"). */
+  issue?: string;
 }
 
 /** Defaults applied to every sheet's title block in a set. */
@@ -124,6 +133,16 @@ export interface DrawingSet {
   name: string;
   sheets: Sheet[];
   titleBlockDefaults: TitleBlockDefaults;
+  /** Optional free-text description of the set (the SSM sheet-set description). */
+  description?: string;
+  /** Organizing subsets (visual folders) for the sheet list. */
+  subsets?: Subset[];
+  /** Custom properties owned by the set or by each sheet (used as title-block fields). */
+  customProperties?: CustomProperty[];
+  /** Saved named sheet selections for batch plot / publish / transmit. */
+  namedSelections?: NamedSelection[];
+  /** Named page setups (plot configurations) available to the set. */
+  pageSetups?: PageSetup[];
 }
 
 /** Compare two sheets by discipline order, then type, then sequence. */

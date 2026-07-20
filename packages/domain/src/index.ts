@@ -14,6 +14,7 @@ export * from "./sheetsize";
 export * from "./drafting";
 export * from "./hatch";
 export * from "./sheet";
+export * from "./sheetset";
 export * from "./sheetview";
 export * from "./dimension";
 export * from "./annotation";

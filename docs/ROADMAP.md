@@ -83,14 +83,26 @@ issued-for-construction, and record deliverables. This is where the platform
 crosses the line from "planning workspace" to "produces CAD drawings" and
 therefore expands what was previously a scope non-goal.
 
-- ⬜ **Sheet composition** — layouts (paper space), viewports at explicit plot
+A cloud-first **Sheet Set Manager** (the SSM analogue) is now in place — modelled
+in `packages/domain/sheetset.ts` and driven from the `apps/web` Sheet Set Manager
+dialog. It organizes the shared `DrawingSet` into nestable **subsets**, creates /
+renames & **renumbers** / reorders / duplicates / deletes sheets (with
+**cross-reference integrity** — callouts, section/detail marks, and match lines
+follow a renumber), carries **custom properties** (set- or sheet-owned) resolved
+into title blocks through a `%<Field>%` **field engine**, saves **named sheet
+selections**, and defines named **page setups** for batch **publish** of any
+selection to a multi-sheet PDF. See
+[CAD-SHEET-SETS.md](CAD-SHEET-SETS.md) for the full AutoCAD Sheet Set Manager
+feature-parity map.
+
+- 🟡 **Sheet composition** — layouts (paper space), viewports at explicit plot
   scales, viewport clipping and layer overrides, sheet-relative annotation
   (annotative scaling for text, dimensions, symbols).
-- ⬜ **Title blocks** — reusable title-block templates conformant with
+- 🟡 **Title blocks** — reusable title-block templates conformant with
   ANSI/ASME Y14.1 (Arch A–E1) and ISO 5457 sheet sizes and ISO 7200 title-block
   data fields; per-project data binding (project name, address, seals,
   approvals, dates).
-- ⬜ **Discipline-organised sheet sets** — US National CAD Standard v6 discipline
+- 🟡 **Discipline-organised sheet sets** — US National CAD Standard v6 discipline
   designators (G · H · V · B · C · L · S · A · I · Q · F · P · D · M · E · T · R
   · X · Z · O) and sheet-type numbering (0-general · 1-plans · 2-elevations ·
   3-sections · 4-enlarged · 5-details · 6-schedules · 9-3D); auto-generated
@@ -113,15 +125,16 @@ therefore expands what was previously a scope non-goal.
 - ⬜ **Schedules & tables** — data-driven door, window, room/finish, panel,
   fixture, equipment schedules whose rows are the same domain objects rendered
   on the plans; live filtering, sorting, and formulas.
-- ⬜ **Revisions & issue management** — revision clouds with delta tags, per-sheet
+- 🟡 **Revisions & issue management** — revision clouds with delta tags, per-sheet
   revision blocks, named issue sets ("For Permit", "For Bid",
   "Issued for Construction", "As-Built") stamping every sheet on release.
-- ⬜ **Export & packaging** — multi-sheet PDF (incl. PDF/A and PDF/E-1 for
+- 🟡 **Export & packaging** — multi-sheet PDF (incl. PDF/A and PDF/E-1 for
   archival/permit), DXF/DWG sheet-set export with layouts/xrefs/plot-styles
   preserved, per-issue release packaging with a manifest and checksums.
-- ⬜ **Sheet-set navigation** — sheet-set browser (project navigator) with
+- 🟡 **Sheet-set navigation** — sheet-set browser (project navigator) with
   filters by discipline, phase, and issue; batch-plot the whole set or a
-  filtered subset.
+  filtered subset. _(Discipline-grouped browser, filters, named selections, and
+  batch PDF publish are implemented; DXF/DWG archive export is still planned.)_
 
 ## Non-goals (for now)
 

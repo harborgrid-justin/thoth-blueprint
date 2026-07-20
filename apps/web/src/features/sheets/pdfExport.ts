@@ -132,7 +132,9 @@ export async function drawingSetToPdf(set: DrawingSet, site: Site): Promise<Uint
 }
 
 function download(bytes: Uint8Array, filename: string): void {
-  const blob = new Blob([bytes], { type: "application/pdf" });
+  // Copy into a fresh (non-shared) ArrayBuffer-backed view so the bytes satisfy
+  // BlobPart under the DOM lib's ArrayBuffer-vs-SharedArrayBuffer typing.
+  const blob = new Blob([new Uint8Array(bytes)], { type: "application/pdf" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
