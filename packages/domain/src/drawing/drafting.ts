@@ -8,17 +8,29 @@
  * Pure data + lookups. Renderers map these to SVG stroke attributes / PDF pens.
  */
 
-// --- line weights ----------------------------------------------------------
+import type {
+  LineWeightName,
+  LineTypeName,
+  LineTypeDef,
+  ScaleSystem,
+  DrawingScale,
+  DisciplineCode,
+  CadLayer,
+  PlotStyle,
+} from "./types/drafting";
 
-/** Named tiers of the ISO line-weight pen set. */
-export type LineWeightName =
-  | "fine"
-  | "thin"
-  | "light"
-  | "medium"
-  | "wide"
-  | "x-wide"
-  | "xx-wide";
+export type {
+  LineWeightName,
+  LineTypeName,
+  LineTypeDef,
+  ScaleSystem,
+  DrawingScale,
+  DisciplineCode,
+  CadLayer,
+  PlotStyle,
+};
+
+// --- line weights ----------------------------------------------------------
 
 /** Millimetre width for each named line weight (ISO pen ladder). */
 export const LINE_WEIGHTS: Record<LineWeightName, number> = {
@@ -41,27 +53,6 @@ export function lineWeightMm(name: LineWeightName): number {
 
 // --- line types ------------------------------------------------------------
 
-/** Named CAD line types. */
-export type LineTypeName =
-  | "continuous"
-  | "hidden"
-  | "center"
-  | "phantom"
-  | "dashed"
-  | "dashdot"
-  | "dotted"
-  | "property"
-  | "break"
-  | "matchline";
-
-/** A line-type definition: a repeating dash pattern in paper millimetres. */
-export interface LineTypeDef {
-  name: LineTypeName;
-  label: string;
-  /** Dash/gap lengths in mm (empty = solid). */
-  pattern: number[];
-}
-
 export const LINE_TYPES: Record<LineTypeName, LineTypeDef> = {
   continuous: { name: "continuous", label: "Continuous", pattern: [] },
   hidden: { name: "hidden", label: "Hidden", pattern: [2, 1.5] },
@@ -81,22 +72,6 @@ export function lineTypePattern(name: LineTypeName): number[] {
 }
 
 // --- drawing scales --------------------------------------------------------
-
-/** Which scale system a named scale belongs to. */
-export type ScaleSystem = "architectural" | "engineering" | "metric";
-
-/** A named drawing scale (paper distance to model distance). */
-export interface DrawingScale {
-  id: string;
-  label: string;
-  system: ScaleSystem;
-  /**
-   * Model units per one paper unit. Both are in the *same* linear unit family;
-   * for imperial the model unit is feet-as-inches resolved below, so this stores
-   * the dimensionless ratio (e.g. 1/4"=1' → 48 model-inches per paper-inch).
-   */
-  modelPerPaper: number;
-}
 
 /**
  * Imperial architectural scales are quoted as `x" = 1'-0"`, i.e. `x` paper
@@ -169,30 +144,6 @@ export function formatScale(id: string): string {
 
 // --- disciplines (NCS designators) -----------------------------------------
 
-/** US National CAD Standard single-letter discipline designator. */
-export type DisciplineCode =
-  | "G"
-  | "H"
-  | "V"
-  | "B"
-  | "C"
-  | "L"
-  | "S"
-  | "A"
-  | "I"
-  | "Q"
-  | "F"
-  | "P"
-  | "D"
-  | "M"
-  | "E"
-  | "W"
-  | "T"
-  | "R"
-  | "X"
-  | "Z"
-  | "O";
-
 /** Human name for each discipline designator. */
 export const DISCIPLINES: Record<DisciplineCode, string> = {
   G: "General",
@@ -229,26 +180,6 @@ export function disciplineName(code: DisciplineCode): string {
 }
 
 // --- CAD layers (NCS / AIA long format) ------------------------------------
-
-/**
- * A CAD layer in the NCS/AIA long format: `DISCIPLINE-MAJOR-MINOR-STATUS`, e.g.
- * `A-WALL-FULL` or `C-TOPO-MAJR`. Carries the plotting attributes a drafter sets
- * once per layer: colour, line weight, line type, and whether it plots.
- */
-export interface CadLayer {
-  /** Full formatted name, e.g. "A-WALL". */
-  name: string;
-  discipline: DisciplineCode;
-  /** Major field, e.g. "WALL", "TOPO", "ANNO". */
-  major: string;
-  /** Optional minor/modifier field, e.g. "FULL", "IDEN". */
-  minor?: string;
-  color: string;
-  lineWeight: LineWeightName;
-  lineType: LineTypeName;
-  /** Whether the layer plots (non-plotting layers are construction aids). */
-  plot: boolean;
-}
 
 /** Format an NCS/AIA layer name from its parts. */
 export function formatLayerName(
@@ -295,15 +226,6 @@ export const STANDARD_CAD_LAYERS: CadLayer[] = [
 ];
 
 // --- plot styles -----------------------------------------------------------
-
-/** A plot/pen style: how a screen colour maps to plotted ink. */
-export interface PlotStyle {
-  name: string;
-  /** Screening percentage (100 = full ink, lower = greyer). */
-  screening: number;
-  /** Optional line-weight override applied at plot time. */
-  lineWeightOverride?: LineWeightName;
-}
 
 /** Common plot styles (monochrome and grayscale). */
 export const PLOT_STYLES: PlotStyle[] = [

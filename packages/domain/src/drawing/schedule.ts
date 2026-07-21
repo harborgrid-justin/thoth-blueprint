@@ -15,23 +15,9 @@ import type { SiteCurve } from "./platset";
 import type { AreaUnit, SpatialContext } from "../spatial/spatial";
 import { areaUnitLabel } from "../spatial/spatial";
 
-/** A schedule column definition. */
-export interface ScheduleColumn {
-  key: string;
-  label: string;
-  align?: "left" | "right" | "center";
-}
+import type { ScheduleColumn, ScheduleRow, ScheduleTable } from "./types/schedule";
 
-/** A row is a map from column key to a cell value. */
-export type ScheduleRow = Record<string, string | number>;
-
-/** A generic titled table. */
-export interface ScheduleTable {
-  id: string;
-  title: string;
-  columns: ScheduleColumn[];
-  rows: ScheduleRow[];
-}
+export type { ScheduleColumn, ScheduleRow, ScheduleTable };
 
 /** Door schedule from a building model. */
 export function doorSchedule(model: BuildingModel): ScheduleTable {

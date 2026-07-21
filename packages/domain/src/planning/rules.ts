@@ -5,9 +5,8 @@
  * everywhere the model runs.
  */
 
-import _ from "lodash";
 import type { Point, Polygon } from "../spatial/geometry";
-import { area as polygonArea, bounds, offsetPolygon, pointInPolygon } from "../spatial/geometry";
+import { area as polygonArea, bounds, centroid, offsetPolygon, pointInPolygon } from "../spatial/geometry";
 import type { Building, Lot, Site, Zone, ComplianceFinding } from "../spatial/types";
 import { auditErosionCompliance } from "./erosion.js";
 
@@ -27,21 +26,9 @@ export function buildableArea(lot: Lot): number {
   return envelope ? polygonArea(envelope) : 0;
 }
 
-/** Options controlling a simple grid subdivision of a parcel-like boundary. */
-export interface SubdivisionOptions {
-  /** Number of columns of lots. */
-  columns: number;
-  /** Number of rows of lots. */
-  rows: number;
-  /** Gap between lots in plan units (interpreted as internal ROW/spacing). */
-  gap?: number;
-  /** Layer the produced lots are placed on. */
-  layerId: string;
-  /** Generator for new lot ids. */
-  makeId: () => string;
-  /** Optional setback stamped onto each produced lot. */
-  setback?: number;
-}
+import type { SubdivisionOptions } from "./types/rules";
+
+export type { SubdivisionOptions };
 
 /**
  * Divide a boundary into a grid of lots. This is a pragmatic first-pass
@@ -101,7 +88,7 @@ export function checkCompliance(site: Site): ComplianceFinding[] {
 
   for (const building of buildings) {
     const footprint = polygonArea(building.boundary);
-    const center = centroidOf(building.boundary);
+    const center = centroid(building.boundary);
 
     const zone = zones.find((z) => pointInPolygon(center, z.boundary));
     if (zone) {
@@ -176,11 +163,4 @@ export function checkCompliance(site: Site): ComplianceFinding[] {
   findings.push(...erosionFindings);
 
   return findings;
-}
-
-function centroidOf(polygon: Polygon): Point {
-  const n = polygon.length;
-  if (n === 0) {return { x: 0, y: 0 };}
-  const sum = _.reduce(polygon, (acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 });
-  return { x: sum.x / n, y: sum.y / n };
 }

@@ -1,47 +1,17 @@
 import type { CurtainWall, CurtainWallGrid, Point } from "../spatial/types.js";
 import { distance } from "../spatial/geometry.js";
 
-export interface CurtainWallPanel {
-  key: string;
-  xStart: number;
-  xEnd: number;
-  yStart: number;
-  yEnd: number;
-  width: number;
-  height: number;
-  material: "glazing" | "brick" | "insulation" | "door" | "window";
-  isOverwritten: boolean;
-  panePolygons: Point[][];
-  clipAnchors: Point[];
-}
+import type {
+  CurtainWallPanel,
+  CurtainWallMullion,
+  CurtainWallGeometryResults,
+} from "./types/curtainwall";
 
-export interface CurtainWallMullion {
-  direction: "vertical" | "horizontal";
-  index: number;
-  xStart: number;
-  yStart: number;
-  xEnd: number;
-  yEnd: number;
-  width: number;
-  mullionPolygon: Point[];
-}
-
-export interface CurtainWallGeometryResults {
-  panels: CurtainWallPanel[];
-  mullions: CurtainWallMullion[];
-  perimeterFrame: Point[][];
-  elevationOutline: Point[];
-  structuralTies: Point[];
-  warnings: string[];
-  overallUFactor: number;
-  overallRValue: number;
-  inventory: {
-    material: string;
-    width: number;
-    height: number;
-    count: number;
-  }[];
-}
+export type {
+  CurtainWallPanel,
+  CurtainWallMullion,
+  CurtainWallGeometryResults,
+};
 
 export function calculateCurtainWallGeometry(wall: CurtainWall): CurtainWallGeometryResults {
   const warnings: string[] = [];

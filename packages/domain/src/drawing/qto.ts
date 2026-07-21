@@ -1,12 +1,9 @@
 import _ from "lodash";
 import { type CrossSection } from "../civil/profile";
 
-/** Area of cut and fill calculated on a single cross-section in plan units². */
-export interface SectionArea {
-  station: number;
-  cutArea: number;
-  fillArea: number;
-}
+import type { SectionArea, StationVolume, MassHaulPoint } from "./types/qto";
+
+export type { SectionArea, StationVolume, MassHaulPoint };
 
 /**
  * Calculates cut and fill areas for a cross section using the trapezoidal rule
@@ -63,14 +60,6 @@ export function calculateSectionArea(section: CrossSection): SectionArea {
   };
 }
 
-/** Earthwork volume between two stations in plan units³. */
-export interface StationVolume {
-  startStation: number;
-  endStation: number;
-  cutVolume: number;
-  fillVolume: number;
-  netVolume: number; // Cut minus Fill
-}
 
 /**
  * Calculates cut and fill volumes between two cross-sections using the Average End Area method.
@@ -93,11 +82,6 @@ export function averageEndAreaVolume(secA: CrossSection, secB: CrossSection): St
   };
 }
 
-/** Coordinates of a point on the Mass Haul Diagram. */
-export interface MassHaulPoint {
-  station: number;
-  cumulativeVolume: number;
-}
 
 /**
  * Generates cumulative mass haul volume lines along consecutive section intervals.
@@ -160,20 +144,14 @@ export function evaluatePayItemCost(
       .replace(/unitCost/g, String(item.unitCost))
       .replace(/length/g, String(len))
       .replace(/area/g, String(area))
-      .replace(/count/g, String(cnt))
-      .replace(/ABS/g, "Math.abs")
-      .replace(/TRUNC/g, "Math.trunc");
+      .replace(/count/g, String(cnt));
 
-    // Evaluate formula safely in JS sandbox context (simple math expressions only)
-    if (/^[0-9+\-*/().\sMath.absMath.trunc]+$/.test(cleanFormula)) {
-      const res = Function(`"use strict"; return (${cleanFormula});`)();
-      if (typeof res === "number" && !isNaN(res)) {
-        // If formula was "quantity * unitCost", cost is computed directly. Let's invert to find quantity
-        if (formula.includes("unitCost")) {
-          return { quantity: qty, cost: res };
-        }
-        return { quantity: res, cost: res * item.unitCost };
+    const res = safeEvalMath(cleanFormula);
+    if (res !== null && !isNaN(res)) {
+      if (formula.includes("unitCost")) {
+        return { quantity: qty, cost: res };
       }
+      return { quantity: res, cost: res * item.unitCost };
     }
   } catch {
     // Fallback on standard calculations
@@ -185,6 +163,65 @@ export function evaluatePayItemCost(
   };
 }
 
+function safeEvalMath(expr: string): number | null {
+  const tokens = expr.match(/\d+(?:\.\d+)?|[+\-*/()]/g);
+  if (!tokens || tokens.join("") !== expr.replace(/\s+/g, "")) {return null;}
+
+  let pos = 0;
+  function parseExpr(): number {
+    let left = parseTerm();
+    while (pos < tokens.length && (tokens[pos] === "+" || tokens[pos] === "-")) {
+      const op = tokens[pos++];
+      const right = parseTerm();
+      left = op === "+" ? left + right : left - right;
+    }
+    return left;
+  }
+
+  function parseTerm(): number {
+    let left = parseFactor();
+    while (pos < tokens.length && (tokens[pos] === "*" || tokens[pos] === "/")) {
+      const op = tokens[pos++];
+      const right = parseFactor();
+      left = op === "*" ? left * right : right !== 0 ? left / right : 0;
+    }
+    return left;
+  }
+
+  function parseFactor(): number {
+    if (pos >= tokens.length) {return 0;}
+    const token = tokens[pos++];
+    if (token === "(") {
+      const val = parseExpr();
+      if (pos < tokens.length && tokens[pos] === ")") {pos++;}
+      return val;
+    }
+    return parseFloat(token) || 0;
+  }
+
+  const result = parseExpr();
+  return Number.isFinite(result) ? result : null;
+}
+
+function parseCsvLine(line: string): string[] {
+  const result: string[] = [];
+  let cur = "";
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') {
+      inQuotes = !inQuotes;
+    } else if (c === "," && !inQuotes) {
+      result.push(cur.trim().replace(/^"|"$/g, ""));
+      cur = "";
+    } else {
+      cur += c;
+    }
+  }
+  result.push(cur.trim().replace(/^"|"$/g, ""));
+  return result;
+}
+
 /** Parse Pay Item lines from raw CSV string. */
 export function parsePayItemListCsv(csvContent: string): PayItem[] {
   const items: PayItem[] = [];
@@ -193,15 +230,14 @@ export function parsePayItemListCsv(csvContent: string): PayItem[] {
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("ID,Name")) {continue;}
 
-    // Handle standard CSV commas split
-    const parts = trimmed.split(",");
+    const parts = parseCsvLine(trimmed);
     if (parts.length >= 4) {
       items.push({
-        id: parts[0].trim(),
-        name: parts[1].trim(),
-        unit: parts[2].trim(),
-        unitCost: parseFloat(parts[3].trim()) || 0,
-        category: parts[4] ? parts[4].trim() : undefined,
+        id: parts[0],
+        name: parts[1],
+        unit: parts[2],
+        unitCost: parseFloat(parts[3]) || 0,
+        category: parts[4] ? parts[4] : undefined,
       });
     }
   }

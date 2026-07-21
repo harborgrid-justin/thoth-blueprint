@@ -68,14 +68,9 @@ export function splitPolygonByLine(polygon: Polygon, p1: Point, p2: Point): Poly
   return [cleanLeft, cleanRight];
 }
 
-export interface SlideLineOptions {
-  targetArea: number;
-  frontage: Point[];
-  angle?: number; // angle in degrees relative to frontage tangent (default 90)
-  layerId: string;
-  makeId: () => string;
-  setback?: number;
-}
+import type { SlideLineOptions, SwingLineOptions } from "./types/subdivision";
+
+export type { SlideLineOptions, SwingLineOptions };
 
 /**
  * Slide Line Subdivision: Walk along a frontage path and slide a lot partition line
@@ -198,14 +193,7 @@ export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions)
   return lots;
 }
 
-export interface SwingLineOptions {
-  targetArea: number;
-  pivot: Point;
-  startAngle?: number; // unused in corner-sweep mode, kept for backwards compatibility
-  layerId: string;
-  makeId: () => string;
-  setback?: number;
-}
+
 
 /**
  * Swing Line Subdivision: Pivot a partition line from a fixed point on the parcel boundary
@@ -349,65 +337,59 @@ export function mergeLots(lots: Lot[], layerId: string, makeId: () => string): L
   }
   if (lots.length === 1) {return { ...lots[0] };}
 
+  const pointKey = (p: Point) => `${Math.round(p.x * 1000)}:${Math.round(p.y * 1000)}`;
+
   interface DirectedEdge {
     from: Point;
     to: Point;
+    keyFrom: string;
+    keyTo: string;
   }
   const allEdges: DirectedEdge[] = [];
+  const edgeCounts = new Map<string, number>();
 
   for (const lot of lots) {
     const poly = lot.boundary;
     const n = poly.length;
     for (let i = 0; i < n; i++) {
-      allEdges.push({ from: poly[i], to: poly[(i + 1) % n] });
+      const from = poly[i];
+      const to = poly[(i + 1) % n];
+      const kFrom = pointKey(from);
+      const kTo = pointKey(to);
+      allEdges.push({ from, to, keyFrom: kFrom, keyTo: kTo });
+
+      const normKey = kFrom < kTo ? `${kFrom}_${kTo}` : `${kTo}_${kFrom}`;
+      edgeCounts.set(normKey, (edgeCounts.get(normKey) ?? 0) + 1);
     }
   }
 
-  const isShared = (e1: DirectedEdge) => {
-    return allEdges.some((e2) => {
-      const matchFrom = distance(e1.from, e2.to) < 1e-3;
-      const matchTo = distance(e1.to, e2.from) < 1e-3;
-      return matchFrom && matchTo;
-    });
-  };
+  const outerEdges = allEdges.filter((e) => {
+    const normKey = e.keyFrom < e.keyTo ? `${e.keyFrom}_${e.keyTo}` : `${e.keyTo}_${e.keyFrom}`;
+    return edgeCounts.get(normKey) === 1;
+  });
 
-  const outerEdges = allEdges.filter((e) => !isShared(e));
   if (outerEdges.length < 3) {
     throw new Error("Invalid adjacent lot layout: no outer boundary found");
   }
 
-  // Reconstruct a single polygon loop from the outer edges
-  const boundaryPoints: Point[] = [outerEdges[0].from];
-  let currentPt = outerEdges[0].to;
-  const remaining = outerEdges.slice(1);
+  const nextEdgeMap = new Map<string, DirectedEdge>();
+  for (const e of outerEdges) {
+    nextEdgeMap.set(e.keyFrom, e);
+  }
 
-  while (remaining.length > 0) {
-    boundaryPoints.push(currentPt);
-    let foundIdx = -1;
-    for (let i = 0; i < remaining.length; i++) {
-      if (distance(remaining[i].from, currentPt) < 1e-3) {
-        foundIdx = i;
-        break;
-      }
-    }
-    if (foundIdx === -1) {
-      let minD = Infinity;
-      for (let i = 0; i < remaining.length; i++) {
-        const d = distance(remaining[i].from, currentPt);
-        if (d < minD) {
-          minD = d;
-          foundIdx = i;
-        }
-      }
-      if (minD > 1.0) {
-        if (remaining.length > 0) {
-          throw new Error("Cannot merge disjoint lots: boundaries do not connect");
-        }
-        break;
-      }
-    }
-    currentPt = remaining[foundIdx].to;
-    remaining.splice(foundIdx, 1);
+  const boundaryPoints: Point[] = [];
+  const startEdge = outerEdges[0];
+  let currEdge: DirectedEdge | undefined = startEdge;
+  const visited = new Set<DirectedEdge>();
+
+  while (currEdge && !visited.has(currEdge)) {
+    visited.add(currEdge);
+    boundaryPoints.push(currEdge.from);
+    currEdge = nextEdgeMap.get(currEdge.keyTo);
+  }
+
+  if (visited.size < outerEdges.length || boundaryPoints.length < 3) {
+    throw new Error("Cannot merge disjoint lots: boundaries do not connect");
   }
 
   return {

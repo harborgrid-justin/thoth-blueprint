@@ -1,21 +1,17 @@
 import type { DoorElement, WindowElement, Point } from "../spatial/types.js";
 import { distance } from "../spatial/geometry.js";
 
-export interface DoorGeometryResults {
-  swingPath: Point[];
-  doorPanelPolygon: Point[];
-  sillPolygon: Point[];
-  thresholdPolygon: Point[];
-  hardwareAnchor: Point;
-  warnings: string[];
-}
+import type {
+  DoorGeometryResults,
+  WindowGeometryResults,
+  UnitScheduleItem,
+} from "./types/doorwindow";
 
-export interface WindowGeometryResults {
-  glazingPolygons: Point[][];
-  sillPolygon: Point[];
-  sashPolygons: Point[][];
-  warnings: string[];
-}
+export type {
+  DoorGeometryResults,
+  WindowGeometryResults,
+  UnitScheduleItem,
+};
 
 export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
   const warnings: string[] = [];
@@ -249,26 +245,30 @@ export function calculateWindowGeometry(win: WindowElement): WindowGeometryResul
   };
 }
 
-export interface UnitScheduleItem {
-  id: string;
-  kind: "door" | "window";
-  name: string;
-  type: string;
-  width: number;
-  height: number;
-  hardware: string;
-  fireRating: string;
-  stc: number;
-  safety: string;
-}
 
-export function compileUnitSchedule(siteElements: any[]): UnitScheduleItem[] {
-  const schedule: UnitScheduleItem[] = [];
+
+import type {
+  DoorGeometryResults,
+  WindowGeometryResults,
+  UnitScheduleItem,
+  UnitSchedule,
+} from "./types/doorwindow";
+
+export type {
+  DoorGeometryResults,
+  WindowGeometryResults,
+  UnitScheduleItem,
+  UnitSchedule,
+};
+
+export function compileUnitSchedule(siteElements: any[]): UnitSchedule {
+  const doors: UnitScheduleItem[] = [];
+  const windows: UnitScheduleItem[] = [];
   
   siteElements.forEach((el) => {
     if (el.kind === "door") {
       const door = el as DoorElement;
-      schedule.push({
+      doors.push({
         id: door.id,
         kind: "door",
         name: door.name,
@@ -277,12 +277,12 @@ export function compileUnitSchedule(siteElements: any[]): UnitScheduleItem[] {
         height: door.height,
         hardware: door.hardwareTrim || "lever",
         fireRating: door.fireRating || "none",
-        stc: door.stcRating || 32,
+        stcRating: door.stcRating || 32,
         safety: door.safetyGlazing || "none",
       });
     } else if (el.kind === "window") {
       const win = el as WindowElement;
-      schedule.push({
+      windows.push({
         id: win.id,
         kind: "window",
         name: win.name,
@@ -291,11 +291,11 @@ export function compileUnitSchedule(siteElements: any[]): UnitScheduleItem[] {
         height: win.height,
         hardware: "operator hinges",
         fireRating: win.fireRating || "none",
-        stc: win.stcRating || 35,
+        stcRating: win.stcRating || 35,
         safety: win.safetyGlazing || "none",
       });
     }
   });
 
-  return schedule;
+  return { doors, windows };
 }

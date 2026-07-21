@@ -3,33 +3,19 @@
  * Supports parent-child inheritance, property overrides, and text expression compilation.
  */
 
-export interface LabelStyleGeneral {
-  layer: string;
-  visible: boolean;
-  planReadable: boolean;
-}
+import type {
+  LabelStyleGeneral,
+  LabelStyleLayout,
+  LabelStyleDraggedState,
+  LabelStyle,
+} from "./types/labeling";
 
-export interface LabelStyleLayout {
-  textTemplate: string; // e.g. "STA: {Station}\nELEV: {Elevation}"
-  fontSize: number;
-  fontColor: string;
-  anchorPoint: string;
-}
-
-export interface LabelStyleDraggedState {
-  leaderVisible: boolean;
-  stackedText: boolean;
-  gap: number;
-}
-
-export interface LabelStyle {
-  id: string;
-  name: string;
-  parentId?: string; // for child styles inheriting properties
-  general?: Partial<LabelStyleGeneral>;
-  layout?: Partial<LabelStyleLayout>;
-  draggedState?: Partial<LabelStyleDraggedState>;
-}
+export type {
+  LabelStyleGeneral,
+  LabelStyleLayout,
+  LabelStyleDraggedState,
+  LabelStyle,
+};
 
 /** Merges a child style override with its resolved parent style. */
 export function resolveLabelStyle(

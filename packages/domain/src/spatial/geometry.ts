@@ -1,5 +1,3 @@
-import _ from "lodash";
-import { vec2, vec3 } from "gl-matrix";
 import type { Point, Bounds, Polyline, Polygon } from "./types";
 export type { Point, Bounds, Polyline, Polygon };
 
@@ -16,54 +14,44 @@ export const GEOMETRY_EPSILON = 1e-9;
 
 /** Euclidean distance between two points, in plan units. */
 export function distance(a: Point, b: Point): number {
-  return vec2.distance(vec2.fromValues(a.x, a.y), vec2.fromValues(b.x, b.y));
+  return Math.hypot(b.x - a.x, b.y - a.y);
 }
 
 /** Add two points as vectors. */
 export function add(a: Point, b: Point): Point {
-  const out = vec2.create();
-  vec2.add(out, vec2.fromValues(a.x, a.y), vec2.fromValues(b.x, b.y));
-  return { x: out[0], y: out[1] };
+  return { x: a.x + b.x, y: a.y + b.y };
 }
 
 /** Subtract `b` from `a` as vectors. */
 export function subtract(a: Point, b: Point): Point {
-  const out = vec2.create();
-  vec2.sub(out, vec2.fromValues(a.x, a.y), vec2.fromValues(b.x, b.y));
-  return { x: out[0], y: out[1] };
+  return { x: a.x - b.x, y: a.y - b.y };
 }
 
 /** Scale a point/vector by a scalar. */
 export function scale(p: Point, k: number): Point {
-  const out = vec2.create();
-  vec2.scale(out, vec2.fromValues(p.x, p.y), k);
-  return { x: out[0], y: out[1] };
+  return { x: p.x * k, y: p.y * k };
 }
 
 /** Vector length (magnitude). */
 export function length(v: Point): number {
-  return vec2.len(vec2.fromValues(v.x, v.y));
+  return Math.hypot(v.x, v.y);
 }
 
 /** Return `v` scaled to unit length, or the zero vector if `v` is ~zero. */
 export function normalize(v: Point): Point {
-  const len = length(v);
+  const len = Math.hypot(v.x, v.y);
   if (len < GEOMETRY_EPSILON) {return { x: 0, y: 0 };}
-  const out = vec2.create();
-  vec2.normalize(out, vec2.fromValues(v.x, v.y));
-  return { x: out[0], y: out[1] };
+  return { x: v.x / len, y: v.y / len };
 }
 
 /** Dot product of two vectors. */
 export function dot(a: Point, b: Point): number {
-  return vec2.dot(vec2.fromValues(a.x, a.y), vec2.fromValues(b.x, b.y));
+  return a.x * b.x + a.y * b.y;
 }
 
 /** 2D cross product (z-component of the 3D cross), useful for orientation. */
 export function cross(a: Point, b: Point): number {
-  const out = vec3.create();
-  vec2.cross(out, vec2.fromValues(a.x, a.y), vec2.fromValues(b.x, b.y));
-  return out[2];
+  return a.x * b.y - a.y * b.x;
 }
 
 /**
@@ -135,16 +123,18 @@ export function centroid(polygon: Polygon): Point {
     a += f;
   }
   a *= 0.5;
-  if (Math.abs(a) < GEOMETRY_EPSILON) {return vertexMean(polygon);}
   return { x: cx / (6 * a), y: cy / (6 * a) };
 }
 
 function vertexMean(points: Point[]): Point {
-  const sumVec = vec2.create();
-  for (const p of points) {
-    vec2.add(sumVec, sumVec, [p.x, p.y]);
+  if (points.length === 0) {return { x: 0, y: 0 };}
+  let sx = 0;
+  let sy = 0;
+  for (let i = 0; i < points.length; i++) {
+    sx += points[i].x;
+    sy += points[i].y;
   }
-  return { x: sumVec[0] / points.length, y: sumVec[1] / points.length };
+  return { x: sx / points.length, y: sy / points.length };
 }
 
 /** Axis-aligned bounding box of a set of points. Returns a zero box if empty. */
@@ -166,12 +156,18 @@ export function bounds(points: Point[]): Bounds {
 /** Merge several bounds into one that contains them all. */
 export function unionBounds(boxes: Bounds[]): Bounds | null {
   if (boxes.length === 0) {return null;}
-  return _.reduce(boxes, (acc, b) => ({
-    minX: Math.min(acc.minX, b.minX),
-    minY: Math.min(acc.minY, b.minY),
-    maxX: Math.max(acc.maxX, b.maxX),
-    maxY: Math.max(acc.maxY, b.maxY),
-  })) || null;
+  let minX = boxes[0].minX;
+  let minY = boxes[0].minY;
+  let maxX = boxes[0].maxX;
+  let maxY = boxes[0].maxY;
+  for (let i = 1; i < boxes.length; i++) {
+    const b = boxes[i];
+    if (b.minX < minX) {minX = b.minX;}
+    if (b.minY < minY) {minY = b.minY;}
+    if (b.maxX > maxX) {maxX = b.maxX;}
+    if (b.maxY > maxY) {maxY = b.maxY;}
+  }
+  return { minX, minY, maxX, maxY };
 }
 
 /** Center point of a bounding box. */
@@ -203,33 +199,25 @@ export function pointInPolygon(point: Point, polygon: Polygon): boolean {
 export function pointOnSegment(p: Point, a: Point, b: Point): boolean {
   const crossProduct = (p.y - a.y) * (b.x - a.x) - (p.x - a.x) * (b.y - a.y);
   if (Math.abs(crossProduct) > GEOMETRY_EPSILON * Math.max(1, distance(a, b))) {return false;}
-  const dotProduct = dot(subtract(p, a), subtract(b, a));
+  const dotProduct = (p.x - a.x) * (b.x - a.x) + (p.y - a.y) * (b.y - a.y);
   if (dotProduct < 0) {return false;}
-  const squaredLen = dot(subtract(b, a), subtract(b, a));
+  const squaredLen = (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y);
   return dotProduct <= squaredLen;
 }
 
 /** Closest point to `p` on the segment `a`–`b`. */
 export function closestPointOnSegment(p: Point, a: Point, b: Point): Point {
-  const pVec = vec2.fromValues(p.x, p.y);
-  const aVec = vec2.fromValues(a.x, a.y);
-  const bVec = vec2.fromValues(b.x, b.y);
+  const abx = b.x - a.x;
+  const aby = b.y - a.y;
+  const lenSq = abx * abx + aby * aby;
+  if (lenSq < GEOMETRY_EPSILON) {return { x: a.x, y: a.y };}
 
-  const ab = vec2.create();
-  vec2.sub(ab, bVec, aVec);
-
-  const lenSq = vec2.sqrLen(ab);
-  if (lenSq < GEOMETRY_EPSILON) {return { ...a };}
-
-  const ap = vec2.create();
-  vec2.sub(ap, pVec, aVec);
-
-  let t = vec2.dot(ap, ab) / lenSq;
+  const apx = p.x - a.x;
+  const apy = p.y - a.y;
+  let t = (apx * abx + apy * aby) / lenSq;
   t = Math.max(0, Math.min(1, t));
 
-  const out = vec2.create();
-  vec2.scaleAndAdd(out, aVec, ab, t);
-  return { x: out[0], y: out[1] };
+  return { x: a.x + abx * t, y: a.y + aby * t };
 }
 
 /**

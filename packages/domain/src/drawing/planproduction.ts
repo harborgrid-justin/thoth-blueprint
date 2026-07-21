@@ -6,34 +6,9 @@ import { type Unit } from "../spatial/spatial";
 import { type PaperUnit } from "./sheetsize";
 import { type Sheet, type DrawingSet } from "./sheet";
 
-/** A single rectangular View Frame showing a station range along an alignment. */
-export interface ViewFrame {
-  id: string;
-  name: string;
-  stationStart: number;
-  stationEnd: number;
-  center: Point;
-  width: number;       // viewport width in model units
-  height: number;      // viewport height in model units
-  rotationDeg: number; // clockwise rotation angle in degrees to align viewport
-}
+import type { ViewFrame, PlanMatchLine, ViewFrameGroup } from "./types/planproduction";
 
-/** A match line marking the page break boundary between two adjacent view frames. */
-export interface PlanMatchLine {
-  id: string;
-  station: number;
-  cutLine: [Point, Point]; // Left to Right normal cut line segment in model coordinates
-  label: string;
-}
-
-/** A group organizing view frames and match lines along an alignment. */
-export interface ViewFrameGroup {
-  id: string;
-  name: string;
-  alignmentId: string;
-  frames: ViewFrame[];
-  matchLines: PlanMatchLine[];
-}
+export type { ViewFrame, PlanMatchLine, ViewFrameGroup };
 
 /**
  * Automatically splits an alignment baseline into consecutive page segments (View Frames)

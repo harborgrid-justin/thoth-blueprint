@@ -18,15 +18,9 @@ export const ACRE_SQFT = 43560;
 /** Standard 1820s-lottery land lot size (Newton, Henry, Fayette, … counties). */
 export const LAND_LOT_ACRES_202 = 202.5;
 
-/** A Land District / Land Lot reference. */
-export interface LandLotRef {
-  district: number;
-  landLot: number;
-  /** Nominal land-lot acreage for this district's lottery (default 202.5). */
-  acres?: number;
-  /** Section suffix used in a few original surveys (e.g. "3rd Section"). */
-  section?: number;
-}
+import type { LandLotRef } from "./types/landlot";
+
+export type { LandLotRef };
 
 /** Side length (feet) of a square land lot of the given acreage. */
 export function landLotSide(acres = LAND_LOT_ACRES_202): number {

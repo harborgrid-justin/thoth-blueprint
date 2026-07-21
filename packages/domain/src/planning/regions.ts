@@ -15,58 +15,29 @@ import type { MonumentType } from "../survey/monument";
 import type { Orientation, SheetSizeId } from "../drawing/sheetsize";
 import type { AreaUnit, CRS, Unit } from "../spatial/spatial";
 
-/** The rectangular-survey framework a jurisdiction is described in. */
-export type SurveyFramework = "plss" | "georgia-land-lot" | "metes-and-bounds";
+import type {
+  SurveyFramework,
+  Capabilities,
+  CertificateSpec,
+  TitleBlockField,
+  TitleBlockSpec,
+  CurveTableColumn,
+  SheetStandards,
+  JurisdictionStandards,
+  RegionPlugin,
+} from "./types/regions";
 
-/** The platform's plat/civil capabilities. Every flag defaults to enabled. */
-export interface Capabilities {
-  /** Draw the survey framework (PLSS section grid or GA land-lot grid). */
-  surveyFramework: boolean;
-  /** Survey monuments with standard symbology + legend. */
-  monuments: boolean;
-  /** Consolidated curve-data table. */
-  curveTable: boolean;
-  /** Metes-and-bounds line table. */
-  lineTable: boolean;
-  /** Easement drafting + labeling. */
-  easements: boolean;
-  /** Stationed horizontal alignments. */
-  stationing: boolean;
-  /** Plat sheet composer (title block + certificates + key map). */
-  platComposer: boolean;
-  /** Plat certificates (dedication, surveyor, approval, …). */
-  certificates: boolean;
-  /** Interior-angle table. */
-  interiorAngles: boolean;
-  /** Multi-sheet drawing-set composer. */
-  sheetSet: boolean;
-  /** Sheet title blocks. */
-  titleBlock: boolean;
-  /** Revision blocks + delta tags. */
-  revisions: boolean;
-  /** Dimensioning (linear/aligned/angular/radial/…). */
-  dimensions: boolean;
-  /** Tabular schedules (door/window/room/finish/curve/line). */
-  schedules: boolean;
-  /** Building sections. */
-  sections: boolean;
-  /** Building elevations. */
-  elevations: boolean;
-  /** Detail callouts + detail views. */
-  details: boolean;
-  /** Structural column grids with bubbled gridlines. */
-  gridBubbles: boolean;
-  /** Keynotes + keynote tags. */
-  keynotes: boolean;
-  /** Match lines + key map for multi-sheet plans. */
-  matchLines: boolean;
-  /** NCS/AIA CAD layer standard. */
-  cadLayers: boolean;
-  /** Building-interior model (walls/doors/windows/rooms → floor plans). */
-  buildingInteriors: boolean;
-  /** Multi-page vector PDF export. */
-  pdfExport: boolean;
-}
+export type {
+  SurveyFramework,
+  Capabilities,
+  CertificateSpec,
+  TitleBlockField,
+  TitleBlockSpec,
+  CurveTableColumn,
+  SheetStandards,
+  JurisdictionStandards,
+  RegionPlugin,
+};
 
 /** The full capability set, everything on — the platform's baseline. */
 export const ALL_CAPABILITIES: Capabilities = {
@@ -95,79 +66,7 @@ export const ALL_CAPABILITIES: Capabilities = {
   pdfExport: true,
 };
 
-/** A plat certificate/attestation block (template text with {placeholders}). */
-export interface CertificateSpec {
-  id: string;
-  title: string;
-  body: string;
-  /** Signature-line labels beneath the block. */
-  signatures?: string[];
-}
 
-/** A field shown in the sheet title block. */
-export interface TitleBlockField {
-  label: string;
-  /** Data key resolved from the sheet context (e.g. "county", "scale"). */
-  key: string;
-}
-
-/** The sheet title-block layout for a jurisdiction. */
-export interface TitleBlockSpec {
-  /** Fixed lines (firm name/address/license), shown verbatim if provided. */
-  firmLines?: string[];
-  fields: TitleBlockField[];
-}
-
-/** A column in the consolidated curve-data table. */
-export interface CurveTableColumn {
-  key: "label" | "radius" | "delta" | "arcLength" | "chord" | "chordBearing" | "tangent";
-  label: string;
-}
-
-/** Sheet/drafting standards a jurisdiction sets for its CAD deliverables. */
-export interface SheetStandards {
-  defaultSize: SheetSizeId;
-  orientation: Orientation;
-  /** Named drawing-scale ids offered for this jurisdiction (from ./drafting). */
-  scaleSet: string[];
-  layerStandard: "ncs" | "aia";
-  /** Default dimension-style id (from ./dimension). */
-  dimStyleId: string;
-  unit: "in" | "mm";
-}
-
-/** Local subdivision / zoning standards a jurisdiction can impose. */
-export interface JurisdictionStandards {
-  /** Minimum lot area, acres. */
-  minLotAreaAcres?: number;
-  /** Nominal land-lot acreage for the Georgia Land Lot System. */
-  landLotAcres?: number;
-  frontSetback?: number;
-  sideSetback?: number;
-  rearSetback?: number;
-  /** Minimum right-of-way width, plan units. */
-  minRowWidth?: number;
-}
-
-/** A regional plug-in: how the platform's capabilities are adjusted for a place. */
-export interface RegionPlugin {
-  id: string;
-  name: string;
-  country: string;
-  state?: string;
-  county?: string;
-  surveyFramework: SurveyFramework;
-  defaults: { units: Unit; areaUnit: AreaUnit; crs: CRS };
-  monuments: MonumentType[];
-  /** Capability overrides; unspecified flags stay enabled. */
-  capabilities?: Partial<Capabilities>;
-  curveTableColumns: CurveTableColumn[];
-  certificates: CertificateSpec[];
-  titleBlock: TitleBlockSpec;
-  standards?: JurisdictionStandards;
-  /** CAD sheet/drafting standards for this jurisdiction. */
-  sheetStandards?: SheetStandards;
-}
 
 /** Imperial engineering/architectural sheet standards on ARCH D. */
 const IMPERIAL_SHEET_STANDARDS: SheetStandards = {

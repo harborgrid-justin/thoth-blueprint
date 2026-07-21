@@ -1,7 +1,6 @@
-/**
- * Parametric Part Builder domain model for Thoth.
- * Manages drainage structure part sizes, catalogs, and wall thickness equations.
- */
+import type { PartParam, CustomPartDefinition, CustomPartCatalog } from "./types/partbuilder";
+
+export type { PartParam, CustomPartDefinition, CustomPartCatalog };
 
 export type SizeStorageType = "Constant" | "List" | "Range";
 

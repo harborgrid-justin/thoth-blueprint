@@ -2,20 +2,9 @@ import { pointInPolygon, distance, length, add, scale, subtract, dot, type Point
 import type { ElevationGrid } from "./terrain";
 import { elevationAt } from "./terrain";
 
-export interface GradingPad {
-  id: string;
-  name: string;
-  points: { x: number; y: number }[]; // 2D polygon vertices
-  targetElevation: number;
-  cutSlope: number; // e.g. 2 (representing 2:1 horizontal:vertical)
-  fillSlope: number; // e.g. 3 (representing 3:1)
-}
+import type { GradingPad, VolumeReport, Point3D, FlowArrow } from "./types/grading";
 
-export interface VolumeReport {
-  cutVolume: number; // cubic yards
-  fillVolume: number; // cubic yards
-  netVolume: number; // cut - fill
-}
+export type { GradingPad, VolumeReport, Point3D, FlowArrow };
 
 /**
  * Helper to check if a point is inside a polygon using ray casting.
@@ -82,31 +71,30 @@ export function calculateGradingVolumes(
   // Double loop grid sampling
   for (let x = minX; x <= maxX; x += gridResolution) {
     for (let y = minY; y <= maxY; y += gridResolution) {
-      // Find existing terrain elevation
-      const cellIndexX = Math.floor((x - surface.origin.x) / surface.cellSize);
-      const cellIndexY = Math.floor((y - surface.origin.y) / surface.cellSize);
-      if (cellIndexX < 0 || cellIndexX >= surface.cols || cellIndexY < 0 || cellIndexY >= surface.rows) {
+      // Find existing terrain elevation using bilinear interpolation
+      if (x < surface.origin.x || x > surface.origin.x + (surface.cols - 1) * surface.cellSize ||
+          y < surface.origin.y || y > surface.origin.y + (surface.rows - 1) * surface.cellSize) {
         continue;
       }
-      const existingZ = surface.heights[cellIndexY * surface.cols + cellIndexX];
+      const existingZ = elevationAt(surface, { x, y });
 
       const inside = isPointInPolygon({ x, y }, pad.points);
       let proposedZ: number;
       if (inside) {
         proposedZ = padZ;
       } else {
-        // Daylight daylight slope projection
+        // Daylight slope projection
         const dist = getDistanceToPolygon({ x, y }, pad.points);
         if (existingZ > padZ) {
           // Cut region: daylight slope goes upwards from the pad
-          proposedZ = padZ + dist / pad.cutSlope;
+          proposedZ = padZ + dist / Math.max(0.01, pad.cutSlope);
           // Clip to existing terrain
           if (proposedZ > existingZ) {
             proposedZ = existingZ; // already daylit
           }
         } else {
           // Fill region: daylight slope goes downwards from the pad
-          proposedZ = padZ - dist / pad.fillSlope;
+          proposedZ = padZ - dist / Math.max(0.01, pad.fillSlope);
           if (proposedZ < existingZ) {
             proposedZ = existingZ; // already daylit
           }
@@ -166,12 +154,6 @@ export function solveBalancedElevation(
   }
 
   return balancedZ;
-}
-
-export interface Point3D {
-  x: number;
-  y: number;
-  z: number;
 }
 
 /** Drape a 2D polyline onto an ElevationGrid surface to create a 3D feature line. */
@@ -304,12 +286,6 @@ export function calculatePondVolume(
   }
   
   return totalVolume / 27;
-}
-
-export interface FlowArrow {
-  point: Point;
-  direction: Point;
-  slope: number;
 }
 
 /** Calculate drainage flow arrows across the surface at grid cell centers. */

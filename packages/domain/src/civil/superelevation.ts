@@ -2,20 +2,9 @@ import _ from "lodash";
 import type { HorizontalAlignment } from "./alignment";
 import { resolveAlignment } from "./alignment";
 
-export interface SuperelevationStation {
-  station: number;
-  leftOuterSlope: number;
-  rightOuterSlope: number;
-  description: string;
-}
+import type { SuperelevationStation, SuperelevationCurve } from "./types/superelevation";
 
-export interface SuperelevationCurve {
-  alignmentId: string;
-  designSpeed: number; // in mph
-  eMax: number; // max superelevation rate (e.g., 0.06 or 0.08)
-  normalCrown: number; // normal crown slope (typically -0.02)
-  transitionStations: SuperelevationStation[];
-}
+export type { SuperelevationStation, SuperelevationCurve };
 
 /**
  * Calculates transition stations for a curve along an alignment per AASHTO standards.

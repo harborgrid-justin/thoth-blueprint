@@ -8,27 +8,9 @@ import { resolveAssemblyOffset } from "./assembly";
 import type { SuperelevationCurve } from "./superelevation";
 import { getSuperelevationSlope } from "./superelevation";
 
-export interface Corridor {
-  id: string;
-  name: string;
-  alignmentId: string;
-  profileId: string;
-  assemblyId: string;
-  frequency: number; // Station interval (e.g. 50 or 100 feet)
-}
+import type { Corridor, CorridorSectionPoint, CorridorFeatureLine } from "./types/corridor";
 
-export interface CorridorSectionPoint {
-  code: string;
-  station: number;
-  x: number;
-  y: number;
-  z: number;
-}
-
-export interface CorridorFeatureLine {
-  code: string;
-  points: { x: number; y: number; z: number }[];
-}
+export type { Corridor, CorridorSectionPoint, CorridorFeatureLine };
 
 /**
  * Builds 3D points representing the Corridor model.

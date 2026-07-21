@@ -10,46 +10,28 @@
  */
 
 import type { Point, Polygon } from "../spatial/geometry";
+import type {
+  Quarter,
+  Half,
+  TownshipDirection,
+  RangeDirection,
+  TownshipRange,
+  SectionFrame,
+} from "./types/plss";
+
+export type {
+  Quarter,
+  Half,
+  TownshipDirection,
+  RangeDirection,
+  TownshipRange,
+  SectionFrame,
+};
 
 /** Nominal U.S. section side, feet (one mile). */
 export const SECTION_FEET = 5280;
 /** Nominal section area, acres. */
 export const SECTION_ACRES = 640;
-
-/** A quarter within a section or aliquot part. */
-export type Quarter = "NW" | "NE" | "SW" | "SE";
-
-/** Halves used for half-aliquots (e.g. the N1/2). */
-export type Half = "N" | "S" | "E" | "W";
-
-export type TownshipDirection = "North" | "South";
-export type RangeDirection = "East" | "West";
-
-/** A Township & Range designation (optionally naming the principal meridian). */
-export interface TownshipRange {
-  township: number;
-  townshipDir: TownshipDirection;
-  range: number;
-  rangeDir: RangeDirection;
-  /** Principal meridian, e.g. "Tallahassee" (optional). */
-  meridian?: string;
-}
-
-/** The corners and controlling points of a section (or any square aliquot). */
-export interface SectionFrame {
-  nw: Point;
-  ne: Point;
-  sw: Point;
-  se: Point;
-  center: Point;
-  /** Quarter-corner points on each edge (the section midpoints). */
-  north: Point;
-  south: Point;
-  east: Point;
-  west: Point;
-  /** Side length in plan units. */
-  side: number;
-}
 
 /**
  * Build a square frame from its **northwest** corner and side length. With north
@@ -121,11 +103,14 @@ export function nominalAliquotAcres(path: Quarter[]): number {
 export function formatAliquot(path: Quarter[]): string {
   if (path.length === 0) {return "all";}
   // The path is outer→inner; the description reads inner→outer.
-  return path
-    .slice()
-    .reverse()
-    .map((q) => `${q}1/4`)
-    .join(" of the ");
+  return (
+    "the " +
+    path
+      .slice()
+      .reverse()
+      .map((q) => `${q}1/4`)
+      .join(" of the ")
+  );
 }
 
 /** Abbreviated Township/Range, e.g. "T3S, R16E". */
@@ -140,23 +125,32 @@ export function formatTownshipRange(tr: TownshipRange): string {
   return `Township ${tr.township} ${tr.townshipDir}, Range ${tr.range} ${tr.rangeDir}`;
 }
 
-/** Full PLSS reference, e.g. "Section 8, Township 3 South, Range 16 East". */
-export function formatPLSS(tr: TownshipRange, section: number): string {
+/** Full PLSS reference, e.g. "the NW1/4 of the SE1/4 of Section 8, Township 3 South, Range 16 East". */
+export function formatPLSS(path: Quarter[], section: number, tr: TownshipRange): string {
   const mer = tr.meridian ? `, ${tr.meridian} Meridian` : "";
-  return `Section ${section}, ${formatTownshipRange(tr)}${mer}`;
+  const aliq = path.length > 0 ? `${formatAliquot(path)} of ` : "";
+  return `${aliq}Section ${section}, ${formatTownshipRange(tr)}${mer}`;
 }
 
-/** Abbreviated PLSS reference, e.g. "Sec. 8, T3S, R16E". */
-export function formatPLSSShort(tr: TownshipRange, section: number): string {
-  return `Sec. ${section}, ${formatTownshipRangeShort(tr)}`;
+/** Abbreviated PLSS reference, e.g. "NW1/4 SE1/4 Sec 8, T3S, R16E". */
+export function formatPLSSShort(path: Quarter[], section: number, tr: TownshipRange): string {
+  const aliq = path.length > 0 ? `${path.reverse().map((q) => `${q}1/4`).join(" ")} ` : "";
+  return `${aliq}Sec ${section}, ${formatTownshipRangeShort(tr)}`;
 }
 
-/**
- * The standard corner name for a point of a section, for legal descriptions
- * ("the Southwest corner of Section 8 …").
- */
-export function sectionCornerName(corner: Quarter): string {
-  return { NW: "Northwest", NE: "Northeast", SW: "Southwest", SE: "Southeast" }[corner] + " corner";
+/** The standard corner name for a section corner or quarter corner. */
+export function sectionCornerName(section: number, corner: "nw" | "ne" | "sw" | "se" | "north" | "south" | "east" | "west"): string {
+  const labels: Record<string, string> = {
+    nw: "NW corner",
+    ne: "NE corner",
+    sw: "SW corner",
+    se: "SE corner",
+    north: "N1/4 corner",
+    south: "S1/4 corner",
+    east: "E1/4 corner",
+    west: "W1/4 corner",
+  };
+  return `${labels[corner]} of Sec ${section}`;
 }
 
 /**

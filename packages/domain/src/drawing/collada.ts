@@ -6,25 +6,11 @@
  * is framework-agnostic and testable.)
  */
 
-/** A triangle mesh: flat XYZ positions and triangle index triples. */
-export interface SimpleMesh {
-  name: string;
-  /** Flat [x,y,z, x,y,z, …] vertex positions. */
-  positions: number[];
-  /** Flat triangle indices into `positions`/3. */
-  indices: number[];
-  /** Diffuse color as [r,g,b] in 0–1. */
-  color: [number, number, number];
-}
+import type { SimpleMesh } from "./types/collada";
 
-function xmlEscape(s: string): string {
-  return s.replace(/[<>&"']/g, (c) => `&#${c.charCodeAt(0)};`);
-}
+export type { SimpleMesh };
 
-function safeId(name: string, index: number): string {
-  const base = name.replace(/[^A-Za-z0-9_]/g, "_") || "mesh";
-  return `${base}_${index}`;
-}
+import { xmlEscape, safeId } from "./common/format";
 
 /** Serialize meshes to a COLLADA 1.4.1 document string. */
 export function writeCollada(meshes: SimpleMesh[], author = "Thoth Blueprint"): string {
@@ -36,39 +22,40 @@ export function writeCollada(meshes: SimpleMesh[], author = "Thoth Blueprint"): 
 
   meshes.forEach((mesh, i) => {
     const id = safeId(mesh.name, i);
+    const idEsc = xmlEscape(id);
     const [r, g, b] = mesh.color;
 
     effects.push(
-      `<effect id="${id}-effect"><profile_COMMON><technique sid="common"><lambert>` +
+      `<effect id="${idEsc}-effect"><profile_COMMON><technique sid="common"><lambert>` +
         `<diffuse><color>${r} ${g} ${b} 1</color></diffuse>` +
         `</lambert></technique></profile_COMMON></effect>`,
     );
     materials.push(
-      `<material id="${id}-material" name="${xmlEscape(mesh.name)}">` +
-        `<instance_effect url="#${id}-effect"/></material>`,
+      `<material id="${idEsc}-material" name="${xmlEscape(mesh.name)}">` +
+        `<instance_effect url="#${idEsc}-effect"/></material>`,
     );
 
     const vcount = mesh.positions.length / 3;
     const triCount = mesh.indices.length / 3;
     geometries.push(
-      `<geometry id="${id}-geom" name="${xmlEscape(mesh.name)}"><mesh>` +
-        `<source id="${id}-pos"><float_array id="${id}-pos-array" count="${mesh.positions.length}">${mesh.positions
+      `<geometry id="${idEsc}-geom" name="${xmlEscape(mesh.name)}"><mesh>` +
+        `<source id="${idEsc}-pos"><float_array id="${idEsc}-pos-array" count="${mesh.positions.length}">${mesh.positions
           .map(fmt)
           .join(" ")}</float_array>` +
-        `<technique_common><accessor source="#${id}-pos-array" count="${vcount}" stride="3">` +
+        `<technique_common><accessor source="#${idEsc}-pos-array" count="${vcount}" stride="3">` +
         `<param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/>` +
         `</accessor></technique_common></source>` +
-        `<vertices id="${id}-vtx"><input semantic="POSITION" source="#${id}-pos"/></vertices>` +
-        `<triangles material="${id}-material" count="${triCount}">` +
-        `<input semantic="VERTEX" source="#${id}-vtx" offset="0"/>` +
+        `<vertices id="${idEsc}-vtx"><input semantic="POSITION" source="#${idEsc}-pos"/></vertices>` +
+        `<triangles material="${idEsc}-material" count="${triCount}">` +
+        `<input semantic="VERTEX" source="#${idEsc}-vtx" offset="0"/>` +
         `<p>${mesh.indices.join(" ")}</p></triangles>` +
         `</mesh></geometry>`,
     );
 
     nodes.push(
-      `<node id="${id}-node" name="${xmlEscape(mesh.name)}"><instance_geometry url="#${id}-geom">` +
+      `<node id="${idEsc}-node" name="${xmlEscape(mesh.name)}"><instance_geometry url="#${idEsc}-geom">` +
         `<bind_material><technique_common>` +
-        `<instance_material symbol="${id}-material" target="#${id}-material"/>` +
+        `<instance_material symbol="${idEsc}-material" target="#${idEsc}-material"/>` +
         `</technique_common></bind_material></instance_geometry></node>`,
     );
   });
@@ -89,5 +76,5 @@ export function writeCollada(meshes: SimpleMesh[], author = "Thoth Blueprint"): 
 }
 
 function fmt(v: number): string {
-  return Number.isFinite(v) ? Number(v.toFixed(4)).toString() : "0";
+  return Number.isFinite(v) ? (Math.round(v * 10000) / 10000).toString() : "0";
 }

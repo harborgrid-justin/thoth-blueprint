@@ -9,45 +9,27 @@
  * of one of these sizes with a border and title block.
  */
 
-/** Paper unit a sheet is laid out in. */
-export type PaperUnit = "in" | "mm";
+import type {
+  PaperUnit,
+  Orientation,
+  SheetSeries,
+  SheetSizeId,
+  SheetSize,
+  PaperDimensions,
+  SheetMargins,
+  PaperRect,
+} from "./types/sheetsize";
 
-/** Sheet orientation. */
-export type Orientation = "landscape" | "portrait";
-
-/** The size series a sheet belongs to. */
-export type SheetSeries = "ansi" | "arch" | "iso";
-
-/** A standard sheet size identifier (series + designation). */
-export type SheetSizeId =
-  | "ansi-a"
-  | "ansi-b"
-  | "ansi-c"
-  | "ansi-d"
-  | "ansi-e"
-  | "arch-a"
-  | "arch-b"
-  | "arch-c"
-  | "arch-d"
-  | "arch-e"
-  | "iso-a4"
-  | "iso-a3"
-  | "iso-a2"
-  | "iso-a1"
-  | "iso-a0";
-
-/** A physical sheet size, in portrait (short edge = width) native measure. */
-export interface SheetSize {
-  id: SheetSizeId;
-  label: string;
-  series: SheetSeries;
-  /** Native short-edge / long-edge in inches (0 for ISO where mm is native). */
-  wIn: number;
-  hIn: number;
-  /** Native short-edge / long-edge in millimetres. */
-  wMm: number;
-  hMm: number;
-}
+export type {
+  PaperUnit,
+  Orientation,
+  SheetSeries,
+  SheetSizeId,
+  SheetSize,
+  PaperDimensions,
+  SheetMargins,
+  PaperRect,
+};
 
 const IN_PER_MM = 1 / 25.4;
 const MM_PER_IN = 25.4;
@@ -97,12 +79,6 @@ export function listSheetSizes(): SheetSize[] {
   return SHEET_SIZES;
 }
 
-/** A width/height in a paper unit. */
-export interface PaperDimensions {
-  w: number;
-  h: number;
-  unit: PaperUnit;
-}
 
 /**
  * The outer page dimensions of a sheet in the requested paper unit and
@@ -123,14 +99,6 @@ export function sheetDimensions(
     : { w: short, h: long, unit };
 }
 
-/** Sheet border margins in a paper unit — a wider left margin is the binding edge. */
-export interface SheetMargins {
-  left: number;
-  right: number;
-  top: number;
-  bottom: number;
-  unit: PaperUnit;
-}
 
 /** Default NCS-style margins (inches): 1.5" binding edge, 0.5" elsewhere. */
 export const DEFAULT_MARGINS_IN: SheetMargins = {
@@ -150,13 +118,6 @@ export const DEFAULT_MARGINS_MM: SheetMargins = {
   unit: "mm",
 };
 
-/** A rectangle in paper units. */
-export interface PaperRect {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
 
 /** Default margins for a paper unit. */
 export function defaultMargins(unit: PaperUnit): SheetMargins {
@@ -182,7 +143,6 @@ export function printableArea(
   };
 }
 
-/** Convert a paper measure to PDF points (1 in = 72 pt). */
-export function paperToPoints(value: number, unit: PaperUnit): number {
-  return unit === "in" ? value * 72 : value * IN_PER_MM * 72;
-}
+import { paperToPoints } from "./common/units";
+
+export { paperToPoints };

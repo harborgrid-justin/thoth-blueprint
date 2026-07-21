@@ -1,30 +1,9 @@
 import type { Stair, Point } from "../spatial/types.js";
 import { centroid, distance, add, scale } from "../spatial/geometry.js";
 
-export interface StairGeometryResults {
-  riserCount: number;
-  actualRiserHeight: number;
-  treadCount: number;
-  actualTreadDepth: number;
+import type { StairGeometryResults } from "./types/stairs";
 
-  // 3D structural centerlines (left & right stringers) (REQ-UNIMP-021)
-  stringerCenterlines: Point[][];
-
-  // 2D annotation symbols (REQ-UNIMP-022, REQ-UNIMP-023, REQ-UNIMP-024)
-  breakLine: Point[]; // line representing the 4-ft plan break cut
-  arrowPath: Point[]; // directional flow arrow pointing "Down"
-  balusterAnchors: Point[]; // anchor mounting coordinates on treads
-
-  // Individual step lines for 2D rendering
-  treadLines: Point[][];
-
-  // Material Takeoffs (REQ-UNIMP-025)
-  concreteVolumeCuM: number;
-  timberBoardFeet: number;
-
-  // Audit warnings (REQ-UNIMP-017, REQ-UNIMP-014)
-  warnings: string[];
-}
+export type { StairGeometryResults };
 
 /**
  * Computes all design parameters, structural stringer centerlines, 2D plan annotations,
@@ -47,6 +26,7 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
   const height = Math.abs(stair.height);
   const riserCount = Math.max(1, Math.ceil(height / riserHeightLimit));
   const actualRiserHeight = height / riserCount;
+  const safeRiserH = Math.max(0.01, actualRiserHeight);
 
   // Total treads in the stairway
   const totalTreadCount = Math.max(1, riserCount - 1);
@@ -139,8 +119,8 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
 
     // 2D Breakline cut at approx 1.2m height (REQ-UNIMP-022)
     // Find tread index matching 1.2m height
-    const cutTreadIdx = Math.min(totalTreadCount - 1, Math.floor(1.2 / actualRiserHeight));
-    const cutAngle = (cutTreadIdx / totalTreadCount) * totalRotRad;
+    const cutIdx = Math.min(totalTreadCount - 1, Math.floor(1.2 / safeRiserH));
+    const cutAngle = (cutIdx / totalTreadCount) * totalRotRad;
     breakLine.push(
       { x: footprintCenter.x + innerR * Math.cos(cutAngle), y: footprintCenter.y + innerR * Math.sin(cutAngle) },
       { x: footprintCenter.x + outerR * Math.cos(cutAngle), y: footprintCenter.y + outerR * Math.sin(cutAngle) }
@@ -222,7 +202,7 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     );
 
     // Breakline on first flight (REQ-UNIMP-022)
-    const cutIdx = Math.min(fTreads - 1, Math.floor(1.2 / actualRiserHeight));
+    const cutIdx = Math.min(fTreads - 1, Math.floor(1.2 / safeRiserH));
     const ptCutL = flight1Left[cutIdx] || startPt;
     const ptCutR = flight1Right[cutIdx] || startPt;
     breakLine.push(ptCutL, ptCutR);
@@ -265,9 +245,9 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     stringerCenterlines.push(leftStringer, rightStringer);
 
     // Plan breakline at 1.2m height cut (REQ-UNIMP-022)
-    const cutIdx = Math.min(totalTreadCount - 1, Math.floor(1.2 / actualRiserHeight));
-    const ptCutL = leftStringer[cutIdx] || startPt;
-    const ptCutR = rightStringer[cutIdx] || startPt;
+    const straightCutIdx = Math.min(totalTreadCount - 1, Math.floor(1.2 / safeRiserH));
+    const ptCutL = leftStringer[straightCutIdx] || startPt;
+    const ptCutR = rightStringer[straightCutIdx] || startPt;
     breakLine.push(ptCutL, ptCutR);
 
     // Direction arrow path pointing "Down" (REQ-UNIMP-023)

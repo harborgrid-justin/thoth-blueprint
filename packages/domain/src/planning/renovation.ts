@@ -2,12 +2,9 @@ import { type Site, isSpatialElement } from "../spatial/primitives.js";
 import { boundaryArea } from "../spatial/curve.js";
 import type { Point } from "../spatial/types.js";
 
-/** Takeoff results separating quantities by renovation status */
-export interface RenovationTakeoff {
-  status: "existing" | "new" | "demolished";
-  count: number;
-  totalArea: number;
-}
+import type { RenovationTakeoff } from "./types/renovation";
+
+export type { RenovationTakeoff };
 
 /**
  * Compute material quantity takeoffs separated by renovation status.

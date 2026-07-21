@@ -13,25 +13,25 @@
 
 import { bounds, pointInPolygon, distance, length, type Bounds, type Point, type Polygon, type Polyline } from "../spatial/geometry";
 import type { SpatialContext } from "../spatial/spatial";
+import type {
+  SpotElevation,
+  ElevationGrid,
+  InterpolateOptions,
+  ContourLevel,
+  SlopeSample,
+  SlopeStats,
+  Earthwork,
+} from "./types/terrain";
 
-/** A surveyed elevation at a point (a spot grade / benchmark). */
-export interface SpotElevation {
-  point: Point;
-  z: number;
-}
-
-/**
- * A regular grid of node elevations. Node (c, r) sits at world coordinate
- * `origin + (c·cellSize, r·cellSize)`; `heights` is row-major with length
- * `cols · rows`.
- */
-export interface ElevationGrid {
-  origin: Point;
-  cellSize: number;
-  cols: number;
-  rows: number;
-  heights: number[];
-}
+export type {
+  SpotElevation,
+  ElevationGrid,
+  InterpolateOptions,
+  ContourLevel,
+  SlopeSample,
+  SlopeStats,
+  Earthwork,
+};
 
 /** Read the node elevation at grid indices, clamped to the grid. */
 export function nodeHeight(grid: ElevationGrid, c: number, r: number): number {
@@ -78,16 +78,7 @@ export function elevationAt(grid: ElevationGrid, p: Point): number {
   return top + (bottom - top) * ty;
 }
 
-export interface InterpolateOptions {
-  /** Grid resolution (world units between nodes). */
-  cellSize: number;
-  /** Inverse-distance-weighting power. */
-  power?: number;
-  /** Base elevation used when there are no spots. */
-  base?: number;
-  /** Padding added around the spots' bounds. */
-  padding?: number;
-}
+
 
 /**
  * Build a regular elevation grid over the given extent by inverse-distance
@@ -117,11 +108,15 @@ export function interpolateGrid(
 }
 
 function idw(spots: SpotElevation[], p: Point, power: number): number {
+  if (spots.length === 0) {return 0;}
   let num = 0;
   let den = 0;
-  for (const s of spots) {
-    const d2 = (s.point.x - p.x) ** 2 + (s.point.y - p.y) ** 2;
-    if (d2 < 1e-9) {return s.z;} // exactly on a control point
+  for (let i = 0; i < spots.length; i++) {
+    const s = spots[i];
+    const dx = s.point.x - p.x;
+    const dy = s.point.y - p.y;
+    const d2 = dx * dx + dy * dy;
+    if (d2 < 1e-9) {return s.z;}
     const w = 1 / Math.pow(d2, power / 2);
     num += w * s.z;
     den += w;
@@ -133,11 +128,7 @@ function idw(spots: SpotElevation[], p: Point, power: number): number {
 // Contours (marching squares)
 // ---------------------------------------------------------------------------
 
-/** Contour line segments at a single elevation level. */
-export interface ContourLevel {
-  level: number;
-  segments: Array<[Point, Point]>;
-}
+
 
 // Segment table keyed by the 4-corner case index (TL=8, TR=4, BR=2, BL=1).
 // Each entry lists edge pairs to connect: T(op), R(ight), B(ottom), L(eft).
@@ -227,58 +218,100 @@ function frac(a: number, b: number, level: number): number {
 /**
  * Stitch a level's segments into continuous polylines for clean rendering and
  * labeling. Endpoints within `eps` world units are treated as the same vertex.
+ * Uses an O(N) spatial endpoint lookup table for high performance on dense grids.
  */
 export function stitchContours(segments: Array<[Point, Point]>, eps = 1e-4): Polyline[] {
+  if (segments.length === 0) {return [];}
   const key = (p: Point) => `${Math.round(p.x / eps)}:${Math.round(p.y / eps)}`;
-  const remaining = segments.map((s) => [...s] as [Point, Point]);
+
+  interface SegNode {
+    a: Point;
+    b: Point;
+    keyA: string;
+    keyB: string;
+    used: boolean;
+  }
+
+  const nodes: SegNode[] = segments.map(([a, b]) => ({
+    a,
+    b,
+    keyA: key(a),
+    keyB: key(b),
+    used: false,
+  }));
+
+  const adjMap = new Map<string, SegNode[]>();
+  for (const n of nodes) {
+    let listA = adjMap.get(n.keyA);
+    if (!listA) {listA = []; adjMap.set(n.keyA, listA);}
+    listA.push(n);
+
+    let listB = adjMap.get(n.keyB);
+    if (!listB) {listB = []; adjMap.set(n.keyB, listB);}
+    listB.push(n);
+  }
+
   const polylines: Polyline[] = [];
 
-  while (remaining.length) {
-    const [a, b] = remaining.pop()!;
-    const line: Polyline = [a, b];
-    let extended = true;
-    while (extended) {
-      extended = false;
-      const tail = line[line.length - 1];
-      const head = line[0];
-      for (let i = 0; i < remaining.length; i++) {
-        const [s0, s1] = remaining[i];
-        if (key(s0) === key(tail)) {
-          line.push(s1);
-        } else if (key(s1) === key(tail)) {
-          line.push(s0);
-        } else if (key(s0) === key(head)) {
-          line.unshift(s1);
-        } else if (key(s1) === key(head)) {
-          line.unshift(s0);
-        } else {
-          continue;
+  for (const startNode of nodes) {
+    if (startNode.used) {continue;}
+    startNode.used = true;
+    const line: Point[] = [startNode.a, startNode.b];
+    let headKey = startNode.keyA;
+    let tailKey = startNode.keyB;
+
+    // Extend tail
+    while (true) {
+      const candidates = adjMap.get(tailKey);
+      let found = false;
+      if (candidates) {
+        for (const nextNode of candidates) {
+          if (nextNode.used) {continue;}
+          nextNode.used = true;
+          found = true;
+          if (nextNode.keyA === tailKey) {
+            line.push(nextNode.b);
+            tailKey = nextNode.keyB;
+          } else {
+            line.push(nextNode.a);
+            tailKey = nextNode.keyA;
+          }
+          break;
         }
-        remaining.splice(i, 1);
-        extended = true;
-        break;
       }
+      if (!found) {break;}
     }
+
+    // Extend head
+    while (true) {
+      const candidates = adjMap.get(headKey);
+      let found = false;
+      if (candidates) {
+        for (const nextNode of candidates) {
+          if (nextNode.used) {continue;}
+          nextNode.used = true;
+          found = true;
+          if (nextNode.keyB === headKey) {
+            line.unshift(nextNode.a);
+            headKey = nextNode.keyA;
+          } else {
+            line.unshift(nextNode.b);
+            headKey = nextNode.keyB;
+          }
+          break;
+        }
+      }
+      if (!found) {break;}
+    }
+
     polylines.push(line);
   }
+
   return polylines;
 }
 
 // ---------------------------------------------------------------------------
 // Slope & aspect
-// ---------------------------------------------------------------------------
-
-export interface SlopeSample {
-  /** Rise over run (dimensionless). */
-  slope: number;
-  /** Slope as a percentage. */
-  percent: number;
-  /** Slope in degrees. */
-  degrees: number;
-  /** Downslope compass aspect in degrees (0 = north/−Y), or null if flat. */
-  aspect: number | null;
-}
-
 /** Slope and aspect at a grid node, via central differences. */
 export function slopeAtNode(grid: ElevationGrid, c: number, r: number): SlopeSample {
   const dzdx = (nodeHeight(grid, c + 1, r) - nodeHeight(grid, c - 1, r)) / (2 * grid.cellSize);
@@ -289,16 +322,6 @@ export function slopeAtNode(grid: ElevationGrid, c: number, r: number): SlopeSam
     slope < 1e-9 ? null : (Math.atan2(grad.x, grad.y) * (180 / Math.PI) + 360) % 360;
   return { slope, percent: slope * 100, degrees: Math.atan(slope) * (180 / Math.PI), aspect };
 }
-
-export interface SlopeStats {
-  minPercent: number;
-  maxPercent: number;
-  meanPercent: number;
-  /** Fraction of sampled nodes at or below `buildableMaxPercent`. */
-  buildableFraction: number;
-  samples: number;
-}
-
 /**
  * Summarize slope over a grid (optionally clipped to a polygon). `buildable`
  * slopes are those at or below `buildableMaxPercent` (default 15%).
@@ -354,21 +377,7 @@ export function gradePad(grid: ElevationGrid, polygon: Polygon, targetZ: number)
 }
 
 /** Earthwork volumes between an existing and a proposed surface. */
-export interface Earthwork {
-  /** Excavation volume (proposed below existing), plan units³. */
-  cut: number;
-  /** Placement volume (proposed above existing), plan units³. */
-  fill: number;
-  /** fill − cut. Positive means net import of material. */
-  net: number;
-  cutCubicMeters: number;
-  fillCubicMeters: number;
-  netCubicMeters: number;
-  /** Horizontal area considered, m². */
-  areaSquareMeters: number;
-  /** True when cut and fill are within `balanceTolerance` of each other. */
-  balanced: boolean;
-}
+
 
 /**
  * Compute cut and fill between two identically-shaped grids by integrating the

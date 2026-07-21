@@ -13,33 +13,35 @@ import { add, distance, normalize, scale, subtract } from "../spatial/geometry";
 import { METERS_PER_UNIT, type SpatialContext } from "../spatial/spatial";
 import type { CoordinateBasis } from "../survey/survey";
 
-/** Arrowhead terminator style. */
-export type DimArrow = "arrow" | "tick" | "dot" | "open";
+import type {
+  DimArrow,
+  DimUnit,
+  DimensionStyle,
+  LinearDimension,
+  AlignedDimension,
+  AngularDimension,
+  RadialDimension,
+  OrdinateDimension,
+  ArcLengthDimension,
+  Dimension,
+  DimensionGeometry,
+  MeasuredDimension,
+} from "./types/dimension";
 
-/** How dimension text is displayed. */
-export type DimUnit = "ft-in" | "ft-dec" | "in" | "m" | "cm" | "mm";
-
-/** A named dimension style. */
-export interface DimensionStyle {
-  id: string;
-  label: string;
-  arrow: DimArrow;
-  /** Text height in paper millimetres. */
-  textHeight: number;
-  /** Decimal precision for the numeric value. */
-  precision: number;
-  unit: DimUnit;
-  /** Gap between the object and the start of the witness line, model units. */
-  extensionGap: number;
-  /** How far the witness line extends past the dimension line, model units. */
-  extensionBeyond: number;
-  /** Suppress a trailing "0 in" / trailing zeros. */
-  suppressZero: boolean;
-  suppressExtension1?: boolean;
-  suppressExtension2?: boolean;
-  textAlignment?: "horizontal" | "parallel" | "perpendicular";
-  secondaryUnit?: DimUnit;
-}
+export type {
+  DimArrow,
+  DimUnit,
+  DimensionStyle,
+  LinearDimension,
+  AlignedDimension,
+  AngularDimension,
+  RadialDimension,
+  OrdinateDimension,
+  ArcLengthDimension,
+  Dimension,
+  DimensionGeometry,
+  MeasuredDimension,
+};
 
 /** Default dimension styles (architectural ticks, engineering arrows, metric). */
 export const DEFAULT_DIM_STYLES: DimensionStyle[] = [
@@ -134,97 +136,6 @@ export function dimensionStyle(id: string): DimensionStyle {
   return STYLE_BY_ID.get(id) ?? DEFAULT_DIM_STYLES[0];
 }
 
-/** A dimension entity, tagged by kind. All anchor points are in model space. */
-export type Dimension =
-  | LinearDimension
-  | AlignedDimension
-  | AngularDimension
-  | RadialDimension
-  | OrdinateDimension
-  | ArcLengthDimension;
-
-interface DimBase {
-  id: string;
-  styleId: string;
-  /** Optional text override (e.g. "EQ", "VIF"); replaces the measured value. */
-  textOverride?: string;
-}
-
-/** Horizontal or vertical distance between two points. */
-export interface LinearDimension extends DimBase {
-  kind: "linear";
-  a: Point;
-  b: Point;
-  axis: "horizontal" | "vertical";
-  /** Perpendicular offset of the dimension line from the points, model units. */
-  offset: number;
-}
-
-/** True (aligned) distance between two points. */
-export interface AlignedDimension extends DimBase {
-  kind: "aligned";
-  a: Point;
-  b: Point;
-  offset: number;
-}
-
-/** Angle at `vertex` between rays to `a` and `b`. */
-export interface AngularDimension extends DimBase {
-  kind: "angular";
-  vertex: Point;
-  a: Point;
-  b: Point;
-  /** Radius of the dimension arc, model units. */
-  radius: number;
-}
-
-/** Radius (or diameter) of an arc/circle. */
-export interface RadialDimension extends DimBase {
-  kind: "radial";
-  center: Point;
-  edge: Point;
-  diameter?: boolean;
-}
-
-/** Ordinate (X or Y offset from a datum). */
-export interface OrdinateDimension extends DimBase {
-  kind: "ordinate";
-  datum: Point;
-  point: Point;
-  axis: "x" | "y";
-  /** Leader length to the text, model units. */
-  leader: number;
-}
-
-/** Arc length along a curved edge. */
-export interface ArcLengthDimension extends DimBase {
-  kind: "arclength";
-  center: Point;
-  start: Point;
-  end: Point;
-  radius: number;
-  offset: number;
-}
-
-/** The drawable pieces of a dimension, in model space (renderer projects them). */
-export interface DimensionGeometry {
-  /** Line segments (witness lines + dimension line / arc chords). */
-  lines: [Point, Point][];
-  /** Arrow/tick placements with an outward direction. */
-  ticks: { at: Point; dir: Point }[];
-  /** Where the measurement text is anchored. */
-  textAt: Point;
-  /** Text baseline rotation, degrees. */
-  textAngleDeg: number;
-}
-
-/** The measured value, formatted label, and drawable geometry of a dimension. */
-export interface MeasuredDimension {
-  value: number;
-  label: string;
-  geometry: DimensionGeometry;
-}
-
 /** Real-world length (in style unit) of a model-space distance. */
 function toDisplayLength(modelDist: number, spatial: SpatialContext, unit: DimUnit): number {
   const meters = modelDist * METERS_PER_UNIT[spatial.units];
@@ -248,7 +159,29 @@ function formatSingleValue(v: number, unit: DimUnit, precision: number, suppress
     case "ft-in": {
       const totalIn = v * 12;
       let ft = Math.floor(totalIn / 12);
-      let inch = Math.round(totalIn - ft * 12);
+      const remIn = totalIn - ft * 12;
+      if (precision > 0) {
+        const denom = Math.pow(2, Math.min(6, precision));
+        const numFrac = Math.round(remIn * denom);
+        let wholeIn = Math.floor(numFrac / denom);
+        const fracNum = numFrac % denom;
+        if (wholeIn === 12) {
+          ft += 1;
+          wholeIn = 0;
+        }
+        if (fracNum === 0) {
+          if (suppressZero && wholeIn === 0) {return `${ft}'`;}
+          return `${ft}'-${wholeIn}"`;
+        }
+        const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+        const g = gcd(fracNum, denom);
+        const fracStr = `${fracNum / g}/${denom / g}`;
+        if (wholeIn === 0) {
+          return `${ft}'-${fracStr}"`;
+        }
+        return `${ft}'-${wholeIn} ${fracStr}"`;
+      }
+      let inch = Math.round(remIn);
       if (inch === 12) {
         ft += 1;
         inch = 0;
@@ -281,10 +214,7 @@ export function formatDimText(modelDist: number, style: DimensionStyle, spatial:
   return primaryStr;
 }
 
-/** Perpendicular (left normal) unit vector of a direction. */
-function leftNormal(dir: Point): Point {
-  return { x: -dir.y, y: dir.x };
-}
+import { leftNormal } from "./common/vector";
 
 /**
  * Measure a dimension: its numeric value, formatted label, and model-space
@@ -543,31 +473,37 @@ export function stackDimensionChains(
   const stacked = dimensions.map(d => ({ ...d }));
   const n = stacked.length;
 
-  for (let i = 0; i < n; i++) {
-    for (let j = i + 1; j < n; j++) {
-      const d1 = stacked[i];
-      const d2 = stacked[j];
+  let changed = true;
+  let passes = 0;
+  while (changed && passes < 10) {
+    changed = false;
+    passes++;
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        const d1 = stacked[i];
+        const d2 = stacked[j];
 
-      const v1 = normalize(subtract(d1.b, d1.a));
-      const v2 = normalize(subtract(d2.b, d2.a));
-      const parallel = Math.abs(v1.x * v2.y - v1.y * v2.x) < 1e-3;
+        const v1 = normalize(subtract(d1.b, d1.a));
+        const v2 = normalize(subtract(d2.b, d2.a));
+        const parallel = Math.abs(v1.x * v2.y - v1.y * v2.x) < 1e-3;
 
-      if (parallel) {
-        // Project ends onto d1 direction
-        const p1a = d1.a.x * v1.x + d1.a.y * v1.y;
-        const p1b = d1.b.x * v1.x + d1.b.y * v1.y;
-        const p2a = d2.a.x * v1.x + d2.a.y * v1.y;
-        const p2b = d2.b.x * v1.x + d2.b.y * v1.y;
+        if (parallel) {
+          const p1a = d1.a.x * v1.x + d1.a.y * v1.y;
+          const p1b = d1.b.x * v1.x + d1.b.y * v1.y;
+          const p2a = d2.a.x * v1.x + d2.a.y * v1.y;
+          const p2b = d2.b.x * v1.x + d2.b.y * v1.y;
 
-        const min1 = Math.min(p1a, p1b);
-        const max1 = Math.max(p1a, p1b);
-        const min2 = Math.min(p2a, p2b);
-        const max2 = Math.max(p2a, p2b);
+          const min1 = Math.min(p1a, p1b);
+          const max1 = Math.max(p1a, p1b);
+          const min2 = Math.min(p2a, p2b);
+          const max2 = Math.max(p2a, p2b);
 
-        const overlap = min1 < max2 - 1e-3 && min2 < max1 - 1e-3;
-        if (overlap) {
-          if (Math.abs(d1.offset - d2.offset) < baseGap - 1e-3) {
-            d2.offset = d1.offset + Math.sign(d1.offset || 1) * baseGap;
+          const overlap = min1 < max2 - 1e-3 && min2 < max1 - 1e-3;
+          if (overlap) {
+            if (Math.abs(d1.offset - d2.offset) < baseGap - 1e-3) {
+              d2.offset = d1.offset + Math.sign(d1.offset || 1) * baseGap;
+              changed = true;
+            }
           }
         }
       }

@@ -15,62 +15,31 @@ import _ from "lodash";
 import { mat2d, vec2 } from "gl-matrix";
 import type { Bounds, Point } from "../spatial/geometry";
 import { boundsCenter } from "../spatial/geometry";
-import { scaleRatio } from "./drafting";
-import type { PaperRect, PaperUnit } from "./sheetsize";
-import { METERS_PER_UNIT, type Unit } from "../spatial/spatial";
+import type { PaperRect, PaperUnit } from "./types/sheetsize";
+import type { Unit } from "../spatial/spatial";
+import type {
+  ViewKind,
+  SheetViewport,
+  ViewportTransform,
+  SectionMark,
+  ElevationMark,
+  DetailMark,
+  MatchLine,
+} from "./types/sheetview";
 
-const METERS_PER_PAPER_UNIT: Record<PaperUnit, number> = {
-  in: 0.0254,
-  mm: 0.001,
+export type {
+  ViewKind,
+  SheetViewport,
+  ViewportTransform,
+  SectionMark,
+  ElevationMark,
+  DetailMark,
+  MatchLine,
 };
 
-/** The kind of drawing a viewport frames. */
-export type ViewKind =
-  | "plan"
-  | "detail"
-  | "section"
-  | "elevation"
-  | "schedule"
-  | "keymap"
-  | "3d"
-  | "legend"
-  | "titleblock"
-  | "index";
+import { paperPerModel } from "./common/units";
 
-/** A rectangular window on a sheet showing the model at a scale. */
-export interface SheetViewport {
-  id: string;
-  kind: ViewKind;
-  /** The rectangle on the sheet, in the sheet's paper unit. */
-  sheetRect: PaperRect;
-  /** Named drawing scale id (from ./drafting), or "as-shown" to fit. */
-  scaleId: string;
-  /** Model point centred in the viewport. */
-  modelCenter: Point;
-  /** Optional rotation of the view about {@link modelCenter}, degrees CW. */
-  rotationDeg?: number;
-  /** View number shown in the viewport title bubble (e.g. 3). */
-  viewNumber?: number;
-  label?: string;
-}
-
-/** A model→paper projection plus the resolved paper-units-per-model-unit scale. */
-export interface ViewportTransform {
-  project: (p: Point) => Point;
-  /** Paper units (the sheet's unit) per one model unit. */
-  scalePx: number;
-}
-
-/**
- * Paper units per one model unit for a named scale, given the model's length
- * unit and the sheet's paper unit. A drawing scale is a dimensionless real-to-
- * paper ratio (e.g. 1"=20' → 240, 1:100 → 100); this reconciles the unit
- * families through metres so the result is unambiguous.
- */
-export function paperPerModel(scaleId: string, modelUnit: Unit, paperUnit: PaperUnit): number {
-  const ratio = scaleRatio(scaleId); // real-world length ÷ paper length, dimensionless
-  return METERS_PER_UNIT[modelUnit] / (ratio * METERS_PER_PAPER_UNIT[paperUnit]);
-}
+export { paperPerModel };
 
 /**
  * The projection for a viewport at its named scale, centred on its model
@@ -146,51 +115,7 @@ export function fitScale(
 
 // --- view references --------------------------------------------------------
 
-/** A section-cut mark: a cut line with a bubble tag referencing another view. */
-export interface SectionMark {
-  id: string;
-  /** Tag shown in the bubble, e.g. "A" or "1". */
-  tag: string;
-  /** The cut line in model space. */
-  atLine: [Point, Point];
-  /** Direction the section looks (unit vector); defaults perpendicular to the cut. */
-  gaze?: Point;
-  /** Sheet number the section is drawn on, e.g. "A-301". */
-  targetSheet: string;
-  /** View number on that sheet. */
-  targetView?: number;
-}
 
-/** An interior/exterior elevation mark (a bubble with a pointing arrow). */
-export interface ElevationMark {
-  id: string;
-  tag: string;
-  position: Point;
-  /** Direction the elevation faces (unit vector). */
-  gaze: Point;
-  targetSheet: string;
-  targetView?: number;
-}
-
-/** A detail callout: a boundary (circle/rect) around an area, tagged to a detail. */
-export interface DetailMark {
-  id: string;
-  tag: string;
-  /** Centre of the callout in model space. */
-  center: Point;
-  /** Callout radius in model units. */
-  radius: number;
-  targetSheet: string;
-  targetView?: number;
-}
-
-/** A match line: where a plan continues on an adjoining sheet. */
-export interface MatchLine {
-  id: string;
-  atLine: [Point, Point];
-  adjoiningSheet: string;
-  label?: string;
-}
 
 /** Unit perpendicular (left normal) of a directed segment, in the −Y-north frame. */
 export function sectionGaze(mark: SectionMark): Point {

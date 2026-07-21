@@ -15,36 +15,23 @@ import {
 } from "../spatial/geometry";
 import type { SpatialContext } from "../spatial/spatial";
 
-/** The kind of system a network carries. */
-export type NetworkKind = "road" | "path" | "water" | "sewer" | "storm" | "power";
+import type {
+  NetworkKind,
+  RoadClass,
+  NetworkNode,
+  NetworkEdge,
+  InfrastructureNetwork,
+  NetworkStats,
+} from "./types/network";
 
-/** Functional road classification (drives width and hierarchy). */
-export type RoadClass = "arterial" | "collector" | "local" | "alley" | "private";
-
-/** A junction/vertex in a network. */
-export interface NetworkNode {
-  id: string;
-  point: Point;
-}
-
-/** A connection between two nodes, with an optional corridor width. */
-export interface NetworkEdge {
-  id: string;
-  from: string;
-  to: string;
-  /** Corridor / pipe width in plan units (ROW width for roads). */
-  width?: number;
-  roadClass?: RoadClass;
-}
-
-/** A connected linear system (a road network, a water main, …). */
-export interface InfrastructureNetwork {
-  id: string;
-  name: string;
-  kind: NetworkKind;
-  nodes: NetworkNode[];
-  edges: NetworkEdge[];
-}
+export type {
+  NetworkKind,
+  RoadClass,
+  NetworkNode,
+  NetworkEdge,
+  InfrastructureNetwork,
+  NetworkStats,
+};
 
 function nodeMap(network: InfrastructureNetwork): Map<string, NetworkNode> {
   return new Map(network.nodes.map((n) => [n.id, n]));
@@ -112,7 +99,15 @@ export function connectedComponents(network: InfrastructureNetwork): number {
   const parent = new Map<string, string>();
   const find = (x: string): string => {
     let root = x;
-    while (parent.get(root) !== root) {root = parent.get(root)!;}
+    while (parent.get(root) !== root) {
+      root = parent.get(root)!;
+    }
+    let curr = x;
+    while (curr !== root) {
+      const nxt = parent.get(curr)!;
+      parent.set(curr, root);
+      curr = nxt;
+    }
     return root;
   };
   for (const n of network.nodes) {parent.set(n.id, n.id);}
@@ -135,8 +130,7 @@ export function isConnected(network: InfrastructureNetwork): boolean {
  * Estimated right-of-way corridor area (Σ edge length × width), in plan units².
  * A first-order measure of land consumed by the network.
  */
-export function corridorArea(network: InfrastructureNetwork): number {
-  const nodes = nodeMap(network);
+export function corridorArea(network: InfrastructureNetwork, nodes = nodeMap(network)): number {
   return _.sumBy(network.edges, (e) => {
     const pts = edgePoints(network, e, nodes);
     if (!pts) {return 0;}
@@ -146,8 +140,11 @@ export function corridorArea(network: InfrastructureNetwork): number {
 }
 
 /** Shortest distance from a point to any edge of the network, in plan units. */
-export function distanceToNetwork(network: InfrastructureNetwork, p: Point): number {
-  const nodes = nodeMap(network);
+export function distanceToNetwork(
+  network: InfrastructureNetwork,
+  p: Point,
+  nodes = nodeMap(network)
+): number {
   let best = Infinity;
   for (const e of network.edges) {
     const pts = edgePoints(network, e, nodes);
@@ -169,7 +166,8 @@ export function serviceCoverage(
   serviceDistance: number,
 ): number {
   if (points.length === 0) {return 0;}
-  const served = points.filter((p) => distanceToNetwork(network, p) <= serviceDistance).length;
+  const nodes = nodeMap(network);
+  const served = points.filter((p) => distanceToNetwork(network, p, nodes) <= serviceDistance).length;
   return served / points.length;
 }
 
@@ -197,19 +195,6 @@ export function networkFromPath(
     edges.push({ id: makeId(), from: nodes[i].id, to: nodes[i + 1].id, ...edgeDefaults });
   }
   return { id, name, kind, nodes, edges };
-}
-
-/** Summary statistics for a network. */
-export interface NetworkStats {
-  kind: NetworkKind;
-  lengthMeters: number;
-  edges: number;
-  nodes: number;
-  intersections: number;
-  deadEnds: number;
-  components: number;
-  connected: boolean;
-  corridorArea: number;
 }
 
 export function networkStats(

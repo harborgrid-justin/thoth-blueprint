@@ -13,6 +13,17 @@ import { areaToSquareMeters, squareMetersTo } from "../spatial/spatial";
 import type { Building, LandUse, Lot, Parcel, Site } from "../spatial/primitives";
 import type { LandUseCategory } from "./landuse";
 import { landUseDefinition } from "./landuse";
+import type {
+  LandUseAllocation,
+  SiteMetrics,
+  CommunityMetrics,
+} from "./types/metrics";
+
+export type {
+  LandUseAllocation,
+  SiteMetrics,
+  CommunityMetrics,
+};
 
 /** Exact plan-unit area of one region, honoring any curved edges. */
 function regionArea(el: { boundary: Polygon; arcs?: EdgeArcs }): number {
@@ -119,16 +130,7 @@ export function openSpaceRatio(site: Site): number {
   return clamp01(openSqm / site_);
 }
 
-/** A single slice of the land-use allocation breakdown. */
-export interface LandUseAllocation {
-  category: LandUseCategory;
-  label: string;
-  color: string;
-  /** Area in the requested unit. */
-  area: number;
-  /** Share of total allocated land use (0–1). */
-  share: number;
-}
+
 
 /**
  * Land-use allocation: how designated land-use area is distributed across
@@ -156,21 +158,7 @@ export function landUseBreakdown(site: Site, unit: AreaUnit = "sqm"): LandUseAll
   return _.orderBy(results, ["area"], ["desc"]);
 }
 
-/** A snapshot of the headline metrics for a site. */
-export interface SiteMetrics {
-  siteArea: number;
-  builtArea: number;
-  grossFloorArea: number;
-  coverage: number;
-  floorAreaRatio: number;
-  density: number;
-  dwellingUnits: number;
-  lotCount: number;
-  imperviousRatio: number;
-  openSpaceRatio: number;
-  areaUnit: AreaUnit;
-  allocation: LandUseAllocation[];
-}
+
 
 /** Compute all headline metrics for a site in one pass-friendly call. */
 export function computeSiteMetrics(site: Site, unit: AreaUnit = "sqm"): SiteMetrics {
@@ -190,19 +178,7 @@ export function computeSiteMetrics(site: Site, unit: AreaUnit = "sqm"): SiteMetr
   };
 }
 
-/** Community-scale metrics derived from the plan and an assumed household size. */
-export interface CommunityMetrics {
-  dwellingUnits: number;
-  /** Estimated resident population = dwelling units × household size. */
-  population: number;
-  /** Residents per square kilometre of site. */
-  populationPerSquareKm: number;
-  /** Open-space + park land per resident, in square metres. */
-  openSpacePerCapitaSqM: number;
-  /** Park land per 1,000 residents, in acres (a common LOS standard). */
-  parkAcresPerThousand: number;
-  householdSize: number;
-}
+
 
 /** Compute community-scale metrics. `householdSize` defaults to 2.5 persons. */
 export function computeCommunityMetrics(site: Site, householdSize = 2.5): CommunityMetrics {

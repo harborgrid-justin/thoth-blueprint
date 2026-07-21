@@ -10,21 +10,9 @@ import { surveyReport } from "../survey/survey";
 import { resolveAlignment } from "../civil/alignment";
 import { azimuthToBearing, formatBearing } from "../survey/survey";
 
-/** One row of the consolidated curve-data table. */
-export interface SiteCurve {
-  label: string;
-  /** The element or alignment the curve belongs to. */
-  source: string;
-  radius: number;
-  arcLength: number;
-  /** Central (delta) angle, decimal degrees. */
-  deltaDeg: number;
-  chord: number;
-  /** Long-chord bearing, quadrant text. */
-  chordBearing: string;
-  tangent: number;
-  direction?: "left" | "right";
-}
+import type { SiteCurve } from "./types/platset";
+
+export type { SiteCurve };
 
 /**
  * Collect every circular curve in the site — from element boundary arcs and

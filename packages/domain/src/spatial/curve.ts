@@ -48,7 +48,7 @@ export interface Arc {
 /** The bulge of edge `i`, or 0 (straight) when absent or non-finite. */
 export function edgeBulge(arcs: EdgeArcs | undefined, i: number): number {
   if (!arcs) {return 0;}
-  const b = arcs[String(i)];
+  const b = (arcs as Record<string | number, number>)[i] ?? arcs[String(i)];
   return typeof b === "number" && Number.isFinite(b) ? b : 0;
 }
 

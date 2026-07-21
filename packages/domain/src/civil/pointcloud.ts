@@ -12,27 +12,9 @@ import { bounds as pointsBounds, type Bounds } from "../spatial/geometry";
 import type { SpotElevationPoint } from "../spatial/primitives";
 import { createId } from "../spatial/id";
 
-/** A single point with optional color and intensity. */
-export interface CloudPoint {
-  x: number;
-  y: number;
-  z: number;
-  r?: number;
-  g?: number;
-  b?: number;
-  intensity?: number;
-}
+import type { CloudPoint, PointCloud, PointCloudFormat, PointCloudData } from "./types/pointcloud";
 
-/** A cloud of points. */
-export interface PointCloud {
-  points: CloudPoint[];
-}
-
-/** Supported point-cloud formats. */
-export type PointCloudFormat = "xyz" | "pts" | "ply" | "las" | "dxf";
-
-/** Text-based formats serialize to a string; LAS serializes to bytes. */
-export type PointCloudData = string | ArrayBuffer;
+export type { CloudPoint, PointCloud, PointCloudFormat, PointCloudData };
 
 /** Infer a {@link PointCloudFormat} from a filename extension. */
 export function pointCloudFormatFromName(name: string): PointCloudFormat | null {
@@ -321,7 +303,9 @@ export function writePLY(cloud: PointCloud): string {
 const LAS_HEADER_SIZE = 227; // LAS 1.2 public header block
 
 export function parseLAS(buffer: ArrayBuffer): PointCloud {
-  const view = new DataView(buffer);
+  const byteOffset = (buffer as { byteOffset?: number }).byteOffset ?? 0;
+  const byteLength = buffer.byteLength;
+  const view = new DataView(buffer, byteOffset, byteLength);
   const signature = String.fromCharCode(
     view.getUint8(0),
     view.getUint8(1),
@@ -554,7 +538,21 @@ function indexOfSubarray(haystack: Uint8Array, needle: Uint8Array): number {
 
 /** Bounding box of a cloud's XY footprint. */
 export function pointCloudBounds(cloud: PointCloud): Bounds {
-  return pointsBounds(cloud.points.map((p) => ({ x: p.x, y: p.y })));
+  if (cloud.points.length === 0) {
+    return { minX: 0, minY: 0, maxX: 0, maxY: 0 };
+  }
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  for (let i = 0; i < cloud.points.length; i++) {
+    const p = cloud.points[i];
+    if (p.x < minX) {minX = p.x;}
+    if (p.y < minY) {minY = p.y;}
+    if (p.x > maxX) {maxX = p.x;}
+    if (p.y > maxY) {maxY = p.y;}
+  }
+  return { minX, minY, maxX, maxY };
 }
 
 /** Elevation range of a cloud. */

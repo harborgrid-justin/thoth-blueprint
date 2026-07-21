@@ -25,110 +25,27 @@ import {
   dot,
   cross as crossz,
 } from "../spatial/geometry";
+import type {
+  AlignmentPI,
+  AlignmentOffset,
+  HorizontalAlignment,
+  AlignmentCurve,
+  AlignmentElement,
+  ResolvedAlignment,
+  DesignSpeedCheckResult,
+} from "./types/alignment";
+import { DEGREE_OF_CURVE_CONST, formatStation, azimuthOf } from "./common";
 
-/** Degrees a 100-unit arc subtends at radius R (arc definition of degree of curve). */
-const DEGREE_OF_CURVE_CONST = (100 * 180) / Math.PI; // 5729.5779… for 100-ft stations
-
-/** A Point of Intersection on an alignment; interior PIs may carry a curve. */
-export interface AlignmentPI {
-  point: Point;
-  /** Circular curve radius at this PI, plan units; 0/undefined ⇒ no curve. */
-  radius?: number;
-}
-
-/** A parallel offset line carried alongside an alignment (pavement edge, R/W…). */
-export interface AlignmentOffset {
-  /** Signed offset, plan units; + is right of travel, − is left. */
-  distance: number;
-  kind: "pavement" | "shoulder" | "row" | "ditch";
-  label?: string;
-}
-
-/** A horizontal alignment definition (the PI chain + its start station). */
-export interface HorizontalAlignment {
-  id: string;
-  name: string;
-  pis: AlignmentPI[];
-  /** Station at the Point of Beginning (start), plan units (e.g. feet). */
-  startStation: number;
-  /** Parallel offset lines to generate (edge of pavement, right-of-way, …). */
-  offsets?: AlignmentOffset[];
-  /** Default Design Speed in mph (e.g. 45) */
-  designSpeed?: number;
-  /** Station-specific design speeds (e.g., zones) */
-  designSpeeds?: { station: number; speed: number }[];
-}
-
-/** Resolved circular curve at a PI, with the values a plan sheet lists. */
-export interface AlignmentCurve {
-  piIndex: number;
-  pi: Point;
-  /** Point of Curvature (tangent-to-curve) and Point of Tangency (curve-to-tangent). */
-  pc: Point;
-  pt: Point;
-  center: Point;
-  radius: number;
-  /** Central (deflection) angle, radians and degrees. */
-  delta: number;
-  deltaDeg: number;
-  /** Tangent distance T = R·tan(Δ/2). */
-  tangent: number;
-  /** Curve (arc) length L = R·Δ. */
-  length: number;
-  /** External distance E = R(sec(Δ/2) − 1). */
-  external: number;
-  /** Middle ordinate M = R(1 − cos(Δ/2)). */
-  middleOrdinate: number;
-  /** Long chord = 2R·sin(Δ/2). */
-  chord: number;
-  /** Degree of curve (arc definition), degrees per 100 units. */
-  degreeOfCurve: number;
-  /** Which way the curve turns along the direction of travel. */
-  direction: "left" | "right";
-  pcStation: number;
-  /** Ahead station of the PI, measured along the back tangent (PC + T). */
-  piStation: number;
-  ptStation: number;
-  /** Azimuth of the long chord, degrees clockwise from north. */
-  chordBearing: number;
-  /** Signed swept angle start→end (radians). */
-  sweep: number;
-  startAngle: number;
-}
-
-/** One element of the traveled centerline: a tangent run or a circular curve. */
-export type AlignmentElement =
-  | {
-      kind: "tangent";
-      from: Point;
-      to: Point;
-      beginStation: number;
-      endStation: number;
-      length: number;
-      /** Azimuth of the tangent, degrees clockwise from north. */
-      bearing: number;
-    }
-  | { kind: "curve"; curve: AlignmentCurve; beginStation: number; endStation: number };
-
-/** A fully-resolved alignment: traveled elements, curve table, and extents. */
-export interface ResolvedAlignment {
-  name: string;
-  elements: AlignmentElement[];
-  curves: AlignmentCurve[];
-  startStation: number;
-  endStation: number;
-  length: number;
-  pob: Point;
-  poe: Point;
-}
-
-// --- vector helpers --------------------------------------------------------
-
-/** Azimuth (deg clockwise from north, north = −Y) of direction `d`. */
-function azimuthOf(d: Point): number {
-  const deg = (Math.atan2(d.x, -d.y) * 180) / Math.PI;
-  return (deg + 360) % 360;
-}
+export { formatStation };
+export type {
+  AlignmentPI,
+  AlignmentOffset,
+  HorizontalAlignment,
+  AlignmentCurve,
+  AlignmentElement,
+  ResolvedAlignment,
+  DesignSpeedCheckResult,
+};
 
 // --- resolve ---------------------------------------------------------------
 
@@ -171,9 +88,8 @@ export function resolveAlignment(alignment: HorizontalAlignment): ResolvedAlignm
     const startAngle = Math.atan2(pc.y - center.y, pc.x - center.x);
     const endAngle = Math.atan2(pt.y - center.y, pt.x - center.x);
     let sweep = endAngle - startAngle;
-    // Normalize the sweep to match the curve direction and magnitude Δ.
-    while (sweep <= -Math.PI) {sweep += 2 * Math.PI;}
-    while (sweep > Math.PI) {sweep -= 2 * Math.PI;}
+    // Normalize the sweep to (-π, π] safely without unbounded loops.
+    sweep = Math.atan2(Math.sin(sweep), Math.cos(sweep));
     if (Math.abs(Math.abs(sweep) - delta) > 1e-4) {
       sweep = Math.sign(sweep || 1) * delta;
     }
@@ -266,23 +182,33 @@ export function pointAtStation(
   resolved: ResolvedAlignment,
   station: number,
 ): { point: Point; bearing: number } | null {
-  for (const el of resolved.elements) {
-    if (station < el.beginStation - 1e-6 || station > el.endStation + 1e-6) {continue;}
-    if (el.kind === "tangent") {
-      const t = (station - el.beginStation) / Math.max(1e-9, el.length);
-      return {
-        point: { x: el.from.x + (el.to.x - el.from.x) * t, y: el.from.y + (el.to.y - el.from.y) * t },
-        bearing: el.bearing,
-      };
+  const elements = resolved.elements;
+  if (elements.length === 0) {return null;}
+  let low = 0;
+  let high = elements.length - 1;
+  while (low <= high) {
+    const mid = (low + high) >> 1;
+    const el = elements[mid];
+    if (station < el.beginStation - 1e-6) {
+      high = mid - 1;
+    } else if (station > el.endStation + 1e-6) {
+      low = mid + 1;
+    } else {
+      if (el.kind === "tangent") {
+        const t = (station - el.beginStation) / Math.max(1e-9, el.length);
+        return {
+          point: { x: el.from.x + (el.to.x - el.from.x) * t, y: el.from.y + (el.to.y - el.from.y) * t },
+          bearing: el.bearing,
+        };
+      }
+      const c = el.curve;
+      const frac = (station - el.beginStation) / Math.max(1e-9, c.length);
+      const ang = c.startAngle + c.sweep * frac;
+      const point = { x: c.center.x + c.radius * Math.cos(ang), y: c.center.y + c.radius * Math.sin(ang) };
+      const sign = c.sweep >= 0 ? 1 : -1;
+      const dir = { x: -Math.sin(ang) * sign, y: Math.cos(ang) * sign };
+      return { point, bearing: azimuthOf(dir) };
     }
-    const c = el.curve;
-    const frac = (station - el.beginStation) / Math.max(1e-9, c.length);
-    const ang = c.startAngle + c.sweep * frac;
-    const point = { x: c.center.x + c.radius * Math.cos(ang), y: c.center.y + c.radius * Math.sin(ang) };
-    // Tangent heading is perpendicular to the radius, in the sweep direction.
-    const sign = c.sweep >= 0 ? 1 : -1;
-    const dir = { x: -Math.sin(ang) * sign, y: Math.cos(ang) * sign };
-    return { point, bearing: azimuthOf(dir) };
   }
   return null;
 }
@@ -379,28 +305,6 @@ export function fullStations(resolved: ResolvedAlignment, interval = 100): numbe
 }
 
 /**
- * Format a station value in engineer's notation, e.g. 176043.32 → "1760+43.32".
- * The value is split into whole hundreds and the remainder.
- */
-export function formatStation(value: number, precision = 2): string {
-  const neg = value < 0;
-  const v = Math.abs(value);
-  const sta = Math.floor(v / 100 + 1e-9);
-  const plus = (v - sta * 100).toFixed(precision).padStart(precision + 3, "0");
-  return `${neg ? "-" : ""}${sta}+${plus}`;
-}
-
-export interface DesignSpeedCheckResult {
-  piIndex: number;
-  station: number;
-  curveRadius: number;
-  requiredRadius: number;
-  designSpeed: number;
-  isViolation: boolean;
-  message: string;
-}
-
-/**
  * Validates alignment curve radii against AASHTO design speed standards.
  * Minimum radius values for eMax=6% crown rate.
  */
@@ -420,9 +324,9 @@ export function validateAlignmentDesignSpeed(
     return 1600; // 65 mph or above
   };
 
+  const sortedZones = _.orderBy(alignment.designSpeeds ?? [], ["station"], ["desc"]);
   const getSpeedAtStation = (station: number): number => {
-    const zones = alignment.designSpeeds ?? [];
-    const zone = _.find(_.orderBy(zones, ["station"], ["desc"]), (z) => station >= z.station);
+    const zone = sortedZones.find((z) => station >= z.station);
     return zone ? zone.speed : defaultSpeed;
   };
 
