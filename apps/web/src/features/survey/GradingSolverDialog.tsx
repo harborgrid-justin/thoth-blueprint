@@ -1,8 +1,4 @@
-import * as React from "react";
-import _ from "lodash";
 import { Mountain, Flame, Compass, Calculator } from "lucide-react";
-import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -13,94 +9,28 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  type GradingPad,
-  calculateGradingVolumes,
-  solveBalancedElevation,
-} from "@thoth/domain";
-import { buildTerrainModel } from "@/features/terrain/terrainModel";
+import { useGradingSolverState } from "./hooks/useGradingSolverState";
 
 export function GradingSolverDialog() {
-  const open = useUiStore((s) => s.gradingOpen);
-  const setOpen = useUiStore((s) => s.setGradingOpen);
-  const site = useWorkspaceStore((s) => s.site);
-
-  const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
-  const terrainSurface = terrain?.existing ?? null;
-
-  // Local Grading Pad state
-  const [cutSlope, setCutSlope] = React.useState<number>(2);
-  const [fillSlope, setFillSlope] = React.useState<number>(3);
-  const [targetVolume, setTargetVolume] = React.useState<number>(0);
-  
-  const [padElevation, setPadElevation] = React.useState<number>(15.5);
-  const [solving, setSolving] = React.useState<boolean>(false);
-  const [volumes, setVolumes] = React.useState<any | null>(null);
-
-  const gradingPad: GradingPad = React.useMemo(() => {
-    return {
-      id: "pad-1",
-      name: "Building Lot Grading Pad",
-      points: [
-        { x: 100, y: 100 },
-        { x: 300, y: 100 },
-        { x: 300, y: 250 },
-        { x: 100, y: 250 },
-      ],
-      targetElevation: padElevation,
-      cutSlope,
-      fillSlope,
-    };
-  }, [padElevation, cutSlope, fillSlope]);
-
-  // Highlight target pad on opening
-  React.useEffect(() => {
-    if (open && site) {
-      const matchingPad = _.find(site.elements, (e) => e.kind === "parcel") ?? site.elements[0];
-      if (matchingPad) {
-        useWorkspaceStore.getState().hoverElement(matchingPad.id);
-      }
-    } else if (!open) {
-      useWorkspaceStore.getState().hoverElement(null);
-    }
-  }, [open, site]);
-
-  // Compute volumes on load or elevation change
-  React.useEffect(() => {
-    if (open && terrainSurface) {
-      const report = calculateGradingVolumes(gradingPad, padElevation, terrainSurface, 10);
-      setVolumes(report);
-    }
-  }, [open, padElevation, gradingPad, terrainSurface]);
+  const {
+    open,
+    setOpen,
+    site,
+    cutSlope,
+    setCutSlope,
+    fillSlope,
+    setFillSlope,
+    targetVolume,
+    setTargetVolume,
+    padElevation,
+    setPadElevation,
+    solving,
+    volumes,
+    runBalanceSolver,
+    handleSave,
+  } = useGradingSolverState();
 
   if (!site) {return null;}
-
-  function runBalanceSolver() {
-    if (!terrainSurface) {return;}
-    setSolving(true);
-    setTimeout(() => {
-      const balancedElev = solveBalancedElevation(gradingPad, terrainSurface, targetVolume, 5);
-      setPadElevation(Number(balancedElev.toFixed(2)));
-      setSolving(false);
-    }, 800);
-  }
-
-  function handleSave() {
-    const matchingPad = _.find(site?.elements, (e) => e.kind === "parcel") ?? site?.elements[0];
-    if (matchingPad) {
-      const patch = {
-        ...matchingPad,
-        properties: {
-          ...(matchingPad as any).properties,
-          elevation: padElevation,
-          cutSlope,
-          fillSlope,
-        }
-      };
-      useWorkspaceStore.getState().updateElement(matchingPad.id, patch);
-    }
-    setOpen(false);
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

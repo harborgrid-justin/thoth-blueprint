@@ -1,13 +1,5 @@
-import * as React from "react";
 import _ from "lodash";
 import { Layout, FileText, ChevronRight, HelpCircle } from "lucide-react";
-import {
-  resolveAlignment,
-  generateViewFrames,
-  createSheetSetFromFrames,
-} from "@thoth/domain";
-import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -18,77 +10,29 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import { usePlanProductionWizardState } from "./hooks/usePlanProductionWizardState";
 
 export function PlanProductionWizard() {
-  const open = useUiStore((s) => s.productionOpen);
-  const setOpen = useUiStore((s) => s.setProductionOpen);
-  const site = useWorkspaceStore((s) => s.site);
-
-  const alignments = site?.alignments ?? [];
-  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(null);
-  
-  // Sheet Templates options
-  const [pageSize, setPageSize] = React.useState<string>("ARCH_D"); // 24x36
-  const [overlap, setOverlap] = React.useState<number>(15); // 15% overlap
-  const [scale, setScale] = React.useState<string>("1:500");
-
-  const [generatedFrames, setGeneratedFrames] = React.useState<any[]>([]);
-  const [generatedMatches, setGeneratedMatches] = React.useState<any[]>([]);
-
-  React.useEffect(() => {
-    if (open && alignments.length > 0) {
-      setSelectedAlignId(alignments[0].id);
-    }
-  }, [open, alignments]);
+  const {
+    open,
+    setOpen,
+    site,
+    alignments,
+    selectedAlignId,
+    setSelectedAlignId,
+    pageSize,
+    setPageSize,
+    overlap,
+    setOverlap,
+    scale,
+    setScale,
+    generatedFrames,
+    generatedMatches,
+    handleSplit,
+    handleCreateSheets,
+  } = usePlanProductionWizardState();
 
   if (!site) {return null;}
-  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
-
-  function handleSplit() {
-    if (!alignment || !site) {return;}
-    const resolved = resolveAlignment(alignment);
-    if (!resolved) {return;}
-
-    // Standard ARCH D viewport dimensions in inches: w=30in, h=18in
-    const w = 30;
-    const h = 18;
-
-    const vfg = generateViewFrames(
-      resolved,
-      alignment.id,
-      scale,
-      w,
-      h,
-      site.spatial.units,
-      overlap / 100
-    );
-
-    setGeneratedFrames(vfg.frames);
-    setGeneratedMatches(vfg.matchLines);
-
-    // Dynamic store update to render frames on canvas
-    useWorkspaceStore.getState().setViewFrames(vfg.frames, vfg.matchLines);
-  }
-
-  function handleCreateSheets() {
-    if (!alignment || generatedFrames.length === 0 || !site) {return;}
-    const resolved = resolveAlignment(alignment);
-    if (!resolved) {return;}
-
-    const w = 30;
-    const h = 18;
-    const vfg = generateViewFrames(resolved, alignment.id, scale, w, h, site.spatial.units, overlap / 100);
-    const set = createSheetSetFromFrames(vfg, `Sheet Set - ${alignment.name}`);
-
-    // Update drawing sets list in the store
-    if (useWorkspaceStore.getState().addDrawingSet) {
-      useWorkspaceStore.getState().addDrawingSet(set);
-    }
-    
-    // Switch to sheet set composer tab
-    useUiStore.getState().setProductionOpen(false);
-    useUiStore.getState().setSheetSetOpen(true);
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -121,8 +65,6 @@ export function PlanProductionWizard() {
                       type="button"
                       onClick={() => {
                         setSelectedAlignId(a.id);
-                        setGeneratedFrames([]);
-                        setGeneratedMatches([]);
                       }}
                       className={cn(
                         "rounded-md px-2 py-1.5 text-left text-xs transition-colors",

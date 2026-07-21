@@ -4,16 +4,11 @@ import {
   type SurveyMonument,
   type Site,
 } from "@thoth/domain";
-import { worldToScreen, type Viewport } from "./viewport";
+import { worldToScreen, type Viewport } from "./helpers/viewport";
 
 const INK = "hsl(var(--foreground))";
 const HALO = "hsl(var(--canvas))";
 
-/**
- * Standard survey-monument symbol for a type/status. `set` monuments read filled,
- * `found` monuments read open — the usual plat convention. Rendered centered on
- * (0,0); callers translate to the screen point.
- */
 export function MonumentSymbol({
   type,
   filled,
@@ -61,7 +56,6 @@ export function MonumentSymbol({
   }
 }
 
-/** Renders the site's survey monuments with standard symbology and stamps. */
 export function MonumentLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const monuments = site.monuments;
   if (!monuments || monuments.length === 0) {return null;}

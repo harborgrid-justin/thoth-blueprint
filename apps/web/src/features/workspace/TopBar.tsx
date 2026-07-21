@@ -28,11 +28,6 @@ import {
   Mountain,
 } from "lucide-react";
 import type { Project } from "@/api";
-import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useCanvasStore } from "@/store/canvasStore";
-import { useUiStore } from "@/store/uiStore";
-import { useFindStore } from "@/store/findStore";
-import { useTheme } from "@/theme/theme-provider";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -40,6 +35,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { PresenceBar } from "./PresenceBar";
 import { ImportExportMenu } from "@/features/interop/ImportExportMenu";
 import { NamedViewsMenu } from "./NamedViewsMenu";
+import { useTopBarState } from "./hooks/useTopBarState";
+import { zoomPercentage } from "./helpers/topBarHelpers";
 
 interface TopBarProps {
   project: Project | null;
@@ -49,15 +46,15 @@ interface TopBarProps {
 }
 
 export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarProps) {
-  const projectName = useWorkspaceStore((s) => s.projectName);
-  const dirty = useWorkspaceStore((s) => s.dirty);
-  const renovationMode = useWorkspaceStore((s) => s.renovationMode);
-  const toggleRenovationMode = useWorkspaceStore((s) => s.toggleRenovationMode);
-  const activeRenovationCategory = useWorkspaceStore((s) => s.activeRenovationCategory);
-  const setActiveRenovationCategory = useWorkspaceStore((s) => s.setActiveRenovationCategory);
-  const { theme, toggleTheme } = useTheme();
-
   const {
+    projectName,
+    dirty,
+    renovationMode,
+    toggleRenovationMode,
+    activeRenovationCategory,
+    setActiveRenovationCategory,
+    theme,
+    toggleTheme,
     viewport,
     zoomBy,
     requestFit,
@@ -69,14 +66,20 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
     toggleSurveyLabels,
     viewMode,
     setViewMode,
-  } = useCanvasStore();
-  const openPlat = useUiStore((s) => s.openPlat);
-  const setAlignmentOpen = useUiStore((s) => s.setAlignmentOpen);
-  const setSheetOpen = useUiStore((s) => s.setSheetOpen);
-  const setSheetSetOpen = useUiStore((s) => s.setSheetSetOpen);
-  const toggleCommand = useUiStore((s) => s.toggleCommand);
-  const setPrefsOpen = useUiStore((s) => s.setPrefsOpen);
-  const openFind = useFindStore((s) => s.openFind);
+    openPlat,
+    setAlignmentOpen,
+    setSheetOpen,
+    setSheetSetOpen,
+    toggleCommand,
+    setPrefsOpen,
+    setSuperelevationOpen,
+    setCorridorOpen,
+    setGradingOpen,
+    setProfileOpen,
+    setPipeOpen,
+    setProductionOpen,
+    openFind,
+  } = useTopBarState();
 
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border bg-card px-3">
@@ -152,7 +155,7 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
             <Minus className="h-4 w-4" />
           </IconBtn>
           <span className="w-12 text-center text-xs tabular-nums text-muted-foreground">
-            {Math.round(viewport.zoom * 100)}%
+            {zoomPercentage(viewport.zoom)}%
           </span>
           <IconBtn label="Zoom in" onClick={() => zoomBy(1.2)}>
             <Plus className="h-4 w-4" />
@@ -183,22 +186,22 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         <Button variant="ghost" size="sm" onClick={() => setAlignmentOpen(true)}>
           <Spline className="h-4 w-4" /> <span className="hidden lg:inline">Stationing</span>
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setSuperelevationOpen(true)}>
+        <Button variant="ghost" size="sm" onClick={() => setSuperelevationOpen(true)}>
           <SlidersHorizontal className="h-4 w-4" /> <span className="hidden xl:inline">Superelevation</span>
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setCorridorOpen(true)}>
+        <Button variant="ghost" size="sm" onClick={() => setCorridorOpen(true)}>
           <HardHat className="h-4 w-4" /> <span className="hidden xl:inline">Corridor</span>
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setGradingOpen(true)}>
+        <Button variant="ghost" size="sm" onClick={() => setGradingOpen(true)}>
           <Mountain className="h-4 w-4" /> <span className="hidden xl:inline">Grading</span>
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setProfileOpen(true)}>
+        <Button variant="ghost" size="sm" onClick={() => setProfileOpen(true)}>
           <LayoutTemplate className="h-4 w-4" /> <span className="hidden lg:inline">Profile &amp; Sections</span>
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setPipeOpen(true)}>
+        <Button variant="ghost" size="sm" onClick={() => setPipeOpen(true)}>
           <Files className="h-4 w-4" /> <span className="hidden lg:inline">Pipes Audit</span>
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => useUiStore.getState().setProductionOpen(true)}>
+        <Button variant="ghost" size="sm" onClick={() => setProductionOpen(true)}>
           <LayoutTemplate className="h-4 w-4" /> <span className="hidden lg:inline">Framing Wizard</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={() => setSheetOpen(true)}>

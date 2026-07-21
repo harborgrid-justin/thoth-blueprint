@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { clampZoom, type Viewport } from "@/features/canvas/viewport";
+import { clampZoom, type Viewport } from "@/features/canvas/helpers/viewport";
 
 interface CanvasState {
   viewport: Viewport;

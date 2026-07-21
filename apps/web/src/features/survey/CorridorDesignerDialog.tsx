@@ -1,8 +1,5 @@
-import * as React from "react";
 import _ from "lodash";
 import { HardHat, Compass, Link2 } from "lucide-react";
-import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
 import {
   Dialog,
   DialogContent,
@@ -12,87 +9,27 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  type Assembly,
-  getDefaultSubassemblies,
-  resolveAssemblyOffset,
-  buildCorridorSections,
-  extractCorridorFeatureLines,
-} from "@thoth/domain";
+import { useCorridorDesignerState } from "./hooks/useCorridorDesignerState";
 
 export function CorridorDesignerDialog() {
-  const open = useUiStore((s) => s.corridorOpen);
-  const setOpen = useUiStore((s) => s.setCorridorOpen);
-  const site = useWorkspaceStore((s) => s.site);
-
-  const alignments = site?.alignments ?? [];
-  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(null);
-
-  // Profile references
-  const [profiles] = React.useState<any[]>([
-    { id: "prof-1", name: "Design Profile 1", pvis: [{ station: 0, elevation: 12 }, { station: 400, elevation: 22 }, { station: 800, elevation: 15 }] }
-  ]);
-  const [selectedProfileId, setSelectedProfileId] = React.useState<string>("prof-1");
-
-  // Local Assembly layout state
-  const [assembly] = React.useState<Assembly>({
-    id: "assembly-main",
-    name: "Primary Highway 2-Lane",
-    leftSubassemblies: getDefaultSubassemblies("left"),
-    rightSubassemblies: getDefaultSubassemblies("right"),
-  });
-
-  const [frequency, setFrequency] = React.useState<number>(50); // station frequency
-
-  React.useEffect(() => {
-    if (open && alignments.length > 0) {
-      setSelectedAlignId(alignments[0].id);
-    }
-  }, [open, alignments]);
-
-  // Resolve current assembly profile outline coordinates
-  const offsetPoints = React.useMemo(() => {
-    return resolveAssemblyOffset(assembly, -0.02, -0.02);
-  }, [assembly]);
+  const {
+    open,
+    setOpen,
+    site,
+    alignments,
+    selectedAlignId,
+    setSelectedAlignId,
+    profiles,
+    selectedProfileId,
+    setSelectedProfileId,
+    assembly,
+    frequency,
+    setFrequency,
+    offsetPoints,
+    handleExtrude,
+  } = useCorridorDesignerState();
 
   if (!site) {return null;}
-
-  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
-  const profile = _.find(profiles, (p) => p.id === selectedProfileId) ?? profiles[0] ?? null;
-
-  function handleExtrude() {
-    if (!alignment || !profile) {return;}
-
-    // Simulate 3D corridor build
-    const corridor = {
-      id: "cor-1",
-      name: `Corridor - ${alignment.name}`,
-      alignmentId: alignment.id,
-      profileId: profile.id,
-      assemblyId: assembly.id,
-      frequency,
-    };
-
-    // Calculate corridor cross sections
-    const sections = buildCorridorSections(corridor, alignment, profile, assembly);
-    const featureLines = extractCorridorFeatureLines(sections);
-
-    // Save feature lines as spatial elements inside the store
-    const newElements = _.map(featureLines, (fl) => ({
-      id: `fl-${fl.code}`,
-      kind: "corridor" as any,
-      layerId: "c-road",
-      name: `${fl.code} Feature Line`,
-      boundary: _.map(fl.points, (p) => ({ x: p.x, y: p.y })),
-      properties: { code: fl.code, points3D: fl.points },
-    }));
-
-    if (useWorkspaceStore.getState().addElements) {
-      useWorkspaceStore.getState().addElements(newElements as any);
-    }
-
-    setOpen(false);
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

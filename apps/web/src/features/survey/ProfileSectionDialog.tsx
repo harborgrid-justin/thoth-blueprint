@@ -1,15 +1,6 @@
-import * as React from "react";
 import _ from "lodash";
 import { AreaChart, Plus, Trash2 } from "lucide-react";
-import {
-  resolveAlignment,
-  type VerticalProfile,
-  type VerticalPVI,
-  sampleCrossSection,
-  type CrossSection,
-} from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -20,78 +11,29 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { buildTerrainModel } from "@/features/terrain/terrainModel";
+import { useProfileSectionState } from "./hooks/useProfileSectionState";
 
 export function ProfileSectionDialog() {
-  const open = useUiStore((s) => s.profileOpen);
-  const setOpen = useUiStore((s) => s.setProfileOpen);
-  const site = useWorkspaceStore((s) => s.site);
-
-  const alignments = site?.alignments ?? [];
-  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(null);
-  
-  const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
-  const terrainSurface = terrain?.existing ?? null;
-
-  // Local profile state
-  const [profile, setProfile] = React.useState<VerticalProfile>({
-    id: "vp-1",
-    name: "Design Profile 1",
-    alignmentId: "",
-    pvis: [
-      { station: 0, elevation: 12 },
-      { station: 400, elevation: 22, curveLength: 100 },
-      { station: 800, elevation: 15 },
-    ],
-  });
-
-  const [selectedStation, setSelectedStation] = React.useState<number>(200);
-  const [swathWidth, setSwathWidth] = React.useState<number>(50);
-
-  React.useEffect(() => {
-    if (open && alignments.length > 0) {
-      setSelectedAlignId(alignments[0].id);
-    }
-  }, [open, alignments]);
-
-  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
-  const resolved = alignment ? resolveAlignment(alignment) : null;
-
-  // Sample cross section using the active terrain
-  const crossSection = React.useMemo<CrossSection | null>(() => {
-    if (!resolved || !terrainSurface) {return null;}
-    return sampleCrossSection(
-      terrainSurface,
-      terrainSurface, // use same grid for proposed model in mock
-      resolved,
-      selectedStation,
-      swathWidth,
-      2
-    );
-  }, [terrainSurface, resolved, selectedStation, swathWidth]);
+  const {
+    open,
+    setOpen,
+    site,
+    alignments,
+    selectedAlignId,
+    setSelectedAlignId,
+    resolved,
+    profile,
+    selectedStation,
+    setSelectedStation,
+    swathWidth,
+    setSwathWidth,
+    crossSection,
+    updatePvi,
+    addPvi,
+    removePvi,
+  } = useProfileSectionState();
 
   if (!site) {return null;}
-
-  function updatePvi(index: number, field: keyof VerticalPVI, value: number) {
-    const updated = [...profile.pvis];
-    updated[index] = { ...updated[index], [field]: value };
-    setProfile({ ...profile, pvis: updated });
-  }
-
-  function addPvi() {
-    const station = profile.pvis.length > 0 ? profile.pvis[profile.pvis.length - 1].station + 100 : 100;
-    const elevation = 15;
-    setProfile({
-      ...profile,
-      pvis: [...profile.pvis, { station, elevation, curveLength: 50 }],
-    });
-  }
-
-  function removePvi(index: number) {
-    if (profile.pvis.length <= 1) {return;}
-    const updated = _.filter(profile.pvis, (_, i) => i !== index);
-    setProfile({ ...profile, pvis: updated });
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

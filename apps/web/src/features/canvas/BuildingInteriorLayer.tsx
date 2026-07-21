@@ -10,7 +10,8 @@ import {
   type Site,
   type Window as WindowOpening,
 } from "@thoth/domain";
-import { worldToScreen, type Viewport } from "./viewport";
+import { worldToScreen, type Viewport } from "./helpers/viewport";
+import { toPath } from "./helpers/interiorHelpers";
 
 const INK = "hsl(var(--foreground))";
 const GLAZE = "#0284c7";
@@ -34,13 +35,6 @@ export function BuildingInteriorLayer({ site, viewport }: { site: Site; viewport
       ))}
     </g>
   );
-}
-
-function toPath(pts: Point[], project: (p: Point) => Point): string {
-  return pts.map((p, i) => {
-    const s = project(p);
-    return `${i === 0 ? "M" : "L"}${s.x.toFixed(1)},${s.y.toFixed(1)}`;
-  }).join(" ") + " Z";
 }
 
 function BuildingPlan({

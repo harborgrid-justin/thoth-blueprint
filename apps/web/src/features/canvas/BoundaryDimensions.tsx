@@ -1,11 +1,11 @@
 import { type Polygon } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { usePrefsStore } from "@/store/prefsStore";
-import { type Viewport } from "./viewport";
+import { type Viewport } from "./helpers/viewport";
 import {
   computeBoundaryDimensions,
   computeSurveyEdgeLabels,
-} from "./boundaryHelpers";
+} from "./helpers/boundaryHelpers";
 
 export function BoundaryDimensions({
   site,

@@ -1,9 +1,5 @@
 import {
-  buildableEnvelope,
-  centroid,
-  densifyBoundary,
   isPointElement,
-  measuredArea,
   calculateStairGeometry,
   calculateCurtainWallGeometry,
   calculateDoorGeometry,
@@ -20,11 +16,8 @@ import {
   type RoofElement,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
-import { elementColor } from "@/lib/elementMeta";
-import { patternFor } from "./patterns";
-import { worldToScreen, type Viewport } from "./viewport";
-import { toPath } from "./canvasHelpers";
-import { formatArea } from "@/lib/format";
+import { worldToScreen, type Viewport } from "./helpers/viewport";
+import { computeElementShapeStyle, getPointElementStyle } from "./helpers/elementShapeHelpers";
 
 export function ElementShape({
   element,
@@ -51,20 +44,10 @@ export function ElementShape({
   if (isPointElement(element)) {
     const shift = moveDelta ?? { x: 0, y: 0 };
     const s = worldToScreen({ x: element.position.x + shift.x, y: element.position.y + shift.y }, viewport);
+    const { canopyFill, canopyStroke, spotFill, noteFill } = getPointElementStyle(renovationMode, renovationStatus);
 
     if (element.kind === "tree") {
       const r = Math.max(4, element.canopyRadius * viewport.zoom);
-      let canopyFill = "#22c55e";
-      let canopyStroke = "#16a34a";
-      if (renovationMode) {
-        if (renovationStatus === "new") {
-          canopyFill = "#22c55e";
-          canopyStroke = "#22c55e";
-        } else if (renovationStatus === "demolished") {
-          canopyFill = "#ef4444";
-          canopyStroke = "#ef4444";
-        }
-      }
       return (
         <g>
           <circle cx={s.x} cy={s.y} r={r} fill={canopyFill} fillOpacity={0.28} stroke={canopyStroke} strokeWidth={1} vectorEffect="non-scaling-stroke" />
@@ -75,11 +58,6 @@ export function ElementShape({
     }
 
     if (element.kind === "spot") {
-      let spotFill = "#d97706";
-      if (renovationMode) {
-        if (renovationStatus === "new") {spotFill = "#22c55e";}
-        else if (renovationStatus === "demolished") {spotFill = "#ef4444";}
-      }
       return (
         <g>
           <path d={`M${s.x} ${s.y - 5} L${s.x + 5} ${s.y} L${s.x} ${s.y + 5} L${s.x - 5} ${s.y} Z`} fill={spotFill} stroke="#fff" strokeWidth={1} />
@@ -94,11 +72,6 @@ export function ElementShape({
     }
 
     // Note.
-    let noteFill = "#eab308";
-    if (renovationMode) {
-      if (renovationStatus === "new") {noteFill = "#22c55e";}
-      else if (renovationStatus === "demolished") {noteFill = "#ef4444";}
-    }
     return (
       <g>
         <circle cx={s.x} cy={s.y} r={5} fill={noteFill} stroke="#fff" strokeWidth={1.5} />
@@ -112,75 +85,34 @@ export function ElementShape({
     );
   }
 
+  const style = computeElementShapeStyle(
+    element,
+    viewport,
+    selected,
+    hovered,
+    showLabels,
+    spatialUnits,
+    moveDelta,
+    overrideBoundary,
+    renovationMode
+  );
+
+  const {
+    path,
+    label,
+    center,
+    areaLabel,
+    envelopePath,
+    patternId,
+    strokeColor,
+    strokeDash,
+    strokeWidth,
+    fillOpacityOverride,
+    elementColorOverride,
+    color,
+  } = style;
+
   const shift = moveDelta ?? { x: 0, y: 0 };
-  const boundary = (overrideBoundary ?? element.boundary).map((p) => ({
-    x: p.x + shift.x,
-    y: p.y + shift.y,
-  }));
-  const hasArc = !!element.arcs && Object.keys(element.arcs).length > 0;
-  const displayRing = hasArc ? densifyBoundary(boundary, element.arcs, 2) : boundary;
-  const category = element.kind === "landuse" ? element.category : undefined;
-  const color = elementColor(element.kind, category);
-  const path = toPath(displayRing, viewport);
-  const isLine = element.kind === "row";
-  const fillOpacity =
-    element.kind === "building"
-      ? 0.65
-      : element.kind === "water"
-        ? 0.5
-        : element.kind === "landuse" || element.kind === "planting"
-          ? 0.32
-          : element.kind === "grade"
-            ? 0.2
-            : element.kind === "region" || element.kind === "easement"
-              ? 0.06
-              : 0.14;
-  const dash =
-    element.kind === "zone"
-      ? "6 4"
-      : element.kind === "region"
-        ? "10 6"
-        : element.kind === "grade"
-          ? "4 3"
-          : element.kind === "easement"
-            ? "7 3 2 3"
-            : undefined;
-
-  const label = showLabels && viewport.zoom > 1.4 ? element.name : null;
-  const center = label ? worldToScreen(centroid(boundary), viewport) : null;
-  const areaLabel =
-    label && viewport.zoom > 3.5
-      ? formatArea(measuredArea(displayRing, spatialUnits, "sqm"), "sqm")
-      : null;
-
-  // Setback / buildable envelope for a lot.
-  let envelopePath: string | null = null;
-  if (element.kind === "lot" && element.setback && element.setback > 0) {
-    const shiftedLot = { ...element, boundary };
-    const env = buildableEnvelope(shiftedLot);
-    if (env) {envelopePath = toPath(env, viewport);}
-  }
-
-  const patternId = isLine ? null : patternFor(element);
-
-  let strokeColor = selected ? "hsl(var(--primary))" : hovered ? "hsl(var(--warning))" : color;
-  let strokeDash = dash;
-  const strokeWidth = selected ? 2.5 : hovered ? 2.25 : element.kind === "building" ? 1.5 : 1.75;
-  let fillOpacityOverride = isLine ? 0.25 : fillOpacity;
-  let elementColorOverride = color;
-
-  if (renovationMode) {
-    if (renovationStatus === "new") {
-      strokeColor = "#22c55e";
-      elementColorOverride = "#22c55e";
-      fillOpacityOverride = isLine ? 0.35 : Math.max(0.18, fillOpacity * 0.7);
-    } else if (renovationStatus === "demolished") {
-      strokeColor = "#ef4444";
-      strokeDash = "3 3";
-      elementColorOverride = "#ef4444";
-      fillOpacityOverride = isLine ? 0.15 : fillOpacity * 0.4;
-    }
-  }
 
   return (
     <g>
@@ -202,10 +134,9 @@ export function ElementShape({
 
         return (
           <g className="pointer-events-none">
-            {/* 1. Draw individual steps */}
             {stairGeom.treadLines.map((line, idx) => {
               const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sLine.length < 2) return null;
+              if (sLine.length < 2) {return null;}
               return (
                 <line
                   key={`tread-${idx}`}
@@ -220,10 +151,9 @@ export function ElementShape({
               );
             })}
 
-            {/* 2. Draw stringer centerlines */}
             {stairGeom.stringerCenterlines.map((line, idx) => {
               const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sLine.length < 2) return null;
+              if (sLine.length < 2) {return null;}
               const stringerD = `M ${sLine.map(p => `${p.x} ${p.y}`).join(" L ")}`;
               return (
                 <path
@@ -238,7 +168,6 @@ export function ElementShape({
               );
             })}
 
-            {/* 3. Direction flow arrow */}
             {sArrow.length >= 2 && (
               <g>
                 <path d={`M ${sArrow.map(p => `${p.x} ${p.y}`).join(" L ")}`} fill="none" stroke="hsl(var(--primary))" strokeWidth={1.5} />
@@ -262,7 +191,6 @@ export function ElementShape({
               </g>
             )}
 
-            {/* 4. Breakline cut */}
             {sBreak.length >= 2 && (() => {
               const midX = (sBreak[0].x + sBreak[1].x) / 2;
               const midY = (sBreak[0].y + sBreak[1].y) / 2;
@@ -282,7 +210,6 @@ export function ElementShape({
               );
             })()}
 
-            {/* 5. Baluster mount anchors */}
             {viewport.zoom > 2.0 && stairGeom.balusterAnchors.map((pt, idx) => {
               const sPt = worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport);
               return (
@@ -305,10 +232,9 @@ export function ElementShape({
         const cwGeom = calculateCurtainWallGeometry(element as CurtainWall);
         return (
           <g className="pointer-events-none">
-            {/* 1. Perimeter structural frame */}
             {cwGeom.perimeterFrame.map((poly, idx) => {
               const sPoly = poly.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sPoly.length < 2) return null;
+              if (sPoly.length < 2) {return null;}
               const d = `M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`;
               return (
                 <path
@@ -321,11 +247,10 @@ export function ElementShape({
               );
             })}
 
-            {/* 2. Mullion vertical segments */}
             {cwGeom.mullions.map((mull, idx) => {
-              if (mull.direction !== "vertical") return null;
+              if (mull.direction !== "vertical") {return null;}
               const sPoly = mull.mullionPolygon.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sPoly.length < 2) return null;
+              if (sPoly.length < 2) {return null;}
               const d = `M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`;
               return (
                 <path
@@ -339,7 +264,6 @@ export function ElementShape({
               );
             })}
 
-            {/* 3. Infill Panels (glazing, brick, etc.) */}
             {cwGeom.panels.map((pan, idx) => {
               const fillCol =
                 pan.material === "brick"
@@ -354,7 +278,7 @@ export function ElementShape({
               const op = pan.material === "glazing" ? 0.15 : 0.6;
               return pan.panePolygons.map((poly, pidx) => {
                 const sPoly = poly.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-                if (sPoly.length < 2) return null;
+                if (sPoly.length < 2) {return null;}
                 const d = `M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`;
                 return (
                   <path
@@ -369,9 +293,8 @@ export function ElementShape({
               });
             })}
 
-            {/* 4. Glass clips */}
             {viewport.zoom > 3.0 && cwGeom.panels.map((pan) => {
-              if (pan.material !== "glazing") return null;
+              if (pan.material !== "glazing") {return null;}
               return pan.clipAnchors.map((pt, cidx) => {
                 const sPt = worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport);
                 return (
@@ -388,7 +311,6 @@ export function ElementShape({
               });
             })}
 
-            {/* 5. Structural Ties */}
             {viewport.zoom > 2.0 && cwGeom.structuralTies.map((pt, idx) => {
               const sPt = worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport);
               return (
@@ -410,35 +332,30 @@ export function ElementShape({
         const doorGeom = calculateDoorGeometry(element as DoorElement);
         return (
           <g className="pointer-events-none">
-            {/* 1. Threshold */}
             {(() => {
               const sThresh = doorGeom.thresholdPolygon.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sThresh.length < 2) return null;
+              if (sThresh.length < 2) {return null;}
               return <path d={`M ${sThresh.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={0.75} strokeDasharray="2 2" />;
             })()}
 
-            {/* 2. Sill */}
             {(() => {
               const sSill = doorGeom.sillPolygon.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sSill.length < 2) return null;
+              if (sSill.length < 2) {return null;}
               return <path d={`M ${sSill.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={1} />;
             })()}
 
-            {/* 3. Door Panel */}
             {(() => {
               const sPanel = doorGeom.doorPanelPolygon.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sPanel.length < 2) return null;
+              if (sPanel.length < 2) {return null;}
               return <path d={`M ${sPanel.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={1.5} />;
             })()}
 
-            {/* 4. Swing Path Arc */}
             {(() => {
               const sPath = doorGeom.swingPath.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sPath.length < 2) return null;
+              if (sPath.length < 2) {return null;}
               return <path d={`M ${sPath.map(p => `${p.x} ${p.y}`).join(" L ")}`} fill="none" stroke={strokeColor} strokeWidth={1} strokeDasharray="3 3" />;
             })()}
 
-            {/* 5. Hardware Knob */}
             {(() => {
               const sKnob = worldToScreen({ x: doorGeom.hardwareAnchor.x + shift.x, y: doorGeom.hardwareAnchor.y + shift.y }, viewport);
               return <circle cx={sKnob.x} cy={sKnob.y} r={2} fill="none" stroke={strokeColor} strokeWidth={1} />;
@@ -450,24 +367,21 @@ export function ElementShape({
         const winGeom = calculateWindowGeometry(element as WindowElement);
         return (
           <g className="pointer-events-none">
-            {/* 1. Sill */}
             {(() => {
               const sSill = winGeom.sillPolygon.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sSill.length < 2) return null;
+              if (sSill.length < 2) {return null;}
               return <path d={`M ${sSill.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={1} />;
             })()}
 
-            {/* 2. Glazing Panes */}
             {winGeom.glazingPolygons.map((poly, idx) => {
               const sPoly = poly.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sPoly.length < 2) return null;
+              if (sPoly.length < 2) {return null;}
               return <path key={`win-glass-${idx}`} d={`M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="#22d3ee" fillOpacity={0.25} stroke={strokeColor} strokeWidth={0.75} />;
             })}
 
-            {/* 3. Sash frames */}
             {winGeom.sashPolygons.map((poly, idx) => {
               const sPoly = poly.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sPoly.length < 2) return null;
+              if (sPoly.length < 2) {return null;}
               return <path key={`win-sash-${idx}`} d={`M ${sPoly.map(p => `${p.x} ${p.y}`).join(" L ")} Z`} fill="none" stroke={strokeColor} strokeWidth={1} />;
             })}
           </g>
@@ -477,10 +391,9 @@ export function ElementShape({
         const roofGeom = calculateRoofGeometry(element as RoofElement);
         return (
           <g className="pointer-events-none">
-            {/* 1. Draw structural rafters */}
             {roofGeom.rafterLines.map((line, idx) => {
               const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sLine.length < 2) return null;
+              if (sLine.length < 2) {return null;}
               return (
                 <line
                   key={`rafter-${idx}`}
@@ -496,10 +409,9 @@ export function ElementShape({
               );
             })}
 
-            {/* 2. Draw gutters */}
             {roofGeom.gutterPaths.map((line, idx) => {
               const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sLine.length < 2) return null;
+              if (sLine.length < 2) {return null;}
               return (
                 <line
                   key={`gutter-${idx}`}
@@ -514,10 +426,9 @@ export function ElementShape({
               );
             })}
 
-            {/* 3. Draw drainage flow arrows */}
             {roofGeom.drainageFlows.map((line, idx) => {
               const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sLine.length < 2) return null;
+              if (sLine.length < 2) {return null;}
               const angle = Math.atan2(sLine[1].y - sLine[0].y, sLine[1].x - sLine[0].x);
               return (
                 <g key={`flow-${idx}`}>
@@ -540,10 +451,9 @@ export function ElementShape({
               );
             })}
 
-            {/* 4. Draw Hip / Valley lines */}
             {roofGeom.hipLines.concat(roofGeom.valleyLines).map((line, idx) => {
               const sLine = line.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
-              if (sLine.length < 2) return null;
+              if (sLine.length < 2) {return null;}
               return (
                 <line
                   key={`hip-valley-${idx}`}
@@ -558,9 +468,8 @@ export function ElementShape({
               );
             })}
 
-            {/* 5. Draw main ridge line */}
             {(() => {
-              if (roofGeom.ridgeLine.length < 2) return null;
+              if (roofGeom.ridgeLine.length < 2) {return null;}
               const sRidge = roofGeom.ridgeLine.map(pt => worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport));
               return (
                 <line
@@ -574,7 +483,6 @@ export function ElementShape({
               );
             })()}
 
-            {/* 6. Downspout indicators */}
             {roofGeom.downspoutAnchors.map((pt, idx) => {
               const sPt = worldToScreen({ x: pt.x + shift.x, y: pt.y + shift.y }, viewport);
               return (

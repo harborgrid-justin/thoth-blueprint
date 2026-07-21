@@ -14,6 +14,7 @@ import {
 import { MonumentSymbol } from "./MonumentLayer";
 import { ControlLineShape } from "./CivilLayer";
 import { CivilSymbolGlyph } from "./CivilSymbolLayer";
+import { uniq } from "./helpers/canvasHelpers";
 
 /**
  * A plat-style survey/civil legend: the active jurisdiction's framework
@@ -36,13 +37,13 @@ export function SurveyLegend({ site }: { site: Site }) {
   if (!monuments.length && !lineTypes.length && !symTypes.length && !frameworkRef && !plugin) {return null;}
 
   return (
-    <div className="absolute left-3 top-3 flex max-h-[82vh] max-w-[15rem] flex-col overflow-y-auto rounded-md border border-border bg-card/90 px-2.5 py-2 shadow-md backdrop-blur">
+    <div className="absolute left-4 top-4 z-10 flex max-h-[80vh] w-64 select-none flex-col overflow-y-auto rounded-xl border border-border/60 bg-card/85 p-3 shadow-xl backdrop-blur-md transition-all duration-200 hover:bg-card/95">
       {(frameworkRef || plugin) && (
-        <div className="mb-1.5 border-b border-border pb-1.5">
-          <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-            {plugin ? plugin.name : "Survey framework"}
+        <div className="mb-2.5 border-b border-border/60 pb-2">
+          <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+            {plugin ? plugin.name : "Survey Framework"}
           </div>
-          {frameworkRef && <div className="text-xs text-foreground">{frameworkRef}</div>}
+          {frameworkRef && <div className="mt-0.5 text-xs font-semibold text-foreground">{frameworkRef}</div>}
         </div>
       )}
 
@@ -59,7 +60,7 @@ export function SurveyLegend({ site }: { site: Site }) {
       )}
 
       {(lineTypes.length > 0 || symTypes.length > 0) && (
-        <Section title="Erosion control">
+        <Section title="Erosion Control">
           {lineTypes.map((t: ControlLineType) => (
             <Row key={t} label="" desc={controlLineDefinition(t).label}>
               <svg width={22} height={12} viewBox="0 0 22 12" className="shrink-0">
@@ -85,28 +86,25 @@ export function SurveyLegend({ site }: { site: Site }) {
 
 function Section({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
   return (
-    <div className="mt-1.5 first:mt-0">
-      <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">{title}</div>
-      <ul className="mt-1 flex flex-col gap-1">{children}</ul>
-      {note && <p className="mt-1 text-[10px] leading-tight text-muted-foreground">{note}</p>}
+    <div className="mt-2.5 first:mt-0 border-t border-border/40 pt-2.5 first:border-0 first:pt-0">
+      <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{title}</div>
+      <ul className="mt-1.5 flex flex-col gap-1">{children}</ul>
+      {note && <p className="mt-1.5 text-[10px] italic text-muted-foreground/80">{note}</p>}
     </div>
   );
 }
 
 function Row({ label, desc, children }: { label: string; desc: string; children: ReactNode }) {
   return (
-    <li className="flex items-center gap-2 text-xs">
-      {children}
-      <span className="text-foreground">
-        {label && <span className="font-medium">{label} · </span>}
+    <li className="flex items-center gap-2.5 rounded-lg px-1.5 py-1 text-xs transition-colors hover:bg-accent/50">
+      <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-muted/60">
+        {children}
+      </div>
+      <span className="truncate text-foreground">
+        {label && <span className="font-semibold text-primary">{label} · </span>}
         <span className="text-muted-foreground">{desc}</span>
       </span>
     </li>
   );
 }
 
-function uniq<T>(arr: T[]): T[] {
-  const out: T[] = [];
-  for (const x of arr) {if (!out.includes(x)) {out.push(x);}}
-  return out;
-}

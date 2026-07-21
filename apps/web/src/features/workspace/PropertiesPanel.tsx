@@ -7,11 +7,7 @@ import {
   measuredPerimeter,
   type LandUseCategory,
   type PlanElement,
-  resolveAlignment,
-  validateAlignmentDesignSpeed,
 } from "@thoth/domain";
-import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
 import { elementMeta } from "@/lib/elementMeta";
 import { formatArea, formatNumber } from "@/lib/format";
 import { Button } from "@/components/ui/button";
@@ -20,12 +16,18 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { usePropertiesState } from "./hooks/usePropertiesState";
+import { countCurvedEdges } from "./helpers/propertiesHelpers";
 
 /** Inspector for the current selection: element attributes and measurements. */
 export function PropertiesPanel() {
-  const site = useWorkspaceStore((s) => s.site);
-  const selection = useWorkspaceStore((s) => s.selection);
-  const deleteSelection = useWorkspaceStore((s) => s.deleteSelection);
+  const {
+    site,
+    selection,
+    selectedElement,
+    validatedAlignments,
+    deleteSelection,
+  } = usePropertiesState();
 
   if (!site) {return null;}
 
@@ -41,19 +43,14 @@ export function PropertiesPanel() {
         </div>
 
         {/* Alignment Design Criteria & AASHTO Checks */}
-        {site.alignments && site.alignments.length > 0 && (
+        {validatedAlignments.length > 0 && (
           <div className="mt-2 border-t border-border/40 pt-3">
             <h4 className="font-semibold text-muted-foreground text-[10px] uppercase tracking-wide mb-1.5">
               Alignment Design Speeds &amp; Checks
             </h4>
             <div className="flex flex-col gap-2">
-              {site.alignments.map((align) => {
-                const resolved = resolveAlignment(align);
-                if (!resolved) {return null;}
-                const checks = validateAlignmentDesignSpeed(align, resolved);
-                const speed = align.designSpeed ?? 35;
-                const violations = checks.filter((c) => c.isViolation);
-
+              {validatedAlignments.map((item: any) => {
+                const { align, resolved, speed, violations } = item;
                 return (
                   <div key={align.id} className="rounded border border-border bg-muted/10 p-2">
                     <div className="flex justify-between items-center text-[11px] font-semibold">
@@ -68,7 +65,7 @@ export function PropertiesPanel() {
                     {/* Violations List */}
                     {violations.length > 0 ? (
                       <div className="mt-1.5 flex flex-col gap-1">
-                        {violations.map((v, idx) => (
+                        {violations.map((v: any, idx: number) => (
                           <div key={idx} className="text-[9px] text-rose-400 bg-rose-500/10 rounded px-1.5 py-0.5 border border-rose-500/15">
                             ⚠️ Min R: {v.requiredRadius} ft | Curve R: {v.curveRadius.toFixed(1)} ft
                           </div>
@@ -106,17 +103,14 @@ export function PropertiesPanel() {
     );
   }
 
-  const element = site.elements.find((e) => e.id === selection[0]);
-  if (!element) {return null;}
+  if (!selectedElement) {return null;}
 
-  return <SingleElementInspector element={element} />;
+  return <SingleElementInspector element={selectedElement} />;
 }
 
 function SingleElementInspector({ element }: { element: PlanElement }) {
-  const site = useWorkspaceStore((s) => s.site)!;
-  const updateElement = useWorkspaceStore((s) => s.updateElement);
-  const deleteSelection = useWorkspaceStore((s) => s.deleteSelection);
-  const openPlat = useUiStore((s) => s.openPlat);
+  const { site, updateElement, deleteSelection, openPlat } = usePropertiesState();
+  if (!site) {return null;}
   const meta = elementMeta(element.kind);
 
   const set = (patch: Partial<PlanElement>) => updateElement(element.id, patch);
@@ -290,11 +284,9 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
 
 /** Curve editing affordance for a spatial element (see canvas ◇ edge handles). */
 function CurveControl({ element }: { element: PlanElement }) {
-  const clearArcs = useWorkspaceStore((s) => s.clearArcs);
+  const { clearArcs } = usePropertiesState();
   if (!isSpatialElement(element)) {return null;}
-  const curveCount = element.arcs
-    ? Object.values(element.arcs).filter((b) => typeof b === "number" && Math.abs(b) > 1e-4).length
-    : 0;
+  const curveCount = countCurvedEdges(element);
   return (
     <div className="flex flex-col gap-1.5 rounded-md border border-border px-3 py-2">
       <div className="flex items-center justify-between">

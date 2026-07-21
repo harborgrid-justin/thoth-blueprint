@@ -9,34 +9,29 @@ import {
   Trash2,
   Unlock,
 } from "lucide-react";
-import { useWorkspaceStore } from "@/store/workspaceStore";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { evaluatePointGroup } from "@thoth/domain";
-
-const POINT_GROUPS = [
-  { id: "all", name: "All Points", query: "*" },
-  { id: "trees", name: "Trees Group", query: "TR*" },
-  { id: "storm", name: "Storm Structures", query: "MH*" },
-  { id: "benchmarks", name: "Benchmarks", query: "BM*" },
-];
+import { useLayerPanelState } from "./hooks/useLayerPanelState";
 
 /** The layer manager: visibility, lock, order, naming, and the active layer. */
 export function LayerPanel() {
-  const site = useWorkspaceStore((s) => s.site);
-  const activeLayerId = useWorkspaceStore((s) => s.activeLayerId);
-  const setActiveLayer = useWorkspaceStore((s) => s.setActiveLayer);
-  const updateLayer = useWorkspaceStore((s) => s.updateLayer);
-  const removeLayer = useWorkspaceStore((s) => s.removeLayer);
-  const reorderLayer = useWorkspaceStore((s) => s.reorderLayer);
-  const addLayer = useWorkspaceStore((s) => s.addLayer);
-  const [editingId, setEditingId] = React.useState<string | null>(null);
+  const {
+    site,
+    layers,
+    counts,
+    evaluatedGroups,
+    activeLayerId,
+    setActiveLayer,
+    updateLayer,
+    removeLayer,
+    reorderLayer,
+    handleAddLayer,
+    editingId,
+    setEditingId,
+  } = useLayerPanelState();
 
   if (!site) {return null;}
-  const layers = [...site.layers].sort((a, b) => b.order - a.order);
-  const counts = new Map<string, number>();
-  for (const el of site.elements) {counts.set(el.layerId, (counts.get(el.layerId) ?? 0) + 1);}
 
   return (
     <div className="flex flex-col">
@@ -45,7 +40,7 @@ export function LayerPanel() {
         <Button
           variant="ghost"
           size="icon-sm"
-          onClick={() => addLayer(`Layer ${site.layers.length + 1}`)}
+          onClick={handleAddLayer}
           aria-label="Add layer"
         >
           <Plus className="h-4 w-4" />
@@ -156,29 +151,20 @@ export function LayerPanel() {
         <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">COGO Point Groups</h3>
       </div>
       <div className="flex flex-col gap-1 px-2 pb-4">
-        {POINT_GROUPS.map((group) => {
-          const matchedIds = evaluatePointGroup(
-            site.elements.map((e: any) => ({
-              id: e.id,
-              description: e.description || e.species || e.label || ""
-            })),
-            group.query
-          );
-          return (
-            <div
-              key={group.id}
-              className="flex items-center justify-between rounded-md px-2 py-1 text-sm hover:bg-accent/40"
-            >
-              <div className="flex items-center gap-1.5">
-                <span className="text-muted-foreground text-xs font-mono">[{group.query}]</span>
-                <span className="font-medium text-foreground text-xs">{group.name}</span>
-              </div>
-              <span className="text-xs font-semibold px-1.5 py-0.5 rounded-full bg-accent text-accent-foreground font-mono">
-                {matchedIds.length}
-              </span>
+        {evaluatedGroups.map((group) => (
+          <div
+            key={group.id}
+            className="flex items-center justify-between rounded-md px-2 py-1 text-sm hover:bg-accent/40"
+          >
+            <div className="flex items-center gap-1.5">
+              <span className="text-muted-foreground text-xs font-mono">[{group.query}]</span>
+              <span className="font-medium text-foreground text-xs">{group.name}</span>
             </div>
-          );
-        })}
+            <span className="text-xs font-semibold px-1.5 py-0.5 rounded-full bg-accent text-accent-foreground font-mono">
+              {group.matchedIds.length}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );

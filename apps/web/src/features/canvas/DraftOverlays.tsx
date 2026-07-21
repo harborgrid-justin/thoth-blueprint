@@ -1,11 +1,11 @@
 import { type Point, type SpatialContext } from "@thoth/domain";
 import { usePrefsStore } from "@/store/prefsStore";
 import { formatCoord } from "@/lib/units";
-import { type Viewport } from "./viewport";
+import { type Viewport } from "./helpers/viewport";
 import {
   computeDraftPoints,
   computeMeasureReadout,
-} from "./draftHelpers";
+} from "./helpers/draftHelpers";
 
 export function DraftOverlay({
   draft,
@@ -111,16 +111,25 @@ export function CanvasHud({
 }) {
   const coordFormat = usePrefsStore((s) => s.coordFormat);
   return (
-    <div className="pointer-events-none absolute bottom-3 left-3 flex items-center gap-2 rounded-md border border-border bg-card/80 px-2.5 py-1 text-xs text-muted-foreground backdrop-blur">
-      <span className="font-medium text-foreground">{tool}</span>
-      {cursor && <span className="tabular-nums">{formatCoord(cursor, coordFormat)}</span>}
-      {snappedToVertex && <span className="font-medium text-primary">⌖ vertex</span>}
+    <div className="pointer-events-none absolute bottom-4 left-4 z-10 flex select-none items-center gap-2.5 rounded-xl border border-border/60 bg-card/85 px-3 py-1.5 text-xs text-muted-foreground shadow-lg backdrop-blur-md transition-all duration-200 hover:bg-card/95">
+      <span className="rounded-md bg-primary/10 px-2 py-0.5 font-semibold text-primary">{tool}</span>
+      {cursor && <span className="font-mono tabular-nums text-foreground">{formatCoord(cursor, coordFormat)}</span>}
+      {snappedToVertex && (
+        <span className="flex items-center gap-1 rounded-md bg-emerald-500/10 px-2 py-0.5 font-semibold text-emerald-600 dark:text-emerald-400">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          ⌖ vertex
+        </span>
+      )}
       {elevation != null && (
-        <span className="tabular-nums text-amber-600 dark:text-amber-500">
+        <span className="font-mono tabular-nums text-amber-600 dark:text-amber-400">
           z {elevation.toFixed(1)} {units}
         </span>
       )}
-      {draft > 0 && <span className="text-primary">{draft} pts · Enter to finish · Esc to cancel</span>}
+      {draft > 0 && (
+        <span className="font-medium text-primary">
+          {draft} pts · <kbd className="rounded bg-muted px-1 py-0.5 text-[10px] text-foreground">Enter</kbd> to finish · <kbd className="rounded bg-muted px-1 py-0.5 text-[10px] text-foreground">Esc</kbd> to cancel
+        </span>
+      )}
     </div>
   );
 }

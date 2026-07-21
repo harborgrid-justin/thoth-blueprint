@@ -3,7 +3,6 @@ import _ from "lodash";
 import { Check, Copy, Download, Ruler } from "lucide-react";
 import {
   formatPLSS,
-  isSpatialElement,
   legalDescription,
   surveyReport,
   unitLabel,
@@ -12,7 +11,6 @@ import {
   type SpatialElement,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
 import { elementMeta } from "@/lib/elementMeta";
 import { formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -27,6 +25,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { usePlatReportState } from "./hooks/usePlatReportState";
+import {
+  signed,
+  dmsText,
+  slug,
+  downloadText,
+  generateCoursesCsv,
+} from "./helpers/platReportHelpers";
 
 /**
  * The plat / survey report: the full metes-and-bounds record a surveyor needs
@@ -34,30 +40,17 @@ import { ScrollArea } from "@/components/ui/scroll-area";
  * traverse closure/precision, area, and a generated legal description.
  */
 export function PlatReportDialog() {
-  const platOpen = useUiStore((s) => s.platOpen);
-  const platTargetId = useUiStore((s) => s.platTargetId);
-  const closePlat = useUiStore((s) => s.closePlat);
-  const site = useWorkspaceStore((s) => s.site);
-
-  const surveyable = React.useMemo<SpatialElement[]>(
-    () => (site ? (_.filter(site.elements, isSpatialElement) as SpatialElement[]) : []),
-    [site],
-  );
-
-  const [selectedId, setSelectedId] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    if (!platOpen) {return;}
-    const preferred =
-      (platTargetId && _.find(surveyable, (e) => e.id === platTargetId)?.id) ??
-      _.find(surveyable, (e) => e.kind === "lot")?.id ??
-      surveyable[0]?.id ??
-      null;
-    setSelectedId(preferred);
-  }, [platOpen, platTargetId, surveyable]);
+  const {
+    platOpen,
+    closePlat,
+    site,
+    surveyable,
+    selectedId,
+    setSelectedId,
+    selected,
+  } = usePlatReportState();
 
   if (!site) {return null;}
-  const selected = _.find(surveyable, (e) => e.id === selectedId) ?? null;
 
   return (
     <Dialog open={platOpen} onOpenChange={(o) => !o && closePlat()}>
@@ -179,19 +172,7 @@ function TractReport({
   const u = unitLabel(spatial.units);
 
   function exportCsv() {
-    const rows = [
-      ["Course", "From", "To", "Bearing", `Distance (${u})`, `Latitude (${u})`, `Departure (${u})`],
-      ..._.map(report.courses, (c) => [
-        String(c.index),
-        c.fromLabel,
-        c.toLabel,
-        c.bearingText,
-        c.distance.toFixed(2),
-        c.latitude.toFixed(2),
-        c.departure.toFixed(2),
-      ]),
-    ];
-    const csv = _.map(rows, (r) => _.map(r, csvCell).join(",")).join("\n");
+    const csv = generateCoursesCsv(report, u);
     downloadText(`${slug(element.name)}-courses.csv`, csv);
   }
 
@@ -427,37 +408,4 @@ function Th({ children, className }: { children: React.ReactNode; className?: st
 
 function Td({ children, className }: { children?: React.ReactNode; className?: string }) {
   return <td className={cn("py-1 pr-2", className)}>{children}</td>;
-}
-
-/** Format a signed latitude/departure with an explicit +/− and no negative zero. */
-function signed(value: number, digits = 2): string {
-  const rounded = Number(value.toFixed(digits));
-  const s = Math.abs(rounded).toFixed(digits);
-  return rounded < 0 ? `−${s}` : `+${s}`;
-}
-
-/** Format an interior angle DMS record as e.g. 90°00′00″. */
-function dmsText(a: { degrees: number; minutes: number; seconds: number }): string {
-  const d = String(Math.abs(a.degrees));
-  const m = String(a.minutes).padStart(2, "0");
-  const sec = String(a.seconds).padStart(2, "0");
-  return `${d}°${m}′${sec}″`;
-}
-
-function csvCell(value: string): string {
-  return /[",\n]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value;
-}
-
-function slug(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "tract";
-}
-
-function downloadText(filename: string, text: string) {
-  const blob = new Blob([text], { type: "text/csv;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
 }

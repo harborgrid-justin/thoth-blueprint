@@ -1,11 +1,11 @@
 import { type Polygon } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
-import { type Viewport } from "./viewport";
+import { type Viewport } from "./helpers/viewport";
 import {
   getAlignmentHandlesPoints,
   getVertexHandlesPoints,
   getEdgeHandlesPoints,
-} from "./handleHelpers";
+} from "./helpers/handleHelpers";
 
 export function AlignmentHandles({
   site,

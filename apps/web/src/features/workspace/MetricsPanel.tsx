@@ -1,51 +1,30 @@
-import * as React from "react";
-import {
-  areaUnitLabel,
-  checkCompliance,
-  computeCommunityMetrics,
-  computeSiteMetrics,
-  networkStats,
-  type AreaUnit,
-} from "@thoth/domain";
+import { areaUnitLabel, type AreaUnit } from "@thoth/domain";
 import { AlertTriangle, CheckCircle2, Info } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useCanvasStore } from "@/store/canvasStore";
-import { usePrefsStore } from "@/store/prefsStore";
 import { formatArea, formatNumber, formatPercent, formatRatio } from "@/lib/format";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-const AREA_UNITS: AreaUnit[] = ["sqm", "sqft", "acres", "hectares", "sqkm", "sqmi"];
+import { useMetricsState } from "./hooks/useMetricsState";
+import { AREA_UNITS } from "./helpers/metricsHelpers";
 
 /** The live metrics panel: headline figures, land-use allocation, compliance. */
 export function MetricsPanel() {
-  const site = useWorkspaceStore((s) => s.site);
-  const selection = useWorkspaceStore((s) => s.selection);
-  const select = useWorkspaceStore((s) => s.select);
-  const requestFitSelection = useCanvasStore((s) => s.requestFitSelection);
-  const areaUnit = usePrefsStore((s) => s.areaUnit);
-  const setAreaUnit = usePrefsStore((s) => s.setAreaUnit);
-
-  const metrics = React.useMemo(() => (site ? computeSiteMetrics(site, areaUnit) : null), [site, areaUnit]);
-
-  // Metrics scoped to the current selection (FE-METRIC-003).
-  const selectionMetrics = React.useMemo(() => {
-    if (!site || selection.length === 0) {return null;}
-    const ids = new Set(selection);
-    const subset = site.elements.filter((e) => ids.has(e.id));
-    if (subset.length === 0) {return null;}
-    return computeSiteMetrics({ ...site, elements: subset }, areaUnit);
-  }, [site, selection, areaUnit]);
-  const community = React.useMemo(() => (site ? computeCommunityMetrics(site) : null), [site]);
-  const networks = React.useMemo(() => {
-    if (!site) {return [];}
-    return (site.networks ?? []).map((n) => networkStats(n, site.spatial));
-  }, [site]);
-  const findings = React.useMemo(() => (site ? checkCompliance(site) : []), [site]);
+  const {
+    site,
+    selection,
+    select,
+    requestFitSelection,
+    areaUnit,
+    setAreaUnit,
+    metrics,
+    selectionMetrics,
+    community,
+    networks,
+    findings,
+    roadMeters,
+    utilityMeters,
+  } = useMetricsState();
 
   if (!site || !metrics || !community) {return null;}
-
-  const roadMeters = networks.filter((n) => n.kind === "road").reduce((s, n) => s + n.lengthMeters, 0);
-  const utilityMeters = networks.filter((n) => n.kind !== "road").reduce((s, n) => s + n.lengthMeters, 0);
 
   return (
     <div className="flex flex-col gap-4 p-3">
@@ -56,7 +35,7 @@ export function MetricsPanel() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {AREA_UNITS.map((u) => (
+            {AREA_UNITS.map((u: AreaUnit) => (
               <SelectItem key={u} value={u}>
                 {areaUnitLabel(u)} ({u})
               </SelectItem>
@@ -172,7 +151,6 @@ export function MetricsPanel() {
                 {f.message}
               </span>
             );
-            // Click a violation to select & zoom the offending element (FE-METRIC-004).
             if (f.elementId) {
               return (
                 <li key={i}>

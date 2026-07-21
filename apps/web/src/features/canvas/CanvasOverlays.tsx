@@ -1,26 +1,17 @@
 import * as React from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Compass } from "lucide-react";
 import {
   landUseColor,
   METERS_PER_UNIT,
   unitLabel,
   type LandUseCategory,
-  type Site,
 } from "@thoth/domain";
 import { LAND_USE_DEFINITIONS } from "@thoth/domain";
 import { useCanvasStore } from "@/store/canvasStore";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { usePrefsStore } from "@/store/prefsStore";
 import { resolveLengthUnit } from "@/lib/units";
-
-/** Round a value to the nearest 1-2-5 × 10ⁿ below it (for tick spacing). */
-function niceNumber(value: number): number {
-  if (value <= 0) {return 1;}
-  const magnitude = Math.pow(10, Math.floor(Math.log10(value)));
-  const residual = value / magnitude;
-  const factor = residual >= 5 ? 5 : residual >= 2 ? 2 : 1;
-  return factor * magnitude;
-}
+import { niceNumber, presentCategories } from "./helpers/canvasOverlayHelpers";
 
 /**
  * A cartographic scale bar (`FE-NAV-002`): a round distance in the user's
@@ -33,7 +24,6 @@ export function ScaleBar() {
   if (!spatial) {return null;}
 
   const unit = resolveLengthUnit(spatial, lengthPref);
-  // Display units per screen pixel at the current zoom.
   const metersPerPx = (1 / zoom) * METERS_PER_UNIT[spatial.units];
   const perPx = metersPerPx / METERS_PER_UNIT[unit];
   const targetPx = 120;
@@ -42,13 +32,13 @@ export function ScaleBar() {
   const label = `${nice.toLocaleString()} ${unitLabel(unit)}`;
 
   return (
-    <div className="pointer-events-none absolute bottom-3 right-3 flex flex-col items-end gap-0.5">
-      <span className="text-[10px] font-medium tabular-nums text-muted-foreground">{label}</span>
+    <div className="pointer-events-none absolute bottom-4 right-4 z-10 flex select-none flex-col items-end gap-1 rounded-lg border border-border/60 bg-card/80 px-2.5 py-1.5 text-xs shadow-lg backdrop-blur-md transition-all duration-200">
+      <span className="font-mono text-[11px] font-medium tabular-nums text-muted-foreground">{label}</span>
       <div
-        className="relative h-2 border-x border-b border-foreground/70"
+        className="relative h-2 border-x-2 border-b-2 border-foreground/80"
         style={{ width: `${widthPx}px` }}
       >
-        <div className="absolute left-1/2 top-0 h-2 w-px bg-foreground/70" />
+        <div className="absolute left-1/2 top-0 h-2 w-0.5 -translate-x-1/2 bg-foreground/80" />
       </div>
     </div>
   );
@@ -60,23 +50,16 @@ export function ScaleBar() {
  */
 export function NorthArrow() {
   return (
-    <div className="pointer-events-none absolute right-3 top-3 flex flex-col items-center text-foreground/80">
-      <svg width={26} height={30} viewBox="0 0 26 30" aria-hidden>
-        <path d="M13 2 L20 20 L13 15 L6 20 Z" fill="currentColor" />
-      </svg>
-      <span className="text-[10px] font-semibold leading-none">N</span>
+    <div className="pointer-events-auto absolute right-4 top-4 z-10 flex cursor-pointer select-none flex-col items-center justify-center gap-0.5 rounded-xl border border-border/60 bg-card/80 p-2 shadow-lg backdrop-blur-md transition-all duration-200 hover:scale-105 hover:bg-card/95 hover:shadow-xl">
+      <div className="relative flex items-center justify-center">
+        <Compass className="h-6 w-6 text-primary/80 transition-transform duration-300" />
+        <svg width={18} height={20} viewBox="0 0 26 30" aria-hidden className="absolute -top-0.5">
+          <path d="M13 2 L20 20 L13 15 L6 20 Z" fill="hsl(var(--primary))" />
+        </svg>
+      </div>
+      <span className="font-mono text-[10px] font-bold tracking-wider text-foreground">N</span>
     </div>
   );
-}
-
-/** Categories actually present among the plan's land-use elements. */
-function presentCategories(site: Site): LandUseCategory[] {
-  const set = new Set<LandUseCategory>();
-  for (const el of site.elements) {
-    if (el.kind === "landuse") {set.add(el.category);}
-    else if (el.kind === "building" && el.use) {set.add(el.use);}
-  }
-  return LAND_USE_DEFINITIONS.map((d) => d.category).filter((c) => set.has(c));
 }
 
 /** A legend reflecting the active land-use styling (`FE-STYLE-002`). */
@@ -93,21 +76,24 @@ export function Legend() {
     LAND_USE_DEFINITIONS.find((d) => d.category === c)?.label ?? c;
 
   return (
-    <div className="absolute bottom-3 left-1/2 w-44 -translate-x-1/2 rounded-md border border-border bg-card/90 shadow-md backdrop-blur">
+    <div className="absolute bottom-4 left-1/2 z-10 w-52 -translate-x-1/2 select-none rounded-xl border border-border/60 bg-card/85 p-2.5 shadow-xl backdrop-blur-md transition-all duration-200 hover:bg-card/95">
       <button
         type="button"
         onClick={() => setCollapsed((c) => !c)}
-        className="flex w-full items-center justify-between px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground"
+        className="flex w-full items-center justify-between rounded-lg px-2 py-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
       >
-        Land use
+        <span>Land Use Legend</span>
         {collapsed ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
       </button>
       {!collapsed && (
-        <ul className="flex flex-col gap-1 px-2.5 pb-2">
+        <ul className="mt-2 flex flex-col gap-1 px-1">
           {categories.map((c) => (
-            <li key={c} className="flex items-center gap-2 text-xs">
-              <span className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: landUseColor(c) }} />
-              <span className="truncate text-foreground">{labelFor(c)}</span>
+            <li key={c} className="flex items-center gap-2.5 rounded-md px-1.5 py-1 text-xs transition-colors hover:bg-accent/50">
+              <span
+                className="h-3 w-3 shrink-0 rounded-sm shadow-sm transition-transform hover:scale-110"
+                style={{ backgroundColor: landUseColor(c) }}
+              />
+              <span className="truncate font-medium text-foreground">{labelFor(c)}</span>
             </li>
           ))}
         </ul>

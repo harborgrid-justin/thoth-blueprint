@@ -1,8 +1,6 @@
 import * as React from "react";
 import { HardHat } from "lucide-react";
 import {
-  type PayItem,
-  evaluatePayItemCost,
   computeRenovationTakeoffs,
   runRenovationAudit,
   calculateStairGeometry,
@@ -17,64 +15,25 @@ import {
   type WindowElement,
   type RoofElement,
 } from "@thoth/domain";
-import { useWorkspaceStore } from "@/store/workspaceStore";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useQtoState } from "./hooks/useQtoState";
 
 export function QtoPanel() {
-  const site = useWorkspaceStore((s) => s.site);
-  const selection = useWorkspaceStore((s) => s.selection);
-  const hoveredElementId = useWorkspaceStore((s) => s.hoveredElementId);
-  const hoverElement = useWorkspaceStore((s) => s.hoverElement);
-  const select = useWorkspaceStore((s) => s.select);
-
-  // Predefined default pay item catalog items
-  const payItems: PayItem[] = [
-    { id: "201-100", name: "Clearing & Grubbing", unit: "acres", unitCost: 3500.0, category: "Earthworks" },
-    { id: "203-010", name: "Road Excavation (Cut)", unit: "sqm", unitCost: 15.0, category: "Earthworks" },
-    { id: "301-050", name: "Aggregate Base Course", unit: "sy", unitCost: 22.0, category: "Pavement" },
-    { id: "401-200", name: "Concrete Curb & Gutter Type A", unit: "LF", unitCost: 35.0, category: "Pavement" },
-    { id: "601-500", name: "18-inch RCP Storm Pipe", unit: "feet", unitCost: 65.0, category: "Drainage" },
-    { id: "601-510", name: "Precast Cylindrical Manhole", unit: "count", unitCost: 2500.0, category: "Drainage" },
-  ];
-
-  // Local state assignment variables
-  const assignments = [
-    { elementId: "road-edge", payItemId: "401-200", formula: "length * unitCost" },
-    { elementId: "building-lot", payItemId: "201-100", formula: "area * unitCost" },
-  ];
-
-  const [activeTab, setActiveTab] = React.useState<"earthwork" | "payitems" | "renovation" | "stairs" | "curtainwalls" | "assemblies" | "roofs">("earthwork");
+  const {
+    site,
+    selection,
+    hoveredElementId,
+    hoverElement,
+    select,
+    activeTab,
+    setActiveTab,
+    payItems,
+    assignedReports,
+    totalCost,
+  } = useQtoState();
 
   if (!site) {return null;}
-
-  // Compute mock takeoffs based on active site components
-  const assignedReports = assignments.map((as) => {
-    const item = payItems.find((p) => p.id === as.payItemId)!;
-    
-    // Find matching element dimensions
-    const el = site.elements.find((e) => e.id === as.elementId);
-    const lengthVal = el && el.kind === "parcel" ? 250 : 150; // default simulation variables
-    const areaVal = el && el.kind === "parcel" ? 1.2 : 0.8;
-
-    const evalRes = evaluatePayItemCost(
-      item,
-      { length: lengthVal, area: areaVal, count: 1 },
-      as.formula
-    );
-
-    const elementName = el ? ('name' in el ? (el as any).name : el.id) : `Site Object (${as.elementId})`;
-
-    return {
-      elementName,
-      itemName: item.name,
-      unit: item.unit,
-      qty: evalRes.quantity,
-      cost: evalRes.cost,
-    };
-  });
-
-  const totalCost = assignedReports.reduce((s, r) => s + r.cost, 0);
 
   return (
     <div className="flex flex-col gap-4 p-3 text-xs">

@@ -1,49 +1,29 @@
-import * as React from "react";
 import { Play, Pause, RotateCcw, ChevronRight, ChevronLeft, ShieldCheck, AlertTriangle } from "lucide-react";
-import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useErosionStore } from "@/store/erosionStore";
-import { ErosionSimulator, type SimulationFrame } from "@thoth/domain";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useErosionSimulatorState } from "./hooks/useErosionSimulatorState";
 
 export function ErosionSimulatorPanel() {
-  const site = useWorkspaceStore((s) => s.site);
-  const { currentFrame, isPlaying, activeStep, setFrame, setPlaying, setActiveStep } = useErosionStore();
+  const {
+    site,
+    frames,
+    frame,
+    maxStep,
+    activeStep,
+    isPlaying,
+    speed,
+    setSpeed,
+    soilType,
+    setSoilType,
+    handleScrub,
+    togglePlay,
+    handleReset,
+    stepForward,
+    stepBackward,
+    compliance,
+  } = useErosionSimulatorState();
 
-  const [frames, setFrames] = React.useState<SimulationFrame[]>([]);
-  const [speed, setSpeed] = React.useState(100); // ms per step
-  const [soilType, setSoilType] = React.useState<"sand" | "silt" | "clay" | "loam">("loam");
-
-  // Run simulation whenever site layout or soil type changes
-  React.useEffect(() => {
-    if (!site) {return;}
-    const sim = new ErosionSimulator(site, soilType);
-    const recorded = sim.runSimulation(100); // 100 frames
-    setFrames(recorded);
-    if (recorded.length > 0) {
-      setFrame(recorded[0]);
-      setActiveStep(0);
-    }
-  }, [site, soilType, setFrame, setActiveStep]);
-
-  // Playback timer loop
-  React.useEffect(() => {
-    if (!isPlaying || frames.length === 0) {return;}
-
-    const interval = setInterval(() => {
-      const currentStep = useErosionStore.getState().activeStep;
-      const next = currentStep + 1;
-      if (next >= frames.length) {
-        setPlaying(false);
-      } else {
-        setActiveStep(next);
-        setFrame(frames[next]);
-      }
-    }, speed);
-
-    return () => clearInterval(interval);
-  }, [isPlaying, frames, speed, setFrame, setActiveStep, setPlaying]);
-
-  if (!site || frames.length === 0) {
+  if (!site || frames.length === 0 || !frame || !compliance) {
     return (
       <div className="p-3 text-xs text-muted-foreground text-center">
         Initialize a site layout to begin erosion simulation.
@@ -51,41 +31,7 @@ export function ErosionSimulatorPanel() {
     );
   }
 
-  const frame = currentFrame || frames[0];
-  const maxStep = frames.length - 1;
-
-  const handleScrub = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const step = parseInt(e.target.value, 10);
-    setActiveStep(step);
-    setFrame(frames[step]);
-  };
-
-  const togglePlay = () => setPlaying(!isPlaying);
-
-  const handleReset = () => {
-    setPlaying(false);
-    setActiveStep(0);
-    setFrame(frames[0]);
-  };
-
-  const stepForward = () => {
-    if (activeStep < maxStep) {
-      setActiveStep(activeStep + 1);
-      setFrame(frames[activeStep + 1]);
-    }
-  };
-
-  const stepBackward = () => {
-    if (activeStep > 0) {
-      setActiveStep(activeStep - 1);
-      setFrame(frames[activeStep - 1]);
-    }
-  };
-
-  // Determine site overall BMP compliance (warning if soil loss > 50kg or barrier load > 90%)
-  const highSoilLoss = frame.totalSoilLostKg > 50;
-  const barrierOverflow = frame.barrierStats.some((b) => b.loadRatio >= 0.9);
-  const complies = !highSoilLoss && !barrierOverflow;
+  const { highSoilLoss, barrierOverflow, complies } = compliance;
 
   return (
     <div className="flex flex-col gap-4 p-3 text-xs">
@@ -237,8 +183,4 @@ export function ErosionSimulatorPanel() {
       </div>
     </div>
   );
-}
-
-function cn(...inputs: unknown[]) {
-  return inputs.filter(Boolean).join(" ");
 }

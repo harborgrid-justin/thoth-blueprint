@@ -2,14 +2,14 @@ import {
   type ElevationGrid,
   type InfrastructureNetwork,
 } from "@thoth/domain";
-import { type Viewport } from "./viewport";
+import { type Viewport } from "./helpers/viewport";
 import {
   computeUnderlayBounds,
   computeCloudDots,
   computeSlopeCells,
   computeContourPaths,
   computeNetworkShapeData,
-} from "./overlayHelpers";
+} from "./helpers/overlayHelpers";
 
 export function UnderlayImage({
   underlay,

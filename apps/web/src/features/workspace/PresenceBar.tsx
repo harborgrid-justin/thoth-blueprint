@@ -1,5 +1,7 @@
 import type { Member } from "@/api";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { usePresenceState } from "./hooks/usePresenceState";
+import { initials } from "./helpers/presenceHelpers";
 
 /**
  * Collaborator presence avatars. Real-time presence is a Phase 4 concern
@@ -7,8 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  * visual language the live cursors will use.
  */
 export function PresenceBar({ members }: { members: Member[] }) {
-  const shown = members.slice(0, 4);
-  const extra = members.length - shown.length;
+  const { shown, extra } = usePresenceState(members);
   return (
     <div className="flex items-center -space-x-1.5">
       {shown.map((m) => (
@@ -33,13 +34,4 @@ export function PresenceBar({ members }: { members: Member[] }) {
       )}
     </div>
   );
-}
-
-function initials(name: string): string {
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
 }

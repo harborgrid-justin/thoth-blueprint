@@ -1,12 +1,5 @@
-import * as React from "react";
 import _ from "lodash";
 import { Activity, ShieldAlert, CheckCircle } from "lucide-react";
-import {
-  validatePipeNetwork,
-  type PipeDesignRules,
-} from "@thoth/domain";
-import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -18,65 +11,28 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { buildTerrainModel } from "@/features/terrain/terrainModel";
+import { usePipeDesignState } from "./hooks/usePipeDesignState";
 
 export function PipeDesignDialog() {
-  const open = useUiStore((s) => s.pipeOpen);
-  const setOpen = useUiStore((s) => s.setPipeOpen);
-  const site = useWorkspaceStore((s) => s.site);
-  const selection = useWorkspaceStore((s) => s.selection);
-  const hoveredElementId = useWorkspaceStore((s) => s.hoveredElementId);
-  const hoverElement = useWorkspaceStore((s) => s.hoverElement);
-  const select = useWorkspaceStore((s) => s.select);
-
-  const networks = site?.networks ?? [];
-  const [selectedNetId, setSelectedNetId] = React.useState<string | null>(null);
-
-  const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
-  const terrainSurface = terrain?.existing ?? null;
-
-  // Default design rules
-  const [rules, setRules] = React.useState<PipeDesignRules>({
-    minCover: 4.0,
-    minSlope: 0.005,
-    maxSlope: 0.08,
-    minPipeDiameter: 1.0,
-    defaultSumpDepth: 1.5,
-  });
-
-  // Local state for structure invert elevations
-  const [inverts, setInverts] = React.useState<Record<string, number>>({});
-
-  React.useEffect(() => {
-    if (open && networks.length > 0) {
-      setSelectedNetId(networks[0].id);
-      
-      // Initialize default inverts relative to ground
-      const initInverts: Record<string, number> = {};
-      if (site && terrainSurface) {
-        for (const net of networks) {
-          for (const node of net.nodes) {
-            initInverts[node.id] = 4.0; // 6 units below hypothetical terrain level
-          }
-        }
-      }
-      setInverts(initInverts);
-    }
-  }, [open, networks, site, terrainSurface]);
-
-  const activeNet = _.find(networks, (n) => n.id === selectedNetId) ?? networks[0] ?? null;
-
-  // Run validation
-  const validation = React.useMemo(() => {
-    if (!activeNet || !terrainSurface) {return null;}
-    return validatePipeNetwork(activeNet, terrainSurface, rules, inverts);
-  }, [activeNet, terrainSurface, rules, inverts]);
+  const {
+    open,
+    setOpen,
+    site,
+    selection,
+    hoveredElementId,
+    hoverElement,
+    select,
+    networks,
+    selectedNetId,
+    setSelectedNetId,
+    rules,
+    setRules,
+    inverts,
+    validation,
+    handleInvertChange,
+  } = usePipeDesignState();
 
   if (!site) {return null;}
-
-  function handleInvertChange(nodeId: string, val: number) {
-    setInverts({ ...inverts, [nodeId]: val });
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -190,17 +146,17 @@ export function PipeDesignDialog() {
                               isHovered ? "bg-amber-500/10" : isSelected ? "bg-primary/10" : "hover:bg-muted/40"
                             )}
                           >
-                          <td className="p-2 font-mono font-medium">{row.name}</td>
-                          <td className="p-2">{row.rimElevation.toFixed(2)}</td>
-                          <td className="p-2">{row.sumpElevation.toFixed(2)}</td>
-                          <td className="p-2">
-                            <Input
-                              type="number"
-                              className="h-7 w-20 text-right text-xs"
-                              value={inverts[row.nodeId] ?? row.lowestInvertOut}
-                              onChange={(e) => handleInvertChange(row.nodeId, parseFloat(e.target.value) || 0)}
-                            />
-                          </td>
+                            <td className="p-2 font-mono font-medium">{row.name}</td>
+                            <td className="p-2">{row.rimElevation.toFixed(2)}</td>
+                            <td className="p-2">{row.sumpElevation.toFixed(2)}</td>
+                            <td className="p-2">
+                              <Input
+                                type="number"
+                                className="h-7 w-20 text-right text-xs"
+                                value={inverts[row.nodeId] ?? row.lowestInvertOut}
+                                onChange={(e) => handleInvertChange(row.nodeId, parseFloat(e.target.value) || 0)}
+                              />
+                            </td>
                           </tr>
                         );
                       })}

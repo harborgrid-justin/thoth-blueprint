@@ -1,14 +1,11 @@
-import * as React from "react";
 import _ from "lodash";
 import { Download, LayoutTemplate } from "lucide-react";
 import {
   areaUnitLabel,
-  bounds as boundsOf,
   collectSiteCurves,
   densifyBoundary,
   formatLandLotShort,
   formatPLSSShort,
-  getRegionPlugin,
   isSpatialElement,
   landLotSide,
   measuredArea,
@@ -18,15 +15,11 @@ import {
   resolveCapabilities,
   sectionFrame,
   unitLabel,
-  unionBounds,
-  US_PLSS_DEFAULT,
-  type Bounds,
   type Point,
   type RegionPlugin,
   type Site,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
 import { elementColor } from "@/lib/elementMeta";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -42,43 +35,24 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-const INK = "#0f172a";
-const MUTED = "#475569";
-const SHEET = "#ffffff";
-
-// Landscape sheet, drawing window on the left, title/legend/curve strip on the right.
-const W = 1180;
-const H = 820;
-const MAIN = { x: 24, y: 44, w: 812, h: 720 };
-const STRIP = { x: 848, y: 44, w: 308, h: 720 };
+import { usePlatSheetState } from "./hooks/usePlatSheetState";
+import {
+  INK,
+  MUTED,
+  SHEET,
+  W,
+  H,
+  MAIN,
+  STRIP,
+  planExtent,
+  computeGraphicScaleBar,
+} from "./helpers/platSheetHelpers";
 
 /** The plat-sheet composer: a jurisdiction-driven plan sheet with title block,
  * certificates, the site plan, a consolidated curve table, and a legend. */
 export function PlatSheetDialog() {
-  const open = useUiStore((s) => s.sheetOpen);
-  const setOpen = useUiStore((s) => s.setSheetOpen);
-  const site = useWorkspaceStore((s) => s.site);
-  const svgRef = React.useRef<SVGSVGElement>(null);
+  const { open, setOpen, site, plugin, caps, svgRef, exportSvg } = usePlatSheetState();
   if (!site) {return null;}
-
-  const plugin = getRegionPlugin(site.jurisdictionId) ?? US_PLSS_DEFAULT;
-  const caps = resolveCapabilities(plugin);
-
-  function exportSvg() {
-    const svg = svgRef.current;
-    if (!svg) {return;}
-    const src = new XMLSerializer().serializeToString(svg);
-    const blob = new Blob([`<?xml version="1.0" encoding="UTF-8"?>\n${src}`], {
-      type: "image/svg+xml;charset=utf-8",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "plat-sheet.svg";
-    a.click();
-    URL.revokeObjectURL(url);
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -161,14 +135,6 @@ export function PlatSheetDialog() {
 }
 
 // --- SVG plan window -------------------------------------------------------
-
-function planExtent(site: Site): Bounds | null {
-  const boxes = _.map(_.filter(site.elements, isSpatialElement), (e) => boundsOf(e.boundary));
-  for (const m of site.monuments ?? []) {
-    boxes.push({ minX: m.position.x, minY: m.position.y, maxX: m.position.x, maxY: m.position.y });
-  }
-  return boxes.length ? unionBounds(boxes) : null;
-}
 
 function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
   const selection = useWorkspaceStore((s) => s.selection);
@@ -470,14 +436,7 @@ function NorthArrow({ x, y }: { x: number; y: number }) {
 
 function GraphicScale({ x, y, scalePx, site }: { x: number; y: number; scalePx: number; site: Site }) {
   const u = unitLabel(site.spatial.units);
-  const metersPerPx = (1 / Math.max(scalePx, 1e-6)) * METERS_PER_UNIT[site.spatial.units];
-  const perPx = metersPerPx / METERS_PER_UNIT[site.spatial.units];
-  const target = 120 * perPx;
-  const mag = Math.pow(10, Math.floor(Math.log10(Math.max(target, 1e-6))));
-  const r = target / mag;
-  const nice = (r >= 5 ? 5 : r >= 2 ? 2 : 1) * mag;
-  const barPx = nice / perPx;
-  const seg = barPx / 4;
+  const { nice, barPx, seg } = computeGraphicScaleBar(scalePx, site);
   return (
     <g transform={`translate(${x} ${y})`}>
       {Array.from({ length: 4 }).map((_, i) => (

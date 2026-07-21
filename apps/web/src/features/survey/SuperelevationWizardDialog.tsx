@@ -1,8 +1,5 @@
-import * as React from "react";
 import _ from "lodash";
 import { SlidersHorizontal, Settings2, Sparkles } from "lucide-react";
-import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
 import {
   Dialog,
   DialogContent,
@@ -12,56 +9,27 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { calculateSuperelevationRunoff } from "@thoth/domain";
+import { useSuperelevationWizardState } from "./hooks/useSuperelevationWizardState";
 
 export function SuperelevationWizardDialog() {
-  const open = useUiStore((s) => s.superelevationOpen);
-  const setOpen = useUiStore((s) => s.setSuperelevationOpen);
-  const site = useWorkspaceStore((s) => s.site);
-
-  const alignments = site?.alignments ?? [];
-  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(null);
-  
-  const [designSpeed, setDesignSpeed] = React.useState<number>(45);
-  const [eMax, setEMax] = React.useState<number>(0.06);
-  const [normalCrown, setNormalCrown] = React.useState<number>(-0.02);
-
-  React.useEffect(() => {
-    if (open && alignments.length > 0) {
-      setSelectedAlignId(alignments[0].id);
-    }
-  }, [open, alignments]);
-
-  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
-
-  const superCurve = React.useMemo(() => {
-    if (!alignment) {return null;}
-    return calculateSuperelevationRunoff(alignment, designSpeed, eMax, normalCrown);
-  }, [alignment, designSpeed, eMax, normalCrown]);
+  const {
+    open,
+    setOpen,
+    site,
+    alignments,
+    selectedAlignId,
+    setSelectedAlignId,
+    designSpeed,
+    setDesignSpeed,
+    eMax,
+    setEMax,
+    normalCrown,
+    setNormalCrown,
+    superCurve,
+    handleSave,
+  } = useSuperelevationWizardState();
 
   if (!site) {return null;}
-
-  function handleSave() {
-    if (!alignment) {return;}
-    
-    // Update design speed on alignment object
-    const patch = {
-      ...alignment,
-      designSpeed,
-      designSpeeds: [{ station: alignment.startStation, speed: designSpeed }]
-    };
-
-    // Update in workspace store list
-    const updatedAlignments = _.map(site?.alignments ?? [], (a) => a.id === alignment.id ? patch : a);
-    useWorkspaceStore.getState().updateElement(alignment.id, { alignments: updatedAlignments } as any);
-
-    // Save superelevation curve directly to store state for visual overlay
-    if ((useWorkspaceStore.getState() as any).setSuperelevationCurve) {
-      (useWorkspaceStore.getState() as any).setSuperelevationCurve(superCurve);
-    }
-
-    setOpen(false);
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

@@ -2,56 +2,38 @@ import * as React from "react";
 import _ from "lodash";
 import { Download } from "lucide-react";
 import {
-  add,
-  subtract,
-  scale,
-  normalize,
-  dot,
   boundaryEdges,
   buildableEnvelope,
   centroid,
-  bounds as boundsOf,
   densifyBoundary,
+  normalize,
   unitLabel,
-  type Point,
   type SpatialElement,
   type SpatialContext,
   type SurveyReport,
 } from "@thoth/domain";
 import { Button } from "@/components/ui/button";
+import {
+  INK,
+  INK_MUTED,
+  SHEET,
+  W,
+  H,
+  M,
+  niceNumber,
+  fmt,
+  dms,
+  buildView,
+  screenPair,
+  offset,
+  outwardNormal,
+  slug,
+} from "./helpers/platDrawingHelpers";
 
 // A monochrome "paper" plat exhibit, drawn to engineering-drawing conventions:
 // labelled metes-and-bounds courses, corner monuments with a Point of Beginning,
 // interior angles, an area callout, a north arrow, a graphic scale, and a title
 // block. Rendered on a white sheet so it reads as a drawing in any UI theme.
-
-const INK = "#0f172a";
-const INK_MUTED = "#475569";
-const SHEET = "#ffffff";
-
-const W = 800;
-const H = 620;
-const M = { left: 76, right: 76, top: 58, bottom: 128 };
-const CW = W - M.left - M.right;
-const CH = H - M.top - M.bottom;
-
-function niceNumber(value: number): number {
-  if (value <= 0) {return 1;}
-  const mag = Math.pow(10, Math.floor(Math.log10(value)));
-  const r = value / mag;
-  return (r >= 5 ? 5 : r >= 2 ? 2 : 1) * mag;
-}
-
-function fmt(v: number, digits = 2): string {
-  return v.toLocaleString(undefined, { minimumFractionDigits: digits, maximumFractionDigits: digits });
-}
-
-function dms(a: { degrees: number; minutes: number; seconds: number }): string {
-  const d = String(Math.abs(a.degrees));
-  const m = String(a.minutes).padStart(2, "0");
-  const s = String(a.seconds).padStart(2, "0");
-  return `${d}°${m}′${s}″`;
-}
 
 export function PlatDrawing({
   element,
@@ -295,53 +277,6 @@ export function PlatDrawing({
     </div>
   );
 }
-
-// --- geometry helpers ------------------------------------------------------
-
-interface View {
-  project(p: Point): Point;
-  scalePx: number;
-}
-
-function buildView(boundary: Point[]): View | null {
-  if (boundary.length < 3) {return null;}
-  const bb = boundsOf(boundary);
-  const bw = Math.max(bb.maxX - bb.minX, 1e-6);
-  const bh = Math.max(bb.maxY - bb.minY, 1e-6);
-  const scalePx = Math.min(CW / bw, CH / bh);
-  const offsetX = M.left + (CW - bw * scalePx) / 2 - bb.minX * scalePx;
-  const offsetY = M.top + (CH - bh * scalePx) / 2 - bb.minY * scalePx;
-  return {
-    scalePx,
-    // Plan north is −Y and SVG y grows downward, so north is up with no flip.
-    project: (p) => ({ x: p.x * scalePx + offsetX, y: p.y * scalePx + offsetY }),
-  };
-}
-
-function screenPair(p: Point): string {
-  return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
-}
-
-function offset(p: Point, dir: Point, px: number): Point {
-  return add(p, scale(dir, px));
-}
-
-/** Unit normal of edge a→b that points away from the polygon centroid. */
-function outwardNormal(a: Point, b: Point, c: Point): Point {
-  const e = normalize(subtract(b, a));
-  let nrm = { x: -e.y, y: e.x };
-  const mid = scale(add(a, b), 0.5);
-  if (dot(nrm, subtract(mid, c)) < 0) {
-    nrm = scale(nrm, -1);
-  }
-  return nrm;
-}
-
-function slug(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "tract";
-}
-
-// --- sheet furniture -------------------------------------------------------
 
 function NorthArrow({ x, y }: { x: number; y: number }) {
   return (

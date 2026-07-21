@@ -1,14 +1,9 @@
 import type { CivilSymbol, CivilSymbolType, Point, Site } from "@thoth/domain";
-import { worldToScreen, type Viewport } from "./viewport";
+import { worldToScreen, type Viewport } from "./helpers/viewport";
 
 const INK = "hsl(var(--foreground))";
 const HALO = "hsl(var(--canvas))";
 
-/**
- * A civil / erosion-control point symbol drawn at the origin (callers translate
- * to the screen point). Follows common plan-sheet conventions: box-X inlet
- * protection, triangle ditch checks, circle culverts, bale barriers, etc.
- */
 export function CivilSymbolGlyph({ type, subtype }: { type: CivilSymbolType; subtype?: string }) {
   switch (type) {
     case "inlet-protection":
@@ -68,7 +63,6 @@ export function CivilSymbolGlyph({ type, subtype }: { type: CivilSymbolType; sub
   }
 }
 
-/** Renders the site's placed civil/erosion-control symbols. */
 export function CivilSymbolLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const symbols = site.civilSymbols;
   if (!symbols || symbols.length === 0) {return null;}

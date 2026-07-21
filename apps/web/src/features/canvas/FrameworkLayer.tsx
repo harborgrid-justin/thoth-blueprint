@@ -8,21 +8,15 @@ import {
   type SectionFrame,
   type Site,
 } from "@thoth/domain";
-import { worldToScreen, type Viewport } from "./viewport";
+import { worldToScreen, type Viewport } from "./helpers/viewport";
 
 const INK = "hsl(var(--muted-foreground))";
 
-/**
- * Draws the controlling survey framework the plat is tied to — a PLSS section or
- * a Georgia land lot — chosen by the active jurisdiction plug-in. Renders the
- * square boundary, its quarter/center cross, corner ticks, and a label.
- */
 export function FrameworkLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const framework = getRegionPlugin(site.jurisdictionId)?.surveyFramework;
 
   if (framework === "georgia-land-lot" && site.landLot?.nwCorner) {
     const acres = site.landLot.ref.acres ?? 202.5;
-    // Land-lot side is defined in feet; express it in the plan's units.
     const side = (landLotSide(acres) * 0.3048) / METERS_PER_UNIT[site.spatial.units];
     return (
       <FrameworkSquare

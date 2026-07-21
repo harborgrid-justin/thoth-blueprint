@@ -6,38 +6,25 @@ import {
   type Point,
   type Site,
 } from "@thoth/domain";
-import { worldToScreen, type Viewport } from "./viewport";
+import { worldToScreen, type Viewport } from "./helpers/viewport";
 
 const INK = "hsl(var(--foreground))";
 const HALO = "hsl(var(--canvas))";
 
-/**
- * A dimension terminator (arrowhead / tick / dot) drawn at the origin, oriented
- * along +X; callers translate and rotate to the projected placement. Follows the
- * dimension style's `arrow` convention.
- */
 function Terminator({ arrow }: { arrow: DimArrow }) {
   switch (arrow) {
     case "tick":
-      // Architectural 45° slash centred on the point.
       return <line x1={-4} y1={4} x2={4} y2={-4} stroke={INK} strokeWidth={1.2} vectorEffect="non-scaling-stroke" />;
     case "dot":
       return <circle cx={0} cy={0} r={2.2} fill={INK} />;
     case "open":
-      // Open (unfilled) arrowhead pointing along −X toward the point.
       return <path d="M8 -3 L0 0 L8 3" fill="none" stroke={INK} strokeWidth={1.2} vectorEffect="non-scaling-stroke" />;
     case "arrow":
     default:
-      // Filled arrowhead whose tip sits at the point, tail along +X.
       return <path d="M0 0 L9 -3 L9 3 Z" fill={INK} stroke="none" />;
   }
 }
 
-/**
- * Renders the site's dimension entities: witness/extension lines, the dimension
- * line, terminators, and the measured label. All geometry is measured in model
- * space by {@link measureDimension} and projected here.
- */
 export function DimensionLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const dimensions = site.dimensions;
   if (!dimensions || dimensions.length === 0) {return null;}
@@ -71,8 +58,6 @@ export function DimensionLayer({ site, viewport }: { site: Site; viewport: Viewp
 
         const ticks = g.ticks.map((t, i) => {
           const s = project(t.at);
-          // `dir` is a model-space unit vector; plan-y is screen-down, so screen
-          // and model directions share sign — use the components directly.
           const angle = (Math.atan2(t.dir.y, t.dir.x) * 180) / Math.PI;
           return (
             <g key={`t${i}`} transform={`translate(${s.x} ${s.y}) rotate(${angle})`}>

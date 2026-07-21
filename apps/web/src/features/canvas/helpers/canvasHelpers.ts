@@ -12,6 +12,7 @@ import {
   type Site,
 } from "@thoth/domain";
 import { type Viewport, worldToScreen } from "./viewport";
+import { pointToSegmentDistance } from "@/lib/math";
 
 /** Midpoint of an edge, honoring an existing bulge (the arc's midpoint). */
 export function edgeMidpoint(a: Point, b: Point, bulge: number): Point {
@@ -52,15 +53,7 @@ export function orderedVisibleElements(site: Site) {
 
 /** Shortest distance from point `p` to segment `a`–`b`, in the same space. */
 export function pointSegmentDistance(p: Point, a: Point, b: Point): number {
-  const dx = b.x - a.x;
-  const dy = b.y - a.y;
-  const lenSq = dx * dx + dy * dy;
-  if (lenSq === 0) {
-    return Math.hypot(p.x - a.x, p.y - a.y);
-  }
-  let t = ((p.x - a.x) * dx + (p.y - a.y) * dy) / lenSq;
-  t = Math.max(0, Math.min(1, t));
-  return Math.hypot(p.x - (a.x + t * dx), p.y - (a.y + t * dy));
+  return pointToSegmentDistance(p, a, b);
 }
 
 /** Expand a bounds by a margin so a tight or zero-size selection keeps context. */
@@ -93,3 +86,14 @@ export function slopeColor(percent: number): string {
   }
   return "#ef4444"; // >25% severe red
 }
+
+export function uniq<T>(arr: T[]): T[] {
+  const out: T[] = [];
+  for (const x of arr) {
+    if (!out.includes(x)) {
+      out.push(x);
+    }
+  }
+  return out;
+}
+

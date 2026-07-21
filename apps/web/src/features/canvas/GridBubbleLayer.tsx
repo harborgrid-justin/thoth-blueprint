@@ -1,21 +1,15 @@
 import { gridBubbleGeometry, type Point, type Site } from "@thoth/domain";
-import { worldToScreen, type Viewport } from "./viewport";
+import { worldToScreen, type Viewport } from "./helpers/viewport";
 
 const GRID = "#64748b";
 const INK = "hsl(var(--foreground))";
 const HALO = "hsl(var(--canvas))";
 
-/**
- * Renders structural/column grids: each gridline drawn with a centre line-type,
- * and a bubbled label (digit or letter) at its tagged ends — the datum a
- * structural or architectural plan references columns from.
- */
 export function GridBubbleLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
   const gridLines = site.annotations?.gridLines;
   if (!gridLines || gridLines.length === 0) {return null;}
 
   const project = (p: Point) => worldToScreen(p, viewport);
-  // Bubble stand-off in model units, so bubbles sit just clear of the line ends.
   const gap = 16;
 
   return (

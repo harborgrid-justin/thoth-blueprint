@@ -5,7 +5,7 @@ import {
   type Point,
   type Site,
 } from "@thoth/domain";
-import { worldToScreen, type Viewport } from "./viewport";
+import { worldToScreen, type Viewport } from "./helpers/viewport";
 
 const INK = "hsl(var(--foreground))";
 const RED = "#b91c1c";

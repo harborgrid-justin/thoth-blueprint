@@ -10,8 +10,6 @@ import {
   type ResolvedAlignment,
   type SpatialContext,
 } from "@thoth/domain";
-import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -21,6 +19,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAlignmentReportState } from "./hooks/useAlignmentReportState";
+import { curveLabel } from "./helpers/alignmentReportHelpers";
 
 /**
  * The alignment / stationing report: for each horizontal baseline, the tangent
@@ -28,19 +28,17 @@ import { ScrollArea } from "@/components/ui/scroll-area";
  * chord) — the survey record behind a civil plan sheet.
  */
 export function AlignmentReportDialog() {
-  const open = useUiStore((s) => s.alignmentOpen);
-  const setOpen = useUiStore((s) => s.setAlignmentOpen);
-  const site = useWorkspaceStore((s) => s.site);
-
-  const alignments = site?.alignments ?? [];
-  const [selectedId, setSelectedId] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    if (open) {setSelectedId(alignments[0]?.id ?? null);}
-  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+  const {
+    open,
+    setOpen,
+    site,
+    alignments,
+    selected,
+    selectAlignment,
+    hoverAlignment,
+  } = useAlignmentReportState();
 
   if (!site) {return null;}
-  const selected = _.find(alignments, (a) => a.id === selectedId) ?? alignments[0] ?? null;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -66,12 +64,9 @@ export function AlignmentReportDialog() {
                 <button
                   key={a.id}
                   type="button"
-                  onClick={() => {
-                    setSelectedId(a.id);
-                    useWorkspaceStore.getState().select(a.id);
-                  }}
-                  onMouseEnter={() => useWorkspaceStore.getState().hoverElement(a.id)}
-                  onMouseLeave={() => useWorkspaceStore.getState().hoverElement(null)}
+                  onClick={() => selectAlignment(a.id)}
+                  onMouseEnter={() => hoverAlignment(a.id)}
+                  onMouseLeave={() => hoverAlignment(null)}
                   className={cn(
                     "truncate rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                     a.id === (selected?.id ?? "")
@@ -201,16 +196,12 @@ function AlignmentReport({
   );
 }
 
-/** Curve label C1, C2… in traversal order. */
-function curveLabel(r: ResolvedAlignment, piIndex: number): string {
-  const n = _.findIndex(r.curves, (c) => c.piIndex === piIndex);
-  return `C${n + 1}`;
-}
-
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h4 className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</h4>
+      <h4 className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        {title}
+      </h4>
       {children}
     </div>
   );

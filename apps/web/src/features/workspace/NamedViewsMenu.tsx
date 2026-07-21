@@ -1,6 +1,4 @@
-
 import { Camera, Plus, Trash2 } from "lucide-react";
-import { useCanvasStore } from "@/store/canvasStore";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,16 +8,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useNamedViewsState } from "./hooks/useNamedViewsState";
 
 export function NamedViewsMenu() {
-  const { namedViews, addNamedView, deleteNamedView, setViewport } = useCanvasStore();
-
-  const handleSave = () => {
-    const name = prompt("Enter a name for the current view:");
-    if (name && name.trim()) {
-      addNamedView(name.trim());
-    }
-  };
+  const { namedViews, setViewport, handleSave, handleDelete } = useNamedViewsState();
 
   return (
     <DropdownMenu>
@@ -45,12 +37,7 @@ export function NamedViewsMenu() {
               <span className="truncate">{view.name}</span>
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (confirm(`Delete named view "${view.name}"?`)) {
-                    deleteNamedView(view.name);
-                  }
-                }}
+                onClick={(e) => handleDelete(e, view.name)}
                 className="opacity-0 group-hover:opacity-100 hover:text-destructive p-1 rounded transition-opacity"
                 aria-label={`Delete ${view.name}`}
               >
