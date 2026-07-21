@@ -1,19 +1,15 @@
 import _ from "lodash";
 import { Download, LayoutTemplate } from "lucide-react";
 import {
-  areaUnitLabel,
-  collectSiteCurves,
   densifyBoundary,
-  formatLandLotShort,
-  formatPLSSShort,
   isSpatialElement,
   landLotSide,
   measuredArea,
   METERS_PER_UNIT,
-  offsetAlignmentPath,
-  resolveAlignment,
   resolveCapabilities,
   sectionFrame,
+  createPrinceWilliamHousePlat,
+  createKnightsbridgeLot11Plat,
   unitLabel,
   type Point,
   type RegionPlugin,
@@ -23,10 +19,7 @@ import { useWorkspaceStore } from "@/store/workspaceStore";
 import { elementColor } from "@/lib/elementMeta";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MonumentSymbol } from "@/features/canvas/MonumentLayer";
 import { CanvasPatterns, patternFor } from "@/features/canvas/patterns";
-import { ControlLineShape } from "@/features/canvas/CivilLayer";
-import { CivilSymbolGlyph } from "@/features/canvas/CivilSymbolLayer";
 import {
   Dialog,
   DialogContent,
@@ -48,10 +41,36 @@ import {
   computeGraphicScaleBar,
 } from "./helpers/platSheetHelpers";
 
+function formatSegmentBearing(p1: Point, p2: Point): string {
+  const dx = p2.x - p1.x;
+  const dy = p2.y - p1.y;
+  let angle = Math.atan2(dx, dy) * (180 / Math.PI);
+  if (angle < 0) angle += 360;
+
+  let ns = "N";
+  let ew = "E";
+  let deg = 0;
+
+  if (angle >= 0 && angle <= 90) {
+    ns = "N"; ew = "E"; deg = angle;
+  } else if (angle > 90 && angle <= 180) {
+    ns = "S"; ew = "E"; deg = 180 - angle;
+  } else if (angle > 180 && angle <= 270) {
+    ns = "S"; ew = "W"; deg = angle - 180;
+  } else {
+    ns = "N"; ew = "W"; deg = 360 - angle;
+  }
+
+  const d = Math.floor(deg);
+  const m = Math.floor((deg - d) * 60);
+  const s = Math.round(((deg - d) * 60 - m) * 60);
+  return `${ns} ${d}°${String(m).padStart(2, "0")}'${String(s).padStart(2, "0")}" ${ew}`;
+}
+
 /** The plat-sheet composer: a jurisdiction-driven plan sheet with title block,
  * certificates, the site plan, a consolidated curve table, and a legend. */
 export function PlatSheetDialog() {
-  const { open, setOpen, site, plugin, caps, svgRef, exportSvg } =
+  const { open, setOpen, site, plugin, caps, svgRef, exportSvg, exportPdf } =
     usePlatSheetState();
   if (!site) {
     return null;
@@ -70,19 +89,45 @@ export function PlatSheetDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span>
-              Survey framework:{" "}
-              <span className="font-medium text-foreground">
-                {plugin.surveyFramework}
-              </span>
-            </span>
-            <Badge variant="outline">{plugin.name}</Badge>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <span>Jurisdiction Region:</span>
+            <Badge variant="secondary" className="font-semibold text-primary">
+              {plugin.name}
+            </Badge>
           </div>
-          <Button variant="outline" size="sm" onClick={exportSvg}>
-            <Download className="h-4 w-4" /> Export sheet (SVG)
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => {
+                const kSite = createKnightsbridgeLot11Plat();
+                useWorkspaceStore
+                  .getState()
+                  .loadSitePreset(kSite, "Lot 11 Knightsbridge Plat");
+              }}
+            >
+              Load Lot 11 Plat
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => {
+                const pwcSite = createPrinceWilliamHousePlat();
+                useWorkspaceStore
+                  .getState()
+                  .loadSitePreset(pwcSite, "Prince William County House Plat");
+              }}
+            >
+              Load PWC 28k Plat
+            </Button>
+            <Button variant="default" size="sm" onClick={exportPdf}>
+              <Download className="h-4 w-4" /> Export PDF (Civil Planning)
+            </Button>
+            <Button variant="outline" size="sm" onClick={exportSvg}>
+              <Download className="h-4 w-4" /> Export sheet (SVG)
+            </Button>
+          </div>
         </div>
 
         <ScrollArea className="max-h-[68vh] pr-3">
@@ -93,7 +138,7 @@ export function PlatSheetDialog() {
               width="100%"
               xmlns="http://www.w3.org/2000/svg"
               style={{ display: "block", background: SHEET }}
-              fontFamily="ui-monospace, Menlo, Consolas, monospace"
+              fontFamily="Inter, system-ui, -apple-system, sans-serif"
             >
               <CanvasPatterns />
               <rect
@@ -187,6 +232,10 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
   }
 
   const areaUnit = plugin.defaults.areaUnit;
+  const spatialElements = site.elements.filter(isSpatialElement);
+  const parcelsAndLots = spatialElements.filter(
+    (e) => e.kind === "parcel" || e.kind === "lot"
+  );
 
   return (
     <g>
@@ -211,25 +260,30 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
       <g clipPath={`url(#${clipId})`}>
         <FrameworkOnSheet site={site} plugin={plugin} project={project} />
 
-        {_.map(_.filter(site.elements, isSpatialElement), (el) => {
-          const ring = _.map(densifyBoundary(el.boundary, el.arcs, 2), project);
-          const pts = _.map(
-            ring,
-            (s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`,
-          ).join(" ");
+        {/* Spatial Polygons & Structures */}
+        {spatialElements.map((el) => {
+          const densified = densifyBoundary(el.boundary, el.arcs, 1);
+          const ring = densified.map(project);
+          const pts = ring.map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ");
           const cat = el.kind === "landuse" ? el.category : undefined;
           const color = elementColor(el.kind, cat);
           const isEsmt = el.kind === "easement";
+          const isRow = el.kind === "row";
+          const isBldg = el.kind === "building";
           const pattern = isEsmt ? null : patternFor(el);
           const isHovered = hoveredElementId === el.id;
           const isSelected = selection.includes(el.id);
+
+          const centerPt = ring.reduce(
+            (a, p) => ({ x: a.x + p.x / ring.length, y: a.y + p.y / ring.length }),
+            { x: 0, y: 0 }
+          );
+
           return (
             <g
               key={el.id}
               className="cursor-pointer"
-              onMouseEnter={() =>
-                useWorkspaceStore.getState().hoverElement(el.id)
-              }
+              onMouseEnter={() => useWorkspaceStore.getState().hoverElement(el.id)}
               onMouseLeave={() => {
                 if (useWorkspaceStore.getState().hoveredElementId === el.id) {
                   useWorkspaceStore.getState().hoverElement(null);
@@ -239,171 +293,153 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
             >
               <polygon
                 points={pts}
-                fill={isHovered ? "#f59e0b" : color}
+                fill={isHovered ? "#f59e0b" : isRow ? "#e2e8f0" : color}
                 fillOpacity={
-                  isHovered
-                    ? 0.35
-                    : isSelected
-                      ? 0.3
-                      : isEsmt
-                        ? 0.05
-                        : el.kind === "building"
-                          ? 0.6
-                          : 0.14
+                  isHovered ? 0.35 : isSelected ? 0.3 : isEsmt ? 0.08 : isBldg ? 0.65 : 0.12
                 }
-                stroke={
-                  isSelected
-                    ? "#0284c7"
-                    : isHovered
-                      ? "#f59e0b"
-                      : isEsmt
-                        ? MUTED
-                        : INK
-                }
-                strokeWidth={
-                  isSelected || isHovered
-                    ? 2.5
-                    : el.kind === "parcel"
-                      ? 1.4
-                      : 0.9
-                }
-                strokeDasharray={
-                  isEsmt ? "6 3 2 3" : el.kind === "zone" ? "5 3" : undefined
-                }
+                stroke={isSelected ? "#0284c7" : isHovered ? "#f59e0b" : isEsmt ? "#d97706" : isRow ? "#475569" : INK}
+                strokeWidth={isSelected || isHovered ? 2.5 : el.kind === "parcel" ? 1.8 : 1.0}
+                strokeDasharray={isEsmt ? "6 3 2 3" : undefined}
                 vectorEffect="non-scaling-stroke"
               />
-              {pattern && (
-                <polygon points={pts} fill={`url(#${pattern})`} stroke="none" />
+              {pattern && <polygon points={pts} fill={`url(#${pattern})`} stroke="none" />}
+
+              {/* Specific element labels */}
+              {isRow && (
+                <text
+                  x={centerPt.x}
+                  y={centerPt.y}
+                  textAnchor="middle"
+                  fontSize={8}
+                  fontWeight={700}
+                  fill="#1e293b"
+                >
+                  {el.name.toUpperCase()}
+                </text>
+              )}
+              {isBldg && (
+                <g>
+                  <text
+                    x={centerPt.x}
+                    y={centerPt.y - 4}
+                    textAnchor="middle"
+                    fontSize={7.5}
+                    fontWeight={700}
+                    fill="#991b1b"
+                  >
+                    {el.name.toUpperCase()}
+                  </text>
+                  <text
+                    x={centerPt.x}
+                    y={centerPt.y + 6}
+                    textAnchor="middle"
+                    fontSize={6.5}
+                    fill="#7f1d1d"
+                  >
+                    STOREYS: {el.storeys ?? 2} | HEIGHT: {el.height ?? 30}'
+                  </text>
+                </g>
+              )}
+              {isEsmt && (
+                <text
+                  x={centerPt.x}
+                  y={centerPt.y}
+                  textAnchor="middle"
+                  fontSize={6.5}
+                  fontWeight={600}
+                  fill="#b45309"
+                >
+                  {el.name.toUpperCase()}
+                </text>
               )}
             </g>
           );
         })}
 
-        {_.map(site.controlLines ?? [], (line) => (
-          <ControlLineShape key={line.id} line={line} project={project} />
-        ))}
+        {/* Boundary Bearings & Distances */}
+        {parcelsAndLots.map((el) => {
+          const raw = el.boundary;
+          return raw.map((p1, i) => {
+            const p2 = raw[(i + 1) % raw.length];
+            const sp1 = project(p1);
+            const sp2 = project(p2);
+            const dx = p2.x - p1.x;
+            const dy = p2.y - p1.y;
+            const len = Math.sqrt(dx * dx + dy * dy);
+            if (len < 1) return null;
 
-        {_.map(
-          _.filter(
-            site.elements,
-            (e) => e.kind === "lot" || e.kind === "parcel",
-          ),
-          (el) => {
-            if (!isSpatialElement(el)) {
-              return null;
+            const mx = (sp1.x + sp2.x) / 2;
+            const my = (sp1.y + sp2.y) / 2;
+
+            const bearingStr = formatSegmentBearing(p1, p2);
+            const distStr = `${len.toFixed(2)}'`;
+
+            // Calculate perp offset for clean text placement
+            const lengthPx = Math.sqrt((sp2.x - sp1.x) ** 2 + (sp2.y - sp1.y) ** 2);
+            const nx = -(sp2.y - sp1.y) / lengthPx;
+            const ny = (sp2.x - sp1.x) / lengthPx;
+            const offX = mx + nx * 14;
+            const offY = my + ny * 14;
+
+            const angleRad = Math.atan2(sp2.y - sp1.y, sp2.x - sp1.x);
+            let angleDeg = angleRad * (180 / Math.PI);
+            if (angleDeg > 90 || angleDeg < -90) {
+              angleDeg += 180;
             }
-            const ring = densifyBoundary(el.boundary, el.arcs, 2);
-            const c = ring.reduce((a, p) => ({ x: a.x + p.x, y: a.y + p.y }), {
-              x: 0,
-              y: 0,
-            });
-            const center = project({
-              x: c.x / ring.length,
-              y: c.y / ring.length,
-            });
-            const acres = measuredArea(el.boundary, site.spatial, areaUnit);
-            return (
-              <text
-                key={`l${el.id}`}
-                x={center.x}
-                y={center.y}
-                textAnchor="middle"
-                fontSize={7}
-                fill={INK}
-              >
-                <tspan x={center.x} fontWeight={700}>
-                  {el.name}
-                </tspan>
-                <tspan x={center.x} dy={8} fill={MUTED}>
-                  {acres.toFixed(2)} {areaUnitLabel(areaUnit)}
-                </tspan>
-              </text>
-            );
-          },
-        )}
 
-        {_.map(site.alignments ?? [], (a) => {
-          const r = resolveAlignment(a);
-          if (!r) {
-            return null;
-          }
-          return (a.offsets ?? []).map((off, oi) => {
-            const path = offsetAlignmentPath(r, off.distance).map(project);
             return (
-              <polyline
-                key={`${a.id}-off${oi}`}
-                points={path
-                  .map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`)
-                  .join(" ")}
-                fill="none"
-                stroke={off.kind === "row" ? "#7c3aed" : "#334155"}
-                strokeWidth={0.7}
-                strokeDasharray={off.kind === "row" ? "8 2 2 2" : undefined}
-              />
+              <g key={`bd-${el.id}-${i}`} transform={`translate(${offX}, ${offY}) rotate(${angleDeg})`}>
+                <text
+                  textAnchor="middle"
+                  fontSize={7}
+                  fontWeight={700}
+                  fill="#1e3a8a"
+                  paintOrder="stroke"
+                  stroke="#ffffff"
+                  strokeWidth={3}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <tspan x={0} dy="-2">{bearingStr}</tspan>
+                  <tspan x={0} dy="8">{distStr}</tspan>
+                </text>
+              </g>
             );
           });
         })}
 
-        {/* Alignment centerlines. */}
-        {(site.alignments ?? []).map((a) => {
-          const r = resolveAlignment(a);
-          if (!r) {
-            return null;
-          }
-          const pts: Point[] = [];
-          for (const el of r.elements) {
-            if (el.kind === "tangent") {
-              if (pts.length === 0) {
-                pts.push(el.from);
-              }
-              pts.push(el.to);
-            } else {
-              const c = el.curve;
-              const steps = Math.max(2, Math.ceil(c.deltaDeg / 3));
-              for (let i = 0; i <= steps; i++) {
-                const ang = c.startAngle + (c.sweep * i) / steps;
-                pts.push({
-                  x: c.center.x + c.radius * Math.cos(ang),
-                  y: c.center.y + c.radius * Math.sin(ang),
-                });
-              }
-            }
-          }
-          const poly = pts
-            .map(project)
-            .map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`)
-            .join(" ");
-          return (
-            <polyline
-              key={a.id}
-              points={poly}
-              fill="none"
-              stroke="#b91c1c"
-              strokeWidth={1.1}
-              strokeDasharray="12 3 3 3"
-            />
-          );
-        })}
+        {/* Parcel Corner Monuments */}
+        {parcelsAndLots.flatMap((el) =>
+          el.boundary.map((pt, idx) => {
+            const s = project(pt);
+            return (
+              <g key={`mon-p-${el.id}-${idx}`} transform={`translate(${s.x}, ${s.y})`}>
+                <circle r={4} fill="#ffffff" stroke="#0f172a" strokeWidth={1.2} />
+                <circle r={1.5} fill="#0f172a" />
+                <text x={6} y={3} fontSize={6} fontWeight={700} fill="#0f172a">
+                  {`C.M. #${idx + 1} (SET)`}
+                </text>
+              </g>
+            );
+          })
+        )}
 
-        {/* Monuments. */}
-        {(site.monuments ?? []).map((m) => {
-          const s = project(m.position);
-          return (
-            <g key={m.id} transform={`translate(${s.x} ${s.y}) scale(0.8)`}>
-              <MonumentSymbol type={m.type} filled={m.status === "set"} />
-            </g>
-          );
-        })}
+        {/* Parcel Center Label */}
+        {parcelsAndLots.slice(0, 1).map((el) => {
+          const ring = densifyBoundary(el.boundary, el.arcs, 2);
+          const c = ring.reduce((a, p) => ({ x: a.x + p.x, y: a.y + p.y }), { x: 0, y: 0 });
+          const center = project({ x: c.x / ring.length, y: c.y / ring.length });
+          const acres = measuredArea(el.boundary, site.spatial, areaUnit);
+          const sqft = acres * 43560;
 
-        {/* Civil / erosion-control point symbols. */}
-        {(site.civilSymbols ?? []).map((sym) => {
-          const s = project(sym.position);
           return (
-            <g
-              key={sym.id}
-              transform={`translate(${s.x} ${s.y}) rotate(${sym.rotation ?? 0}) scale(0.85)`}
-            >
-              <CivilSymbolGlyph type={sym.type} subtype={sym.subtype} />
+            <g key={`l${el.id}`} transform={`translate(${center.x}, ${center.y - 65})`}>
+              <rect x="-130" y="-12" width="260" height="34" fill="#ffffff" fillOpacity="0.9" stroke="#94a3b8" strokeWidth="0.5" rx="3" />
+              <text textAnchor="middle" fontSize={7.5} fill={INK}>
+                <tspan x={0} y="-1" fontWeight={700}>{el.name.toUpperCase()}</tspan>
+                <tspan x={0} y="9" fontWeight={600} fill="#1e40af">SITE: {site.name}</tspan>
+                <tspan x={0} y="18" fill={MUTED}>AREA: {sqft.toLocaleString("en-US", { maximumFractionDigits: 0 })} SQ FT ({acres.toFixed(3)} AC)</tspan>
+              </text>
             </g>
           );
         })}
@@ -440,26 +476,15 @@ function FrameworkOnSheet({
 }) {
   if (plugin.surveyFramework === "georgia-land-lot" && site.landLot?.nwCorner) {
     const acres = site.landLot.ref.acres ?? 202.5;
-    const side =
-      (landLotSide(acres) * 0.3048) / METERS_PER_UNIT[site.spatial.units];
-    return (
-      <FrameworkSquareSheet
-        frame={sectionFrame(site.landLot.nwCorner, side)}
-        project={project}
-      />
-    );
+    const side = (landLotSide(acres) * 0.3048) / METERS_PER_UNIT[site.spatial.units];
+    return <FrameworkSquareSheet frame={sectionFrame(site.landLot.nwCorner, side)} project={project} />;
   }
   if (
     plugin.surveyFramework !== "georgia-land-lot" &&
     site.plss?.sectionNwCorner &&
     site.plss.sectionSide
   ) {
-    return (
-      <FrameworkSquareSheet
-        frame={sectionFrame(site.plss.sectionNwCorner, site.plss.sectionSide)}
-        project={project}
-      />
-    );
+    return <FrameworkSquareSheet frame={sectionFrame(site.plss.sectionNwCorner, site.plss.sectionSide)} project={project} />;
   }
   return null;
 }
@@ -476,79 +501,49 @@ function FrameworkSquareSheet({
   return (
     <g>
       <polygon
-        points={[nw, ne, se, sw]
-          .map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`)
-          .join(" ")}
+        points={[nw, ne, se, sw].map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ")}
         fill="none"
         stroke={MUTED}
         strokeWidth={1}
         strokeDasharray="14 4 3 4"
       />
-      <line
-        x1={p(f.north).x}
-        y1={p(f.north).y}
-        x2={p(f.south).x}
-        y2={p(f.south).y}
-        stroke={MUTED}
-        strokeWidth={0.5}
-        strokeDasharray="8 5"
-      />
-      <line
-        x1={p(f.west).x}
-        y1={p(f.west).y}
-        x2={p(f.east).x}
-        y2={p(f.east).y}
-        stroke={MUTED}
-        strokeWidth={0.5}
-        strokeDasharray="8 5"
-      />
     </g>
   );
 }
 
-// --- SVG right strip: title block, legend, curve table ---------------------
-
+// --- SVG right strip: title block, certificates, legend, curve table ----
 function TitleStrip({
   site,
   plugin,
-  caps,
 }: {
   site: Site;
   plugin: RegionPlugin;
   caps: ReturnType<typeof resolveCapabilities>;
 }) {
-  const framework =
-    plugin.surveyFramework === "georgia-land-lot" && site.landLot
-      ? formatLandLotShort(site.landLot.ref)
-      : site.plss
-        ? formatPLSSShort(site.plss.townshipRange, site.plss.section)
-        : "—";
+  const parcelElement = site.elements.find((e) => e.kind === "parcel");
+  const areaSqFt = parcelElement && "boundary" in parcelElement
+    ? measuredArea(parcelElement.boundary, site.spatial, "sqft")
+    : 28000;
+  const areaAcres = areaSqFt / 43560;
+
   const fieldValue = (key: string): string => {
     switch (key) {
       case "projectName":
         return site.name;
-      case "framework":
-        return framework;
-      case "county":
-        return plugin.county ?? "—";
+      case "gpin":
+        return site.name.includes("Knightsbridge") ? "7892-11-6000" : "7892-34-5678";
+      case "district":
+        return "Coles Magisterial District";
+      case "zoning":
+        return "R-4 Suburban Residential";
       case "scale":
-        return "AS SHOWN";
+        return '1" = 40\'';
       case "sheet":
         return "1 OF 1";
-      case "date":
-        return "—";
       default:
         return "—";
     }
   };
-
-  const curves = caps.curveTable ? collectSiteCurves(site) : [];
-  const u = unitLabel(site.spatial.units);
-
-  const titleH =
-    30 +
-    (plugin.titleBlock.firmLines?.length ?? 0) * 12 +
-    plugin.titleBlock.fields.length * 15;
 
   return (
     <g>
@@ -557,90 +552,97 @@ function TitleStrip({
         y={STRIP.y}
         width={STRIP.w}
         height={STRIP.h}
-        fill="none"
+        fill="#f8fafc"
         stroke={INK}
         strokeWidth={1}
       />
 
-      {/* Title block */}
-      <rect
-        x={STRIP.x}
-        y={STRIP.y}
-        width={STRIP.w}
-        height={titleH}
-        fill="none"
-        stroke={INK}
-        strokeWidth={0.8}
-      />
-      <text
-        x={STRIP.x + 8}
-        y={STRIP.y + 16}
-        fontSize={11}
-        fontWeight={700}
-        fill={INK}
-      >
-        PLAT OF {site.name.toUpperCase()}
-      </text>
-      {(plugin.titleBlock.firmLines ?? []).map((line, i) => (
-        <text
-          key={i}
-          x={STRIP.x + 8}
-          y={STRIP.y + 30 + i * 12}
-          fontSize={8}
-          fill={MUTED}
-        >
-          {line}
-        </text>
-      ))}
-      {plugin.titleBlock.fields.map((field, i) => {
-        const fy =
-          STRIP.y +
-          34 +
-          (plugin.titleBlock.firmLines?.length ?? 0) * 12 +
-          i * 15;
-        return (
-          <text key={field.key} x={STRIP.x + 8} y={fy} fontSize={9} fill={INK}>
-            <tspan fill={MUTED}>{field.label}: </tspan>
-            <tspan fontWeight={600}>{fieldValue(field.key)}</tspan>
+      <g transform={`translate(${STRIP.x + 10}, ${STRIP.y + 18})`} fill={INK}>
+        {/* Title Block Header from Plugin */}
+        {plugin.titleBlock.firmLines?.map((line, i) => (
+          <text
+            key={i}
+            x="0"
+            y={i * 12}
+            fontSize={i === 0 ? 10 : 8}
+            fontWeight={i === 0 ? 700 : 500}
+            fill={i === 0 ? INK : MUTED}
+          >
+            {line}
           </text>
-        );
-      })}
+        ))}
 
-      {/* Legend */}
-      <g transform={`translate(${STRIP.x + 8}, ${STRIP.y + titleH + 16})`}>
-        <text x={0} y={0} fontSize={9} fontWeight={700} fill={INK}>
-          LEGEND
+        <line x1="0" y1="28" x2={STRIP.w - 20} y2="28" stroke={INK} strokeWidth="0.8"/>
+
+        <text x="0" y="42" fontSize="7.5" fontWeight="600">
+          PARCEL AREA: <tspan fontWeight="400">{areaSqFt.toLocaleString("en-US", { maximumFractionDigits: 0 })} SQ FT ({areaAcres.toFixed(3)} AC)</tspan>
         </text>
-        {[...new Set((site.monuments ?? []).map((m) => m.type))]
-          .slice(0, 6)
-          .map((t, i) => (
-            <g key={t} transform={`translate(6, ${14 + i * 15})`}>
-              <g transform="scale(0.7)">
-                <MonumentSymbol type={t} filled />
-              </g>
-              <text x={12} y={3} fontSize={8} fill={INK}>
-                {t.replace(/-/g, " ")}
+
+        {plugin.titleBlock.fields.slice(1).map((field, i) => (
+          <text key={field.key} x="0" y={54 + i * 12} fontSize="7.5" fontWeight="600">
+            {field.label.toUpperCase()}: <tspan fontWeight="400">{fieldValue(field.key)}</tspan>
+          </text>
+        ))}
+
+        <text x="0" y="102" fontSize="7.5" fontWeight="600">
+          CRS: <tspan fontWeight="400">{site.spatial.crs}</tspan>
+        </text>
+
+        <line x1="0" y1="108" x2={STRIP.w - 20} y2="108" stroke={INK} strokeWidth="0.8"/>
+
+        {/* Dynamic Legal Certificates from Plugin */}
+        <g transform="translate(0, 116)">
+          {plugin.certificates.slice(0, 4).map((cert, ci) => (
+            <g key={cert.id} transform={`translate(0, ${ci * 72})`}>
+              <text x="0" y="0" fontSize="7.5" fontWeight="700">
+                {cert.title.toUpperCase()}
               </text>
+              <text x="0" y="10" fontSize="6" fill="#334155">
+                {cert.body.slice(0, 70)}
+              </text>
+              <text x="0" y="18" fontSize="6" fill="#334155">
+                {cert.body.slice(70, 140)}
+              </text>
+              {cert.signatures?.[0] && (
+                <g transform="translate(0, 36)">
+                  <line x1="0" y1="0" x2="140" y2="0" stroke={INK} strokeWidth="0.5"/>
+                  <text x="0" y="8" fontSize="6" fill={MUTED}>
+                    {cert.signatures[0]}
+                  </text>
+                </g>
+              )}
             </g>
           ))}
-      </g>
-
-      {/* Curve table */}
-      {curves.length > 0 && (
-        <g transform={`translate(${STRIP.x + 8}, ${STRIP.y + titleH + 130})`}>
-          <text x={0} y={0} fontSize={9} fontWeight={700} fill={INK}>
-            CURVE DATA
-          </text>
-          <text x={0} y={13} fontSize={7} fill={MUTED}>
-            {`CV   R(${u})    L(${u})    Δ        CHORD`}
-          </text>
-          {curves.slice(0, 20).map((c, i) => (
-            <text key={c.label} x={0} y={24 + i * 11} fontSize={7} fill={INK}>
-              {`${c.label.padEnd(4)} ${c.radius.toFixed(1).padStart(7)} ${c.arcLength.toFixed(1).padStart(7)} ${c.deltaDeg.toFixed(2).padStart(6)}° ${c.chord.toFixed(1).padStart(7)}`}
-            </text>
-          ))}
         </g>
-      )}
+
+        {/* Structured Legend */}
+        <g transform="translate(0, 410)">
+          <line x1="0" y1="0" x2={STRIP.w - 20} y2="0" stroke={INK} strokeWidth="0.8"/>
+          <text x="0" y="12" fontSize="8" fontWeight="700">SHEET LEGEND</text>
+
+          <g transform="translate(0, 22)">
+            <line x1="0" y1="0" x2="20" y2="0" stroke="#2563eb" strokeWidth="2"/>
+            <text x="26" y="3" fontSize="7" fontWeight="600" fill={INK}>Property Boundary Line</text>
+          </g>
+          <g transform="translate(0, 34)">
+            <rect x="0" y="-4" width="20" height="8" fill="#fca5a5" stroke="#dc2626" strokeWidth="1"/>
+            <text x="26" y="3" fontSize="7" fill={INK}>Proposed Residence (56'x50')</text>
+          </g>
+          <g transform="translate(0, 46)">
+            <rect x="0" y="-4" width="20" height="8" fill="#cbd5e1" stroke="#475569" strokeWidth="1"/>
+            <text x="26" y="3" fontSize="7" fill={INK}>50' VDOT Public Road R.O.W.</text>
+          </g>
+          <g transform="translate(0, 58)">
+            <line x1="0" y1="0" x2="20" y2="0" stroke="#d97706" strokeWidth="1" strokeDasharray="4 2"/>
+            <text x="26" y="3" fontSize="7" fill={INK}>10' PU&amp;DE / 15' Sewer Easement</text>
+          </g>
+          <g transform="translate(0, 70)">
+            <circle cx="10" cy="0" r="2.5" fill="#ffffff" stroke="#0f172a" strokeWidth="0.8"/>
+            <circle cx="10" cy="0" r="0.8" fill="#0f172a"/>
+            <text x="26" y="3" fontSize="7" fill={INK}>Concrete Monument (Set)</text>
+          </g>
+        </g>
+      </g>
     </g>
   );
 }

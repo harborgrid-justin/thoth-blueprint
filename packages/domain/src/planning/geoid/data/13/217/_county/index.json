@@ -1,0 +1,16 @@
+{
+  "geoid": "13217",
+  "areaType": "county",
+  "name": "Newton County, GA",
+  "stateName": "Georgia",
+  "countyName": "Newton County",
+  "standards": {
+    "zoning": {
+      "frontSetback": 50,
+      "sideSetback": 15,
+      "rearSetback": 40,
+      "minLotArea": 43560,
+      "minRowWidth": 60
+    }
+  }
+}

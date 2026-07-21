@@ -87,6 +87,7 @@ export function TopBar({
     setProfileOpen,
     setPipeOpen,
     setProductionOpen,
+    setCogoOpen,
     openFind,
   } = useTopBarState();
 
@@ -210,6 +211,10 @@ export function TopBar({
         <Button variant="ghost" size="sm" onClick={() => openPlat(null)}>
           <ScrollText className="h-4 w-4" />{" "}
           <span className="hidden md:inline">Plat</span>
+        </Button>
+        <Button variant="ghost" size="sm" onClick={() => setCogoOpen(true)}>
+          <Compass className="h-4 w-4" />{" "}
+          <span className="hidden md:inline">COGO Builder</span>
         </Button>
         <Button
           variant="ghost"

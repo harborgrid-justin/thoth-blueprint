@@ -3,6 +3,7 @@ import {
   defaultSpatialContext,
   networkFromPath,
   subdivideGrid,
+  createKnightsbridgeLot11Plat,
   type Building,
   type Easement,
   type InfrastructureNetwork,
@@ -951,6 +952,8 @@ export function siteForTemplate(
       return districtSite(name);
     case "estate":
       return estateSite(name);
+    case "knightsbridge":
+      return { ...createKnightsbridgeLot11Plat(), name };
     default:
       return emptySite(name);
   }

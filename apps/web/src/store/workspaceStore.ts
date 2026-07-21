@@ -56,6 +56,7 @@ export interface WorkspaceState {
 
   // --- lifecycle ---
   loadProject(project: Project): void;
+  loadSitePreset(site: Site, name?: string): void;
   reset(): void;
   markSaved(savedAt: string): void;
 
@@ -278,6 +279,21 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         hoveredElementId: null,
         dirty: false,
         lastSavedAt: project.updatedAt,
+        viewFrames: [],
+        matchLines: [],
+      });
+    },
+
+    loadSitePreset(presetSite, name) {
+      set({
+        site: snapshot(presetSite),
+        projectName: name ?? presetSite.name ?? "Site Plan Preset",
+        history: { past: [], future: [] },
+        activeTool: "select",
+        activeLayerId: presetSite.layers[0]?.id ?? null,
+        selection: [],
+        hoveredElementId: null,
+        dirty: true,
         viewFrames: [],
         matchLines: [],
       });
@@ -624,12 +640,12 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         }
       }
 
-      const element: any = createPointElement(
+      const element = createPointElement(
         site,
         finalKind,
         position,
         layerId,
-      );
+      ) as any;
       element.description = rawDesc;
       element.label = finalDesc;
       if (finalKind === "tree") {

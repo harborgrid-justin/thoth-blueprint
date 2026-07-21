@@ -46,6 +46,7 @@ export function useWorkspaceLayoutState() {
   const commandOpen = useUiStore((s) => s.commandOpen);
   const shortcutsOpen = useUiStore((s) => s.shortcutsOpen);
   const prefsOpen = useUiStore((s) => s.prefsOpen);
+  const cogoOpen = useUiStore((s) => s.cogoOpen);
 
   const [sidebarWidth, setSidebarWidth] = React.useState(320);
   const isResizingRef = React.useRef(false);
@@ -251,5 +252,6 @@ export function useWorkspaceLayoutState() {
     commandOpen,
     shortcutsOpen,
     prefsOpen,
+    cogoOpen,
   };
 }

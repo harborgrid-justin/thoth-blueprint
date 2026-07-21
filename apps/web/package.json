@@ -10,10 +10,13 @@
     "preview": "yarn run vite preview",
     "type-check": "yarn run tsc --noEmit",
     "test": "yarn run vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "lint": "yarn run eslint src"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.19.3",
+    "@radix-ui/react-context-menu": "^2.3.4",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-dropdown-menu": "^2.1.4",
     "@radix-ui/react-label": "^2.1.1",
@@ -40,6 +43,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/gl-matrix": "^2.4.5",
     "@types/lodash": "^4.17.24",

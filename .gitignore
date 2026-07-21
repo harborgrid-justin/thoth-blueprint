@@ -46,3 +46,15 @@ coverage
 .terraform
 *.tfstate
 *.tfstate.*
+# Test directories
+test/
+tests/
+__tests__/
+spec/
+e2e/
+
+# Playwright report data
+apps/web/playwright-report/data/
+
+# Test results
+apps/web/test-results/

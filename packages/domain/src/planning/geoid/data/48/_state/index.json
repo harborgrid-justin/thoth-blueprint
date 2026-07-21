@@ -1,0 +1,24 @@
+{
+  "geoid": "48",
+  "areaType": "state",
+  "name": "Texas",
+  "stateName": "Texas",
+  "standards": {
+    "zoning": {
+      "frontSetback": 25,
+      "sideSetback": 10,
+      "rearSetback": 20,
+      "maxHeight": 40,
+      "maxCoverage": 0.55,
+      "minLotArea": 5000
+    },
+    "stairs": {
+      "maxRiserHeight": 7.75,
+      "minTreadDepth": 10.0
+    },
+    "civil": {
+      "minSiltFenceBuffer": 10,
+      "maxDisturbedSlopePercent": 30
+    }
+  }
+}

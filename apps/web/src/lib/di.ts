@@ -3,8 +3,8 @@ import * as React from "react";
 type ServiceLoader<T> = () => Promise<T>;
 
 class DIContainer {
-  private services = new Map<string, any>();
-  private loaders = new Map<string, ServiceLoader<any>>();
+  private services = new Map<string, unknown>();
+  private loaders = new Map<string, ServiceLoader<unknown>>();
   private listeners = new Map<string, Set<() => void>>();
 
   /** Register a service instance immediately */
@@ -32,7 +32,7 @@ class DIContainer {
     const service = await loader();
     this.services.set(name, service);
     this.notify(name);
-    return service;
+    return service as T;
   }
 
   /** Retrieve a service synchronously if it has already been loaded */
@@ -97,7 +97,7 @@ export function useService<T>(name: string): {
     // Try to get synced value first
     const current = container.getSync<T>(name);
     if (current) {
-      setService(current);
+      setService(current as T);
       setLoading(false);
       return;
     }

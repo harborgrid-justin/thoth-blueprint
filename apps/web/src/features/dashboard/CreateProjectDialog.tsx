@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Building2, Globe, Map, Square } from "lucide-react";
+import { Building2, FileText, Globe, Map, Square } from "lucide-react";
 import { api, type CreateProjectInput } from "@/api";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,12 @@ const TEMPLATES: {
     label: "Blank site",
     description: "Start from an empty, spatially-defined site.",
     icon: Square,
+  },
+  {
+    id: "knightsbridge",
+    label: "Lot 11 Knightsbridge Plat",
+    description: "19,430 sq ft House Location Survey with basement house & easements.",
+    icon: FileText,
   },
   {
     id: "subdivision",

@@ -4,6 +4,9 @@ import {
   computeCommunityMetrics,
   computeSiteMetrics,
   networkStats,
+  auditGeoidCompliance,
+  isValidGeoid,
+  type ComplianceFinding,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
@@ -47,10 +50,20 @@ export function useMetricsState() {
     return (site.networks ?? []).map((n) => networkStats(n, site.spatial));
   }, [site]);
 
-  const findings = React.useMemo(
-    () => (site ? checkCompliance(site) : []),
-    [site],
-  );
+  const findings = React.useMemo(() => {
+    if (!site) {return [];}
+    
+    // Legacy RegionPlugin findings
+    const oldFindings = checkCompliance(site);
+    
+    // New scalable GEOID findings
+    let geoidFindings: ComplianceFinding[] = [];
+    if (site.jurisdictionId && isValidGeoid(site.jurisdictionId)) {
+      geoidFindings = auditGeoidCompliance(site, site.jurisdictionId);
+    }
+    
+    return [...oldFindings, ...geoidFindings];
+  }, [site]);
 
   const roadMeters = React.useMemo(
     () => sumNetworkMeters(networks, (k) => k === "road"),

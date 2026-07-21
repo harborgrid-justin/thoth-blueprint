@@ -12,6 +12,7 @@ export * from "./spatial/curve";
 export * from "./spatial/spatial";
 export * from "./spatial/primitives";
 export * from "./spatial/id";
+export * from "./spatial/types";
 
 // Survey
 export * from "./survey/survey";
@@ -34,6 +35,7 @@ export * from "./planning/curtainwall";
 export * from "./planning/doorwindow";
 export * from "./planning/roof";
 export * from "./planning/erosion";
+export * from "./planning/geoid/index";
 
 // Civil
 export * from "./civil/alignment";
@@ -63,3 +65,6 @@ export * from "./drawing/platset";
 export * from "./drawing/qto";
 export * from "./drawing/collada";
 export * from "./planning/sampleData";
+export * from "./planning/presets/princeWilliamHousePlat";
+export * from "./planning/presets/knightsbridgeLot11Plat";
+

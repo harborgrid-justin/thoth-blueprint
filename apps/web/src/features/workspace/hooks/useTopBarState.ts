@@ -43,6 +43,7 @@ export function useTopBarState() {
   const setProfileOpen = useUiStore((s) => s.setProfileOpen);
   const setPipeOpen = useUiStore((s) => s.setPipeOpen);
   const setProductionOpen = useUiStore((s) => s.setProductionOpen);
+  const setCogoOpen = useUiStore((s) => s.setCogoOpen);
   const openFind = useFindStore((s) => s.openFind);
 
   return {
@@ -77,6 +78,7 @@ export function useTopBarState() {
     setProfileOpen,
     setPipeOpen,
     setProductionOpen,
+    setCogoOpen,
     openFind,
   };
 }

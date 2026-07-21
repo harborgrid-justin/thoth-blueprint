@@ -2,10 +2,10 @@ import * as React from "react";
 import {
   getRegionPlugin,
   resolveCapabilities,
-  US_PLSS_DEFAULT,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useUiStore } from "@/store/uiStore";
+import { exportNativePlatPdf } from "@/features/interop/blueprintExport";
 
 export function usePlatSheetState() {
   const open = useUiStore((s) => s.sheetOpen);
@@ -14,8 +14,8 @@ export function usePlatSheetState() {
   const svgRef = React.useRef<SVGSVGElement>(null);
 
   const plugin = site
-    ? (getRegionPlugin(site.jurisdictionId) ?? US_PLSS_DEFAULT)
-    : US_PLSS_DEFAULT;
+    ? (getRegionPlugin(site.jurisdictionId) ?? getRegionPlugin("us-va-prince-william")!)
+    : getRegionPlugin("us-va-prince-william")!;
   const caps = resolveCapabilities(plugin);
 
   function exportSvg() {
@@ -35,6 +35,19 @@ export function usePlatSheetState() {
     URL.revokeObjectURL(url);
   }
 
+  function exportPdf() {
+    const svg = svgRef.current;
+    if (!svg) {
+      return;
+    }
+    const filename = site
+      ? `${site.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-plat.pdf`
+      : "civil-planning-plat.pdf";
+    exportNativePlatPdf(svg, filename).catch((err) => {
+      console.error("Native PDF Export Error:", err);
+    });
+  }
+
   return {
     open,
     setOpen,
@@ -43,5 +56,6 @@ export function usePlatSheetState() {
     caps,
     svgRef,
     exportSvg,
+    exportPdf,
   };
 }

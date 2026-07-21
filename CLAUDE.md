@@ -54,6 +54,7 @@ artifact/        ARCHIVED original DB-design app (read-only)
 - **Monorepo:** each workspace owns its `package.json` and scripts. Run commands
   from the relevant workspace. The archived app builds from `artifact/`
   (`cd artifact && pnpm install && pnpm build`).
+- **Testing:** Unit tests run via `yarn test`. End-to-End Playwright test suite (81 test cases across 15 spec files) runs via `yarn workspace @thoth/web test:e2e` or `yarn workspace @thoth/web test:e2e:ui`.
 - **TypeScript, strict.** Avoid `any`. Prefer explicit domain types.
 - **Docs move with behavior.** If you change structure or behavior, update the
   relevant file in `docs/`.

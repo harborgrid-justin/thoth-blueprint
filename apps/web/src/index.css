@@ -34,8 +34,9 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
 
-  --font-sans: "Inter", "ui-sans-serif", "system-ui", "sans-serif";
-  --font-mono: "ui-monospace", "SFMono-Regular", "Menlo", "monospace";
+  --font-sans: "Inter", "Plus Jakarta Sans", "ui-sans-serif", "system-ui", "sans-serif";
+  --font-mono: "JetBrains Mono", "Roboto Mono", "IBM Plex Mono", "ui-monospace", "monospace";
+  --font-cad: "JetBrains Mono", "ISOCPEUR", "Simplex", "monospace";
 
   --animate-fade-in: fade-in 0.15s ease-out;
 
@@ -145,5 +146,10 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+  .font-cad {
+    font-family: var(--font-cad);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
   }
 }

@@ -135,6 +135,7 @@ a landscape-scale estate) you can edit immediately.
 | `npm run build` | Type-check the domain model and build the web app to `apps/web/dist`. |
 | `npm run preview` | Serve the production build locally. |
 | `npm test` | Run the domain model's unit tests (geometry, metrics, survey, terrain, networks, interop). |
+| `yarn workspace @thoth/web test:e2e` | Run the full Playwright E2E test suite (81 test cases across 15 spec files). |
 | `npm run type-check` | Strict TypeScript check across the domain model and web app. |
 
 > Prefer `npx`? From `apps/web` you can also run `npx vite` (dev) or

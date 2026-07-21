@@ -64,10 +64,21 @@ describe("region plug-ins", () => {
     expect(resolveCapabilities(newton).platComposer).toBe(true);
   });
 
-  it("lists at least the default and Newton County plug-ins", () => {
+  it("lists at least the default, Newton County, and Prince William County plug-ins", () => {
     const ids = listRegionPlugins().map((p) => p.id);
     expect(ids).toContain("us-plss-default");
     expect(ids).toContain("us-ga-newton");
+    expect(ids).toContain("us-va-prince-william");
+  });
+
+  it("registers Prince William County, Virginia with Virginia State Plane and APELSCIDLA standards", () => {
+    const pwc = getRegionPlugin("us-va-prince-william")!;
+    expect(pwc.state).toBe("Virginia");
+    expect(pwc.county).toBe("Prince William");
+    expect(pwc.defaults.crs).toBe("EPSG:2283");
+    expect(pwc.standards?.minLotAreaSqFt).toBe(28000);
+    expect(pwc.certificates.some((c) => /APELSCIDLA/i.test(c.title))).toBe(true);
+    expect(pwc.certificates.some((c) => /Prince William County/i.test(c.title))).toBe(true);
   });
 });
 

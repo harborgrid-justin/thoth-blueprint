@@ -28,8 +28,8 @@ interface UiState {
   corridorOpen: boolean;
   /** Whether the grading pad zero-volume solver is open. */
   gradingOpen: boolean;
-  /** Whether the superelevation runoff wizard is open. */
-  superelevationOpen: boolean;
+  /** Whether the COGO Metes & Bounds Traverse Plat Builder dialog is open. */
+  cogoOpen: boolean;
 
   openPlat(targetId?: string | null): void;
   closePlat(): void;
@@ -63,6 +63,7 @@ export const useUiStore = create<UiState>((set) => ({
   corridorOpen: false,
   gradingOpen: false,
   superelevationOpen: false,
+  cogoOpen: false,
 
   openPlat(targetId = null) {
     set({ platOpen: true, platTargetId: targetId });
@@ -96,6 +97,9 @@ export const useUiStore = create<UiState>((set) => ({
   },
   setSuperelevationOpen(superelevationOpen) {
     set({ superelevationOpen });
+  },
+  setCogoOpen(cogoOpen) {
+    set({ cogoOpen });
   },
   setCommandOpen(commandOpen) {
     set({ commandOpen });

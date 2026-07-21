@@ -60,5 +60,5 @@ export interface CreateProjectInput {
   name: string;
   description?: string;
   /** Optional starter template; falls back to an empty site. */
-  template?: "empty" | "subdivision" | "district" | "estate";
+  template?: "empty" | "subdivision" | "district" | "estate" | "knightsbridge";
 }

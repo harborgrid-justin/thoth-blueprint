@@ -1,6 +1,7 @@
 import {
   Box,
   ClipboardPaste,
+  Compass,
   Copy,
   Grid3x3,
   History,
@@ -254,6 +255,14 @@ export function buildCommands(actions: CommandActions): Command[] {
       group: "Project",
       icon: ScrollText,
       run: () => useUiStore.getState().openPlat(null),
+    },
+    {
+      id: "project.cogo",
+      title: "COGO Metes & Bounds Plat Builder",
+      group: "Project",
+      keywords: "metes bounds survey bearing distance cogo traverse draw",
+      icon: Compass,
+      run: () => useUiStore.getState().setCogoOpen(true),
     },
     {
       id: "project.alignment",

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { areaUnitLabel, listRegionPlugins, type AreaUnit } from "@thoth/domain";
+import { areaUnitLabel, listRegionPlugins, PRESET_GEOID_PLUGINS, type AreaUnit } from "@thoth/domain";
 import { usePrefsStore } from "@/store/prefsStore";
 import { useUiStore } from "@/store/uiStore";
 import { useWorkspaceStore } from "@/store/workspaceStore";
@@ -70,6 +70,7 @@ export function PreferencesDialog() {
               options={[
                 { value: "none", label: "None (base capabilities)" },
                 ...plugins.map((p) => ({ value: p.id, label: p.name })),
+                ...PRESET_GEOID_PLUGINS.map((p) => ({ value: p.geoid, label: `${p.name} (GEOID: ${p.geoid})` })),
               ]}
               onChange={(v) => setJurisdiction(v === "none" ? null : v)}
             />

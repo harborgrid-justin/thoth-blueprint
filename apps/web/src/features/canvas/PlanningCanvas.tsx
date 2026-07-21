@@ -32,6 +32,7 @@ import {
 } from "./hooks/useCanvasViewport";
 import { usePlanningCanvasState } from "./hooks/usePlanningCanvasState";
 import { useCanvasInteractions } from "./hooks/useCanvasInteractions";
+import { ElementContextMenu } from "./ElementContextMenu";
 
 export function PlanningCanvas() {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -111,16 +112,25 @@ export function PlanningCanvas() {
         : "cursor-crosshair";
 
   return (
-    <div
-      ref={containerRef}
-      className={`relative h-full w-full overflow-hidden bg-[hsl(var(--canvas))] ${cursorClass}`}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onWheel={onWheel}
-      onDoubleClick={onDoubleClick}
-      onContextMenu={(e) => e.preventDefault()}
+    <ElementContextMenu
+      onContextMenu={() => {
+        // Automatically select hovered element on right click
+        if (hoveredElementId && !selectionSet.has(hoveredElementId)) {
+          useWorkspaceStore.getState().select(hoveredElementId);
+        } else if (!hoveredElementId && selection.length > 0) {
+          useWorkspaceStore.getState().select(null);
+        }
+      }}
     >
+      <div
+        ref={containerRef}
+        className={`relative h-full w-full overflow-hidden bg-[hsl(var(--canvas))] ${cursorClass}`}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onWheel={onWheel}
+        onDoubleClick={onDoubleClick}
+      >
       <svg
         width={size.width}
         height={size.height}
@@ -411,7 +421,8 @@ export function PlanningCanvas() {
       <ScaleBar />
       <Legend />
       <SurveyLegend site={site} />
-    </div>
+      </div>
+    </ElementContextMenu>
   );
 }
 

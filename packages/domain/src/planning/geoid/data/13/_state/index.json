@@ -1,0 +1,15 @@
+{
+  "geoid": "13",
+  "areaType": "state",
+  "name": "Georgia",
+  "stateName": "Georgia",
+  "standards": {
+    "zoning": {
+      "frontSetback": 30,
+      "sideSetback": 12,
+      "rearSetback": 25,
+      "maxHeight": 45,
+      "maxCoverage": 0.5
+    }
+  }
+}

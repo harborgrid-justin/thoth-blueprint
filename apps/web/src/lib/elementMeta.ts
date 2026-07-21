@@ -187,7 +187,14 @@ const META: Record<ElementKind, ElementKindMeta> = {
 };
 
 export function elementMeta(kind: ElementKind): ElementKindMeta {
-  return META[kind];
+  return META[kind] || {
+    kind: kind || "unknown",
+    label: `Unknown (${kind})`,
+    defaultLayerId: "layer-base",
+    stroke: "#ff00ff",
+    fill: "#ff00ff",
+    namePrefix: "Unknown",
+  };
 }
 
 /** The canvas color for an element, honoring land-use category when relevant. */
@@ -198,5 +205,10 @@ export function elementColor(
   if (kind === "landuse" && category) {
     return landUseColor(category);
   }
-  return META[kind].fill;
+  const meta = META[kind];
+  if (!meta) {
+    console.warn(`Missing META for kind: ${kind}`);
+    return "#ff00ff"; // magenta fallback
+  }
+  return meta.fill;
 }

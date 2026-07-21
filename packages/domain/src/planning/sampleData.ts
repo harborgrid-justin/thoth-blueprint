@@ -2,6 +2,7 @@ import { createId } from "../spatial/id";
 import { defaultSpatialContext } from "../spatial/spatial";
 import { networkFromPath } from "../civil/network";
 import { subdivideGrid } from "./rules";
+import { createKnightsbridgeLot11Plat } from "./presets/knightsbridgeLot11Plat";
 import type {
   Building,
   Easement,
@@ -918,6 +919,9 @@ export function siteForTemplate(name: string, template: string): Site {
       return districtSite(name);
     case "estate":
       return estateSite(name);
+    case "knightsbridge":
+    case "knightsbridge-lot11":
+      return { ...createKnightsbridgeLot11Plat(), name };
     default:
       return emptySite(name);
   }

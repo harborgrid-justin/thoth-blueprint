@@ -86,6 +86,8 @@ export interface SheetStandards {
 export interface JurisdictionStandards {
   /** Minimum lot area, acres. */
   minLotAreaAcres?: number;
+  /** Minimum lot area, sq ft. */
+  minLotAreaSqFt?: number;
   /** Nominal land-lot acreage for the Georgia Land Lot System. */
   landLotAcres?: number;
   frontSetback?: number;

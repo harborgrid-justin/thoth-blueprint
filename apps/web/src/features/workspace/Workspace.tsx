@@ -109,6 +109,11 @@ const PreferencesDialog = React.lazy(() =>
     default: m.PreferencesDialog,
   })),
 );
+const MetesAndBoundsDialog = React.lazy(() =>
+  import("@/features/survey/MetesAndBoundsDialog").then((m) => ({
+    default: m.MetesAndBoundsDialog,
+  })),
+);
 
 export function Workspace() {
   const {
@@ -140,6 +145,7 @@ export function Workspace() {
     commandOpen,
     shortcutsOpen,
     prefsOpen,
+    cogoOpen,
   } = useWorkspaceLayoutState();
 
   if (loading) {
@@ -316,6 +322,11 @@ export function Workspace() {
         {prefsOpen && (
           <React.Suspense fallback={null}>
             <PreferencesDialog />
+          </React.Suspense>
+        )}
+        {cogoOpen && (
+          <React.Suspense fallback={null}>
+            <MetesAndBoundsDialog />
           </React.Suspense>
         )}
       </div>
