@@ -1,6 +1,10 @@
 import * as React from "react";
 import { Search, X } from "lucide-react";
-import { isPointElement, type ElementKind, type PlanElement } from "@thoth/domain";
+import {
+  isPointElement,
+  type ElementKind,
+  type PlanElement,
+} from "@thoth/domain";
 import { useFindStore } from "@/store/findStore";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
@@ -24,8 +28,12 @@ const RESULT_CAP = 200;
 /** Human label for a search result row. */
 function elementLabel(el: PlanElement): string {
   if (isPointElement(el)) {
-    if (el.kind === "note") {return el.text || "Note";}
-    if (el.kind === "tree") {return el.species || "Tree";}
+    if (el.kind === "note") {
+      return el.text || "Note";
+    }
+    if (el.kind === "tree") {
+      return el.species || "Tree";
+    }
     return el.label || "Spot elevation";
   }
   return el.name;
@@ -55,13 +63,18 @@ export function FindPanel() {
 
   const inputRef = React.useRef<HTMLInputElement>(null);
   React.useEffect(() => {
-    if (open) {inputRef.current?.focus();}
+    if (open) {
+      inputRef.current?.focus();
+    }
   }, [open]);
 
   const debouncedQuery = useDebounce(query, 200);
 
   const matches = React.useMemo(
-    () => (site ? site.elements.filter((el) => elementMatches(el, debouncedQuery, kind)) : []),
+    () =>
+      site
+        ? site.elements.filter((el) => elementMatches(el, debouncedQuery, kind))
+        : [],
     [site, debouncedQuery, kind],
   );
 
@@ -72,7 +85,9 @@ export function FindPanel() {
     return [...set];
   }, [site]);
 
-  if (!open || !site) {return null;}
+  if (!open || !site) {
+    return null;
+  }
 
   const selectedSet = new Set(selection);
 
@@ -109,7 +124,10 @@ export function FindPanel() {
       </div>
 
       <div className="flex items-center gap-2 px-2.5 py-2">
-        <Select value={kind} onValueChange={(v) => setKind(v as ElementKind | "all")}>
+        <Select
+          value={kind}
+          onValueChange={(v) => setKind(v as ElementKind | "all")}
+        >
           <SelectTrigger className="h-7 flex-1 text-xs">
             <SelectValue />
           </SelectTrigger>
@@ -129,14 +147,18 @@ export function FindPanel() {
 
       <div className="max-h-64 overflow-y-auto px-1.5 pb-1.5">
         {matches.length === 0 ? (
-          <p className="px-2 py-4 text-center text-xs text-muted-foreground">No matching elements.</p>
+          <p className="px-2 py-4 text-center text-xs text-muted-foreground">
+            No matching elements.
+          </p>
         ) : (
           matches.slice(0, RESULT_CAP).map((el) => (
             <button
               key={el.id}
               type="button"
               onClick={() => pick(el)}
-              onMouseEnter={() => useWorkspaceStore.getState().hoverElement(el.id)}
+              onMouseEnter={() =>
+                useWorkspaceStore.getState().hoverElement(el.id)
+              }
               onMouseLeave={() => {
                 if (useWorkspaceStore.getState().hoveredElementId === el.id) {
                   useWorkspaceStore.getState().hoverElement(null);
@@ -144,14 +166,17 @@ export function FindPanel() {
               }}
               className={cn(
                 "flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm transition-colors hover:bg-accent",
-                (selectedSet.has(el.id) || hoveredElementId === el.id) && "bg-accent border border-amber-500/30",
+                (selectedSet.has(el.id) || hoveredElementId === el.id) &&
+                  "bg-accent border border-amber-500/30",
               )}
             >
               <span
                 className="h-2.5 w-2.5 shrink-0 rounded-sm"
                 style={{ backgroundColor: elementMeta(el.kind).fill }}
               />
-              <span className="flex-1 truncate text-foreground">{elementLabel(el)}</span>
+              <span className="flex-1 truncate text-foreground">
+                {elementLabel(el)}
+              </span>
               <span className="shrink-0 text-[10px] uppercase tracking-wide text-muted-foreground">
                 {el.kind}
               </span>
@@ -167,8 +192,15 @@ export function FindPanel() {
 
       <div className="flex items-center justify-between gap-2 border-t border-border px-2.5 py-2">
         <div className="flex items-center gap-2">
-          <Switch id="filter-canvas" checked={filterOnCanvas} onCheckedChange={setFilterOnCanvas} />
-          <Label htmlFor="filter-canvas" className="text-xs text-muted-foreground">
+          <Switch
+            id="filter-canvas"
+            checked={filterOnCanvas}
+            onCheckedChange={setFilterOnCanvas}
+          />
+          <Label
+            htmlFor="filter-canvas"
+            className="text-xs text-muted-foreground"
+          >
             Filter canvas
           </Label>
         </div>

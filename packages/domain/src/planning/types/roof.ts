@@ -5,7 +5,7 @@ export interface RoofGeometryResults {
   slopeFactor: number;
   planAreaSqm: number;
   trueAreaSqm: number;
-  
+
   // 2D plan lines
   ridgeLine: Point[];
   hipLines: Point[][];

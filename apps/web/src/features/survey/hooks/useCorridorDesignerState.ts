@@ -15,12 +15,23 @@ export function useCorridorDesignerState() {
   const site = useWorkspaceStore((s) => s.site);
 
   const alignments = site?.alignments ?? [];
-  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(null);
+  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(
+    null,
+  );
 
   const [profiles] = React.useState<any[]>([
-    { id: "prof-1", name: "Design Profile 1", pvis: [{ station: 0, elevation: 12 }, { station: 400, elevation: 22 }, { station: 800, elevation: 15 }] }
+    {
+      id: "prof-1",
+      name: "Design Profile 1",
+      pvis: [
+        { station: 0, elevation: 12 },
+        { station: 400, elevation: 22 },
+        { station: 800, elevation: 15 },
+      ],
+    },
   ]);
-  const [selectedProfileId, setSelectedProfileId] = React.useState<string>("prof-1");
+  const [selectedProfileId, setSelectedProfileId] =
+    React.useState<string>("prof-1");
 
   const [assembly] = React.useState<Assembly>({
     id: "assembly-main",
@@ -41,11 +52,17 @@ export function useCorridorDesignerState() {
     return resolveAssemblyOffset(assembly, -0.02, -0.02);
   }, [assembly]);
 
-  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
-  const profile = _.find(profiles, (p) => p.id === selectedProfileId) ?? profiles[0] ?? null;
+  const alignment =
+    _.find(alignments, (a) => a.id === selectedAlignId) ??
+    alignments[0] ??
+    null;
+  const profile =
+    _.find(profiles, (p) => p.id === selectedProfileId) ?? profiles[0] ?? null;
 
   function handleExtrude() {
-    if (!alignment || !profile) {return;}
+    if (!alignment || !profile) {
+      return;
+    }
     extrudeCorridor({ alignment, profile, assembly, frequency });
     setOpen(false);
   }

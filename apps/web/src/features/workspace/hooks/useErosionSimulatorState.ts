@@ -6,14 +6,25 @@ import { checkErosionCompliance } from "../helpers/erosionHelpers";
 
 export function useErosionSimulatorState() {
   const site = useWorkspaceStore((s) => s.site);
-  const { currentFrame, isPlaying, activeStep, setFrame, setPlaying, setActiveStep } = useErosionStore();
+  const {
+    currentFrame,
+    isPlaying,
+    activeStep,
+    setFrame,
+    setPlaying,
+    setActiveStep,
+  } = useErosionStore();
 
   const [frames, setFrames] = React.useState<SimulationFrame[]>([]);
   const [speed, setSpeed] = React.useState(100);
-  const [soilType, setSoilType] = React.useState<"sand" | "silt" | "clay" | "loam">("loam");
+  const [soilType, setSoilType] = React.useState<
+    "sand" | "silt" | "clay" | "loam"
+  >("loam");
 
   React.useEffect(() => {
-    if (!site) {return;}
+    if (!site) {
+      return;
+    }
     const sim = new ErosionSimulator(site, soilType);
     const recorded = sim.runSimulation(100);
     setFrames(recorded);
@@ -24,7 +35,9 @@ export function useErosionSimulatorState() {
   }, [site, soilType, setFrame, setActiveStep]);
 
   React.useEffect(() => {
-    if (!isPlaying || frames.length === 0) {return;}
+    if (!isPlaying || frames.length === 0) {
+      return;
+    }
 
     const interval = setInterval(() => {
       const currentStep = useErosionStore.getState().activeStep;
@@ -71,7 +84,10 @@ export function useErosionSimulatorState() {
     }
   };
 
-  const compliance = React.useMemo(() => (frame ? checkErosionCompliance(frame) : null), [frame]);
+  const compliance = React.useMemo(
+    () => (frame ? checkErosionCompliance(frame) : null),
+    [frame],
+  );
 
   return {
     site,

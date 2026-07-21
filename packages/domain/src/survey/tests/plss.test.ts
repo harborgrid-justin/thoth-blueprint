@@ -65,7 +65,13 @@ describe("nominal aliquot acreage", () => {
 });
 
 describe("PLSS text formatting", () => {
-  const tr: TownshipRange = { township: 3, townshipDir: "South", range: 16, rangeDir: "East", meridian: "Tallahassee" };
+  const tr: TownshipRange = {
+    township: 3,
+    townshipDir: "South",
+    range: 16,
+    rangeDir: "East",
+    meridian: "Tallahassee",
+  };
 
   it("formats aliquot parts outer→inner", () => {
     expect(formatAliquot(["SE", "NW"])).toBe("the NW1/4 of the SE1/4");
@@ -74,11 +80,15 @@ describe("PLSS text formatting", () => {
 
   it("formats standard legal descriptions", () => {
     const text = formatPLSS(["SE", "NW"], 8, tr);
-    expect(text).toBe("the NW1/4 of the SE1/4 of Section 8, Township 3 South, Range 16 East, Tallahassee Meridian");
+    expect(text).toBe(
+      "the NW1/4 of the SE1/4 of Section 8, Township 3 South, Range 16 East, Tallahassee Meridian",
+    );
   });
 
   it("formats short PLSS designations", () => {
-    expect(formatPLSSShort(["SE", "NW"], 8, tr)).toBe("NW1/4 SE1/4 Sec 8, T3S, R16E");
+    expect(formatPLSSShort(["SE", "NW"], 8, tr)).toBe(
+      "NW1/4 SE1/4 Sec 8, T3S, R16E",
+    );
   });
 });
 

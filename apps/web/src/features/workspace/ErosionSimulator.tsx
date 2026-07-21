@@ -1,4 +1,12 @@
-import { Play, Pause, RotateCcw, ChevronRight, ChevronLeft, ShieldCheck, AlertTriangle } from "lucide-react";
+import {
+  Play,
+  Pause,
+  RotateCcw,
+  ChevronRight,
+  ChevronLeft,
+  ShieldCheck,
+  AlertTriangle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useErosionSimulatorState } from "./hooks/useErosionSimulatorState";
@@ -43,7 +51,9 @@ export function ErosionSimulatorPanel() {
 
         {/* Timeline Slider */}
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-mono text-muted-foreground">T+{activeStep}s</span>
+          <span className="text-[10px] font-mono text-muted-foreground">
+            T+{activeStep}s
+          </span>
           <input
             type="range"
             min={0}
@@ -52,22 +62,50 @@ export function ErosionSimulatorPanel() {
             onChange={handleScrub}
             className="flex-1 h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
           />
-          <span className="text-[10px] font-mono text-muted-foreground">T+{maxStep}s</span>
+          <span className="text-[10px] font-mono text-muted-foreground">
+            T+{maxStep}s
+          </span>
         </div>
 
         {/* Controls Bar */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <Button size="icon" variant="outline" className="h-7 w-7" onClick={handleReset}>
+            <Button
+              size="icon"
+              variant="outline"
+              className="h-7 w-7"
+              onClick={handleReset}
+            >
               <RotateCcw className="h-3.5 w-3.5" />
             </Button>
-            <Button size="icon" variant="outline" className="h-7 w-7" onClick={stepBackward} disabled={activeStep === 0}>
+            <Button
+              size="icon"
+              variant="outline"
+              className="h-7 w-7"
+              onClick={stepBackward}
+              disabled={activeStep === 0}
+            >
               <ChevronLeft className="h-3.5 w-3.5" />
             </Button>
-            <Button size="icon" variant={isPlaying ? "default" : "outline"} className="h-7 w-7 bg-primary text-primary-foreground" onClick={togglePlay}>
-              {isPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
+            <Button
+              size="icon"
+              variant={isPlaying ? "default" : "outline"}
+              className="h-7 w-7 bg-primary text-primary-foreground"
+              onClick={togglePlay}
+            >
+              {isPlaying ? (
+                <Pause className="h-3.5 w-3.5" />
+              ) : (
+                <Play className="h-3.5 w-3.5" />
+              )}
             </Button>
-            <Button size="icon" variant="outline" className="h-7 w-7" onClick={stepForward} disabled={activeStep === maxStep}>
+            <Button
+              size="icon"
+              variant="outline"
+              className="h-7 w-7"
+              onClick={stepForward}
+              disabled={activeStep === maxStep}
+            >
               <ChevronRight className="h-3.5 w-3.5" />
             </Button>
           </div>
@@ -104,12 +142,20 @@ export function ErosionSimulatorPanel() {
         </h4>
         <div className="grid grid-cols-2 gap-3">
           <div className="border border-border/40 rounded p-2 bg-background/50">
-            <span className="text-[10px] text-muted-foreground block">Cum. Soil Runoff Loss</span>
-            <span className="text-sm font-bold font-mono text-rose-500">{frame.totalSoilLostKg.toFixed(1)} kg</span>
+            <span className="text-[10px] text-muted-foreground block">
+              Cum. Soil Runoff Loss
+            </span>
+            <span className="text-sm font-bold font-mono text-rose-500">
+              {frame.totalSoilLostKg.toFixed(1)} kg
+            </span>
           </div>
           <div className="border border-border/40 rounded p-2 bg-background/50">
-            <span className="text-[10px] text-muted-foreground block">Total Water Volume</span>
-            <span className="text-sm font-bold font-mono text-blue-500">{frame.totalWaterRunoffLiters.toFixed(0)} L</span>
+            <span className="text-[10px] text-muted-foreground block">
+              Total Water Volume
+            </span>
+            <span className="text-sm font-bold font-mono text-blue-500">
+              {frame.totalWaterRunoffLiters.toFixed(0)} L
+            </span>
           </div>
         </div>
       </div>
@@ -121,7 +167,8 @@ export function ErosionSimulatorPanel() {
         </h4>
         {frame.barrierStats.length === 0 ? (
           <div className="text-[10px] text-muted-foreground/80 py-1 text-center">
-            No active silt fences or erosion bales drafted in the current design.
+            No active silt fences or erosion bales drafted in the current
+            design.
           </div>
         ) : (
           <div className="flex flex-col gap-2">
@@ -129,7 +176,9 @@ export function ErosionSimulatorPanel() {
               <div key={stat.id} className="flex flex-col gap-1">
                 <div className="flex justify-between text-[10px] font-medium text-foreground">
                   <span>{stat.name}</span>
-                  <span className="font-mono">{(stat.loadRatio * 100).toFixed(0)}% Cap</span>
+                  <span className="font-mono">
+                    {(stat.loadRatio * 100).toFixed(0)}% Cap
+                  </span>
                 </div>
                 <div className="w-full bg-secondary h-1.5 rounded-full overflow-hidden">
                   <div
@@ -164,7 +213,8 @@ export function ErosionSimulatorPanel() {
             <div>
               <p className="font-semibold text-[10px]">BMP Standards Met</p>
               <p className="text-[9px] text-emerald-500/80 mt-0.5">
-                Runoff sediment levels are inside limits. Silt barriers have sufficient retention capacity.
+                Runoff sediment levels are inside limits. Silt barriers have
+                sufficient retention capacity.
               </p>
             </div>
           </div>
@@ -172,10 +222,21 @@ export function ErosionSimulatorPanel() {
           <div className="rounded border border-rose-500/20 bg-rose-500/5 p-2 flex items-start gap-2 text-rose-500">
             <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-[10px]">Stormwater Runoff Warning</p>
+              <p className="font-semibold text-[10px]">
+                Stormwater Runoff Warning
+              </p>
               <ul className="list-disc pl-3 text-[9px] text-rose-500/80 mt-0.5 space-y-0.5">
-                {highSoilLoss && <li>Cumulative soil loss exceeds limits (max 50kg per shower).</li>}
-                {barrierOverflow && <li>Silt fence / barrier load is exceeding 90% capacity, risk of breakout.</li>}
+                {highSoilLoss && (
+                  <li>
+                    Cumulative soil loss exceeds limits (max 50kg per shower).
+                  </li>
+                )}
+                {barrierOverflow && (
+                  <li>
+                    Silt fence / barrier load is exceeding 90% capacity, risk of
+                    breakout.
+                  </li>
+                )}
               </ul>
             </div>
           </div>

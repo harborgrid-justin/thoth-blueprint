@@ -33,7 +33,7 @@ describe("AEC Dimensions & Plat annotations", () => {
   it("calculates slope annotations (ratios and percents)", () => {
     const a = { x: 0, y: 0, z: 0 };
     const b = { x: 100, y: 0, z: 2.5 };
-    
+
     expect(formatSlope(a, b, "percent")).toBe("2.50%");
     expect(formatSlope(a, b, "ratio")).toBe("40.0:1");
   });
@@ -56,10 +56,13 @@ describe("AEC Dimensions & Plat annotations", () => {
       b: { x: 100, y: 0 },
       offset: 10,
     };
-    
+
     const measured = measureDimension(dim, spatial);
     expect(measured.geometry.lines).toHaveLength(1);
-    expect(measured.geometry.lines[0]).toEqual([{ x: 0, y: 10 }, { x: 100, y: 10 }]);
+    expect(measured.geometry.lines[0]).toEqual([
+      { x: 0, y: 10 },
+      { x: 100, y: 10 },
+    ]);
   });
 
   it("aligns dimension text perpendicular or horizontal", () => {

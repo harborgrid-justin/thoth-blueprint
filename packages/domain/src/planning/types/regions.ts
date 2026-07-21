@@ -1,4 +1,6 @@
 import type { MonumentType } from "../../survey/monument";
+
+export type { MonumentType };
 import type { Orientation, SheetSizeId } from "../../drawing/sheetsize";
 import type { AreaUnit, CRS, Unit } from "../../spatial/spatial";
 
@@ -57,7 +59,14 @@ export interface TitleBlockSpec {
 
 /** A column in the consolidated curve-data table. */
 export interface CurveTableColumn {
-  key: "label" | "radius" | "delta" | "arcLength" | "chord" | "chordBearing" | "tangent";
+  key:
+    | "label"
+    | "radius"
+    | "delta"
+    | "arcLength"
+    | "chord"
+    | "chordBearing"
+    | "tangent";
   label: string;
 }
 

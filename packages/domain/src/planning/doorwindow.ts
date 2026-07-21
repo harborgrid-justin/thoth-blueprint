@@ -5,12 +5,14 @@ import type {
   DoorGeometryResults,
   WindowGeometryResults,
   UnitScheduleItem,
+  UnitSchedule,
 } from "./types/doorwindow";
 
 export type {
   DoorGeometryResults,
   WindowGeometryResults,
   UnitScheduleItem,
+  UnitSchedule,
 };
 
 export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
@@ -31,7 +33,8 @@ export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
       y: (door.boundary[1].y + door.boundary[2].y) / 2,
     };
     // compute depth thickness from actual polygon
-    wallThickness = distance(door.boundary[3], door.boundary[0]) || wallThickness;
+    wallThickness =
+      distance(door.boundary[3], door.boundary[0]) || wallThickness;
   } else if (door.boundary && door.boundary.length >= 2) {
     pLeft = door.boundary[0];
     pRight = door.boundary[1];
@@ -55,8 +58,10 @@ export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
     const steps = 18;
     for (let i = 0; i <= steps; i++) {
       const phi = (i / steps) * angleRad;
-      const x = pLeft.x + width * (Math.cos(phi) * cos - Math.sin(phi) * normalX);
-      const y = pLeft.y + width * (Math.cos(phi) * sin - Math.sin(phi) * normalY);
+      const x =
+        pLeft.x + width * (Math.cos(phi) * cos - Math.sin(phi) * normalX);
+      const y =
+        pLeft.y + width * (Math.cos(phi) * sin - Math.sin(phi) * normalY);
       swingPath.push({ x, y });
     }
   } else if (door.doorOperation === "double-swing") {
@@ -66,22 +71,29 @@ export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
     // Left arc
     for (let i = 0; i <= steps; i++) {
       const phi = (i / steps) * angleRad;
-      const x = pLeft.x + halfW * (Math.cos(phi) * cos - Math.sin(phi) * normalX);
-      const y = pLeft.y + halfW * (Math.cos(phi) * sin - Math.sin(phi) * normalY);
+      const x =
+        pLeft.x + halfW * (Math.cos(phi) * cos - Math.sin(phi) * normalX);
+      const y =
+        pLeft.y + halfW * (Math.cos(phi) * sin - Math.sin(phi) * normalY);
       swingPath.push({ x, y });
     }
     // Right arc
     for (let i = 0; i <= steps; i++) {
       const phi = (i / steps) * angleRad;
-      const x = pRight.x - halfW * (Math.cos(phi) * cos + Math.sin(phi) * normalX);
-      const y = pRight.y - halfW * (Math.cos(phi) * sin + Math.sin(phi) * normalY);
+      const x =
+        pRight.x - halfW * (Math.cos(phi) * cos + Math.sin(phi) * normalX);
+      const y =
+        pRight.y - halfW * (Math.cos(phi) * sin + Math.sin(phi) * normalY);
       swingPath.push({ x, y });
     }
   } else if (door.doorOperation === "folding") {
     // Folding bi-fold zig-zag panel in plan
     swingPath.push(
       pLeft,
-      { x: pLeft.x + (width / 4) * cos + (width / 6) * normalX, y: pLeft.y + (width / 4) * sin + (width / 6) * normalY },
+      {
+        x: pLeft.x + (width / 4) * cos + (width / 6) * normalX,
+        y: pLeft.y + (width / 4) * sin + (width / 6) * normalY,
+      },
       { x: pLeft.x + (width / 2) * cos, y: pLeft.y + (width / 2) * sin },
     );
   }
@@ -90,15 +102,31 @@ export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
   const pAngleRad = door.doorOperation === "swing" ? angleRad : 0;
   const panelXStart = pLeft.x;
   const panelYStart = pLeft.y;
-  const panelXEnd = pLeft.x + width * (Math.cos(pAngleRad) * cos - Math.sin(pAngleRad) * normalX);
-  const panelYEnd = pLeft.y + width * (Math.cos(pAngleRad) * sin - Math.sin(pAngleRad) * normalY);
+  const panelXEnd =
+    pLeft.x +
+    width * (Math.cos(pAngleRad) * cos - Math.sin(pAngleRad) * normalX);
+  const panelYEnd =
+    pLeft.y +
+    width * (Math.cos(pAngleRad) * sin - Math.sin(pAngleRad) * normalY);
   const thick = 0.04;
 
   const doorPanelPolygon = [
-    { x: panelXStart - (thick / 2) * normalX, y: panelYStart - (thick / 2) * normalY },
-    { x: panelXStart + (thick / 2) * normalX, y: panelYStart + (thick / 2) * normalY },
-    { x: panelXEnd + (thick / 2) * normalX, y: panelYEnd + (thick / 2) * normalY },
-    { x: panelXEnd - (thick / 2) * normalX, y: panelYEnd - (thick / 2) * normalY },
+    {
+      x: panelXStart - (thick / 2) * normalX,
+      y: panelYStart - (thick / 2) * normalY,
+    },
+    {
+      x: panelXStart + (thick / 2) * normalX,
+      y: panelYStart + (thick / 2) * normalY,
+    },
+    {
+      x: panelXEnd + (thick / 2) * normalX,
+      y: panelYEnd + (thick / 2) * normalY,
+    },
+    {
+      x: panelXEnd - (thick / 2) * normalX,
+      y: panelYEnd - (thick / 2) * normalY,
+    },
   ];
 
   // 3. Sill and threshold coordinates (REQ-UNIMP-044, REQ-UNIMP-045)
@@ -108,35 +136,67 @@ export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
 
   // Sill projects outward (along positive normal)
   const sillPolygon = [
-    { x: pLeft.x - sillOver * cos + (wallThickness / 2) * normalX, y: pLeft.y - sillOver * sin + (wallThickness / 2) * normalY },
-    { x: pRight.x + sillOver * cos + (wallThickness / 2) * normalX, y: pRight.y + sillOver * sin + (wallThickness / 2) * normalY },
-    { x: pRight.x + sillOver * cos + (wallThickness / 2 + sillThick) * normalX, y: pRight.y + sillOver * sin + (wallThickness / 2 + sillThick) * normalY },
-    { x: pLeft.x - sillOver * cos + (wallThickness / 2 + sillThick) * normalX, y: pLeft.y - sillOver * sin + (wallThickness / 2 + sillThick) * normalY },
+    {
+      x: pLeft.x - sillOver * cos + (wallThickness / 2) * normalX,
+      y: pLeft.y - sillOver * sin + (wallThickness / 2) * normalY,
+    },
+    {
+      x: pRight.x + sillOver * cos + (wallThickness / 2) * normalX,
+      y: pRight.y + sillOver * sin + (wallThickness / 2) * normalY,
+    },
+    {
+      x: pRight.x + sillOver * cos + (wallThickness / 2 + sillThick) * normalX,
+      y: pRight.y + sillOver * sin + (wallThickness / 2 + sillThick) * normalY,
+    },
+    {
+      x: pLeft.x - sillOver * cos + (wallThickness / 2 + sillThick) * normalX,
+      y: pLeft.y - sillOver * sin + (wallThickness / 2 + sillThick) * normalY,
+    },
   ];
 
   // Threshold covers wall slot depth
   const thresholdPolygon = [
-    { x: pLeft.x - (wallThickness / 2) * normalX, y: pLeft.y - (wallThickness / 2) * normalY },
-    { x: pRight.x - (wallThickness / 2) * normalX, y: pRight.y - (wallThickness / 2) * normalY },
-    { x: pRight.x + (wallThickness / 2) * normalX, y: pRight.y + (wallThickness / 2) * normalY },
-    { x: pLeft.x + (wallThickness / 2) * normalX, y: pLeft.y + (wallThickness / 2) * normalY },
+    {
+      x: pLeft.x - (wallThickness / 2) * normalX,
+      y: pLeft.y - (wallThickness / 2) * normalY,
+    },
+    {
+      x: pRight.x - (wallThickness / 2) * normalX,
+      y: pRight.y - (wallThickness / 2) * normalY,
+    },
+    {
+      x: pRight.x + (wallThickness / 2) * normalX,
+      y: pRight.y + (wallThickness / 2) * normalY,
+    },
+    {
+      x: pLeft.x + (wallThickness / 2) * normalX,
+      y: pLeft.y + (wallThickness / 2) * normalY,
+    },
   ];
 
   // 4. Hardware Knob / Handle anchor coordinate (REQ-UNIMP-046)
   // Placed at 90% along panel width from hinge
   const hardwareAnchor = {
-    x: pLeft.x + width * 0.9 * (Math.cos(pAngleRad) * cos - Math.sin(pAngleRad) * normalX),
-    y: pLeft.y + width * 0.9 * (Math.cos(pAngleRad) * sin - Math.sin(pAngleRad) * normalY),
+    x:
+      pLeft.x +
+      width * 0.9 * (Math.cos(pAngleRad) * cos - Math.sin(pAngleRad) * normalX),
+    y:
+      pLeft.y +
+      width * 0.9 * (Math.cos(pAngleRad) * sin - Math.sin(pAngleRad) * normalY),
   };
 
   // Egress codes warning checking (IBC 1010.1.1: minimum door clear width 32 inches / 0.81m)
   if (width < 0.81) {
-    warnings.push(`Door width ${width.toFixed(2)}m is below minimum building egress code clear width limit (0.81m / 32 inches).`);
+    warnings.push(
+      `Door width ${width.toFixed(2)}m is below minimum building egress code clear width limit (0.81m / 32 inches).`,
+    );
   }
 
   // Threshold step warning (ADA compliance: max threshold height 0.5 inches / 12.7mm)
   if (threshH > 0.0127) {
-    warnings.push(`Threshold height ${(threshH * 1000).toFixed(1)}mm exceeds ADA compliance limit (12.7mm / 0.5 inches).`);
+    warnings.push(
+      `Threshold height ${(threshH * 1000).toFixed(1)}mm exceeds ADA compliance limit (12.7mm / 0.5 inches).`,
+    );
   }
 
   return {
@@ -149,7 +209,9 @@ export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
   };
 }
 
-export function calculateWindowGeometry(win: WindowElement): WindowGeometryResults {
+export function calculateWindowGeometry(
+  win: WindowElement,
+): WindowGeometryResults {
   const warnings: string[] = [];
 
   let pLeft = { x: 0, y: 0 };
@@ -184,10 +246,22 @@ export function calculateWindowGeometry(win: WindowElement): WindowGeometryResul
   const sillOver = win.sillOverhang || 0.04;
 
   const sillPolygon = [
-    { x: pLeft.x - sillOver * cos + (wallThickness / 2) * normalX, y: pLeft.y - sillOver * sin + (wallThickness / 2) * normalY },
-    { x: pRight.x + sillOver * cos + (wallThickness / 2) * normalX, y: pRight.y + sillOver * sin + (wallThickness / 2) * normalY },
-    { x: pRight.x + sillOver * cos + (wallThickness / 2 + sillThick) * normalX, y: pRight.y + sillOver * sin + (wallThickness / 2 + sillThick) * normalY },
-    { x: pLeft.x - sillOver * cos + (wallThickness / 2 + sillThick) * normalX, y: pLeft.y - sillOver * sin + (wallThickness / 2 + sillThick) * normalY },
+    {
+      x: pLeft.x - sillOver * cos + (wallThickness / 2) * normalX,
+      y: pLeft.y - sillOver * sin + (wallThickness / 2) * normalY,
+    },
+    {
+      x: pRight.x + sillOver * cos + (wallThickness / 2) * normalX,
+      y: pRight.y + sillOver * sin + (wallThickness / 2) * normalY,
+    },
+    {
+      x: pRight.x + sillOver * cos + (wallThickness / 2 + sillThick) * normalX,
+      y: pRight.y + sillOver * sin + (wallThickness / 2 + sillThick) * normalY,
+    },
+    {
+      x: pLeft.x - sillOver * cos + (wallThickness / 2 + sillThick) * normalX,
+      y: pLeft.y - sillOver * sin + (wallThickness / 2 + sillThick) * normalY,
+    },
   ];
 
   // 2. Glazing panel outlines
@@ -203,8 +277,14 @@ export function calculateWindowGeometry(win: WindowElement): WindowGeometryResul
 
   const glazingPolygons: Point[][] = [
     [
-      { x: gStartX - (thick / 2) * normalX, y: gStartY - (thick / 2) * normalY },
-      { x: gStartX + (thick / 2) * normalX, y: gStartY + (thick / 2) * normalY },
+      {
+        x: gStartX - (thick / 2) * normalX,
+        y: gStartY - (thick / 2) * normalY,
+      },
+      {
+        x: gStartX + (thick / 2) * normalX,
+        y: gStartY + (thick / 2) * normalY,
+      },
       { x: gEndX + (thick / 2) * normalX, y: gEndY + (thick / 2) * normalY },
       { x: gEndX - (thick / 2) * normalX, y: gEndY - (thick / 2) * normalY },
     ],
@@ -219,12 +299,12 @@ export function calculateWindowGeometry(win: WindowElement): WindowGeometryResul
     const sStartY = gStartY + sBorder * sin;
     const sEndX = gEndX - sBorder * cos;
     const sEndY = gEndY - sBorder * sin;
-    
+
     sashPolygons.push([
-      { x: sStartX - (thick) * normalX, y: sStartY - (thick) * normalY },
-      { x: sStartX + (thick) * normalX, y: sStartY + (thick) * normalY },
-      { x: sEndX + (thick) * normalX, y: sEndY + (thick) * normalY },
-      { x: sEndX - (thick) * normalX, y: sEndY - (thick) * normalY },
+      { x: sStartX - thick * normalX, y: sStartY - thick * normalY },
+      { x: sStartX + thick * normalX, y: sStartY + thick * normalY },
+      { x: sEndX + thick * normalX, y: sEndY + thick * normalY },
+      { x: sEndX - thick * normalX, y: sEndY - thick * normalY },
     ]);
   }
 
@@ -234,7 +314,9 @@ export function calculateWindowGeometry(win: WindowElement): WindowGeometryResul
   const ratio = glazingArea / defaultRoomArea;
 
   if (ratio < 0.08) {
-    warnings.push(`Natural lighting area ratio (${(ratio * 100).toFixed(1)}%) is below standard building code compliance limit (8.0% of served room area).`);
+    warnings.push(
+      `Natural lighting area ratio (${(ratio * 100).toFixed(1)}%) is below standard building code compliance limit (8.0% of served room area).`,
+    );
   }
 
   return {
@@ -245,30 +327,15 @@ export function calculateWindowGeometry(win: WindowElement): WindowGeometryResul
   };
 }
 
-
-
-import type {
-  DoorGeometryResults,
-  WindowGeometryResults,
-  UnitScheduleItem,
-  UnitSchedule,
-} from "./types/doorwindow";
-
-export type {
-  DoorGeometryResults,
-  WindowGeometryResults,
-  UnitScheduleItem,
-  UnitSchedule,
-};
-
 export function compileUnitSchedule(siteElements: any[]): UnitSchedule {
   const doors: UnitScheduleItem[] = [];
   const windows: UnitScheduleItem[] = [];
-  
+  const schedule: UnitScheduleItem[] = [];
+
   siteElements.forEach((el) => {
     if (el.kind === "door") {
       const door = el as DoorElement;
-      doors.push({
+      const item: UnitScheduleItem = {
         id: door.id,
         kind: "door",
         name: door.name,
@@ -278,11 +345,14 @@ export function compileUnitSchedule(siteElements: any[]): UnitSchedule {
         hardware: door.hardwareTrim || "lever",
         fireRating: door.fireRating || "none",
         stcRating: door.stcRating || 32,
+        stc: door.stcRating || 32,
         safety: door.safetyGlazing || "none",
-      });
+      };
+      doors.push(item);
+      schedule.push(item);
     } else if (el.kind === "window") {
       const win = el as WindowElement;
-      windows.push({
+      const item: UnitScheduleItem = {
         id: win.id,
         kind: "window",
         name: win.name,
@@ -292,10 +362,13 @@ export function compileUnitSchedule(siteElements: any[]): UnitSchedule {
         hardware: "operator hinges",
         fireRating: win.fireRating || "none",
         stcRating: win.stcRating || 35,
+        stc: win.stcRating || 35,
         safety: win.safetyGlazing || "none",
-      });
+      };
+      windows.push(item);
+      schedule.push(item);
     }
   });
 
-  return { doors, windows };
+  return Object.assign(schedule, { doors, windows });
 }

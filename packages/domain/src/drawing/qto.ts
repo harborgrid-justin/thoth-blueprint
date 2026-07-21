@@ -13,7 +13,10 @@ export function calculateSectionArea(section: CrossSection): SectionArea {
   let cutArea = 0;
   let fillArea = 0;
 
-  const n = Math.min(section.existingPoints.length, section.proposedPoints.length);
+  const n = Math.min(
+    section.existingPoints.length,
+    section.proposedPoints.length,
+  );
   if (n < 2) {
     return { station: section.station, cutArea, fillArea };
   }
@@ -26,7 +29,9 @@ export function calculateSectionArea(section: CrossSection): SectionArea {
     const x0 = existing[i].offset;
     const x1 = existing[i + 1].offset;
     const w = x1 - x0;
-    if (w <= 0.0001) {continue;}
+    if (w <= 0.0001) {
+      continue;
+    }
 
     // Difference proposed - existing (positive is fill, negative is cut)
     const d0 = proposed[i].elevation - existing[i].elevation;
@@ -34,10 +39,10 @@ export function calculateSectionArea(section: CrossSection): SectionArea {
 
     if (d0 >= 0 && d1 >= 0) {
       // Entirely fill
-      fillArea += w * (d0 + d1) / 2;
+      fillArea += (w * (d0 + d1)) / 2;
     } else if (d0 <= 0 && d1 <= 0) {
       // Entirely cut
-      cutArea += w * (Math.abs(d0) + Math.abs(d1)) / 2;
+      cutArea += (w * (Math.abs(d0) + Math.abs(d1))) / 2;
     } else {
       // Crossing case: d0 and d1 have opposite signs. Find the zero crossing offset.
       // x_zero is between x0 and x1
@@ -48,8 +53,8 @@ export function calculateSectionArea(section: CrossSection): SectionArea {
       const h_fill = d0 > 0 ? d0 : d1;
       const h_cut = d0 < 0 ? Math.abs(d0) : Math.abs(d1);
 
-      fillArea += w_fill * h_fill / 2;
-      cutArea += w_cut * h_cut / 2;
+      fillArea += (w_fill * h_fill) / 2;
+      cutArea += (w_cut * h_cut) / 2;
     }
   }
 
@@ -60,11 +65,13 @@ export function calculateSectionArea(section: CrossSection): SectionArea {
   };
 }
 
-
 /**
  * Calculates cut and fill volumes between two cross-sections using the Average End Area method.
  */
-export function averageEndAreaVolume(secA: CrossSection, secB: CrossSection): StationVolume {
+export function averageEndAreaVolume(
+  secA: CrossSection,
+  secB: CrossSection,
+): StationVolume {
   const areaA = calculateSectionArea(secA);
   const areaB = calculateSectionArea(secB);
 
@@ -82,21 +89,27 @@ export function averageEndAreaVolume(secA: CrossSection, secB: CrossSection): St
   };
 }
 
-
 /**
  * Generates cumulative mass haul volume lines along consecutive section intervals.
  */
 export function calculateMassHaul(sections: CrossSection[]): MassHaulPoint[] {
-  if (sections.length === 0) {return [];}
+  if (sections.length === 0) {
+    return [];
+  }
   const sorted = _.sortBy(sections, "station");
 
-  const points: MassHaulPoint[] = [{ station: sorted[0].station, cumulativeVolume: 0 }];
+  const points: MassHaulPoint[] = [
+    { station: sorted[0].station, cumulativeVolume: 0 },
+  ];
   let runningSum = 0;
 
   for (let i = 0; i < sorted.length - 1; i++) {
     const vol = averageEndAreaVolume(sorted[i], sorted[i + 1]);
     runningSum += vol.netVolume;
-    points.push({ station: sorted[i + 1].station, cumulativeVolume: runningSum });
+    points.push({
+      station: sorted[i + 1].station,
+      cumulativeVolume: runningSum,
+    });
   }
 
   return points;
@@ -130,9 +143,17 @@ export function evaluatePayItemCost(
 
   // Decide the base quantity variable
   let qty = cnt;
-  if (item.unit.toLowerCase() === "lf" || item.unit.toLowerCase() === "m" || item.unit.toLowerCase() === "feet") {
+  if (
+    item.unit.toLowerCase() === "lf" ||
+    item.unit.toLowerCase() === "m" ||
+    item.unit.toLowerCase() === "feet"
+  ) {
     qty = len;
-  } else if (item.unit.toLowerCase() === "sf" || item.unit.toLowerCase() === "sy" || item.unit.toLowerCase() === "sqm") {
+  } else if (
+    item.unit.toLowerCase() === "sf" ||
+    item.unit.toLowerCase() === "sy" ||
+    item.unit.toLowerCase() === "sqm"
+  ) {
     qty = area;
   }
 
@@ -165,13 +186,16 @@ export function evaluatePayItemCost(
 
 function safeEvalMath(expr: string): number | null {
   const tokens = expr.match(/\d+(?:\.\d+)?|[+\-*/()]/g);
-  if (!tokens || tokens.join("") !== expr.replace(/\s+/g, "")) {return null;}
+  if (!tokens || tokens.join("") !== expr.replace(/\s+/g, "")) {
+    return null;
+  }
+  const tok = tokens;
 
   let pos = 0;
   function parseExpr(): number {
     let left = parseTerm();
-    while (pos < tokens.length && (tokens[pos] === "+" || tokens[pos] === "-")) {
-      const op = tokens[pos++];
+    while (pos < tok.length && (tok[pos] === "+" || tok[pos] === "-")) {
+      const op = tok[pos++];
       const right = parseTerm();
       left = op === "+" ? left + right : left - right;
     }
@@ -180,8 +204,8 @@ function safeEvalMath(expr: string): number | null {
 
   function parseTerm(): number {
     let left = parseFactor();
-    while (pos < tokens.length && (tokens[pos] === "*" || tokens[pos] === "/")) {
-      const op = tokens[pos++];
+    while (pos < tok.length && (tok[pos] === "*" || tok[pos] === "/")) {
+      const op = tok[pos++];
       const right = parseFactor();
       left = op === "*" ? left * right : right !== 0 ? left / right : 0;
     }
@@ -189,11 +213,15 @@ function safeEvalMath(expr: string): number | null {
   }
 
   function parseFactor(): number {
-    if (pos >= tokens.length) {return 0;}
-    const token = tokens[pos++];
+    if (pos >= tok.length) {
+      return 0;
+    }
+    const token = tok[pos++];
     if (token === "(") {
       const val = parseExpr();
-      if (pos < tokens.length && tokens[pos] === ")") {pos++;}
+      if (pos < tok.length && tok[pos] === ")") {
+        pos++;
+      }
       return val;
     }
     return parseFloat(token) || 0;
@@ -228,7 +256,9 @@ export function parsePayItemListCsv(csvContent: string): PayItem[] {
   const lines = csvContent.split(/\r?\n/);
   for (const line of lines) {
     const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("ID,Name")) {continue;}
+    if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("ID,Name")) {
+      continue;
+    }
 
     const parts = parseCsvLine(trimmed);
     if (parts.length >= 4) {

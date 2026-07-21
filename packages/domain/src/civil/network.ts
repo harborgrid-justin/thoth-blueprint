@@ -49,7 +49,10 @@ export function edgePoints(
 }
 
 /** Length of a single edge in plan units. */
-export function edgeLength(network: InfrastructureNetwork, edge: NetworkEdge): number {
+export function edgeLength(
+  network: InfrastructureNetwork,
+  edge: NetworkEdge,
+): number {
   const pts = edgePoints(network, edge);
   return pts ? distance(pts[0], pts[1]) : 0;
 }
@@ -68,9 +71,13 @@ export function networkLength(
 }
 
 /** The degree (number of incident edges) of each node. */
-export function nodeDegrees(network: InfrastructureNetwork): Map<string, number> {
+export function nodeDegrees(
+  network: InfrastructureNetwork,
+): Map<string, number> {
   const deg = new Map<string, number>();
-  for (const n of network.nodes) {deg.set(n.id, 0);}
+  for (const n of network.nodes) {
+    deg.set(n.id, 0);
+  }
   for (const e of network.edges) {
     deg.set(e.from, (deg.get(e.from) ?? 0) + 1);
     deg.set(e.to, (deg.get(e.to) ?? 0) + 1);
@@ -88,8 +95,11 @@ export function junctions(network: InfrastructureNetwork): {
   const deadEnds: NetworkNode[] = [];
   for (const n of network.nodes) {
     const d = deg.get(n.id) ?? 0;
-    if (d >= 3) {intersections.push(n);}
-    else if (d === 1) {deadEnds.push(n);}
+    if (d >= 3) {
+      intersections.push(n);
+    } else if (d === 1) {
+      deadEnds.push(n);
+    }
   }
   return { intersections, deadEnds };
 }
@@ -110,14 +120,20 @@ export function connectedComponents(network: InfrastructureNetwork): number {
     }
     return root;
   };
-  for (const n of network.nodes) {parent.set(n.id, n.id);}
+  for (const n of network.nodes) {
+    parent.set(n.id, n.id);
+  }
   for (const e of network.edges) {
     const a = find(e.from);
     const b = find(e.to);
-    if (a !== b) {parent.set(a, b);}
+    if (a !== b) {
+      parent.set(a, b);
+    }
   }
   const roots = new Set<string>();
-  for (const n of network.nodes) {roots.add(find(n.id));}
+  for (const n of network.nodes) {
+    roots.add(find(n.id));
+  }
   return network.nodes.length === 0 ? 0 : roots.size;
 }
 
@@ -130,10 +146,15 @@ export function isConnected(network: InfrastructureNetwork): boolean {
  * Estimated right-of-way corridor area (Σ edge length × width), in plan units².
  * A first-order measure of land consumed by the network.
  */
-export function corridorArea(network: InfrastructureNetwork, nodes = nodeMap(network)): number {
+export function corridorArea(
+  network: InfrastructureNetwork,
+  nodes = nodeMap(network),
+): number {
   return _.sumBy(network.edges, (e) => {
     const pts = edgePoints(network, e, nodes);
-    if (!pts) {return 0;}
+    if (!pts) {
+      return 0;
+    }
     const w = e.width ?? DEFAULT_ROAD_WIDTH[e.roadClass ?? "local"] ?? 0;
     return distance(pts[0], pts[1]) * w;
   });
@@ -143,12 +164,14 @@ export function corridorArea(network: InfrastructureNetwork, nodes = nodeMap(net
 export function distanceToNetwork(
   network: InfrastructureNetwork,
   p: Point,
-  nodes = nodeMap(network)
+  nodes = nodeMap(network),
 ): number {
   let best = Infinity;
   for (const e of network.edges) {
     const pts = edgePoints(network, e, nodes);
-    if (!pts) {continue;}
+    if (!pts) {
+      continue;
+    }
     const c = closestPointOnSegment(p, pts[0], pts[1]);
     best = Math.min(best, distance(p, c));
   }
@@ -165,9 +188,13 @@ export function serviceCoverage(
   points: Point[],
   serviceDistance: number,
 ): number {
-  if (points.length === 0) {return 0;}
+  if (points.length === 0) {
+    return 0;
+  }
   const nodes = nodeMap(network);
-  const served = points.filter((p) => distanceToNetwork(network, p, nodes) <= serviceDistance).length;
+  const served = points.filter(
+    (p) => distanceToNetwork(network, p, nodes) <= serviceDistance,
+  ).length;
   return served / points.length;
 }
 
@@ -192,7 +219,12 @@ export function networkFromPath(
   const nodes: NetworkNode[] = path.map((point) => ({ id: makeId(), point }));
   const edges: NetworkEdge[] = [];
   for (let i = 0; i < nodes.length - 1; i++) {
-    edges.push({ id: makeId(), from: nodes[i].id, to: nodes[i + 1].id, ...edgeDefaults });
+    edges.push({
+      id: makeId(),
+      from: nodes[i].id,
+      to: nodes[i + 1].id,
+      ...edgeDefaults,
+    });
   }
   return { id, name, kind, nodes, edges };
 }

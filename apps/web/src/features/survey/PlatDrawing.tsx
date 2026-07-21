@@ -85,11 +85,16 @@ export function PlatDrawing({
 
   function exportSvg() {
     const svg = svgRef.current;
-    if (!svg) {return;}
+    if (!svg) {
+      return;
+    }
     const source = new XMLSerializer().serializeToString(svg);
-    const blob = new Blob([`<?xml version="1.0" encoding="UTF-8"?>\n${source}`], {
-      type: "image/svg+xml;charset=utf-8",
-    });
+    const blob = new Blob(
+      [`<?xml version="1.0" encoding="UTF-8"?>\n${source}`],
+      {
+        type: "image/svg+xml;charset=utf-8",
+      },
+    );
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -118,8 +123,24 @@ export function PlatDrawing({
           fontFamily="ui-monospace, Menlo, Consolas, monospace"
         >
           {/* Sheet border */}
-          <rect x={8} y={8} width={W - 16} height={H - 16} fill="none" stroke={INK} strokeWidth={1.5} />
-          <rect x={13} y={13} width={W - 26} height={H - 26} fill="none" stroke={INK} strokeWidth={0.6} />
+          <rect
+            x={8}
+            y={8}
+            width={W - 16}
+            height={H - 16}
+            fill="none"
+            stroke={INK}
+            strokeWidth={1.5}
+          />
+          <rect
+            x={13}
+            y={13}
+            width={W - 26}
+            height={H - 26}
+            fill="none"
+            stroke={INK}
+            strokeWidth={0.6}
+          />
 
           {/* Setback / buildable envelope */}
           {envelope && (
@@ -134,7 +155,9 @@ export function PlatDrawing({
 
           {/* Boundary (arcs tessellated so curves render smoothly). */}
           <polygon
-            points={_.map(densifyBoundary(boundary, element.arcs, 1), (p) => screenPair(project(p))).join(" ")}
+            points={_.map(densifyBoundary(boundary, element.arcs, 1), (p) =>
+              screenPair(project(p)),
+            ).join(" ")}
             fill={INK}
             fillOpacity={0.04}
             stroke={INK}
@@ -147,11 +170,15 @@ export function PlatDrawing({
             const a = edge.from;
             const b = edge.to;
             const course = report.courses[i];
-            const midWorld = edge.arc ? edge.arc.mid : { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+            const midWorld = edge.arc
+              ? edge.arc.mid
+              : { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
             const out = outwardNormal(a, b, c);
             const pos = offset(project(midWorld), out, 16);
             let angle = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
-            if (angle > 90 || angle < -90) {angle += 180;}
+            if (angle > 90 || angle < -90) {
+              angle += 180;
+            }
             if (edge.arc && course.curve) {
               const cv = course.curve;
               return (
@@ -166,7 +193,13 @@ export function PlatDrawing({
                     strokeWidth={0.6}
                     strokeDasharray="3 3"
                   />
-                  <text x={pos.x} y={pos.y} textAnchor="middle" fill={INK} fontSize={9.5}>
+                  <text
+                    x={pos.x}
+                    y={pos.y}
+                    textAnchor="middle"
+                    fill={INK}
+                    fontSize={9.5}
+                  >
                     <tspan x={pos.x} dy={-2} fontWeight={700}>
                       {cv.label}
                     </tspan>
@@ -224,13 +257,33 @@ export function PlatDrawing({
             const pob = i === 0;
             return (
               <g key={`m${i}`}>
-                <circle cx={s.x} cy={s.y} r={pob ? 4 : 3} fill={SHEET} stroke={INK} strokeWidth={pob ? 1.8 : 1.3} />
+                <circle
+                  cx={s.x}
+                  cy={s.y}
+                  r={pob ? 4 : 3}
+                  fill={SHEET}
+                  stroke={INK}
+                  strokeWidth={pob ? 1.8 : 1.3}
+                />
                 <circle cx={s.x} cy={s.y} r={1} fill={INK} />
-                <text x={lp.x} y={lp.y + 3} textAnchor="middle" fontSize={9.5} fontWeight={700} fill={INK}>
+                <text
+                  x={lp.x}
+                  y={lp.y + 3}
+                  textAnchor="middle"
+                  fontSize={9.5}
+                  fontWeight={700}
+                  fill={INK}
+                >
                   P{i + 1}
                 </text>
                 {pob && (
-                  <text x={lp.x} y={lp.y + 13} textAnchor="middle" fontSize={7.5} fill={INK_MUTED}>
+                  <text
+                    x={lp.x}
+                    y={lp.y + 13}
+                    textAnchor="middle"
+                    fontSize={7.5}
+                    fill={INK_MUTED}
+                  >
                     P.O.B.
                   </text>
                 )}
@@ -240,10 +293,21 @@ export function PlatDrawing({
 
           {/* Area callout at the centroid. */}
           <g textAnchor="middle" fill={INK}>
-            <text x={cScreen.x} y={cScreen.y - 8} fontSize={9} letterSpacing={1} fill={INK_MUTED}>
+            <text
+              x={cScreen.x}
+              y={cScreen.y - 8}
+              fontSize={9}
+              letterSpacing={1}
+              fill={INK_MUTED}
+            >
               AREA
             </text>
-            <text x={cScreen.x} y={cScreen.y + 6} fontSize={13} fontWeight={700}>
+            <text
+              x={cScreen.x}
+              y={cScreen.y + 6}
+              fontSize={13}
+              fontWeight={700}
+            >
               {areaLine1}
             </text>
             <text x={cScreen.x} y={cScreen.y + 20} fontSize={11}>
@@ -283,14 +347,31 @@ function NorthArrow({ x, y }: { x: number; y: number }) {
     <g transform={`translate(${x} ${y})`} fill={INK} stroke={INK}>
       <path d="M0 34 L0 6" strokeWidth={1.2} />
       <path d="M0 0 L6 14 L0 9 L-6 14 Z" strokeWidth={0.6} />
-      <text x={0} y={48} textAnchor="middle" fontSize={11} fontWeight={700} stroke="none">
+      <text
+        x={0}
+        y={48}
+        textAnchor="middle"
+        fontSize={11}
+        fontWeight={700}
+        stroke="none"
+      >
         N
       </text>
     </g>
   );
 }
 
-function GraphicScale({ x, y, barPx, label }: { x: number; y: number; barPx: number; label: string }) {
+function GraphicScale({
+  x,
+  y,
+  barPx,
+  label,
+}: {
+  x: number;
+  y: number;
+  barPx: number;
+  label: string;
+}) {
   const segs = 4;
   const seg = barPx / segs;
   return (
@@ -341,9 +422,31 @@ function TitleBlock({
   const c2 = x + width * 0.72;
   return (
     <g>
-      <rect x={x} y={top} width={width} height={boxH} fill="none" stroke={INK} strokeWidth={1.2} />
-      <line x1={c1} y1={top} x2={c1} y2={top + boxH} stroke={INK} strokeWidth={0.8} />
-      <line x1={c2} y1={top} x2={c2} y2={top + boxH} stroke={INK} strokeWidth={0.8} />
+      <rect
+        x={x}
+        y={top}
+        width={width}
+        height={boxH}
+        fill="none"
+        stroke={INK}
+        strokeWidth={1.2}
+      />
+      <line
+        x1={c1}
+        y1={top}
+        x2={c1}
+        y2={top + boxH}
+        stroke={INK}
+        strokeWidth={0.8}
+      />
+      <line
+        x1={c2}
+        y1={top}
+        x2={c2}
+        y2={top + boxH}
+        stroke={INK}
+        strokeWidth={0.8}
+      />
 
       {/* Left cell: title */}
       <text x={x + 12} y={top + 20} fontSize={12} fontWeight={700} fill={INK}>
@@ -357,13 +460,33 @@ function TitleBlock({
       </text>
 
       {/* Middle cell: metrics */}
-      <TitleRow x={c1 + 12} y={top + 18} k="Area" v={`${fmt(report.area.squareUnits, 0)} ${u}²`} />
+      <TitleRow
+        x={c1 + 12}
+        y={top + 18}
+        k="Area"
+        v={`${fmt(report.area.squareUnits, 0)} ${u}²`}
+      />
       <TitleRow x={c1 + 12} y={top + 34} k="" v={areaSecondary} />
-      <TitleRow x={c1 + 12} y={top + 52} k="Perimeter" v={`${fmt(report.perimeter)} ${u}`} />
+      <TitleRow
+        x={c1 + 12}
+        y={top + 52}
+        k="Perimeter"
+        v={`${fmt(report.perimeter)} ${u}`}
+      />
 
       {/* Right cell: closure + notes */}
-      <TitleRow x={c2 + 12} y={top + 18} k="Closure" v={report.record.precisionText} />
-      <TitleRow x={c2 + 12} y={top + 34} k="Corners" v={String(element.boundary.length)} />
+      <TitleRow
+        x={c2 + 12}
+        y={top + 18}
+        k="Closure"
+        v={report.record.precisionText}
+      />
+      <TitleRow
+        x={c2 + 12}
+        y={top + 34}
+        k="Corners"
+        v={String(element.boundary.length)}
+      />
       <text x={c2 + 12} y={top + 54} fontSize={8} fill={INK_MUTED}>
         BEARINGS &amp; DISTANCES SHOWN
       </text>
@@ -371,7 +494,17 @@ function TitleBlock({
   );
 }
 
-function TitleRow({ x, y, k, v }: { x: number; y: number; k: string; v: string }) {
+function TitleRow({
+  x,
+  y,
+  k,
+  v,
+}: {
+  x: number;
+  y: number;
+  k: string;
+  v: string;
+}) {
   return (
     <text x={x} y={y} fontSize={9} fill={INK}>
       {k && <tspan fill={INK_MUTED}>{k}: </tspan>}

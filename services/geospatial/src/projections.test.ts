@@ -1,6 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { reprojectPoint } from "./projections.js";
-import { geojsonToElements, elementsToGeojson, type GeoJSONFeatureCollection } from "./interop.js";
+import {
+  geojsonToElements,
+  elementsToGeojson,
+  type GeoJSONFeatureCollection,
+} from "./interop.js";
 import type { PlanElement } from "@thoth/domain";
 
 describe("Geospatial Projections Engine", () => {
@@ -8,7 +12,7 @@ describe("Geospatial Projections Engine", () => {
     // Prime meridian at equator
     const origin = { x: 0, y: 0 };
     const mercOrigin = reprojectPoint(origin, "EPSG:4326", "EPSG:3857");
-    
+
     expect(mercOrigin.x).toBeCloseTo(0, 1);
     expect(mercOrigin.y).toBeCloseTo(0, 1);
 
@@ -46,17 +50,17 @@ describe("Geospatial GeoJSON Translation", () => {
                 [-122.3, 37.7],
                 [-122.3, 37.8],
                 [-122.4, 37.8],
-                [-122.4, 37.7] // Closed loop
-              ]
-            ]
+                [-122.4, 37.7], // Closed loop
+              ],
+            ],
           },
           properties: {
             kind: "parcel",
             name: "San Francisco Block A",
-            apn: "999-88-77"
-          }
-        }
-      ]
+            apn: "999-88-77",
+          },
+        },
+      ],
     };
 
     const elements = geojsonToElements(geojson, "EPSG:4326", "EPSG:3857");
@@ -68,7 +72,7 @@ describe("Geospatial GeoJSON Translation", () => {
     expect((el as any).name).toBe("San Francisco Block A");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((el as any).apn).toBe("999-88-77");
-    
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const boundary = (el as any).boundary;
     expect(boundary.length).toBe(4); // The duplicate end point is removed
@@ -87,10 +91,10 @@ describe("Geospatial GeoJSON Translation", () => {
           { x: -13625460.3, y: 4537845.5 },
           { x: -13614328.7, y: 4537845.5 },
           { x: -13614328.7, y: 4551877.8 },
-          { x: -13625460.3, y: 4551877.8 }
+          { x: -13625460.3, y: 4551877.8 },
         ],
-        apn: "111-22-33"
-      }
+        apn: "111-22-33",
+      },
     ];
 
     const geojson = elementsToGeojson(elements, "EPSG:3857", "EPSG:4326");

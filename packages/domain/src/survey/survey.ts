@@ -16,7 +16,12 @@
 
 import _ from "lodash";
 import { vec2 } from "gl-matrix";
-import { distance, signedArea, type Point, type Polygon } from "../spatial/geometry";
+import {
+  distance,
+  signedArea,
+  type Point,
+  type Polygon,
+} from "../spatial/geometry";
 import {
   boundaryArea,
   boundaryEdges,
@@ -25,7 +30,11 @@ import {
   type EdgeArcs,
 } from "../spatial/curve";
 import type { SpatialContext, Unit } from "../spatial/spatial";
-import { areaToSquareMeters, squareMetersTo, unitLabel } from "../spatial/spatial";
+import {
+  areaToSquareMeters,
+  squareMetersTo,
+  unitLabel,
+} from "../spatial/spatial";
 
 const DEG = 180 / Math.PI;
 
@@ -73,15 +82,24 @@ export {
   bearingToAzimuth,
 };
 
-
 /** Build the tabulated curve record for an arc course. */
-function curveRecord(courseIndex: number, curveNo: number, from: Point, to: Point, arc: Arc): CurveRecord {
+function curveRecord(
+  courseIndex: number,
+  curveNo: number,
+  from: Point,
+  to: Point,
+  arc: Arc,
+): CurveRecord {
   const chordAz = azimuth(from, to);
   const delta = arc.delta * DEG;
   const mid = { x: (from.x + to.x) / 2, y: (from.y + to.y) / 2 };
-  const u = { x: (to.x - from.x) / arc.chordLength, y: (to.y - from.y) / arc.chordLength };
+  const u = {
+    x: (to.x - from.x) / arc.chordLength,
+    y: (to.y - from.y) / arc.chordLength,
+  };
   const r = { x: arc.center.x - mid.x, y: arc.center.y - mid.y };
-  const direction: "left" | "right" = u.x * r.y - u.y * r.x > 0 ? "right" : "left";
+  const direction: "left" | "right" =
+    u.x * r.y - u.y * r.x > 0 ? "right" : "left";
   return {
     courseIndex,
     label: `C${curveNo}`,
@@ -148,19 +166,28 @@ export function polygonCourses(
   return courses;
 }
 
-
 /** Check how well a set of courses closes back on the Point of Beginning. */
 export function traverseClosure(courses: SurveyCourse[]): TraverseClosure {
   const perimeter = _.sumBy(courses, "distance");
   const latitudeError = _.sumBy(courses, "latitude");
   const departureError = _.sumBy(courses, "departure");
-  const linearMisclosure = vec2.len(vec2.fromValues(latitudeError, departureError));
-  const precision = linearMisclosure < 1e-9 ? Infinity : perimeter / linearMisclosure;
+  const linearMisclosure = vec2.len(
+    vec2.fromValues(latitudeError, departureError),
+  );
+  const precision =
+    linearMisclosure < 1e-9 ? Infinity : perimeter / linearMisclosure;
   const precisionText =
     precision === Infinity || precision > 1e6
       ? "Exact (closed)"
       : `1:${Math.round(precision).toLocaleString()}`;
-  return { perimeter, latitudeError, departureError, linearMisclosure, precision, precisionText };
+  return {
+    perimeter,
+    latitudeError,
+    departureError,
+    linearMisclosure,
+    precision,
+    precisionText,
+  };
 }
 
 /**
@@ -172,7 +199,9 @@ export function traverseClosure(courses: SurveyCourse[]): TraverseClosure {
  */
 export function interiorAngles(polygon: Polygon): number[] {
   const n = polygon.length;
-  if (n < 3) {return polygon.map(() => 0);}
+  if (n < 3) {
+    return polygon.map(() => 0);
+  }
   const ccw = signedArea(polygon) > 0;
   const angles: number[] = [];
   for (let i = 0; i < n; i++) {
@@ -194,9 +223,6 @@ export function interiorAngles(polygon: Polygon): number[] {
   }
   return angles;
 }
-
-
-
 
 /**
  * Traverse closure computed from the **recorded** bearings and distances — i.e.
@@ -221,13 +247,23 @@ export function recordClosure(
     latitudeError += Math.cos(rad) * dist;
     departureError += Math.sin(rad) * dist;
   }
-  const linearMisclosure = vec2.len(vec2.fromValues(latitudeError, departureError));
-  const precision = linearMisclosure < 1e-9 ? Infinity : perimeter / linearMisclosure;
+  const linearMisclosure = vec2.len(
+    vec2.fromValues(latitudeError, departureError),
+  );
+  const precision =
+    linearMisclosure < 1e-9 ? Infinity : perimeter / linearMisclosure;
   const precisionText =
     precision === Infinity || precision > 1e6
       ? "Exact (closed)"
       : `1:${Math.round(precision).toLocaleString()}`;
-  return { perimeter, latitudeError, departureError, linearMisclosure, precision, precisionText };
+  return {
+    perimeter,
+    latitudeError,
+    departureError,
+    linearMisclosure,
+    precision,
+    precisionText,
+  };
 }
 
 /**
@@ -241,19 +277,24 @@ export function dmdArea(courses: SurveyCourse[]): number {
   let dmd = 0;
   let doubleArea = 0;
   for (let i = 0; i < courses.length; i++) {
-    dmd = i === 0 ? courses[i].departure : dmd + courses[i - 1].departure + courses[i].departure;
+    dmd =
+      i === 0
+        ? courses[i].departure
+        : dmd + courses[i - 1].departure + courses[i].departure;
     doubleArea += dmd * courses[i].latitude;
   }
   return Math.abs(doubleArea / 2);
 }
-
 
 /**
  * Survey coordinates for each corner. Uses an assumed local datum: Easting
  * grows with +X and Northing with north (−Y), offset by a false origin so
  * values stay positive (a common local-coordinate convention on plats).
  */
-export function boundaryCoordinates(polygon: Polygon, basis: CoordinateBasis = {}): CornerCoordinate[] {
+export function boundaryCoordinates(
+  polygon: Polygon,
+  basis: CoordinateBasis = {},
+): CornerCoordinate[] {
   const falseEasting = basis.falseEasting ?? 5000;
   const falseNorthing = basis.falseNorthing ?? 5000;
   return polygon.map((point, index) => ({
@@ -265,8 +306,11 @@ export function boundaryCoordinates(polygon: Polygon, basis: CoordinateBasis = {
   }));
 }
 
-
-export function surveyArea(polygon: Polygon, spatial: SpatialContext, arcs?: EdgeArcs): SurveyArea {
+export function surveyArea(
+  polygon: Polygon,
+  spatial: SpatialContext,
+  arcs?: EdgeArcs,
+): SurveyArea {
   const sqm = areaToSquareMeters(boundaryArea(polygon, arcs), spatial);
   const factor = spatial.units === "feet" ? 0.09290304 : 1;
   return {
@@ -277,9 +321,6 @@ export function surveyArea(polygon: Polygon, spatial: SpatialContext, arcs?: Edg
     squareMeters: sqm,
   };
 }
-
-
-
 
 /** Compute the full survey report for a boundary, honoring any curved edges. */
 export function surveyReport(
@@ -358,7 +399,9 @@ export function legalDescription(
           `and a long chord bearing ${cv.chordBearingText} for ${fmt(cv.chordLength)} ${u} to ${to};`,
       );
     } else {
-      lines.push(`thence ${c.bearingText}, a distance of ${fmt(c.distance)} ${u} to ${to};`);
+      lines.push(
+        `thence ${c.bearingText}, a distance of ${fmt(c.distance)} ${u} to ${to};`,
+      );
     }
   }
   lines.push("");
@@ -370,39 +413,73 @@ export function legalDescription(
 }
 
 function fmt(v: number): string {
-  return v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return v.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 }
 
 /** Format a degrees/minutes/seconds triple as e.g. 90°00′00″. */
-export function formatDms(a: { degrees: number; minutes: number; seconds: number }): string {
+export function formatDms(a: {
+  degrees: number;
+  minutes: number;
+  seconds: number;
+}): string {
   const d = String(Math.abs(a.degrees));
   const m = String(a.minutes).padStart(2, "0");
   const s = String(a.seconds).padStart(2, "0");
   return `${d}°${m}′${s}″`;
 }
 
-
-
 /** Parse a quadrant bearing string into a QuadrantBearing object. */
 export function parseBearing(text: string): QuadrantBearing {
   const s = text.trim().toUpperCase().replace(/\s+/g, " ");
-  
+
   // Check for cardinal directions
   if (s === "DUE NORTH" || s === "DUE N" || s === "N") {
-    return { ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" };
+    return {
+      ns: "N",
+      degrees: 0,
+      minutes: 0,
+      seconds: 0,
+      ew: "E",
+      cardinal: "N",
+    };
   }
   if (s === "DUE SOUTH" || s === "DUE S" || s === "S") {
-    return { ns: "S", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "S" };
+    return {
+      ns: "S",
+      degrees: 0,
+      minutes: 0,
+      seconds: 0,
+      ew: "E",
+      cardinal: "S",
+    };
   }
   if (s === "DUE EAST" || s === "DUE E" || s === "E") {
-    return { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "E", cardinal: "E" };
+    return {
+      ns: "N",
+      degrees: 90,
+      minutes: 0,
+      seconds: 0,
+      ew: "E",
+      cardinal: "E",
+    };
   }
   if (s === "DUE WEST" || s === "DUE W" || s === "W") {
-    return { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "W", cardinal: "W" };
+    return {
+      ns: "N",
+      degrees: 90,
+      minutes: 0,
+      seconds: 0,
+      ew: "W",
+      cardinal: "W",
+    };
   }
 
   // Matches formats: "N 45-30-15 E", "N45.5E", "N 45°30'15\" E"
-  const regex = /^([NS])\s*(\d+(?:\.\d+)?)(?:\s*[°\-\s]\s*(\d+)?(?:\s*[′'\-\s]\s*(\d+)?(?:″|""|'|")?)?)?\s*([EW])$/;
+  const regex =
+    /^([NS])\s*(\d+(?:\.\d+)?)(?:\s*[°\-\s]\s*(\d+)?(?:\s*[′'\-\s]\s*(\d+)?(?:″|""|'|")?)?)?\s*([EW])$/;
   const match = s.match(regex);
   if (!match) {
     throw new Error(`Invalid quadrant bearing format: ${text}`);
@@ -438,12 +515,16 @@ export interface AdjustedTraverse {
 /** Adjust a traverse using either Compass (Bowditch) or Transit rules to close the linear error. */
 export function adjustTraverse(
   courses: SurveyCourse[],
-  method: "compass" | "transit" = "compass"
+  method: "compass" | "transit" = "compass",
 ): AdjustedTraverse {
   const closureBefore = traverseClosure(courses);
   const n = courses.length;
   if (n === 0 || closureBefore.linearMisclosure < 1e-9) {
-    return { courses: courses.slice(), closureBefore, closureAfter: closureBefore };
+    return {
+      courses: courses.slice(),
+      closureBefore,
+      closureAfter: closureBefore,
+    };
   }
 
   const totalLat = closureBefore.latitudeError;
@@ -464,8 +545,10 @@ export function adjustTraverse(
       dLat = -totalLat * (c.distance / totalDist);
       dDep = -totalDep * (c.distance / totalDist);
     } else {
-      dLat = sumAbsLat < 1e-9 ? 0 : -totalLat * (Math.abs(c.latitude) / sumAbsLat);
-      dDep = sumAbsDep < 1e-9 ? 0 : -totalDep * (Math.abs(c.departure) / sumAbsDep);
+      dLat =
+        sumAbsLat < 1e-9 ? 0 : -totalLat * (Math.abs(c.latitude) / sumAbsLat);
+      dDep =
+        sumAbsDep < 1e-9 ? 0 : -totalDep * (Math.abs(c.departure) / sumAbsDep);
     }
 
     const adjLat = c.latitude + dLat;
@@ -474,7 +557,7 @@ export function adjustTraverse(
     // Calculate new target point. Recall North is -Y, East is +X
     const nextPoint = {
       x: currentPoint.x + adjDep,
-      y: currentPoint.y - adjLat
+      y: currentPoint.y - adjLat,
     };
 
     const adjV = vec2.fromValues(adjDep, adjLat);
@@ -493,10 +576,11 @@ export function adjustTraverse(
       bearing,
       bearingText: formatBearing(bearing),
       distance: dist,
-      distanceMeters: c.distance < 1e-9 ? 0 : dist * (c.distanceMeters / c.distance),
+      distanceMeters:
+        c.distance < 1e-9 ? 0 : dist * (c.distanceMeters / c.distance),
       latitude: adjLat,
       departure: adjDep,
-      curve: c.curve
+      curve: c.curve,
     });
 
     currentPoint = nextPoint;
@@ -510,4 +594,3 @@ export function adjustTraverse(
   const closureAfter = traverseClosure(adjustedCourses);
   return { courses: adjustedCourses, closureBefore, closureAfter };
 }
-

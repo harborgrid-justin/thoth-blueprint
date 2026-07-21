@@ -25,12 +25,29 @@ export function MonumentSymbol({
     case "section-corner":
       return (
         <g>
-          <rect x={-5.5} y={-5.5} width={11} height={11} fill="none" stroke={INK} strokeWidth={1.6} />
+          <rect
+            x={-5.5}
+            y={-5.5}
+            width={11}
+            height={11}
+            fill="none"
+            stroke={INK}
+            strokeWidth={1.6}
+          />
           <circle cx={0} cy={0} r={1.6} fill={INK} />
         </g>
       );
     case "quarter-corner":
-      return <rect x={-4.5} y={-4.5} width={9} height={9} transform="rotate(45)" {...common} />;
+      return (
+        <rect
+          x={-4.5}
+          y={-4.5}
+          width={9}
+          height={9}
+          transform="rotate(45)"
+          {...common}
+        />
+      );
     case "pcp":
     case "nail-disc":
       return (
@@ -43,12 +60,28 @@ export function MonumentSymbol({
     case "rebar-cap":
       return (
         <g>
-          <circle cx={0} cy={0} r={4} fill={fill} stroke={INK} strokeWidth={1.3} />
+          <circle
+            cx={0}
+            cy={0}
+            r={4}
+            fill={fill}
+            stroke={INK}
+            strokeWidth={1.3}
+          />
           <path d="M-3 0 H3 M0 -3 V3" stroke={INK} strokeWidth={1} />
         </g>
       );
     case "iron-pipe":
-      return <circle cx={0} cy={0} r={4} fill="none" stroke={INK} strokeWidth={1.6} />;
+      return (
+        <circle
+          cx={0}
+          cy={0}
+          r={4}
+          fill="none"
+          stroke={INK}
+          strokeWidth={1.6}
+        />
+      );
     case "benchmark":
       return <path d="M0 -5 L5 4 L-5 4 Z" {...common} />;
     default:
@@ -56,9 +89,17 @@ export function MonumentSymbol({
   }
 }
 
-export function MonumentLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
+export function MonumentLayer({
+  site,
+  viewport,
+}: {
+  site: Site;
+  viewport: Viewport;
+}) {
   const monuments = site.monuments;
-  if (!monuments || monuments.length === 0) {return null;}
+  if (!monuments || monuments.length === 0) {
+    return null;
+  }
 
   return (
     <g className="pointer-events-none">

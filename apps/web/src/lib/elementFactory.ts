@@ -46,7 +46,14 @@ export function createSpatialElement(
     case "lot":
       return { ...base, kind, setback: 3 };
     case "building":
-      return { ...base, kind, storeys: 2, height: 7, dwellingUnits: 1, use: "residential" };
+      return {
+        ...base,
+        kind,
+        storeys: 2,
+        height: 7,
+        dwellingUnits: 1,
+        use: "residential",
+      };
     case "row":
       return { ...base, kind, width: 12 };
     case "openspace":
@@ -174,7 +181,14 @@ export function createPointElement(
 ): PlanElement {
   switch (kind) {
     case "tree":
-      return { id: createId("tree"), kind, layerId, position, species: "Shade tree", canopyRadius: 4 };
+      return {
+        id: createId("tree"),
+        kind,
+        layerId,
+        position,
+        species: "Shade tree",
+        canopyRadius: 4,
+      };
     case "spot":
       return {
         id: createId("spot"),
@@ -185,6 +199,12 @@ export function createPointElement(
         label: `SP${countOfKind(site, "spot") + 1}`,
       };
     case "note":
-      return { id: createId("note"), kind, layerId, text: `Note ${countOfKind(site, "note") + 1}`, position };
+      return {
+        id: createId("note"),
+        kind,
+        layerId,
+        text: `Note ${countOfKind(site, "note") + 1}`,
+        position,
+      };
   }
 }

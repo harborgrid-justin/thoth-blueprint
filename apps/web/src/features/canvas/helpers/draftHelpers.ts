@@ -1,5 +1,10 @@
 import { type Point, type SpatialContext } from "@thoth/domain";
-import { formatDirection, formatLength, type LengthUnitPref, type AngleFormat } from "@/lib/units";
+import {
+  formatDirection,
+  formatLength,
+  type LengthUnitPref,
+  type AngleFormat,
+} from "@/lib/units";
 import { worldToScreen, type Viewport } from "./viewport";
 
 export interface DraftPointsResult {
@@ -12,7 +17,7 @@ export interface DraftPointsResult {
 export function computeDraftPoints(
   draft: Point[],
   cursor: Point | null,
-  viewport: Viewport
+  viewport: Viewport,
 ): DraftPointsResult {
   const pts = cursor ? [...draft, cursor] : draft;
   const screenPts = pts.map((p) => worldToScreen(p, viewport));
@@ -37,7 +42,7 @@ export function computeMeasureReadout(
   viewport: Viewport,
   spatial: SpatialContext,
   lengthPref: LengthUnitPref,
-  angleFormat: AngleFormat
+  angleFormat: AngleFormat,
 ): MeasureReadoutResult {
   const pts = cursor ? [...points, cursor] : points;
   const screen = pts.map((p) => worldToScreen(p, viewport));

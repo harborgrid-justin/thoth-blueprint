@@ -41,9 +41,18 @@ describe("resolveAlignment — curve geometry", () => {
   });
 
   it("locates PC, PT and the center; turns right (N→E)", () => {
-    expect(c.pc).toMatchObject({ x: expect.closeTo(0, 6), y: expect.closeTo(-500, 6) });
-    expect(c.pt).toMatchObject({ x: expect.closeTo(500, 6), y: expect.closeTo(-1000, 6) });
-    expect(c.center).toMatchObject({ x: expect.closeTo(500, 6), y: expect.closeTo(-500, 6) });
+    expect(c.pc).toMatchObject({
+      x: expect.closeTo(0, 6),
+      y: expect.closeTo(-500, 6),
+    });
+    expect(c.pt).toMatchObject({
+      x: expect.closeTo(500, 6),
+      y: expect.closeTo(-1000, 6),
+    });
+    expect(c.center).toMatchObject({
+      x: expect.closeTo(500, 6),
+      y: expect.closeTo(-500, 6),
+    });
     expect(distance(c.pc, c.center)).toBeCloseTo(500, 6);
     expect(distance(c.pt, c.center)).toBeCloseTo(500, 6);
     expect(c.direction).toBe("right");
@@ -124,10 +133,7 @@ describe("offsetAlignmentPath", () => {
       id: "s",
       name: "S",
       startStation: 0,
-      pis: [
-        { point: { x: 0, y: 0 } },
-        { point: { x: 0, y: -100 } },
-      ],
+      pis: [{ point: { x: 0, y: 0 } }, { point: { x: 0, y: -100 } }],
     };
     const r = resolveAlignment(straight)!;
     const right = offsetAlignmentPath(r, 10, 20);

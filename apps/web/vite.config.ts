@@ -11,7 +11,9 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
-      "@thoth/domain": fileURLToPath(new URL("../../packages/domain/src/index.ts", import.meta.url)),
+      "@thoth/domain": fileURLToPath(
+        new URL("../../packages/domain/src/index.ts", import.meta.url),
+      ),
     },
   },
   server: {

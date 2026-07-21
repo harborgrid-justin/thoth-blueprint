@@ -4,20 +4,10 @@ import {
   profileElevationAt,
   type CrossSection,
 } from "../profile";
-import {
-  calculateSectionArea,
-  averageEndAreaVolume,
-} from "../../drawing/qto";
-import {
-  compileLabelTemplate,
-} from "../../drawing/labeling";
-import {
-  validatePipeNetwork,
-  type PipeDesignRules,
-} from "../pipedesign";
-import {
-  generateViewFrames,
-} from "../../drawing/planproduction";
+import { calculateSectionArea, averageEndAreaVolume } from "../../drawing/qto";
+import { compileLabelTemplate } from "../../drawing/labeling";
+import { validatePipeNetwork, type PipeDesignRules } from "../pipedesign";
+import { generateViewFrames } from "../../drawing/planproduction";
 import {
   type HorizontalAlignment,
   resolveAlignment,
@@ -27,22 +17,11 @@ import {
   calculateSuperelevationRunoff,
   getSuperelevationSlope,
 } from "../superelevation";
-import {
-  resolveAssemblyOffset,
-} from "../assembly";
-import {
-  buildCorridorSections,
-} from "../corridor";
-import {
-  calculateGradingVolumes,
-  solveBalancedElevation,
-} from "../grading";
-import {
-  type ElevationGrid,
-} from "../terrain";
-import {
-  type InfrastructureNetwork,
-} from "../network";
+import { resolveAssemblyOffset } from "../assembly";
+import { buildCorridorSections } from "../corridor";
+import { calculateGradingVolumes, solveBalancedElevation } from "../grading";
+import { type ElevationGrid } from "../terrain";
+import { type InfrastructureNetwork } from "../network";
 
 describe("Vertical Profiles Math & Curves", () => {
   const profile: VerticalProfile = {
@@ -90,14 +69,26 @@ describe("Quantity Takeoff Average End Area Math", () => {
     const csA: CrossSection = {
       station: 0,
       centerpoint: { x: 0, y: 0 },
-      existingPoints: [{ offset: -25, elevation: 10 }, { offset: 25, elevation: 10 }],
-      proposedPoints: [{ offset: -25, elevation: 12 }, { offset: 25, elevation: 12 }],
+      existingPoints: [
+        { offset: -25, elevation: 10 },
+        { offset: 25, elevation: 10 },
+      ],
+      proposedPoints: [
+        { offset: -25, elevation: 12 },
+        { offset: 25, elevation: 12 },
+      ],
     };
     const csB: CrossSection = {
       station: 100,
       centerpoint: { x: 100, y: 0 },
-      existingPoints: [{ offset: -25, elevation: 10 }, { offset: 25, elevation: 10 }],
-      proposedPoints: [{ offset: -25, elevation: 14 }, { offset: 25, elevation: 14 }],
+      existingPoints: [
+        { offset: -25, elevation: 10 },
+        { offset: 25, elevation: 10 },
+      ],
+      proposedPoints: [
+        { offset: -25, elevation: 14 },
+        { offset: 25, elevation: 14 },
+      ],
     };
 
     const vol = averageEndAreaVolume(csA, csB);
@@ -112,11 +103,7 @@ describe("Pipe Network Rules Validation", () => {
     cellSize: 10,
     cols: 3,
     rows: 3,
-    heights: [
-      10, 10, 10,
-      10, 10, 10,
-      10, 10, 10,
-    ],
+    heights: [10, 10, 10, 10, 10, 10, 10, 10, 10],
   };
 
   const net: InfrastructureNetwork = {
@@ -127,15 +114,13 @@ describe("Pipe Network Rules Validation", () => {
       { id: "node1", point: { x: 0, y: 0 } },
       { id: "node2", point: { x: 20, y: 0 } },
     ],
-    edges: [
-      { id: "edge1", from: "node1", to: "node2", width: 1.5 },
-    ],
+    edges: [{ id: "edge1", from: "node1", to: "node2", width: 1.5 }],
   };
 
   const rules: PipeDesignRules = {
-    minCover: 4.0,     // 4 units min cover
-    minSlope: 0.005,   // 0.5% min slope
-    maxSlope: 0.08,    // 8% max slope
+    minCover: 4.0, // 4 units min cover
+    minSlope: 0.005, // 0.5% min slope
+    maxSlope: 0.08, // 8% max slope
     minPipeDiameter: 1.0,
     defaultSumpDepth: 1.5,
   };
@@ -175,10 +160,7 @@ describe("Plan Production View Frames Splitter", () => {
       id: "a1",
       name: "PLAN ROAD",
       startStation: 0,
-      pis: [
-        { point: { x: 0, y: 0 } },
-        { point: { x: 1000, y: 0 } },
-      ],
+      pis: [{ point: { x: 0, y: 0 } }, { point: { x: 1000, y: 0 } }],
     };
     const r = resolveAlignment(align)!;
 
@@ -203,7 +185,9 @@ describe("Superelevation attainment logic", () => {
     const curve = calculateSuperelevationRunoff(align, 45, 0.06, -0.02);
     expect(curve.transitionStations.length).toBe(8);
     expect(curve.transitionStations[0].description).toBe("Normal Crown (NC)");
-    expect(curve.transitionStations[3].description).toBe("Full Superelevation Start (FS)");
+    expect(curve.transitionStations[3].description).toBe(
+      "Full Superelevation Start (FS)",
+    );
   });
 
   it("interpolates lane slope within transition ranges", () => {
@@ -211,10 +195,7 @@ describe("Superelevation attainment logic", () => {
       id: "a1",
       name: "Super Road",
       startStation: 0,
-      pis: [
-        { point: { x: 0, y: 0 } },
-        { point: { x: 1000, y: 0 } },
-      ],
+      pis: [{ point: { x: 0, y: 0 } }, { point: { x: 1000, y: 0 } }],
     };
     const curve = calculateSuperelevationRunoff(align, 45, 0.06, -0.02);
     const rcStation = curve.transitionStations[2].station;
@@ -232,10 +213,22 @@ describe("Assemblies & Subassemblies template", () => {
       id: "as-1",
       name: "Assembly A",
       leftSubassemblies: [
-        { id: "l1", name: "Left Lane", side: "left" as const, type: "Lane" as const, parameters: [{ name: "Width", value: 12 }] }
+        {
+          id: "l1",
+          name: "Left Lane",
+          side: "left" as const,
+          type: "Lane" as const,
+          parameters: [{ name: "Width", value: 12 }],
+        },
       ],
       rightSubassemblies: [
-        { id: "r1", name: "Right Lane", side: "right" as const, type: "Lane" as const, parameters: [{ name: "Width", value: 12 }] }
+        {
+          id: "r1",
+          name: "Right Lane",
+          side: "right" as const,
+          type: "Lane" as const,
+          parameters: [{ name: "Width", value: 12 }],
+        },
       ],
     };
     const points = resolveAssemblyOffset(assembly, -0.02, -0.02);
@@ -253,21 +246,50 @@ describe("Corridor Extrusion modeler", () => {
       startStation: 0,
       pis: [{ point: { x: 0, y: 0 } }, { point: { x: 500, y: 0 } }],
     };
-    const profile = { id: "p1", name: "Profile", alignmentId: "a1", pvis: [{ station: 0, elevation: 100 }, { station: 500, elevation: 110 }] };
+    const profile = {
+      id: "p1",
+      name: "Profile",
+      alignmentId: "a1",
+      pvis: [
+        { station: 0, elevation: 100 },
+        { station: 500, elevation: 110 },
+      ],
+    };
     const assembly = {
       id: "as-1",
       name: "Assembly A",
       leftSubassemblies: [
-        { id: "l1", name: "Left Lane", side: "left" as const, type: "Lane" as const, parameters: [{ name: "Width", value: 10 }] }
+        {
+          id: "l1",
+          name: "Left Lane",
+          side: "left" as const,
+          type: "Lane" as const,
+          parameters: [{ name: "Width", value: 10 }],
+        },
       ],
       rightSubassemblies: [
-        { id: "r1", name: "Right Lane", side: "right" as const, type: "Lane" as const, parameters: [{ name: "Width", value: 10 }] }
+        {
+          id: "r1",
+          name: "Right Lane",
+          side: "right" as const,
+          type: "Lane" as const,
+          parameters: [{ name: "Width", value: 10 }],
+        },
       ],
     };
-    const corridor = { id: "c1", name: "Corridor", alignmentId: "a1", profileId: "p1", assemblyId: "as-1", frequency: 100 };
+    const corridor = {
+      id: "c1",
+      name: "Corridor",
+      alignmentId: "a1",
+      profileId: "p1",
+      assemblyId: "as-1",
+      frequency: 100,
+    };
     const sections = buildCorridorSections(corridor, align, profile, assembly);
     expect(sections.length).toBeGreaterThan(0);
-    const cl = sections.find((s) => s.station === 100 && s.code === "Centerline");
+    const cl = sections.find(
+      (s) => s.station === 100 && s.code === "Centerline",
+    );
     expect(cl?.z).toBeCloseTo(102, 1);
   });
 });
@@ -279,11 +301,8 @@ describe("Grading Pad volume balance", () => {
     origin: { x: 0, y: 0 },
     cellSize: 20,
     heights: [
-      10, 10, 10, 10, 10,
-      10, 10, 10, 10, 10,
-      10, 10, 10, 10, 10,
-      10, 10, 10, 10, 10,
-      10, 10, 10, 10, 10,
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      10, 10, 10, 10, 10, 10, 10,
     ],
   };
 

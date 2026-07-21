@@ -1,22 +1,44 @@
-import { pointInPolygon, distance, length, add, scale, subtract, dot, type Point, type Polygon } from "../spatial/geometry";
+import {
+  pointInPolygon,
+  distance,
+  length,
+  add,
+  scale,
+  subtract,
+  dot,
+  type Point,
+  type Polygon,
+} from "../spatial/geometry";
 import type { ElevationGrid } from "./terrain";
 import { elevationAt } from "./terrain";
 
-import type { GradingPad, VolumeReport, Point3D, FlowArrow } from "./types/grading";
+import type {
+  GradingPad,
+  VolumeReport,
+  Point3D,
+  FlowArrow,
+} from "./types/grading";
 
 export type { GradingPad, VolumeReport, Point3D, FlowArrow };
 
 /**
  * Helper to check if a point is inside a polygon using ray casting.
  */
-function isPointInPolygon(p: { x: number; y: number }, polygon: { x: number; y: number }[]): boolean {
+function isPointInPolygon(
+  p: { x: number; y: number },
+  polygon: { x: number; y: number }[],
+): boolean {
   let inside = false;
   for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-    const xi = polygon[i].x, yi = polygon[i].y;
-    const xj = polygon[j].x, yj = polygon[j].y;
-    const intersect = ((yi > p.y) !== (yj > p.y))
-        && (p.x < (xj - xi) * (p.y - yi) / (yj - yi) + xi);
-    if (intersect) {inside = !inside;}
+    const xi = polygon[i].x,
+      yi = polygon[i].y;
+    const xj = polygon[j].x,
+      yj = polygon[j].y;
+    const intersect =
+      yi > p.y !== yj > p.y && p.x < ((xj - xi) * (p.y - yi)) / (yj - yi) + xi;
+    if (intersect) {
+      inside = !inside;
+    }
   }
   return inside;
 }
@@ -29,10 +51,12 @@ function getDistanceToPolygon(p: Point, polygon: Point[]): number {
   for (let i = 0; i < polygon.length; i++) {
     const p1 = polygon[i];
     const p2 = polygon[(i + 1) % polygon.length];
-    
+
     const ab = subtract(p2, p1);
     const lenSq = dot(ab, ab);
-    if (lenSq < 1e-12) {continue;}
+    if (lenSq < 1e-12) {
+      continue;
+    }
 
     const ap = subtract(p, p1);
     let t = dot(ap, ab) / lenSq;
@@ -40,7 +64,9 @@ function getDistanceToPolygon(p: Point, polygon: Point[]): number {
 
     const proj = add(p1, scale(ab, t));
     const dist = distance(p, proj);
-    if (dist < minDist) {minDist = dist;}
+    if (dist < minDist) {
+      minDist = dist;
+    }
   }
   return minDist;
 }
@@ -52,7 +78,7 @@ export function calculateGradingVolumes(
   pad: GradingPad,
   padZ: number,
   surface: ElevationGrid,
-  gridResolution: number = 5 // 5-unit grid intervals
+  gridResolution: number = 5, // 5-unit grid intervals
 ): VolumeReport {
   // Determine bounding box around the pad with a daylight buffer offset
   const buffer = 150; // max daylight run length
@@ -72,8 +98,12 @@ export function calculateGradingVolumes(
   for (let x = minX; x <= maxX; x += gridResolution) {
     for (let y = minY; y <= maxY; y += gridResolution) {
       // Find existing terrain elevation using bilinear interpolation
-      if (x < surface.origin.x || x > surface.origin.x + (surface.cols - 1) * surface.cellSize ||
-          y < surface.origin.y || y > surface.origin.y + (surface.rows - 1) * surface.cellSize) {
+      if (
+        x < surface.origin.x ||
+        x > surface.origin.x + (surface.cols - 1) * surface.cellSize ||
+        y < surface.origin.y ||
+        y > surface.origin.y + (surface.rows - 1) * surface.cellSize
+      ) {
         continue;
       }
       const existingZ = elevationAt(surface, { x, y });
@@ -128,7 +158,7 @@ export function solveBalancedElevation(
   pad: GradingPad,
   surface: ElevationGrid,
   targetNetVolume: number = 0,
-  tolerance: number = 50 // within 50 cubic yards
+  tolerance: number = 50, // within 50 cubic yards
 ): number {
   let lowZ = -100;
   let highZ = 500;
@@ -157,11 +187,14 @@ export function solveBalancedElevation(
 }
 
 /** Drape a 2D polyline onto an ElevationGrid surface to create a 3D feature line. */
-export function drapePolyline(points: Point[], surface: ElevationGrid): Point3D[] {
-  return points.map(p => ({
+export function drapePolyline(
+  points: Point[],
+  surface: ElevationGrid,
+): Point3D[] {
+  return points.map((p) => ({
     x: p.x,
     y: p.y,
-    z: elevationAt(surface, p)
+    z: elevationAt(surface, p),
   }));
 }
 
@@ -169,17 +202,19 @@ export function drapePolyline(points: Point[], surface: ElevationGrid): Point3D[
 export function calculateDaylightLine(
   featureLine: Point3D[],
   surface: ElevationGrid,
-  cutSlope: number = 2.0,  // H:V
+  cutSlope: number = 2.0, // H:V
   fillSlope: number = 3.0, // H:V
-  searchDistance: number = 300
+  searchDistance: number = 300,
 ): Point3D[] {
   const daylightLine: Point3D[] = [];
   const n = featureLine.length;
-  if (n < 2) {return [];}
+  if (n < 2) {
+    return [];
+  }
 
   for (let i = 0; i < n; i++) {
     const curr = featureLine[i];
-    
+
     // Calculate 2D tangent vector
     let tx: number;
     let ty: number;
@@ -200,60 +235,66 @@ export function calculateDaylightLine(
       tx = sum.x;
       ty = sum.y;
     }
-    
+
     const tangent = { x: tx, y: ty };
     const tangentLen = length(tangent);
-    if (tangentLen < 1e-4) {continue;}
-    
+    if (tangentLen < 1e-4) {
+      continue;
+    }
+
     // Left normal vector
     const nx = -tangent.y / tangentLen;
     const ny = tangent.x / tangentLen;
-    
+
     const terrainAtStart = elevationAt(surface, curr);
     const isCut = curr.z < terrainAtStart;
     const slope = isCut ? cutSlope : fillSlope;
-    
+
     // March ray along the normal to find where proposed slope intersects terrain
     let found = false;
     let prevDist = 0;
     let prevDiff = curr.z - terrainAtStart;
-    
+
     const steps = 150;
     const stepSize = searchDistance / steps;
-    
+
     for (let step = 1; step <= steps; step++) {
       const d = step * stepSize;
       const pt2d = { x: curr.x + d * nx, y: curr.y + d * ny };
       const terrZ = elevationAt(surface, pt2d);
       const propZ = isCut ? curr.z + d / slope : curr.z - d / slope;
-      
+
       const diff = propZ - terrZ;
       if ((isCut && diff < 0) || (!isCut && diff > 0)) {
         prevDist = d;
         prevDiff = diff;
       } else {
-        const fraction = Math.abs(prevDiff) / (Math.abs(prevDiff) + Math.abs(diff));
+        const fraction =
+          Math.abs(prevDiff) / (Math.abs(prevDiff) + Math.abs(diff));
         const dayDist = prevDist + fraction * (d - prevDist);
         const dayPt = { x: curr.x + dayDist * nx, y: curr.y + dayDist * ny };
         daylightLine.push({
           x: dayPt.x,
           y: dayPt.y,
-          z: elevationAt(surface, dayPt)
+          z: elevationAt(surface, dayPt),
         });
         found = true;
         break;
       }
     }
-    
+
     if (!found) {
       daylightLine.push({
         x: curr.x + searchDistance * nx,
         y: curr.y + searchDistance * ny,
-        z: elevationAt(surface, { x: curr.x + searchDistance * nx, y: curr.y + searchDistance * ny })
+        z: elevationAt(surface, {
+          x: curr.x + searchDistance * nx,
+          y: curr.y + searchDistance * ny,
+        }),
       });
     }
   }
-  
+
   return daylightLine;
 }
 
@@ -262,7 +303,7 @@ export function calculatePondVolume(
   surface: ElevationGrid,
   waterElevation: number,
   boundary: Polygon,
-  gridResolution: number = 2
+  gridResolution: number = 2,
 ): number {
   const xs = boundary.map((p) => p.x);
   const ys = boundary.map((p) => p.y);
@@ -270,10 +311,10 @@ export function calculatePondVolume(
   const maxX = Math.max(...xs);
   const minY = Math.min(...ys);
   const maxY = Math.max(...ys);
-  
+
   let totalVolume = 0;
   const cellArea = gridResolution * gridResolution;
-  
+
   for (let x = minX + gridResolution / 2; x < maxX; x += gridResolution) {
     for (let y = minY + gridResolution / 2; y < maxY; y += gridResolution) {
       if (pointInPolygon({ x, y }, boundary)) {
@@ -284,28 +325,28 @@ export function calculatePondVolume(
       }
     }
   }
-  
+
   return totalVolume / 27;
 }
 
 /** Calculate drainage flow arrows across the surface at grid cell centers. */
 export function calculateDrainageFlow(
   surface: ElevationGrid,
-  cellStride: number = 4
+  cellStride: number = 4,
 ): FlowArrow[] {
   const arrows: FlowArrow[] = [];
   const dx = surface.cellSize;
-  
+
   for (let r = 1; r < surface.rows - 1; r += cellStride) {
     for (let c = 1; c < surface.cols - 1; c += cellStride) {
       const x = surface.origin.x + c * dx;
       const y = surface.origin.y + r * dx;
-      
+
       const zL = surface.heights[r * surface.cols + (c - 1)];
       const zR = surface.heights[r * surface.cols + (c + 1)];
       const zT = surface.heights[(r - 1) * surface.cols + c];
       const zB = surface.heights[(r + 1) * surface.cols + c];
-      
+
       const gradX = (zR - zL) / (2 * dx);
       const gradY = (zB - zT) / (2 * dx);
       const grad = { x: gradX, y: gradY };
@@ -314,11 +355,10 @@ export function calculateDrainageFlow(
         arrows.push({
           point: { x, y },
           direction: { x: -grad.x / slope, y: -grad.y / slope },
-          slope
+          slope,
         });
       }
     }
   }
   return arrows;
 }
-

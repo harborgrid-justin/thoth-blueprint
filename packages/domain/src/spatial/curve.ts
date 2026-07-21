@@ -16,7 +16,15 @@
  * accompanying {@link SpatialContext}.
  */
 
-import { GEOMETRY_EPSILON, distance, add, scale, subtract, type Point, type Polygon } from "./geometry";
+import {
+  GEOMETRY_EPSILON,
+  distance,
+  add,
+  scale,
+  subtract,
+  type Point,
+  type Polygon,
+} from "./geometry";
 import type { EdgeArcs } from "./types";
 export type { EdgeArcs };
 
@@ -43,11 +51,11 @@ export interface Arc {
   ccw: boolean;
 }
 
-
-
 /** The bulge of edge `i`, or 0 (straight) when absent or non-finite. */
 export function edgeBulge(arcs: EdgeArcs | undefined, i: number): number {
-  if (!arcs) {return 0;}
+  if (!arcs) {
+    return 0;
+  }
   const b = (arcs as Record<string | number, number>)[i] ?? arcs[String(i)];
   return typeof b === "number" && Number.isFinite(b) ? b : 0;
 }
@@ -63,9 +71,13 @@ function chordNormal(a: Point, b: Point, len: number): Point {
  * zero/degenerate bulge or a zero-length chord (treat those edges as straight).
  */
 export function bulgeToArc(a: Point, b: Point, bulge: number): Arc | null {
-  if (!Number.isFinite(bulge) || Math.abs(bulge) < GEOMETRY_EPSILON) {return null;}
+  if (!Number.isFinite(bulge) || Math.abs(bulge) < GEOMETRY_EPSILON) {
+    return null;
+  }
   const chordLength = distance(a, b);
-  if (chordLength < GEOMETRY_EPSILON) {return null;}
+  if (chordLength < GEOMETRY_EPSILON) {
+    return null;
+  }
 
   const t = Math.abs(bulge);
   const delta = 4 * Math.atan(t); // included angle magnitude
@@ -80,7 +92,9 @@ export function bulgeToArc(a: Point, b: Point, bulge: number): Arc | null {
 
   // Center lies on the perpendicular bisector; the apothem flips side between a
   // minor arc (|b|<1) and a major arc (|b|>1).
-  const apothem = Math.sqrt(Math.max(0, radius * radius - halfChord * halfChord));
+  const apothem = Math.sqrt(
+    Math.max(0, radius * radius - halfChord * halfChord),
+  );
   const centerDir = -Math.sign(bulge) * Math.sign(1 - t * t);
   const center = add(chordMid, scale(n, centerDir * apothem));
 
@@ -97,7 +111,10 @@ export function bulgeToArc(a: Point, b: Point, bulge: number): Arc | null {
     sweep,
     chordLength,
     arcLength: radius * delta,
-    tangent: Math.abs(delta - Math.PI) < GEOMETRY_EPSILON ? Infinity : radius * Math.tan(delta / 2),
+    tangent:
+      Math.abs(delta - Math.PI) < GEOMETRY_EPSILON
+        ? Infinity
+        : radius * Math.tan(delta / 2),
     midOrdinate,
     mid,
     ccw: sweep > 0,
@@ -107,8 +124,12 @@ export function bulgeToArc(a: Point, b: Point, bulge: number): Arc | null {
 /** Normalize an angle to (−π, π]. */
 function normalizeSigned(angle: number): number {
   let a = angle % (2 * Math.PI);
-  if (a <= -Math.PI) {a += 2 * Math.PI;}
-  if (a > Math.PI) {a -= 2 * Math.PI;}
+  if (a <= -Math.PI) {
+    a += 2 * Math.PI;
+  }
+  if (a > Math.PI) {
+    a -= 2 * Math.PI;
+  }
   return a;
 }
 
@@ -121,7 +142,9 @@ function normalizeSigned(angle: number): number {
 export function arcAreaTerm(a: Point, b: Point, arc: Arc): number {
   return (
     0.5 *
-    (arc.center.x * (b.y - a.y) - arc.center.y * (b.x - a.x) + arc.radius * arc.radius * arc.sweep)
+    (arc.center.x * (b.y - a.y) -
+      arc.center.y * (b.x - a.x) +
+      arc.radius * arc.radius * arc.sweep)
   );
 }
 
@@ -130,10 +153,20 @@ export function arcAreaTerm(a: Point, b: Point, arc: Arc): number {
  * spacing. Returns the intermediate points **excluding both endpoints**, ready
  * to splice between the ring vertices.
  */
-export function densifyArc(a: Point, b: Point, bulge: number, degPerStep = 2): Point[] {
+export function densifyArc(
+  a: Point,
+  b: Point,
+  bulge: number,
+  degPerStep = 2,
+): Point[] {
   const arc = bulgeToArc(a, b, bulge);
-  if (!arc) {return [];}
-  const steps = Math.max(2, Math.ceil((arc.delta * (180 / Math.PI)) / degPerStep));
+  if (!arc) {
+    return [];
+  }
+  const steps = Math.max(
+    2,
+    Math.ceil((arc.delta * (180 / Math.PI)) / degPerStep),
+  );
   const angA = Math.atan2(a.y - arc.center.y, a.x - arc.center.x);
   const points: Point[] = [];
   for (let i = 1; i < steps; i++) {
@@ -157,21 +190,32 @@ export interface BoundaryEdge {
 }
 
 /** The ordered edges of a ring, each tagged straight or arc. */
-export function boundaryEdges(boundary: Polygon, arcs?: EdgeArcs): BoundaryEdge[] {
+export function boundaryEdges(
+  boundary: Polygon,
+  arcs?: EdgeArcs,
+): BoundaryEdge[] {
   const n = boundary.length;
   const edges: BoundaryEdge[] = [];
   for (let i = 0; i < n; i++) {
     const from = boundary[i];
     const to = boundary[(i + 1) % n];
     const bulge = edgeBulge(arcs, i);
-    edges.push({ index: i, from, to, bulge, arc: bulge ? bulgeToArc(from, to, bulge) : null });
+    edges.push({
+      index: i,
+      from,
+      to,
+      bulge,
+      arc: bulge ? bulgeToArc(from, to, bulge) : null,
+    });
   }
   return edges;
 }
 
 /** `true` if any edge of the ring is a circular arc. */
 export function hasArcs(boundary: Polygon, arcs?: EdgeArcs): boolean {
-  if (!arcs) {return false;}
+  if (!arcs) {
+    return false;
+  }
   return boundaryEdges(boundary, arcs).some((e) => e.arc !== null);
 }
 
@@ -180,12 +224,20 @@ export function hasArcs(boundary: Polygon, arcs?: EdgeArcs): boolean {
  * rendering, hit-testing, and any consumer that needs straight segments. When
  * the ring has no arcs, returns a copy of the original vertices.
  */
-export function densifyBoundary(boundary: Polygon, arcs?: EdgeArcs, degPerStep = 2): Polygon {
-  if (!arcs) {return boundary.slice();}
+export function densifyBoundary(
+  boundary: Polygon,
+  arcs?: EdgeArcs,
+  degPerStep = 2,
+): Polygon {
+  if (!arcs) {
+    return boundary.slice();
+  }
   const out: Point[] = [];
   for (const edge of boundaryEdges(boundary, arcs)) {
     out.push(edge.from);
-    if (edge.arc) {out.push(...densifyArc(edge.from, edge.to, edge.bulge, degPerStep));}
+    if (edge.arc) {
+      out.push(...densifyArc(edge.from, edge.to, edge.bulge, degPerStep));
+    }
   }
   return out;
 }
@@ -193,7 +245,9 @@ export function densifyBoundary(boundary: Polygon, arcs?: EdgeArcs, degPerStep =
 /** Exact area of a ring that may mix straight and arc edges, plan units². */
 export function boundaryArea(boundary: Polygon, arcs?: EdgeArcs): number {
   const n = boundary.length;
-  if (n < 3) {return 0;}
+  if (n < 3) {
+    return 0;
+  }
   let signed = 0;
   for (const edge of boundaryEdges(boundary, arcs)) {
     const { from: a, to: b, arc } = edge;

@@ -80,8 +80,18 @@ const CURRENT_USER: User = {
 };
 
 const TEAMMATES: User[] = [
-  { id: "user-amaya", name: "Amaya Okonkwo", email: "amaya@city.gov", color: "#f59e0b" },
-  { id: "user-liang", name: "Liang Wei", email: "liang@studio.co", color: "#ec4899" },
+  {
+    id: "user-amaya",
+    name: "Amaya Okonkwo",
+    email: "amaya@city.gov",
+    color: "#f59e0b",
+  },
+  {
+    id: "user-liang",
+    name: "Liang Wei",
+    email: "liang@studio.co",
+    color: "#ec4899",
+  },
 ];
 
 function defaultMembers(): Member[] {
@@ -111,12 +121,13 @@ function seedStore(): Store {
   const dist = districtSite("Riverside Mixed-Use District");
   const estate = estateSite("Kestrel Ridge Estate");
   const createdAt = new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString();
-  
+
   const projects: Project[] = [
     {
       id: createId("proj"),
       name: "Willow Creek Subdivision",
-      description: "48-unit single-family subdivision feasibility study with a neighborhood park.",
+      description:
+        "48-unit single-family subdivision feasibility study with a neighborhood park.",
       createdAt,
       updatedAt: new Date(Date.now() - 1000 * 60 * 90).toISOString(),
       siteAreaAcres: 0,
@@ -127,7 +138,8 @@ function seedStore(): Store {
     {
       id: createId("proj"),
       name: "Riverside Mixed-Use District",
-      description: "Downtown district plan exploring land-use allocation and FAR envelopes.",
+      description:
+        "Downtown district plan exploring land-use allocation and FAR envelopes.",
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
       updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
       siteAreaAcres: 0,
@@ -138,7 +150,8 @@ function seedStore(): Store {
     {
       id: createId("proj"),
       name: "Kestrel Ridge Estate",
-      description: "A single-household estate at landscape scale — regions, terrain, forest, and a reservoir.",
+      description:
+        "A single-household estate at landscape scale — regions, terrain, forest, and a reservoir.",
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 100).toISOString(),
       updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 12).toISOString(),
       siteAreaAcres: 0,
@@ -171,7 +184,10 @@ export function loadStore(): Store {
     return JSON.parse(content) as Store;
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error("Failed to parse database file, loading seed store instead.", err);
+    console.error(
+      "Failed to parse database file, loading seed store instead.",
+      err,
+    );
     return seedStore();
   }
 }

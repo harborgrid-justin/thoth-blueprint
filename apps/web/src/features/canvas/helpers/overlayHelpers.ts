@@ -18,10 +18,16 @@ export interface UnderlayRect {
 
 export function computeUnderlayBounds(
   underlay: import("@/store/interopStore").Underlay,
-  viewport: Viewport
+  viewport: Viewport,
 ): UnderlayRect {
-  const tl = worldToScreen({ x: underlay.bounds.minX, y: underlay.bounds.minY }, viewport);
-  const br = worldToScreen({ x: underlay.bounds.maxX, y: underlay.bounds.maxY }, viewport);
+  const tl = worldToScreen(
+    { x: underlay.bounds.minX, y: underlay.bounds.minY },
+    viewport,
+  );
+  const br = worldToScreen(
+    { x: underlay.bounds.maxX, y: underlay.bounds.maxY },
+    viewport,
+  );
   return {
     x: Math.min(tl.x, br.x),
     y: Math.min(tl.y, br.y),
@@ -39,7 +45,7 @@ export interface CloudDotItem {
 
 export function computeCloudDots(
   points: Array<{ x: number; y: number; r?: number; g?: number; b?: number }>,
-  viewport: Viewport
+  viewport: Viewport,
 ): CloudDotItem[] {
   const MAX = 6000;
   const stride = Math.max(1, Math.ceil(points.length / MAX));
@@ -68,10 +74,12 @@ export interface SlopeCellItem {
 export function computeSlopeCells(
   surface: ElevationGrid,
   viewport: Viewport,
-  showSlope: boolean
+  showSlope: boolean,
 ): SlopeCellItem[] {
   const cellPx = surface.cellSize * viewport.zoom;
-  if (!showSlope || cellPx < 2) {return [];}
+  if (!showSlope || cellPx < 2) {
+    return [];
+  }
 
   const cells: SlopeCellItem[] = [];
   for (let r = 0; r < surface.rows - 1; r++) {
@@ -83,7 +91,10 @@ export function computeSlopeCells(
           slopeAtNode(surface, c + 1, r + 1).percent) /
         4;
       const s = worldToScreen(
-        { x: surface.origin.x + c * surface.cellSize, y: surface.origin.y + r * surface.cellSize },
+        {
+          x: surface.origin.x + c * surface.cellSize,
+          y: surface.origin.y + r * surface.cellSize,
+        },
         viewport,
       );
       cells.push({
@@ -111,9 +122,11 @@ export function computeContourPaths(
   surface: ElevationGrid,
   viewport: Viewport,
   showContours: boolean,
-  interval: number
+  interval: number,
 ): ContourPathItem[] {
-  if (!showContours || interval <= 0) {return [];}
+  if (!showContours || interval <= 0) {
+    return [];
+  }
 
   const items: ContourPathItem[] = [];
   const levels = contourLevels(surface, interval);
@@ -162,7 +175,7 @@ export interface NetworkShapeData {
 
 export function computeNetworkShapeData(
   network: InfrastructureNetwork,
-  viewport: Viewport
+  viewport: Viewport,
 ): NetworkShapeData {
   const nodeMap = new Map(network.nodes.map((n) => [n.id, n]));
   const isRoad = network.kind === "road";
@@ -183,7 +196,9 @@ export function computeNetworkShapeData(
   for (const e of network.edges) {
     const a = nodeMap.get(e.from);
     const b = nodeMap.get(e.to);
-    if (!a || !b) {continue;}
+    if (!a || !b) {
+      continue;
+    }
     const sa = worldToScreen(a.point, viewport);
     const sb = worldToScreen(b.point, viewport);
     const widthPx = isRoad ? Math.max(2, (e.width ?? 15) * viewport.zoom) : 2;

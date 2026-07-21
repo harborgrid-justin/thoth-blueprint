@@ -21,7 +21,9 @@ export const CW = W - M.left - M.right;
 export const CH = H - M.top - M.bottom;
 
 export function niceNumber(value: number): number {
-  if (value <= 0) {return 1;}
+  if (value <= 0) {
+    return 1;
+  }
   const mag = Math.pow(10, Math.floor(Math.log10(value)));
   const r = value / mag;
   return (r >= 5 ? 5 : r >= 2 ? 2 : 1) * mag;
@@ -31,7 +33,11 @@ export function fmt(v: number, digits = 2): string {
   return formatNumber(v, digits);
 }
 
-export function dms(a: { degrees: number; minutes: number; seconds: number }): string {
+export function dms(a: {
+  degrees: number;
+  minutes: number;
+  seconds: number;
+}): string {
   const d = String(Math.abs(a.degrees));
   const m = String(a.minutes).padStart(2, "0");
   const s = String(a.seconds).padStart(2, "0");
@@ -44,7 +50,9 @@ export interface View {
 }
 
 export function buildView(boundary: Point[]): View | null {
-  if (boundary.length < 3) {return null;}
+  if (boundary.length < 3) {
+    return null;
+  }
   const bb = boundsOf(boundary);
   const bw = Math.max(bb.maxX - bb.minX, 1e-6);
   const bh = Math.max(bb.maxY - bb.minY, 1e-6);
@@ -53,7 +61,10 @@ export function buildView(boundary: Point[]): View | null {
   const offsetY = M.top + (CH - bh * scalePx) / 2 - bb.minY * scalePx;
   return {
     scalePx,
-    project: (p) => ({ x: p.x * scalePx + offsetX, y: p.y * scalePx + offsetY }),
+    project: (p) => ({
+      x: p.x * scalePx + offsetX,
+      y: p.y * scalePx + offsetY,
+    }),
   };
 }
 
@@ -76,5 +87,10 @@ export function outwardNormal(a: Point, b: Point, c: Point): Point {
 }
 
 export function slug(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "tract";
+  return (
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || "tract"
+  );
 }

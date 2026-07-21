@@ -18,27 +18,48 @@ export function useMetricsState() {
   const areaUnit = usePrefsStore((s) => s.areaUnit);
   const setAreaUnit = usePrefsStore((s) => s.setAreaUnit);
 
-  const metrics = React.useMemo(() => (site ? computeSiteMetrics(site, areaUnit) : null), [site, areaUnit]);
+  const metrics = React.useMemo(
+    () => (site ? computeSiteMetrics(site, areaUnit) : null),
+    [site, areaUnit],
+  );
 
   const selectionMetrics = React.useMemo(() => {
-    if (!site || selection.length === 0) {return null;}
+    if (!site || selection.length === 0) {
+      return null;
+    }
     const ids = new Set(selection);
     const subset = site.elements.filter((e) => ids.has(e.id));
-    if (subset.length === 0) {return null;}
+    if (subset.length === 0) {
+      return null;
+    }
     return computeSiteMetrics({ ...site, elements: subset }, areaUnit);
   }, [site, selection, areaUnit]);
 
-  const community = React.useMemo(() => (site ? computeCommunityMetrics(site) : null), [site]);
+  const community = React.useMemo(
+    () => (site ? computeCommunityMetrics(site) : null),
+    [site],
+  );
 
   const networks = React.useMemo(() => {
-    if (!site) {return [];}
+    if (!site) {
+      return [];
+    }
     return (site.networks ?? []).map((n) => networkStats(n, site.spatial));
   }, [site]);
 
-  const findings = React.useMemo(() => (site ? checkCompliance(site) : []), [site]);
+  const findings = React.useMemo(
+    () => (site ? checkCompliance(site) : []),
+    [site],
+  );
 
-  const roadMeters = React.useMemo(() => sumNetworkMeters(networks, (k) => k === "road"), [networks]);
-  const utilityMeters = React.useMemo(() => sumNetworkMeters(networks, (k) => k !== "road"), [networks]);
+  const roadMeters = React.useMemo(
+    () => sumNetworkMeters(networks, (k) => k === "road"),
+    [networks],
+  );
+  const utilityMeters = React.useMemo(
+    () => sumNetworkMeters(networks, (k) => k !== "road"),
+    [networks],
+  );
 
   return {
     site,

@@ -16,9 +16,17 @@ export function BoundaryDimensions({
 }) {
   const lengthPref = usePrefsStore((s) => s.lengthUnit);
   const angleFormat = usePrefsStore((s) => s.angleFormat);
-  const labels = computeBoundaryDimensions(site.elements, site.spatial, viewport, lengthPref, angleFormat);
+  const labels = computeBoundaryDimensions(
+    site.elements,
+    site.spatial,
+    viewport,
+    lengthPref,
+    angleFormat,
+  );
 
-  if (labels.length === 0) {return null;}
+  if (labels.length === 0) {
+    return null;
+  }
 
   return (
     <g className="pointer-events-none">
@@ -31,7 +39,11 @@ export function BoundaryDimensions({
           fontSize={item.fontSize}
           textAnchor="middle"
           fill="hsl(var(--foreground))"
-          style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: item.strokeWidth }}
+          style={{
+            paintOrder: "stroke",
+            stroke: "hsl(var(--canvas))",
+            strokeWidth: item.strokeWidth,
+          }}
         >
           {item.label}
         </text>
@@ -54,11 +66,22 @@ export function SurveyEdgeLabels({
   const lengthPref = usePrefsStore((s) => s.lengthUnit);
   const angleFormat = usePrefsStore((s) => s.angleFormat);
 
-  if (selection.length !== 1) {return null;}
+  if (selection.length !== 1) {
+    return null;
+  }
   const element = site.elements.find((e) => e.id === selection[0]);
-  const labels = computeSurveyEdgeLabels(element, site.spatial, viewport, preview, lengthPref, angleFormat);
+  const labels = computeSurveyEdgeLabels(
+    element,
+    site.spatial,
+    viewport,
+    preview,
+    lengthPref,
+    angleFormat,
+  );
 
-  if (labels.length === 0) {return null;}
+  if (labels.length === 0) {
+    return null;
+  }
 
   return (
     <g className="pointer-events-none">
@@ -71,7 +94,11 @@ export function SurveyEdgeLabels({
           fontSize={item.fontSize}
           textAnchor="middle"
           fill="hsl(var(--foreground))"
-          style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: item.strokeWidth }}
+          style={{
+            paintOrder: "stroke",
+            stroke: "hsl(var(--canvas))",
+            strokeWidth: item.strokeWidth,
+          }}
         >
           {item.label}
         </text>

@@ -13,8 +13,10 @@ export function useSuperelevationWizardState() {
   const site = useWorkspaceStore((s) => s.site);
 
   const alignments = site?.alignments ?? [];
-  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(null);
-  
+  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(
+    null,
+  );
+
   const [designSpeed, setDesignSpeed] = React.useState<number>(45);
   const [eMax, setEMax] = React.useState<number>(0.06);
   const [normalCrown, setNormalCrown] = React.useState<number>(-0.02);
@@ -25,7 +27,10 @@ export function useSuperelevationWizardState() {
     }
   }, [open, alignments]);
 
-  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
+  const alignment =
+    _.find(alignments, (a) => a.id === selectedAlignId) ??
+    alignments[0] ??
+    null;
 
   const superCurve = React.useMemo(() => {
     return computeSuperelevation({ alignment, designSpeed, eMax, normalCrown });

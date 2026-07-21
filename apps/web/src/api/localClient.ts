@@ -1,6 +1,21 @@
-import { computeSiteMetrics, createId, siteForTemplate, subdivisionSite, districtSite, estateSite, type Site } from "@thoth/domain";
+import {
+  computeSiteMetrics,
+  createId,
+  siteForTemplate,
+  subdivisionSite,
+  districtSite,
+  estateSite,
+  type Site,
+} from "@thoth/domain";
 import type { ApiClient, CreateProjectInput } from "./client";
-import type { Checkpoint, Member, Project, ProjectSummary, ReviewThread, User } from "./types";
+import type {
+  Checkpoint,
+  Member,
+  Project,
+  ProjectSummary,
+  ReviewThread,
+  User,
+} from "./types";
 
 /**
  * A local, browser-persisted implementation of {@link ApiClient}. It stands in
@@ -26,8 +41,18 @@ const CURRENT_USER: User = {
 };
 
 const TEAMMATES: User[] = [
-  { id: "user-amaya", name: "Amaya Okonkwo", email: "amaya@city.gov", color: "#f59e0b" },
-  { id: "user-liang", name: "Liang Wei", email: "liang@studio.co", color: "#ec4899" },
+  {
+    id: "user-amaya",
+    name: "Amaya Okonkwo",
+    email: "amaya@city.gov",
+    color: "#f59e0b",
+  },
+  {
+    id: "user-liang",
+    name: "Liang Wei",
+    email: "liang@studio.co",
+    color: "#ec4899",
+  },
 ];
 
 function defaultMembers(): Member[] {
@@ -72,7 +97,8 @@ function seed(): Store {
     {
       id: createId("proj"),
       name: "Willow Creek Subdivision",
-      description: "48-unit single-family subdivision feasibility study with a neighborhood park.",
+      description:
+        "48-unit single-family subdivision feasibility study with a neighborhood park.",
       createdAt,
       updatedAt: new Date(Date.now() - 1000 * 60 * 90).toISOString(),
       siteAreaAcres: 0,
@@ -83,7 +109,8 @@ function seed(): Store {
     {
       id: createId("proj"),
       name: "Riverside Mixed-Use District",
-      description: "Downtown district plan exploring land-use allocation and FAR envelopes.",
+      description:
+        "Downtown district plan exploring land-use allocation and FAR envelopes.",
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
       updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
       siteAreaAcres: 0,
@@ -94,7 +121,8 @@ function seed(): Store {
     {
       id: createId("proj"),
       name: "Kestrel Ridge Estate",
-      description: "A single-household estate at landscape scale — regions, terrain, forest, and a reservoir.",
+      description:
+        "A single-household estate at landscape scale — regions, terrain, forest, and a reservoir.",
       createdAt: new Date(Date.now() - 1000 * 60 * 60 * 100).toISOString(),
       updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 12).toISOString(),
       siteAreaAcres: 0,
@@ -107,7 +135,9 @@ function seed(): Store {
 }
 
 function load(): Store {
-  if (typeof window === "undefined") {return seed();}
+  if (typeof window === "undefined") {
+    return seed();
+  }
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) {
@@ -124,7 +154,9 @@ function load(): Store {
 }
 
 function persist(store: Store): void {
-  if (typeof window === "undefined") {return;}
+  if (typeof window === "undefined") {
+    return;
+  }
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
   } catch {
@@ -145,7 +177,9 @@ export class LocalApiClient implements ApiClient {
 
   private findProject(id: string): Project {
     const project = this.store.projects.find((p) => p.id === id);
-    if (!project) {throw new Error(`Project not found: ${id}`);}
+    if (!project) {
+      throw new Error(`Project not found: ${id}`);
+    }
     return project;
   }
 
@@ -182,11 +216,17 @@ export class LocalApiClient implements ApiClient {
     return delay(clone(project));
   }
 
-  renameProject(id: string, name: string, description?: string): Promise<Project> {
+  renameProject(
+    id: string,
+    name: string,
+    description?: string,
+  ): Promise<Project> {
     const project = this.findProject(id);
     project.name = name;
     project.site.name = name;
-    if (description !== undefined) {project.description = description;}
+    if (description !== undefined) {
+      project.description = description;
+    }
     project.updatedAt = nowIso();
     this.commit();
     return delay(clone(project));
@@ -194,7 +234,9 @@ export class LocalApiClient implements ApiClient {
 
   deleteProject(id: string): Promise<void> {
     this.store.projects = this.store.projects.filter((p) => p.id !== id);
-    this.store.checkpoints = this.store.checkpoints.filter((c) => c.projectId !== id);
+    this.store.checkpoints = this.store.checkpoints.filter(
+      (c) => c.projectId !== id,
+    );
     this.store.threads = this.store.threads.filter((t) => t.projectId !== id);
     this.commit();
     return delay(undefined);
@@ -215,7 +257,11 @@ export class LocalApiClient implements ApiClient {
     return delay(clone(checkpoints));
   }
 
-  createCheckpoint(projectId: string, name: string, note?: string): Promise<Checkpoint> {
+  createCheckpoint(
+    projectId: string,
+    name: string,
+    note?: string,
+  ): Promise<Checkpoint> {
     const project = this.findProject(projectId);
     const checkpoint: Checkpoint = {
       id: createId("ckpt"),
@@ -236,7 +282,9 @@ export class LocalApiClient implements ApiClient {
     const checkpoint = this.store.checkpoints.find(
       (c) => c.id === checkpointId && c.projectId === projectId,
     );
-    if (!checkpoint) {throw new Error(`Checkpoint not found: ${checkpointId}`);}
+    if (!checkpoint) {
+      throw new Error(`Checkpoint not found: ${checkpointId}`);
+    }
     project.site = clone(checkpoint.site);
     project.updatedAt = nowIso();
     this.commit();
@@ -252,18 +300,28 @@ export class LocalApiClient implements ApiClient {
   }
 
   resetWorkspace(mode: "samples" | "empty"): Promise<void> {
-    this.store = mode === "samples" ? seed() : { projects: [], checkpoints: [], threads: [] };
+    this.store =
+      mode === "samples"
+        ? seed()
+        : { projects: [], checkpoints: [], threads: [] };
     this.commit();
     return delay(undefined);
   }
 
   listThreads(projectId: string): Promise<ReviewThread[]> {
-    return delay(clone(this.store.threads.filter((t) => t.projectId === projectId)));
+    return delay(
+      clone(this.store.threads.filter((t) => t.projectId === projectId)),
+    );
   }
 
-  addComment(projectId: string, elementId: string | null, body: string): Promise<ReviewThread> {
+  addComment(
+    projectId: string,
+    elementId: string | null,
+    body: string,
+  ): Promise<ReviewThread> {
     let thread = this.store.threads.find(
-      (t) => t.projectId === projectId && t.elementId === elementId && !t.resolved,
+      (t) =>
+        t.projectId === projectId && t.elementId === elementId && !t.resolved,
     );
     if (!thread) {
       thread = {
@@ -287,8 +345,12 @@ export class LocalApiClient implements ApiClient {
   }
 
   resolveThread(projectId: string, threadId: string): Promise<ReviewThread> {
-    const thread = this.store.threads.find((t) => t.id === threadId && t.projectId === projectId);
-    if (!thread) {throw new Error(`Thread not found: ${threadId}`);}
+    const thread = this.store.threads.find(
+      (t) => t.id === threadId && t.projectId === projectId,
+    );
+    if (!thread) {
+      throw new Error(`Thread not found: ${threadId}`);
+    }
     thread.resolved = true;
     this.commit();
     return delay(clone(thread));

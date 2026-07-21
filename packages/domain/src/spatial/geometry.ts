@@ -40,7 +40,9 @@ export function length(v: Point): number {
 /** Return `v` scaled to unit length, or the zero vector if `v` is ~zero. */
 export function normalize(v: Point): Point {
   const len = Math.hypot(v.x, v.y);
-  if (len < GEOMETRY_EPSILON) {return { x: 0, y: 0 };}
+  if (len < GEOMETRY_EPSILON) {
+    return { x: 0, y: 0 };
+  }
   return { x: v.x / len, y: v.y / len };
 }
 
@@ -60,7 +62,9 @@ export function cross(a: Point, b: Point): number {
  */
 export function signedArea(polygon: Polygon): number {
   const n = polygon.length;
-  if (n < 3) {return 0;}
+  if (n < 3) {
+    return 0;
+  }
   let sum = 0;
   for (let i = 0; i < n; i++) {
     const a = polygon[i];
@@ -82,7 +86,9 @@ export function isCounterClockwise(polygon: Polygon): boolean {
 
 /** Return a copy of the ring wound counter-clockwise. */
 export function ensureCounterClockwise(polygon: Polygon): Polygon {
-  return isCounterClockwise(polygon) ? polygon.slice() : polygon.slice().reverse();
+  return isCounterClockwise(polygon)
+    ? polygon.slice()
+    : polygon.slice().reverse();
 }
 
 /** Total length of a polyline in plan units. */
@@ -97,7 +103,9 @@ export function polylineLength(line: Polyline): number {
 /** Perimeter of a closed polygon in plan units (includes the closing edge). */
 export function perimeter(polygon: Polygon): number {
   const n = polygon.length;
-  if (n < 2) {return 0;}
+  if (n < 2) {
+    return 0;
+  }
   let total = 0;
   for (let i = 0; i < n; i++) {
     total += distance(polygon[i], polygon[(i + 1) % n]);
@@ -108,8 +116,12 @@ export function perimeter(polygon: Polygon): number {
 /** Area-weighted centroid of a polygon. Falls back to the vertex mean if degenerate. */
 export function centroid(polygon: Polygon): Point {
   const n = polygon.length;
-  if (n === 0) {return { x: 0, y: 0 };}
-  if (n < 3) {return vertexMean(polygon);}
+  if (n === 0) {
+    return { x: 0, y: 0 };
+  }
+  if (n < 3) {
+    return vertexMean(polygon);
+  }
 
   let cx = 0;
   let cy = 0;
@@ -127,7 +139,9 @@ export function centroid(polygon: Polygon): Point {
 }
 
 function vertexMean(points: Point[]): Point {
-  if (points.length === 0) {return { x: 0, y: 0 };}
+  if (points.length === 0) {
+    return { x: 0, y: 0 };
+  }
   let sx = 0;
   let sy = 0;
   for (let i = 0; i < points.length; i++) {
@@ -139,33 +153,53 @@ function vertexMean(points: Point[]): Point {
 
 /** Axis-aligned bounding box of a set of points. Returns a zero box if empty. */
 export function bounds(points: Point[]): Bounds {
-  if (points.length === 0) {return { minX: 0, minY: 0, maxX: 0, maxY: 0 };}
+  if (points.length === 0) {
+    return { minX: 0, minY: 0, maxX: 0, maxY: 0 };
+  }
   let minX = Infinity;
   let minY = Infinity;
   let maxX = -Infinity;
   let maxY = -Infinity;
   for (const p of points) {
-    if (p.x < minX) {minX = p.x;}
-    if (p.y < minY) {minY = p.y;}
-    if (p.x > maxX) {maxX = p.x;}
-    if (p.y > maxY) {maxY = p.y;}
+    if (p.x < minX) {
+      minX = p.x;
+    }
+    if (p.y < minY) {
+      minY = p.y;
+    }
+    if (p.x > maxX) {
+      maxX = p.x;
+    }
+    if (p.y > maxY) {
+      maxY = p.y;
+    }
   }
   return { minX, minY, maxX, maxY };
 }
 
 /** Merge several bounds into one that contains them all. */
 export function unionBounds(boxes: Bounds[]): Bounds | null {
-  if (boxes.length === 0) {return null;}
+  if (boxes.length === 0) {
+    return null;
+  }
   let minX = boxes[0].minX;
   let minY = boxes[0].minY;
   let maxX = boxes[0].maxX;
   let maxY = boxes[0].maxY;
   for (let i = 1; i < boxes.length; i++) {
     const b = boxes[i];
-    if (b.minX < minX) {minX = b.minX;}
-    if (b.minY < minY) {minY = b.minY;}
-    if (b.maxX > maxX) {maxX = b.maxX;}
-    if (b.maxY > maxY) {maxY = b.maxY;}
+    if (b.minX < minX) {
+      minX = b.minX;
+    }
+    if (b.minY < minY) {
+      minY = b.minY;
+    }
+    if (b.maxX > maxX) {
+      maxX = b.maxX;
+    }
+    if (b.maxY > maxY) {
+      maxY = b.maxY;
+    }
   }
   return { minX, minY, maxX, maxY };
 }
@@ -181,16 +215,22 @@ export function boundsCenter(b: Bounds): Point {
  */
 export function pointInPolygon(point: Point, polygon: Polygon): boolean {
   const n = polygon.length;
-  if (n < 3) {return false;}
+  if (n < 3) {
+    return false;
+  }
   let inside = false;
   for (let i = 0, j = n - 1; i < n; j = i++) {
     const pi = polygon[i];
     const pj = polygon[j];
-    if (pointOnSegment(point, pi, pj)) {return true;}
+    if (pointOnSegment(point, pi, pj)) {
+      return true;
+    }
     const intersects =
       pi.y > point.y !== pj.y > point.y &&
       point.x < ((pj.x - pi.x) * (point.y - pi.y)) / (pj.y - pi.y) + pi.x;
-    if (intersects) {inside = !inside;}
+    if (intersects) {
+      inside = !inside;
+    }
   }
   return inside;
 }
@@ -198,9 +238,13 @@ export function pointInPolygon(point: Point, polygon: Polygon): boolean {
 /** `true` if `p` lies on the segment `a`–`b` within {@link GEOMETRY_EPSILON}. */
 export function pointOnSegment(p: Point, a: Point, b: Point): boolean {
   const crossProduct = (p.y - a.y) * (b.x - a.x) - (p.x - a.x) * (b.y - a.y);
-  if (Math.abs(crossProduct) > GEOMETRY_EPSILON * Math.max(1, distance(a, b))) {return false;}
+  if (Math.abs(crossProduct) > GEOMETRY_EPSILON * Math.max(1, distance(a, b))) {
+    return false;
+  }
   const dotProduct = (p.x - a.x) * (b.x - a.x) + (p.y - a.y) * (b.y - a.y);
-  if (dotProduct < 0) {return false;}
+  if (dotProduct < 0) {
+    return false;
+  }
   const squaredLen = (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y);
   return dotProduct <= squaredLen;
 }
@@ -210,7 +254,9 @@ export function closestPointOnSegment(p: Point, a: Point, b: Point): Point {
   const abx = b.x - a.x;
   const aby = b.y - a.y;
   const lenSq = abx * abx + aby * aby;
-  if (lenSq < GEOMETRY_EPSILON) {return { x: a.x, y: a.y };}
+  if (lenSq < GEOMETRY_EPSILON) {
+    return { x: a.x, y: a.y };
+  }
 
   const apx = p.x - a.x;
   const apy = p.y - a.y;
@@ -229,7 +275,9 @@ export function closestPointOnSegment(p: Point, a: Point, b: Point): Point {
 export function offsetPolygon(polygon: Polygon, d: number): Polygon | null {
   const ring = ensureCounterClockwise(polygon);
   const n = ring.length;
-  if (n < 3) {return null;}
+  if (n < 3) {
+    return null;
+  }
 
   const offsetEdges: { p: Point; dir: Point }[] = [];
   for (let i = 0; i < n; i++) {
@@ -249,7 +297,9 @@ export function offsetPolygon(polygon: Polygon, d: number): Polygon | null {
     const prev = offsetEdges[(i - 1 + n) % n];
     const curr = offsetEdges[i];
     const intersection = lineIntersection(prev.p, prev.dir, curr.p, curr.dir);
-    if (!intersection) {return null;}
+    if (!intersection) {
+      return null;
+    }
     result.push(intersection);
   }
 
@@ -258,18 +308,31 @@ export function offsetPolygon(polygon: Polygon, d: number): Polygon | null {
   // from result[i] to result[i+1] no longer aligns with its source edge.
   for (let i = 0; i < n; i++) {
     const edgeVec = subtract(result[(i + 1) % n], result[i]);
-    if (dot(edgeVec, offsetEdges[i].dir) <= GEOMETRY_EPSILON) {return null;}
+    if (dot(edgeVec, offsetEdges[i].dir) <= GEOMETRY_EPSILON) {
+      return null;
+    }
   }
 
-  if (area(result) < GEOMETRY_EPSILON) {return null;}
-  if (isCounterClockwise(result) !== isCounterClockwise(ring)) {return null;}
+  if (area(result) < GEOMETRY_EPSILON) {
+    return null;
+  }
+  if (isCounterClockwise(result) !== isCounterClockwise(ring)) {
+    return null;
+  }
   return result;
 }
 
 /** Intersection of two infinite lines given as point + direction. `null` if parallel. */
-function lineIntersection(p1: Point, d1: Point, p2: Point, d2: Point): Point | null {
+function lineIntersection(
+  p1: Point,
+  d1: Point,
+  p2: Point,
+  d2: Point,
+): Point | null {
   const denom = cross(d1, d2);
-  if (Math.abs(denom) < GEOMETRY_EPSILON) {return null;}
+  if (Math.abs(denom) < GEOMETRY_EPSILON) {
+    return null;
+  }
   const diff = subtract(p2, p1);
   const t = cross(diff, d2) / denom;
   return { x: p1.x + d1.x * t, y: p1.y + d1.y * t };

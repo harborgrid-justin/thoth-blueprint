@@ -2,11 +2,7 @@ import * as React from "react";
 import { Search } from "lucide-react";
 import { useUiStore } from "@/store/uiStore";
 import { cn } from "@/lib/utils";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { buildCommands, type Command, type CommandActions } from "./commands";
 
 /**
@@ -24,7 +20,9 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
 
   const results = React.useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) {return commands;}
+    if (!q) {
+      return commands;
+    }
     return commands.filter((c) =>
       `${c.title} ${c.group} ${c.keywords ?? ""}`.toLowerCase().includes(q),
     );
@@ -44,12 +42,16 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
 
   // Keep the highlighted row scrolled into view.
   React.useEffect(() => {
-    const el = listRef.current?.querySelector<HTMLElement>(`[data-idx="${index}"]`);
+    const el = listRef.current?.querySelector<HTMLElement>(
+      `[data-idx="${index}"]`,
+    );
     el?.scrollIntoView({ block: "nearest" });
   }, [index]);
 
   function run(cmd: Command | undefined) {
-    if (!cmd) {return;}
+    if (!cmd) {
+      return;
+    }
     setOpen(false);
     // Defer so the dialog's focus teardown doesn't swallow tool-driven focus.
     requestAnimationFrame(() => cmd.run());
@@ -61,7 +63,9 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
       setIndex((i) => (results.length ? (i + 1) % results.length : 0));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setIndex((i) => (results.length ? (i - 1 + results.length) % results.length : 0));
+      setIndex((i) =>
+        results.length ? (i - 1 + results.length) % results.length : 0,
+      );
     } else if (e.key === "Enter") {
       e.preventDefault();
       run(results[index]);
@@ -85,12 +89,20 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
             className="h-11 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
           />
         </div>
-        <div ref={listRef} className="max-h-[min(60vh,24rem)] overflow-y-auto p-1.5">
+        <div
+          ref={listRef}
+          className="max-h-[min(60vh,24rem)] overflow-y-auto p-1.5"
+        >
           {results.length === 0 ? (
-            <p className="px-3 py-6 text-center text-sm text-muted-foreground">No matching commands.</p>
+            <p className="px-3 py-6 text-center text-sm text-muted-foreground">
+              No matching commands.
+            </p>
           ) : (
             groupOrder
-              .map((group) => ({ group, items: results.filter((c) => c.group === group) }))
+              .map((group) => ({
+                group,
+                items: results.filter((c) => c.group === group),
+              }))
               .filter((g) => g.items.length > 0)
               .map(({ group, items }) => (
                 <div key={group} className="mb-1">
@@ -110,7 +122,9 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
                         onClick={() => run(cmd)}
                         className={cn(
                           "flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left text-sm transition-colors",
-                          i === index ? "bg-accent text-accent-foreground" : "text-foreground",
+                          i === index
+                            ? "bg-accent text-accent-foreground"
+                            : "text-foreground",
                         )}
                       >
                         <Icon className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -132,4 +146,10 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
   );
 }
 
-const groupOrder: Command["group"][] = ["Tools", "Edit", "View", "Project", "Help"];
+const groupOrder: Command["group"][] = [
+  "Tools",
+  "Edit",
+  "View",
+  "Project",
+  "Help",
+];

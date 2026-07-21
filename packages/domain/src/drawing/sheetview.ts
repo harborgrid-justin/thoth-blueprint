@@ -74,7 +74,11 @@ export function viewportTransform(
  * A projection that fits `modelBounds` into the viewport rect (ignoring the
  * named scale) — for key maps, index thumbnails, and "as-shown" windows.
  */
-export function fitViewportTransform(rect: PaperRect, modelBounds: Bounds, pad = 0.06): ViewportTransform {
+export function fitViewportTransform(
+  rect: PaperRect,
+  modelBounds: Bounds,
+  pad = 0.06,
+): ViewportTransform {
   const bw = Math.max(modelBounds.maxX - modelBounds.minX, 1e-6);
   const bh = Math.max(modelBounds.maxY - modelBounds.minY, 1e-6);
   const iw = rect.w * (1 - pad * 2);
@@ -83,7 +87,10 @@ export function fitViewportTransform(rect: PaperRect, modelBounds: Bounds, pad =
   const c = boundsCenter(modelBounds);
   const cx = rect.x + rect.w / 2;
   const cy = rect.y + rect.h / 2;
-  const project = (p: Point): Point => ({ x: cx + (p.x - c.x) * s, y: cy + (p.y - c.y) * s });
+  const project = (p: Point): Point => ({
+    x: cx + (p.x - c.x) * s,
+    y: cy + (p.y - c.y) * s,
+  });
   return { project, scalePx: s };
 }
 
@@ -103,23 +110,28 @@ export function fitScale(
   const bh = Math.max(modelBounds.maxY - modelBounds.minY, 1e-6);
   // Larger paperPerModel ⇒ bigger drawing; iterate from biggest to smallest.
   const sorted = _.orderBy(
-    candidates.map((id) => ({ id, s: paperPerModel(id, modelUnit, paperUnit) })),
+    candidates.map((id) => ({
+      id,
+      s: paperPerModel(id, modelUnit, paperUnit),
+    })),
     ["s"],
-    ["desc"]
+    ["desc"],
   );
   for (const { id, s } of sorted) {
-    if (bw * s <= rect.w && bh * s <= rect.h) {return id;}
+    if (bw * s <= rect.w && bh * s <= rect.h) {
+      return id;
+    }
   }
   return sorted.length ? sorted[sorted.length - 1].id : candidates[0];
 }
 
 // --- view references --------------------------------------------------------
 
-
-
 /** Unit perpendicular (left normal) of a directed segment, in the −Y-north frame. */
 export function sectionGaze(mark: SectionMark): Point {
-  if (mark.gaze) {return mark.gaze;}
+  if (mark.gaze) {
+    return mark.gaze;
+  }
   const [a, b] = mark.atLine;
   const v = vec2.fromValues(b.x - a.x, b.y - a.y);
   const len = vec2.len(v) || 1;

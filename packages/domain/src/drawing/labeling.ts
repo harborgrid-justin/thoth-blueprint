@@ -30,7 +30,12 @@ export function resolveLabelStyle(
 } {
   const defaultStyle = {
     general: { layer: "C-ANNO-LABL", visible: true, planReadable: true },
-    layout: { textTemplate: "{Name}", fontSize: 8, fontColor: "#000000", anchorPoint: "center" },
+    layout: {
+      textTemplate: "{Name}",
+      fontSize: 8,
+      fontColor: "#000000",
+      anchorPoint: "center",
+    },
     draggedState: { leaderVisible: true, stackedText: true, gap: 2 },
   };
 
@@ -47,9 +52,15 @@ export function resolveLabelStyle(
   const draggedState = { ...defaultStyle.draggedState };
 
   for (const s of chain) {
-    if (s.general) {Object.assign(general, s.general);}
-    if (s.layout) {Object.assign(layout, s.layout);}
-    if (s.draggedState) {Object.assign(draggedState, s.draggedState);}
+    if (s.general) {
+      Object.assign(general, s.general);
+    }
+    if (s.layout) {
+      Object.assign(layout, s.layout);
+    }
+    if (s.draggedState) {
+      Object.assign(draggedState, s.draggedState);
+    }
   }
 
   return {
@@ -66,7 +77,7 @@ import { formatStation } from "../civil/alignment";
 /** Format azimuth degrees as quadrant bearing string, e.g. N 45-30-00 E. */
 export function formatQuadrantBearing(azimuth: number): string {
   const normalized = ((azimuth % 360) + 360) % 360;
-  
+
   let quadrant: string;
   let bearingVal: number;
   let exitDir: string;
@@ -98,8 +109,6 @@ export function formatQuadrantBearing(azimuth: number): string {
   return `${quadrant} ${deg}°${pad(min)}'${pad(sec)}" ${exitDir}`;
 }
 
-
-
 /**
  * Compiles a text template with variables and evaluates basic math expressions.
  * Supports evaluating bracket tags {Expression} inside strings.
@@ -115,7 +124,7 @@ export function compileLabelTemplate(
   for (const key of Object.keys(variables)) {
     const val = variables[key];
     const regex = new RegExp(`\\{${key}\\}`, "g");
-    
+
     if (key === "Station" && typeof val === "number") {
       result = result.replace(regex, formatStation(val));
     } else if (key === "Bearing" && typeof val === "number") {
@@ -138,7 +147,10 @@ export function compileLabelTemplate(
     for (const key of Object.keys(variables)) {
       const val = variables[key];
       if (typeof val === "number") {
-        expression = expression.replace(new RegExp(`\\b${key}\\b`, "g"), String(val));
+        expression = expression.replace(
+          new RegExp(`\\b${key}\\b`, "g"),
+          String(val),
+        );
       }
     }
 

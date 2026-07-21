@@ -17,10 +17,14 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
   const treadDepthLimit = stair.treadDepthLimit || 0.28; // Default 28cm (11 inches)
 
   if (riserHeightLimit > 0.21) {
-    warnings.push(`Warning: Riser height limit (${riserHeightLimit}m) exceeds safe maximum (0.21m / 8.25").`);
+    warnings.push(
+      `Warning: Riser height limit (${riserHeightLimit}m) exceeds safe maximum (0.21m / 8.25").`,
+    );
   }
   if (treadDepthLimit < 0.22) {
-    warnings.push(`Warning: Tread depth limit (${treadDepthLimit}m) is below safe minimum (0.22m / 9").`);
+    warnings.push(
+      `Warning: Tread depth limit (${treadDepthLimit}m) is below safe minimum (0.22m / 9").`,
+    );
   }
 
   const height = Math.abs(stair.height);
@@ -30,10 +34,10 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
 
   // Total treads in the stairway
   const totalTreadCount = Math.max(1, riserCount - 1);
-  
+
   // Calculate average actual tread depth based on length of boundary
   const footprintCenter = centroid(stair.boundary);
-  
+
   // Estimate length of the staircase footprint
   let footprintLength = 3.0; // Fallback
   if (stair.boundary.length >= 4) {
@@ -46,7 +50,7 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     const endMid = scale(add(p2, p3), 0.5);
     footprintLength = distance(endMid, startMid);
   }
-  
+
   const actualTreadDepth = footprintLength / Math.max(1, totalTreadCount);
 
   // 2. Safety overhead clearance calculations (REQ-UNIMP-017)
@@ -56,7 +60,7 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     const criticalClearance = stair.ceilingElevation - height;
     if (criticalClearance < overheadLimit) {
       warnings.push(
-        `Violation: Overhead clearance height (${criticalClearance.toFixed(2)}m) is less than standard minimum (${overheadLimit.toFixed(2)}m / 6'8").`
+        `Violation: Overhead clearance height (${criticalClearance.toFixed(2)}m) is less than standard minimum (${overheadLimit.toFixed(2)}m / 6'8").`,
       );
     }
   }
@@ -75,7 +79,7 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     const totalRotRad = (totalRotDeg * Math.PI) / 180;
     const radius = stair.radius || 1.2;
     const w = stair.width || 0.9;
-    
+
     const innerR = Math.max(0.1, radius - w / 2);
     const outerR = radius + w / 2;
 
@@ -89,15 +93,21 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
       const sin = Math.sin(angle);
 
       // Left/Right stringer boundary points at radius outer & inner
-      const ptInner = { x: footprintCenter.x + innerR * cos, y: footprintCenter.y + innerR * sin };
-      const ptOuter = { x: footprintCenter.x + outerR * cos, y: footprintCenter.y + outerR * sin };
+      const ptInner = {
+        x: footprintCenter.x + innerR * cos,
+        y: footprintCenter.y + innerR * sin,
+      };
+      const ptOuter = {
+        x: footprintCenter.x + outerR * cos,
+        y: footprintCenter.y + outerR * sin,
+      };
 
       leftStringer.push(ptInner);
       rightStringer.push(ptOuter);
 
       if (i < totalTreadCount) {
         treadLines.push([ptInner, ptOuter]);
-        
+
         // Baluster mounting coordinates on outer edge of treads (REQ-UNIMP-024)
         const nextAngle = ((i + 0.5) / totalTreadCount) * totalRotRad;
         balusterAnchors.push({
@@ -122,10 +132,15 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     const cutIdx = Math.min(totalTreadCount - 1, Math.floor(1.2 / safeRiserH));
     const cutAngle = (cutIdx / totalTreadCount) * totalRotRad;
     breakLine.push(
-      { x: footprintCenter.x + innerR * Math.cos(cutAngle), y: footprintCenter.y + innerR * Math.sin(cutAngle) },
-      { x: footprintCenter.x + outerR * Math.cos(cutAngle), y: footprintCenter.y + outerR * Math.sin(cutAngle) }
+      {
+        x: footprintCenter.x + innerR * Math.cos(cutAngle),
+        y: footprintCenter.y + innerR * Math.sin(cutAngle),
+      },
+      {
+        x: footprintCenter.x + outerR * Math.cos(cutAngle),
+        y: footprintCenter.y + outerR * Math.sin(cutAngle),
+      },
     );
-
   } else if (stair.stairType === "u-shape") {
     // U-SHAPE STAIR DESIGN (REQ-UNIMP-012, REQ-UNIMP-018)
     // Two flights divided by an intermediate landing
@@ -136,7 +151,7 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     // Riser count per flight
     const fRisers = Math.ceil(riserCount / 2);
     const sRisers = riserCount - fRisers;
-    
+
     const fTreads = Math.max(1, fRisers - 1);
     const sTreads = Math.max(1, sRisers - 1);
 
@@ -158,7 +173,10 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     const flight1Right: Point[] = [];
     for (let i = 0; i <= fTreads; i++) {
       const progress = i * treadDepthLimit;
-      const ptL = { x: startPt.x + progress * cos, y: startPt.y + progress * sin };
+      const ptL = {
+        x: startPt.x + progress * cos,
+        y: startPt.y + progress * sin,
+      };
       const ptR = { x: ptL.x + w * -sin, y: ptL.y + w * cos };
 
       flight1Left.push(ptL);
@@ -166,7 +184,10 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
 
       if (i < fTreads) {
         treadLines.push([ptL, ptR]);
-        balusterAnchors.push({ x: (ptL.x + ptR.x) / 2, y: (ptL.y + ptR.y) / 2 });
+        balusterAnchors.push({
+          x: (ptL.x + ptR.x) / 2,
+          y: (ptL.y + ptR.y) / 2,
+        });
       }
     }
     stringerCenterlines.push(flight1Left, flight1Right);
@@ -181,7 +202,10 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
 
     for (let i = 0; i <= sTreads; i++) {
       const progress = i * -treadDepthLimit;
-      const ptL = { x: f2Start.x + progress * cos, y: f2Start.y + progress * sin };
+      const ptL = {
+        x: f2Start.x + progress * cos,
+        y: f2Start.y + progress * sin,
+      };
       const ptR = { x: ptL.x + w * sin, y: ptL.y + w * -cos };
 
       flight2Left.push(ptL);
@@ -189,16 +213,19 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
 
       if (i < sTreads) {
         treadLines.push([ptL, ptR]);
-        balusterAnchors.push({ x: (ptL.x + ptR.x) / 2, y: (ptL.y + ptR.y) / 2 });
+        balusterAnchors.push({
+          x: (ptL.x + ptR.x) / 2,
+          y: (ptL.y + ptR.y) / 2,
+        });
       }
     }
     stringerCenterlines.push(flight2Left, flight2Right);
 
     // Down direction arrow connecting flights 2 to 1 (REQ-UNIMP-023)
     arrowPath.push(
-      { x: f2Start.x + w/2 * sin, y: f2Start.y + w/2 * -cos },
-      { x: startPt.x + sepX/2, y: startPt.y + sepY/2 },
-      { x: startPt.x + w/2 * -sin, y: startPt.y + w/2 * cos }
+      { x: f2Start.x + (w / 2) * sin, y: f2Start.y + (w / 2) * -cos },
+      { x: startPt.x + sepX / 2, y: startPt.y + sepY / 2 },
+      { x: startPt.x + (w / 2) * -sin, y: startPt.y + (w / 2) * cos },
     );
 
     // Breakline on first flight (REQ-UNIMP-022)
@@ -206,7 +233,6 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     const ptCutL = flight1Left[cutIdx] || startPt;
     const ptCutR = flight1Right[cutIdx] || startPt;
     breakLine.push(ptCutL, ptCutR);
-
   } else {
     // STRAIGHT STAIR DESIGN (Standard)
     const startPt = stair.boundary[0] || { x: 0, y: 0 };
@@ -226,7 +252,10 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     for (let i = 0; i <= totalTreadCount; i++) {
       const progress = i * actualTreadDepth;
       // Step left/right boundaries
-      const ptL = { x: startPt.x + progress * cos, y: startPt.y + progress * sin };
+      const ptL = {
+        x: startPt.x + progress * cos,
+        y: startPt.y + progress * sin,
+      };
       const ptR = { x: ptL.x + w * -sin, y: ptL.y + w * cos };
 
       leftStringer.push(ptL);
@@ -245,7 +274,10 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     stringerCenterlines.push(leftStringer, rightStringer);
 
     // Plan breakline at 1.2m height cut (REQ-UNIMP-022)
-    const straightCutIdx = Math.min(totalTreadCount - 1, Math.floor(1.2 / safeRiserH));
+    const straightCutIdx = Math.min(
+      totalTreadCount - 1,
+      Math.floor(1.2 / safeRiserH),
+    );
     const ptCutL = leftStringer[straightCutIdx] || startPt;
     const ptCutR = rightStringer[straightCutIdx] || startPt;
     breakLine.push(ptCutL, ptCutR);
@@ -253,7 +285,7 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     // Direction arrow path pointing "Down" (REQ-UNIMP-023)
     arrowPath.push(
       { x: p1.x + (w / 2) * -sin, y: p1.y + (w / 2) * cos },
-      { x: startPt.x + (w / 2) * -sin, y: startPt.y + (w / 2) * cos }
+      { x: startPt.x + (w / 2) * -sin, y: startPt.y + (w / 2) * cos },
     );
   }
 
@@ -262,11 +294,11 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
   const landingThick = stair.landingSlabThickness || 0.15;
   const treadThick = stair.treadSlabThickness || 0.12;
   const w = stair.width || 1.0;
-  
+
   // Treads Volume
   const singleTreadVol = w * actualTreadDepth * actualRiserHeight * 0.5; // triangular step profile
   const totalStepsVol = riserCount * singleTreadVol;
-  
+
   // Landing Volume (1 landing if U-shaped/split stair)
   const landingArea = stair.stairType === "u-shape" ? w * w * 2 : 0;
   const landingsVol = landingArea * landingThick;

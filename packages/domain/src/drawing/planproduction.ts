@@ -6,7 +6,11 @@ import { type Unit } from "../spatial/spatial";
 import { type PaperUnit } from "./sheetsize";
 import { type Sheet, type DrawingSet } from "./sheet";
 
-import type { ViewFrame, PlanMatchLine, ViewFrameGroup } from "./types/planproduction";
+import type {
+  ViewFrame,
+  PlanMatchLine,
+  ViewFrameGroup,
+} from "./types/planproduction";
 
 export type { ViewFrame, PlanMatchLine, ViewFrameGroup };
 
@@ -18,7 +22,7 @@ export function generateViewFrames(
   resolved: ResolvedAlignment,
   alignmentId: string,
   scaleId: string,
-  viewportWidthIn: number,  // paper sheet viewport width in inches
+  viewportWidthIn: number, // paper sheet viewport width in inches
   viewportHeightIn: number, // paper sheet viewport height in inches
   modelUnit: Unit,
   overlapRatio = 0.15,
@@ -26,7 +30,7 @@ export function generateViewFrames(
   const paperUnit: PaperUnit = "in";
   // Model units per paper unit (inches)
   const scalePx = paperPerModel(scaleId, modelUnit, paperUnit);
-  
+
   // Real world model dimensions of the viewport
   const modelWidth = scalePx > 0 ? viewportWidthIn / scalePx : 400;
   const modelHeight = scalePx > 0 ? viewportHeightIn / scalePx : 250;
@@ -45,7 +49,9 @@ export function generateViewFrames(
     const stationCenter = (stationStart + stationEnd) / 2;
 
     const centerPoint = pointAtStation(resolved, stationCenter);
-    if (!centerPoint) {break;}
+    if (!centerPoint) {
+      break;
+    }
 
     // View rotation: set viewport horizontal to follow centerline bearing
     // heading is bearing, viewport horizontal aligns perpendicular to left normal
@@ -95,7 +101,9 @@ export function generateViewFrames(
     idx++;
 
     // Prevent infinite loop on edge cases
-    if (stepDistance <= 0.01) {break;}
+    if (stepDistance <= 0.01) {
+      break;
+    }
   }
 
   return {

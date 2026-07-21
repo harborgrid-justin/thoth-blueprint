@@ -131,9 +131,15 @@ export function enterpriseCurtainWall(
 
   // 2. Vertical mullion beams
   _.forEach(cwGeom.mullions, (mull) => {
-    if (mull.direction !== "vertical") {return;}
+    if (mull.direction !== "vertical") {
+      return;
+    }
     const lxly = add(startPt, scale(dir, mull.xStart));
-    const geo = new THREE.BoxGeometry(mull.width, (mull.yEnd - mull.yStart) * exag, 0.1);
+    const geo = new THREE.BoxGeometry(
+      mull.width,
+      (mull.yEnd - mull.yStart) * exag,
+      0.1,
+    );
     const m = new THREE.Mesh(geo, metalMat);
     m.position.set(
       lxly.x - center.x,
@@ -148,7 +154,9 @@ export function enterpriseCurtainWall(
 
   // 3. Horizontal mullion beams
   _.forEach(cwGeom.mullions, (mull) => {
-    if (mull.direction !== "horizontal") {return;}
+    if (mull.direction !== "horizontal") {
+      return;
+    }
     const geo = new THREE.BoxGeometry(planLen, mull.width * exag, 0.08);
     const m = new THREE.Mesh(geo, metalMat);
     m.position.set(
@@ -166,7 +174,10 @@ export function enterpriseCurtainWall(
   const perpNormal = { x: -dir.y, y: dir.x };
   _.forEach(cwGeom.panels, (pan) => {
     const mx = (pan.xStart + pan.xEnd) / 2;
-    const pXY = add(add(startPt, scale(dir, mx)), scale(perpNormal, paneOffset));
+    const pXY = add(
+      add(startPt, scale(dir, mx)),
+      scale(perpNormal, paneOffset),
+    );
 
     let useMat = glassMat;
     let thickness = 0.02;
@@ -197,7 +208,10 @@ export function enterpriseCurtainWall(
     if (pan.material === "door") {
       const handleGeo = new THREE.BoxGeometry(0.05, 0.15 * exag, 0.05);
       const handle = new THREE.Mesh(handleGeo, metalMat);
-      const hXY = add(add(startPt, scale(dir, pan.xStart + 0.1)), scale(perpNormal, paneOffset + 0.04));
+      const hXY = add(
+        add(startPt, scale(dir, pan.xStart + 0.1)),
+        scale(perpNormal, paneOffset + 0.04),
+      );
       handle.position.set(
         hXY.x - center.x,
         baseElevation + 0.9 * exag,

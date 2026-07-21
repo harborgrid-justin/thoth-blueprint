@@ -42,16 +42,27 @@ export function SheetSetDialog() {
   const svgRef = React.useRef<SVGSVGElement>(null);
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [sizeOverride, setSizeOverride] = React.useState<SheetSizeId | "">("");
-  const [orientOverride, setOrientOverride] = React.useState<Orientation | "">("");
+  const [orientOverride, setOrientOverride] = React.useState<Orientation | "">(
+    "",
+  );
   const [busy, setBusy] = React.useState(false);
 
-  const plugin = site ? getRegionPlugin(site.jurisdictionId) ?? US_PLSS_DEFAULT : US_PLSS_DEFAULT;
+  const plugin = site
+    ? (getRegionPlugin(site.jurisdictionId) ?? US_PLSS_DEFAULT)
+    : US_PLSS_DEFAULT;
   const caps = resolveCapabilities(plugin);
 
-  const baseSet = React.useMemo(() => (site ? ensureDrawingSet(site, plugin) : null), [site, plugin]);
+  const baseSet = React.useMemo(
+    () => (site ? ensureDrawingSet(site, plugin) : null),
+    [site, plugin],
+  );
   const set = React.useMemo(() => {
-    if (!baseSet) {return null;}
-    if (!sizeOverride && !orientOverride) {return baseSet;}
+    if (!baseSet) {
+      return null;
+    }
+    if (!sizeOverride && !orientOverride) {
+      return baseSet;
+    }
     return {
       ...baseSet,
       sheets: baseSet.sheets.map((s) => ({
@@ -64,11 +75,15 @@ export function SheetSetDialog() {
 
   const sheets = React.useMemo(() => (set ? sortSheets(set) : []), [set]);
   const selected: Sheet | null = React.useMemo(() => {
-    if (!sheets.length) {return null;}
+    if (!sheets.length) {
+      return null;
+    }
     return sheets.find((s) => s.id === selectedId) ?? sheets[0];
   }, [sheets, selectedId]);
 
-  if (!site || !set || !selected) {return null;}
+  if (!site || !set || !selected) {
+    return null;
+  }
 
   const unit = plugin.sheetStandards?.unit ?? "in";
   const layout = sheetLayout(selected, unit);
@@ -76,9 +91,13 @@ export function SheetSetDialog() {
 
   function exportSvg() {
     const svg = svgRef.current;
-    if (!svg) {return;}
+    if (!svg) {
+      return;
+    }
     const src = new XMLSerializer().serializeToString(svg);
-    const blob = new Blob([`<?xml version="1.0" encoding="UTF-8"?>\n${src}`], { type: "image/svg+xml;charset=utf-8" });
+    const blob = new Blob([`<?xml version="1.0" encoding="UTF-8"?>\n${src}`], {
+      type: "image/svg+xml;charset=utf-8",
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -88,11 +107,18 @@ export function SheetSetDialog() {
   }
 
   async function exportPdf() {
-    if (!set || !site) {return;}
+    if (!set || !site) {
+      return;
+    }
     setBusy(true);
     try {
-      const pdfService = await container.get<typeof import("./pdfExport")>("pdfExport");
-      await pdfService.exportDrawingSetPdf(set, site, `${site.name.replace(/\s+/g, "-").toLowerCase()}-drawings.pdf`);
+      const pdfService =
+        await container.get<typeof import("./pdfExport")>("pdfExport");
+      await pdfService.exportDrawingSetPdf(
+        set,
+        site,
+        `${site.name.replace(/\s+/g, "-").toLowerCase()}-drawings.pdf`,
+      );
     } finally {
       setBusy(false);
     }
@@ -117,7 +143,9 @@ export function SheetSetDialog() {
               <select
                 className="rounded border border-border bg-background px-2.5 py-1 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 value={sizeOverride}
-                onChange={(e) => setSizeOverride(e.target.value as SheetSizeId | "")}
+                onChange={(e) =>
+                  setSizeOverride(e.target.value as SheetSizeId | "")
+                }
               >
                 <option value="">Per sheet</option>
                 {listSheetSizes().map((s) => (
@@ -132,7 +160,9 @@ export function SheetSetDialog() {
               <select
                 className="rounded border border-border bg-background px-2.5 py-1 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 value={orientOverride}
-                onChange={(e) => setOrientOverride(e.target.value as Orientation | "")}
+                onChange={(e) =>
+                  setOrientOverride(e.target.value as Orientation | "")
+                }
               >
                 <option value="">Per sheet</option>
                 <option value="landscape">Landscape</option>
@@ -171,10 +201,13 @@ export function SheetSetDialog() {
                       onClick={() => setSelectedId(s.id)}
                       className={`w-full rounded px-2 py-1.5 text-left text-xs transition-colors ${active ? "bg-primary/15 text-primary font-medium" : "text-muted-foreground hover:bg-accent hover:text-foreground"}`}
                     >
-                      <div className="font-mono font-semibold text-foreground">{formatSheetNumber(s.number)}</div>
+                      <div className="font-mono font-semibold text-foreground">
+                        {formatSheetNumber(s.number)}
+                      </div>
                       <div className="truncate">{s.title}</div>
                       <div className="text-[10px] opacity-70">
-                        {disciplineName(s.number.discipline)} · {sheetTypeName(s.number.type)}
+                        {disciplineName(s.number.discipline)} ·{" "}
+                        {sheetTypeName(s.number.type)}
                       </div>
                     </button>
                   </li>
@@ -186,8 +219,16 @@ export function SheetSetDialog() {
           {/* Preview */}
           <div className="min-w-0 flex-1">
             <ScrollArea className="h-[62vh] rounded-md border border-border bg-muted/30 p-3">
-              <div className="mx-auto max-w-full overflow-x-auto shadow-md" style={{ maxWidth: layout.wPt }}>
-                <SvgSheet ref={svgRef} prims={prims} wPt={layout.wPt} hPt={layout.hPt} />
+              <div
+                className="mx-auto max-w-full overflow-x-auto shadow-md"
+                style={{ maxWidth: layout.wPt }}
+              >
+                <SvgSheet
+                  ref={svgRef}
+                  prims={prims}
+                  wPt={layout.wPt}
+                  hPt={layout.hPt}
+                />
               </div>
             </ScrollArea>
           </div>

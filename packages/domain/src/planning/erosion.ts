@@ -8,11 +8,7 @@ import type {
   SimulationFrame,
 } from "./types/erosion";
 
-export type {
-  ErosionParticle,
-  BarrierStats,
-  SimulationFrame,
-};
+export type { ErosionParticle, BarrierStats, SimulationFrame };
 
 export class ErosionSimulator {
   private site: Site;
@@ -32,10 +28,10 @@ export class ErosionSimulator {
         this.soilErodibility = 0.025;
         this.depositRate = 0.25;
       } else if (soilType === "clay") {
-        this.soilErodibility = 0.040;
+        this.soilErodibility = 0.04;
         this.depositRate = 0.05;
       } else if (soilType === "silt") {
-        this.soilErodibility = 0.080;
+        this.soilErodibility = 0.08;
         this.depositRate = 0.15;
       } else {
         this.soilErodibility = 0.055;
@@ -66,7 +62,9 @@ export class ErosionSimulator {
     const rows = this.grid.rows;
     const heights = [...this.grid.heights];
     const barrierStats: BarrierStats[] = this.site.elements
-      .filter((e) => e.kind === "curtainwall" || (e as any).type === "erosion-bale")
+      .filter(
+        (e) => e.kind === "curtainwall" || (e as any).type === "erosion-bale",
+      )
       .map((e) => ({
         id: e.id,
         name: (e as any).name || "Silt Barrier",
@@ -83,8 +81,10 @@ export class ErosionSimulator {
 
       // 1. Generate new rain particles (hydrology)
       for (let p = 0; p < this.rainIntensity; p++) {
-        const x = this.grid.origin.x + Math.random() * (cols - 1) * this.grid.cellSize;
-        const y = this.grid.origin.y + Math.random() * (rows - 1) * this.grid.cellSize;
+        const x =
+          this.grid.origin.x + Math.random() * (cols - 1) * this.grid.cellSize;
+        const y =
+          this.grid.origin.y + Math.random() * (rows - 1) * this.grid.cellSize;
         activeParticles.push({
           id: `p-${s}-${p}`,
           position: { x, y },
@@ -120,7 +120,10 @@ export class ErosionSimulator {
           };
 
           // Check barrier intersections (silt fences, straw bales)
-          const barrierHit = this.checkBarrierIntersection(part.position, nextPt);
+          const barrierHit = this.checkBarrierIntersection(
+            part.position,
+            nextPt,
+          );
           if (barrierHit) {
             // Trap sediment in barrier
             const stat = barrierStats.find((b) => b.id === barrierHit.id);
@@ -181,7 +184,11 @@ export class ErosionSimulator {
       this.steps.push({
         step: s,
         heights: [...heights],
-        particles: activeParticles.map((p) => ({ ...p, position: { ...p.position }, velocity: { ...p.velocity } })),
+        particles: activeParticles.map((p) => ({
+          ...p,
+          position: { ...p.position },
+          velocity: { ...p.velocity },
+        })),
         barrierStats: barrierStats.map((b) => ({ ...b })),
         totalSoilLostKg,
         totalWaterRunoffLiters,
@@ -223,8 +230,12 @@ export class ErosionSimulator {
   }
 
   /** Checks if segment (from -> to) intersects with any erosion barriers */
-  private checkBarrierIntersection(from: Point, to: Point): { id: string } | null {
-    const ccw = (A: Point, B: Point, C: Point) => (C.y - A.y) * (B.x - A.x) > (B.y - A.y) * (B.x - A.x);
+  private checkBarrierIntersection(
+    from: Point,
+    to: Point,
+  ): { id: string } | null {
+    const ccw = (A: Point, B: Point, C: Point) =>
+      (C.y - A.y) * (B.x - A.x) > (B.y - A.y) * (B.x - A.x);
 
     for (const el of this.site.elements) {
       if (el.kind === "curtainwall" && el.boundary && el.boundary.length >= 2) {
@@ -232,7 +243,9 @@ export class ErosionSimulator {
           const b1 = el.boundary[i];
           const b2 = el.boundary[i + 1];
           // Check segment intersection
-          const intersect = ccw(from, b1, b2) !== ccw(to, b1, b2) && ccw(from, to, b1) !== ccw(from, to, b2);
+          const intersect =
+            ccw(from, b1, b2) !== ccw(to, b1, b2) &&
+            ccw(from, to, b1) !== ccw(from, to, b2);
           if (intersect) {
             return { id: el.id };
           }
@@ -268,14 +281,17 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
 
   // 1. MS-4 Check: First Step (Requires perimeter sediment barriers)
   const hasSiltFence = controlLines.some((c) => c.type === "silt-fence");
-  const hasBales = civilSymbols.some((s) => s.type === "erosion-bale" || s.type === "silt-basin");
+  const hasBales = civilSymbols.some(
+    (s) => s.type === "erosion-bale" || s.type === "silt-basin",
+  );
   const hasPerimeterBarrier = hasSiltFence || hasBales;
 
   if (!hasPerimeterBarrier) {
     findings.push({
       severity: "error",
       code: "erosion.perimeter.missing",
-      message: "No perimeter erosion barriers (silt fence, sediment basin, or erosion bales) are drafted on site (MS-4).",
+      message:
+        "No perimeter erosion barriers (silt fence, sediment basin, or erosion bales) are drafted on site (MS-4).",
     });
   }
 
@@ -302,7 +318,11 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
   }
 
   // REQ-ESC-005: Shear Stress Limits (Ditch channel check)
-  const ditchElements = site.elements.filter((e) => (e as any).kind === "ditch" || (e as any).name?.toLowerCase().includes("ditch"));
+  const ditchElements = site.elements.filter(
+    (e) =>
+      (e as any).kind === "ditch" ||
+      (e as any).name?.toLowerCase().includes("ditch"),
+  );
   ditchElements.forEach((d) => {
     const slope = (d as any).slope || 0.08;
     const computedShearStressPa = 9810 * 0.15 * slope; // tau = gamma * R * S
@@ -321,10 +341,14 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
   // --- II. Sediment Barriers & Filtering ---
 
   // REQ-ESC-011: Compost Filter Socks Sizing Gradient limits
-  const filterSocks = civilSymbols.filter((s) => s.type === "erosion-bale" && (s.label?.toLowerCase().includes("sock") || s.subtype === "compost"));
+  const filterSocks = civilSymbols.filter(
+    (s) =>
+      s.type === "erosion-bale" &&
+      (s.label?.toLowerCase().includes("sock") || s.subtype === "compost"),
+  );
   filterSocks.forEach((sock) => {
     // Check if the contributing terrain slope is too steep for the diameter size
-    const slopeBehind = (sock as any).gradient || 0.40; // 40% (2.5:1)
+    const slopeBehind = (sock as any).gradient || 0.4; // 40% (2.5:1)
     const diameter = (sock as any).diameter || 8; // 8-inch
 
     if (diameter === 8 && slopeBehind > 0.33) {
@@ -338,7 +362,9 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
   });
 
   // REQ-ESC-015: Curb Inlet Protection 2-inch overflow gap check
-  const curbInlets = civilSymbols.filter((s) => s.type === "inlet-protection" && s.subtype === "curb");
+  const curbInlets = civilSymbols.filter(
+    (s) => s.type === "inlet-protection" && s.subtype === "curb",
+  );
   curbInlets.forEach((inlet) => {
     const hasOverflowGap = (inlet as any).overflowGapPresent ?? false;
     if (!hasOverflowGap) {
@@ -444,7 +470,9 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
   });
 
   // REQ-ESC-033: Level Spreaders linear weir crest loading check
-  const spreaders = civilSymbols.filter((s) => s.type === "sign" && s.label?.toLowerCase().includes("spreader"));
+  const spreaders = civilSymbols.filter(
+    (s) => s.type === "sign" && s.label?.toLowerCase().includes("spreader"),
+  );
   spreaders.forEach((ls) => {
     const crestLengthFt = (ls as any).crestLength || 20;
     const dischargeCfs = (ls as any).discharge || 1.8;
@@ -481,7 +509,9 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
   stormNetworks.forEach((net) => {
     net.nodes.forEach((node) => {
       const hasProtection = civilSymbols.some((sym) => {
-        if (sym.type !== "inlet-protection") {return false;}
+        if (sym.type !== "inlet-protection") {
+          return false;
+        }
         return distance(sym.position, node.point) < 5.0; // within 5m
       });
 
@@ -497,13 +527,19 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
   });
 
   // MS-11 Check: Outfall Protection (Riprap at outlets)
-  const pipeNetworks = networks.filter((n) => n.kind === "storm" || n.kind === "sewer");
+  const pipeNetworks = networks.filter(
+    (n) => n.kind === "storm" || n.kind === "sewer",
+  );
   pipeNetworks.forEach((net) => {
     net.nodes.forEach((node) => {
-      const connectedEdges = net.edges.filter((e) => e.from === node.id || e.to === node.id);
+      const connectedEdges = net.edges.filter(
+        (e) => e.from === node.id || e.to === node.id,
+      );
       if (connectedEdges.length === 1) {
         const hasRiprap = civilSymbols.some((sym) => {
-          if (sym.type !== "riprap") {return false;}
+          if (sym.type !== "riprap") {
+            return false;
+          }
           return distance(sym.position, node.point) < 5.0;
         });
 
@@ -521,18 +557,23 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
 
   // MS-15 Check: Stabilized Construction Entrance
   const roadNetworks = networks.filter((n) => n.kind === "road");
-  const hasEntrance = civilSymbols.some((s) => s.type === "stabilized-entrance");
+  const hasEntrance = civilSymbols.some(
+    (s) => s.type === "stabilized-entrance",
+  );
 
   if (roadNetworks.length > 0 && !hasEntrance) {
     findings.push({
       severity: "error",
       code: "erosion.entrance.missing",
-      message: "No stabilized construction stone pad entrance drafted at site egress interface (MS-15).",
+      message:
+        "No stabilized construction stone pad entrance drafted at site egress interface (MS-15).",
     });
   }
 
   // MS-18 Check: Utility Trench open excavation length limit (Max 500ft)
-  const sewerNetworks = networks.filter((n) => n.kind === "sewer" || n.kind === "water" || n.kind === "storm");
+  const sewerNetworks = networks.filter(
+    (n) => n.kind === "sewer" || n.kind === "water" || n.kind === "storm",
+  );
   sewerNetworks.forEach((net) => {
     let totalLength = 0;
     net.edges.forEach((edge) => {
@@ -557,7 +598,8 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
     findings.push({
       severity: "info",
       code: "erosion.compliant",
-      message: "All drafted erosion control elements comply with the 19 Virginia Minimum Standards.",
+      message:
+        "All drafted erosion control elements comply with the 19 Virginia Minimum Standards.",
     });
   }
 

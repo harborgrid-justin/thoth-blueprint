@@ -69,7 +69,11 @@ export type {
 };
 
 /** Element kinds represented by a single point rather than a boundary. */
-export const POINT_ELEMENT_KINDS = new Set<ElementKind>(["note", "tree", "spot"]);
+export const POINT_ELEMENT_KINDS = new Set<ElementKind>([
+  "note",
+  "tree",
+  "spot",
+]);
 
 /** Type guard: is this a point-anchored element? */
 export function isPointElement(element: PlanElement): element is PointElement {
@@ -77,7 +81,9 @@ export function isPointElement(element: PlanElement): element is PointElement {
 }
 
 /** Type guard: does this element carry a spatial boundary? */
-export function isSpatialElement(element: PlanElement): element is SpatialElement {
+export function isSpatialElement(
+  element: PlanElement,
+): element is SpatialElement {
   return !isPointElement(element);
 }
 
@@ -93,9 +99,14 @@ export function regionPerimeter(element: SpatialElement): number {
 
 /** The anchor position of any element (centroid for spatial, position for points). */
 export function elementPosition(element: PlanElement): Point {
-  if (isPointElement(element)) {return element.position;}
+  if (isPointElement(element)) {
+    return element.position;
+  }
   const b = element.boundary;
-  const sum = _.reduce(b, (acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 });
+  const sum = _.reduce(b, (acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), {
+    x: 0,
+    y: 0,
+  });
   return { x: sum.x / b.length, y: sum.y / b.length };
 }
 

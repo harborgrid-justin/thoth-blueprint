@@ -31,7 +31,11 @@ import type { Project } from "@/api";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { PresenceBar } from "./PresenceBar";
 import { ImportExportMenu } from "@/features/interop/ImportExportMenu";
 import { NamedViewsMenu } from "./NamedViewsMenu";
@@ -45,7 +49,12 @@ interface TopBarProps {
   onOpenCheckpoints: () => void;
 }
 
-export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarProps) {
+export function TopBar({
+  project,
+  saving,
+  onSave,
+  onOpenCheckpoints,
+}: TopBarProps) {
   const {
     projectName,
     dirty,
@@ -94,7 +103,9 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
       <Separator orientation="vertical" className="mx-1 h-6" />
 
       <div className="flex min-w-0 items-center gap-2">
-        <span className="truncate text-sm font-medium text-foreground">{projectName}</span>
+        <span className="truncate text-sm font-medium text-foreground">
+          {projectName}
+        </span>
         <SaveStatus dirty={dirty} saving={saving} />
       </div>
 
@@ -113,7 +124,11 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
           {renovationMode && (
             <select
               value={activeRenovationCategory}
-              onChange={(e) => setActiveRenovationCategory(e.target.value as "existing" | "new" | "demolished")}
+              onChange={(e) =>
+                setActiveRenovationCategory(
+                  e.target.value as "existing" | "new" | "demolished",
+                )
+              }
               className="ml-1 h-6 rounded border border-border bg-background px-1.5 text-[11px] text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
             >
               <option value="existing">Existing</option>
@@ -131,7 +146,9 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
             aria-pressed={viewMode === "2d"}
             className={cn(
               "flex h-7 items-center gap-1 rounded px-2 text-xs font-medium transition-colors",
-              viewMode === "2d" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
+              viewMode === "2d"
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             <Square className="h-3.5 w-3.5" /> 2D
@@ -142,7 +159,9 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
             aria-pressed={viewMode === "3d"}
             className={cn(
               "flex h-7 items-center gap-1 rounded px-2 text-xs font-medium transition-colors",
-              viewMode === "3d" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
+              viewMode === "3d"
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             <Box className="h-3.5 w-3.5" /> 3D
@@ -169,10 +188,18 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         <Toggle label="Grid" active={showGrid} onClick={toggleGrid}>
           <Grid3x3 className="h-4 w-4" />
         </Toggle>
-        <Toggle label="Snap to grid" active={snapToGrid} onClick={toggleSnapToGrid}>
+        <Toggle
+          label="Snap to grid"
+          active={snapToGrid}
+          onClick={toggleSnapToGrid}
+        >
           <Magnet className="h-4 w-4" />
         </Toggle>
-        <Toggle label="Bearing & distance labels" active={showSurveyLabels} onClick={toggleSurveyLabels}>
+        <Toggle
+          label="Bearing & distance labels"
+          active={showSurveyLabels}
+          onClick={toggleSurveyLabels}
+        >
           <Compass className="h-4 w-4" />
         </Toggle>
 
@@ -181,40 +208,68 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         <ImportExportMenu />
         <NamedViewsMenu />
         <Button variant="ghost" size="sm" onClick={() => openPlat(null)}>
-          <ScrollText className="h-4 w-4" /> <span className="hidden md:inline">Plat</span>
+          <ScrollText className="h-4 w-4" />{" "}
+          <span className="hidden md:inline">Plat</span>
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => setAlignmentOpen(true)}>
-          <Spline className="h-4 w-4" /> <span className="hidden lg:inline">Stationing</span>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setAlignmentOpen(true)}
+        >
+          <Spline className="h-4 w-4" />{" "}
+          <span className="hidden lg:inline">Stationing</span>
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => setSuperelevationOpen(true)}>
-          <SlidersHorizontal className="h-4 w-4" /> <span className="hidden xl:inline">Superelevation</span>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setSuperelevationOpen(true)}
+        >
+          <SlidersHorizontal className="h-4 w-4" />{" "}
+          <span className="hidden xl:inline">Superelevation</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={() => setCorridorOpen(true)}>
-          <HardHat className="h-4 w-4" /> <span className="hidden xl:inline">Corridor</span>
+          <HardHat className="h-4 w-4" />{" "}
+          <span className="hidden xl:inline">Corridor</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={() => setGradingOpen(true)}>
-          <Mountain className="h-4 w-4" /> <span className="hidden xl:inline">Grading</span>
+          <Mountain className="h-4 w-4" />{" "}
+          <span className="hidden xl:inline">Grading</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={() => setProfileOpen(true)}>
-          <LayoutTemplate className="h-4 w-4" /> <span className="hidden lg:inline">Profile &amp; Sections</span>
+          <LayoutTemplate className="h-4 w-4" />{" "}
+          <span className="hidden lg:inline">Profile &amp; Sections</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={() => setPipeOpen(true)}>
-          <Files className="h-4 w-4" /> <span className="hidden lg:inline">Pipes Audit</span>
+          <Files className="h-4 w-4" />{" "}
+          <span className="hidden lg:inline">Pipes Audit</span>
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => setProductionOpen(true)}>
-          <LayoutTemplate className="h-4 w-4" /> <span className="hidden lg:inline">Framing Wizard</span>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setProductionOpen(true)}
+        >
+          <LayoutTemplate className="h-4 w-4" />{" "}
+          <span className="hidden lg:inline">Framing Wizard</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={() => setSheetOpen(true)}>
-          <LayoutTemplate className="h-4 w-4" /> <span className="hidden lg:inline">Sheet</span>
+          <LayoutTemplate className="h-4 w-4" />{" "}
+          <span className="hidden lg:inline">Sheet</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={() => setSheetSetOpen(true)}>
-          <Files className="h-4 w-4" /> <span className="hidden lg:inline">Drawings</span>
+          <Files className="h-4 w-4" />{" "}
+          <span className="hidden lg:inline">Drawings</span>
         </Button>
         <Button variant="ghost" size="sm" onClick={onOpenCheckpoints}>
-          <History className="h-4 w-4" /> <span className="hidden md:inline">Checkpoints</span>
+          <History className="h-4 w-4" />{" "}
+          <span className="hidden md:inline">Checkpoints</span>
         </Button>
 
-        <Button variant="outline" size="sm" onClick={onSave} disabled={saving || !dirty}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onSave}
+          disabled={saving || !dirty}
+        >
           <Cloud className="h-4 w-4" /> Save
         </Button>
 
@@ -222,7 +277,12 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
 
         <Tooltip delayDuration={300}>
           <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon-sm" onClick={openFind} aria-label="Find and filter">
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={openFind}
+              aria-label="Find and filter"
+            >
               <Search className="h-4 w-4" />
             </Button>
           </TooltipTrigger>
@@ -230,7 +290,12 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         </Tooltip>
         <Tooltip delayDuration={300}>
           <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon-sm" onClick={toggleCommand} aria-label="Command palette">
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={toggleCommand}
+              aria-label="Command palette"
+            >
               <Command className="h-4 w-4" />
             </Button>
           </TooltipTrigger>
@@ -238,7 +303,12 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
         </Tooltip>
         <Tooltip delayDuration={300}>
           <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon-sm" onClick={() => setPrefsOpen(true)} aria-label="Display preferences">
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => setPrefsOpen(true)}
+              aria-label="Display preferences"
+            >
               <Settings2 className="h-4 w-4" />
             </Button>
           </TooltipTrigger>
@@ -247,8 +317,17 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
 
         <Tooltip delayDuration={300}>
           <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon-sm" onClick={toggleTheme} aria-label="Toggle theme">
-              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
             </Button>
           </TooltipTrigger>
           <TooltipContent side="bottom">Toggle theme</TooltipContent>

@@ -50,7 +50,10 @@ export function buildTerrainModel(site: Site): TerrainModel {
     _.filter(site.elements, (e): e is SpotElevationPoint => e.kind === "spot"),
     (s) => ({ point: s.position, z: s.z }),
   );
-  const grades = _.filter(site.elements, (e): e is GradeRegion => e.kind === "grade");
+  const grades = _.filter(
+    site.elements,
+    (e): e is GradeRegion => e.kind === "grade",
+  );
   const extent = siteExtent(site);
 
   if (spots.length < 2 || !extent) {
@@ -66,11 +69,19 @@ export function buildTerrainModel(site: Site): TerrainModel {
 
   const width = Math.max(1, extent.maxX - extent.minX);
   const height = Math.max(1, extent.maxY - extent.minY);
-  const cellSize = Math.max(MIN_CELL, Math.max(width, height) / TARGET_CELLS_ACROSS);
+  const cellSize = Math.max(
+    MIN_CELL,
+    Math.max(width, height) / TARGET_CELLS_ACROSS,
+  );
 
-  const existing = interpolateGrid(spots, extent, { cellSize, padding: cellSize });
+  const existing = interpolateGrid(spots, extent, {
+    cellSize,
+    padding: cellSize,
+  });
   let proposed = existing;
-  for (const g of grades) {proposed = gradePad(proposed, g.boundary, g.targetElevation);}
+  for (const g of grades) {
+    proposed = gradePad(proposed, g.boundary, g.targetElevation);
+  }
 
   return {
     hasTerrain: true,

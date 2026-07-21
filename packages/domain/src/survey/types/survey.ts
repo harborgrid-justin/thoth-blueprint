@@ -134,4 +134,8 @@ export interface SurveyReport {
   anglesSum: number;
   anglesExpected: number;
   area: SurveyArea;
+  areaByDmd: number;
+  perimeter: number;
+  perimeterMeters: number;
+  units: string;
 }

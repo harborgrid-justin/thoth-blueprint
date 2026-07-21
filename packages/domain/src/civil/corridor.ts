@@ -8,7 +8,11 @@ import { resolveAssemblyOffset } from "./assembly";
 import type { SuperelevationCurve } from "./superelevation";
 import { getSuperelevationSlope } from "./superelevation";
 
-import type { Corridor, CorridorSectionPoint, CorridorFeatureLine } from "./types/corridor";
+import type {
+  Corridor,
+  CorridorSectionPoint,
+  CorridorFeatureLine,
+} from "./types/corridor";
 
 export type { Corridor, CorridorSectionPoint, CorridorFeatureLine };
 
@@ -20,10 +24,12 @@ export function buildCorridorSections(
   alignment: HorizontalAlignment,
   profile: VerticalProfile,
   assembly: Assembly,
-  superelevation?: SuperelevationCurve
+  superelevation?: SuperelevationCurve,
 ): CorridorSectionPoint[] {
   const resolved = resolveAlignment(alignment);
-  if (!resolved) {return [];}
+  if (!resolved) {
+    return [];
+  }
 
   const sections: CorridorSectionPoint[] = [];
   const stationsCount = Math.floor(resolved.length / corridor.frequency);
@@ -32,7 +38,9 @@ export function buildCorridorSections(
     const station = i * corridor.frequency;
     const baseStation = resolved.startStation + station;
     const atStation = pointAtStation(resolved, baseStation);
-    if (!atStation) {continue;}
+    if (!atStation) {
+      continue;
+    }
 
     // 2. Get profile elevation (Z)
     const zBase = profileElevationAt(profile, station);
@@ -43,7 +51,11 @@ export function buildCorridorSections(
       : { leftSlope: -0.02, rightSlope: -0.02 };
 
     // 4. Resolve assembly cross-section coordinates
-    const offsetPoints = resolveAssemblyOffset(assembly, slopes.leftSlope, slopes.rightSlope);
+    const offsetPoints = resolveAssemblyOffset(
+      assembly,
+      slopes.leftSlope,
+      slopes.rightSlope,
+    );
 
     // 5. Transform 2D offset points to 3D absolute space along traveled normal using gl-matrix
     const rad = (atStation.bearing * Math.PI) / 180;
@@ -75,7 +87,7 @@ export function buildCorridorSections(
  * Extracts 3D coordinate lines for specific point codes (e.g. "Centerline", "EdgeOfPavement_left").
  */
 export function extractCorridorFeatureLines(
-  sections: CorridorSectionPoint[]
+  sections: CorridorSectionPoint[],
 ): CorridorFeatureLine[] {
   const groups: Record<string, { x: number; y: number; z: number }[]> = {};
 

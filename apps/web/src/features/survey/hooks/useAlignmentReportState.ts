@@ -12,12 +12,15 @@ export function useAlignmentReportState() {
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    if (open) {setSelectedId(alignments[0]?.id ?? null);}
+    if (open) {
+      setSelectedId(alignments[0]?.id ?? null);
+    }
   }, [open, alignments]);
 
   const selected = React.useMemo(
-    () => _.find(alignments, (a) => a.id === selectedId) ?? alignments[0] ?? null,
-    [alignments, selectedId]
+    () =>
+      _.find(alignments, (a) => a.id === selectedId) ?? alignments[0] ?? null,
+    [alignments, selectedId],
   );
 
   function selectAlignment(id: string) {

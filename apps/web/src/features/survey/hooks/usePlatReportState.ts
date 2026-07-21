@@ -11,14 +11,19 @@ export function usePlatReportState() {
   const site = useWorkspaceStore((s) => s.site);
 
   const surveyable = React.useMemo<SpatialElement[]>(
-    () => (site ? (_.filter(site.elements, isSpatialElement) as SpatialElement[]) : []),
+    () =>
+      site
+        ? (_.filter(site.elements, isSpatialElement) as SpatialElement[])
+        : [],
     [site],
   );
 
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    if (!platOpen) {return;}
+    if (!platOpen) {
+      return;
+    }
     const preferred =
       (platTargetId && _.find(surveyable, (e) => e.id === platTargetId)?.id) ??
       _.find(surveyable, (e) => e.kind === "lot")?.id ??
@@ -29,7 +34,7 @@ export function usePlatReportState() {
 
   const selected = React.useMemo(
     () => _.find(surveyable, (e) => e.id === selectedId) ?? null,
-    [surveyable, selectedId]
+    [surveyable, selectedId],
   );
 
   return {

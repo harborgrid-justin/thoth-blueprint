@@ -37,7 +37,7 @@ describe("Projects Service Store", () => {
   it("should seed store on initial load if database file does not exist", () => {
     expect(fs.existsSync(DB_FILE)).toBe(false);
     const store = db.loadStore();
-    
+
     expect(fs.existsSync(DB_FILE)).toBe(true);
     expect(store.projects.length).toBe(3);
     expect(store.checkpoints.length).toBe(0);
@@ -71,8 +71,10 @@ describe("Projects Service Store", () => {
     // Load from disk again to verify persistence
     const loadedStore = db.loadStore();
     expect(loadedStore.projects.length).toBe(originalCount + 1);
-    
-    const savedProject = loadedStore.projects.find((p) => p.id === "proj-test-123");
+
+    const savedProject = loadedStore.projects.find(
+      (p) => p.id === "proj-test-123",
+    );
     expect(savedProject).toBeDefined();
     expect(savedProject?.name).toBe("Test persistence project");
   });
@@ -80,7 +82,7 @@ describe("Projects Service Store", () => {
   it("should generate correct project summaries", () => {
     const store = db.loadStore();
     const project = store.projects[0];
-    
+
     const summary = db.summarize(project);
     expect(summary.id).toBe(project.id);
     expect(summary.name).toBe(project.name);

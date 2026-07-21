@@ -17,7 +17,9 @@ export function AlignmentHandles({
   viewport: Viewport;
 }) {
   const points = getAlignmentHandlesPoints(site, selection, viewport);
-  if (points.length === 0) {return null;}
+  if (points.length === 0) {
+    return null;
+  }
 
   return (
     <g>
@@ -49,7 +51,9 @@ export function VertexHandles({
   preview: { id: string; boundary: Polygon } | null;
 }) {
   const points = getVertexHandlesPoints(site, selection, viewport, preview);
-  if (points.length === 0) {return null;}
+  if (points.length === 0) {
+    return null;
+  }
 
   return (
     <g>
@@ -80,7 +84,9 @@ export function EdgeHandles({
   viewport: Viewport;
 }) {
   const handles = getEdgeHandlesPoints(site, selection, viewport);
-  if (handles.length === 0) {return null;}
+  if (handles.length === 0) {
+    return null;
+  }
 
   return (
     <g>

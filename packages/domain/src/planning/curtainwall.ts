@@ -13,7 +13,9 @@ export type {
   CurtainWallGeometryResults,
 };
 
-export function calculateCurtainWallGeometry(wall: CurtainWall): CurtainWallGeometryResults {
+export function calculateCurtainWallGeometry(
+  wall: CurtainWall,
+): CurtainWallGeometryResults {
   const warnings: string[] = [];
   const panels: CurtainWallPanel[] = [];
   const mullions: CurtainWallMullion[] = [];
@@ -41,10 +43,16 @@ export function calculateCurtainWallGeometry(wall: CurtainWall): CurtainWallGeom
   const clipSpacing = wall.clipSpacing || 0.6;
   const tieSpacing = wall.structuralTieSpacing || 1.2;
 
-  function getSplits(len: number, mode: "uniform" | "fixed" | "manual", offsets: number[]): number[] {
+  function getSplits(
+    len: number,
+    mode: "uniform" | "fixed" | "manual",
+    offsets: number[],
+  ): number[] {
     const list: number[] = [0];
     if (mode === "manual" && offsets && offsets.length > 0) {
-      const sorted = [...offsets].filter((v) => v > 0 && v < len).sort((a, b) => a - b);
+      const sorted = [...offsets]
+        .filter((v) => v > 0 && v < len)
+        .sort((a, b) => a - b);
       list.push(...sorted);
     } else if (mode === "fixed") {
       const spacing = offsets && offsets[0] ? offsets[0] : 1.2;
@@ -54,7 +62,8 @@ export function calculateCurtainWallGeometry(wall: CurtainWall): CurtainWallGeom
         curr += spacing;
       }
     } else {
-      const count = offsets && offsets[0] ? Math.max(1, Math.round(offsets[0])) : 3;
+      const count =
+        offsets && offsets[0] ? Math.max(1, Math.round(offsets[0])) : 3;
       const spacing = len / count;
       for (let i = 1; i < count; i++) {
         list.push(i * spacing);
@@ -76,7 +85,11 @@ export function calculateCurtainWallGeometry(wall: CurtainWall): CurtainWallGeom
     const H = y1 - y0;
 
     const xSplits = getSplits(W, grid.verticalDivisions, grid.verticalOffsets);
-    const ySplits = getSplits(H, grid.horizontalDivisions, grid.horizontalOffsets);
+    const ySplits = getSplits(
+      H,
+      grid.horizontalDivisions,
+      grid.horizontalOffsets,
+    );
 
     for (let i = 1; i < xSplits.length - 1; i++) {
       const localX = x0 + xSplits[i];
@@ -84,8 +97,14 @@ export function calculateCurtainWallGeometry(wall: CurtainWall): CurtainWallGeom
 
       const wallX = startPt.x + localX * cos;
       const wallY = startPt.y + localX * sin;
-      const orthoL = { x: wallX - (mWidth / 2) * -sin, y: wallY - (mWidth / 2) * cos };
-      const orthoR = { x: wallX + (mWidth / 2) * -sin, y: wallY + (mWidth / 2) * cos };
+      const orthoL = {
+        x: wallX - (mWidth / 2) * -sin,
+        y: wallY - (mWidth / 2) * cos,
+      };
+      const orthoR = {
+        x: wallX + (mWidth / 2) * -sin,
+        y: wallY + (mWidth / 2) * cos,
+      };
 
       mullions.push({
         direction: "vertical",
@@ -133,7 +152,9 @@ export function calculateCurtainWallGeometry(wall: CurtainWall): CurtainWallGeom
           const mat = grid.infillMaterials?.[`${i},${j}`] || "glazing";
 
           if (mat === "glazing" && (cellW > 2.0 || cellH > 3.0)) {
-            warnings.push(`Glazing panel ${cellKey} exceeds safe wind load area limits (max 2.0m x 3.0m).`);
+            warnings.push(
+              `Glazing panel ${cellKey} exceeds safe wind load area limits (max 2.0m x 3.0m).`,
+            );
           }
 
           const pStart = cx0 + gap;
@@ -154,10 +175,22 @@ export function calculateCurtainWallGeometry(wall: CurtainWall): CurtainWallGeom
           const thick = 0.02;
           const panePolygons = [
             [
-              { x: offsetStartX - (thick / 2) * cos, y: offsetStartY - (thick / 2) * sin },
-              { x: offsetStartX + (thick / 2) * cos, y: offsetStartY + (thick / 2) * sin },
-              { x: offsetEndX + (thick / 2) * cos, y: offsetEndY + (thick / 2) * sin },
-              { x: offsetEndX - (thick / 2) * cos, y: offsetEndY - (thick / 2) * sin },
+              {
+                x: offsetStartX - (thick / 2) * cos,
+                y: offsetStartY - (thick / 2) * sin,
+              },
+              {
+                x: offsetStartX + (thick / 2) * cos,
+                y: offsetStartY + (thick / 2) * sin,
+              },
+              {
+                x: offsetEndX + (thick / 2) * cos,
+                y: offsetEndY + (thick / 2) * sin,
+              },
+              {
+                x: offsetEndX - (thick / 2) * cos,
+                y: offsetEndY - (thick / 2) * sin,
+              },
             ],
           ];
 
@@ -204,10 +237,22 @@ export function calculateCurtainWallGeometry(wall: CurtainWall): CurtainWallGeom
     const wallEndY = startPt.y + totalWidth * sin;
 
     perimeterFrame.push([
-      { x: wallStartX - (frameWidth / 2) * -sin, y: wallStartY - (frameWidth / 2) * cos },
-      { x: wallEndX - (frameWidth / 2) * -sin, y: wallEndY - (frameWidth / 2) * cos },
-      { x: wallEndX + (frameWidth / 2) * -sin, y: wallEndY + (frameWidth / 2) * cos },
-      { x: wallStartX + (frameWidth / 2) * -sin, y: wallStartY + (frameWidth / 2) * cos },
+      {
+        x: wallStartX - (frameWidth / 2) * -sin,
+        y: wallStartY - (frameWidth / 2) * cos,
+      },
+      {
+        x: wallEndX - (frameWidth / 2) * -sin,
+        y: wallEndY - (frameWidth / 2) * cos,
+      },
+      {
+        x: wallEndX + (frameWidth / 2) * -sin,
+        y: wallEndY + (frameWidth / 2) * cos,
+      },
+      {
+        x: wallStartX + (frameWidth / 2) * -sin,
+        y: wallStartY + (frameWidth / 2) * cos,
+      },
     ]);
   }
 

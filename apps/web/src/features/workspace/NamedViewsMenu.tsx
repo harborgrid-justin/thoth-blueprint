@@ -11,7 +11,8 @@ import {
 import { useNamedViewsState } from "./hooks/useNamedViewsState";
 
 export function NamedViewsMenu() {
-  const { namedViews, setViewport, handleSave, handleDelete } = useNamedViewsState();
+  const { namedViews, setViewport, handleSave, handleDelete } =
+    useNamedViewsState();
 
   return (
     <DropdownMenu>
@@ -24,9 +25,11 @@ export function NamedViewsMenu() {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>Named Viewports</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        
+
         {namedViews.length === 0 ? (
-          <div className="px-2 py-1.5 text-xs text-muted-foreground">No saved views</div>
+          <div className="px-2 py-1.5 text-xs text-muted-foreground">
+            No saved views
+          </div>
         ) : (
           namedViews.map((view) => (
             <DropdownMenuItem

@@ -17,7 +17,9 @@ export function extrudeCorridor({
   assembly: Assembly;
   frequency: number;
 }) {
-  if (!alignment || !profile) {return;}
+  if (!alignment || !profile) {
+    return;
+  }
 
   const corridor = {
     id: "cor-1",
@@ -28,7 +30,12 @@ export function extrudeCorridor({
     frequency,
   };
 
-  const sections = buildCorridorSections(corridor, alignment, profile, assembly);
+  const sections = buildCorridorSections(
+    corridor,
+    alignment,
+    profile,
+    assembly,
+  );
   const featureLines = extractCorridorFeatureLines(sections);
 
   const newElements = _.map(featureLines, (fl) => ({

@@ -15,14 +15,16 @@ export function computeCrossSection({
   selectedStation: number;
   swathWidth: number;
 }) {
-  if (!resolved || !terrainSurface) {return null;}
+  if (!resolved || !terrainSurface) {
+    return null;
+  }
   return sampleCrossSection(
     terrainSurface,
     terrainSurface,
     resolved,
     selectedStation,
     swathWidth,
-    2
+    2,
   );
 }
 
@@ -30,7 +32,7 @@ export function updateProfilePvi(
   profile: VerticalProfile,
   index: number,
   field: keyof VerticalPVI,
-  value: number
+  value: number,
 ): VerticalProfile {
   const updated = [...profile.pvis];
   updated[index] = { ...updated[index], [field]: value };
@@ -38,7 +40,10 @@ export function updateProfilePvi(
 }
 
 export function addProfilePvi(profile: VerticalProfile): VerticalProfile {
-  const station = profile.pvis.length > 0 ? profile.pvis[profile.pvis.length - 1].station + 100 : 100;
+  const station =
+    profile.pvis.length > 0
+      ? profile.pvis[profile.pvis.length - 1].station + 100
+      : 100;
   const elevation = 15;
   return {
     ...profile,
@@ -46,8 +51,13 @@ export function addProfilePvi(profile: VerticalProfile): VerticalProfile {
   };
 }
 
-export function removeProfilePvi(profile: VerticalProfile, index: number): VerticalProfile {
-  if (profile.pvis.length <= 1) {return profile;}
+export function removeProfilePvi(
+  profile: VerticalProfile,
+  index: number,
+): VerticalProfile {
+  if (profile.pvis.length <= 1) {
+    return profile;
+  }
   const updated = profile.pvis.filter((_, i) => i !== index);
   return { ...profile, pvis: updated };
 }

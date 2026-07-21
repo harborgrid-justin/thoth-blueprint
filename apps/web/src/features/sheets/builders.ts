@@ -104,7 +104,11 @@ interface Projector {
   scalePt: number;
 }
 
-function fitProjector(rect: { x: number; y: number; w: number; h: number }, b: Bounds, pad = 0.06): Projector {
+function fitProjector(
+  rect: { x: number; y: number; w: number; h: number },
+  b: Bounds,
+  pad = 0.06,
+): Projector {
   const bw = Math.max(b.maxX - b.minX, 1e-6);
   const bh = Math.max(b.maxY - b.minY, 1e-6);
   const iw = rect.w * (1 - pad * 2);
@@ -114,22 +118,40 @@ function fitProjector(rect: { x: number; y: number; w: number; h: number }, b: B
   const cy = (b.minY + b.maxY) / 2;
   const ox = rect.x + rect.w / 2;
   const oy = rect.y + rect.h / 2;
-  return { project: (p) => ({ x: ox + (p.x - cx) * s, y: oy + (p.y - cy) * s }), scalePt: s };
+  return {
+    project: (p) => ({ x: ox + (p.x - cx) * s, y: oy + (p.y - cy) * s }),
+    scalePt: s,
+  };
 }
 
 // --- content bounds ---------------------------------------------------------
 
 function siteBounds(site: Site): Bounds | null {
   const boxes: Bounds[] = [];
-  for (const e of site.elements) {if (isSpatialElement(e)) {boxes.push(boundsOf(e.boundary));}}
-  for (const m of site.monuments ?? []) {boxes.push({ minX: m.position.x, minY: m.position.y, maxX: m.position.x, maxY: m.position.y });}
+  for (const e of site.elements) {
+    if (isSpatialElement(e)) {
+      boxes.push(boundsOf(e.boundary));
+    }
+  }
+  for (const m of site.monuments ?? []) {
+    boxes.push({
+      minX: m.position.x,
+      minY: m.position.y,
+      maxX: m.position.x,
+      maxY: m.position.y,
+    });
+  }
   return boxes.length ? unionBounds(boxes) : null;
 }
 
 function buildingBounds(model: BuildingModel): Bounds | null {
   const pts: Point[] = [];
-  for (const w of model.walls) {pts.push(...w.baseline);}
-  for (const r of model.rooms) {pts.push(...r.boundary);}
+  for (const w of model.walls) {
+    pts.push(...w.baseline);
+  }
+  for (const r of model.rooms) {
+    pts.push(...r.boundary);
+  }
   return pts.length ? boundsOf(pts) : null;
 }
 
@@ -138,35 +160,101 @@ function buildingBounds(model: BuildingModel): Bounds | null {
 function buildFrame(layout: SheetLayout): SheetPrimitive[] {
   const { wPt, hPt, border } = layout;
   return [
-    { t: "rect", x: 6, y: 6, w: wPt - 12, h: hPt - 12, sw: 1.6, stroke: INK, fill: "#ffffff" },
-    { t: "rect", x: border.x, y: border.y, w: border.w, h: border.h, sw: 0.8, stroke: INK },
+    {
+      t: "rect",
+      x: 6,
+      y: 6,
+      w: wPt - 12,
+      h: hPt - 12,
+      sw: 1.6,
+      stroke: INK,
+      fill: "#ffffff",
+    },
+    {
+      t: "rect",
+      x: border.x,
+      y: border.y,
+      w: border.w,
+      h: border.h,
+      sw: 0.8,
+      stroke: INK,
+    },
   ];
 }
 
-function buildTitleBlock(set: DrawingSet, sheet: Sheet, plugin: RegionPlugin, layout: SheetLayout, scaleLabel: string): SheetPrimitive[] {
+function buildTitleBlock(
+  set: DrawingSet,
+  sheet: Sheet,
+  plugin: RegionPlugin,
+  layout: SheetLayout,
+  scaleLabel: string,
+): SheetPrimitive[] {
   const r = layout.titleRect;
   const tb = resolveTitleBlock(set, sheet, scaleLabel);
-  const out: SheetPrimitive[] = [{ t: "rect", x: r.x, y: r.y, w: r.w, h: r.h, sw: 1, stroke: INK }];
+  const out: SheetPrimitive[] = [
+    { t: "rect", x: r.x, y: r.y, w: r.w, h: r.h, sw: 1, stroke: INK },
+  ];
   const pad = 8;
-  const firm = plugin.titleBlock.firmLines ?? set.titleBlockDefaults.firmLines ?? [];
+  const firm =
+    plugin.titleBlock.firmLines ?? set.titleBlockDefaults.firmLines ?? [];
   let y = r.y + 18;
   // Firm / project banner (top of strip).
-  out.push({ t: "text", at: { x: r.x + pad, y }, text: set.titleBlockDefaults.projectName.toUpperCase(), size: 9, color: INK, weight: 700 });
+  out.push({
+    t: "text",
+    at: { x: r.x + pad, y },
+    text: set.titleBlockDefaults.projectName.toUpperCase(),
+    size: 9,
+    color: INK,
+    weight: 700,
+  });
   y += 12;
   for (const line of firm) {
-    out.push({ t: "text", at: { x: r.x + pad, y }, text: line, size: 6.5, color: MUTED });
+    out.push({
+      t: "text",
+      at: { x: r.x + pad, y },
+      text: line,
+      size: 6.5,
+      color: MUTED,
+    });
     y += 9;
   }
   y += 4;
-  out.push({ t: "line", a: { x: r.x, y }, b: { x: r.x + r.w, y }, w: 0.6, color: INK });
+  out.push({
+    t: "line",
+    a: { x: r.x, y },
+    b: { x: r.x + r.w, y },
+    w: 0.6,
+    color: INK,
+  });
   y += 4;
 
   // The big sheet-number cell at the bottom of the strip.
   const numCellH = 54;
   const numTop = r.y + r.h - numCellH;
-  out.push({ t: "line", a: { x: r.x, y: numTop }, b: { x: r.x + r.w, y: numTop }, w: 1, color: INK });
-  out.push({ t: "text", at: { x: r.x + r.w / 2, y: numTop + 22 }, text: "SHEET", size: 6.5, color: MUTED, anchor: "middle" });
-  out.push({ t: "text", at: { x: r.x + r.w / 2, y: numTop + 42 }, text: formatSheetNumber(sheet.number), size: 20, color: INK, anchor: "middle", weight: 700 });
+  out.push({
+    t: "line",
+    a: { x: r.x, y: numTop },
+    b: { x: r.x + r.w, y: numTop },
+    w: 1,
+    color: INK,
+  });
+  out.push({
+    t: "text",
+    at: { x: r.x + r.w / 2, y: numTop + 22 },
+    text: "SHEET",
+    size: 6.5,
+    color: MUTED,
+    anchor: "middle",
+  });
+  out.push({
+    t: "text",
+    at: { x: r.x + r.w / 2, y: numTop + 42 },
+    text: formatSheetNumber(sheet.number),
+    size: 20,
+    color: INK,
+    anchor: "middle",
+    weight: 700,
+  });
 
   // Field rows between banner and number cell.
   const rows: [string, string][] = [
@@ -180,28 +268,79 @@ function buildTitleBlock(set: DrawingSet, sheet: Sheet, plugin: RegionPlugin, la
   ];
   const rowH = Math.min(22, (numTop - y - 4) / rows.length);
   for (const [label, value] of rows) {
-    out.push({ t: "text", at: { x: r.x + pad, y: y + 8 }, text: label, size: 5.5, color: MUTED });
-    out.push({ t: "text", at: { x: r.x + pad, y: y + 17 }, text: value, size: 8, color: INK, weight: 600 });
+    out.push({
+      t: "text",
+      at: { x: r.x + pad, y: y + 8 },
+      text: label,
+      size: 5.5,
+      color: MUTED,
+    });
+    out.push({
+      t: "text",
+      at: { x: r.x + pad, y: y + 17 },
+      text: value,
+      size: 8,
+      color: INK,
+      weight: 600,
+    });
     y += rowH;
-    out.push({ t: "line", a: { x: r.x, y }, b: { x: r.x + r.w, y }, w: 0.4, color: LIGHT });
+    out.push({
+      t: "line",
+      a: { x: r.x, y },
+      b: { x: r.x + r.w, y },
+      w: 0.4,
+      color: LIGHT,
+    });
   }
   return out;
 }
 
-function buildRevisionBlock(sheet: Sheet, layout: SheetLayout): SheetPrimitive[] {
-  if (!sheet.revisions.length) {return [];}
+function buildRevisionBlock(
+  sheet: Sheet,
+  layout: SheetLayout,
+): SheetPrimitive[] {
+  if (!sheet.revisions.length) {
+    return [];
+  }
   const r = layout.titleRect;
   const h = 12 + sheet.revisions.length * 10;
   const top = r.y + r.h - 54 - h - 6;
   const out: SheetPrimitive[] = [
     { t: "rect", x: r.x, y: top, w: r.w, h, sw: 0.6, stroke: INK },
-    { t: "text", at: { x: r.x + 4, y: top + 9 }, text: "REVISIONS", size: 6, color: MUTED, weight: 700 },
+    {
+      t: "text",
+      at: { x: r.x + 4, y: top + 9 },
+      text: "REVISIONS",
+      size: 6,
+      color: MUTED,
+      weight: 700,
+    },
   ];
   let y = top + 20;
   for (const rev of sheet.revisions) {
-    out.push({ t: "circle", c: { x: r.x + 10, y: y - 3 }, r: 5, sw: 0.6, stroke: INK });
-    out.push({ t: "text", at: { x: r.x + 10, y: y - 1 }, text: String(rev.delta), size: 6, color: INK, anchor: "middle", weight: 700 });
-    out.push({ t: "text", at: { x: r.x + 20, y: y }, text: `${rev.date}  ${rev.description}`.slice(0, 34), size: 6, color: INK });
+    out.push({
+      t: "circle",
+      c: { x: r.x + 10, y: y - 3 },
+      r: 5,
+      sw: 0.6,
+      stroke: INK,
+    });
+    out.push({
+      t: "text",
+      at: { x: r.x + 10, y: y - 1 },
+      text: String(rev.delta),
+      size: 6,
+      color: INK,
+      anchor: "middle",
+      weight: 700,
+    });
+    out.push({
+      t: "text",
+      at: { x: r.x + 20, y: y },
+      text: `${rev.date}  ${rev.description}`.slice(0, 34),
+      size: 6,
+      color: INK,
+    });
     y += 10;
   }
   return out;
@@ -209,7 +348,10 @@ function buildRevisionBlock(sheet: Sheet, layout: SheetLayout): SheetPrimitive[]
 
 // --- shared drawing of site model into a projector -------------------------
 
-function drawFramework(site: Site, project: (p: Point) => Pt): SheetPrimitive[] {
+function drawFramework(
+  site: Site,
+  project: (p: Point) => Pt,
+): SheetPrimitive[] {
   const out: SheetPrimitive[] = [];
   let frame: ReturnType<typeof sectionFrame> | null = null;
   if (site.landLot?.nwCorner) {
@@ -218,17 +360,33 @@ function drawFramework(site: Site, project: (p: Point) => Pt): SheetPrimitive[] 
   } else if (site.plss?.sectionNwCorner && site.plss.sectionSide) {
     frame = sectionFrame(site.plss.sectionNwCorner, site.plss.sectionSide);
   }
-  if (!frame) {return out;}
-  const [nw, ne, se, sw] = [frame.nw, frame.ne, frame.se, frame.sw].map(project);
-  out.push({ t: "polygon", pts: [nw, ne, se, sw], stroke: MUTED, w: 1, dash: [14, 4, 3, 4] });
+  if (!frame) {
+    return out;
+  }
+  const [nw, ne, se, sw] = [frame.nw, frame.ne, frame.se, frame.sw].map(
+    project,
+  );
+  out.push({
+    t: "polygon",
+    pts: [nw, ne, se, sw],
+    stroke: MUTED,
+    w: 1,
+    dash: [14, 4, 3, 4],
+  });
   return out;
 }
 
-function drawSitePlan(site: Site, project: (p: Point) => Pt, areaUnit: RegionPlugin["defaults"]["areaUnit"]): SheetPrimitive[] {
+function drawSitePlan(
+  site: Site,
+  project: (p: Point) => Pt,
+  areaUnit: RegionPlugin["defaults"]["areaUnit"],
+): SheetPrimitive[] {
   const out: SheetPrimitive[] = [...drawFramework(site, project)];
 
   for (const el of site.elements) {
-    if (!isSpatialElement(el)) {continue;}
+    if (!isSpatialElement(el)) {
+      continue;
+    }
     const ring = densifyBoundary(el.boundary, el.arcs, 2).map(project);
     const cat = el.kind === "landuse" ? el.category : undefined;
     const color = elementColor(el.kind, cat);
@@ -242,47 +400,93 @@ function drawSitePlan(site: Site, project: (p: Point) => Pt, areaUnit: RegionPlu
       w: el.kind === "parcel" ? 1.2 : 0.8,
       dash: isEsmt ? [6, 3, 2, 3] : el.kind === "zone" ? [5, 3] : undefined,
     });
-    const hatchId = el.hatchId ?? hatchForMaterial(el.kind === "landuse" ? el.category : el.kind);
+    const hatchId =
+      el.hatchId ??
+      hatchForMaterial(el.kind === "landuse" ? el.category : el.kind);
     const hp = hatchId ? hatchPattern(hatchId) : undefined;
-    if (hp && !isEsmt) {out.push(...hatchLines(ring, hp));}
+    if (hp && !isEsmt) {
+      out.push(...hatchLines(ring, hp));
+    }
   }
 
   // Lot/parcel labels.
   for (const el of site.elements) {
-    if (el.kind !== "lot" && el.kind !== "parcel") {continue;}
-    if (!isSpatialElement(el)) {continue;}
+    if (el.kind !== "lot" && el.kind !== "parcel") {
+      continue;
+    }
+    if (!isSpatialElement(el)) {
+      continue;
+    }
     const c = project(centroid(el.boundary));
     const ac = measuredArea(el.boundary, site.spatial, areaUnit);
-    out.push({ t: "text", at: { x: c.x, y: c.y }, text: el.name, size: 6, color: INK, anchor: "middle", weight: 700 });
-    out.push({ t: "text", at: { x: c.x, y: c.y + 8 }, text: `${ac.toFixed(2)} ${areaUnit}`, size: 5.5, color: MUTED, anchor: "middle" });
+    out.push({
+      t: "text",
+      at: { x: c.x, y: c.y },
+      text: el.name,
+      size: 6,
+      color: INK,
+      anchor: "middle",
+      weight: 700,
+    });
+    out.push({
+      t: "text",
+      at: { x: c.x, y: c.y + 8 },
+      text: `${ac.toFixed(2)} ${areaUnit}`,
+      size: 5.5,
+      color: MUTED,
+      anchor: "middle",
+    });
   }
 
   // Alignments: offsets + centreline + station ticks.
   for (const a of site.alignments ?? []) {
     const r = resolveAlignment(a);
-    if (!r) {continue;}
+    if (!r) {
+      continue;
+    }
     for (const off of a.offsets ?? []) {
       const path = offsetAlignmentPath(r, off.distance).map(project);
-      out.push({ t: "polyline", pts: path, color: off.kind === "row" ? "#7c3aed" : "#334155", w: 0.7, dash: off.kind === "row" ? [8, 2, 2, 2] : undefined });
+      out.push({
+        t: "polyline",
+        pts: path,
+        color: off.kind === "row" ? "#7c3aed" : "#334155",
+        w: 0.7,
+        dash: off.kind === "row" ? [8, 2, 2, 2] : undefined,
+      });
     }
     const cl: Pt[] = [];
     for (const el of r.elements) {
       if (el.kind === "tangent") {
-        if (cl.length === 0) {cl.push(project(el.from));}
+        if (cl.length === 0) {
+          cl.push(project(el.from));
+        }
         cl.push(project(el.to));
       } else {
         const c = el.curve;
         const steps = Math.max(2, Math.ceil(c.deltaDeg / 3));
         for (let i = 0; i <= steps; i++) {
           const ang = c.startAngle + (c.sweep * i) / steps;
-          cl.push(project({ x: c.center.x + c.radius * Math.cos(ang), y: c.center.y + c.radius * Math.sin(ang) }));
+          cl.push(
+            project({
+              x: c.center.x + c.radius * Math.cos(ang),
+              y: c.center.y + c.radius * Math.sin(ang),
+            }),
+          );
         }
       }
     }
-    out.push({ t: "polyline", pts: cl, color: "#b91c1c", w: 1.1, dash: [12, 3, 3, 3] });
+    out.push({
+      t: "polyline",
+      pts: cl,
+      color: "#b91c1c",
+      w: 1.1,
+      dash: [12, 3, 3, 3],
+    });
     for (const st of fullStations(r, 100)) {
       const at = pointAtStation(r, st);
-      if (!at) {continue;}
+      if (!at) {
+        continue;
+      }
       const s = project(at.point);
       out.push({ t: "circle", c: s, r: 1.2, fill: "#b91c1c" });
     }
@@ -291,10 +495,30 @@ function drawSitePlan(site: Site, project: (p: Point) => Pt, areaUnit: RegionPlu
   // Monuments (simple glyphs) + POB.
   for (const m of site.monuments ?? []) {
     const s = project(m.position);
-    if (m.type === "iron-rod" || m.type === "iron-pipe" || m.type === "rebar-cap") {
-      out.push({ t: "circle", c: s, r: 2, sw: 0.8, stroke: INK, fill: m.status === "set" ? INK : "#ffffff" });
+    if (
+      m.type === "iron-rod" ||
+      m.type === "iron-pipe" ||
+      m.type === "rebar-cap"
+    ) {
+      out.push({
+        t: "circle",
+        c: s,
+        r: 2,
+        sw: 0.8,
+        stroke: INK,
+        fill: m.status === "set" ? INK : "#ffffff",
+      });
     } else {
-      out.push({ t: "rect", x: s.x - 2, y: s.y - 2, w: 4, h: 4, sw: 0.8, stroke: INK, fill: m.status === "set" ? INK : "#ffffff" });
+      out.push({
+        t: "rect",
+        x: s.x - 2,
+        y: s.y - 2,
+        w: 4,
+        h: 4,
+        sw: 0.8,
+        stroke: INK,
+        fill: m.status === "set" ? INK : "#ffffff",
+      });
     }
   }
   return out;
@@ -302,7 +526,11 @@ function drawSitePlan(site: Site, project: (p: Point) => Pt, areaUnit: RegionPlu
 
 // --- building floor plan ----------------------------------------------------
 
-function drawFloorPlan(site: Site, model: BuildingModel, project: (p: Point) => Pt): SheetPrimitive[] {
+function drawFloorPlan(
+  site: Site,
+  model: BuildingModel,
+  project: (p: Point) => Pt,
+): SheetPrimitive[] {
   const out: SheetPrimitive[] = [];
   const level = model.levels[0];
   const walls = model.walls.filter((w) => !level || w.levelId === level.id);
@@ -310,72 +538,165 @@ function drawFloorPlan(site: Site, model: BuildingModel, project: (p: Point) => 
 
   // Room fills + tags.
   for (const room of model.rooms) {
-    if (level && room.levelId !== level.id) {continue;}
+    if (level && room.levelId !== level.id) {
+      continue;
+    }
     const ring = room.boundary.map(project);
-    out.push({ t: "polygon", pts: ring, fill: "#f1f5f9", fillOpacity: 0.6, stroke: LIGHT, w: 0.4 });
+    out.push({
+      t: "polygon",
+      pts: ring,
+      fill: "#f1f5f9",
+      fillOpacity: 0.6,
+      stroke: LIGHT,
+      w: 0.4,
+    });
   }
   // Wall poché.
   for (const w of walls) {
     const pg = wallPolygon(w).map(project);
-    out.push({ t: "polygon", pts: pg, fill: INK, fillOpacity: 0.85, stroke: INK, w: 0.4 });
+    out.push({
+      t: "polygon",
+      pts: pg,
+      fill: INK,
+      fillOpacity: 0.85,
+      stroke: INK,
+      w: 0.4,
+    });
   }
   // Doors: jamb gap (white) + swing.
   for (const d of model.doors) {
-    if (!wallIds.has(d.wallId)) {continue;}
+    if (!wallIds.has(d.wallId)) {
+      continue;
+    }
     const w = walls.find((x) => x.id === d.wallId);
-    if (!w) {continue;}
+    if (!w) {
+      continue;
+    }
     const [j1, j2] = openingJambs(w, d);
-    out.push({ t: "line", a: project(j1), b: project(j2), w: 2, color: "#ffffff" });
+    out.push({
+      t: "line",
+      a: project(j1),
+      b: project(j2),
+      w: 2,
+      color: "#ffffff",
+    });
     const sw = doorSwing(w, d);
-    out.push({ t: "line", a: project(sw.hinge), b: project(sw.leafEnd), w: 0.6, color: INK });
+    out.push({
+      t: "line",
+      a: project(sw.hinge),
+      b: project(sw.leafEnd),
+      w: 0.6,
+      color: INK,
+    });
     out.push({ t: "polyline", pts: sw.arc.map(project), color: INK, w: 0.4 });
   }
   // Windows: double glazing line.
   for (const wn of model.windows) {
-    if (!wallIds.has(wn.wallId)) {continue;}
+    if (!wallIds.has(wn.wallId)) {
+      continue;
+    }
     const w = walls.find((x) => x.id === wn.wallId);
-    if (!w) {continue;}
+    if (!w) {
+      continue;
+    }
     const [j1, j2] = openingJambs(w, wn);
-    out.push({ t: "line", a: project(j1), b: project(j2), w: 1.4, color: "#0284c7" });
+    out.push({
+      t: "line",
+      a: project(j1),
+      b: project(j2),
+      w: 1.4,
+      color: "#0284c7",
+    });
   }
   // Room tags.
   for (const room of model.rooms) {
-    if (level && room.levelId !== level.id) {continue;}
+    if (level && room.levelId !== level.id) {
+      continue;
+    }
     const c = project(centroid(room.boundary));
-    out.push({ t: "text", at: { x: c.x, y: c.y }, text: room.name, size: 6, color: INK, anchor: "middle", weight: 700 });
-    out.push({ t: "text", at: { x: c.x, y: c.y + 8 }, text: `${room.number} · ${roomArea(room, site.spatial, "sqft").toFixed(0)} SF`, size: 5, color: MUTED, anchor: "middle" });
+    out.push({
+      t: "text",
+      at: { x: c.x, y: c.y },
+      text: room.name,
+      size: 6,
+      color: INK,
+      anchor: "middle",
+      weight: 700,
+    });
+    out.push({
+      t: "text",
+      at: { x: c.x, y: c.y + 8 },
+      text: `${room.number} · ${roomArea(room, site.spatial, "sqft").toFixed(0)} SF`,
+      size: 5,
+      color: MUTED,
+      anchor: "middle",
+    });
   }
   return out;
 }
 
 // --- dimensions, grids, annotations projected into a view ------------------
 
-function drawDimensions(site: Site, project: (p: Point) => Pt): SheetPrimitive[] {
+function drawDimensions(
+  site: Site,
+  project: (p: Point) => Pt,
+): SheetPrimitive[] {
   const out: SheetPrimitive[] = [];
   for (const dim of site.dimensions ?? []) {
     const m = measureDimension(dim as Dimension, site.spatial);
     const style = dimensionStyle((dim as Dimension).styleId);
-    for (const [a, b] of m.geometry.lines) {out.push({ t: "line", a: project(a), b: project(b), w: 0.4, color: INK });}
+    for (const [a, b] of m.geometry.lines) {
+      out.push({ t: "line", a: project(a), b: project(b), w: 0.4, color: INK });
+    }
     for (const tk of m.geometry.ticks) {
       const at = project(tk.at);
       const dir = { x: tk.dir.x, y: tk.dir.y };
-      if (style.arrow === "tick") {out.push(dimTick(at, dir, 3));}
-      else {out.push(arrowHead(at, dir, 4));}
+      if (style.arrow === "tick") {
+        out.push(dimTick(at, dir, 3));
+      } else {
+        out.push(arrowHead(at, dir, 4));
+      }
     }
     const t = project(m.geometry.textAt);
-    out.push({ t: "text", at: t, text: m.label, size: 5.5, color: INK, anchor: "middle", angle: m.geometry.textAngleDeg });
+    out.push({
+      t: "text",
+      at: t,
+      text: m.label,
+      size: 5.5,
+      color: INK,
+      anchor: "middle",
+      angle: m.geometry.textAngleDeg,
+    });
   }
   return out;
 }
 
-function drawGridBubbles(site: Site, project: (p: Point) => Pt): SheetPrimitive[] {
+function drawGridBubbles(
+  site: Site,
+  project: (p: Point) => Pt,
+): SheetPrimitive[] {
   const out: SheetPrimitive[] = [];
   for (const g of site.annotations?.gridLines ?? []) {
-    out.push({ t: "line", a: project(g.from), b: project(g.to), w: 0.5, color: "#64748b", dash: [10, 2, 2, 2] });
+    out.push({
+      t: "line",
+      a: project(g.from),
+      b: project(g.to),
+      w: 0.5,
+      color: "#64748b",
+      dash: [10, 2, 2, 2],
+    });
     for (const bub of gridBubbleGeometry(g, 6)) {
       const c = project(bub.center);
       out.push({ t: "circle", c, r: 8, sw: 0.7, stroke: INK, fill: "#ffffff" });
-      out.push({ t: "text", at: { x: c.x, y: c.y + 3 }, text: bub.label, size: 7, color: INK, anchor: "middle", weight: 700 });
+      out.push({
+        t: "text",
+        at: { x: c.x, y: c.y + 3 },
+        text: bub.label,
+        size: 7,
+        color: INK,
+        anchor: "middle",
+        weight: 700,
+      });
     }
   }
   return out;
@@ -384,15 +705,34 @@ function drawGridBubbles(site: Site, project: (p: Point) => Pt): SheetPrimitive[
 function drawMarks(site: Site, project: (p: Point) => Pt): SheetPrimitive[] {
   const out: SheetPrimitive[] = [];
   const ann = site.annotations;
-  if (!ann) {return out;}
+  if (!ann) {
+    return out;
+  }
   for (const sm of ann.sectionMarks ?? []) {
     const [a, b] = sm.atLine.map(project) as [Pt, Pt];
     out.push({ t: "line", a, b, w: 1.4, color: INK, dash: [12, 3, 3, 3] });
     const gaze = sectionGaze(sm);
     for (const end of [a, b]) {
-      out.push({ t: "circle", c: end, r: 9, sw: 0.9, stroke: INK, fill: "#ffffff" });
-      out.push({ t: "text", at: { x: end.x, y: end.y + 3 }, text: sm.tag, size: 8, color: INK, anchor: "middle", weight: 700 });
-      out.push(arrowHead({ x: end.x + gaze.x * 14, y: end.y + gaze.y * 14 }, gaze, 5));
+      out.push({
+        t: "circle",
+        c: end,
+        r: 9,
+        sw: 0.9,
+        stroke: INK,
+        fill: "#ffffff",
+      });
+      out.push({
+        t: "text",
+        at: { x: end.x, y: end.y + 3 },
+        text: sm.tag,
+        size: 8,
+        color: INK,
+        anchor: "middle",
+        weight: 700,
+      });
+      out.push(
+        arrowHead({ x: end.x + gaze.x * 14, y: end.y + gaze.y * 14 }, gaze, 5),
+      );
     }
   }
   for (const dm of ann.detailMarks ?? []) {
@@ -400,62 +740,212 @@ function drawMarks(site: Site, project: (p: Point) => Pt): SheetPrimitive[] {
     // radius scaled roughly by the projector via two projected points.
     const edge = project({ x: dm.center.x + dm.radius, y: dm.center.y });
     const rr = distance(edge, c);
-    out.push({ t: "circle", c, r: rr, sw: 0.8, stroke: INK, fill: "transparent", fillOpacity: 0 });
-    out.push({ t: "circle", c: { x: c.x + rr + 12, y: c.y - rr }, r: 9, sw: 0.9, stroke: INK, fill: "#ffffff" });
-    out.push({ t: "text", at: { x: c.x + rr + 12, y: c.y - rr + 3 }, text: dm.tag, size: 8, color: INK, anchor: "middle", weight: 700 });
+    out.push({
+      t: "circle",
+      c,
+      r: rr,
+      sw: 0.8,
+      stroke: INK,
+      fill: "transparent",
+      fillOpacity: 0,
+    });
+    out.push({
+      t: "circle",
+      c: { x: c.x + rr + 12, y: c.y - rr },
+      r: 9,
+      sw: 0.9,
+      stroke: INK,
+      fill: "#ffffff",
+    });
+    out.push({
+      t: "text",
+      at: { x: c.x + rr + 12, y: c.y - rr + 3 },
+      text: dm.tag,
+      size: 8,
+      color: INK,
+      anchor: "middle",
+      weight: 700,
+    });
   }
   for (const ml of ann.matchLines ?? []) {
     const [a, b] = ml.atLine.map(project) as [Pt, Pt];
-    out.push({ t: "line", a, b, w: 1.6, color: "#b91c1c", dash: [16, 3, 3, 3] });
-    out.push({ t: "text", at: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 - 4 }, text: `MATCH LINE — SEE ${ml.adjoiningSheet}`, size: 6, color: "#b91c1c", anchor: "middle", weight: 700 });
+    out.push({
+      t: "line",
+      a,
+      b,
+      w: 1.6,
+      color: "#b91c1c",
+      dash: [16, 3, 3, 3],
+    });
+    out.push({
+      t: "text",
+      at: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 - 4 },
+      text: `MATCH LINE — SEE ${ml.adjoiningSheet}`,
+      size: 6,
+      color: "#b91c1c",
+      anchor: "middle",
+      weight: 700,
+    });
   }
   for (const rc of ann.revisionClouds ?? []) {
     const apexes = revisionCloudBumps(rc, 6).map(project);
-    out.push({ t: "polyline", pts: apexes, color: "#b91c1c", w: 0.8, close: true });
+    out.push({
+      t: "polyline",
+      pts: apexes,
+      color: "#b91c1c",
+      w: 0.8,
+      close: true,
+    });
     const first = project(rc.boundary[0]);
-    out.push({ t: "polygon", pts: [{ x: first.x, y: first.y - 6 }, { x: first.x + 6, y: first.y + 4 }, { x: first.x - 6, y: first.y + 4 }], fill: "#b91c1c", stroke: "#b91c1c", w: 0.3 });
-    out.push({ t: "text", at: { x: first.x, y: first.y + 3 }, text: String(rc.delta), size: 6, color: "#ffffff", anchor: "middle", weight: 700 });
+    out.push({
+      t: "polygon",
+      pts: [
+        { x: first.x, y: first.y - 6 },
+        { x: first.x + 6, y: first.y + 4 },
+        { x: first.x - 6, y: first.y + 4 },
+      ],
+      fill: "#b91c1c",
+      stroke: "#b91c1c",
+      w: 0.3,
+    });
+    out.push({
+      t: "text",
+      at: { x: first.x, y: first.y + 3 },
+      text: String(rc.delta),
+      size: 6,
+      color: "#ffffff",
+      anchor: "middle",
+      weight: 700,
+    });
   }
   return out;
 }
 
 // --- viewport frame + title bubble -----------------------------------------
 
-function viewportTitle(rect: { x: number; y: number; w: number; h: number }, num: number | undefined, title: string, scale: string): SheetPrimitive[] {
+function viewportTitle(
+  rect: { x: number; y: number; w: number; h: number },
+  num: number | undefined,
+  title: string,
+  scale: string,
+): SheetPrimitive[] {
   const out: SheetPrimitive[] = [];
   const y = rect.y + rect.h + 4;
   if (num != null) {
-    out.push({ t: "circle", c: { x: rect.x + 10, y: y + 8 }, r: 9, sw: 1, stroke: INK, fill: "#ffffff" });
-    out.push({ t: "text", at: { x: rect.x + 10, y: y + 11 }, text: String(num), size: 9, color: INK, anchor: "middle", weight: 700 });
+    out.push({
+      t: "circle",
+      c: { x: rect.x + 10, y: y + 8 },
+      r: 9,
+      sw: 1,
+      stroke: INK,
+      fill: "#ffffff",
+    });
+    out.push({
+      t: "text",
+      at: { x: rect.x + 10, y: y + 11 },
+      text: String(num),
+      size: 9,
+      color: INK,
+      anchor: "middle",
+      weight: 700,
+    });
   }
-  out.push({ t: "text", at: { x: rect.x + 24, y: y + 8 }, text: title.toUpperCase(), size: 8, color: INK, weight: 700 });
-  out.push({ t: "text", at: { x: rect.x + 24, y: y + 17 }, text: `SCALE: ${scale}`, size: 6, color: MUTED });
-  out.push({ t: "line", a: { x: rect.x, y: y + 20 }, b: { x: rect.x + Math.min(rect.w, 160), y: y + 20 }, w: 1, color: INK });
+  out.push({
+    t: "text",
+    at: { x: rect.x + 24, y: y + 8 },
+    text: title.toUpperCase(),
+    size: 8,
+    color: INK,
+    weight: 700,
+  });
+  out.push({
+    t: "text",
+    at: { x: rect.x + 24, y: y + 17 },
+    text: `SCALE: ${scale}`,
+    size: 6,
+    color: MUTED,
+  });
+  out.push({
+    t: "line",
+    a: { x: rect.x, y: y + 20 },
+    b: { x: rect.x + Math.min(rect.w, 160), y: y + 20 },
+    w: 1,
+    color: INK,
+  });
   return out;
 }
 
 // --- schedules --------------------------------------------------------------
 
-function drawScheduleTable(table: ScheduleTable, x: number, y: number, w: number): { prims: SheetPrimitive[]; height: number } {
+function drawScheduleTable(
+  table: ScheduleTable,
+  x: number,
+  y: number,
+  w: number,
+): { prims: SheetPrimitive[]; height: number } {
   const out: SheetPrimitive[] = [];
   const rowH = 14;
   const headH = 16;
   const cols = table.columns;
   const colW = w / cols.length;
-  out.push({ t: "text", at: { x, y: y - 4 }, text: table.title.toUpperCase(), size: 8, color: INK, weight: 700 });
-  out.push({ t: "rect", x, y, w, h: headH, sw: 0.6, stroke: INK, fill: "#e2e8f0" });
+  out.push({
+    t: "text",
+    at: { x, y: y - 4 },
+    text: table.title.toUpperCase(),
+    size: 8,
+    color: INK,
+    weight: 700,
+  });
+  out.push({
+    t: "rect",
+    x,
+    y,
+    w,
+    h: headH,
+    sw: 0.6,
+    stroke: INK,
+    fill: "#e2e8f0",
+  });
   cols.forEach((c, i) => {
-    out.push({ t: "text", at: { x: x + i * colW + 4, y: y + 11 }, text: c.label, size: 6, color: INK, weight: 700 });
-    if (i > 0) {out.push({ t: "line", a: { x: x + i * colW, y }, b: { x: x + i * colW, y: y + headH + table.rows.length * rowH }, w: 0.4, color: LIGHT });}
+    out.push({
+      t: "text",
+      at: { x: x + i * colW + 4, y: y + 11 },
+      text: c.label,
+      size: 6,
+      color: INK,
+      weight: 700,
+    });
+    if (i > 0) {
+      out.push({
+        t: "line",
+        a: { x: x + i * colW, y },
+        b: { x: x + i * colW, y: y + headH + table.rows.length * rowH },
+        w: 0.4,
+        color: LIGHT,
+      });
+    }
   });
   table.rows.forEach((row, ri) => {
     const ry = y + headH + ri * rowH;
     out.push({ t: "rect", x, y: ry, w, h: rowH, sw: 0.3, stroke: LIGHT });
     cols.forEach((c, i) => {
       const v = String(row[c.key] ?? "");
-      const anchor = c.align === "right" ? "end" : c.align === "center" ? "middle" : "start";
-      const tx = c.align === "right" ? x + (i + 1) * colW - 4 : c.align === "center" ? x + i * colW + colW / 2 : x + i * colW + 4;
-      out.push({ t: "text", at: { x: tx, y: ry + 10 }, text: v, size: 6, color: INK, anchor });
+      const anchor =
+        c.align === "right" ? "end" : c.align === "center" ? "middle" : "start";
+      const tx =
+        c.align === "right"
+          ? x + (i + 1) * colW - 4
+          : c.align === "center"
+            ? x + i * colW + colW / 2
+            : x + i * colW + 4;
+      out.push({
+        t: "text",
+        at: { x: tx, y: ry + 10 },
+        text: v,
+        size: 6,
+        color: INK,
+        anchor,
+      });
     });
   });
   return { prims: out, height: headH + table.rows.length * rowH + 24 };
@@ -465,48 +955,150 @@ function schedulesFor(site: Site): ScheduleTable[] {
   const tables: ScheduleTable[] = [];
   const model = site.buildingModels?.[0];
   if (model) {
-    tables.push(doorSchedule(model), windowSchedule(model), roomSchedule(model, site.spatial), finishSchedule(model));
+    tables.push(
+      doorSchedule(model),
+      windowSchedule(model),
+      roomSchedule(model, site.spatial),
+      finishSchedule(model),
+    );
   }
   const curves = collectSiteCurves(site);
-  if (curves.length) {tables.push(curveSchedule(curves));}
+  if (curves.length) {
+    tables.push(curveSchedule(curves));
+  }
   return tables;
 }
 
 // --- index sheet ------------------------------------------------------------
 
-function buildIndexSheet(set: DrawingSet, site: Site, layout: SheetLayout): SheetPrimitive[] {
+function buildIndexSheet(
+  set: DrawingSet,
+  site: Site,
+  layout: SheetLayout,
+): SheetPrimitive[] {
   const out: SheetPrimitive[] = [];
   const a = layout.drawArea;
-  out.push({ t: "text", at: { x: a.x + 12, y: a.y + 26 }, text: set.name.toUpperCase(), size: 18, color: INK, weight: 700 });
-  out.push({ t: "text", at: { x: a.x + 12, y: a.y + 44 }, text: set.titleBlockDefaults.location ?? "", size: 9, color: MUTED });
+  out.push({
+    t: "text",
+    at: { x: a.x + 12, y: a.y + 26 },
+    text: set.name.toUpperCase(),
+    size: 18,
+    color: INK,
+    weight: 700,
+  });
+  out.push({
+    t: "text",
+    at: { x: a.x + 12, y: a.y + 44 },
+    text: set.titleBlockDefaults.location ?? "",
+    size: 9,
+    color: MUTED,
+  });
 
   // Sheet index table (left half).
   const rows = sheetIndex(set);
   const tblX = a.x + 12;
   let y = a.y + 74;
-  out.push({ t: "text", at: { x: tblX, y: y - 6 }, text: "SHEET INDEX", size: 10, color: INK, weight: 700 });
-  out.push({ t: "rect", x: tblX, y, w: a.w * 0.44, h: 16, sw: 0.6, stroke: INK, fill: "#e2e8f0" });
-  out.push({ t: "text", at: { x: tblX + 4, y: y + 11 }, text: "NO.", size: 6.5, color: INK, weight: 700 });
-  out.push({ t: "text", at: { x: tblX + 60, y: y + 11 }, text: "SHEET TITLE", size: 6.5, color: INK, weight: 700 });
+  out.push({
+    t: "text",
+    at: { x: tblX, y: y - 6 },
+    text: "SHEET INDEX",
+    size: 10,
+    color: INK,
+    weight: 700,
+  });
+  out.push({
+    t: "rect",
+    x: tblX,
+    y,
+    w: a.w * 0.44,
+    h: 16,
+    sw: 0.6,
+    stroke: INK,
+    fill: "#e2e8f0",
+  });
+  out.push({
+    t: "text",
+    at: { x: tblX + 4, y: y + 11 },
+    text: "NO.",
+    size: 6.5,
+    color: INK,
+    weight: 700,
+  });
+  out.push({
+    t: "text",
+    at: { x: tblX + 60, y: y + 11 },
+    text: "SHEET TITLE",
+    size: 6.5,
+    color: INK,
+    weight: 700,
+  });
   y += 16;
   for (const r of rows) {
-    out.push({ t: "rect", x: tblX, y, w: a.w * 0.44, h: 13, sw: 0.3, stroke: LIGHT });
-    out.push({ t: "text", at: { x: tblX + 4, y: y + 9 }, text: r.number, size: 6.5, color: INK, weight: 600 });
-    out.push({ t: "text", at: { x: tblX + 60, y: y + 9 }, text: r.title, size: 6.5, color: INK });
+    out.push({
+      t: "rect",
+      x: tblX,
+      y,
+      w: a.w * 0.44,
+      h: 13,
+      sw: 0.3,
+      stroke: LIGHT,
+    });
+    out.push({
+      t: "text",
+      at: { x: tblX + 4, y: y + 9 },
+      text: r.number,
+      size: 6.5,
+      color: INK,
+      weight: 600,
+    });
+    out.push({
+      t: "text",
+      at: { x: tblX + 60, y: y + 9 },
+      text: r.title,
+      size: 6.5,
+      color: INK,
+    });
     y += 13;
   }
 
   // Key map (right half): a fitted site thumbnail.
   const b = siteBounds(site);
   if (b) {
-    const kmRect = { x: a.x + a.w * 0.5, y: a.y + 74, w: a.w * 0.46, h: a.h * 0.6 };
-    out.push({ t: "rect", x: kmRect.x, y: kmRect.y, w: kmRect.w, h: kmRect.h, sw: 0.8, stroke: INK });
-    out.push({ t: "text", at: { x: kmRect.x, y: kmRect.y - 6 }, text: "KEY MAP", size: 10, color: INK, weight: 700 });
+    const kmRect = {
+      x: a.x + a.w * 0.5,
+      y: a.y + 74,
+      w: a.w * 0.46,
+      h: a.h * 0.6,
+    };
+    out.push({
+      t: "rect",
+      x: kmRect.x,
+      y: kmRect.y,
+      w: kmRect.w,
+      h: kmRect.h,
+      sw: 0.8,
+      stroke: INK,
+    });
+    out.push({
+      t: "text",
+      at: { x: kmRect.x, y: kmRect.y - 6 },
+      text: "KEY MAP",
+      size: 10,
+      color: INK,
+      weight: 700,
+    });
     const pr = fitProjector(kmRect, b, 0.08);
     out.push(...drawSitePlan(site, pr.project, "acres"));
     for (const ml of site.annotations?.matchLines ?? []) {
       const [p, q] = ml.atLine.map(pr.project) as [Pt, Pt];
-      out.push({ t: "line", a: p, b: q, w: 1.2, color: "#b91c1c", dash: [10, 3, 3, 3] });
+      out.push({
+        t: "line",
+        a: p,
+        b: q,
+        w: 1.2,
+        color: "#b91c1c",
+        dash: [10, 3, 3, 3],
+      });
     }
   }
   return out;
@@ -515,7 +1107,12 @@ function buildIndexSheet(set: DrawingSet, site: Site, layout: SheetLayout): Shee
 // --- the top-level sheet composer ------------------------------------------
 
 /** Build the full primitive scene for one sheet. */
-export function buildSheetScene(set: DrawingSet, sheet: Sheet, site: Site, plugin: RegionPlugin): SheetBand[] {
+export function buildSheetScene(
+  set: DrawingSet,
+  sheet: Sheet,
+  site: Site,
+  plugin: RegionPlugin,
+): SheetBand[] {
   const unit = plugin.sheetStandards?.unit ?? "in";
   const layout = sheetLayout(sheet, unit);
   const scaleLabel = sheet.scaleId === "as-shown" ? "AS SHOWN" : sheet.scaleId;
@@ -545,7 +1142,11 @@ export function buildSheetScene(set: DrawingSet, sheet: Sheet, site: Site, plugi
         y = a.y + 24;
       }
     }
-  } else if (sheet.number.discipline === "A" && (sheet.number.type === 1 || sheet.number.type === 4) && site.buildingModels?.length) {
+  } else if (
+    sheet.number.discipline === "A" &&
+    (sheet.number.type === 1 || sheet.number.type === 4) &&
+    site.buildingModels?.length
+  ) {
     const model = site.buildingModels[0];
     const b = buildingBounds(model);
     if (b) {
@@ -554,7 +1155,14 @@ export function buildSheetScene(set: DrawingSet, sheet: Sheet, site: Site, plugi
       content.push(...drawDimensions(site, pr.project));
       content.push(...drawGridBubbles(site, pr.project));
       content.push(...drawMarks(site, pr.project));
-      content.push(...viewportTitle({ x: a.x + 8, y: a.y + 8, w: a.w - 16, h: a.h - 40 }, sheet.viewportIds.length ? 1 : undefined, `${model.levels[0]?.name ?? "LEVEL 1"} FLOOR PLAN`, scaleLabel));
+      content.push(
+        ...viewportTitle(
+          { x: a.x + 8, y: a.y + 8, w: a.w - 16, h: a.h - 40 },
+          sheet.viewportIds.length ? 1 : undefined,
+          `${model.levels[0]?.name ?? "LEVEL 1"} FLOOR PLAN`,
+          scaleLabel,
+        ),
+      );
       content.push(...northArrow({ x: a.x + a.w - 30, y: a.y + 16 }, 30));
     }
   } else if (sheet.number.type === 2 || sheet.number.type === 3) {
@@ -567,60 +1175,142 @@ export function buildSheetScene(set: DrawingSet, sheet: Sheet, site: Site, plugi
       content.push(...drawSitePlan(site, pr.project, areaUnit));
       content.push(...drawDimensions(site, pr.project));
       content.push(...drawMarks(site, pr.project));
-      content.push(...viewportTitle({ x: a.x + 8, y: a.y + 8, w: a.w - 16, h: a.h - 40 }, sheet.viewportIds.length ? 1 : undefined, sheet.title, scaleLabel));
+      content.push(
+        ...viewportTitle(
+          { x: a.x + 8, y: a.y + 8, w: a.w - 16, h: a.h - 40 },
+          sheet.viewportIds.length ? 1 : undefined,
+          sheet.title,
+          scaleLabel,
+        ),
+      );
       content.push(...northArrow({ x: a.x + a.w - 30, y: a.y + 16 }, 30));
     }
   }
 
   bands.push({ name: "content", prims: content });
-  bands.push({ name: "title", prims: buildTitleBlock(set, sheet, plugin, layout, scaleLabel) });
+  bands.push({
+    name: "title",
+    prims: buildTitleBlock(set, sheet, plugin, layout, scaleLabel),
+  });
   bands.push({ name: "revisions", prims: buildRevisionBlock(sheet, layout) });
   return bands;
 }
 
 /** Elevation / section views built from the building model's extents. */
-function buildBuildingViews(site: Site, sheet: Sheet, layout: SheetLayout, scaleLabel: string): SheetPrimitive[] {
+function buildBuildingViews(
+  site: Site,
+  sheet: Sheet,
+  layout: SheetLayout,
+  scaleLabel: string,
+): SheetPrimitive[] {
   const out: SheetPrimitive[] = [];
   const model = site.buildingModels?.[0];
   const a = layout.drawArea;
-  if (!model || !model.levels.length) {return out;}
+  if (!model || !model.levels.length) {
+    return out;
+  }
   const b = buildingBounds(model);
-  if (!b) {return out;}
+  if (!b) {
+    return out;
+  }
   const isSection = sheet.number.type === 3;
   const widthModel = b.maxX - b.minX;
-  const totalH = model.levels.reduce((mx, l) => Math.max(mx, l.elevation + l.height), 0);
+  const totalH = model.levels.reduce(
+    (mx, l) => Math.max(mx, l.elevation + l.height),
+    0,
+  );
   // One elevation per drawing, stacked in the drawing area.
   const count = isSection ? 1 : 2;
   const cellH = (a.h - 40) / count;
   for (let i = 0; i < count; i++) {
-    const rect = { x: a.x + 16, y: a.y + 12 + i * cellH, w: a.w - 40, h: cellH - 30 };
-    const s = Math.min((rect.w * 0.85) / Math.max(widthModel, 1e-6), (rect.h * 0.8) / Math.max(totalH, 1e-6));
+    const rect = {
+      x: a.x + 16,
+      y: a.y + 12 + i * cellH,
+      w: a.w - 40,
+      h: cellH - 30,
+    };
+    const s = Math.min(
+      (rect.w * 0.85) / Math.max(widthModel, 1e-6),
+      (rect.h * 0.8) / Math.max(totalH, 1e-6),
+    );
     const ox = rect.x + rect.w / 2 - (widthModel * s) / 2;
     const groundY = rect.y + rect.h - 10;
     // Ground line.
-    out.push({ t: "line", a: { x: rect.x, y: groundY }, b: { x: rect.x + rect.w, y: groundY }, w: 1.2, color: INK });
+    out.push({
+      t: "line",
+      a: { x: rect.x, y: groundY },
+      b: { x: rect.x + rect.w, y: groundY },
+      w: 1.2,
+      color: INK,
+    });
     // Building box per level.
     for (const lvl of model.levels) {
       const y0 = groundY - (lvl.elevation + lvl.height) * s;
       const y1 = groundY - lvl.elevation * s;
-      out.push({ t: "rect", x: ox, y: y0, w: widthModel * s, h: y1 - y0, sw: 1, stroke: INK, fill: isSection ? "#f1f5f9" : "#ffffff" });
-      out.push({ t: "line", a: { x: ox - 12, y: y1 }, b: { x: ox + widthModel * s + 12, y: y1 }, w: 0.4, color: LIGHT, dash: [4, 2] });
-      out.push({ t: "text", at: { x: ox - 16, y: y1 + 3 }, text: lvl.name, size: 5.5, color: MUTED, anchor: "end" });
+      out.push({
+        t: "rect",
+        x: ox,
+        y: y0,
+        w: widthModel * s,
+        h: y1 - y0,
+        sw: 1,
+        stroke: INK,
+        fill: isSection ? "#f1f5f9" : "#ffffff",
+      });
+      out.push({
+        t: "line",
+        a: { x: ox - 12, y: y1 },
+        b: { x: ox + widthModel * s + 12, y: y1 },
+        w: 0.4,
+        color: LIGHT,
+        dash: [4, 2],
+      });
+      out.push({
+        t: "text",
+        at: { x: ox - 16, y: y1 + 3 },
+        text: lvl.name,
+        size: 5.5,
+        color: MUTED,
+        anchor: "end",
+      });
     }
     // Windows drawn on the front elevation as rectangles (approximate).
     if (!isSection) {
       model.windows.forEach((_win, wi) => {
-        const wx = ox + ((wi + 1) / (model.windows.length + 1)) * widthModel * s;
+        const wx =
+          ox + ((wi + 1) / (model.windows.length + 1)) * widthModel * s;
         const wy = groundY - (model.levels[0].elevation + 3) * s;
-        out.push({ t: "rect", x: wx - 6, y: wy - 10, w: 12, h: 14, sw: 0.6, stroke: "#0284c7" });
+        out.push({
+          t: "rect",
+          x: wx - 6,
+          y: wy - 10,
+          w: 12,
+          h: 14,
+          sw: 0.6,
+          stroke: "#0284c7",
+        });
       });
     }
-    out.push(...viewportTitle(rect, i + 1, isSection ? `BUILDING SECTION ${String.fromCharCode(65 + i)}` : `${["FRONT", "SIDE"][i]} ELEVATION`, scaleLabel));
+    out.push(
+      ...viewportTitle(
+        rect,
+        i + 1,
+        isSection
+          ? `BUILDING SECTION ${String.fromCharCode(65 + i)}`
+          : `${["FRONT", "SIDE"][i]} ELEVATION`,
+        scaleLabel,
+      ),
+    );
   }
   return out;
 }
 
 /** Convenience: build and flatten a sheet to a flat primitive list. */
-export function buildSheetPrimitives(set: DrawingSet, sheet: Sheet, site: Site, plugin: RegionPlugin): SheetPrimitive[] {
+export function buildSheetPrimitives(
+  set: DrawingSet,
+  sheet: Sheet,
+  site: Site,
+  plugin: RegionPlugin,
+): SheetPrimitive[] {
   return flattenBands(buildSheetScene(set, sheet, site, plugin));
 }

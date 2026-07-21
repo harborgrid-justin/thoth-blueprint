@@ -23,21 +23,34 @@ import {
  * full-station ticks and labels, and PC/PT/POB/POE control points — the survey
  * baseline of a civil plan sheet.
  */
-export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
+export function AlignmentLayer({
+  site,
+  viewport,
+}: {
+  site: Site;
+  viewport: Viewport;
+}) {
   const alignments = site.alignments;
-  if (!alignments || alignments.length === 0) {return null;}
+  if (!alignments || alignments.length === 0) {
+    return null;
+  }
 
   return (
     <g className="pointer-events-none">
       {alignments.map((a) => {
         const r = resolveAlignment(a);
-        if (!r) {return null;}
+        if (!r) {
+          return null;
+        }
 
         const line = centerlinePoints(r).map((p) => worldToScreen(p, viewport));
-        const poly = line.map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ");
+        const poly = line
+          .map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`)
+          .join(" ");
 
         // Choose a station interval that stays legible at the current zoom.
-        const interval = viewport.zoom > 2 ? 50 : viewport.zoom > 0.6 ? 100 : 500;
+        const interval =
+          viewport.zoom > 2 ? 50 : viewport.zoom > 0.6 ? 100 : 500;
         const stations = fullStations(r, interval);
         const tickHalf = 6;
 
@@ -45,12 +58,16 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
           <g key={a.id}>
             {/* Parallel offset lines (edge of pavement, right-of-way, …). */}
             {(a.offsets ?? []).map((off, oi) => {
-              const path = offsetAlignmentPath(r, off.distance).map((p) => worldToScreen(p, viewport));
+              const path = offsetAlignmentPath(r, off.distance).map((p) =>
+                worldToScreen(p, viewport),
+              );
               const style = offsetStyle(off);
               return (
                 <polyline
                   key={oi}
-                  points={path.map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ")}
+                  points={path
+                    .map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`)
+                    .join(" ")}
                   fill="none"
                   stroke={style.stroke}
                   strokeWidth={style.width}
@@ -71,7 +88,9 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
             {/* Full-station ticks + labels. */}
             {stations.map((st, i) => {
               const at = pointAtStation(r, st);
-              if (!at) {return null;}
+              if (!at) {
+                return null;
+              }
               const s = worldToScreen(at.point, viewport);
               const d = dirFor(at.bearing);
               const perp = { x: -d.y, y: d.x };
@@ -95,7 +114,11 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
                       fontSize={8}
                       fill={CENTERLINE_COLOR}
                       textAnchor="middle"
-                      style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: 2.5 }}
+                      style={{
+                        paintOrder: "stroke",
+                        stroke: "hsl(var(--canvas))",
+                        strokeWidth: 2.5,
+                      }}
                     >
                       {formatStation(st)}
                     </text>
@@ -112,7 +135,14 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
                   const st = key === "pc" ? c.pcStation : c.ptStation;
                   return (
                     <g key={key}>
-                      <circle cx={p.x} cy={p.y} r={2.6} fill="hsl(var(--canvas))" stroke={CENTERLINE_COLOR} strokeWidth={1.3} />
+                      <circle
+                        cx={p.x}
+                        cy={p.y}
+                        r={2.6}
+                        fill="hsl(var(--canvas))"
+                        stroke={CENTERLINE_COLOR}
+                        strokeWidth={1.3}
+                      />
                       {viewport.zoom > 0.8 && (
                         <text
                           x={p.x + 5}
@@ -120,7 +150,11 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
                           fontSize={8.5}
                           fontWeight={700}
                           fill={CENTERLINE_COLOR}
-                          style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: 2.5 }}
+                          style={{
+                            paintOrder: "stroke",
+                            stroke: "hsl(var(--canvas))",
+                            strokeWidth: 2.5,
+                          }}
                         >
                           {key.toUpperCase()} {formatStation(st)}
                         </text>
@@ -132,8 +166,16 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
             ))}
 
             {/* POB / POE and the baseline name. */}
-            <ControlDot p={worldToScreen(r.pob, viewport)} label={`POB ${formatStation(r.startStation)}`} zoom={viewport.zoom} />
-            <ControlDot p={worldToScreen(r.poe, viewport)} label={`POE ${formatStation(r.endStation)}`} zoom={viewport.zoom} />
+            <ControlDot
+              p={worldToScreen(r.pob, viewport)}
+              label={`POB ${formatStation(r.startStation)}`}
+              zoom={viewport.zoom}
+            />
+            <ControlDot
+              p={worldToScreen(r.poe, viewport)}
+              label={`POE ${formatStation(r.endStation)}`}
+              zoom={viewport.zoom}
+            />
             {viewport.zoom > 0.8 && line.length > 1 && (
               <text
                 x={line[Math.floor(line.length / 2)].x}
@@ -142,7 +184,11 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
                 fontWeight={700}
                 fill={CENTERLINE_COLOR}
                 textAnchor="middle"
-                style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: 3 }}
+                style={{
+                  paintOrder: "stroke",
+                  stroke: "hsl(var(--canvas))",
+                  strokeWidth: 3,
+                }}
               >
                 {a.name}
               </text>
@@ -154,10 +200,25 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
   );
 }
 
-function ControlDot({ p, label, zoom }: { p: Point; label: string; zoom: number }) {
+function ControlDot({
+  p,
+  label,
+  zoom,
+}: {
+  p: Point;
+  label: string;
+  zoom: number;
+}) {
   return (
     <g>
-      <circle cx={p.x} cy={p.y} r={3.4} fill={CENTERLINE_COLOR} stroke="hsl(var(--canvas))" strokeWidth={1.2} />
+      <circle
+        cx={p.x}
+        cy={p.y}
+        r={3.4}
+        fill={CENTERLINE_COLOR}
+        stroke="hsl(var(--canvas))"
+        strokeWidth={1.2}
+      />
       {zoom > 0.7 && (
         <text
           x={p.x + 6}
@@ -165,7 +226,11 @@ function ControlDot({ p, label, zoom }: { p: Point; label: string; zoom: number 
           fontSize={9}
           fontWeight={700}
           fill={CENTERLINE_COLOR}
-          style={{ paintOrder: "stroke", stroke: "hsl(var(--canvas))", strokeWidth: 2.5 }}
+          style={{
+            paintOrder: "stroke",
+            stroke: "hsl(var(--canvas))",
+            strokeWidth: 2.5,
+          }}
         >
           {label}
         </text>

@@ -11,10 +11,6 @@
  * capability set has everything turned on.
  */
 
-import type { MonumentType } from "../survey/monument";
-import type { Orientation, SheetSizeId } from "../drawing/sheetsize";
-import type { AreaUnit, CRS, Unit } from "../spatial/spatial";
-
 import type {
   SurveyFramework,
   Capabilities,
@@ -25,6 +21,7 @@ import type {
   SheetStandards,
   JurisdictionStandards,
   RegionPlugin,
+  MonumentType,
 } from "./types/regions";
 
 export type {
@@ -37,6 +34,7 @@ export type {
   SheetStandards,
   JurisdictionStandards,
   RegionPlugin,
+  MonumentType,
 };
 
 /** The full capability set, everything on — the platform's baseline. */
@@ -66,20 +64,30 @@ export const ALL_CAPABILITIES: Capabilities = {
   pdfExport: true,
 };
 
-
-
 /** Imperial engineering/architectural sheet standards on ARCH D. */
 const IMPERIAL_SHEET_STANDARDS: SheetStandards = {
   defaultSize: "arch-d",
   orientation: "landscape",
-  scaleSet: ["eng-10", "eng-20", "eng-30", "eng-40", "eng-50", "eng-100", "arch-1-8", "arch-1-4", "arch-1-2"],
+  scaleSet: [
+    "eng-10",
+    "eng-20",
+    "eng-30",
+    "eng-40",
+    "eng-50",
+    "eng-100",
+    "arch-1-8",
+    "arch-1-4",
+    "arch-1-2",
+  ],
   layerStandard: "ncs",
   dimStyleId: "eng-arrow",
   unit: "in",
 };
 
 /** Resolve a plug-in's effective capabilities against the all-on baseline. */
-export function resolveCapabilities(plugin?: RegionPlugin | null): Capabilities {
+export function resolveCapabilities(
+  plugin?: RegionPlugin | null,
+): Capabilities {
   return { ...ALL_CAPABILITIES, ...(plugin?.capabilities ?? {}) };
 }
 
@@ -230,17 +238,30 @@ export const NEWTON_COUNTY_GA: RegionPlugin = {
   },
   sheetStandards: {
     ...IMPERIAL_SHEET_STANDARDS,
-    scaleSet: ["eng-20", "eng-30", "eng-40", "eng-50", "eng-100", "eng-200", "arch-1-4"],
+    scaleSet: [
+      "eng-20",
+      "eng-30",
+      "eng-40",
+      "eng-50",
+      "eng-100",
+      "eng-200",
+      "arch-1-4",
+    ],
   },
 };
 
 /** All available region plug-ins. */
-export const REGION_PLUGINS: RegionPlugin[] = [US_PLSS_DEFAULT, NEWTON_COUNTY_GA];
+export const REGION_PLUGINS: RegionPlugin[] = [
+  US_PLSS_DEFAULT,
+  NEWTON_COUNTY_GA,
+];
 
 const BY_ID = new Map(REGION_PLUGINS.map((p) => [p.id, p]));
 
 /** Look up a region plug-in by id. */
-export function getRegionPlugin(id: string | undefined | null): RegionPlugin | undefined {
+export function getRegionPlugin(
+  id: string | undefined | null,
+): RegionPlugin | undefined {
   return id ? BY_ID.get(id) : undefined;
 }
 

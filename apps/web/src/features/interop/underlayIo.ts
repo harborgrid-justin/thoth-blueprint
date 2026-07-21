@@ -1,4 +1,11 @@
-import { bounds, createId, isSpatialElement, unionBounds, type Bounds, type Site } from "@thoth/domain";
+import {
+  bounds,
+  createId,
+  isSpatialElement,
+  unionBounds,
+  type Bounds,
+  type Site,
+} from "@thoth/domain";
 import type { Underlay } from "@/store/interopStore";
 
 /**
@@ -6,7 +13,10 @@ import type { Underlay } from "@/store/interopStore";
  * placed to cover the current plan extent (or a default world rectangle when the
  * plan is empty) so it reads as a georeferenced reference beneath the plan.
  */
-export async function importUnderlayImage(file: File, site: Site): Promise<Underlay> {
+export async function importUnderlayImage(
+  file: File,
+  site: Site,
+): Promise<Underlay> {
   const url = URL.createObjectURL(file);
   const { width, height } = await imageSize(url);
   const aspect = width / height || 1;
@@ -28,7 +38,12 @@ export async function importUnderlayImage(file: File, site: Site): Promise<Under
     id: createId("underlay"),
     name: file.name.replace(/\.[^.]+$/, ""),
     url,
-    bounds: { minX: cx - fitW / 2, minY: cy - fitH / 2, maxX: cx + fitW / 2, maxY: cy + fitH / 2 },
+    bounds: {
+      minX: cx - fitW / 2,
+      minY: cy - fitH / 2,
+      maxX: cx + fitW / 2,
+      maxY: cy + fitH / 2,
+    },
     opacity: 0.75,
     visible: true,
   };
@@ -37,7 +52,8 @@ export async function importUnderlayImage(file: File, site: Site): Promise<Under
 function imageSize(url: string): Promise<{ width: number; height: number }> {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight });
+    img.onload = () =>
+      resolve({ width: img.naturalWidth, height: img.naturalHeight });
     img.onerror = () => reject(new Error("Could not read image"));
     img.src = url;
   });
@@ -45,7 +61,9 @@ function imageSize(url: string): Promise<{ width: number; height: number }> {
 
 function planExtent(site: Site): Bounds | null {
   const spatial = site.elements.filter(isSpatialElement);
-  return spatial.length ? unionBounds(spatial.map((e) => bounds(e.boundary))) : null;
+  return spatial.length
+    ? unionBounds(spatial.map((e) => bounds(e.boundary)))
+    : null;
 }
 
 function defaultBounds(): Bounds {

@@ -1,6 +1,10 @@
 import { describe, it, expect } from "vitest";
 import type { DoorElement, WindowElement } from "../../spatial/types.js";
-import { calculateDoorGeometry, calculateWindowGeometry, compileUnitSchedule } from "../doorwindow.js";
+import {
+  calculateDoorGeometry,
+  calculateWindowGeometry,
+  compileUnitSchedule,
+} from "../doorwindow.js";
 
 describe("Door & Window Assemblies Calculations Engine", () => {
   it("should calculate swing door arc paths and knob anchors", () => {

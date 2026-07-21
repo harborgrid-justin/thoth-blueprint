@@ -38,24 +38,28 @@ export function AlignmentReportDialog() {
     hoverAlignment,
   } = useAlignmentReportState();
 
-  if (!site) {return null;}
+  if (!site) {
+    return null;
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-4xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Spline className="h-5 w-5 text-primary" /> Alignment &amp; Stationing
+            <Spline className="h-5 w-5 text-primary" /> Alignment &amp;
+            Stationing
           </DialogTitle>
           <DialogDescription>
-            Horizontal baselines with continuous stationing and curve data for {site.name}.
+            Horizontal baselines with continuous stationing and curve data for{" "}
+            {site.name}.
           </DialogDescription>
         </DialogHeader>
 
         {alignments.length === 0 ? (
           <div className="py-16 text-center text-sm text-muted-foreground">
-            No alignments yet. Draw one with the Alignment tool (I) — click each PI, then
-            Enter — to generate stationing and curve data.
+            No alignments yet. Draw one with the Alignment tool (I) — click each
+            PI, then Enter — to generate stationing and curve data.
           </div>
         ) : (
           <div className="grid grid-cols-[180px_1fr] gap-4">
@@ -79,7 +83,9 @@ export function AlignmentReportDialog() {
               ))}
             </div>
             <ScrollArea className="max-h-[60vh] min-w-0 pr-3">
-              {selected && <AlignmentReport alignment={selected} spatial={site.spatial} />}
+              {selected && (
+                <AlignmentReport alignment={selected} spatial={site.spatial} />
+              )}
             </ScrollArea>
           </div>
         )}
@@ -95,9 +101,18 @@ function AlignmentReport({
   alignment: HorizontalAlignment;
   spatial: SpatialContext;
 }) {
-  const r = React.useMemo<ResolvedAlignment | null>(() => resolveAlignment(alignment), [alignment]);
+  const r = React.useMemo<ResolvedAlignment | null>(
+    () => resolveAlignment(alignment),
+    [alignment],
+  );
   const u = unitLabel(spatial.units);
-  if (!r) {return <p className="text-sm text-muted-foreground">This baseline needs at least two PIs.</p>;}
+  if (!r) {
+    return (
+      <p className="text-sm text-muted-foreground">
+        This baseline needs at least two PIs.
+      </p>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -126,7 +141,9 @@ function AlignmentReport({
                   <Td>Tangent</Td>
                   <Td>{formatStation(el.beginStation)}</Td>
                   <Td>{formatStation(el.endStation)}</Td>
-                  <Td className="text-right tabular-nums">{el.length.toFixed(2)}</Td>
+                  <Td className="text-right tabular-nums">
+                    {el.length.toFixed(2)}
+                  </Td>
                   <Td>{bearingText(el.from, el.to)}</Td>
                 </tr>
               ) : (
@@ -134,7 +151,9 @@ function AlignmentReport({
                   <Td>Curve {curveLabel(r, el.curve.piIndex)}</Td>
                   <Td>{formatStation(el.beginStation)}</Td>
                   <Td>{formatStation(el.endStation)}</Td>
-                  <Td className="text-right tabular-nums">{el.curve.length.toFixed(2)}</Td>
+                  <Td className="text-right tabular-nums">
+                    {el.curve.length.toFixed(2)}
+                  </Td>
                   <Td className="capitalize">
                     {el.curve.direction} · R={el.curve.radius.toFixed(1)} {u}
                   </Td>
@@ -172,13 +191,27 @@ function AlignmentReport({
                     <Td>{formatStation(c.pcStation)}</Td>
                     <Td>{formatStation(c.piStation)}</Td>
                     <Td>{formatStation(c.ptStation)}</Td>
-                    <Td className="text-right tabular-nums">{c.radius.toFixed(2)}</Td>
-                    <Td className="text-right tabular-nums">{c.length.toFixed(2)}</Td>
-                    <Td className="text-right tabular-nums">{c.tangent.toFixed(2)}</Td>
-                    <Td className="text-right tabular-nums">{c.deltaDeg.toFixed(3)}°</Td>
-                    <Td className="text-right tabular-nums">{c.degreeOfCurve.toFixed(3)}°</Td>
-                    <Td className="text-right tabular-nums">{c.external.toFixed(2)}</Td>
-                    <Td className="text-right tabular-nums">{c.middleOrdinate.toFixed(2)}</Td>
+                    <Td className="text-right tabular-nums">
+                      {c.radius.toFixed(2)}
+                    </Td>
+                    <Td className="text-right tabular-nums">
+                      {c.length.toFixed(2)}
+                    </Td>
+                    <Td className="text-right tabular-nums">
+                      {c.tangent.toFixed(2)}
+                    </Td>
+                    <Td className="text-right tabular-nums">
+                      {c.deltaDeg.toFixed(3)}°
+                    </Td>
+                    <Td className="text-right tabular-nums">
+                      {c.degreeOfCurve.toFixed(3)}°
+                    </Td>
+                    <Td className="text-right tabular-nums">
+                      {c.external.toFixed(2)}
+                    </Td>
+                    <Td className="text-right tabular-nums">
+                      {c.middleOrdinate.toFixed(2)}
+                    </Td>
                     <Td className="uppercase">{c.direction[0]}</Td>
                   </tr>
                 ))}
@@ -186,9 +219,9 @@ function AlignmentReport({
             </table>
           </div>
           <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">
-            R = radius, L = arc length, T = tangent, Δ = central angle, Dc = degree of
-            curve (arc definition), E = external, M = middle ordinate. Stations are
-            continuous through each curve (PT − PC = L).
+            R = radius, L = arc length, T = tangent, Δ = central angle, Dc =
+            degree of curve (arc definition), E = external, M = middle ordinate.
+            Stations are continuous through each curve (PT − PC = L).
           </p>
         </Section>
       )}
@@ -196,7 +229,13 @@ function AlignmentReport({
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <div>
       <h4 className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -210,16 +249,34 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-md border border-border bg-background/50 px-2.5 py-1.5">
-      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">{value}</div>
+      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
+      <div className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">
+        {value}
+      </div>
     </div>
   );
 }
 
-function Th({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <th className={cn("py-1.5 pr-2 font-medium", className)}>{children}</th>;
+function Th({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <th className={cn("py-1.5 pr-2 font-medium", className)}>{children}</th>
+  );
 }
 
-function Td({ children, className }: { children?: React.ReactNode; className?: string }) {
+function Td({
+  children,
+  className,
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) {
   return <td className={cn("py-1 pr-2", className)}>{children}</td>;
 }

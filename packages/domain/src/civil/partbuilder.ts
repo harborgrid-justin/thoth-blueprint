@@ -1,4 +1,8 @@
-import type { PartParam, CustomPartDefinition, CustomPartCatalog } from "./types/partbuilder";
+import type {
+  PartParam,
+  CustomPartDefinition,
+  CustomPartCatalog,
+} from "./types/partbuilder";
 
 export type { PartParam, CustomPartDefinition, CustomPartCatalog };
 
@@ -8,8 +12,8 @@ export interface PartSizeParameter {
   name: string;
   description: string;
   storageType: SizeStorageType;
-  value: number;            // for Constant
-  listValues?: number[];    // for List
+  value: number; // for Constant
+  listValues?: number[]; // for List
   rangeLimit?: { min: number; max: number }; // for Range
 }
 
@@ -54,7 +58,7 @@ export function resolveCylindricalManhole(
   parameters: Record<string, number>,
 ): ResolvedStructureComponents {
   const frameHeight = parameters["FRH"] ?? 0.5; // Frame Height
-  const coneHeight = parameters["CNH"] ?? 1.5;  // Cone Height
+  const coneHeight = parameters["CNH"] ?? 1.5; // Cone Height
 
   const totalHeight = Math.max(0.1, rimElevation - sumpElevation);
 
@@ -130,10 +134,32 @@ export function getDefaultPartsCatalog(): PartsCatalog {
             shape: "Cylinder",
             description: "Standard precast concrete sewer or storm manhole",
             parameters: {
-              FRH: { name: "FRH", description: "Frame Height", storageType: "Constant", value: 0.5 },
-              CNH: { name: "CNH", description: "Cone Height", storageType: "Constant", value: 1.5 },
-              BDM: { name: "BDM", description: "Barrel Diameter", storageType: "List", value: 4.0, listValues: [3.0, 4.0, 5.0, 6.0] },
-              BDH: { name: "BDH", description: "Barrel Height", storageType: "Range", value: 4.0, rangeLimit: { min: 2.0, max: 12.0 } },
+              FRH: {
+                name: "FRH",
+                description: "Frame Height",
+                storageType: "Constant",
+                value: 0.5,
+              },
+              CNH: {
+                name: "CNH",
+                description: "Cone Height",
+                storageType: "Constant",
+                value: 1.5,
+              },
+              BDM: {
+                name: "BDM",
+                description: "Barrel Diameter",
+                storageType: "List",
+                value: 4.0,
+                listValues: [3.0, 4.0, 5.0, 6.0],
+              },
+              BDH: {
+                name: "BDH",
+                description: "Barrel Height",
+                storageType: "Range",
+                value: 4.0,
+                rangeLimit: { min: 2.0, max: 12.0 },
+              },
             },
           },
         ],
@@ -148,9 +174,26 @@ export function getDefaultPartsCatalog(): PartsCatalog {
             shape: "Box",
             description: "Rectangular precast vault structure",
             parameters: {
-              VWD: { name: "VWD", description: "Vault Width", storageType: "List", value: 4.0, listValues: [2.0, 3.0, 4.0, 6.0] },
-              VLN: { name: "VLN", description: "Vault Length", storageType: "List", value: 6.0, listValues: [4.0, 6.0, 8.0, 10.0] },
-              WTH: { name: "WTH", description: "Wall Thickness", storageType: "Constant", value: 0.5 },
+              VWD: {
+                name: "VWD",
+                description: "Vault Width",
+                storageType: "List",
+                value: 4.0,
+                listValues: [2.0, 3.0, 4.0, 6.0],
+              },
+              VLN: {
+                name: "VLN",
+                description: "Vault Length",
+                storageType: "List",
+                value: 6.0,
+                listValues: [4.0, 6.0, 8.0, 10.0],
+              },
+              WTH: {
+                name: "WTH",
+                description: "Wall Thickness",
+                storageType: "Constant",
+                value: 0.5,
+              },
             },
           },
         ],

@@ -97,7 +97,9 @@ const BY_CATEGORY = new Map<LandUseCategory, LandUseDefinition>(
 );
 
 /** Look up the definition for a category (falls back to `unassigned`). */
-export function landUseDefinition(category: LandUseCategory): LandUseDefinition {
+export function landUseDefinition(
+  category: LandUseCategory,
+): LandUseDefinition {
   return BY_CATEGORY.get(category) ?? BY_CATEGORY.get("unassigned")!;
 }
 

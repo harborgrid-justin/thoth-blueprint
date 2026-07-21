@@ -9,8 +9,12 @@ export function useTopBarState() {
   const dirty = useWorkspaceStore((s) => s.dirty);
   const renovationMode = useWorkspaceStore((s) => s.renovationMode);
   const toggleRenovationMode = useWorkspaceStore((s) => s.toggleRenovationMode);
-  const activeRenovationCategory = useWorkspaceStore((s) => s.activeRenovationCategory);
-  const setActiveRenovationCategory = useWorkspaceStore((s) => s.setActiveRenovationCategory);
+  const activeRenovationCategory = useWorkspaceStore(
+    (s) => s.activeRenovationCategory,
+  );
+  const setActiveRenovationCategory = useWorkspaceStore(
+    (s) => s.setActiveRenovationCategory,
+  );
   const { theme, toggleTheme } = useTheme();
 
   const {

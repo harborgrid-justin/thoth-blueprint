@@ -21,7 +21,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const AREA_UNITS: AreaUnit[] = ["sqm", "sqft", "acres", "hectares", "sqkm", "sqmi"];
+const AREA_UNITS: AreaUnit[] = [
+  "sqm",
+  "sqft",
+  "acres",
+  "hectares",
+  "sqkm",
+  "sqmi",
+];
 const LENGTH_UNITS: { value: LengthUnitPref; label: string }[] = [
   { value: "auto", label: "Follow plan units" },
   { value: "meters", label: "Metric (m)" },
@@ -51,8 +58,8 @@ export function PreferencesDialog() {
         <DialogHeader>
           <DialogTitle>Display preferences</DialogTitle>
           <DialogDescription>
-            How measurements, coordinates, and bearings are shown. Your plan's stored
-            geometry and coordinate system are never changed.
+            How measurements, coordinates, and bearings are shown. Your plan's
+            stored geometry and coordinate system are never changed.
           </DialogDescription>
         </DialogHeader>
 
@@ -79,7 +86,10 @@ export function PreferencesDialog() {
           <Row label="Area units">
             <PrefSelect
               value={prefs.areaUnit}
-              options={AREA_UNITS.map((u) => ({ value: u, label: `${areaUnitLabel(u)} (${u})` }))}
+              options={AREA_UNITS.map((u) => ({
+                value: u,
+                label: `${areaUnitLabel(u)} (${u})`,
+              }))}
               onChange={(v) => prefs.setAreaUnit(v as AreaUnit)}
             />
           </Row>
@@ -102,10 +112,17 @@ export function PreferencesDialog() {
 
           <div className="flex items-center justify-between rounded-md border border-border px-3 py-2.5">
             <div>
-              <Label className="text-sm text-foreground">High-contrast mode</Label>
-              <p className="text-xs text-muted-foreground">Stronger borders and text for readability.</p>
+              <Label className="text-sm text-foreground">
+                High-contrast mode
+              </Label>
+              <p className="text-xs text-muted-foreground">
+                Stronger borders and text for readability.
+              </p>
             </div>
-            <Switch checked={prefs.highContrast} onCheckedChange={prefs.setHighContrast} />
+            <Switch
+              checked={prefs.highContrast}
+              onCheckedChange={prefs.setHighContrast}
+            />
           </div>
         </div>
       </DialogContent>

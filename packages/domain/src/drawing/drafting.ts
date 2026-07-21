@@ -44,7 +44,9 @@ export const LINE_WEIGHTS: Record<LineWeightName, number> = {
 };
 
 /** The full ISO pen ladder in millimetres, for style pickers. */
-export const ISO_PEN_LADDER_MM = [0.13, 0.18, 0.25, 0.35, 0.5, 0.7, 1.0, 1.4, 2.0];
+export const ISO_PEN_LADDER_MM = [
+  0.13, 0.18, 0.25, 0.35, 0.5, 0.7, 1.0, 1.4, 2.0,
+];
 
 /** Millimetre width for a named line weight. */
 export function lineWeightMm(name: LineWeightName): number {
@@ -61,7 +63,11 @@ export const LINE_TYPES: Record<LineTypeName, LineTypeDef> = {
   dashed: { name: "dashed", label: "Dashed", pattern: [4, 2] },
   dashdot: { name: "dashdot", label: "Dash-dot", pattern: [8, 2, 1, 2] },
   dotted: { name: "dotted", label: "Dotted", pattern: [0.5, 2] },
-  property: { name: "property", label: "Property line", pattern: [14, 3, 3, 3] },
+  property: {
+    name: "property",
+    label: "Property line",
+    pattern: [14, 3, 3, 3],
+  },
   break: { name: "break", label: "Break", pattern: [6, 2, 1, 2] },
   matchline: { name: "matchline", label: "Match line", pattern: [16, 3, 3, 3] },
 };
@@ -77,8 +83,17 @@ export function lineTypePattern(name: LineTypeName): number[] {
  * Imperial architectural scales are quoted as `x" = 1'-0"`, i.e. `x` paper
  * inches represents 12 model inches, so modelPerPaper = 12 / x.
  */
-function arch(id: string, label: string, paperInchesPerFoot: number): DrawingScale {
-  return { id, label, system: "architectural", modelPerPaper: 12 / paperInchesPerFoot };
+function arch(
+  id: string,
+  label: string,
+  paperInchesPerFoot: number,
+): DrawingScale {
+  return {
+    id,
+    label,
+    system: "architectural",
+    modelPerPaper: 12 / paperInchesPerFoot,
+  };
 }
 
 /**
@@ -106,14 +121,14 @@ export const DRAWING_SCALES: DrawingScale[] = [
   arch("arch-1", '1" = 1\'-0"', 1),
   arch("arch-1-1-2", '1-1/2" = 1\'-0"', 1.5),
   arch("arch-3", '3" = 1\'-0"', 3),
-  eng("eng-10", '1" = 10\'', 10),
-  eng("eng-20", '1" = 20\'', 20),
-  eng("eng-30", '1" = 30\'', 30),
-  eng("eng-40", '1" = 40\'', 40),
-  eng("eng-50", '1" = 50\'', 50),
-  eng("eng-60", '1" = 60\'', 60),
-  eng("eng-100", '1" = 100\'', 100),
-  eng("eng-200", '1" = 200\'', 200),
+  eng("eng-10", "1\" = 10'", 10),
+  eng("eng-20", "1\" = 20'", 20),
+  eng("eng-30", "1\" = 30'", 30),
+  eng("eng-40", "1\" = 40'", 40),
+  eng("eng-50", "1\" = 50'", 50),
+  eng("eng-60", "1\" = 60'", 60),
+  eng("eng-100", "1\" = 100'", 100),
+  eng("eng-200", "1\" = 200'", 200),
   metric(1),
   metric(5),
   metric(10),
@@ -171,7 +186,27 @@ export const DISCIPLINES: Record<DisciplineCode, string> = {
 
 /** Canonical ordering of disciplines for sheet-set sorting. */
 export const DISCIPLINE_ORDER: DisciplineCode[] = [
-  "G", "H", "V", "B", "C", "L", "S", "A", "I", "Q", "F", "P", "D", "M", "E", "W", "T", "R", "X", "Z", "O",
+  "G",
+  "H",
+  "V",
+  "B",
+  "C",
+  "L",
+  "S",
+  "A",
+  "I",
+  "Q",
+  "F",
+  "P",
+  "D",
+  "M",
+  "E",
+  "W",
+  "T",
+  "R",
+  "X",
+  "Z",
+  "O",
 ];
 
 /** Name for a discipline code. */
@@ -195,7 +230,13 @@ export function formatLayerName(
 export function cadLayer(
   discipline: DisciplineCode,
   major: string,
-  attrs: { minor?: string; color: string; lineWeight: LineWeightName; lineType?: LineTypeName; plot?: boolean },
+  attrs: {
+    minor?: string;
+    color: string;
+    lineWeight: LineWeightName;
+    lineType?: LineTypeName;
+    plot?: boolean;
+  },
 ): CadLayer {
   return {
     name: formatLayerName(discipline, major, attrs.minor),
@@ -211,17 +252,41 @@ export function cadLayer(
 
 /** A standard starter layer set spanning the common disciplines. */
 export const STANDARD_CAD_LAYERS: CadLayer[] = [
-  cadLayer("G", "ANNO", { minor: "TTLB", color: "#0f172a", lineWeight: "thin" }),
-  cadLayer("C", "PROP", { color: "#0f172a", lineWeight: "wide", lineType: "property" }),
+  cadLayer("G", "ANNO", {
+    minor: "TTLB",
+    color: "#0f172a",
+    lineWeight: "thin",
+  }),
+  cadLayer("C", "PROP", {
+    color: "#0f172a",
+    lineWeight: "wide",
+    lineType: "property",
+  }),
   cadLayer("C", "TOPO", { color: "#92400e", lineWeight: "thin" }),
   cadLayer("C", "ROAD", { color: "#334155", lineWeight: "medium" }),
-  cadLayer("C", "ESMT", { color: "#7c3aed", lineWeight: "thin", lineType: "dashdot" }),
+  cadLayer("C", "ESMT", {
+    color: "#7c3aed",
+    lineWeight: "thin",
+    lineType: "dashdot",
+  }),
   cadLayer("L", "PLNT", { color: "#15803d", lineWeight: "thin" }),
-  cadLayer("S", "GRID", { color: "#64748b", lineWeight: "thin", lineType: "center" }),
-  cadLayer("A", "WALL", { minor: "FULL", color: "#0f172a", lineWeight: "wide" }),
+  cadLayer("S", "GRID", {
+    color: "#64748b",
+    lineWeight: "thin",
+    lineType: "center",
+  }),
+  cadLayer("A", "WALL", {
+    minor: "FULL",
+    color: "#0f172a",
+    lineWeight: "wide",
+  }),
   cadLayer("A", "GLAZ", { color: "#0284c7", lineWeight: "thin" }),
   cadLayer("A", "DOOR", { color: "#0f172a", lineWeight: "light" }),
-  cadLayer("A", "ANNO", { minor: "DIMS", color: "#0f172a", lineWeight: "fine" }),
+  cadLayer("A", "ANNO", {
+    minor: "DIMS",
+    color: "#0f172a",
+    lineWeight: "fine",
+  }),
   cadLayer("A", "ROOM", { color: "#475569", lineWeight: "fine" }),
 ];
 

@@ -1,8 +1,12 @@
 import { useCanvasStore } from "@/store/canvasStore";
-import { promptViewName, confirmDeleteView } from "../helpers/namedViewsHelpers";
+import {
+  promptViewName,
+  confirmDeleteView,
+} from "../helpers/namedViewsHelpers";
 
 export function useNamedViewsState() {
-  const { namedViews, addNamedView, deleteNamedView, setViewport } = useCanvasStore();
+  const { namedViews, addNamedView, deleteNamedView, setViewport } =
+    useCanvasStore();
 
   function handleSave() {
     const name = promptViewName();

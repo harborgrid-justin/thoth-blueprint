@@ -38,7 +38,9 @@ export function saveGradingPadElevation({
   cutSlope: number;
   fillSlope: number;
 }) {
-  const matchingPad = _.find(site?.elements, (e: any) => e.kind === "parcel") ?? site?.elements[0];
+  const matchingPad =
+    _.find(site?.elements, (e: any) => e.kind === "parcel") ??
+    site?.elements[0];
   if (matchingPad) {
     const patch = {
       ...matchingPad,
@@ -64,9 +66,16 @@ export function solveGradingBalance({
   targetVolume: number;
   onComplete: (balancedElev: number) => void;
 }) {
-  if (!terrainSurface) {return;}
+  if (!terrainSurface) {
+    return;
+  }
   setTimeout(() => {
-    const balancedElev = solveBalancedElevation(gradingPad, terrainSurface, targetVolume, 5);
+    const balancedElev = solveBalancedElevation(
+      gradingPad,
+      terrainSurface,
+      targetVolume,
+      5,
+    );
     onComplete(Number(formatRatio(balancedElev)));
   }, 800);
 }

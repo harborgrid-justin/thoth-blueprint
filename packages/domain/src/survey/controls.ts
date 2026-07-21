@@ -31,7 +31,9 @@ export const CONTROL_LINE_DEFINITIONS: ControlLineDefinition[] = [
 
 const BY_TYPE = new Map(CONTROL_LINE_DEFINITIONS.map((d) => [d.type, d]));
 
-export function controlLineDefinition(type: ControlLineType): ControlLineDefinition {
+export function controlLineDefinition(
+  type: ControlLineType,
+): ControlLineDefinition {
   return BY_TYPE.get(type) ?? { type, label: type };
 }
 
@@ -54,8 +56,12 @@ export const CIVIL_SYMBOL_DEFINITIONS: CivilSymbolDefinition[] = [
   { type: "silt-basin", label: "Sediment basin / trap" },
 ];
 
-const SYMBOL_BY_TYPE = new Map(CIVIL_SYMBOL_DEFINITIONS.map((d) => [d.type, d]));
+const SYMBOL_BY_TYPE = new Map(
+  CIVIL_SYMBOL_DEFINITIONS.map((d) => [d.type, d]),
+);
 
-export function civilSymbolDefinition(type: CivilSymbolType): CivilSymbolDefinition {
+export function civilSymbolDefinition(
+  type: CivilSymbolType,
+): CivilSymbolDefinition {
   return SYMBOL_BY_TYPE.get(type) ?? { type, label: type };
 }

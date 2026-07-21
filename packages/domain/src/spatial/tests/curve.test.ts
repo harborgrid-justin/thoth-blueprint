@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { area as polygonArea, distance, type Point, type Polygon } from "../geometry";
+import {
+  area as polygonArea,
+  distance,
+  type Point,
+  type Polygon,
+} from "../geometry";
 import {
   boundaryArea,
   boundaryPerimeter,

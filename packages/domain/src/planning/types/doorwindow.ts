@@ -26,10 +26,11 @@ export interface UnitScheduleItem {
   hardware: string;
   fireRating: string;
   stcRating: number;
+  stc?: number;
   safety: string;
 }
 
-export interface UnitSchedule {
+export type UnitSchedule = UnitScheduleItem[] & {
   doors: UnitScheduleItem[];
   windows: UnitScheduleItem[];
-}
+};

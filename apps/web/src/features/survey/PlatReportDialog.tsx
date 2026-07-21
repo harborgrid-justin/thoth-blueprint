@@ -50,7 +50,9 @@ export function PlatReportDialog() {
     selected,
   } = usePlatReportState();
 
-  if (!site) {return null;}
+  if (!site) {
+    return null;
+  }
 
   return (
     <Dialog open={platOpen} onOpenChange={(o) => !o && closePlat()}>
@@ -60,8 +62,8 @@ export function PlatReportDialog() {
             <Ruler className="h-5 w-5 text-primary" /> Plat &amp; Survey Report
           </DialogTitle>
           <DialogDescription>
-            Metes-and-bounds courses, corner coordinates, closure, and the legal description for each
-            tract in {site.name}.
+            Metes-and-bounds courses, corner coordinates, closure, and the legal
+            description for each tract in {site.name}.
           </DialogDescription>
         </DialogHeader>
 
@@ -81,7 +83,8 @@ export function PlatReportDialog() {
               />
             ) : (
               <div className="py-16 text-center text-sm text-muted-foreground">
-                No surveyable tracts yet. Draw a parcel or lot to generate a plat.
+                No surveyable tracts yet. Draw a parcel or lot to generate a
+                plat.
               </div>
             )}
           </ScrollArea>
@@ -122,9 +125,13 @@ function TractList({
                   key={el.id}
                   type="button"
                   onClick={() => onSelect(el.id)}
-                  onMouseEnter={() => useWorkspaceStore.getState().hoverElement(el.id)}
+                  onMouseEnter={() =>
+                    useWorkspaceStore.getState().hoverElement(el.id)
+                  }
                   onMouseLeave={() => {
-                    if (useWorkspaceStore.getState().hoveredElementId === el.id) {
+                    if (
+                      useWorkspaceStore.getState().hoveredElementId === el.id
+                    ) {
                       useWorkspaceStore.getState().hoverElement(null);
                     }
                   }}
@@ -166,7 +173,12 @@ function TractReport({
     : siteName;
   const legal = React.useMemo(
     () =>
-      legalDescription(element.boundary, spatial, { tractName: element.name, context }, element.arcs),
+      legalDescription(
+        element.boundary,
+        spatial,
+        { tractName: element.name, context },
+        element.arcs,
+      ),
     [element, spatial, context],
   );
   const u = unitLabel(spatial.units);
@@ -180,7 +192,9 @@ function TractReport({
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h3 className="text-base font-semibold text-foreground">{element.name}</h3>
+          <h3 className="text-base font-semibold text-foreground">
+            {element.name}
+          </h3>
           <Badge variant="outline" className="mt-1 capitalize">
             {elementMeta(element.kind).label}
           </Badge>
@@ -190,12 +204,23 @@ function TractReport({
         </Button>
       </div>
 
-      <PlatDrawing element={element} spatial={spatial} report={report} siteName={siteName} />
+      <PlatDrawing
+        element={element}
+        spatial={spatial}
+        report={report}
+        siteName={siteName}
+      />
 
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        <Stat label={`Area (${u}²)`} value={formatNumber(report.area.squareUnits, 0)} />
+        <Stat
+          label={`Area (${u}²)`}
+          value={formatNumber(report.area.squareUnits, 0)}
+        />
         <Stat label="Area (acres)" value={report.area.acres.toFixed(3)} />
-        <Stat label={`Perimeter (${u})`} value={formatNumber(report.perimeter, 2)} />
+        <Stat
+          label={`Perimeter (${u})`}
+          value={formatNumber(report.perimeter, 2)}
+        />
         <Stat label="Record closure" value={report.record.precisionText} />
       </div>
 
@@ -214,12 +239,19 @@ function TractReport({
             {_.map(report.courses, (c) => (
               <tr key={c.index} className="border-b border-border/50">
                 <Td>
-                  {c.curve ? c.curve.label : `L${c.index}`} · {c.fromLabel}–{c.toLabel}
+                  {c.curve ? c.curve.label : `L${c.index}`} · {c.fromLabel}–
+                  {c.toLabel}
                 </Td>
                 <Td>{c.curve ? `⌒ chord ${c.bearingText}` : c.bearingText}</Td>
-                <Td className="text-right tabular-nums">{c.distance.toFixed(2)}</Td>
-                <Td className="text-right tabular-nums">{signed(c.latitude)}</Td>
-                <Td className="text-right tabular-nums">{signed(c.departure)}</Td>
+                <Td className="text-right tabular-nums">
+                  {c.distance.toFixed(2)}
+                </Td>
+                <Td className="text-right tabular-nums">
+                  {signed(c.latitude)}
+                </Td>
+                <Td className="text-right tabular-nums">
+                  {signed(c.departure)}
+                </Td>
               </tr>
             ))}
           </tbody>
@@ -227,9 +259,15 @@ function TractReport({
             <tr className="border-t border-border text-muted-foreground">
               <Td className="font-medium">Σ misclosure</Td>
               <Td />
-              <Td className="text-right tabular-nums">{report.record.perimeter.toFixed(2)}</Td>
-              <Td className="text-right tabular-nums">{signed(report.record.latitudeError, 4)}</Td>
-              <Td className="text-right tabular-nums">{signed(report.record.departureError, 4)}</Td>
+              <Td className="text-right tabular-nums">
+                {report.record.perimeter.toFixed(2)}
+              </Td>
+              <Td className="text-right tabular-nums">
+                {signed(report.record.latitudeError, 4)}
+              </Td>
+              <Td className="text-right tabular-nums">
+                {signed(report.record.departureError, 4)}
+              </Td>
             </tr>
           </tfoot>
         </table>
@@ -258,21 +296,27 @@ function TractReport({
               <tr key={a.label} className="border-b border-border/50">
                 <Td>{a.label}</Td>
                 <Td className="text-right tabular-nums">{dmsText(a.dms)}</Td>
-                <Td className="text-right tabular-nums">{a.interior.toFixed(4)}°</Td>
+                <Td className="text-right tabular-nums">
+                  {a.interior.toFixed(4)}°
+                </Td>
               </tr>
             ))}
           </tbody>
           <tfoot>
             <tr className="border-t border-border text-muted-foreground">
               <Td className="font-medium">Σ</Td>
-              <Td className="text-right tabular-nums">{report.anglesSum.toFixed(2)}°</Td>
-              <Td className="text-right tabular-nums">= {report.anglesExpected}°</Td>
+              <Td className="text-right tabular-nums">
+                {report.anglesSum.toFixed(2)}°
+              </Td>
+              <Td className="text-right tabular-nums">
+                = {report.anglesExpected}°
+              </Td>
             </tr>
           </tfoot>
         </table>
         <p className="mt-1.5 text-[11px] text-muted-foreground">
-          Interior angles sum to (n − 2) × 180° = {report.anglesExpected}° for {report.angles.length}{" "}
-          corners — a geometric check on the traverse.
+          Interior angles sum to (n − 2) × 180° = {report.anglesExpected}° for{" "}
+          {report.angles.length} corners — a geometric check on the traverse.
         </p>
       </Section>
 
@@ -296,14 +340,24 @@ function TractReport({
                 {_.map(report.curves, (cv) => (
                   <tr key={cv.label} className="border-b border-border/50">
                     <Td>{cv.label}</Td>
-                    <Td className="text-right tabular-nums">{cv.radius.toFixed(2)}</Td>
-                    <Td className="text-right tabular-nums">{cv.arcLength.toFixed(2)}</Td>
-                    <Td className="text-right tabular-nums">{dmsText(cv.deltaDms)}</Td>
                     <Td className="text-right tabular-nums">
-                      {Number.isFinite(cv.tangent) ? cv.tangent.toFixed(2) : "∞"}
+                      {cv.radius.toFixed(2)}
+                    </Td>
+                    <Td className="text-right tabular-nums">
+                      {cv.arcLength.toFixed(2)}
+                    </Td>
+                    <Td className="text-right tabular-nums">
+                      {dmsText(cv.deltaDms)}
+                    </Td>
+                    <Td className="text-right tabular-nums">
+                      {Number.isFinite(cv.tangent)
+                        ? cv.tangent.toFixed(2)
+                        : "∞"}
                     </Td>
                     <Td>{cv.chordBearingText}</Td>
-                    <Td className="text-right tabular-nums">{cv.chordLength.toFixed(2)}</Td>
+                    <Td className="text-right tabular-nums">
+                      {cv.chordLength.toFixed(2)}
+                    </Td>
                     <Td className="uppercase">{cv.direction[0]}</Td>
                   </tr>
                 ))}
@@ -312,8 +366,8 @@ function TractReport({
           </div>
           <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">
             Circular curves: R = radius, L = arc length, Δ = central angle, T =
-            tangent, Dir = curves left/right along travel. Tract area includes the
-            circular segments; the traverse closes on the long chords.
+            tangent, Dir = curves left/right along travel. Tract area includes
+            the circular segments; the traverse closes on the long chords.
           </p>
         </Section>
       )}
@@ -331,18 +385,19 @@ function TractReport({
             {_.map(report.coordinates, (c) => (
               <tr key={c.label} className="border-b border-border/50">
                 <Td>{c.label}</Td>
-                <Td className="text-right tabular-nums">{c.northing.toFixed(2)}</Td>
-                <Td className="text-right tabular-nums">{c.easting.toFixed(2)}</Td>
+                <Td className="text-right tabular-nums">
+                  {c.northing.toFixed(2)}
+                </Td>
+                <Td className="text-right tabular-nums">
+                  {c.easting.toFixed(2)}
+                </Td>
               </tr>
             ))}
           </tbody>
         </table>
       </Section>
 
-      <Section
-        title="Legal Description"
-        action={<CopyButton text={legal} />}
-      >
+      <Section title="Legal Description" action={<CopyButton text={legal} />}>
         <pre className="whitespace-pre-wrap rounded-md border border-border bg-background/60 p-3 font-mono text-[11px] leading-relaxed text-foreground">
           {legal}
         </pre>
@@ -367,7 +422,11 @@ function CopyButton({ text }: { text: string }) {
         }
       }}
     >
-      {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+      {copied ? (
+        <Check className="h-4 w-4 text-emerald-500" />
+      ) : (
+        <Copy className="h-4 w-4" />
+      )}
       {copied ? "Copied" : "Copy"}
     </Button>
   );
@@ -385,7 +444,9 @@ function Section({
   return (
     <div>
       <div className="mb-1.5 flex items-center justify-between">
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</h4>
+        <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          {title}
+        </h4>
         {action}
       </div>
       {children}
@@ -396,16 +457,34 @@ function Section({
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-md border border-border bg-background/50 px-2.5 py-1.5">
-      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">{value}</div>
+      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+        {label}
+      </div>
+      <div className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">
+        {value}
+      </div>
     </div>
   );
 }
 
-function Th({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <th className={cn("py-1.5 pr-2 font-medium", className)}>{children}</th>;
+function Th({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <th className={cn("py-1.5 pr-2 font-medium", className)}>{children}</th>
+  );
 }
 
-function Td({ children, className }: { children?: React.ReactNode; className?: string }) {
+function Td({
+  children,
+  className,
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) {
   return <td className={cn("py-1 pr-2", className)}>{children}</td>;
 }

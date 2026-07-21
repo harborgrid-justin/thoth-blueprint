@@ -7,7 +7,10 @@ export const DEGREE_OF_CURVE_CONST = (100 * 180) / Math.PI;
 /**
  * Convert length in plan units to meters based on unit system.
  */
-export function toMeters(value: number, units: "feet" | "meters" = "feet"): number {
+export function toMeters(
+  value: number,
+  units: "feet" | "meters" = "feet",
+): number {
   return value * (units === "feet" ? FEET_TO_METERS : 1);
 }
 

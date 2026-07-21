@@ -23,7 +23,11 @@ import { buildTerrainModel, siteExtent } from "@/features/terrain/terrainModel";
 import { enterpriseStair } from "./stairs3d";
 import { enterpriseCurtainWall } from "./curtainwall3d";
 import { enterpriseDoor, enterpriseWindow } from "./doorwindow3d";
-import { enterpriseBuilding, buildingInterior, shapeFromBoundary } from "./building3d";
+import {
+  enterpriseBuilding,
+  buildingInterior,
+  shapeFromBoundary,
+} from "./building3d";
 import { enterpriseRoof } from "./roof3d";
 
 export interface SceneResult {
@@ -44,7 +48,9 @@ const DRAPE_OFFSET = 0.6;
 
 export function buildScene(site: Site): SceneResult | null {
   const extent = siteExtent(site);
-  if (!extent) {return null;}
+  if (!extent) {
+    return null;
+  }
 
   const terrain = buildTerrainModel(site);
   const center = boundsCenter(extent);
@@ -71,12 +77,19 @@ export function buildScene(site: Site): SceneResult | null {
     let minElev = 0;
     if (surface) {
       minElev = Infinity;
-      for (const h of surface.heights) {if (h < minElev) {minElev = h;}}
+      for (const h of surface.heights) {
+        if (h < minElev) {
+          minElev = h;
+        }
+      }
     }
     const span = Math.max(extent.maxX - extent.minX, extent.maxY - extent.minY);
     const geo = new THREE.PlaneGeometry(span * 12, span * 12);
     geo.rotateX(-Math.PI / 2);
-    const mat = new THREE.MeshStandardMaterial({ color: 0x47593c, roughness: 1 });
+    const mat = new THREE.MeshStandardMaterial({
+      color: 0x47593c,
+      roughness: 1,
+    });
     disposables.push(geo, mat);
     const plane = new THREE.Mesh(geo, mat);
     plane.position.y = minElev * exag - 0.6;
@@ -99,11 +112,22 @@ export function buildScene(site: Site): SceneResult | null {
   for (const el of site.elements) {
     if (isPointElement(el)) {
       if (el.kind === "tree") {
-        group.add(treeObject(el.position, el.canopyRadius, elevAt(el.position) * exag, tx, tz, disposables));
+        group.add(
+          treeObject(
+            el.position,
+            el.canopyRadius,
+            elevAt(el.position) * exag,
+            tx,
+            tz,
+            disposables,
+          ),
+        );
       }
       continue;
     }
-    if (!isSpatialElement(el)) {continue;}
+    if (!isSpatialElement(el)) {
+      continue;
+    }
 
     const ring = densifyBoundary(el.boundary, el.arcs, 3);
 
@@ -111,7 +135,16 @@ export function buildScene(site: Site): SceneResult | null {
       const storeys = Math.max(1, el.storeys);
       const height = (el.height ?? storeys * 3.2) * exag;
       const base = elevAt(centroid(ring)) * exag;
-      const bGroup = enterpriseBuilding(ring, center, base, storeys, height, el.use, el.renovationStatus, disposables);
+      const bGroup = enterpriseBuilding(
+        ring,
+        center,
+        base,
+        storeys,
+        height,
+        el.use,
+        el.renovationStatus,
+        disposables,
+      );
       bGroup.name = el.id;
       buildingMeshes.set(el.id, bGroup);
       group.add(bGroup);
@@ -120,7 +153,13 @@ export function buildScene(site: Site): SceneResult | null {
 
     if (el.kind === "stair") {
       const base = elevAt(centroid(ring)) * exag;
-      const sGroup = enterpriseStair(el as Stair, center, base, exag, disposables);
+      const sGroup = enterpriseStair(
+        el as Stair,
+        center,
+        base,
+        exag,
+        disposables,
+      );
       sGroup.name = el.id;
       group.add(sGroup);
       continue;
@@ -128,7 +167,13 @@ export function buildScene(site: Site): SceneResult | null {
 
     if (el.kind === "curtainwall") {
       const base = elevAt(centroid(ring)) * exag;
-      const cwGroup = enterpriseCurtainWall(el as CurtainWall, center, base, exag, disposables);
+      const cwGroup = enterpriseCurtainWall(
+        el as CurtainWall,
+        center,
+        base,
+        exag,
+        disposables,
+      );
       cwGroup.name = el.id;
       group.add(cwGroup);
       continue;
@@ -136,7 +181,13 @@ export function buildScene(site: Site): SceneResult | null {
 
     if (el.kind === "door") {
       const base = elevAt(centroid(ring)) * exag;
-      const dGroup = enterpriseDoor(el as DoorElement, center, base, exag, disposables);
+      const dGroup = enterpriseDoor(
+        el as DoorElement,
+        center,
+        base,
+        exag,
+        disposables,
+      );
       dGroup.name = el.id;
       group.add(dGroup);
       continue;
@@ -144,7 +195,13 @@ export function buildScene(site: Site): SceneResult | null {
 
     if (el.kind === "window") {
       const base = elevAt(centroid(ring)) * exag;
-      const wGroup = enterpriseWindow(el as WindowElement, center, base, exag, disposables);
+      const wGroup = enterpriseWindow(
+        el as WindowElement,
+        center,
+        base,
+        exag,
+        disposables,
+      );
       wGroup.name = el.id;
       group.add(wGroup);
       continue;
@@ -152,7 +209,13 @@ export function buildScene(site: Site): SceneResult | null {
 
     if (el.kind === "roof") {
       const base = elevAt(centroid(ring)) * exag;
-      const rGroup = enterpriseRoof(el as RoofElement, center, base, exag, disposables);
+      const rGroup = enterpriseRoof(
+        el as RoofElement,
+        center,
+        base,
+        exag,
+        disposables,
+      );
       rGroup.name = el.id;
       group.add(rGroup);
       continue;
@@ -161,8 +224,14 @@ export function buildScene(site: Site): SceneResult | null {
     const category = el.kind === "landuse" ? el.category : undefined;
     let color = new THREE.Color(elementColor(el.kind, category)).getHex();
     let opacity =
-      el.kind === "water" ? 0.82 : el.kind === "region" ? 0.1 : el.kind === "grade" ? 0.45 : 0.5;
-    
+      el.kind === "water"
+        ? 0.82
+        : el.kind === "region"
+          ? 0.1
+          : el.kind === "grade"
+            ? 0.45
+            : 0.5;
+
     if (el.renovationStatus === "new") {
       color = 0x22c55e;
       opacity = Math.max(opacity, 0.6);
@@ -171,7 +240,8 @@ export function buildScene(site: Site): SceneResult | null {
       opacity = opacity * 0.4;
     }
 
-    const lift = el.kind === "water" ? -0.3 : el.kind === "region" ? 0.15 : DRAPE_OFFSET;
+    const lift =
+      el.kind === "water" ? -0.3 : el.kind === "region" ? 0.15 : DRAPE_OFFSET;
     const roughness = el.kind === "water" ? 0.12 : 0.9;
     const metalness = el.kind === "water" ? 0.0 : 0.02;
     draped.push({ ring, color, opacity, lift, roughness, metalness });
@@ -192,12 +262,35 @@ export function buildScene(site: Site): SceneResult | null {
     .sort((a, b) => b.opacity - a.opacity)
     .forEach((d) =>
       group.add(
-        conformingDrape(d.ring, center, elevAt, exag, d.lift, d.color, d.opacity, d.roughness, d.metalness, disposables),
+        conformingDrape(
+          d.ring,
+          center,
+          elevAt,
+          exag,
+          d.lift,
+          d.color,
+          d.opacity,
+          d.roughness,
+          d.metalness,
+          disposables,
+        ),
       ),
     );
 
   // Parcel outlines
-  outlines.forEach((o) => group.add(boundaryOutline(o.ring, center, elevAt, exag, o.lift, o.color, disposables)));
+  outlines.forEach((o) =>
+    group.add(
+      boundaryOutline(
+        o.ring,
+        center,
+        elevAt,
+        exag,
+        o.lift,
+        o.color,
+        disposables,
+      ),
+    ),
+  );
 
   buildingMeshes.forEach((b) => group.add(b));
 
@@ -213,8 +306,22 @@ export function buildScene(site: Site): SceneResult | null {
     for (const edge of net.edges) {
       const a = nodes.get(edge.from);
       const b = nodes.get(edge.to);
-      if (!a || !b) {continue;}
-      group.add(networkEdge(a, b, center, elevAt, exag, color, edge.width ?? 6, net.kind === "road", disposables));
+      if (!a || !b) {
+        continue;
+      }
+      group.add(
+        networkEdge(
+          a,
+          b,
+          center,
+          elevAt,
+          exag,
+          color,
+          edge.width ?? 6,
+          net.kind === "road",
+          disposables,
+        ),
+      );
     }
   }
 
@@ -250,8 +357,12 @@ function terrainMesh(
   let min = Infinity;
   let max = -Infinity;
   for (const h of grid.heights) {
-    if (h < min) {min = h;}
-    if (h > max) {max = h;}
+    if (h < min) {
+      min = h;
+    }
+    if (h > max) {
+      max = h;
+    }
   }
   const span = Math.max(1e-6, max - min);
 
@@ -294,11 +405,11 @@ function terrainMesh(
  */
 function terrainColor(t: number): THREE.Color {
   const stops: [number, THREE.Color][] = [
-    [0.00, new THREE.Color(0x3a6b32)], // deep green lowland
+    [0.0, new THREE.Color(0x3a6b32)], // deep green lowland
     [0.25, new THREE.Color(0x6b8c4a)], // mid-slope olive
-    [0.50, new THREE.Color(0xb8a06a)], // sandy transition
+    [0.5, new THREE.Color(0xb8a06a)], // sandy transition
     [0.75, new THREE.Color(0x8a6e52)], // rocky brown
-    [1.00, new THREE.Color(0xc8bfb0)], // light peak
+    [1.0, new THREE.Color(0xc8bfb0)], // light peak
   ];
 
   for (let i = 0; i < stops.length - 1; i++) {
@@ -315,10 +426,14 @@ const OUTLINE_KINDS = new Set(["parcel", "lot", "zone", "block", "openspace"]);
 
 function outlineColor(kind: string): number {
   switch (kind) {
-    case "lot": return 0x0c4a6e;
-    case "zone": return 0x5b21b6;
-    case "openspace": return 0x115e59;
-    default: return 0x334155;
+    case "lot":
+      return 0x0c4a6e;
+    case "zone":
+      return 0x5b21b6;
+    case "openspace":
+      return 0x115e59;
+    default:
+      return 0x334155;
   }
 }
 
@@ -366,11 +481,22 @@ function boundaryOutline(
   disposables: Array<{ dispose: () => void }>,
 ): THREE.Line {
   const pts = ring.map(
-    (p) => new THREE.Vector3(p.x - center.x, elevAt(p) * exag + lift, p.y - center.y),
+    (p) =>
+      new THREE.Vector3(
+        p.x - center.x,
+        elevAt(p) * exag + lift,
+        p.y - center.y,
+      ),
   );
-  if (pts.length) {pts.push(pts[0].clone());}
+  if (pts.length) {
+    pts.push(pts[0].clone());
+  }
   const geo = new THREE.BufferGeometry().setFromPoints(pts);
-  const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.85 });
+  const mat = new THREE.LineBasicMaterial({
+    color,
+    transparent: true,
+    opacity: 0.85,
+  });
   disposables.push(geo, mat);
   return new THREE.Line(geo, mat);
 }
@@ -385,9 +511,15 @@ function treeObject(
 ): THREE.Group {
   const r = Math.max(1.5, canopyRadius);
   const canopyGeo = new THREE.ConeGeometry(r, r * 2.2, 7);
-  const canopyMat = new THREE.MeshStandardMaterial({ color: 0x2f7d32, roughness: 0.9 });
+  const canopyMat = new THREE.MeshStandardMaterial({
+    color: 0x2f7d32,
+    roughness: 0.9,
+  });
   const trunkGeo = new THREE.CylinderGeometry(r * 0.12, r * 0.16, r, 5);
-  const trunkMat = new THREE.MeshStandardMaterial({ color: 0x6b4423, roughness: 1 });
+  const trunkMat = new THREE.MeshStandardMaterial({
+    color: 0x6b4423,
+    roughness: 1,
+  });
   disposables.push(canopyGeo, canopyMat, trunkGeo, trunkMat);
 
   const g = new THREE.Group();
@@ -432,15 +564,27 @@ function networkEdge(
     const nrm = new THREE.Vector2(-dir.y, dir.x).multiplyScalar(width / 2);
     const geo = new THREE.BufferGeometry();
     const verts = new Float32Array([
-      ax + nrm.x, ay, az + nrm.y,
-      ax - nrm.x, ay, az - nrm.y,
-      bx + nrm.x, by, bz + nrm.y,
-      bx - nrm.x, by, bz - nrm.y,
+      ax + nrm.x,
+      ay,
+      az + nrm.y,
+      ax - nrm.x,
+      ay,
+      az - nrm.y,
+      bx + nrm.x,
+      by,
+      bz + nrm.y,
+      bx - nrm.x,
+      by,
+      bz - nrm.y,
     ]);
     geo.setAttribute("position", new THREE.BufferAttribute(verts, 3));
     geo.setIndex([0, 2, 1, 1, 2, 3]);
     geo.computeVertexNormals();
-    const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.9, side: THREE.DoubleSide });
+    const mat = new THREE.MeshStandardMaterial({
+      color,
+      roughness: 0.9,
+      side: THREE.DoubleSide,
+    });
     disposables.push(geo, mat);
     return new THREE.Mesh(geo, mat);
   }
@@ -453,5 +597,3 @@ function networkEdge(
   disposables.push(geo, mat);
   return new THREE.Line(geo, mat);
 }
-
-

@@ -97,7 +97,14 @@ describe("PLY binary parsing", () => {
     buf.set(headerBytes, 0);
     buf.set(new Uint8Array(body), headerBytes.length);
     const parsed = parsePLY(buf.buffer);
-    expect(parsed.points[0]).toMatchObject({ x: 1.5, y: -2.5, z: 3.5, r: 200, g: 100, b: 50 });
+    expect(parsed.points[0]).toMatchObject({
+      x: 1.5,
+      y: -2.5,
+      z: 3.5,
+      r: 200,
+      g: 100,
+      b: 50,
+    });
   });
 });
 
@@ -111,7 +118,9 @@ describe("LAS round-trip (binary)", () => {
 
   it("has a valid LASF signature", () => {
     const bytes = new Uint8Array(writeLAS(cloud));
-    expect(String.fromCharCode(bytes[0], bytes[1], bytes[2], bytes[3])).toBe("LASF");
+    expect(String.fromCharCode(bytes[0], bytes[1], bytes[2], bytes[3])).toBe(
+      "LASF",
+    );
   });
 });
 

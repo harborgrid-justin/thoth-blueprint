@@ -38,5 +38,7 @@ export interface CivilSymbol {
   type: CivilSymbolType;
   position: { x: number; y: number };
   rotationDeg?: number;
+  rotation?: number;
+  subtype?: string;
   label?: string;
 }

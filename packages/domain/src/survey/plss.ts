@@ -58,7 +58,11 @@ export function sectionFrame(nwCorner: Point, side: number): SectionFrame {
 }
 
 /** The NW corner and side of one quarter of a square given by its NW corner. */
-function quarterOrigin(nwCorner: Point, side: number, q: Quarter): { nw: Point; side: number } {
+function quarterOrigin(
+  nwCorner: Point,
+  side: number,
+  q: Quarter,
+): { nw: Point; side: number } {
   const half = side / 2;
   const { x, y } = nwCorner;
   switch (q) {
@@ -78,7 +82,11 @@ function quarterOrigin(nwCorner: Point, side: number, q: Quarter): { nw: Point; 
  * side. `path` reads outer→inner: `["SE", "NW"]` is "the NW1/4 of the SE1/4".
  * Returned as a closed ring (NW, NE, SE, SW) in plan coordinates.
  */
-export function aliquotRect(nwCorner: Point, side: number, path: Quarter[]): Polygon {
+export function aliquotRect(
+  nwCorner: Point,
+  side: number,
+  path: Quarter[],
+): Polygon {
   let origin = nwCorner;
   let s = side;
   for (const q of path) {
@@ -101,7 +109,9 @@ export function nominalAliquotAcres(path: Quarter[]): number {
 
 /** Format an aliquot path as "NW1/4 of the SE1/4 of the …". */
 export function formatAliquot(path: Quarter[]): string {
-  if (path.length === 0) {return "all";}
+  if (path.length === 0) {
+    return "all";
+  }
   // The path is outer→inner; the description reads inner→outer.
   return (
     "the " +
@@ -125,21 +135,58 @@ export function formatTownshipRange(tr: TownshipRange): string {
   return `Township ${tr.township} ${tr.townshipDir}, Range ${tr.range} ${tr.rangeDir}`;
 }
 
-/** Full PLSS reference, e.g. "the NW1/4 of the SE1/4 of Section 8, Township 3 South, Range 16 East". */
-export function formatPLSS(path: Quarter[], section: number, tr: TownshipRange): string {
-  const mer = tr.meridian ? `, ${tr.meridian} Meridian` : "";
-  const aliq = path.length > 0 ? `${formatAliquot(path)} of ` : "";
-  return `${aliq}Section ${section}, ${formatTownshipRange(tr)}${mer}`;
+/** Full PLSS reference, e.g. "the NW1/4 of the SE1/4 of Section 8, Township 3 South, Range 16 East" or "Section 8, Township 3 South, Range 16 East". */
+export function formatPLSS(
+  arg1: Quarter[] | TownshipRange,
+  section: number,
+  tr?: TownshipRange,
+): string {
+  if (Array.isArray(arg1)) {
+    const path = arg1;
+    const townshipRange = tr!;
+    const mer = townshipRange.meridian
+      ? `, ${townshipRange.meridian} Meridian`
+      : "";
+    const aliq = path.length > 0 ? `${formatAliquot(path)} of ` : "";
+    return `${aliq}Section ${section}, ${formatTownshipRange(townshipRange)}${mer}`;
+  } else {
+    const townshipRange = arg1;
+    const mer = townshipRange.meridian
+      ? `, ${townshipRange.meridian} Meridian`
+      : "";
+    return `Section ${section}, ${formatTownshipRange(townshipRange)}${mer}`;
+  }
 }
 
-/** Abbreviated PLSS reference, e.g. "NW1/4 SE1/4 Sec 8, T3S, R16E". */
-export function formatPLSSShort(path: Quarter[], section: number, tr: TownshipRange): string {
-  const aliq = path.length > 0 ? `${path.reverse().map((q) => `${q}1/4`).join(" ")} ` : "";
-  return `${aliq}Sec ${section}, ${formatTownshipRangeShort(tr)}`;
+/** Abbreviated PLSS reference, e.g. "NW1/4 SE1/4 Sec 8, T3S, R16E" or "Sec 8, T3S, R16E". */
+export function formatPLSSShort(
+  arg1: Quarter[] | TownshipRange,
+  section: number,
+  tr?: TownshipRange,
+): string {
+  if (Array.isArray(arg1)) {
+    const path = arg1;
+    const townshipRange = tr!;
+    const aliq =
+      path.length > 0
+        ? `${path
+            .slice()
+            .reverse()
+            .map((q) => `${q}1/4`)
+            .join(" ")} `
+        : "";
+    return `${aliq}Sec ${section}, ${formatTownshipRangeShort(townshipRange)}`;
+  } else {
+    const townshipRange = arg1;
+    return `Sec ${section}, ${formatTownshipRangeShort(townshipRange)}`;
+  }
 }
 
 /** The standard corner name for a section corner or quarter corner. */
-export function sectionCornerName(section: number, corner: "nw" | "ne" | "sw" | "se" | "north" | "south" | "east" | "west"): string {
+export function sectionCornerName(
+  section: number,
+  corner: "nw" | "ne" | "sw" | "se" | "north" | "south" | "east" | "west",
+): string {
   const labels: Record<string, string> = {
     nw: "NW corner",
     ne: "NE corner",
@@ -158,8 +205,12 @@ export function sectionCornerName(section: number, corner: "nw" | "ne" | "sw" | 
  * following the standard boustrophedon: Section 1 is the NE corner, numbering
  * runs west across the top tier, then serpentines down to Section 36 in the SE.
  */
-export function sectionColRow(section: number): { col: number; row: number } | null {
-  if (section < 1 || section > 36) {return null;}
+export function sectionColRow(
+  section: number,
+): { col: number; row: number } | null {
+  if (section < 1 || section > 36) {
+    return null;
+  }
   const row = Math.floor((section - 1) / 6); // 0 = north tier
   const within = (section - 1) % 6;
   // Odd tiers (row 0,2,4) number east→west; even tiers (row 1,3,5) west→east.

@@ -18,8 +18,18 @@ import {
 
 type Template = NonNullable<CreateProjectInput["template"]>;
 
-const TEMPLATES: { id: Template; label: string; description: string; icon: typeof Square }[] = [
-  { id: "empty", label: "Blank site", description: "Start from an empty, spatially-defined site.", icon: Square },
+const TEMPLATES: {
+  id: Template;
+  label: string;
+  description: string;
+  icon: typeof Square;
+}[] = [
+  {
+    id: "empty",
+    label: "Blank site",
+    description: "Start from an empty, spatially-defined site.",
+    icon: Square,
+  },
   {
     id: "subdivision",
     label: "Subdivision",
@@ -35,7 +45,8 @@ const TEMPLATES: { id: Template; label: string; description: string; icon: typeo
   {
     id: "estate",
     label: "Estate / homestead",
-    description: "A single-household territory at landscape scale, with terrain.",
+    description:
+      "A single-household territory at landscape scale, with terrain.",
     icon: Globe,
   },
 ];
@@ -64,10 +75,16 @@ export function CreateProjectDialog({
   }, [open]);
 
   async function handleCreate() {
-    if (!name.trim()) {return;}
+    if (!name.trim()) {
+      return;
+    }
     setBusy(true);
     try {
-      const project = await api.createProject({ name: name.trim(), description: description.trim(), template });
+      const project = await api.createProject({
+        name: name.trim(),
+        description: description.trim(),
+        template,
+      });
       onOpenChange(false);
       onCreated?.();
       navigate(`/project/${project.id}`);
@@ -82,7 +99,8 @@ export function CreateProjectDialog({
         <DialogHeader>
           <DialogTitle>New project</DialogTitle>
           <DialogDescription>
-            Create a server-backed planning workspace. You can change everything later.
+            Create a server-backed planning workspace. You can change everything
+            later.
           </DialogDescription>
         </DialogHeader>
 
@@ -120,12 +138,23 @@ export function CreateProjectDialog({
                   onClick={() => setTemplate(t.id)}
                   className={cn(
                     "flex flex-col items-start gap-1.5 rounded-lg border p-3 text-left transition-colors",
-                    active ? "border-primary bg-primary/5" : "border-border hover:border-primary/40",
+                    active
+                      ? "border-primary bg-primary/5"
+                      : "border-border hover:border-primary/40",
                   )}
                 >
-                  <Icon className={cn("h-5 w-5", active ? "text-primary" : "text-muted-foreground")} />
-                  <span className="text-sm font-medium text-foreground">{t.label}</span>
-                  <span className="text-xs leading-snug text-muted-foreground">{t.description}</span>
+                  <Icon
+                    className={cn(
+                      "h-5 w-5",
+                      active ? "text-primary" : "text-muted-foreground",
+                    )}
+                  />
+                  <span className="text-sm font-medium text-foreground">
+                    {t.label}
+                  </span>
+                  <span className="text-xs leading-snug text-muted-foreground">
+                    {t.description}
+                  </span>
                 </button>
               );
             })}

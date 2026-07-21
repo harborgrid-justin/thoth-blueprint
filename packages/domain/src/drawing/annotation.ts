@@ -36,10 +36,37 @@ export type {
 
 /** Standard text styles (title, heading, note, tag). */
 export const TEXT_STYLES: TextStyle[] = [
-  { id: "title", label: "Sheet title", height: 5, font: "sans-serif", justify: "left", bold: true },
-  { id: "heading", label: "Heading", height: 3.5, font: "sans-serif", justify: "left", bold: true },
-  { id: "note", label: "Note", height: 2.5, font: "sans-serif", justify: "left" },
-  { id: "tag", label: "Tag", height: 2.5, font: "sans-serif", justify: "center", bold: true },
+  {
+    id: "title",
+    label: "Sheet title",
+    height: 5,
+    font: "sans-serif",
+    justify: "left",
+    bold: true,
+  },
+  {
+    id: "heading",
+    label: "Heading",
+    height: 3.5,
+    font: "sans-serif",
+    justify: "left",
+    bold: true,
+  },
+  {
+    id: "note",
+    label: "Note",
+    height: 2.5,
+    font: "sans-serif",
+    justify: "left",
+  },
+  {
+    id: "tag",
+    label: "Tag",
+    height: 2.5,
+    font: "sans-serif",
+    justify: "center",
+    bold: true,
+  },
 ];
 
 /**
@@ -51,7 +78,11 @@ export function gridBubbleGeometry(line: GridLine, gap: number): GridBubble[] {
   const which = line.bubbles ?? "both";
   const out: GridBubble[] = [];
   if (which === "start" || which === "both") {
-    out.push({ center: add(line.from, scale(dir, -gap)), dir: scale(dir, -1), label: line.label });
+    out.push({
+      center: add(line.from, scale(dir, -gap)),
+      dir: scale(dir, -1),
+      label: line.label,
+    });
   }
   if (which === "end" || which === "both") {
     out.push({ center: add(line.to, scale(dir, gap)), dir, label: line.label });
@@ -63,7 +94,10 @@ export function gridBubbleGeometry(line: GridLine, gap: number): GridBubble[] {
  * Sample a revision-cloud boundary into scalloped arc bumps — returns the bump
  * apex points between consecutive vertices so a renderer can draw the arcs.
  */
-export function revisionCloudBumps(cloud: RevisionCloud, bumpSize: number): Point[] {
+export function revisionCloudBumps(
+  cloud: RevisionCloud,
+  bumpSize: number,
+): Point[] {
   const b = cloud.boundary;
   const apexes: Point[] = [];
   for (let i = 0; i < b.length; i++) {

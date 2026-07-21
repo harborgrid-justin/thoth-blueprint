@@ -71,7 +71,10 @@ function Prim({ p }: { p: SheetPrimitive }) {
           cy={p.c.y}
           r={p.r}
           fill={p.fill ?? "none"}
-          fillOpacity={p.fillOpacity ?? (p.fill && p.fill !== "none" && p.fill !== "transparent" ? 1 : 0)}
+          fillOpacity={
+            p.fillOpacity ??
+            (p.fill && p.fill !== "none" && p.fill !== "transparent" ? 1 : 0)
+          }
           stroke={p.stroke ?? "none"}
           strokeWidth={p.sw ?? 0}
         />
@@ -85,8 +88,14 @@ function Prim({ p }: { p: SheetPrimitive }) {
           fill={p.color ?? INK}
           textAnchor={p.anchor ?? "start"}
           fontWeight={p.weight ?? 400}
-          fontFamily={p.mono ? "ui-monospace, Menlo, Consolas, monospace" : "ui-sans-serif, system-ui, sans-serif"}
-          transform={p.angle ? `rotate(${p.angle} ${p.at.x} ${p.at.y})` : undefined}
+          fontFamily={
+            p.mono
+              ? "ui-monospace, Menlo, Consolas, monospace"
+              : "ui-sans-serif, system-ui, sans-serif"
+          }
+          transform={
+            p.angle ? `rotate(${p.angle} ${p.at.x} ${p.at.y})` : undefined
+          }
         >
           {p.text}
         </text>
@@ -95,21 +104,22 @@ function Prim({ p }: { p: SheetPrimitive }) {
 }
 
 /** Render a sheet scene as an inline SVG. */
-export const SvgSheet = React.forwardRef<SVGSVGElement, { prims: SheetPrimitive[]; wPt: number; hPt: number; className?: string }>(
-  function SvgSheet({ prims, wPt, hPt, className }, ref) {
-    return (
-      <svg
-        ref={ref}
-        viewBox={`0 0 ${wPt} ${hPt}`}
-        width="100%"
-        xmlns="http://www.w3.org/2000/svg"
-        className={className}
-        style={{ display: "block", background: "#ffffff" }}
-      >
-        {prims.map((p, i) => (
-          <Prim key={i} p={p} />
-        ))}
-      </svg>
-    );
-  },
-);
+export const SvgSheet = React.forwardRef<
+  SVGSVGElement,
+  { prims: SheetPrimitive[]; wPt: number; hPt: number; className?: string }
+>(function SvgSheet({ prims, wPt, hPt, className }, ref) {
+  return (
+    <svg
+      ref={ref}
+      viewBox={`0 0 ${wPt} ${hPt}`}
+      width="100%"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      style={{ display: "block", background: "#ffffff" }}
+    >
+      {prims.map((p, i) => (
+        <Prim key={i} p={p} />
+      ))}
+    </svg>
+  );
+});

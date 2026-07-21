@@ -6,9 +6,21 @@ import type { TownshipRange } from "../../survey/plss";
 import type { InfrastructureNetwork } from "../../civil/network";
 import type { CadLayer } from "../../drawing/drafting";
 import type { DrawingSet } from "../../drawing/sheet";
-import type { SheetViewport, SectionMark, ElevationMark, DetailMark, MatchLine } from "../../drawing/sheetview";
+import type {
+  SheetViewport,
+  SectionMark,
+  ElevationMark,
+  DetailMark,
+  MatchLine,
+} from "../../drawing/sheetview";
 import type { Dimension } from "../../drawing/dimension";
-import type { GridLine, Keynote, KeynoteTag, Leader, RevisionCloud } from "../../drawing/annotation";
+import type {
+  GridLine,
+  Keynote,
+  KeynoteTag,
+  Leader,
+  RevisionCloud,
+} from "../../drawing/annotation";
 import type { BuildingModel } from "../../planning/building";
 import type { LandUseCategory } from "../../planning/landuse";
 
@@ -149,7 +161,13 @@ export interface ElementBase {
 /** A large-scale land division above the parcel. */
 export interface Region extends ElementBase {
   kind: "region";
-  regionType?: "estate" | "district" | "watershed" | "reserve" | "agricultural" | "settlement";
+  regionType?:
+    | "estate"
+    | "district"
+    | "watershed"
+    | "reserve"
+    | "agricultural"
+    | "settlement";
 }
 
 /** A legally or conceptually distinct piece of land ΓÇö the fundamental unit. */
@@ -330,7 +348,10 @@ export interface CurtainWallGrid {
   horizontalDivisions: "uniform" | "fixed" | "manual";
   horizontalOffsets: number[]; // division heights from bottom sill
   mullionWidths?: Record<number, number>; // index -> custom width override
-  infillMaterials?: Record<string, "glazing" | "brick" | "insulation" | "door" | "window">; // "row,col" -> material type
+  infillMaterials?: Record<
+    string,
+    "glazing" | "brick" | "insulation" | "door" | "window"
+  >; // "row,col" -> material type
 }
 
 /** A curtain wall planning element representing glazed panel structures. */
@@ -338,23 +359,23 @@ export interface CurtainWall extends ElementBase {
   kind: "curtainwall";
   width: number; // total wall length in plan
   height: number; // total height
-  
+
   // Grid layout parameters (REQ-UNIMP-026, REQ-UNIMP-028, REQ-UNIMP-029)
   grid: CurtainWallGrid;
-  
+
   // Nested sub-grids mapping: "row,col" of main grid -> nested subgrid definition (REQ-UNIMP-030)
   nestedGrids?: Record<string, CurtainWallGrid>;
-  
+
   // Framing details (REQ-UNIMP-027, REQ-UNIMP-031, REQ-UNIMP-034)
   cornerStyle?: "rectangular" | "L-corner" | "V-corner";
   frameProfileWidth?: number; // perimeter frame width (e.g. 0.1m)
   expansionGap?: number; // gap between frame/panels (e.g. 0.01m)
-  
+
   // Pane & accessory options (REQ-UNIMP-035, REQ-UNIMP-036, REQ-UNIMP-037)
   paneOffset?: number; // front/back glass offset in frame (e.g. 0.02m)
   clipSpacing?: number; // spacing of glass clips (e.g. 0.5m)
   structuralTieSpacing?: number; // structural columns ties spacing (e.g. 1.2m)
-  
+
   // Thermal and performance properties (REQ-UNIMP-038)
   frameRValue?: number; // thermal resistance
 }
@@ -364,7 +385,8 @@ export interface DoorElement extends ElementBase {
   width: number;
   height: number;
   depth: number;
-  doorOperation: "swing" | "double-swing" | "slide" | "folding" | "pocket" | "overhead";
+  doorOperation:
+    "swing" | "double-swing" | "slide" | "folding" | "pocket" | "overhead";
   swingAngle?: number; // swing angle in degrees (default 90)
   sillThickness?: number;
   sillOverhang?: number;
@@ -382,7 +404,13 @@ export interface WindowElement extends ElementBase {
   width: number;
   height: number;
   depth: number;
-  windowType: "awning" | "casement" | "hopper" | "single-hung" | "double-hung" | "gliding";
+  windowType:
+    | "awning"
+    | "casement"
+    | "hopper"
+    | "single-hung"
+    | "double-hung"
+    | "gliding";
   sillThickness?: number;
   sillOverhang?: number;
   thresholdHeight?: number;
@@ -510,4 +538,3 @@ export interface ComplianceFinding {
   /** The element the finding concerns, if any. */
   elementId?: string;
 }
-

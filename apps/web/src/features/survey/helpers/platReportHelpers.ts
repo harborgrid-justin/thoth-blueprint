@@ -8,7 +8,11 @@ export function signed(value: number, digits = 2): string {
   return rounded < 0 ? `−${s}` : `+${s}`;
 }
 
-export function dmsText(a: { degrees: number; minutes: number; seconds: number }): string {
+export function dmsText(a: {
+  degrees: number;
+  minutes: number;
+  seconds: number;
+}): string {
   const d = String(Math.abs(a.degrees));
   const m = String(a.minutes).padStart(2, "0");
   const sec = String(a.seconds).padStart(2, "0");
@@ -20,7 +24,12 @@ export function csvCell(value: string): string {
 }
 
 export function slug(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "tract";
+  return (
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || "tract"
+  );
 }
 
 export function downloadText(filename: string, text: string) {
@@ -35,7 +44,15 @@ export function downloadText(filename: string, text: string) {
 
 export function generateCoursesCsv(report: SurveyReport, u: string): string {
   const rows = [
-    ["Course", "From", "To", "Bearing", `Distance (${u})`, `Latitude (${u})`, `Departure (${u})`],
+    [
+      "Course",
+      "From",
+      "To",
+      "Bearing",
+      `Distance (${u})`,
+      `Latitude (${u})`,
+      `Departure (${u})`,
+    ],
     ..._.map(report.courses, (c) => [
       String(c.index),
       c.fromLabel,

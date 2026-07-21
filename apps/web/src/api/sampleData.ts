@@ -35,14 +35,70 @@ function rect(x: number, y: number, w: number, h: number): Polygon {
 
 function baseLayers(): Layer[] {
   return [
-    { id: "layer-base", name: "Base / Parcels", order: 0, visible: true, locked: false, color: "#64748b" },
-    { id: "layer-zoning", name: "Zoning", order: 1, visible: true, locked: false, color: "#8b5cf6" },
-    { id: "layer-landuse", name: "Land Use", order: 2, visible: true, locked: false, color: "#22c55e" },
-    { id: "layer-lots", name: "Lots", order: 3, visible: true, locked: false, color: "#0ea5e9" },
-    { id: "layer-buildings", name: "Buildings", order: 4, visible: true, locked: false, color: "#f59e0b" },
-    { id: "layer-row", name: "Rights-of-Way", order: 5, visible: true, locked: false, color: "#94a3b8" },
-    { id: "layer-landscape", name: "Landscape", order: 6, visible: true, locked: false, color: "#22c55e" },
-    { id: "layer-terrain", name: "Terrain", order: 7, visible: true, locked: false, color: "#a16207" },
+    {
+      id: "layer-base",
+      name: "Base / Parcels",
+      order: 0,
+      visible: true,
+      locked: false,
+      color: "#64748b",
+    },
+    {
+      id: "layer-zoning",
+      name: "Zoning",
+      order: 1,
+      visible: true,
+      locked: false,
+      color: "#8b5cf6",
+    },
+    {
+      id: "layer-landuse",
+      name: "Land Use",
+      order: 2,
+      visible: true,
+      locked: false,
+      color: "#22c55e",
+    },
+    {
+      id: "layer-lots",
+      name: "Lots",
+      order: 3,
+      visible: true,
+      locked: false,
+      color: "#0ea5e9",
+    },
+    {
+      id: "layer-buildings",
+      name: "Buildings",
+      order: 4,
+      visible: true,
+      locked: false,
+      color: "#f59e0b",
+    },
+    {
+      id: "layer-row",
+      name: "Rights-of-Way",
+      order: 5,
+      visible: true,
+      locked: false,
+      color: "#94a3b8",
+    },
+    {
+      id: "layer-landscape",
+      name: "Landscape",
+      order: 6,
+      visible: true,
+      locked: false,
+      color: "#22c55e",
+    },
+    {
+      id: "layer-terrain",
+      name: "Terrain",
+      order: 7,
+      visible: true,
+      locked: false,
+      color: "#a16207",
+    },
   ];
 }
 
@@ -75,7 +131,14 @@ function hillSpots(
 }
 
 function tree(x: number, y: number, canopyRadius = 4): Tree {
-  return { id: createId("tree"), kind: "tree", layerId: "layer-landscape", position: { x, y }, species: "Shade tree", canopyRadius };
+  return {
+    id: createId("tree"),
+    kind: "tree",
+    layerId: "layer-landscape",
+    position: { x, y },
+    species: "Shade tree",
+    canopyRadius,
+  };
 }
 
 /** An empty but valid site: spatial context and a set of layers, no geometry. */
@@ -202,7 +265,9 @@ export function subdivisionSite(name: string): Site {
   );
 
   // Street trees along the park frontage.
-  for (let i = 0; i < 5; i++) {elements.push(tree(236 + i * 9, 150));}
+  for (let i = 0; i < 5; i++) {
+    elements.push(tree(236 + i * 9, 150));
+  }
 
   // A road network running down Maple Street with a stub into the park.
   const roads = networkFromPath(
@@ -278,41 +343,212 @@ export function subdivisionSite(name: string): Site {
     buildingId: bldgId,
     levels: [{ id: L1, name: "Level 1", elevation: 0, height: 12 }],
     walls: [
-      { id: "w-n", levelId: L1, baseline: [{ x: 40, y: 40 }, { x: 70, y: 40 }], thickness: T, height: 12, typeId: "ext-8" },
-      { id: "w-s", levelId: L1, baseline: [{ x: 40, y: 64 }, { x: 70, y: 64 }], thickness: T, height: 12, typeId: "ext-8" },
-      { id: "w-w", levelId: L1, baseline: [{ x: 40, y: 40 }, { x: 40, y: 64 }], thickness: T, height: 12, typeId: "ext-8" },
-      { id: "w-e", levelId: L1, baseline: [{ x: 70, y: 40 }, { x: 70, y: 64 }], thickness: T, height: 12, typeId: "ext-8" },
-      { id: "w-p", levelId: L1, baseline: [{ x: 55, y: 40 }, { x: 55, y: 64 }], thickness: 0.4, height: 12, typeId: "int-5" },
+      {
+        id: "w-n",
+        levelId: L1,
+        baseline: [
+          { x: 40, y: 40 },
+          { x: 70, y: 40 },
+        ],
+        thickness: T,
+        height: 12,
+        typeId: "ext-8",
+      },
+      {
+        id: "w-s",
+        levelId: L1,
+        baseline: [
+          { x: 40, y: 64 },
+          { x: 70, y: 64 },
+        ],
+        thickness: T,
+        height: 12,
+        typeId: "ext-8",
+      },
+      {
+        id: "w-w",
+        levelId: L1,
+        baseline: [
+          { x: 40, y: 40 },
+          { x: 40, y: 64 },
+        ],
+        thickness: T,
+        height: 12,
+        typeId: "ext-8",
+      },
+      {
+        id: "w-e",
+        levelId: L1,
+        baseline: [
+          { x: 70, y: 40 },
+          { x: 70, y: 64 },
+        ],
+        thickness: T,
+        height: 12,
+        typeId: "ext-8",
+      },
+      {
+        id: "w-p",
+        levelId: L1,
+        baseline: [
+          { x: 55, y: 40 },
+          { x: 55, y: 64 },
+        ],
+        thickness: 0.4,
+        height: 12,
+        typeId: "int-5",
+      },
     ],
     doors: [
-      { id: "d-1", wallId: "w-s", offset: 8, width: 3, height: 6.7, mark: "1", swing: "L" as const, leaf: "single" as const },
-      { id: "d-2", wallId: "w-p", offset: 12, width: 2.67, height: 6.7, mark: "2", swing: "R" as const, leaf: "single" as const },
+      {
+        id: "d-1",
+        wallId: "w-s",
+        offset: 8,
+        width: 3,
+        height: 6.7,
+        mark: "1",
+        swing: "L" as const,
+        leaf: "single" as const,
+      },
+      {
+        id: "d-2",
+        wallId: "w-p",
+        offset: 12,
+        width: 2.67,
+        height: 6.7,
+        mark: "2",
+        swing: "R" as const,
+        leaf: "single" as const,
+      },
     ],
     windows: [
-      { id: "win-1", wallId: "w-n", offset: 8, width: 4, height: 4, sill: 3, mark: "A" },
-      { id: "win-2", wallId: "w-n", offset: 22, width: 4, height: 4, sill: 3, mark: "A" },
-      { id: "win-3", wallId: "w-e", offset: 12, width: 4, height: 4, sill: 3, mark: "B" },
+      {
+        id: "win-1",
+        wallId: "w-n",
+        offset: 8,
+        width: 4,
+        height: 4,
+        sill: 3,
+        mark: "A",
+      },
+      {
+        id: "win-2",
+        wallId: "w-n",
+        offset: 22,
+        width: 4,
+        height: 4,
+        sill: 3,
+        mark: "A",
+      },
+      {
+        id: "win-3",
+        wallId: "w-e",
+        offset: 12,
+        width: 4,
+        height: 4,
+        sill: 3,
+        mark: "B",
+      },
     ],
     rooms: [
-      { id: "rm-101", levelId: L1, boundary: rect(40, 40, 15, 24), name: "Great Room", number: "101", floorFinish: "LVT", baseFinish: "RB-1", wallFinish: "PT-1", ceilingFinish: "ACT" },
-      { id: "rm-102", levelId: L1, boundary: rect(55, 40, 15, 24), name: "Meeting", number: "102", floorFinish: "CPT", baseFinish: "RB-1", wallFinish: "PT-1", ceilingFinish: "ACT" },
+      {
+        id: "rm-101",
+        levelId: L1,
+        boundary: rect(40, 40, 15, 24),
+        name: "Great Room",
+        number: "101",
+        floorFinish: "LVT",
+        baseFinish: "RB-1",
+        wallFinish: "PT-1",
+        ceilingFinish: "ACT",
+      },
+      {
+        id: "rm-102",
+        levelId: L1,
+        boundary: rect(55, 40, 15, 24),
+        name: "Meeting",
+        number: "102",
+        floorFinish: "CPT",
+        baseFinish: "RB-1",
+        wallFinish: "PT-1",
+        ceilingFinish: "ACT",
+      },
     ],
   };
 
   // CAD dimensions on the clubhouse plan (architectural ticks).
   const dimensions = [
-    { id: "dim-1", kind: "linear" as const, styleId: "arch-tick", a: { x: 40, y: 64 }, b: { x: 70, y: 64 }, axis: "horizontal" as const, offset: 6 },
-    { id: "dim-2", kind: "linear" as const, styleId: "arch-tick", a: { x: 40, y: 40 }, b: { x: 40, y: 64 }, axis: "vertical" as const, offset: -6 },
-    { id: "dim-3", kind: "linear" as const, styleId: "arch-tick", a: { x: 40, y: 64 }, b: { x: 55, y: 64 }, axis: "horizontal" as const, offset: 3 },
+    {
+      id: "dim-1",
+      kind: "linear" as const,
+      styleId: "arch-tick",
+      a: { x: 40, y: 64 },
+      b: { x: 70, y: 64 },
+      axis: "horizontal" as const,
+      offset: 6,
+    },
+    {
+      id: "dim-2",
+      kind: "linear" as const,
+      styleId: "arch-tick",
+      a: { x: 40, y: 40 },
+      b: { x: 40, y: 64 },
+      axis: "vertical" as const,
+      offset: -6,
+    },
+    {
+      id: "dim-3",
+      kind: "linear" as const,
+      styleId: "arch-tick",
+      a: { x: 40, y: 64 },
+      b: { x: 55, y: 64 },
+      axis: "horizontal" as const,
+      offset: 3,
+    },
   ];
 
   // A structural column grid over the clubhouse.
   const gridLines = [
-    { id: "g-1", label: "1", kind: "digit" as const, from: { x: 40, y: 37 }, to: { x: 40, y: 67 }, bubbles: "both" as const },
-    { id: "g-2", label: "2", kind: "digit" as const, from: { x: 55, y: 37 }, to: { x: 55, y: 67 }, bubbles: "both" as const },
-    { id: "g-3", label: "3", kind: "digit" as const, from: { x: 70, y: 37 }, to: { x: 70, y: 67 }, bubbles: "both" as const },
-    { id: "g-A", label: "A", kind: "letter" as const, from: { x: 37, y: 40 }, to: { x: 73, y: 40 }, bubbles: "both" as const },
-    { id: "g-B", label: "B", kind: "letter" as const, from: { x: 37, y: 64 }, to: { x: 73, y: 64 }, bubbles: "both" as const },
+    {
+      id: "g-1",
+      label: "1",
+      kind: "digit" as const,
+      from: { x: 40, y: 37 },
+      to: { x: 40, y: 67 },
+      bubbles: "both" as const,
+    },
+    {
+      id: "g-2",
+      label: "2",
+      kind: "digit" as const,
+      from: { x: 55, y: 37 },
+      to: { x: 55, y: 67 },
+      bubbles: "both" as const,
+    },
+    {
+      id: "g-3",
+      label: "3",
+      kind: "digit" as const,
+      from: { x: 70, y: 37 },
+      to: { x: 70, y: 67 },
+      bubbles: "both" as const,
+    },
+    {
+      id: "g-A",
+      label: "A",
+      kind: "letter" as const,
+      from: { x: 37, y: 40 },
+      to: { x: 73, y: 40 },
+      bubbles: "both" as const,
+    },
+    {
+      id: "g-B",
+      label: "B",
+      kind: "letter" as const,
+      from: { x: 37, y: 64 },
+      to: { x: 73, y: 64 },
+      bubbles: "both" as const,
+    },
   ];
 
   return {
@@ -329,47 +565,143 @@ export function subdivisionSite(name: string): Site {
     annotations: {
       gridLines,
       keynotes: [
-        { id: "kn1", number: "1", text: '6" concrete curb & gutter, see C-501' },
-        { id: "kn2", number: "2", text: "Silt fence per erosion control detail" },
+        {
+          id: "kn1",
+          number: "1",
+          text: '6" concrete curb & gutter, see C-501',
+        },
+        {
+          id: "kn2",
+          number: "2",
+          text: "Silt fence per erosion control detail",
+        },
         { id: "kn3", number: "3", text: "Accessible route, 1:20 max slope" },
       ],
       keynoteTags: [
         { id: "kt1", keynoteId: "kn1", position: { x: 140, y: 118 } },
-        { id: "kt2", keynoteId: "kn2", position: { x: 90, y: 200 }, leaderTo: { x: 90, y: 202 } },
+        {
+          id: "kt2",
+          keynoteId: "kn2",
+          position: { x: 90, y: 200 },
+          leaderTo: { x: 90, y: 202 },
+        },
       ],
       sectionMarks: [
-        { id: "sm1", tag: "A", atLine: [{ x: 100, y: 30 }, { x: 100, y: 190 }], targetSheet: "A-301", targetView: 1 },
+        {
+          id: "sm1",
+          tag: "A",
+          atLine: [
+            { x: 100, y: 30 },
+            { x: 100, y: 190 },
+          ],
+          targetSheet: "A-301",
+          targetView: 1,
+        },
       ],
       elevationMarks: [
-        { id: "em1", tag: "1", position: { x: 55, y: 30 }, gaze: { x: 0, y: 1 }, targetSheet: "A-201", targetView: 1 },
+        {
+          id: "em1",
+          tag: "1",
+          position: { x: 55, y: 30 },
+          gaze: { x: 0, y: 1 },
+          targetSheet: "A-201",
+          targetView: 1,
+        },
       ],
       detailMarks: [
-        { id: "dm1", tag: "5", center: { x: 210, y: 150 }, radius: 14, targetSheet: "C-501", targetView: 3 },
+        {
+          id: "dm1",
+          tag: "5",
+          center: { x: 210, y: 150 },
+          radius: 14,
+          targetSheet: "C-501",
+          targetView: 3,
+        },
       ],
       matchLines: [
-        { id: "ml1", atLine: [{ x: 250, y: 20 }, { x: 250, y: 200 }], adjoiningSheet: "C-102" },
+        {
+          id: "ml1",
+          atLine: [
+            { x: 250, y: 20 },
+            { x: 250, y: 200 },
+          ],
+          adjoiningSheet: "C-102",
+        },
       ],
       revisionClouds: [
         { id: "rc1", delta: 1, boundary: rect(58, 120, 54, 44) },
       ],
     },
     controlLines: [
-      { id: createId("ctl"), type: "silt-fence", label: "Silt Fence", path: [{ x: 22, y: 202 }, { x: 278, y: 202 }] },
-      { id: createId("ctl"), type: "tree-line", label: "Tree Line", path: [{ x: 22, y: 18 }, { x: 278, y: 18 }] },
-      { id: createId("ctl"), type: "flow", path: [{ x: 40, y: 60 }, { x: 120, y: 112 }, { x: 210, y: 150 }] },
+      {
+        id: createId("ctl"),
+        type: "silt-fence",
+        label: "Silt Fence",
+        path: [
+          { x: 22, y: 202 },
+          { x: 278, y: 202 },
+        ],
+      },
+      {
+        id: createId("ctl"),
+        type: "tree-line",
+        label: "Tree Line",
+        path: [
+          { x: 22, y: 18 },
+          { x: 278, y: 18 },
+        ],
+      },
+      {
+        id: createId("ctl"),
+        type: "flow",
+        path: [
+          { x: 40, y: 60 },
+          { x: 120, y: 112 },
+          { x: 210, y: 150 },
+        ],
+      },
     ],
     civilSymbols: [
-      { id: createId("sym"), type: "inlet-protection", position: { x: 62, y: 118 }, subtype: "A" },
-      { id: createId("sym"), type: "inlet-protection", position: { x: 150, y: 118 }, subtype: "B" },
-      { id: createId("sym"), type: "inlet-protection", position: { x: 236, y: 118 }, subtype: "C" },
-      { id: createId("sym"), type: "ditch-check", position: { x: 120, y: 112 }, rotation: 30 },
+      {
+        id: createId("sym"),
+        type: "inlet-protection",
+        position: { x: 62, y: 118 },
+        subtype: "A",
+      },
+      {
+        id: createId("sym"),
+        type: "inlet-protection",
+        position: { x: 150, y: 118 },
+        subtype: "B",
+      },
+      {
+        id: createId("sym"),
+        type: "inlet-protection",
+        position: { x: 236, y: 118 },
+        subtype: "C",
+      },
+      {
+        id: createId("sym"),
+        type: "ditch-check",
+        position: { x: 120, y: 112 },
+        rotation: 30,
+      },
       { id: createId("sym"), type: "culvert", position: { x: 210, y: 150 } },
-      { id: createId("sym"), type: "erosion-bale", position: { x: 40, y: 198 } },
+      {
+        id: createId("sym"),
+        type: "erosion-bale",
+        position: { x: 40, y: 198 },
+      },
       { id: createId("sym"), type: "riprap", position: { x: 268, y: 152 } },
     ],
     jurisdictionId: "us-plss-default",
     plss: {
-      townshipRange: { township: 3, townshipDir: "South" as const, range: 16, rangeDir: "East" as const },
+      townshipRange: {
+        township: 3,
+        townshipDir: "South" as const,
+        range: 16,
+        rangeDir: "East" as const,
+      },
       section: 8,
       sectionNwCorner: { x: 10, y: 10 },
       sectionSide: 300,
@@ -575,8 +907,11 @@ export function estateSite(name: string): Site {
   );
 
   // Orchard trees near the homestead.
-  for (let r = 0; r < 3; r++)
-    {for (let c = 0; c < 6; c++) {elements.push(tree(760 + c * 90, 1080 + r * 70, 12));}}
+  for (let r = 0; r < 3; r++) {
+    for (let c = 0; c < 6; c++) {
+      elements.push(tree(760 + c * 90, 1080 + r * 70, 12));
+    }
+  }
 
   // Private access road from the entrance to the homestead and on to the fields.
   const road: InfrastructureNetwork = networkFromPath(
@@ -605,7 +940,10 @@ export function estateSite(name: string): Site {
 }
 
 /** Build a starter site for a chosen template. */
-export function siteForTemplate(name: string, template: CreateProjectInput["template"]): Site {
+export function siteForTemplate(
+  name: string,
+  template: CreateProjectInput["template"],
+): Site {
   switch (template) {
     case "subdivision":
       return subdivisionSite(name);

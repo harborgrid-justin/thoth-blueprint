@@ -29,7 +29,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { pickFile, downloadText, slugify } from "./fileIo";
-import { importPointCloudFile, exportPointCloud, POINT_CLOUD_ACCEPT, POINT_CLOUD_FORMATS } from "./pointCloudIo";
+import {
+  importPointCloudFile,
+  exportPointCloud,
+  POINT_CLOUD_ACCEPT,
+  POINT_CLOUD_FORMATS,
+} from "./pointCloudIo";
 import { importMeshFile, MESH_ACCEPT } from "./meshIo";
 import { exportPlanPng, exportSiteDae } from "./blueprintExport";
 import { importUnderlayImage } from "./underlayIo";
@@ -47,8 +52,9 @@ export function ImportExportMenu() {
     try {
       await fn();
     } catch (e) {
-       
-      window.alert(`${label} failed: ${e instanceof Error ? e.message : String(e)}`);
+      window.alert(
+        `${label} failed: ${e instanceof Error ? e.message : String(e)}`,
+      );
     } finally {
       setBusy(false);
     }
@@ -58,7 +64,9 @@ export function ImportExportMenu() {
 
   async function importMesh() {
     const file = await pickFile(MESH_ACCEPT);
-    if (!file) {return;}
+    if (!file) {
+      return;
+    }
     await run("Mesh import", async () => {
       const object = await importMeshFile(file);
       addMesh({ id: createId("mesh"), name: file.name, object, visible: true });
@@ -67,13 +75,18 @@ export function ImportExportMenu() {
 
   async function importCloud(asTerrain: boolean) {
     const file = await pickFile(POINT_CLOUD_ACCEPT);
-    if (!file) {return;}
+    if (!file) {
+      return;
+    }
     await run("Point-cloud import", async () => {
       const { name, cloud } = await importPointCloudFile(file);
       if (asTerrain) {
         const s = site();
-        if (!s) {return;}
-        const layerId = s.layers.find((l) => l.id === "layer-terrain")?.id ?? s.layers[0].id;
+        if (!s) {
+          return;
+        }
+        const layerId =
+          s.layers.find((l) => l.id === "layer-terrain")?.id ?? s.layers[0].id;
         const spots = pointCloudToSpots(cloud, layerId) as SpotElevationPoint[];
         addElements(spots);
       } else {
@@ -84,50 +97,72 @@ export function ImportExportMenu() {
 
   async function importUnderlay() {
     const file = await pickFile("image/png,image/jpeg,.png,.jpg,.jpeg");
-    if (!file) {return;}
+    if (!file) {
+      return;
+    }
     await run("Blueprint import", async () => {
       const s = site();
-      if (!s) {return;}
+      if (!s) {
+        return;
+      }
       setUnderlay(await importUnderlayImage(file, s));
     });
   }
 
   async function exportPng() {
     const s = site();
-    if (!s) {return;}
+    if (!s) {
+      return;
+    }
     await run("PNG export", () => exportPlanPng(s));
   }
 
   function exportDae() {
     const s = site();
-    if (!s) {return;}
+    if (!s) {
+      return;
+    }
     void run("COLLADA export", () => exportSiteDae(s));
   }
 
   function exportCloud(format: PointCloudFormat) {
     const s = site();
-    if (!s) {return;}
-    const spots = s.elements.filter((e): e is SpotElevationPoint => e.kind === "spot");
-    if (spots.length === 0) {
-       
-      window.alert("No terrain spot elevations to export. Add spot elevations or import a point cloud as terrain first.");
+    if (!s) {
       return;
     }
-    void run("Point-cloud export", () => exportPointCloud(spotsToPointCloud(spots), format, `${s.name}-cloud`));
+    const spots = s.elements.filter(
+      (e): e is SpotElevationPoint => e.kind === "spot",
+    );
+    if (spots.length === 0) {
+      window.alert(
+        "No terrain spot elevations to export. Add spot elevations or import a point cloud as terrain first.",
+      );
+      return;
+    }
+    void run("Point-cloud export", () =>
+      exportPointCloud(spotsToPointCloud(spots), format, `${s.name}-cloud`),
+    );
   }
 
   async function importDataShortcut() {
     const file = await pickFile(".json");
-    if (!file) {return;}
+    if (!file) {
+      return;
+    }
     await run("Import Data Shortcut", async () => {
       const text = await file.text();
       const data = JSON.parse(text);
       if (data && Array.isArray(data.alignments)) {
         const s = site();
-        if (!s) {return;}
+        if (!s) {
+          return;
+        }
         const workspaceStore = useWorkspaceStore.getState();
         for (const item of data.alignments) {
-          workspaceStore.addAlignment(item.pis.map((pi: any) => pi.point), item.pis[1]?.radius);
+          workspaceStore.addAlignment(
+            item.pis.map((pi: any) => pi.point),
+            item.pis[1]?.radius,
+          );
         }
       }
     });
@@ -135,39 +170,66 @@ export function ImportExportMenu() {
 
   function exportDataShortcut() {
     const s = site();
-    if (!s) {return;}
+    if (!s) {
+      return;
+    }
     const shortcuts = {
       alignments: s.alignments ?? [],
     };
-    downloadText(`${slugify(s.name)}-shortcuts.json`, JSON.stringify(shortcuts, null, 2));
+    downloadText(
+      `${slugify(s.name)}-shortcuts.json`,
+      JSON.stringify(shortcuts, null, 2),
+    );
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" disabled={busy}>
-          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileUp className="h-4 w-4" />}
+          {busy ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <FileUp className="h-4 w-4" />
+          )}
           <span className="hidden md:inline">File</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-60">
         <DropdownMenuLabel>Import</DropdownMenuLabel>
         <DropdownMenuItem onClick={importMesh}>
-          <Boxes /> Mesh <span className="ml-auto text-[10px] text-muted-foreground">obj·dae·fbx·stl·gltf</span>
+          <Boxes /> Mesh{" "}
+          <span className="ml-auto text-[10px] text-muted-foreground">
+            obj·dae·fbx·stl·gltf
+          </span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => importCloud(false)}>
-          <Upload /> Point cloud <span className="ml-auto text-[10px] text-muted-foreground">reference</span>
+          <Upload /> Point cloud{" "}
+          <span className="ml-auto text-[10px] text-muted-foreground">
+            reference
+          </span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => importCloud(true)}>
-          <Mountain /> Point cloud → terrain <span className="ml-auto text-[10px] text-muted-foreground">spots</span>
+          <Mountain /> Point cloud → terrain{" "}
+          <span className="ml-auto text-[10px] text-muted-foreground">
+            spots
+          </span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={importUnderlay}>
-          <ImageIcon /> Blueprint image <span className="ml-auto text-[10px] text-muted-foreground">png·jpg</span>
+          <ImageIcon /> Blueprint image{" "}
+          <span className="ml-auto text-[10px] text-muted-foreground">
+            png·jpg
+          </span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={importDataShortcut} className="text-primary font-medium">
-          <Upload className="text-primary" /> Import Data Shortcut <span className="ml-auto text-[10px] text-muted-foreground font-normal">json</span>
+        <DropdownMenuItem
+          onClick={importDataShortcut}
+          className="text-primary font-medium"
+        >
+          <Upload className="text-primary" /> Import Data Shortcut{" "}
+          <span className="ml-auto text-[10px] text-muted-foreground font-normal">
+            json
+          </span>
         </DropdownMenuItem>
- 
+
         <DropdownMenuSeparator />
         <DropdownMenuLabel>Export</DropdownMenuLabel>
         <DropdownMenuItem onClick={exportPng}>
@@ -176,11 +238,19 @@ export function ImportExportMenu() {
         <DropdownMenuItem onClick={exportDae}>
           <Box /> Model as COLLADA (.dae)
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={exportDataShortcut} className="text-primary font-medium">
-          <Download className="text-primary" /> Export Data Shortcuts <span className="ml-auto text-[10px] text-muted-foreground font-normal">json</span>
+        <DropdownMenuItem
+          onClick={exportDataShortcut}
+          className="text-primary font-medium"
+        >
+          <Download className="text-primary" /> Export Data Shortcuts{" "}
+          <span className="ml-auto text-[10px] text-muted-foreground font-normal">
+            json
+          </span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuLabel className="pt-1 text-[10px]">Point cloud (terrain)</DropdownMenuLabel>
+        <DropdownMenuLabel className="pt-1 text-[10px]">
+          Point cloud (terrain)
+        </DropdownMenuLabel>
         <div className="flex flex-wrap gap-1 px-2 pb-1.5">
           {POINT_CLOUD_FORMATS.map((f) => (
             <button

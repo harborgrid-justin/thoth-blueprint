@@ -12,9 +12,19 @@ import {
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useKeyboardShortcut } from "@/lib/hooks";
-import { niceGridStep, worldToScreen, zoomAt, type Viewport } from "../helpers/viewport";
+import {
+  niceGridStep,
+  worldToScreen,
+  zoomAt,
+  type Viewport,
+} from "../helpers/viewport";
 import { eventToWorld, snapPoint } from "../helpers/snapping";
-import { edgeMidpoint, bulgeThroughCursor, orderedVisibleElements, pointSegmentDistance } from "../helpers/canvasHelpers";
+import {
+  edgeMidpoint,
+  bulgeThroughCursor,
+  orderedVisibleElements,
+  pointSegmentDistance,
+} from "../helpers/canvasHelpers";
 
 export type Interaction =
   | { type: "idle" }
@@ -22,13 +32,22 @@ export type Interaction =
   | { type: "moving"; startWorld: Point; delta: Point }
   | { type: "vertex"; elementId: string; index: number; boundary: Polygon }
   | { type: "alignmentPI"; elementId: string; index: number; boundary: Point[] }
-  | { type: "edgeBulge"; elementId: string; index: number; from: Point; to: Point; bulge: number };
+  | {
+      type: "edgeBulge";
+      elementId: string;
+      index: number;
+      from: Point;
+      to: Point;
+      bulge: number;
+    };
 
 export interface CanvasInteractionsProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
   viewport: Viewport;
   setViewport: (v: Viewport) => void;
-  state: ReturnType<typeof import("./usePlanningCanvasState").usePlanningCanvasState>;
+  state: ReturnType<
+    typeof import("./usePlanningCanvasState").usePlanningCanvasState
+  >;
 }
 
 export function useCanvasInteractions({
@@ -60,9 +79,12 @@ export function useCanvasInteractions({
 
   const [draft, setDraft] = React.useState<Point[]>([]);
   const [cursor, setCursor] = React.useState<Point | null>(null);
-  const [cursorSnappedToVertex, setCursorSnappedToVertex] = React.useState(false);
+  const [cursorSnappedToVertex, setCursorSnappedToVertex] =
+    React.useState(false);
   const [measure, setMeasure] = React.useState<Point[]>([]);
-  const [waterDropPath, setWaterDropPath] = React.useState<Point[] | null>(null);
+  const [waterDropPath, setWaterDropPath] = React.useState<Point[] | null>(
+    null,
+  );
 
   const interactionRef = React.useRef<Interaction>({ type: "idle" });
   const [, forceRender] = React.useReducer((n: number) => n + 1, 0);
@@ -74,20 +96,35 @@ export function useCanvasInteractions({
     setWaterDropPath(null);
   }, [activeTool]);
 
-  const gridStep = React.useMemo(() => niceGridStep(viewport.zoom), [viewport.zoom]);
+  const gridStep = React.useMemo(
+    () => niceGridStep(viewport.zoom),
+    [viewport.zoom],
+  );
 
-  const getRect = React.useCallback(() => containerRef.current!.getBoundingClientRect(), [containerRef]);
+  const getRect = React.useCallback(
+    () => containerRef.current!.getBoundingClientRect(),
+    [containerRef],
+  );
 
   const resolveWorld = React.useCallback(
-    (clientX: number, clientY: number): { world: Point; snapped: Point; snappedToVertex: boolean } => {
+    (
+      clientX: number,
+      clientY: number,
+    ): { world: Point; snapped: Point; snappedToVertex: boolean } => {
       const rect = getRect();
       const raw = eventToWorld(clientX, clientY, rect, viewport);
       const screen = { x: clientX - rect.left, y: clientY - rect.top };
-      const { point, snappedToVertex } = snapPoint(raw, screen, viewport, site?.elements ?? [], {
-        gridStep,
-        snapToGrid,
-        snapToVertices,
-      });
+      const { point, snappedToVertex } = snapPoint(
+        raw,
+        screen,
+        viewport,
+        site?.elements ?? [],
+        {
+          gridStep,
+          snapToGrid,
+          snapToVertices,
+        },
+      );
       return { world: raw, snapped: point, snappedToVertex };
     },
     [getRect, viewport, site, gridStep, snapToGrid, snapToVertices],
@@ -167,7 +204,10 @@ export function useCanvasInteractions({
 
   const completeDraft = React.useCallback(() => {
     if (tool.mode === "polygon" && tool.kind && draft.length >= 3) {
-      addDrawnElement(tool.kind as Exclude<typeof tool.kind, "note" | "tree" | "spot">, draft);
+      addDrawnElement(
+        tool.kind as Exclude<typeof tool.kind, "note" | "tree" | "spot">,
+        draft,
+      );
       setDraft([]);
       setTool("select");
     } else if (tool.mode === "polyline" && tool.network && draft.length >= 2) {
@@ -181,9 +221,15 @@ export function useCanvasInteractions({
     } else if (tool.id === "alignment" && draft.length >= 2) {
       let minSeg = Infinity;
       for (let i = 1; i < draft.length; i++) {
-        minSeg = Math.min(minSeg, Math.hypot(draft[i].x - draft[i - 1].x, draft[i].y - draft[i - 1].y));
+        minSeg = Math.min(
+          minSeg,
+          Math.hypot(draft[i].x - draft[i - 1].x, draft[i].y - draft[i - 1].y),
+        );
       }
-      addAlignment(draft, draft.length > 2 && Number.isFinite(minSeg) ? minSeg * 0.35 : 0);
+      addAlignment(
+        draft,
+        draft.length > 2 && Number.isFinite(minSeg) ? minSeg * 0.35 : 0,
+      );
       setDraft([]);
       setTool("select");
     }
@@ -226,7 +272,10 @@ export function useCanvasInteractions({
 
     if (isMiddle || tool.mode === "pan") {
       e.currentTarget.setPointerCapture(e.pointerId);
-      interactionRef.current = { type: "panning", lastScreen: { x: e.clientX, y: e.clientY } };
+      interactionRef.current = {
+        type: "panning",
+        lastScreen: { x: e.clientX, y: e.clientY },
+      };
       return;
     }
 
@@ -269,7 +318,9 @@ export function useCanvasInteractions({
     }
 
     const selectedElement =
-      selection.length === 1 ? site.elements.find((el) => el.id === selection[0]) : undefined;
+      selection.length === 1
+        ? site.elements.find((el) => el.id === selection[0])
+        : undefined;
 
     if (selectedElement && isSpatialElement(selectedElement)) {
       const rect = getRect();
@@ -342,7 +393,11 @@ export function useCanvasInteractions({
         select(hitId, true);
       }
       e.currentTarget.setPointerCapture(e.pointerId);
-      interactionRef.current = { type: "moving", startWorld: snapped, delta: { x: 0, y: 0 } };
+      interactionRef.current = {
+        type: "moving",
+        startWorld: snapped,
+        delta: { x: 0, y: 0 },
+      };
     } else {
       select(null);
     }
@@ -357,8 +412,15 @@ export function useCanvasInteractions({
     if (interaction.type === "panning") {
       const dx = e.clientX - interaction.lastScreen.x;
       const dy = e.clientY - interaction.lastScreen.y;
-      interactionRef.current = { type: "panning", lastScreen: { x: e.clientX, y: e.clientY } };
-      setViewport({ ...viewport, offsetX: viewport.offsetX + dx, offsetY: viewport.offsetY + dy });
+      interactionRef.current = {
+        type: "panning",
+        lastScreen: { x: e.clientX, y: e.clientY },
+      };
+      setViewport({
+        ...viewport,
+        offsetX: viewport.offsetX + dx,
+        offsetY: viewport.offsetY + dy,
+      });
       return;
     }
 
@@ -372,19 +434,27 @@ export function useCanvasInteractions({
     }
 
     if (interaction.type === "vertex") {
-      interaction.boundary = interaction.boundary.map((v, i) => (i === interaction.index ? snapped : v));
+      interaction.boundary = interaction.boundary.map((v, i) =>
+        i === interaction.index ? snapped : v,
+      );
       forceRender();
       return;
     }
 
     if (interaction.type === "alignmentPI") {
-      interaction.boundary = interaction.boundary.map((v, i) => (i === interaction.index ? snapped : v));
+      interaction.boundary = interaction.boundary.map((v, i) =>
+        i === interaction.index ? snapped : v,
+      );
       forceRender();
       return;
     }
 
     if (interaction.type === "edgeBulge") {
-      interaction.bulge = bulgeThroughCursor(interaction.from, interaction.to, snapped);
+      interaction.bulge = bulgeThroughCursor(
+        interaction.from,
+        interaction.to,
+        snapped,
+      );
       forceRender();
       return;
     }
@@ -399,16 +469,27 @@ export function useCanvasInteractions({
     } else if (interaction.type === "vertex") {
       updateBoundary(interaction.elementId, interaction.boundary);
     } else if (interaction.type === "alignmentPI") {
-      const selectedAlign = site?.alignments?.find((a) => a.id === interaction.elementId);
+      const selectedAlign = site?.alignments?.find(
+        (a) => a.id === interaction.elementId,
+      );
       if (selectedAlign) {
         const patch = {
           ...selectedAlign,
           pis: selectedAlign.pis.map((pi, i) =>
-            i === interaction.index ? { ...pi, point: interaction.boundary[i] } : pi
+            i === interaction.index
+              ? { ...pi, point: interaction.boundary[i] }
+              : pi,
           ),
         };
-        const updatedAlignments = site?.alignments?.map((a) => (a.id === selectedAlign.id ? patch : a)) ?? [];
-        useWorkspaceStore.getState().updateElement(selectedAlign.id, { alignments: updatedAlignments } as any);
+        const updatedAlignments =
+          site?.alignments?.map((a) =>
+            a.id === selectedAlign.id ? patch : a,
+          ) ?? [];
+        useWorkspaceStore
+          .getState()
+          .updateElement(selectedAlign.id, {
+            alignments: updatedAlignments,
+          } as any);
       }
     } else if (interaction.type === "edgeBulge") {
       setEdgeBulge(interaction.elementId, interaction.index, interaction.bulge);
@@ -429,7 +510,10 @@ export function useCanvasInteractions({
   }
 
   function onDoubleClick(e: React.MouseEvent) {
-    if ((tool.mode === "polygon" || tool.mode === "polyline") && draft.length >= 2) {
+    if (
+      (tool.mode === "polygon" || tool.mode === "polyline") &&
+      draft.length >= 2
+    ) {
       completeDraft();
       return;
     }
@@ -446,7 +530,10 @@ export function useCanvasInteractions({
     let bestDist = 8;
     for (let i = 0; i < el.boundary.length; i++) {
       const a = worldToScreen(el.boundary[i], viewport);
-      const b = worldToScreen(el.boundary[(i + 1) % el.boundary.length], viewport);
+      const b = worldToScreen(
+        el.boundary[(i + 1) % el.boundary.length],
+        viewport,
+      );
       const d = pointSegmentDistance(sc, a, b);
       if (d < bestDist) {
         bestDist = d;

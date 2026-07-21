@@ -26,7 +26,10 @@ export type AngleFormat = "dms" | "dd";
 export type CoordFormat = "xy" | "survey";
 
 /** Resolve the concrete length unit a readout should use given the plan + pref. */
-export function resolveLengthUnit(spatial: SpatialContext, pref: LengthUnitPref): Unit {
+export function resolveLengthUnit(
+  spatial: SpatialContext,
+  pref: LengthUnitPref,
+): Unit {
   return pref === "auto" ? spatial.units : pref;
 }
 
@@ -57,7 +60,9 @@ export function formatLength(
 export function formatCoord(p: Point, format: CoordFormat, digits = 1): string {
   const x = p.x.toFixed(digits);
   const y = p.y.toFixed(digits);
-  if (format === "survey") {return `N ${(-p.y).toFixed(digits)} · E ${x}`;}
+  if (format === "survey") {
+    return `N ${(-p.y).toFixed(digits)} · E ${x}`;
+  }
   return `x ${x} · y ${y}`;
 }
 
@@ -65,8 +70,14 @@ export function formatCoord(p: Point, format: CoordFormat, digits = 1): string {
  * Format the direction from `a` to `b` as either a surveyor quadrant bearing
  * (e.g. `N45°30′15″E`) or a decimal-degree azimuth clockwise from north.
  */
-export function formatDirection(a: Point, b: Point, format: AngleFormat): string {
+export function formatDirection(
+  a: Point,
+  b: Point,
+  format: AngleFormat,
+): string {
   const az = azimuth(a, b);
-  if (format === "dd") {return `${az.toFixed(1)}°`;}
+  if (format === "dd") {
+    return `${az.toFixed(1)}°`;
+  }
   return formatBearing(azimuthToBearing(az));
 }

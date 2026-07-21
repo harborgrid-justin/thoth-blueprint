@@ -52,7 +52,11 @@ describe("azimuth & bearing", () => {
 
   it("converts decimal degrees to DMS with carry", () => {
     expect(toDms(45.25)).toEqual({ degrees: 45, minutes: 15, seconds: 0 });
-    expect(toDms(30.50833333)).toEqual({ degrees: 30, minutes: 30, seconds: 30 });
+    expect(toDms(30.50833333)).toEqual({
+      degrees: 30,
+      minutes: 30,
+      seconds: 30,
+    });
   });
 });
 
@@ -110,7 +114,10 @@ describe("interior angles", () => {
 
   it("sums to (n−2)·180° and finds the reflex corner on a concave tract", () => {
     const angles = interiorAngles(ell);
-    expect(angles.reduce((s, a) => s + a, 0)).toBeCloseTo((ell.length - 2) * 180, 6);
+    expect(angles.reduce((s, a) => s + a, 0)).toBeCloseTo(
+      (ell.length - 2) * 180,
+      6,
+    );
     const reflex = angles.filter((a) => a > 180);
     expect(reflex).toHaveLength(1);
     expect(reflex[0]).toBeCloseTo(270, 6);
@@ -148,8 +155,16 @@ describe("full report", () => {
 describe("coordinates & report", () => {
   it("assigns positive local northing/easting", () => {
     const coords = boundaryCoordinates(square);
-    expect(coords[0]).toMatchObject({ label: "P1", easting: 5000, northing: 5000 });
-    expect(coords[2]).toMatchObject({ label: "P3", easting: 5100, northing: 4900 });
+    expect(coords[0]).toMatchObject({
+      label: "P1",
+      easting: 5000,
+      northing: 5000,
+    });
+    expect(coords[2]).toMatchObject({
+      label: "P3",
+      easting: 5100,
+      northing: 4900,
+    });
   });
 
   it("reports area in survey units and acres", () => {
@@ -183,7 +198,12 @@ describe("curved tract", () => {
   });
 
   it("describes the curve in the legal description", () => {
-    const text = legalDescription(square, spatial, { tractName: "Lot 7" }, arcs);
+    const text = legalDescription(
+      square,
+      spatial,
+      { tractName: "Lot 7" },
+      arcs,
+    );
     expect(text).toContain("along a curve to the");
     expect(text).toContain("radius of");
     expect(text).toContain("arc length of");
@@ -192,7 +212,10 @@ describe("curved tract", () => {
 
 describe("legal description", () => {
   it("reads as a metes-and-bounds description", () => {
-    const text = legalDescription(square, spatial, { tractName: "Lot 1", context: "Test Subdivision" });
+    const text = legalDescription(square, spatial, {
+      tractName: "Lot 1",
+      context: "Test Subdivision",
+    });
     expect(text).toContain("BEGINNING at the Point of Beginning");
     expect(text).toContain("thence Due East");
     expect(text).toContain("the POINT OF BEGINNING");
@@ -203,15 +226,54 @@ describe("legal description", () => {
 
 describe("bearing parsing", () => {
   it("parses cardinal directions", () => {
-    expect(parseBearing("Due North")).toEqual({ ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" });
-    expect(parseBearing("N")).toEqual({ ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" });
-    expect(parseBearing("Due West")).toEqual({ ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "W", cardinal: "W" });
+    expect(parseBearing("Due North")).toEqual({
+      ns: "N",
+      degrees: 0,
+      minutes: 0,
+      seconds: 0,
+      ew: "E",
+      cardinal: "N",
+    });
+    expect(parseBearing("N")).toEqual({
+      ns: "N",
+      degrees: 0,
+      minutes: 0,
+      seconds: 0,
+      ew: "E",
+      cardinal: "N",
+    });
+    expect(parseBearing("Due West")).toEqual({
+      ns: "N",
+      degrees: 90,
+      minutes: 0,
+      seconds: 0,
+      ew: "W",
+      cardinal: "W",
+    });
   });
 
   it("parses standard quadrant bearings", () => {
-    expect(parseBearing("N 45-30-15 E")).toEqual({ ns: "N", degrees: 45, minutes: 30, seconds: 15, ew: "E" });
-    expect(parseBearing("S45.5W")).toEqual({ ns: "S", degrees: 45, minutes: 30, seconds: 0, ew: "W" });
-    expect(parseBearing("N 45°30'15\" E")).toEqual({ ns: "N", degrees: 45, minutes: 30, seconds: 15, ew: "E" });
+    expect(parseBearing("N 45-30-15 E")).toEqual({
+      ns: "N",
+      degrees: 45,
+      minutes: 30,
+      seconds: 15,
+      ew: "E",
+    });
+    expect(parseBearing("S45.5W")).toEqual({
+      ns: "S",
+      degrees: 45,
+      minutes: 30,
+      seconds: 0,
+      ew: "W",
+    });
+    expect(parseBearing("N 45°30'15\" E")).toEqual({
+      ns: "N",
+      degrees: 45,
+      minutes: 30,
+      seconds: 15,
+      ew: "E",
+    });
   });
 
   it("throws on invalid bearings", () => {
@@ -232,7 +294,14 @@ describe("traverse adjustments", () => {
         fromLabel: "P1",
         toLabel: "P2",
         azimuth: 90,
-        bearing: { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "E", cardinal: "E" },
+        bearing: {
+          ns: "N",
+          degrees: 90,
+          minutes: 0,
+          seconds: 0,
+          ew: "E",
+          cardinal: "E",
+        },
         bearingText: "Due East",
         distance: 100,
         distanceMeters: 100,
@@ -247,7 +316,14 @@ describe("traverse adjustments", () => {
         fromLabel: "P2",
         toLabel: "P3",
         azimuth: 180,
-        bearing: { ns: "S", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "S" },
+        bearing: {
+          ns: "S",
+          degrees: 0,
+          minutes: 0,
+          seconds: 0,
+          ew: "E",
+          cardinal: "S",
+        },
         bearingText: "Due South",
         distance: 100,
         distanceMeters: 100,
@@ -262,7 +338,14 @@ describe("traverse adjustments", () => {
         fromLabel: "P3",
         toLabel: "P4",
         azimuth: 270,
-        bearing: { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "W", cardinal: "W" },
+        bearing: {
+          ns: "N",
+          degrees: 90,
+          minutes: 0,
+          seconds: 0,
+          ew: "W",
+          cardinal: "W",
+        },
         bearingText: "Due West",
         distance: 100,
         distanceMeters: 100,
@@ -277,7 +360,14 @@ describe("traverse adjustments", () => {
         fromLabel: "P4",
         toLabel: "P1",
         azimuth: 0,
-        bearing: { ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" },
+        bearing: {
+          ns: "N",
+          degrees: 0,
+          minutes: 0,
+          seconds: 0,
+          ew: "E",
+          cardinal: "N",
+        },
         bearingText: "Due North",
         distance: 100,
         distanceMeters: 100,
@@ -293,7 +383,10 @@ describe("traverse adjustments", () => {
     const adjusted = adjustTraverse(courses, "compass");
     expect(adjusted.closureAfter.linearMisclosure).toBeLessThan(1e-9);
     expect(adjusted.closureAfter.precisionText).toBe("Exact (closed)");
-    expect(adjusted.courses[adjusted.courses.length - 1].to).toEqual({ x: 0, y: 0 });
+    expect(adjusted.courses[adjusted.courses.length - 1].to).toEqual({
+      x: 0,
+      y: 0,
+    });
   });
 
   it("closes an open traverse using Transit Rule", () => {
@@ -307,7 +400,14 @@ describe("traverse adjustments", () => {
         fromLabel: "P1",
         toLabel: "P2",
         azimuth: 90,
-        bearing: { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "E", cardinal: "E" },
+        bearing: {
+          ns: "N",
+          degrees: 90,
+          minutes: 0,
+          seconds: 0,
+          ew: "E",
+          cardinal: "E",
+        },
         bearingText: "Due East",
         distance: 100,
         distanceMeters: 100,
@@ -322,7 +422,14 @@ describe("traverse adjustments", () => {
         fromLabel: "P2",
         toLabel: "P3",
         azimuth: 180,
-        bearing: { ns: "S", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "S" },
+        bearing: {
+          ns: "S",
+          degrees: 0,
+          minutes: 0,
+          seconds: 0,
+          ew: "E",
+          cardinal: "S",
+        },
         bearingText: "Due South",
         distance: 100,
         distanceMeters: 100,
@@ -337,7 +444,14 @@ describe("traverse adjustments", () => {
         fromLabel: "P3",
         toLabel: "P4",
         azimuth: 270,
-        bearing: { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "W", cardinal: "W" },
+        bearing: {
+          ns: "N",
+          degrees: 90,
+          minutes: 0,
+          seconds: 0,
+          ew: "W",
+          cardinal: "W",
+        },
         bearingText: "Due West",
         distance: 100,
         distanceMeters: 100,
@@ -352,7 +466,14 @@ describe("traverse adjustments", () => {
         fromLabel: "P4",
         toLabel: "P1",
         azimuth: 0,
-        bearing: { ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" },
+        bearing: {
+          ns: "N",
+          degrees: 0,
+          minutes: 0,
+          seconds: 0,
+          ew: "E",
+          cardinal: "N",
+        },
         bearingText: "Due North",
         distance: 102,
         distanceMeters: 102,
@@ -364,6 +485,9 @@ describe("traverse adjustments", () => {
     const adjusted = adjustTraverse(courses, "transit");
     expect(adjusted.closureAfter.linearMisclosure).toBeLessThan(1e-9);
     expect(adjusted.closureAfter.precisionText).toBe("Exact (closed)");
-    expect(adjusted.courses[adjusted.courses.length - 1].to).toEqual({ x: 0, y: 0 });
+    expect(adjusted.courses[adjusted.courses.length - 1].to).toEqual({
+      x: 0,
+      y: 0,
+    });
   });
 });

@@ -1,5 +1,11 @@
 import type { Site } from "@thoth/domain";
-import type { Checkpoint, Project, ProjectSummary, ReviewThread, User } from "./types";
+import type {
+  Checkpoint,
+  Project,
+  ProjectSummary,
+  ReviewThread,
+  User,
+} from "./types";
 
 /**
  * The cloud API surface the workspace talks to. The app depends on this
@@ -16,14 +22,22 @@ export interface ApiClient {
   listProjects(): Promise<ProjectSummary[]>;
   getProject(id: string): Promise<Project>;
   createProject(input: CreateProjectInput): Promise<Project>;
-  renameProject(id: string, name: string, description?: string): Promise<Project>;
+  renameProject(
+    id: string,
+    name: string,
+    description?: string,
+  ): Promise<Project>;
   deleteProject(id: string): Promise<void>;
 
   /** Persist a project's site (a save / autosave). */
   saveSite(projectId: string, site: Site): Promise<Project>;
 
   listCheckpoints(projectId: string): Promise<Checkpoint[]>;
-  createCheckpoint(projectId: string, name: string, note?: string): Promise<Checkpoint>;
+  createCheckpoint(
+    projectId: string,
+    name: string,
+    note?: string,
+  ): Promise<Checkpoint>;
   restoreCheckpoint(projectId: string, checkpointId: string): Promise<Project>;
   deleteCheckpoint(projectId: string, checkpointId: string): Promise<void>;
 

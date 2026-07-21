@@ -62,7 +62,7 @@ describe("Erosion Control & Hydrology Simulation Engine", () => {
             { x: 10, y: 10 },
             { x: 90, y: 10 },
           ],
-          gradient: 0.40, // 40% slope behind fence
+          gradient: 0.4, // 40% slope behind fence
           slopeLength: 120, // 120ft slope length
         } as any,
       ],
@@ -72,7 +72,7 @@ describe("Erosion Control & Hydrology Simulation Engine", () => {
           type: "erosion-bale",
           position: { x: 50, y: 20 },
           label: "8-inch compost filter sock",
-          gradient: 0.40, // too steep for 8" sock
+          gradient: 0.4, // too steep for 8" sock
           diameter: 8,
         } as any,
         {
@@ -100,7 +100,10 @@ describe("Erosion Control & Hydrology Simulation Engine", () => {
           id: "road-1",
           name: "Main Access Road",
           kind: "road",
-          nodes: [{ id: "n1", point: { x: 0, y: 0 } }, { id: "n2", point: { x: 20, y: 10 } }],
+          nodes: [
+            { id: "n1", point: { x: 0, y: 0 } },
+            { id: "n2", point: { x: 20, y: 10 } },
+          ],
           edges: [{ id: "e1", from: "n1", to: "n2" }],
         },
       ],
@@ -109,18 +112,42 @@ describe("Erosion Control & Hydrology Simulation Engine", () => {
     const findings = auditErosionCompliance(site1);
 
     // Verify all targeted standards findings are caught correctly
-    expect(findings.some((f) => f.code === "erosion.flow.excessive")).toBe(true);
+    expect(findings.some((f) => f.code === "erosion.flow.excessive")).toBe(
+      true,
+    );
     expect(findings.some((f) => f.code === "erosion.tc.tooShort")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.shear.exceeded")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.sock.slopeExceeded")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.inlet.overflowGapMissing")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.fence.upgradeRequired")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.basin.undersized")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.basin.skimmerMissing")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.basin.ratioTooLow")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.spillway.inadequate")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.basin.trashRackMissing")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.basin.depthTooShallow")).toBe(true);
-    expect(findings.some((f) => f.code === "erosion.entrance.missing")).toBe(true);
+    expect(findings.some((f) => f.code === "erosion.shear.exceeded")).toBe(
+      true,
+    );
+    expect(findings.some((f) => f.code === "erosion.sock.slopeExceeded")).toBe(
+      true,
+    );
+    expect(
+      findings.some((f) => f.code === "erosion.inlet.overflowGapMissing"),
+    ).toBe(true);
+    expect(
+      findings.some((f) => f.code === "erosion.fence.upgradeRequired"),
+    ).toBe(true);
+    expect(findings.some((f) => f.code === "erosion.basin.undersized")).toBe(
+      true,
+    );
+    expect(
+      findings.some((f) => f.code === "erosion.basin.skimmerMissing"),
+    ).toBe(true);
+    expect(findings.some((f) => f.code === "erosion.basin.ratioTooLow")).toBe(
+      true,
+    );
+    expect(findings.some((f) => f.code === "erosion.spillway.inadequate")).toBe(
+      true,
+    );
+    expect(
+      findings.some((f) => f.code === "erosion.basin.trashRackMissing"),
+    ).toBe(true);
+    expect(
+      findings.some((f) => f.code === "erosion.basin.depthTooShallow"),
+    ).toBe(true);
+    expect(findings.some((f) => f.code === "erosion.entrance.missing")).toBe(
+      true,
+    );
   });
 });

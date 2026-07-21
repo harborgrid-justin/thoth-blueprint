@@ -3,7 +3,12 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import { siteForTemplate, createId } from "@thoth/domain";
-import { db, type Project, type Checkpoint, type ReviewComment } from "./store.js";
+import {
+  db,
+  type Project,
+  type Checkpoint,
+  type ReviewComment,
+} from "./store.js";
 
 dotenv.config();
 
@@ -23,7 +28,9 @@ app.get("/api/user", (_req, res) => {
 app.post("/api/workspace/reset", (req, res) => {
   const { mode } = req.body;
   if (mode !== "samples" && mode !== "empty") {
-    return res.status(400).json({ error: "Invalid mode. Must be 'samples' or 'empty'." });
+    return res
+      .status(400)
+      .json({ error: "Invalid mode. Must be 'samples' or 'empty'." });
   }
 
   const store = db.loadStore();
@@ -98,8 +105,12 @@ app.patch("/api/projects/:id", (req, res) => {
     return res.status(404).json({ error: "Project not found" });
   }
 
-  if (name !== undefined) {project.name = name;}
-  if (description !== undefined) {project.description = description;}
+  if (name !== undefined) {
+    project.name = name;
+  }
+  if (description !== undefined) {
+    project.description = description;
+  }
   project.updatedAt = new Date().toISOString();
 
   db.writeStore(store);
@@ -116,7 +127,9 @@ app.delete("/api/projects/:id", (req, res) => {
 
   store.projects.splice(index, 1);
   // Cascade delete checkpoints and threads
-  store.checkpoints = store.checkpoints.filter((c) => c.projectId !== req.params.id);
+  store.checkpoints = store.checkpoints.filter(
+    (c) => c.projectId !== req.params.id,
+  );
   store.threads = store.threads.filter((t) => t.projectId !== req.params.id);
 
   db.writeStore(store);
@@ -189,7 +202,7 @@ app.post("/api/projects/:id/checkpoints/:checkpointId/restore", (req, res) => {
   }
 
   const checkpoint = store.checkpoints.find(
-    (c) => c.projectId === req.params.id && c.id === req.params.checkpointId
+    (c) => c.projectId === req.params.id && c.id === req.params.checkpointId,
   );
   if (!checkpoint) {
     return res.status(404).json({ error: "Checkpoint not found" });
@@ -206,7 +219,7 @@ app.post("/api/projects/:id/checkpoints/:checkpointId/restore", (req, res) => {
 app.delete("/api/projects/:id/checkpoints/:checkpointId", (req, res) => {
   const store = db.loadStore();
   const index = store.checkpoints.findIndex(
-    (c) => c.projectId === req.params.id && c.id === req.params.checkpointId
+    (c) => c.projectId === req.params.id && c.id === req.params.checkpointId,
   );
   if (index === -1) {
     return res.status(404).json({ error: "Checkpoint not found" });
@@ -239,7 +252,8 @@ app.post("/api/projects/:id/threads", (req, res) => {
 
   // Look for existing unresolved thread on this element
   let thread = store.threads.find(
-    (t) => t.projectId === req.params.id && t.elementId === elementId && !t.resolved
+    (t) =>
+      t.projectId === req.params.id && t.elementId === elementId && !t.resolved,
   );
 
   const comment: ReviewComment = {
@@ -271,7 +285,7 @@ app.post("/api/projects/:id/threads", (req, res) => {
 app.post("/api/projects/:id/threads/:threadId/resolve", (req, res) => {
   const store = db.loadStore();
   const thread = store.threads.find(
-    (t) => t.projectId === req.params.id && t.id === req.params.threadId
+    (t) => t.projectId === req.params.id && t.id === req.params.threadId,
   );
   if (!thread) {
     return res.status(404).json({ error: "Thread not found" });

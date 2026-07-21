@@ -12,7 +12,11 @@
 
 import type { Point, Polygon } from "../spatial/geometry";
 import { add, distance, normalize, scale, subtract } from "../spatial/geometry";
-import { measuredArea, type AreaUnit, type SpatialContext } from "../spatial/spatial";
+import {
+  measuredArea,
+  type AreaUnit,
+  type SpatialContext,
+} from "../spatial/spatial";
 
 import type {
   Level,
@@ -40,14 +44,26 @@ export type {
 export const WALL_TYPES: WallType[] = [
   { id: "ext-8", label: 'Exterior 8"', thickness: 8 / 12, material: "masonry" },
   { id: "ext-6", label: 'Exterior 6"', thickness: 6 / 12, material: "wood" },
-  { id: "int-5", label: 'Interior 4-7/8"', thickness: 4.875 / 12, material: "wood" },
-  { id: "int-3", label: 'Interior 3-5/8"', thickness: 3.625 / 12, material: "wood" },
+  {
+    id: "int-5",
+    label: 'Interior 4-7/8"',
+    thickness: 4.875 / 12,
+    material: "wood",
+  },
+  {
+    id: "int-3",
+    label: 'Interior 3-5/8"',
+    thickness: 3.625 / 12,
+    material: "wood",
+  },
 ];
 
 /** The straight centreline direction (start→end) of a wall. */
 export function wallDirection(wall: Wall): Point {
   const pts = wall.baseline;
-  if (pts.length < 2) {return { x: 1, y: 0 };}
+  if (pts.length < 2) {
+    return { x: 1, y: 0 };
+  }
   const a = pts[0];
   const b = pts[pts.length - 1];
   return normalize(subtract(b, a));
@@ -56,7 +72,9 @@ export function wallDirection(wall: Wall): Point {
 /** The length of a wall along its baseline. */
 export function wallLength(wall: Wall): number {
   let total = 0;
-  for (let i = 1; i < wall.baseline.length; i++) {total += distance(wall.baseline[i - 1], wall.baseline[i]);}
+  for (let i = 1; i < wall.baseline.length; i++) {
+    total += distance(wall.baseline[i - 1], wall.baseline[i]);
+  }
   return total;
 }
 
@@ -66,7 +84,9 @@ export function wallLength(wall: Wall): number {
  */
 export function wallPolygon(wall: Wall): Polygon {
   const pts = wall.baseline;
-  if (pts.length < 2) {return [];}
+  if (pts.length < 2) {
+    return [];
+  }
   const half = wall.thickness / 2;
   const left: Point[] = [];
   const right: Point[] = [];
@@ -88,7 +108,10 @@ export function openingCenter(wall: Wall, opening: { offset: number }): Point {
 }
 
 /** The two jamb points (opening edges) of a wall-hosted opening. */
-export function openingJambs(wall: Wall, opening: { offset: number; width: number }): [Point, Point] {
+export function openingJambs(
+  wall: Wall,
+  opening: { offset: number; width: number },
+): [Point, Point] {
   const dir = wallDirection(wall);
   const start = wall.baseline[0];
   const p1 = add(start, scale(dir, opening.offset - opening.width / 2));
@@ -97,7 +120,10 @@ export function openingJambs(wall: Wall, opening: { offset: number; width: numbe
 }
 
 /** The door leaf line + swing-arc sample points for a hosted door. */
-export function doorSwing(wall: Wall, door: Door): { hinge: Point; leafEnd: Point; arc: Point[] } {
+export function doorSwing(
+  wall: Wall,
+  door: Door,
+): { hinge: Point; leafEnd: Point; arc: Point[] } {
   const dir = wallDirection(wall);
   const n = { x: -dir.y, y: dir.x };
   const [j1, j2] = openingJambs(wall, door);
@@ -109,23 +135,37 @@ export function doorSwing(wall: Wall, door: Door): { hinge: Point; leafEnd: Poin
   const startAng = Math.atan2(n.y, n.x);
   const endAng = Math.atan2(along.y, along.x);
   let sweep = endAng - startAng;
-  while (sweep <= -Math.PI) {sweep += 2 * Math.PI;}
-  while (sweep > Math.PI) {sweep -= 2 * Math.PI;}
+  while (sweep <= -Math.PI) {
+    sweep += 2 * Math.PI;
+  }
+  while (sweep > Math.PI) {
+    sweep -= 2 * Math.PI;
+  }
   const steps = 8;
   for (let i = 0; i <= steps; i++) {
     const t = startAng + (sweep * i) / steps;
-    arc.push({ x: hinge.x + door.width * Math.cos(t), y: hinge.y + door.width * Math.sin(t) });
+    arc.push({
+      x: hinge.x + door.width * Math.cos(t),
+      y: hinge.y + door.width * Math.sin(t),
+    });
   }
   return { hinge, leafEnd, arc };
 }
 
 /** Room floor area in a real-world unit. */
-export function roomArea(room: Room, spatial: SpatialContext, unit: AreaUnit = "sqft"): number {
+export function roomArea(
+  room: Room,
+  spatial: SpatialContext,
+  unit: AreaUnit = "sqft",
+): number {
   return measuredArea(room.boundary, spatial, unit);
 }
 
 /** All walls, doors, windows, rooms on a given level. */
-export function levelContents(model: BuildingModel, levelId: string): {
+export function levelContents(
+  model: BuildingModel,
+  levelId: string,
+): {
   walls: Wall[];
   doors: Door[];
   windows: Window[];
@@ -142,6 +182,9 @@ export function levelContents(model: BuildingModel, levelId: string): {
 }
 
 /** Find a wall by id within a model. */
-export function findWall(model: BuildingModel, wallId: string): Wall | undefined {
+export function findWall(
+  model: BuildingModel,
+  wallId: string,
+): Wall | undefined {
   return model.walls.find((w) => w.id === wallId);
 }

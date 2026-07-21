@@ -96,9 +96,9 @@ describe("Subdivision Engine", () => {
     const makeId = () => `lot-${++idCounter}`;
     const merged = mergeLots([lot1, lot2], "lot-layer", makeId);
     expect(polygonArea(merged.boundary)).toBeCloseTo(10000);
-    
-    const xs = merged.boundary.map(p => p.x);
-    const ys = merged.boundary.map(p => p.y);
+
+    const xs = merged.boundary.map((p) => p.x);
+    const ys = merged.boundary.map((p) => p.y);
     expect(Math.max(...xs)).toBe(100);
     expect(Math.min(...xs)).toBe(0);
     expect(Math.max(...ys)).toBe(100);

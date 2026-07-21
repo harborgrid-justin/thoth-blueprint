@@ -137,7 +137,11 @@ export function dimensionStyle(id: string): DimensionStyle {
 }
 
 /** Real-world length (in style unit) of a model-space distance. */
-function toDisplayLength(modelDist: number, spatial: SpatialContext, unit: DimUnit): number {
+function toDisplayLength(
+  modelDist: number,
+  spatial: SpatialContext,
+  unit: DimUnit,
+): number {
   const meters = modelDist * METERS_PER_UNIT[spatial.units];
   switch (unit) {
     case "m":
@@ -154,7 +158,12 @@ function toDisplayLength(modelDist: number, spatial: SpatialContext, unit: DimUn
   }
 }
 
-function formatSingleValue(v: number, unit: DimUnit, precision: number, suppressZero: boolean): string {
+function formatSingleValue(
+  v: number,
+  unit: DimUnit,
+  precision: number,
+  suppressZero: boolean,
+): string {
   switch (unit) {
     case "ft-in": {
       const totalIn = v * 12;
@@ -170,10 +179,13 @@ function formatSingleValue(v: number, unit: DimUnit, precision: number, suppress
           wholeIn = 0;
         }
         if (fracNum === 0) {
-          if (suppressZero && wholeIn === 0) {return `${ft}'`;}
+          if (suppressZero && wholeIn === 0) {
+            return `${ft}'`;
+          }
           return `${ft}'-${wholeIn}"`;
         }
-        const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+        const gcd = (a: number, b: number): number =>
+          b === 0 ? a : gcd(b, a % b);
         const g = gcd(fracNum, denom);
         const fracStr = `${fracNum / g}/${denom / g}`;
         if (wholeIn === 0) {
@@ -186,7 +198,9 @@ function formatSingleValue(v: number, unit: DimUnit, precision: number, suppress
         ft += 1;
         inch = 0;
       }
-      if (suppressZero && inch === 0) {return `${ft}'`;}
+      if (suppressZero && inch === 0) {
+        return `${ft}'`;
+      }
       return `${ft}'-${inch}"`;
     }
     case "ft-dec":
@@ -203,12 +217,26 @@ function formatSingleValue(v: number, unit: DimUnit, precision: number, suppress
 }
 
 /** Format a length value per a dimension style. */
-export function formatDimText(modelDist: number, style: DimensionStyle, spatial: SpatialContext): string {
+export function formatDimText(
+  modelDist: number,
+  style: DimensionStyle,
+  spatial: SpatialContext,
+): string {
   const v1 = toDisplayLength(modelDist, spatial, style.unit);
-  const primaryStr = formatSingleValue(v1, style.unit, style.precision, style.suppressZero);
+  const primaryStr = formatSingleValue(
+    v1,
+    style.unit,
+    style.precision,
+    style.suppressZero,
+  );
   if (style.secondaryUnit) {
     const v2 = toDisplayLength(modelDist, spatial, style.secondaryUnit);
-    const secondaryStr = formatSingleValue(v2, style.secondaryUnit, style.precision, style.suppressZero);
+    const secondaryStr = formatSingleValue(
+      v2,
+      style.secondaryUnit,
+      style.precision,
+      style.suppressZero,
+    );
     return `${primaryStr} [${secondaryStr}]`;
   }
   return primaryStr;
@@ -220,7 +248,10 @@ import { leftNormal } from "./common/vector";
  * Measure a dimension: its numeric value, formatted label, and model-space
  * geometry. Angular values are in degrees; all others are display lengths.
  */
-export function measureDimension(dim: Dimension, spatial: SpatialContext): MeasuredDimension {
+export function measureDimension(
+  dim: Dimension,
+  spatial: SpatialContext,
+): MeasuredDimension {
   const style = dimensionStyle(dim.styleId);
   switch (dim.kind) {
     case "linear":
@@ -238,7 +269,11 @@ export function measureDimension(dim: Dimension, spatial: SpatialContext): Measu
   }
 }
 
-function measureAligned(dim: AlignedDimension, style: DimensionStyle, spatial: SpatialContext): MeasuredDimension {
+function measureAligned(
+  dim: AlignedDimension,
+  style: DimensionStyle,
+  spatial: SpatialContext,
+): MeasuredDimension {
   const dir = normalize(subtract(dim.b, dim.a));
   const n = leftNormal(dir);
   const off = scale(n, dim.offset);
@@ -246,7 +281,10 @@ function measureAligned(dim: AlignedDimension, style: DimensionStyle, spatial: S
   const b2 = add(dim.b, off);
   const value = distance(dim.a, dim.b);
   const gap = scale(n, Math.sign(dim.offset || 1) * style.extensionGap);
-  const beyond = scale(n, dim.offset + Math.sign(dim.offset || 1) * style.extensionBeyond);
+  const beyond = scale(
+    n,
+    dim.offset + Math.sign(dim.offset || 1) * style.extensionBeyond,
+  );
 
   const lines: [Point, Point][] = [];
   if (!style.suppressExtension1) {
@@ -279,15 +317,31 @@ function measureAligned(dim: AlignedDimension, style: DimensionStyle, spatial: S
   };
 }
 
-function measureLinear(dim: LinearDimension, style: DimensionStyle, spatial: SpatialContext): MeasuredDimension {
+function measureLinear(
+  dim: LinearDimension,
+  style: DimensionStyle,
+  spatial: SpatialContext,
+): MeasuredDimension {
   const dir = dim.axis === "horizontal" ? { x: 1, y: 0 } : { x: 0, y: 1 };
   const n = leftNormal(dir);
   // Project both points onto the dimension line at the offset.
-  const base = dim.axis === "horizontal" ? Math.max(dim.a.y, dim.b.y) : Math.max(dim.a.x, dim.b.x);
+  const base =
+    dim.axis === "horizontal"
+      ? Math.max(dim.a.y, dim.b.y)
+      : Math.max(dim.a.x, dim.b.x);
   const lineCoord = base + dim.offset;
-  const a2 = dim.axis === "horizontal" ? { x: dim.a.x, y: lineCoord } : { x: lineCoord, y: dim.a.y };
-  const b2 = dim.axis === "horizontal" ? { x: dim.b.x, y: lineCoord } : { x: lineCoord, y: dim.b.y };
-  const value = dim.axis === "horizontal" ? Math.abs(dim.b.x - dim.a.x) : Math.abs(dim.b.y - dim.a.y);
+  const a2 =
+    dim.axis === "horizontal"
+      ? { x: dim.a.x, y: lineCoord }
+      : { x: lineCoord, y: dim.a.y };
+  const b2 =
+    dim.axis === "horizontal"
+      ? { x: dim.b.x, y: lineCoord }
+      : { x: lineCoord, y: dim.b.y };
+  const value =
+    dim.axis === "horizontal"
+      ? Math.abs(dim.b.x - dim.a.x)
+      : Math.abs(dim.b.y - dim.a.y);
   const segDir = normalize(subtract(b2, a2));
 
   const lines: [Point, Point][] = [];
@@ -303,7 +357,8 @@ function measureLinear(dim: LinearDimension, style: DimensionStyle, spatial: Spa
   if (style.textAlignment === "parallel") {
     textAngleDeg = (Math.atan2(segDir.y, segDir.x) * 180) / Math.PI;
   } else if (style.textAlignment === "perpendicular") {
-    textAngleDeg = ((Math.atan2(segDir.y, segDir.x) * 180) / Math.PI + 90) % 360;
+    textAngleDeg =
+      ((Math.atan2(segDir.y, segDir.x) * 180) / Math.PI + 90) % 360;
   } else if (style.textAlignment === "horizontal") {
     textAngleDeg = 0;
   }
@@ -323,14 +378,21 @@ function measureLinear(dim: LinearDimension, style: DimensionStyle, spatial: Spa
   };
 }
 
-function measureAngular(dim: AngularDimension, style: DimensionStyle): MeasuredDimension {
+function measureAngular(
+  dim: AngularDimension,
+  style: DimensionStyle,
+): MeasuredDimension {
   const va = subtract(dim.a, dim.vertex);
   const vb = subtract(dim.b, dim.vertex);
   const angA = Math.atan2(va.y, va.x);
   const angB = Math.atan2(vb.y, vb.x);
   let sweep = angB - angA;
-  while (sweep <= -Math.PI) {sweep += 2 * Math.PI;}
-  while (sweep > Math.PI) {sweep -= 2 * Math.PI;}
+  while (sweep <= -Math.PI) {
+    sweep += 2 * Math.PI;
+  }
+  while (sweep > Math.PI) {
+    sweep -= 2 * Math.PI;
+  }
   const deg = Math.abs((sweep * 180) / Math.PI);
   const mid = angA + sweep / 2;
   const r = dim.radius;
@@ -338,12 +400,29 @@ function measureAngular(dim: AngularDimension, style: DimensionStyle): MeasuredD
   const steps = Math.max(2, Math.ceil(deg / 5));
   for (let i = 0; i <= steps; i++) {
     const t = angA + (sweep * i) / steps;
-    arcPts.push({ x: dim.vertex.x + r * Math.cos(t), y: dim.vertex.y + r * Math.sin(t) });
+    arcPts.push({
+      x: dim.vertex.x + r * Math.cos(t),
+      y: dim.vertex.y + r * Math.sin(t),
+    });
   }
   const lines: [Point, Point][] = [];
-  for (let i = 1; i < arcPts.length; i++) {lines.push([arcPts[i - 1], arcPts[i]]);}
-  lines.push([dim.vertex, { x: dim.vertex.x + r * Math.cos(angA), y: dim.vertex.y + r * Math.sin(angA) }]);
-  lines.push([dim.vertex, { x: dim.vertex.x + r * Math.cos(angB), y: dim.vertex.y + r * Math.sin(angB) }]);
+  for (let i = 1; i < arcPts.length; i++) {
+    lines.push([arcPts[i - 1], arcPts[i]]);
+  }
+  lines.push([
+    dim.vertex,
+    {
+      x: dim.vertex.x + r * Math.cos(angA),
+      y: dim.vertex.y + r * Math.sin(angA),
+    },
+  ]);
+  lines.push([
+    dim.vertex,
+    {
+      x: dim.vertex.x + r * Math.cos(angB),
+      y: dim.vertex.y + r * Math.sin(angB),
+    },
+  ]);
   const decimals = Math.max(0, style.precision - 1);
   return {
     value: deg,
@@ -351,22 +430,32 @@ function measureAngular(dim: AngularDimension, style: DimensionStyle): MeasuredD
     geometry: {
       lines,
       ticks: [],
-      textAt: { x: dim.vertex.x + (r + 1) * Math.cos(mid), y: dim.vertex.y + (r + 1) * Math.sin(mid) },
+      textAt: {
+        x: dim.vertex.x + (r + 1) * Math.cos(mid),
+        y: dim.vertex.y + (r + 1) * Math.sin(mid),
+      },
       textAngleDeg: 0,
     },
   };
 }
 
-function measureRadial(dim: RadialDimension, style: DimensionStyle, spatial: SpatialContext): MeasuredDimension {
+function measureRadial(
+  dim: RadialDimension,
+  style: DimensionStyle,
+  spatial: SpatialContext,
+): MeasuredDimension {
   const r = distance(dim.center, dim.edge);
   const value = dim.diameter ? r * 2 : r;
   const prefix = dim.diameter ? "⌀" : "R";
   const dir = normalize(subtract(dim.edge, dim.center));
   return {
     value,
-    label: dim.textOverride ?? `${prefix}${formatDimText(value, style, spatial)}`,
+    label:
+      dim.textOverride ?? `${prefix}${formatDimText(value, style, spatial)}`,
     geometry: {
-      lines: [[dim.diameter ? add(dim.center, scale(dir, -r)) : dim.center, dim.edge]],
+      lines: [
+        [dim.diameter ? add(dim.center, scale(dir, -r)) : dim.center, dim.edge],
+      ],
       ticks: [{ at: dim.edge, dir: scale(dir, -1) }],
       textAt: add(dim.center, scale(dir, r * 0.55)),
       textAngleDeg: 0,
@@ -374,10 +463,17 @@ function measureRadial(dim: RadialDimension, style: DimensionStyle, spatial: Spa
   };
 }
 
-function measureOrdinate(dim: OrdinateDimension, style: DimensionStyle, spatial: SpatialContext): MeasuredDimension {
-  const value = dim.axis === "x" ? dim.point.x - dim.datum.x : dim.point.y - dim.datum.y;
+function measureOrdinate(
+  dim: OrdinateDimension,
+  style: DimensionStyle,
+  spatial: SpatialContext,
+): MeasuredDimension {
+  const value =
+    dim.axis === "x" ? dim.point.x - dim.datum.x : dim.point.y - dim.datum.y;
   const leaderEnd =
-    dim.axis === "x" ? { x: dim.point.x, y: dim.point.y - dim.leader } : { x: dim.point.x + dim.leader, y: dim.point.y };
+    dim.axis === "x"
+      ? { x: dim.point.x, y: dim.point.y - dim.leader }
+      : { x: dim.point.x + dim.leader, y: dim.point.y };
   return {
     value: Math.abs(value),
     label: dim.textOverride ?? formatDimText(Math.abs(value), style, spatial),
@@ -390,12 +486,20 @@ function measureOrdinate(dim: OrdinateDimension, style: DimensionStyle, spatial:
   };
 }
 
-function measureArcLength(dim: ArcLengthDimension, style: DimensionStyle, spatial: SpatialContext): MeasuredDimension {
+function measureArcLength(
+  dim: ArcLengthDimension,
+  style: DimensionStyle,
+  spatial: SpatialContext,
+): MeasuredDimension {
   const a = subtract(dim.start, dim.center);
   const b = subtract(dim.end, dim.center);
   let sweep = Math.atan2(b.y, b.x) - Math.atan2(a.y, a.x);
-  while (sweep <= -Math.PI) {sweep += 2 * Math.PI;}
-  while (sweep > Math.PI) {sweep -= 2 * Math.PI;}
+  while (sweep <= -Math.PI) {
+    sweep += 2 * Math.PI;
+  }
+  while (sweep > Math.PI) {
+    sweep -= 2 * Math.PI;
+  }
   const arcLen = Math.abs(sweep) * dim.radius;
   const steps = Math.max(2, Math.ceil((Math.abs(sweep) * 180) / Math.PI / 5));
   const start = Math.atan2(a.y, a.x);
@@ -403,10 +507,15 @@ function measureArcLength(dim: ArcLengthDimension, style: DimensionStyle, spatia
   const pts: Point[] = [];
   for (let i = 0; i <= steps; i++) {
     const t = start + (sweep * i) / steps;
-    pts.push({ x: dim.center.x + rr * Math.cos(t), y: dim.center.y + rr * Math.sin(t) });
+    pts.push({
+      x: dim.center.x + rr * Math.cos(t),
+      y: dim.center.y + rr * Math.sin(t),
+    });
   }
   const lines: [Point, Point][] = [];
-  for (let i = 1; i < pts.length; i++) {lines.push([pts[i - 1], pts[i]]);}
+  for (let i = 1; i < pts.length; i++) {
+    lines.push([pts[i - 1], pts[i]]);
+  }
   const mid = start + sweep / 2;
   return {
     value: arcLen,
@@ -415,14 +524,19 @@ function measureArcLength(dim: ArcLengthDimension, style: DimensionStyle, spatia
       lines,
       ticks: [
         { at: pts[0], dir: normalize(subtract(pts[1], pts[0])) },
-        { at: pts[pts.length - 1], dir: normalize(subtract(pts[pts.length - 2], pts[pts.length - 1])) },
+        {
+          at: pts[pts.length - 1],
+          dir: normalize(subtract(pts[pts.length - 2], pts[pts.length - 1])),
+        },
       ],
-      textAt: { x: dim.center.x + (rr + 1) * Math.cos(mid), y: dim.center.y + (rr + 1) * Math.sin(mid) },
+      textAt: {
+        x: dim.center.x + (rr + 1) * Math.cos(mid),
+        y: dim.center.y + (rr + 1) * Math.sin(mid),
+      },
       textAngleDeg: 0,
     },
   };
 }
-
 
 /** Formatted coordinates structure for a Spot Coordinate. */
 export interface SpotCoordinate {
@@ -432,7 +546,11 @@ export interface SpotCoordinate {
 }
 
 /** Format a point's coordinates as a Spot Coordinate label detailing Northing and Easting. */
-export function formatSpotCoordinate(p: Point, spatial: SpatialContext, basis?: CoordinateBasis): SpotCoordinate {
+export function formatSpotCoordinate(
+  p: Point,
+  spatial: SpatialContext,
+  basis?: CoordinateBasis,
+): SpotCoordinate {
   const easting = p.x + (basis?.falseEasting ?? 5000);
   const northing = -p.y + (basis?.falseNorthing ?? 5000);
   const u = spatial.units === "feet" ? "ft" : "m";
@@ -441,7 +559,7 @@ export function formatSpotCoordinate(p: Point, spatial: SpatialContext, basis?: 
   return {
     northing,
     easting,
-    text: `${northingStr}\n${eastingStr}`
+    text: `${northingStr}\n${eastingStr}`,
   };
 }
 
@@ -449,17 +567,21 @@ export function formatSpotCoordinate(p: Point, spatial: SpatialContext, basis?: 
 export function formatSlope(
   a: Point & { z?: number },
   b: Point & { z?: number },
-  format: "percent" | "ratio" = "percent"
+  format: "percent" | "ratio" = "percent",
 ): string {
   const dist2d = distance(a, b);
-  if (dist2d < 1e-9) {return "0.00%";}
-  
+  if (dist2d < 1e-9) {
+    return "0.00%";
+  }
+
   const dz = (b.z ?? 0) - (a.z ?? 0);
   const slopeVal = Math.abs(dz) / dist2d;
   if (format === "percent") {
     return `${(slopeVal * 100).toFixed(2)}%`;
   } else {
-    if (slopeVal < 1e-9) {return "Flat";}
+    if (slopeVal < 1e-9) {
+      return "Flat";
+    }
     const h = 1 / slopeVal;
     return `${h.toFixed(1)}:1`;
   }
@@ -468,9 +590,9 @@ export function formatSlope(
 /** Stack overlapping colinear/parallel aligned dimensions to avoid line overlap. */
 export function stackDimensionChains(
   dimensions: AlignedDimension[],
-  baseGap: number = 8
+  baseGap: number = 8,
 ): AlignedDimension[] {
-  const stacked = dimensions.map(d => ({ ...d }));
+  const stacked = dimensions.map((d) => ({ ...d }));
   const n = stacked.length;
 
   let changed = true;
@@ -511,4 +633,3 @@ export function stackDimensionChains(
   }
   return stacked;
 }
-

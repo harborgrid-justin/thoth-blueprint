@@ -22,9 +22,14 @@ export function useProfileSectionState() {
   const site = useWorkspaceStore((s) => s.site);
 
   const alignments = site?.alignments ?? [];
-  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(null);
-  
-  const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
+  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(
+    null,
+  );
+
+  const terrain = React.useMemo(
+    () => (site ? buildTerrainModel(site) : null),
+    [site],
+  );
   const terrainSurface = terrain?.existing ?? null;
 
   const [profile, setProfile] = React.useState<VerticalProfile>({
@@ -47,11 +52,19 @@ export function useProfileSectionState() {
     }
   }, [open, alignments]);
 
-  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
+  const alignment =
+    _.find(alignments, (a) => a.id === selectedAlignId) ??
+    alignments[0] ??
+    null;
   const resolved = alignment ? resolveAlignment(alignment) : null;
 
   const crossSection = React.useMemo<CrossSection | null>(() => {
-    return computeCrossSection({ resolved, terrainSurface, selectedStation, swathWidth });
+    return computeCrossSection({
+      resolved,
+      terrainSurface,
+      selectedStation,
+      swathWidth,
+    });
   }, [terrainSurface, resolved, selectedStation, swathWidth]);
 
   function updatePvi(index: number, field: keyof VerticalPVI, value: number) {

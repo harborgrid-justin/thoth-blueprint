@@ -54,32 +54,44 @@ export type {
  * continuous stationing. Interior PIs whose radius fits between their neighbors
  * become circular curves; otherwise the PI is a simple angle point.
  */
-export function resolveAlignment(alignment: HorizontalAlignment): ResolvedAlignment | null {
+export function resolveAlignment(
+  alignment: HorizontalAlignment,
+): ResolvedAlignment | null {
   const pis = alignment.pis;
-  if (pis.length < 2) {return null;}
+  if (pis.length < 2) {
+    return null;
+  }
 
   // Resolve a curve at each interior PI (when a radius is set and it fits).
   const curves: (AlignmentCurve | null)[] = pis.map(() => null);
   for (let i = 1; i < pis.length - 1; i++) {
     const R = pis[i].radius ?? 0;
-    if (R <= 0) {continue;}
+    if (R <= 0) {
+      continue;
+    }
     const pi = pis[i].point;
     const back = norm(sub(pi, pis[i - 1].point)); // direction of travel into the PI
     const fwd = norm(sub(pis[i + 1].point, pi)); // direction of travel out of the PI
     const cosD = Math.max(-1, Math.min(1, dot(back, fwd)));
     const delta = Math.acos(cosD);
-    if (delta < 1e-6 || Math.PI - delta < 1e-6) {continue;} // straight or reversal
+    if (delta < 1e-6 || Math.PI - delta < 1e-6) {
+      continue;
+    } // straight or reversal
     const tangent = R * Math.tan(delta / 2);
     // Tangent must fit within both adjacent tangent lengths.
     const backLen = len(sub(pi, pis[i - 1].point));
     const fwdLen = len(sub(pis[i + 1].point, pi));
-    if (tangent > backLen - 1e-6 || tangent > fwdLen - 1e-6) {continue;}
+    if (tangent > backLen - 1e-6 || tangent > fwdLen - 1e-6) {
+      continue;
+    }
 
     const pc = sub(pi, mul(back, tangent));
     const pt = add(pi, mul(fwd, tangent));
     // Center is offset from PC, perpendicular to the back tangent, toward the turn.
     let nrm = { x: -back.y, y: back.x };
-    if (dot(nrm, fwd) < 0) {nrm = { x: -nrm.x, y: -nrm.y };}
+    if (dot(nrm, fwd) < 0) {
+      nrm = { x: -nrm.x, y: -nrm.y };
+    }
     const center = add(pc, mul(nrm, R));
     // In the north=−Y frame, a clockwise turn (crossz > 0) curves to the right.
     const turn = crossz(back, fwd);
@@ -183,7 +195,9 @@ export function pointAtStation(
   station: number,
 ): { point: Point; bearing: number } | null {
   const elements = resolved.elements;
-  if (elements.length === 0) {return null;}
+  if (elements.length === 0) {
+    return null;
+  }
   let low = 0;
   let high = elements.length - 1;
   while (low <= high) {
@@ -197,14 +211,20 @@ export function pointAtStation(
       if (el.kind === "tangent") {
         const t = (station - el.beginStation) / Math.max(1e-9, el.length);
         return {
-          point: { x: el.from.x + (el.to.x - el.from.x) * t, y: el.from.y + (el.to.y - el.from.y) * t },
+          point: {
+            x: el.from.x + (el.to.x - el.from.x) * t,
+            y: el.from.y + (el.to.y - el.from.y) * t,
+          },
           bearing: el.bearing,
         };
       }
       const c = el.curve;
       const frac = (station - el.beginStation) / Math.max(1e-9, c.length);
       const ang = c.startAngle + c.sweep * frac;
-      const point = { x: c.center.x + c.radius * Math.cos(ang), y: c.center.y + c.radius * Math.sin(ang) };
+      const point = {
+        x: c.center.x + c.radius * Math.cos(ang),
+        y: c.center.y + c.radius * Math.sin(ang),
+      };
       const sign = c.sweep >= 0 ? 1 : -1;
       const dir = { x: -Math.sin(ang) * sign, y: Math.cos(ang) * sign };
       return { point, bearing: azimuthOf(dir) };
@@ -218,7 +238,11 @@ export function stationOffsetOfPoint(
   resolved: ResolvedAlignment,
   p: Point,
 ): { station: number; offset: number; side: "left" | "right" | "on" } {
-  let best = { station: resolved.startStation, offset: Infinity, side: "on" as "left" | "right" | "on" };
+  let best = {
+    station: resolved.startStation,
+    offset: Infinity,
+    side: "on" as "left" | "right" | "on",
+  };
   let bestAbs = Infinity;
 
   for (const el of resolved.elements) {
@@ -250,16 +274,26 @@ export function stationOffsetOfPoint(
       const hi = Math.max(a0, a1);
       let clamped = ang;
       // Bring ang near the arc range before clamping.
-      while (clamped < lo - Math.PI) {clamped += 2 * Math.PI;}
-      while (clamped > hi + Math.PI) {clamped -= 2 * Math.PI;}
+      while (clamped < lo - Math.PI) {
+        clamped += 2 * Math.PI;
+      }
+      while (clamped > hi + Math.PI) {
+        clamped -= 2 * Math.PI;
+      }
       clamped = Math.max(lo, Math.min(hi, clamped));
-      const foot = { x: c.center.x + c.radius * Math.cos(clamped), y: c.center.y + c.radius * Math.sin(clamped) };
+      const foot = {
+        x: c.center.x + c.radius * Math.cos(clamped),
+        y: c.center.y + c.radius * Math.sin(clamped),
+      };
       const d = len(sub(p, foot));
       if (d < bestAbs) {
         bestAbs = d;
         const frac = c.sweep === 0 ? 0 : (clamped - c.startAngle) / c.sweep;
         const sign = c.sweep >= 0 ? 1 : -1;
-        const dir = { x: -Math.sin(clamped) * sign, y: Math.cos(clamped) * sign };
+        const dir = {
+          x: -Math.sin(clamped) * sign,
+          y: Math.cos(clamped) * sign,
+        };
         const side = crossz(dir, sub(p, foot));
         best = {
           station: el.beginStation + frac * c.length,
@@ -284,23 +318,38 @@ export function offsetAlignmentPath(
 ): Point[] {
   const out: Point[] = [];
   const total = resolved.length;
-  if (total <= 0) {return out;}
+  if (total <= 0) {
+    return out;
+  }
   for (let i = 0; i <= samples; i++) {
-    const at = pointAtStation(resolved, resolved.startStation + (total * i) / samples);
-    if (!at) {continue;}
+    const at = pointAtStation(
+      resolved,
+      resolved.startStation + (total * i) / samples,
+    );
+    if (!at) {
+      continue;
+    }
     const rad = (at.bearing * Math.PI) / 180;
     const dir = { x: Math.sin(rad), y: -Math.cos(rad) }; // travel direction
     const nrm = { x: -dir.y, y: dir.x }; // right of travel
-    out.push({ x: at.point.x + nrm.x * offset, y: at.point.y + nrm.y * offset });
+    out.push({
+      x: at.point.x + nrm.x * offset,
+      y: at.point.y + nrm.y * offset,
+    });
   }
   return out;
 }
 
 /** Full-station values at multiples of `interval` within the alignment range. */
-export function fullStations(resolved: ResolvedAlignment, interval = 100): number[] {
+export function fullStations(
+  resolved: ResolvedAlignment,
+  interval = 100,
+): number[] {
   const out: number[] = [];
   const first = Math.ceil(resolved.startStation / interval) * interval;
-  for (let s = first; s <= resolved.endStation + 1e-6; s += interval) {out.push(s);}
+  for (let s = first; s <= resolved.endStation + 1e-6; s += interval) {
+    out.push(s);
+  }
   return out;
 }
 
@@ -310,21 +359,35 @@ export function fullStations(resolved: ResolvedAlignment, interval = 100): numbe
  */
 export function validateAlignmentDesignSpeed(
   alignment: HorizontalAlignment,
-  resolved: ResolvedAlignment
+  resolved: ResolvedAlignment,
 ): DesignSpeedCheckResult[] {
   const defaultSpeed = alignment.designSpeed ?? 35;
   const checks: DesignSpeedCheckResult[] = [];
 
   const getMinRadius = (speed: number): number => {
-    if (speed <= 15) {return 50;}
-    if (speed <= 25) {return 150;}
-    if (speed <= 35) {return 350;}
-    if (speed <= 45) {return 600;}
-    if (speed <= 55) {return 1000;}
+    if (speed <= 15) {
+      return 50;
+    }
+    if (speed <= 25) {
+      return 150;
+    }
+    if (speed <= 35) {
+      return 350;
+    }
+    if (speed <= 45) {
+      return 600;
+    }
+    if (speed <= 55) {
+      return 1000;
+    }
     return 1600; // 65 mph or above
   };
 
-  const sortedZones = _.orderBy(alignment.designSpeeds ?? [], ["station"], ["desc"]);
+  const sortedZones = _.orderBy(
+    alignment.designSpeeds ?? [],
+    ["station"],
+    ["desc"],
+  );
   const getSpeedAtStation = (station: number): number => {
     const zone = sortedZones.find((z) => station >= z.station);
     return zone ? zone.speed : defaultSpeed;
@@ -346,10 +409,9 @@ export function validateAlignmentDesignSpeed(
       isViolation,
       message: isViolation
         ? `Curve at station ${formatStation(station)} has radius ${radius.toFixed(1)} which is less than AASHTO minimum of ${minRad} for design speed ${speed} mph.`
-        : `Curve at station ${formatStation(station)} satisfies design standards.`
+        : `Curve at station ${formatStation(station)} satisfies design standards.`,
     });
   }
 
   return checks;
 }
-

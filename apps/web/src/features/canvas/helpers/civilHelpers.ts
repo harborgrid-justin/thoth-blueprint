@@ -9,7 +9,9 @@ export interface Sample {
 /** Evenly-spaced samples (point + direction + normal) along a screen polyline. */
 export function sampleAlong(pts: Point[], spacing: number): Sample[] {
   const res: Sample[] = [];
-  if (pts.length < 2) {return res;}
+  if (pts.length < 2) {
+    return res;
+  }
   const segLen: number[] = [];
   let total = 0;
   for (let i = 1; i < pts.length; i++) {
@@ -58,7 +60,13 @@ export function triangle(s: Sample, side: number): string {
 export function arrowhead(s: Sample): string {
   const size = 4;
   const tip = { x: s.point.x + s.dir.x * size, y: s.point.y + s.dir.y * size };
-  const l = { x: s.point.x - s.dir.x * size + s.nrm.x * size * 0.7, y: s.point.y - s.dir.y * size + s.nrm.y * size * 0.7 };
-  const r = { x: s.point.x - s.dir.x * size - s.nrm.x * size * 0.7, y: s.point.y - s.dir.y * size - s.nrm.y * size * 0.7 };
+  const l = {
+    x: s.point.x - s.dir.x * size + s.nrm.x * size * 0.7,
+    y: s.point.y - s.dir.y * size + s.nrm.y * size * 0.7,
+  };
+  const r = {
+    x: s.point.x - s.dir.x * size - s.nrm.x * size * 0.7,
+    y: s.point.y - s.dir.y * size - s.nrm.y * size * 0.7,
+  };
   return `M ${tip.x.toFixed(1)} ${tip.y.toFixed(1)} L ${l.x.toFixed(1)} ${l.y.toFixed(1)} L ${r.x.toFixed(1)} ${r.y.toFixed(1)} Z`;
 }

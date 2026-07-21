@@ -64,7 +64,9 @@ export const useInteropStore = create<InteropState>((set, get) => ({
   },
   toggleCloud(id) {
     set((s) => ({
-      clouds: s.clouds.map((c) => (c.id === id ? { ...c, visible: !c.visible } : c)),
+      clouds: s.clouds.map((c) =>
+        c.id === id ? { ...c, visible: !c.visible } : c,
+      ),
     }));
   },
 
@@ -77,7 +79,9 @@ export const useInteropStore = create<InteropState>((set, get) => ({
 
   setUnderlay(underlay) {
     const prev = get().underlay;
-    if (prev) {URL.revokeObjectURL(prev.url);}
+    if (prev) {
+      URL.revokeObjectURL(prev.url);
+    }
     set({ underlay });
   },
   updateUnderlay(patch) {
@@ -85,13 +89,17 @@ export const useInteropStore = create<InteropState>((set, get) => ({
   },
   clearUnderlay() {
     const prev = get().underlay;
-    if (prev) {URL.revokeObjectURL(prev.url);}
+    if (prev) {
+      URL.revokeObjectURL(prev.url);
+    }
     set({ underlay: null });
   },
 
   clearAll() {
     const { underlay } = get();
-    if (underlay) {URL.revokeObjectURL(underlay.url);}
+    if (underlay) {
+      URL.revokeObjectURL(underlay.url);
+    }
     set({ clouds: [], meshes: [], underlay: null });
   },
 }));

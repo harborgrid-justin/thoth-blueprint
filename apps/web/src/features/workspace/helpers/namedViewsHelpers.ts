@@ -10,7 +10,11 @@ export function confirmDeleteView(name: string): boolean {
   return confirm(`Delete named view "${name}"?`);
 }
 
-export function formatViewReadout(viewport: { x: number; y: number; zoom: number }) {
+export function formatViewReadout(viewport: {
+  x: number;
+  y: number;
+  zoom: number;
+}) {
   const coordText = formatCoord({ x: viewport.x, y: viewport.y }, "survey", 1);
   const zoomText = formatPercent(viewport.zoom, 0);
   const formattedX = formatNumber(viewport.x, 1);

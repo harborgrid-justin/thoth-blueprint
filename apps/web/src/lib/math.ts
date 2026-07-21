@@ -18,14 +18,18 @@ export function angleBetween(v1: Point, v2: Point): number {
   const d = dot(v1, v2);
   const l1 = length(v1);
   const l2 = length(v2);
-  if (l1 < 1e-9 || l2 < 1e-9) {return 0;}
+  if (l1 < 1e-9 || l2 < 1e-9) {
+    return 0;
+  }
   return Math.acos(Math.max(-1, Math.min(1, d / (l1 * l2))));
 }
 
 /** Project vector `v` onto vector `onto`. */
 export function projectVector(v: Point, onto: Point): Point {
   const lenSq = onto.x * onto.x + onto.y * onto.y;
-  if (lenSq < 1e-9) {return { x: 0, y: 0 };}
+  if (lenSq < 1e-9) {
+    return { x: 0, y: 0 };
+  }
   const d = dot(v, onto);
   const factor = d / lenSq;
   return { x: onto.x * factor, y: onto.y * factor };
@@ -46,14 +50,18 @@ export function arcFromThreePoints(
   endAngle: number;
   counterClockwise: boolean;
 } | null {
-  const area2 = p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y);
-  if (Math.abs(area2) < 1e-9) {return null;}
+  const area2 =
+    p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y);
+  if (Math.abs(area2) < 1e-9) {
+    return null;
+  }
 
   const a = p1.x * p1.x + p1.y * p1.y;
   const b = p2.x * p2.x + p2.y * p2.y;
   const c = p3.x * p3.x + p3.y * p3.y;
 
-  const d = 2 * (p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y));
+  const d =
+    2 * (p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y));
   const ux = (a * (p2.y - p3.y) + b * (p3.y - p1.y) + c * (p1.y - p2.y)) / d;
   const uy = (a * (p3.x - p2.x) + b * (p1.x - p3.x) + c * (p2.x - p1.x)) / d;
 
@@ -73,7 +81,12 @@ export function arcFromThreePoints(
 }
 
 /** Evaluate a point along a quadratic Bezier curve at parameter `t` [0, 1]. */
-export function bezierQuadratic(p0: Point, p1: Point, p2: Point, t: number): Point {
+export function bezierQuadratic(
+  p0: Point,
+  p1: Point,
+  p2: Point,
+  t: number,
+): Point {
   const mt = 1 - t;
   return {
     x: mt * mt * p0.x + 2 * mt * t * p1.x + t * t * p2.x,
@@ -82,26 +95,38 @@ export function bezierQuadratic(p0: Point, p1: Point, p2: Point, t: number): Poi
 }
 
 /** Evaluate a point along a cubic Bezier curve at parameter `t` [0, 1]. */
-export function bezierCubic(p0: Point, p1: Point, p2: Point, p3: Point, t: number): Point {
+export function bezierCubic(
+  p0: Point,
+  p1: Point,
+  p2: Point,
+  p3: Point,
+  t: number,
+): Point {
   const mt = 1 - t;
   const mt2 = mt * mt;
   const t2 = t * t;
   return {
-    x: mt2 * mt * p0.x + 3 * mt2 * t * p1.x + 3 * mt * t2 * p2.x + t2 * t * p3.x,
-    y: mt2 * mt * p0.y + 3 * mt2 * t * p1.y + 3 * mt * t2 * p2.y + t2 * t * p3.y,
+    x:
+      mt2 * mt * p0.x + 3 * mt2 * t * p1.x + 3 * mt * t2 * p2.x + t2 * t * p3.x,
+    y:
+      mt2 * mt * p0.y + 3 * mt2 * t * p1.y + 3 * mt * t2 * p2.y + t2 * t * p3.y,
   };
 }
 
 /** Snap an angle (in radians) to the nearest multiple of `stepRad`. */
 export function snapToAngle(angleRad: number, stepRad: number): number {
-  if (stepRad <= 0) {return angleRad;}
+  if (stepRad <= 0) {
+    return angleRad;
+  }
   const steps = Math.round(angleRad / stepRad);
   return steps * stepRad;
 }
 
 /** Snap coordinates of a point to the nearest grid sizing `size`. */
 export function snapPointToGrid(p: Point, size: number): Point {
-  if (size <= 0) {return { ...p };}
+  if (size <= 0) {
+    return { ...p };
+  }
   return {
     x: Math.round(p.x / size) * size,
     y: Math.round(p.y / size) * size,
@@ -109,7 +134,12 @@ export function snapPointToGrid(p: Point, size: number): Point {
 }
 
 /** Snap a point `p` to the closest point on segment `a`-`b` if it falls within `snapRadius`. */
-export function snapPointToSegment(p: Point, a: Point, b: Point, snapRadius: number): Point | null {
+export function snapPointToSegment(
+  p: Point,
+  a: Point,
+  b: Point,
+  snapRadius: number,
+): Point | null {
   const cp = closestPointOnSegment(p, a, b);
   if (distance(p, cp) <= snapRadius) {
     return cp;
@@ -118,12 +148,21 @@ export function snapPointToSegment(p: Point, a: Point, b: Point, snapRadius: num
 }
 
 /** Compute the intersection between two finite line segments 1-2 and 3-4. */
-export function segmentIntersection(p1: Point, p2: Point, p3: Point, p4: Point): Point | null {
+export function segmentIntersection(
+  p1: Point,
+  p2: Point,
+  p3: Point,
+  p4: Point,
+): Point | null {
   const denom = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
-  if (Math.abs(denom) < 1e-9) {return null;} // Parallel
+  if (Math.abs(denom) < 1e-9) {
+    return null;
+  } // Parallel
 
-  const ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denom;
-  const ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denom;
+  const ua =
+    ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denom;
+  const ub =
+    ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denom;
 
   if (ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1) {
     return {
@@ -142,7 +181,9 @@ export function pointToSegmentDistance(p: Point, a: Point, b: Point): number {
 /** Verify if a polygon ring is convex. */
 export function polygonIsConvex(poly: Point[]): boolean {
   const n = poly.length;
-  if (n < 3) {return false;}
+  if (n < 3) {
+    return false;
+  }
   let sign = 0;
   for (let i = 0; i < n; i++) {
     const p1 = poly[i];
@@ -179,7 +220,12 @@ export function polyIntersectAABB(poly: Point[], aabb: Bounds): boolean {
 
   // Check if any polygon vertex is inside AABB
   for (const p of poly) {
-    if (p.x >= aabb.minX && p.x <= aabb.maxX && p.y >= aabb.minY && p.y <= aabb.maxY) {
+    if (
+      p.x >= aabb.minX &&
+      p.x <= aabb.maxX &&
+      p.y >= aabb.minY &&
+      p.y <= aabb.maxY
+    ) {
       return true;
     }
   }

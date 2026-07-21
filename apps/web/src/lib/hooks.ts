@@ -23,7 +23,10 @@ export function useDebounce<T>(value: T, delay: number): T {
 }
 
 /** Synchronize state with window.localStorage. */
-export function useLocalStorage<T>(key: string, initialValue: T): [T, (val: T | ((v: T) => T)) => void] {
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T,
+): [T, (val: T | ((v: T) => T)) => void] {
   const [storedValue, setStoredValue] = React.useState<T>(() => {
     try {
       const item = window.localStorage.getItem(key);
@@ -64,7 +67,9 @@ export function useResizeObserver(
   }, [callback]);
 
   React.useEffect(() => {
-    if (!element) {return;}
+    if (!element) {
+      return;
+    }
     const observer = new ResizeObserver((entries) => {
       if (entries[0]) {
         savedCallback.current(entries[0]);
@@ -78,7 +83,10 @@ export function useResizeObserver(
 }
 
 /** Trigger callback when clicking outside a specified element ref (e.g. menus/modals). */
-export function useClickOutside(ref: React.RefObject<HTMLElement | null>, callback: () => void): void {
+export function useClickOutside(
+  ref: React.RefObject<HTMLElement | null>,
+  callback: () => void,
+): void {
   const savedCallback = React.useRef(callback);
 
   React.useEffect(() => {
@@ -111,13 +119,18 @@ export function useKeyboardShortcut(
   }, [callback]);
 
   React.useEffect(() => {
-    if (options.disabled) {return;}
+    if (options.disabled) {
+      return;
+    }
 
     function handleKeyDown(e: KeyboardEvent) {
       const parts = keys.toLowerCase().split("+");
       const key = parts[parts.length - 1];
       const ctrl = parts.includes("ctrl") || parts.includes("control");
-      const meta = parts.includes("meta") || parts.includes("cmd") || parts.includes("command");
+      const meta =
+        parts.includes("meta") ||
+        parts.includes("cmd") ||
+        parts.includes("command");
       const shift = parts.includes("shift");
       const alt = parts.includes("alt");
 
@@ -128,9 +141,16 @@ export function useKeyboardShortcut(
       const matchesAlt = alt === (e.altKey || false);
 
       const isMod = parts.includes("mod");
-      const matchesMod = isMod ? (e.metaKey || e.ctrlKey) : true;
+      const matchesMod = isMod ? e.metaKey || e.ctrlKey : true;
 
-      if (matchesKey && matchesCtrl && matchesMeta && matchesShift && matchesAlt && matchesMod) {
+      if (
+        matchesKey &&
+        matchesCtrl &&
+        matchesMeta &&
+        matchesShift &&
+        matchesAlt &&
+        matchesMod
+      ) {
         const target = e.target as HTMLElement;
         const typing =
           target.tagName === "INPUT" ||
@@ -163,7 +183,9 @@ export function usePrevious<T>(value: T): T | undefined {
 
 /** Monitor responsive browser viewport media queries dynamically. */
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = React.useState(() => window.matchMedia(query).matches);
+  const [matches, setMatches] = React.useState(
+    () => window.matchMedia(query).matches,
+  );
 
   React.useEffect(() => {
     const media = window.matchMedia(query);

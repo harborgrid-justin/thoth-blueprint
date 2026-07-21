@@ -13,7 +13,9 @@ export function usePlanProductionWizardState() {
   const site = useWorkspaceStore((s) => s.site);
 
   const alignments = site?.alignments ?? [];
-  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(null);
+  const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(
+    null,
+  );
 
   const [pageSize, setPageSize] = React.useState<string>("ARCH_D");
   const [overlap, setOverlap] = React.useState<number>(15);
@@ -28,7 +30,10 @@ export function usePlanProductionWizardState() {
     }
   }, [open, alignments]);
 
-  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
+  const alignment =
+    _.find(alignments, (a) => a.id === selectedAlignId) ??
+    alignments[0] ??
+    null;
 
   function handleSplit() {
     const vfg = generatePlanViewFrames({ alignment, site, scale, overlap });

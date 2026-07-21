@@ -1,14 +1,19 @@
 import * as React from "react";
 import { Redo2, Undo2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
 import { useToolbarState } from "./hooks/useToolbarState";
 import { isGroupStart } from "./helpers/toolbarHelpers";
 
 /** The vertical drawing toolbar down the left edge of the workspace. */
 export function Toolbar() {
-  const { tools, activeTool, setTool, undo, redo, canUndo, canRedo } = useToolbarState();
+  const { tools, activeTool, setTool, undo, redo, canUndo, canRedo } =
+    useToolbarState();
 
   return (
     <div className="flex w-12 flex-col items-center gap-1 overflow-y-auto border-r border-border bg-card py-2 no-scrollbar">
@@ -37,7 +42,8 @@ export function Toolbar() {
                 </button>
               </TooltipTrigger>
               <TooltipContent side="right">
-                {tool.label} <span className="ml-1 opacity-60">{tool.shortcut}</span>
+                {tool.label}{" "}
+                <span className="ml-1 opacity-60">{tool.shortcut}</span>
               </TooltipContent>
             </Tooltip>
           </React.Fragment>

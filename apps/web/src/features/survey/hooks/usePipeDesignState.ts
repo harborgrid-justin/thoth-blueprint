@@ -4,7 +4,10 @@ import { type PipeDesignRules } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useUiStore } from "@/store/uiStore";
 import { buildTerrainModel } from "@/features/terrain/terrainModel";
-import { initializeNodeInverts, runPipeValidation } from "../helpers/pipeHelpers";
+import {
+  initializeNodeInverts,
+  runPipeValidation,
+} from "../helpers/pipeHelpers";
 
 export function usePipeDesignState() {
   const open = useUiStore((s) => s.pipeOpen);
@@ -18,7 +21,10 @@ export function usePipeDesignState() {
   const networks = site?.networks ?? [];
   const [selectedNetId, setSelectedNetId] = React.useState<string | null>(null);
 
-  const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
+  const terrain = React.useMemo(
+    () => (site ? buildTerrainModel(site) : null),
+    [site],
+  );
   const terrainSurface = terrain?.existing ?? null;
 
   const [rules, setRules] = React.useState<PipeDesignRules>({
@@ -39,7 +45,8 @@ export function usePipeDesignState() {
     }
   }, [open, networks, site, terrainSurface]);
 
-  const activeNet = _.find(networks, (n) => n.id === selectedNetId) ?? networks[0] ?? null;
+  const activeNet =
+    _.find(networks, (n) => n.id === selectedNetId) ?? networks[0] ?? null;
 
   const validation = React.useMemo(() => {
     return runPipeValidation({ activeNet, terrainSurface, rules, inverts });

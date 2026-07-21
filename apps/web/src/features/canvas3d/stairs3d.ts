@@ -50,7 +50,9 @@ export function enterpriseStair(
   }
 
   _.forEach(stairGeom.treadLines, (line, i) => {
-    if (line.length < 2) {return;}
+    if (line.length < 2) {
+      return;
+    }
     const ptA = line[0];
     const ptB = line[1];
     const treadW = distance(ptB, ptA);
@@ -94,7 +96,9 @@ export function enterpriseStair(
   if (stair.stringerProfile !== "none") {
     const sWidth = stair.stringerWidth || 0.05;
     _.forEach(stairGeom.stringerCenterlines, (line) => {
-      if (line.length < 2) {return;}
+      if (line.length < 2) {
+        return;
+      }
 
       for (let i = 0; i < line.length - 1; i++) {
         const p1 = line[i];

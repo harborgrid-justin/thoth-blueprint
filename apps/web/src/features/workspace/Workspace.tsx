@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Layers, Mountain, Ruler, SlidersHorizontal, HardHat, Waves, Loader2 } from "lucide-react";
+import {
+  Layers,
+  Mountain,
+  Ruler,
+  SlidersHorizontal,
+  HardHat,
+  Waves,
+  Loader2,
+} from "lucide-react";
 import { useCanvasStore } from "@/store/canvasStore";
 import { PlanningCanvas } from "@/features/canvas/PlanningCanvas";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,26 +21,94 @@ import { FindPanel } from "@/features/find/FindPanel";
 import { useWorkspaceLayoutState } from "./hooks/useWorkspaceLayoutState";
 
 // Lazy-loaded dialogs & panels to optimize bundle sizes and speed up initialization
-const Scene3D = React.lazy(() => import("@/features/canvas3d/Scene3D").then((m) => ({ default: m.Scene3D })));
-const TerrainPanel = React.lazy(() => import("@/features/terrain/TerrainPanel").then((m) => ({ default: m.TerrainPanel })));
-const MetricsPanel = React.lazy(() => import("./MetricsPanel").then((m) => ({ default: m.MetricsPanel })));
-const QtoPanel = React.lazy(() => import("./QtoPanel").then((m) => ({ default: m.QtoPanel })));
-const ErosionSimulatorPanel = React.lazy(() => import("./ErosionSimulator").then((m) => ({ default: m.ErosionSimulatorPanel })));
+const Scene3D = React.lazy(() =>
+  import("@/features/canvas3d/Scene3D").then((m) => ({ default: m.Scene3D })),
+);
+const TerrainPanel = React.lazy(() =>
+  import("@/features/terrain/TerrainPanel").then((m) => ({
+    default: m.TerrainPanel,
+  })),
+);
+const MetricsPanel = React.lazy(() =>
+  import("./MetricsPanel").then((m) => ({ default: m.MetricsPanel })),
+);
+const QtoPanel = React.lazy(() =>
+  import("./QtoPanel").then((m) => ({ default: m.QtoPanel })),
+);
+const ErosionSimulatorPanel = React.lazy(() =>
+  import("./ErosionSimulator").then((m) => ({
+    default: m.ErosionSimulatorPanel,
+  })),
+);
 
-const CheckpointsDialog = React.lazy(() => import("./CheckpointsDialog").then((m) => ({ default: m.CheckpointsDialog })));
-const PlatReportDialog = React.lazy(() => import("@/features/survey/PlatReportDialog").then((m) => ({ default: m.PlatReportDialog })));
-const AlignmentReportDialog = React.lazy(() => import("@/features/survey/AlignmentReportDialog").then((m) => ({ default: m.AlignmentReportDialog })));
-const ProfileSectionDialog = React.lazy(() => import("@/features/survey/ProfileSectionDialog").then((m) => ({ default: m.ProfileSectionDialog })));
-const PipeDesignDialog = React.lazy(() => import("@/features/survey/PipeDesignDialog").then((m) => ({ default: m.PipeDesignDialog })));
-const PlanProductionWizard = React.lazy(() => import("@/features/survey/PlanProductionWizard").then((m) => ({ default: m.PlanProductionWizard })));
-const SuperelevationWizardDialog = React.lazy(() => import("@/features/survey/SuperelevationWizardDialog").then((m) => ({ default: m.SuperelevationWizardDialog })));
-const CorridorDesignerDialog = React.lazy(() => import("@/features/survey/CorridorDesignerDialog").then((m) => ({ default: m.CorridorDesignerDialog })));
-const GradingSolverDialog = React.lazy(() => import("@/features/survey/GradingSolverDialog").then((m) => ({ default: m.GradingSolverDialog })));
-const PlatSheetDialog = React.lazy(() => import("@/features/survey/PlatSheetDialog").then((m) => ({ default: m.PlatSheetDialog })));
-const SheetSetDialog = React.lazy(() => import("@/features/sheets/SheetSetDialog").then((m) => ({ default: m.SheetSetDialog })));
-const CommandPalette = React.lazy(() => import("@/features/command/CommandPalette").then((m) => ({ default: m.CommandPalette })));
-const ShortcutsDialog = React.lazy(() => import("@/features/command/ShortcutsDialog").then((m) => ({ default: m.ShortcutsDialog })));
-const PreferencesDialog = React.lazy(() => import("@/features/preferences/PreferencesDialog").then((m) => ({ default: m.PreferencesDialog })));
+const CheckpointsDialog = React.lazy(() =>
+  import("./CheckpointsDialog").then((m) => ({ default: m.CheckpointsDialog })),
+);
+const PlatReportDialog = React.lazy(() =>
+  import("@/features/survey/PlatReportDialog").then((m) => ({
+    default: m.PlatReportDialog,
+  })),
+);
+const AlignmentReportDialog = React.lazy(() =>
+  import("@/features/survey/AlignmentReportDialog").then((m) => ({
+    default: m.AlignmentReportDialog,
+  })),
+);
+const ProfileSectionDialog = React.lazy(() =>
+  import("@/features/survey/ProfileSectionDialog").then((m) => ({
+    default: m.ProfileSectionDialog,
+  })),
+);
+const PipeDesignDialog = React.lazy(() =>
+  import("@/features/survey/PipeDesignDialog").then((m) => ({
+    default: m.PipeDesignDialog,
+  })),
+);
+const PlanProductionWizard = React.lazy(() =>
+  import("@/features/survey/PlanProductionWizard").then((m) => ({
+    default: m.PlanProductionWizard,
+  })),
+);
+const SuperelevationWizardDialog = React.lazy(() =>
+  import("@/features/survey/SuperelevationWizardDialog").then((m) => ({
+    default: m.SuperelevationWizardDialog,
+  })),
+);
+const CorridorDesignerDialog = React.lazy(() =>
+  import("@/features/survey/CorridorDesignerDialog").then((m) => ({
+    default: m.CorridorDesignerDialog,
+  })),
+);
+const GradingSolverDialog = React.lazy(() =>
+  import("@/features/survey/GradingSolverDialog").then((m) => ({
+    default: m.GradingSolverDialog,
+  })),
+);
+const PlatSheetDialog = React.lazy(() =>
+  import("@/features/survey/PlatSheetDialog").then((m) => ({
+    default: m.PlatSheetDialog,
+  })),
+);
+const SheetSetDialog = React.lazy(() =>
+  import("@/features/sheets/SheetSetDialog").then((m) => ({
+    default: m.SheetSetDialog,
+  })),
+);
+const CommandPalette = React.lazy(() =>
+  import("@/features/command/CommandPalette").then((m) => ({
+    default: m.CommandPalette,
+  })),
+);
+const ShortcutsDialog = React.lazy(() =>
+  import("@/features/command/ShortcutsDialog").then((m) => ({
+    default: m.ShortcutsDialog,
+  })),
+);
+const PreferencesDialog = React.lazy(() =>
+  import("@/features/preferences/PreferencesDialog").then((m) => ({
+    default: m.PreferencesDialog,
+  })),
+);
 
 export function Workspace() {
   const {
@@ -101,7 +177,11 @@ export function Workspace() {
             style={{ width: sidebarWidth }}
             className="flex shrink-0 flex-col bg-card"
           >
-            <Tabs value={tab} onValueChange={setTab} className="flex min-h-0 flex-1 flex-col">
+            <Tabs
+              value={tab}
+              onValueChange={setTab}
+              className="flex min-h-0 flex-1 flex-col"
+            >
               <TabsList className="m-2 grid grid-cols-6">
                 <TabsTrigger value="inspect" title="Inspect">
                   <SlidersHorizontal className="h-3 w-3" />
@@ -145,14 +225,18 @@ export function Workspace() {
                 </TabsContent>
                 <TabsContent value="qto" className="mt-0">
                   {tab === "qto" && (
-                    <React.Suspense fallback={<TabLoading label="quantities" />}>
+                    <React.Suspense
+                      fallback={<TabLoading label="quantities" />}
+                    >
                       <QtoPanel />
                     </React.Suspense>
                   )}
                 </TabsContent>
                 <TabsContent value="erosion" className="mt-0">
                   {tab === "erosion" && (
-                    <React.Suspense fallback={<TabLoading label="erosion simulation" />}>
+                    <React.Suspense
+                      fallback={<TabLoading label="erosion simulation" />}
+                    >
                       <ErosionSimulatorPanel />
                     </React.Suspense>
                   )}
@@ -163,7 +247,10 @@ export function Workspace() {
         </div>
         {checkpointsOpen && (
           <React.Suspense fallback={null}>
-            <CheckpointsDialog open={checkpointsOpen} onOpenChange={setCheckpointsOpen} />
+            <CheckpointsDialog
+              open={checkpointsOpen}
+              onOpenChange={setCheckpointsOpen}
+            />
           </React.Suspense>
         )}
         {platOpen && (

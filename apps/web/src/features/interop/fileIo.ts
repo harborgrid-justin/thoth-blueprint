@@ -9,12 +9,20 @@ export function readFileAsArrayBuffer(file: File): Promise<ArrayBuffer> {
 }
 
 /** Trigger a download of text content as a file. */
-export function downloadText(filename: string, text: string, mime = "text/plain"): void {
+export function downloadText(
+  filename: string,
+  text: string,
+  mime = "text/plain",
+): void {
   downloadBlob(filename, new Blob([text], { type: `${mime};charset=utf-8` }));
 }
 
 /** Trigger a download of binary content as a file. */
-export function downloadArrayBuffer(filename: string, buffer: ArrayBuffer, mime = "application/octet-stream"): void {
+export function downloadArrayBuffer(
+  filename: string,
+  buffer: ArrayBuffer,
+  mime = "application/octet-stream",
+): void {
   downloadBlob(filename, new Blob([buffer], { type: mime }));
 }
 
@@ -46,5 +54,10 @@ export function pickFile(accept: string): Promise<File | null> {
 
 /** A safe filename slug from a plan/element name. */
 export function slugify(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "export";
+  return (
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || "export"
+  );
 }

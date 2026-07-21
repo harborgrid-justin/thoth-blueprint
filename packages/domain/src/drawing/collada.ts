@@ -13,7 +13,10 @@ export type { SimpleMesh };
 import { xmlEscape, safeId } from "./common/format";
 
 /** Serialize meshes to a COLLADA 1.4.1 document string. */
-export function writeCollada(meshes: SimpleMesh[], author = "Thoth Blueprint"): string {
+export function writeCollada(
+  meshes: SimpleMesh[],
+  author = "Thoth Blueprint",
+): string {
   const now = "1970-01-01T00:00:00Z"; // deterministic; callers may substitute a real time
   const materials: string[] = [];
   const effects: string[] = [];

@@ -23,7 +23,9 @@ export function collectSiteCurves(site: Site): SiteCurve[] {
   let n = 0;
 
   for (const el of spatialElements(site)) {
-    if (!el.arcs || Object.keys(el.arcs).length === 0) {continue;}
+    if (!el.arcs || Object.keys(el.arcs).length === 0) {
+      continue;
+    }
     const report = surveyReport(el.boundary, site.spatial, el.arcs);
     for (const c of report.curves) {
       n += 1;
@@ -43,7 +45,9 @@ export function collectSiteCurves(site: Site): SiteCurve[] {
 
   for (const a of site.alignments ?? []) {
     const resolved = resolveAlignment(a);
-    if (!resolved) {continue;}
+    if (!resolved) {
+      continue;
+    }
     for (const c of resolved.curves) {
       n += 1;
       out.push({

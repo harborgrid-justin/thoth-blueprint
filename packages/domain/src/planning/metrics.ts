@@ -10,7 +10,13 @@ import type { Polygon } from "../spatial/geometry";
 import { boundaryArea, type EdgeArcs } from "../spatial/curve";
 import type { AreaUnit } from "../spatial/spatial";
 import { areaToSquareMeters, squareMetersTo } from "../spatial/spatial";
-import type { Building, LandUse, Lot, Parcel, Site } from "../spatial/primitives";
+import type {
+  Building,
+  LandUse,
+  Lot,
+  Parcel,
+  Site,
+} from "../spatial/primitives";
 import type { LandUseCategory } from "./landuse";
 import { landUseDefinition } from "./landuse";
 import type {
@@ -19,11 +25,7 @@ import type {
   CommunityMetrics,
 } from "./types/metrics";
 
-export type {
-  LandUseAllocation,
-  SiteMetrics,
-  CommunityMetrics,
-};
+export type { LandUseAllocation, SiteMetrics, CommunityMetrics };
 
 /** Exact plan-unit area of one region, honoring any curved edges. */
 function regionArea(el: { boundary: Polygon; arcs?: EdgeArcs }): number {
@@ -31,7 +33,9 @@ function regionArea(el: { boundary: Polygon; arcs?: EdgeArcs }): number {
 }
 
 /** Sum of raw plan-unit areas for a set of elements' boundaries. */
-function totalPlanArea(elements: { boundary: Polygon; arcs?: EdgeArcs }[]): number {
+function totalPlanArea(
+  elements: { boundary: Polygon; arcs?: EdgeArcs }[],
+): number {
   return _.sumBy(elements, regionArea);
 }
 
@@ -62,7 +66,10 @@ export function builtArea(site: Site, unit: AreaUnit = "sqm"): number {
 /** Gross floor area = Σ(footprint × storeys), reported in `unit`. */
 export function grossFloorArea(site: Site, unit: AreaUnit = "sqm"): number {
   const buildings = elementsOfKind(site, "building") as Building[];
-  const planArea = _.sumBy(buildings, (b) => regionArea(b) * Math.max(1, b.storeys));
+  const planArea = _.sumBy(
+    buildings,
+    (b) => regionArea(b) * Math.max(1, b.storeys),
+  );
   return squareMetersTo(areaToSquareMeters(planArea, site.spatial), unit);
 }
 
@@ -72,14 +79,18 @@ export function grossFloorArea(site: Site, unit: AreaUnit = "sqm"): number {
  */
 export function coverage(site: Site): number {
   const site_ = siteArea(site, "sqm");
-  if (site_ <= 0) {return 0;}
+  if (site_ <= 0) {
+    return 0;
+  }
   return clamp01(builtArea(site, "sqm") / site_);
 }
 
 /** Floor Area Ratio: gross floor area ÷ site area. */
 export function floorAreaRatio(site: Site): number {
   const site_ = siteArea(site, "sqm");
-  if (site_ <= 0) {return 0;}
+  if (site_ <= 0) {
+    return 0;
+  }
   return grossFloorArea(site, "sqm") / site_;
 }
 
@@ -92,7 +103,9 @@ export function dwellingUnits(site: Site): number {
 /** Residential density in dwelling units per acre. */
 export function density(site: Site): number {
   const acres = siteArea(site, "acres");
-  if (acres <= 0) {return 0;}
+  if (acres <= 0) {
+    return 0;
+  }
   return dwellingUnits(site) / acres;
 }
 
@@ -107,40 +120,46 @@ export function lotCount(site: Site): number {
  */
 export function imperviousRatio(site: Site): number {
   const site_ = siteArea(site, "sqm");
-  if (site_ <= 0) {return 0;}
+  if (site_ <= 0) {
+    return 0;
+  }
   const landUses = elementsOfKind(site, "landuse") as LandUse[];
   const imperviousLandUse = _.sumBy(
     landUses.filter((l) => landUseDefinition(l.category).impervious),
-    regionArea
+    regionArea,
   );
   const impSqm =
-    areaToSquareMeters(imperviousLandUse, site.spatial) + builtArea(site, "sqm");
+    areaToSquareMeters(imperviousLandUse, site.spatial) +
+    builtArea(site, "sqm");
   return clamp01(impSqm / site_);
 }
 
 /** Open-space ratio: fraction of site area classified as open space. */
 export function openSpaceRatio(site: Site): number {
   const site_ = siteArea(site, "sqm");
-  if (site_ <= 0) {return 0;}
+  if (site_ <= 0) {
+    return 0;
+  }
   const landUses = elementsOfKind(site, "landuse") as LandUse[];
   const openSqm = _.sumBy(
     landUses.filter((l) => landUseDefinition(l.category).openSpace),
-    (l) => areaToSquareMeters(regionArea(l), site.spatial)
+    (l) => areaToSquareMeters(regionArea(l), site.spatial),
   );
   return clamp01(openSqm / site_);
 }
-
-
 
 /**
  * Land-use allocation: how designated land-use area is distributed across
  * categories, sorted largest-first. Shares are relative to total land-use area.
  */
-export function landUseBreakdown(site: Site, unit: AreaUnit = "sqm"): LandUseAllocation[] {
+export function landUseBreakdown(
+  site: Site,
+  unit: AreaUnit = "sqm",
+): LandUseAllocation[] {
   const landUses = elementsOfKind(site, "landuse") as LandUse[];
   const grouped = _.groupBy(landUses, "category");
   const byCategory = _.mapValues(grouped, (lus) =>
-    _.sumBy(lus, (lu) => areaToSquareMeters(regionArea(lu), site.spatial))
+    _.sumBy(lus, (lu) => areaToSquareMeters(regionArea(lu), site.spatial)),
   );
   const totalSqm = _.sum(Object.values(byCategory));
 
@@ -158,10 +177,11 @@ export function landUseBreakdown(site: Site, unit: AreaUnit = "sqm"): LandUseAll
   return _.orderBy(results, ["area"], ["desc"]);
 }
 
-
-
 /** Compute all headline metrics for a site in one pass-friendly call. */
-export function computeSiteMetrics(site: Site, unit: AreaUnit = "sqm"): SiteMetrics {
+export function computeSiteMetrics(
+  site: Site,
+  unit: AreaUnit = "sqm",
+): SiteMetrics {
   return {
     siteArea: siteArea(site, unit),
     builtArea: builtArea(site, unit),
@@ -178,10 +198,11 @@ export function computeSiteMetrics(site: Site, unit: AreaUnit = "sqm"): SiteMetr
   };
 }
 
-
-
 /** Compute community-scale metrics. `householdSize` defaults to 2.5 persons. */
-export function computeCommunityMetrics(site: Site, householdSize = 2.5): CommunityMetrics {
+export function computeCommunityMetrics(
+  site: Site,
+  householdSize = 2.5,
+): CommunityMetrics {
   const du = dwellingUnits(site);
   const population = du * householdSize;
   const siteSqKm = siteArea(site, "sqkm");
@@ -190,11 +211,11 @@ export function computeCommunityMetrics(site: Site, householdSize = 2.5): Commun
   const landUses = elementsOfKind(site, "landuse") as LandUse[];
   const openSqM = _.sumBy(
     landUses.filter((l) => landUseDefinition(l.category).openSpace),
-    (l) => areaToSquareMeters(regionArea(l), site.spatial)
+    (l) => areaToSquareMeters(regionArea(l), site.spatial),
   );
   const parkSqM = _.sumBy(
     landUses.filter((l) => l.category === "park"),
-    (l) => areaToSquareMeters(regionArea(l), site.spatial)
+    (l) => areaToSquareMeters(regionArea(l), site.spatial),
   );
   void siteSqM;
 
@@ -203,7 +224,10 @@ export function computeCommunityMetrics(site: Site, householdSize = 2.5): Commun
     population,
     populationPerSquareKm: siteSqKm > 0 ? population / siteSqKm : 0,
     openSpacePerCapitaSqM: population > 0 ? openSqM / population : 0,
-    parkAcresPerThousand: population > 0 ? squareMetersTo(parkSqM, "acres") / (population / 1000) : 0,
+    parkAcresPerThousand:
+      population > 0
+        ? squareMetersTo(parkSqM, "acres") / (population / 1000)
+        : 0,
     householdSize,
   };
 }

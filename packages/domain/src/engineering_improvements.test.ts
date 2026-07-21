@@ -24,7 +24,11 @@ import { splitPolygonByLine, mergeLots } from "./planning/subdivision";
 import { checkCompliance } from "./planning/rules";
 import { adjustTraverse, interiorAngles } from "./survey/survey";
 import { calculateGradingVolumes } from "./civil/grading";
-import { connectedComponents, distanceToNetwork, serviceCoverage } from "./civil/network";
+import {
+  connectedComponents,
+  distanceToNetwork,
+  serviceCoverage,
+} from "./civil/network";
 import { evaluatePayItemCost, parsePayItemListCsv } from "./drawing/qto";
 import { calculateStairGeometry } from "./planning/stairs";
 
@@ -43,7 +47,12 @@ describe("30 Engineering Improvements Validation Suite", () => {
   it("Item 3: Scalar accumulator unionBounds", () => {
     const b1 = { minX: 0, minY: 0, maxX: 10, maxY: 10 };
     const b2 = { minX: -5, minY: 2, maxX: 15, maxY: 8 };
-    expect(unionBounds([b1, b2])).toEqual({ minX: -5, minY: 0, maxX: 15, maxY: 10 });
+    expect(unionBounds([b1, b2])).toEqual({
+      minX: -5,
+      minY: 0,
+      maxX: 15,
+      maxY: 10,
+    });
     expect(unionBounds([])).toBeNull();
   });
 
@@ -83,10 +92,21 @@ describe("30 Engineering Improvements Validation Suite", () => {
   });
 
   it("Item 8 & 9 & 10: Contour stitching HashMap, IDW & Float64Array terrain", () => {
-    const segments: Array<[{ x: number; y: number }, { x: number; y: number }]> = [
-      [{ x: 0, y: 0 }, { x: 1, y: 0 }],
-      [{ x: 1, y: 0 }, { x: 2, y: 0 }],
-      [{ x: 2, y: 0 }, { x: 3, y: 0 }],
+    const segments: Array<
+      [{ x: number; y: number }, { x: number; y: number }]
+    > = [
+      [
+        { x: 0, y: 0 },
+        { x: 1, y: 0 },
+      ],
+      [
+        { x: 1, y: 0 },
+        { x: 2, y: 0 },
+      ],
+      [
+        { x: 2, y: 0 },
+        { x: 3, y: 0 },
+      ],
     ];
     const stitched = stitchContours(segments);
     expect(stitched.length).toBe(1);
@@ -98,7 +118,7 @@ describe("30 Engineering Improvements Validation Suite", () => {
         { point: { x: 10, y: 10 }, z: 20 },
       ],
       { minX: 0, minY: 0, maxX: 10, maxY: 10 },
-      { cellSize: 5, power: 2 }
+      { cellSize: 5, power: 2 },
     );
     expect(grid.cols).toBeGreaterThan(0);
   });
@@ -122,7 +142,10 @@ describe("30 Engineering Improvements Validation Suite", () => {
     uint8[1] = 0x41; // A
     uint8[2] = 0x53; // S
     uint8[3] = 0x46; // F
-    const sliceBuffer = uint8.buffer.slice(uint8.byteOffset, uint8.byteOffset + uint8.byteLength);
+    const sliceBuffer = uint8.buffer.slice(
+      uint8.byteOffset,
+      uint8.byteOffset + uint8.byteLength,
+    );
     expect(() => parseLAS(sliceBuffer)).not.toThrow();
   });
 
@@ -143,10 +166,26 @@ describe("30 Engineering Improvements Validation Suite", () => {
     const text = formatDimText(5.5208333, styleArch, spatial);
     expect(text).toContain("5'");
 
-    const dim1 = { kind: "aligned" as const, id: "d1", styleId: "arch", a: { x: 0, y: 0 }, b: { x: 10, y: 0 }, offset: 5 };
-    const dim2 = { kind: "aligned" as const, id: "d2", styleId: "arch", a: { x: 2, y: 0 }, b: { x: 8, y: 0 }, offset: 5 };
+    const dim1 = {
+      kind: "aligned" as const,
+      id: "d1",
+      styleId: "arch",
+      a: { x: 0, y: 0 },
+      b: { x: 10, y: 0 },
+      offset: 5,
+    };
+    const dim2 = {
+      kind: "aligned" as const,
+      id: "d2",
+      styleId: "arch",
+      a: { x: 2, y: 0 },
+      b: { x: 8, y: 0 },
+      offset: 5,
+    };
     const stacked = stackDimensionChains([dim1, dim2], 8);
-    expect(Math.abs(stacked[0].offset - stacked[1].offset)).toBeGreaterThanOrEqual(8);
+    expect(
+      Math.abs(stacked[0].offset - stacked[1].offset),
+    ).toBeGreaterThanOrEqual(8);
   });
 
   it("Item 16 & 30: COLLADA numeric formatting & attribute XML escaping", () => {
@@ -246,7 +285,13 @@ describe("30 Engineering Improvements Validation Suite", () => {
         fromLabel: "P1",
         toLabel: "P2",
         azimuth: 0,
-        bearing: { ns: "N" as const, degrees: 0, minutes: 0, seconds: 0, ew: "E" as const },
+        bearing: {
+          ns: "N" as const,
+          degrees: 0,
+          minutes: 0,
+          seconds: 0,
+          ew: "E" as const,
+        },
         bearingText: "N00°00′00″E",
         distance: 0,
         distanceMeters: 0,
@@ -287,7 +332,7 @@ describe("30 Engineering Improvements Validation Suite", () => {
         { point: { x: 30, y: 30 }, z: 110 },
       ],
       { minX: 0, minY: 0, maxX: 30, maxY: 30 },
-      { cellSize: 5 }
+      { cellSize: 5 },
     );
     const vol = calculateGradingVolumes(pad, 100, surface, 5);
     expect(vol.cutVolume).toBeGreaterThanOrEqual(0);
@@ -316,7 +361,11 @@ describe("30 Engineering Improvements Validation Suite", () => {
 
   it("Item 27 & 28: Safe QTO pay item math parser & quoted CSV parsing", () => {
     const payItem = { id: "item1", name: "Paving", unit: "sqm", unitCost: 25 };
-    const costEval = evaluatePayItemCost(payItem, { area: 100 }, "area * unitCost");
+    const costEval = evaluatePayItemCost(
+      payItem,
+      { area: 100 },
+      "area * unitCost",
+    );
     expect(costEval.cost).toBe(2500);
 
     const csv = 'ID,Name,Unit,UnitCost\n1,"Concrete, Class A",cy,150,Concrete';

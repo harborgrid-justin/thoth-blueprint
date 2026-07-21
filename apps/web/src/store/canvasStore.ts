@@ -146,13 +146,22 @@ export const useCanvasStore = create<CanvasState>((set, get) => ({
 
   namedViews: [
     { name: "Site View", viewport: { offsetX: 0, offsetY: 0, zoom: 3 } },
-    { name: "South Subdivision", viewport: { offsetX: 100, offsetY: 150, zoom: 5 } },
-    { name: "Retention Pond", viewport: { offsetX: -120, offsetY: -200, zoom: 6 } },
+    {
+      name: "South Subdivision",
+      viewport: { offsetX: 100, offsetY: 150, zoom: 5 },
+    },
+    {
+      name: "Retention Pond",
+      viewport: { offsetX: -120, offsetY: -200, zoom: 6 },
+    },
   ],
   addNamedView(name) {
     const viewport = get().viewport;
     set((s) => ({
-      namedViews: [...s.namedViews.filter((v) => v.name !== name), { name, viewport }],
+      namedViews: [
+        ...s.namedViews.filter((v) => v.name !== name),
+        { name, viewport },
+      ],
     }));
   },
   deleteNamedView(name) {

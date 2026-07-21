@@ -38,3 +38,18 @@ const BY_TYPE = new Map(MONUMENT_DEFINITIONS.map((d) => [d.type, d]));
 export function monumentDefinition(type: MonumentType): MonumentDefinition {
   return BY_TYPE.get(type) ?? { type, label: type, abbrev: type.toUpperCase() };
 }
+
+/** Human-readable label for a survey monument. */
+export function monumentLabel(
+  monument: SurveyMonument | MonumentType,
+  status?: MonumentStatus,
+): string {
+  if (typeof monument === "string") {
+    const def = monumentDefinition(monument);
+    const st = status ? ` (${status})` : "";
+    return `${def.label}${st}`;
+  }
+  const def = monumentDefinition(monument.type);
+  const st = monument.status ? ` (${monument.status})` : "";
+  return `${def.label}${st}`;
+}

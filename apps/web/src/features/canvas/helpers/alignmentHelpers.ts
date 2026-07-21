@@ -37,7 +37,11 @@ export function centerlinePoints(r: ResolvedAlignment): Point[] {
 }
 
 /** Drafting style for an alignment offset line by kind. */
-export function offsetStyle(off: AlignmentOffset): { stroke: string; width: number; dash?: string } {
+export function offsetStyle(off: AlignmentOffset): {
+  stroke: string;
+  width: number;
+  dash?: string;
+} {
   switch (off.kind) {
     case "pavement":
       return { stroke: "#334155", width: 1.2 };

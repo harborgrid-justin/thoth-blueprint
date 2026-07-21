@@ -43,7 +43,11 @@ export function bulgeThroughCursor(a: Point, b: Point, cursor: Point): number {
 export function orderedVisibleElements(site: Site) {
   const layerById = new Map(site.layers.map((l) => [l.id, l]));
   return site.elements
-    .map((element, index) => ({ element, layer: layerById.get(element.layerId), index }))
+    .map((element, index) => ({
+      element,
+      layer: layerById.get(element.layerId),
+      index,
+    }))
     .filter((entry) => entry.layer && entry.layer.visible)
     .sort((a, b) => {
       const lo = (a.layer!.order ?? 0) - (b.layer!.order ?? 0);
@@ -59,7 +63,12 @@ export function pointSegmentDistance(p: Point, a: Point, b: Point): number {
 /** Expand a bounds by a margin so a tight or zero-size selection keeps context. */
 export function padBounds(b: Bounds): Bounds {
   const pad = Math.max(b.maxX - b.minX, b.maxY - b.minY) * 0.15 || 10;
-  return { minX: b.minX - pad, minY: b.minY - pad, maxX: b.maxX + pad, maxY: b.maxY + pad };
+  return {
+    minX: b.minX - pad,
+    minY: b.minY - pad,
+    maxX: b.maxX + pad,
+    maxY: b.maxY + pad,
+  };
 }
 
 export function toPath(boundary: Polygon, viewport: Viewport): string {
@@ -96,4 +105,3 @@ export function uniq<T>(arr: T[]): T[] {
   }
   return out;
 }
-

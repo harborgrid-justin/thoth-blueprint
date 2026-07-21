@@ -47,7 +47,9 @@ export function Scene3D() {
   // Sync erosion frames to ThreeJS visualizer
   React.useEffect(() => {
     const scene = sceneRef.current;
-    if (!scene || !contentRef.current) {return;}
+    if (!scene || !contentRef.current) {
+      return;
+    }
 
     if (!visualizerRef.current) {
       // Derive accurate grid dimensions from the terrain model so the elevation
@@ -83,7 +85,9 @@ export function Scene3D() {
   // --- one-time setup ------------------------------------------------------
   React.useEffect(() => {
     const mount = mountRef.current;
-    if (!mount) {return;}
+    if (!mount) {
+      return;
+    }
 
     // A fresh camera is created here, so it must be framed again on next content
     // (StrictMode remounts and HMR recreate this effect while refs persist).
@@ -204,7 +208,9 @@ export function Scene3D() {
     animate();
 
     const onResize = () => {
-      if (!mount) {return;}
+      if (!mount) {
+        return;
+      }
       const w = mount.clientWidth;
       const h = mount.clientHeight;
       renderer.setSize(w, h);
@@ -220,7 +226,9 @@ export function Scene3D() {
       controls.dispose();
       renderer.dispose();
       contentRef.current?.dispose();
-      if (renderer.domElement.parentNode === mount) {mount.removeChild(renderer.domElement);}
+      if (renderer.domElement.parentNode === mount) {
+        mount.removeChild(renderer.domElement);
+      }
     };
   }, []);
 
@@ -229,7 +237,9 @@ export function Scene3D() {
     const scene = sceneRef.current;
     const camera = cameraRef.current;
     const controls = controlsRef.current;
-    if (!scene || !camera || !controls || !site) {return;}
+    if (!scene || !camera || !controls || !site) {
+      return;
+    }
 
     if (contentRef.current) {
       scene.remove(contentRef.current.group);
@@ -244,7 +254,9 @@ export function Scene3D() {
     cloudDisposeRef.current = [];
 
     const result = buildScene(site);
-    if (!result) {return;}
+    if (!result) {
+      return;
+    }
 
     if (physicsRef.current) {
       physicsRef.current.syncWorld(site, result.exaggeration);
@@ -252,15 +264,23 @@ export function Scene3D() {
 
     // Imported point clouds, in scene space (plan-centered, y-up, exaggerated).
     for (const c of clouds) {
-      if (!c.visible) {continue;}
-      const pts = cloudPoints(c.cloud.points, result.center, result.exaggeration);
+      if (!c.visible) {
+        continue;
+      }
+      const pts = cloudPoints(
+        c.cloud.points,
+        result.center,
+        result.exaggeration,
+      );
       result.group.add(pts.object);
       cloudDisposeRef.current.push(pts.geometry, pts.material);
     }
 
     // Imported meshes, seated on the terrain at the plan center.
     for (const m of meshes) {
-      if (!m.visible) {continue;}
+      if (!m.visible) {
+        continue;
+      }
       m.object.position.set(0, result.baseElevation, 0);
       result.group.add(m.object);
     }
@@ -301,12 +321,16 @@ export function Scene3D() {
   // Synchronized Selection and Hover Highlights in 3D View (Feature 6 & 7 & 8)
   React.useEffect(() => {
     const rootGroup = contentRef.current?.group;
-    if (!rootGroup) {return;}
+    if (!rootGroup) {
+      return;
+    }
 
     // Restore original colors/emissive properties for all meshes before applying new ones.
     rootGroup.traverse((child) => {
       if (child instanceof THREE.Mesh && child.material) {
-        const mats = Array.isArray(child.material) ? child.material : [child.material];
+        const mats = Array.isArray(child.material)
+          ? child.material
+          : [child.material];
         for (const mat of mats) {
           if ("emissive" in mat && mat.emissive instanceof THREE.Color) {
             mat.emissive.setHex(0x000000);
@@ -328,7 +352,9 @@ export function Scene3D() {
           current = current.parent;
         }
         if (matched && child instanceof THREE.Mesh && child.material) {
-          const mats = Array.isArray(child.material) ? child.material : [child.material];
+          const mats = Array.isArray(child.material)
+            ? child.material
+            : [child.material];
           for (const mat of mats) {
             if ("emissive" in mat && mat.emissive instanceof THREE.Color) {
               mat.emissive.setHex(0x332600); // subtle yellow glow
@@ -352,7 +378,9 @@ export function Scene3D() {
           current = current.parent;
         }
         if (matched && child instanceof THREE.Mesh && child.material) {
-          const mats = Array.isArray(child.material) ? child.material : [child.material];
+          const mats = Array.isArray(child.material)
+            ? child.material
+            : [child.material];
           for (const mat of mats) {
             if ("emissive" in mat && mat.emissive instanceof THREE.Color) {
               mat.emissive.setHex(0x001f3f); // subtle blue glow
@@ -369,7 +397,7 @@ export function Scene3D() {
         const box = new THREE.Box3().setFromObject(selectedObj);
         const center = new THREE.Vector3();
         box.getCenter(center);
-        
+
         controls.target.copy(center);
         controls.update();
       }
@@ -381,7 +409,14 @@ export function Scene3D() {
 
 /** Build a THREE.Points cloud from colored points, mapped into scene space. */
 function cloudPoints(
-  points: Array<{ x: number; y: number; z: number; r?: number; g?: number; b?: number }>,
+  points: Array<{
+    x: number;
+    y: number;
+    z: number;
+    r?: number;
+    g?: number;
+    b?: number;
+  }>,
   center: { x: number; y: number },
   exag: number,
 ) {
@@ -398,6 +433,10 @@ function cloudPoints(
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-  const material = new THREE.PointsMaterial({ size: 2, vertexColors: true, sizeAttenuation: true });
+  const material = new THREE.PointsMaterial({
+    size: 2,
+    vertexColors: true,
+    sizeAttenuation: true,
+  });
   return { object: new THREE.Points(geometry, material), geometry, material };
 }

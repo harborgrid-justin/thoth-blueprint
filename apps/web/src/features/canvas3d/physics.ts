@@ -42,7 +42,9 @@ export class ThothPhysicsEngine {
 
   /** Synchronize the physics world with the current plan state */
   syncWorld(site: Site, exaggeration: number): void {
-    if (!this.initialized) {return;}
+    if (!this.initialized) {
+      return;
+    }
 
     // Clear existing colliders and their rigid bodies to prevent memory leaks in WASM
     for (const collider of this.colliders.values()) {
@@ -57,7 +59,9 @@ export class ThothPhysicsEngine {
     this.elementIdsByHandle.clear();
 
     const extent = siteExtent(site);
-    if (!extent) {return;}
+    if (!extent) {
+      return;
+    }
 
     const center = boundsCenter(extent);
     const terrain = buildTerrainModel(site);
@@ -111,14 +115,20 @@ export class ThothPhysicsEngine {
 
     // 2. Create Building Footprint Colliders
     for (const el of site.elements) {
-      if (el.kind !== "building" || !isSpatialElement(el)) {continue;}
+      if (el.kind !== "building" || !isSpatialElement(el)) {
+        continue;
+      }
 
       const boundary = el.boundary;
-      if (boundary.length < 3) {continue;}
+      if (boundary.length < 3) {
+        continue;
+      }
 
       // Extract footprint elevations conforming to terrain at centroid
       const bldgCentroid = centroid(boundary);
-      const elev = surface ? elevationAt(surface, bldgCentroid) * exaggeration : 0;
+      const elev = surface
+        ? elevationAt(surface, bldgCentroid) * exaggeration
+        : 0;
       const storeys = Math.max(1, el.storeys);
       const height = (el.height ?? storeys * 3.2) * exaggeration;
 
@@ -180,7 +190,9 @@ export class ThothPhysicsEngine {
    */
   checkCollisions(): Set<string> {
     const collidingIds = new Set<string>();
-    if (!this.initialized) {return collidingIds;}
+    if (!this.initialized) {
+      return collidingIds;
+    }
 
     // Only step when something has actually changed — avoids wasting CPU every
     // animation frame for a completely static scene.
@@ -189,8 +201,9 @@ export class ThothPhysicsEngine {
       this.needsStep = false;
     }
 
-    const buildingColliders = Array.from(this.colliders.entries())
-      .filter(([id]) => id !== "terrain");
+    const buildingColliders = Array.from(this.colliders.entries()).filter(
+      ([id]) => id !== "terrain",
+    );
 
     for (let i = 0; i < buildingColliders.length; i++) {
       const [idA, colA] = buildingColliders[i]!;
@@ -218,9 +231,13 @@ export class ThothPhysicsEngine {
    * snapping elements to the terrain surface).
    */
   raycastElevation(x: number, z: number): number | null {
-    if (!this.initialized) {return null;}
+    if (!this.initialized) {
+      return null;
+    }
     const terrainCollider = this.colliders.get("terrain");
-    if (!terrainCollider) {return null;}
+    if (!terrainCollider) {
+      return null;
+    }
 
     const rayOrigin = { x, y: 100000, z };
     const rayDir = { x: 0, y: -1, z: 0 };
@@ -236,9 +253,9 @@ export class ThothPhysicsEngine {
       terrainCollider,
     );
 
-    if (hit === null) {return null;}
+    if (hit === null) {
+      return null;
+    }
     return rayOrigin.y + rayDir.y * hit.timeOfImpact;
   }
 }
-
-

@@ -29,7 +29,8 @@ export function usePlanningCanvasState() {
   const findQuery = useFindStore((s) => s.query);
   const findKind = useFindStore((s) => s.kind);
   const findFilter = useFindStore((s) => s.filterOnCanvas);
-  const findActive = findFilter && (findQuery.trim().length > 0 || findKind !== "all");
+  const findActive =
+    findFilter && (findQuery.trim().length > 0 || findKind !== "all");
 
   const {
     showGrid,
@@ -48,7 +49,10 @@ export function usePlanningCanvasState() {
     snapToVertices,
   } = useCanvasStore();
 
-  const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
+  const terrain = React.useMemo(
+    () => (site ? buildTerrainModel(site) : null),
+    [site],
+  );
   const terrainSurface = showProposed ? terrain?.proposed : terrain?.existing;
 
   const underlay = useInteropStore((s) => s.underlay);

@@ -47,7 +47,10 @@ export function ShortcutsDialog() {
   const open = useUiStore((s) => s.shortcutsOpen);
   const setOpen = useUiStore((s) => s.setShortcutsOpen);
 
-  const tools: Shortcut[] = TOOLS.map((t) => ({ keys: t.shortcut, label: `${t.label} tool` }));
+  const tools: Shortcut[] = TOOLS.map((t) => ({
+    keys: t.shortcut,
+    label: `${t.label} tool`,
+  }));
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -55,7 +58,8 @@ export function ShortcutsDialog() {
         <DialogHeader>
           <DialogTitle>Keyboard shortcuts</DialogTitle>
           <DialogDescription>
-            Every frequent action has a shortcut. Press ⌘K for the full command palette.
+            Every frequent action has a shortcut. Press ⌘K for the full command
+            palette.
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2">
@@ -72,10 +76,15 @@ export function ShortcutsDialog() {
 function Section({ title, items }: { title: string; items: Shortcut[] }) {
   return (
     <div>
-      <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</h4>
+      <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        {title}
+      </h4>
       <ul className="flex flex-col gap-1">
         {items.map((s) => (
-          <li key={s.label} className="flex items-center justify-between gap-3 text-sm">
+          <li
+            key={s.label}
+            className="flex items-center justify-between gap-3 text-sm"
+          >
             <span className="text-foreground">{s.label}</span>
             <kbd className="shrink-0 rounded border border-border bg-muted px-1.5 py-0.5 text-[11px] font-medium tabular-nums text-muted-foreground">
               {s.keys}

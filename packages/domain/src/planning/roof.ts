@@ -33,12 +33,23 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
   const trueAreaSqm = planAreaSqm * slopeFactor;
 
   // Find bounding box
-  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  let minX = Infinity,
+    maxX = -Infinity,
+    minY = Infinity,
+    maxY = -Infinity;
   boundary.forEach((pt) => {
-    if (pt.x < minX) {minX = pt.x;}
-    if (pt.x > maxX) {maxX = pt.x;}
-    if (pt.y < minY) {minY = pt.y;}
-    if (pt.y > maxY) {maxY = pt.y;}
+    if (pt.x < minX) {
+      minX = pt.x;
+    }
+    if (pt.x > maxX) {
+      maxX = pt.x;
+    }
+    if (pt.y < minY) {
+      minY = pt.y;
+    }
+    if (pt.y > maxY) {
+      maxY = pt.y;
+    }
   });
 
   const width = maxX - minX;
@@ -57,14 +68,29 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
   } else if (roof.roofType === "hip") {
     // Ridge is shorter, ends are sloped hip planes
     const hipOffset = width / 2; // 45-degree hips in plan
-    ridgeLine.push({ x: midX, y: minY + hipOffset }, { x: midX, y: maxY - hipOffset });
+    ridgeLine.push(
+      { x: midX, y: minY + hipOffset },
+      { x: midX, y: maxY - hipOffset },
+    );
 
     // Hips connect corners to ridge ends
     hipLines.push(
-      [{ x: minX, y: minY }, { x: midX, y: minY + hipOffset }],
-      [{ x: maxX, y: minY }, { x: midX, y: minY + hipOffset }],
-      [{ x: minX, y: maxY }, { x: midX, y: maxY - hipOffset }],
-      [{ x: maxX, y: maxY }, { x: midX, y: maxY - hipOffset }],
+      [
+        { x: minX, y: minY },
+        { x: midX, y: minY + hipOffset },
+      ],
+      [
+        { x: maxX, y: minY },
+        { x: midX, y: minY + hipOffset },
+      ],
+      [
+        { x: minX, y: maxY },
+        { x: midX, y: maxY - hipOffset },
+      ],
+      [
+        { x: maxX, y: maxY },
+        { x: midX, y: maxY - hipOffset },
+      ],
     );
   } else if (roof.roofType === "shed") {
     // High edge acts as a ridge, low edge is eaves
@@ -82,8 +108,14 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
     const rx = minX + i * spacing;
     // Rafters run from center ridge to the outer low boundaries (left and right)
     rafterLines.push(
-      [{ x: rx, y: midY }, { x: rx, y: minY }],
-      [{ x: rx, y: midY }, { x: rx, y: maxY }],
+      [
+        { x: rx, y: midY },
+        { x: rx, y: minY },
+      ],
+      [
+        { x: rx, y: midY },
+        { x: rx, y: maxY },
+      ],
     );
   }
 
@@ -98,16 +130,28 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
   for (let i = 1; i < steps; i++) {
     const rx = minX + (i / steps) * width;
     drainageFlows.push(
-      [{ x: rx, y: midY }, { x: rx, y: minY - overhang }],
-      [{ x: rx, y: midY }, { x: rx, y: maxY + overhang }],
+      [
+        { x: rx, y: midY },
+        { x: rx, y: minY - overhang },
+      ],
+      [
+        { x: rx, y: midY },
+        { x: rx, y: maxY + overhang },
+      ],
     );
   }
 
   // Gutters along the low eaves (north and south boundaries)
   if (roof.gutters) {
     gutterPaths.push(
-      [{ x: minX - overhang, y: minY - overhang }, { x: maxX + overhang, y: minY - overhang }],
-      [{ x: minX - overhang, y: maxY + overhang }, { x: maxX + overhang, y: maxY + overhang }],
+      [
+        { x: minX - overhang, y: minY - overhang },
+        { x: maxX + overhang, y: minY - overhang },
+      ],
+      [
+        { x: minX - overhang, y: maxY + overhang },
+        { x: maxX + overhang, y: maxY + overhang },
+      ],
     );
     // Downspouts at the 4 low corners
     downspoutAnchors.push(
@@ -128,7 +172,7 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
   // International Residential Code (IRC R806.1): Net free vent area >= 1:150 of plan area
   // (or 1:300 if balanced between ridge and soffit)
   const requiredVentAreaSqm = planAreaSqm / 300;
-  
+
   // Calculate provided vent area:
   // Ridge vent (length of ridge * free area width ~ 0.05m)
   let ridgeVentArea = 0;
@@ -151,7 +195,9 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
 
   // Warnings for structural limits (heavy snow load check: pitch < 3:12 warns)
   if (pitchVal < 3) {
-    warnings.push(`Low pitch slope ratio (${pitchVal}:12) requires special ice/water waterproofing membranes.`);
+    warnings.push(
+      `Low pitch slope ratio (${pitchVal}:12) requires special ice/water waterproofing membranes.`,
+    );
   }
 
   return {

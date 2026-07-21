@@ -1,7 +1,10 @@
 import { TOOLS, toolDef, type ToolId, type ToolDef } from "@/lib/tools";
 import { elementMeta } from "@/lib/elementMeta";
 
-export function isGroupStart(index: number, tools: typeof TOOLS = TOOLS): boolean {
+export function isGroupStart(
+  index: number,
+  tools: typeof TOOLS = TOOLS,
+): boolean {
   return index > 0 && tools[index - 1].group !== tools[index].group;
 }
 

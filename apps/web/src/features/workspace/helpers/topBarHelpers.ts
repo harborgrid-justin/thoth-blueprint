@@ -9,9 +9,17 @@ export function formatZoomReadout(zoom: number): string {
   return formatPercent(zoom, 0);
 }
 
-export function formatViewportCenterReadout(viewport: { x: number; y: number }, spatial: any) {
+export function formatViewportCenterReadout(
+  viewport: { x: number; y: number },
+  spatial: any,
+) {
   const coordText = formatCoord({ x: viewport.x, y: viewport.y }, "survey", 1);
-  const lengthText = formatLength(Math.hypot(viewport.x, viewport.y), spatial, "auto", 1);
+  const lengthText = formatLength(
+    Math.hypot(viewport.x, viewport.y),
+    spatial,
+    "auto",
+    1,
+  );
   const unit = resolveLengthUnit(spatial, "auto");
   return { coordText, lengthText, unit };
 }

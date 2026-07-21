@@ -15,9 +15,15 @@ const IN_PER_MM = 1 / 25.4;
  * paper ratio (e.g. 1"=20' → 240, 1:100 → 100); this reconciles the unit
  * families through metres so the result is unambiguous.
  */
-export function paperPerModel(scaleId: string, modelUnit: Unit, paperUnit: PaperUnit): number {
+export function paperPerModel(
+  scaleId: string,
+  modelUnit: Unit,
+  paperUnit: PaperUnit,
+): number {
   const ratio = scaleRatio(scaleId);
-  return METERS_PER_UNIT[modelUnit] / (ratio * METERS_PER_PAPER_UNIT[paperUnit]);
+  return (
+    METERS_PER_UNIT[modelUnit] / (ratio * METERS_PER_PAPER_UNIT[paperUnit])
+  );
 }
 
 /** Convert a paper measure to PDF points (1 in = 72 pt). */

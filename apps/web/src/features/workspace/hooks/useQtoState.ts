@@ -6,7 +6,14 @@ import {
   computeAssignedReports,
 } from "../helpers/qtoHelpers";
 
-export type QtoTab = "earthwork" | "payitems" | "renovation" | "stairs" | "curtainwalls" | "assemblies" | "roofs";
+export type QtoTab =
+  | "earthwork"
+  | "payitems"
+  | "renovation"
+  | "stairs"
+  | "curtainwalls"
+  | "assemblies"
+  | "roofs";
 
 export function useQtoState() {
   const site = useWorkspaceStore((s) => s.site);

@@ -13,8 +13,15 @@ export function computeSuperelevation({
   eMax: number;
   normalCrown: number;
 }) {
-  if (!alignment) {return null;}
-  return calculateSuperelevationRunoff(alignment, designSpeed, eMax, normalCrown);
+  if (!alignment) {
+    return null;
+  }
+  return calculateSuperelevationRunoff(
+    alignment,
+    designSpeed,
+    eMax,
+    normalCrown,
+  );
 }
 
 export function saveAlignmentSuperelevation({
@@ -28,16 +35,22 @@ export function saveAlignmentSuperelevation({
   designSpeed: number;
   superCurve: any;
 }) {
-  if (!alignment) {return;}
-  
+  if (!alignment) {
+    return;
+  }
+
   const patch = {
     ...alignment,
     designSpeed,
     designSpeeds: [{ station: alignment.startStation, speed: designSpeed }],
   };
 
-  const updatedAlignments = _.map(site?.alignments ?? [], (a: any) => a.id === alignment.id ? patch : a);
-  useWorkspaceStore.getState().updateElement(alignment.id, { alignments: updatedAlignments } as any);
+  const updatedAlignments = _.map(site?.alignments ?? [], (a: any) =>
+    a.id === alignment.id ? patch : a,
+  );
+  useWorkspaceStore
+    .getState()
+    .updateElement(alignment.id, { alignments: updatedAlignments } as any);
 
   if ((useWorkspaceStore.getState() as any).setSuperelevationCurve) {
     (useWorkspaceStore.getState() as any).setSuperelevationCurve(superCurve);

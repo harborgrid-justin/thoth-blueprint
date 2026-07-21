@@ -1,6 +1,13 @@
 import { describe, it, expect } from "vitest";
-import { defaultSpatialContext, type Site, type PlanElement } from "../../index.js";
-import { computeRenovationTakeoffs, runRenovationAudit } from "../renovation.js";
+import {
+  defaultSpatialContext,
+  type Site,
+  type PlanElement,
+} from "../../index.js";
+import {
+  computeRenovationTakeoffs,
+  runRenovationAudit,
+} from "../renovation.js";
 
 describe("Renovation Mode Domain Logic", () => {
   it("should calculate correct material takeoff areas for Existing, New, and Demolished elements", () => {
@@ -14,9 +21,9 @@ describe("Renovation Mode Domain Logic", () => {
           { x: 0, y: 0 },
           { x: 10, y: 0 },
           { x: 10, y: 10 },
-          { x: 0, y: 10 }
+          { x: 0, y: 10 },
         ],
-        renovationStatus: "existing"
+        renovationStatus: "existing",
       },
       {
         id: "b2",
@@ -27,9 +34,9 @@ describe("Renovation Mode Domain Logic", () => {
           { x: 10, y: 0 },
           { x: 20, y: 0 },
           { x: 20, y: 10 },
-          { x: 10, y: 10 }
+          { x: 10, y: 10 },
         ],
-        renovationStatus: "new"
+        renovationStatus: "new",
       },
       {
         id: "b3",
@@ -40,10 +47,10 @@ describe("Renovation Mode Domain Logic", () => {
           { x: 30, y: 0 },
           { x: 35, y: 0 },
           { x: 35, y: 5 },
-          { x: 30, y: 5 }
+          { x: 30, y: 5 },
         ],
-        renovationStatus: "demolished"
-      }
+        renovationStatus: "demolished",
+      },
     ];
 
     const site: Site = {
@@ -51,7 +58,7 @@ describe("Renovation Mode Domain Logic", () => {
       name: "Renovation Site",
       spatial: defaultSpatialContext(),
       layers: [],
-      elements
+      elements,
     };
 
     const takeoffs = computeRenovationTakeoffs(site);
@@ -77,9 +84,9 @@ describe("Renovation Mode Domain Logic", () => {
           { x: 0, y: 0 },
           { x: 50, y: 0 },
           { x: 50, y: 50 },
-          { x: 0, y: 50 }
+          { x: 0, y: 50 },
         ],
-        renovationStatus: "demolished"
+        renovationStatus: "demolished",
       },
       {
         id: "b1",
@@ -90,9 +97,9 @@ describe("Renovation Mode Domain Logic", () => {
           { x: 10, y: 10 },
           { x: 20, y: 10 },
           { x: 20, y: 20 },
-          { x: 10, y: 20 }
+          { x: 10, y: 20 },
         ],
-        renovationStatus: "new"
+        renovationStatus: "new",
       },
       {
         id: "p2",
@@ -103,11 +110,11 @@ describe("Renovation Mode Domain Logic", () => {
           { x: 100, y: 100 },
           { x: 150, y: 100 },
           { x: 150, y: 150 },
-          { x: 100, y: 150 }
+          { x: 100, y: 150 },
         ],
         apn: "PROTECTED",
-        renovationStatus: "demolished"
-      }
+        renovationStatus: "demolished",
+      },
     ];
 
     const site: Site = {
@@ -115,12 +122,16 @@ describe("Renovation Mode Domain Logic", () => {
       name: "Renovation Site",
       spatial: defaultSpatialContext(),
       layers: [],
-      elements
+      elements,
     };
 
     const warnings = runRenovationAudit(site);
     expect(warnings.length).toBe(2);
-    expect(warnings[0]).toContain("New building \"New Window/Structure\" intersects with demolished parcel \"Demolished Parcel\"");
-    expect(warnings[1]).toContain("Cannot demolish protected parcel \"Protected Existing Parcel\"");
+    expect(warnings[0]).toContain(
+      'New building "New Window/Structure" intersects with demolished parcel "Demolished Parcel"',
+    );
+    expect(warnings[1]).toContain(
+      'Cannot demolish protected parcel "Protected Existing Parcel"',
+    );
   });
 });

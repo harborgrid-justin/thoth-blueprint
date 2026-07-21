@@ -16,7 +16,10 @@ const STORAGE_KEY = "thoth.theme";
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useLocalStorage<Theme>(
     STORAGE_KEY,
-    typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
+    typeof window !== "undefined" &&
+      window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark",
   );
 
   React.useEffect(() => {
@@ -28,16 +31,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     () => ({
       theme,
       setTheme: setThemeState,
-      toggleTheme: () => setThemeState((t) => (t === "dark" ? "light" : "dark")),
+      toggleTheme: () =>
+        setThemeState((t) => (t === "dark" ? "light" : "dark")),
     }),
     [theme],
   );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  );
 }
 
 export function useTheme(): ThemeContextValue {
   const ctx = React.useContext(ThemeContext);
-  if (!ctx) {throw new Error("useTheme must be used within a ThemeProvider");}
+  if (!ctx) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
   return ctx;
 }

@@ -11,7 +11,16 @@
  * horizontal coordinates, so slope is a true rise-over-run.
  */
 
-import { bounds, pointInPolygon, distance, length, type Bounds, type Point, type Polygon, type Polyline } from "../spatial/geometry";
+import {
+  bounds,
+  pointInPolygon,
+  distance,
+  length,
+  type Bounds,
+  type Point,
+  type Polygon,
+  type Polyline,
+} from "../spatial/geometry";
 import type { SpatialContext } from "../spatial/spatial";
 import type {
   SpotElevation,
@@ -51,12 +60,19 @@ export function gridBounds(grid: ElevationGrid): Bounds {
 }
 
 /** Min and max elevation over all nodes. */
-export function elevationRange(grid: ElevationGrid): { min: number; max: number } {
+export function elevationRange(grid: ElevationGrid): {
+  min: number;
+  max: number;
+} {
   let min = Infinity;
   let max = -Infinity;
   for (const h of grid.heights) {
-    if (h < min) {min = h;}
-    if (h > max) {max = h;}
+    if (h < min) {
+      min = h;
+    }
+    if (h > max) {
+      max = h;
+    }
   }
   return { min, max };
 }
@@ -77,8 +93,6 @@ export function elevationAt(grid: ElevationGrid, p: Point): number {
   const bottom = bl + (br - bl) * tx;
   return top + (bottom - top) * ty;
 }
-
-
 
 /**
  * Build a regular elevation grid over the given extent by inverse-distance
@@ -108,7 +122,9 @@ export function interpolateGrid(
 }
 
 function idw(spots: SpotElevation[], p: Point, power: number): number {
-  if (spots.length === 0) {return 0;}
+  if (spots.length === 0) {
+    return 0;
+  }
   let num = 0;
   let den = 0;
   for (let i = 0; i < spots.length; i++) {
@@ -116,7 +132,9 @@ function idw(spots: SpotElevation[], p: Point, power: number): number {
     const dx = s.point.x - p.x;
     const dy = s.point.y - p.y;
     const d2 = dx * dx + dy * dy;
-    if (d2 < 1e-9) {return s.z;}
+    if (d2 < 1e-9) {
+      return s.z;
+    }
     const w = 1 / Math.pow(d2, power / 2);
     num += w * s.z;
     den += w;
@@ -128,8 +146,6 @@ function idw(spots: SpotElevation[], p: Point, power: number): number {
 // Contours (marching squares)
 // ---------------------------------------------------------------------------
 
-
-
 // Segment table keyed by the 4-corner case index (TL=8, TR=4, BR=2, BL=1).
 // Each entry lists edge pairs to connect: T(op), R(ight), B(ottom), L(eft).
 const MS_TABLE: Record<number, Array<[Edge, Edge]>> = {
@@ -138,12 +154,18 @@ const MS_TABLE: Record<number, Array<[Edge, Edge]>> = {
   2: [["B", "R"]],
   3: [["L", "R"]],
   4: [["T", "R"]],
-  5: [["L", "T"], ["B", "R"]],
+  5: [
+    ["L", "T"],
+    ["B", "R"],
+  ],
   6: [["T", "B"]],
   7: [["L", "T"]],
   8: [["L", "T"]],
   9: [["T", "B"]],
-  10: [["L", "B"], ["T", "R"]],
+  10: [
+    ["L", "B"],
+    ["T", "R"],
+  ],
   11: [["T", "R"]],
   12: [["L", "R"]],
   13: [["B", "R"]],
@@ -157,8 +179,13 @@ type Edge = "T" | "R" | "B" | "L";
  * Generate contour line segments at every multiple of `interval` between the
  * surface's min and max elevation, using marching squares.
  */
-export function contourLevels(grid: ElevationGrid, interval: number): ContourLevel[] {
-  if (interval <= 0) {return [];}
+export function contourLevels(
+  grid: ElevationGrid,
+  interval: number,
+): ContourLevel[] {
+  if (interval <= 0) {
+    return [];
+  }
   const { min, max } = elevationRange(grid);
   const levels: ContourLevel[] = [];
   const start = Math.ceil(min / interval) * interval;
@@ -169,7 +196,9 @@ export function contourLevels(grid: ElevationGrid, interval: number): ContourLev
         marchCell(grid, c, r, level, segments);
       }
     }
-    if (segments.length) {levels.push({ level: round(level), segments });}
+    if (segments.length) {
+      levels.push({ level: round(level), segments });
+    }
   }
   return levels;
 }
@@ -185,9 +214,15 @@ function marchCell(
   const tr = nodeHeight(grid, c + 1, r);
   const br = nodeHeight(grid, c + 1, r + 1);
   const bl = nodeHeight(grid, c, r + 1);
-  const idx = (tl >= level ? 8 : 0) | (tr >= level ? 4 : 0) | (br >= level ? 2 : 0) | (bl >= level ? 1 : 0);
+  const idx =
+    (tl >= level ? 8 : 0) |
+    (tr >= level ? 4 : 0) |
+    (br >= level ? 2 : 0) |
+    (bl >= level ? 1 : 0);
   const pairs = MS_TABLE[idx];
-  if (pairs.length === 0) {return;}
+  if (pairs.length === 0) {
+    return;
+  }
 
   const xL = grid.origin.x + c * grid.cellSize;
   const xR = xL + grid.cellSize;
@@ -207,7 +242,9 @@ function marchCell(
     }
   };
 
-  for (const [a, b] of pairs) {out.push([point(a), point(b)]);}
+  for (const [a, b] of pairs) {
+    out.push([point(a), point(b)]);
+  }
 }
 
 function frac(a: number, b: number, level: number): number {
@@ -220,8 +257,13 @@ function frac(a: number, b: number, level: number): number {
  * labeling. Endpoints within `eps` world units are treated as the same vertex.
  * Uses an O(N) spatial endpoint lookup table for high performance on dense grids.
  */
-export function stitchContours(segments: Array<[Point, Point]>, eps = 1e-4): Polyline[] {
-  if (segments.length === 0) {return [];}
+export function stitchContours(
+  segments: Array<[Point, Point]>,
+  eps = 1e-4,
+): Polyline[] {
+  if (segments.length === 0) {
+    return [];
+  }
   const key = (p: Point) => `${Math.round(p.x / eps)}:${Math.round(p.y / eps)}`;
 
   interface SegNode {
@@ -243,18 +285,26 @@ export function stitchContours(segments: Array<[Point, Point]>, eps = 1e-4): Pol
   const adjMap = new Map<string, SegNode[]>();
   for (const n of nodes) {
     let listA = adjMap.get(n.keyA);
-    if (!listA) {listA = []; adjMap.set(n.keyA, listA);}
+    if (!listA) {
+      listA = [];
+      adjMap.set(n.keyA, listA);
+    }
     listA.push(n);
 
     let listB = adjMap.get(n.keyB);
-    if (!listB) {listB = []; adjMap.set(n.keyB, listB);}
+    if (!listB) {
+      listB = [];
+      adjMap.set(n.keyB, listB);
+    }
     listB.push(n);
   }
 
   const polylines: Polyline[] = [];
 
   for (const startNode of nodes) {
-    if (startNode.used) {continue;}
+    if (startNode.used) {
+      continue;
+    }
     startNode.used = true;
     const line: Point[] = [startNode.a, startNode.b];
     let headKey = startNode.keyA;
@@ -266,7 +316,9 @@ export function stitchContours(segments: Array<[Point, Point]>, eps = 1e-4): Pol
       let found = false;
       if (candidates) {
         for (const nextNode of candidates) {
-          if (nextNode.used) {continue;}
+          if (nextNode.used) {
+            continue;
+          }
           nextNode.used = true;
           found = true;
           if (nextNode.keyA === tailKey) {
@@ -279,7 +331,9 @@ export function stitchContours(segments: Array<[Point, Point]>, eps = 1e-4): Pol
           break;
         }
       }
-      if (!found) {break;}
+      if (!found) {
+        break;
+      }
     }
 
     // Extend head
@@ -288,7 +342,9 @@ export function stitchContours(segments: Array<[Point, Point]>, eps = 1e-4): Pol
       let found = false;
       if (candidates) {
         for (const nextNode of candidates) {
-          if (nextNode.used) {continue;}
+          if (nextNode.used) {
+            continue;
+          }
           nextNode.used = true;
           found = true;
           if (nextNode.keyB === headKey) {
@@ -301,7 +357,9 @@ export function stitchContours(segments: Array<[Point, Point]>, eps = 1e-4): Pol
           break;
         }
       }
-      if (!found) {break;}
+      if (!found) {
+        break;
+      }
     }
 
     polylines.push(line);
@@ -313,14 +371,29 @@ export function stitchContours(segments: Array<[Point, Point]>, eps = 1e-4): Pol
 // ---------------------------------------------------------------------------
 // Slope & aspect
 /** Slope and aspect at a grid node, via central differences. */
-export function slopeAtNode(grid: ElevationGrid, c: number, r: number): SlopeSample {
-  const dzdx = (nodeHeight(grid, c + 1, r) - nodeHeight(grid, c - 1, r)) / (2 * grid.cellSize);
-  const dzdy = (nodeHeight(grid, c, r + 1) - nodeHeight(grid, c, r - 1)) / (2 * grid.cellSize);
+export function slopeAtNode(
+  grid: ElevationGrid,
+  c: number,
+  r: number,
+): SlopeSample {
+  const dzdx =
+    (nodeHeight(grid, c + 1, r) - nodeHeight(grid, c - 1, r)) /
+    (2 * grid.cellSize);
+  const dzdy =
+    (nodeHeight(grid, c, r + 1) - nodeHeight(grid, c, r - 1)) /
+    (2 * grid.cellSize);
   const grad = { x: dzdx, y: dzdy };
   const slope = length(grad);
   const aspect =
-    slope < 1e-9 ? null : (Math.atan2(grad.x, grad.y) * (180 / Math.PI) + 360) % 360;
-  return { slope, percent: slope * 100, degrees: Math.atan(slope) * (180 / Math.PI), aspect };
+    slope < 1e-9
+      ? null
+      : (Math.atan2(grad.x, grad.y) * (180 / Math.PI) + 360) % 360;
+  return {
+    slope,
+    percent: slope * 100,
+    degrees: Math.atan(slope) * (180 / Math.PI),
+    aspect,
+  };
 }
 /**
  * Summarize slope over a grid (optionally clipped to a polygon). `buildable`
@@ -339,18 +412,33 @@ export function slopeStats(
   for (let r = 0; r < grid.rows; r++) {
     for (let c = 0; c < grid.cols; c++) {
       if (region) {
-        const p = { x: grid.origin.x + c * grid.cellSize, y: grid.origin.y + r * grid.cellSize };
-        if (!pointInPolygon(p, region)) {continue;}
+        const p = {
+          x: grid.origin.x + c * grid.cellSize,
+          y: grid.origin.y + r * grid.cellSize,
+        };
+        if (!pointInPolygon(p, region)) {
+          continue;
+        }
       }
       const pct = slopeAtNode(grid, c, r).percent;
       min = Math.min(min, pct);
       max = Math.max(max, pct);
       sum += pct;
-      if (pct <= buildableMaxPercent) {buildable += 1;}
+      if (pct <= buildableMaxPercent) {
+        buildable += 1;
+      }
       n += 1;
     }
   }
-  if (n === 0) {return { minPercent: 0, maxPercent: 0, meanPercent: 0, buildableFraction: 0, samples: 0 };}
+  if (n === 0) {
+    return {
+      minPercent: 0,
+      maxPercent: 0,
+      meanPercent: 0,
+      buildableFraction: 0,
+      samples: 0,
+    };
+  }
   return {
     minPercent: min,
     maxPercent: max,
@@ -365,19 +453,27 @@ export function slopeStats(
 // ---------------------------------------------------------------------------
 
 /** Return a copy of `grid` with nodes inside `polygon` set to `targetZ` (a flat pad). */
-export function gradePad(grid: ElevationGrid, polygon: Polygon, targetZ: number): ElevationGrid {
+export function gradePad(
+  grid: ElevationGrid,
+  polygon: Polygon,
+  targetZ: number,
+): ElevationGrid {
   const heights = grid.heights.slice();
   for (let r = 0; r < grid.rows; r++) {
     for (let c = 0; c < grid.cols; c++) {
-      const p = { x: grid.origin.x + c * grid.cellSize, y: grid.origin.y + r * grid.cellSize };
-      if (pointInPolygon(p, polygon)) {heights[r * grid.cols + c] = targetZ;}
+      const p = {
+        x: grid.origin.x + c * grid.cellSize,
+        y: grid.origin.y + r * grid.cellSize,
+      };
+      if (pointInPolygon(p, polygon)) {
+        heights[r * grid.cols + c] = targetZ;
+      }
     }
   }
   return { ...grid, heights };
 }
 
 /** Earthwork volumes between an existing and a proposed surface. */
-
 
 /**
  * Compute cut and fill between two identically-shaped grids by integrating the
@@ -386,7 +482,11 @@ export function gradePad(grid: ElevationGrid, polygon: Polygon, targetZ: number)
 export function cutFill(
   existing: ElevationGrid,
   proposed: ElevationGrid,
-  options: { region?: Polygon; spatial?: SpatialContext; balanceTolerance?: number } = {},
+  options: {
+    region?: Polygon;
+    spatial?: SpatialContext;
+    balanceTolerance?: number;
+  } = {},
 ): Earthwork {
   const { region, spatial, balanceTolerance = 0.1 } = options;
   const cellArea = existing.cellSize * existing.cellSize;
@@ -400,7 +500,9 @@ export function cutFill(
         x: existing.origin.x + (c + 0.5) * existing.cellSize,
         y: existing.origin.y + (r + 0.5) * existing.cellSize,
       };
-      if (region && !pointInPolygon(center, region)) {continue;}
+      if (region && !pointInPolygon(center, region)) {
+        continue;
+      }
       const dz =
         (diff(existing, proposed, c, r) +
           diff(existing, proposed, c + 1, r) +
@@ -408,8 +510,11 @@ export function cutFill(
           diff(existing, proposed, c + 1, r + 1)) /
         4;
       const volume = dz * cellArea;
-      if (volume > 0) {fill += volume;}
-      else {cut += -volume;}
+      if (volume > 0) {
+        fill += volume;
+      } else {
+        cut += -volume;
+      }
       cells += 1;
     }
   }
@@ -430,7 +535,12 @@ export function cutFill(
   };
 }
 
-function diff(existing: ElevationGrid, proposed: ElevationGrid, c: number, r: number): number {
+function diff(
+  existing: ElevationGrid,
+  proposed: ElevationGrid,
+  c: number,
+  r: number,
+): number {
   return nodeHeight(proposed, c, r) - nodeHeight(existing, c, r);
 }
 
@@ -462,7 +572,7 @@ export function traceWaterDropPath(
   grid: ElevationGrid,
   start: Point,
   stepSize: number = 5,
-  maxSteps: number = 80
+  maxSteps: number = 80,
 ): Point[] {
   const path: Point[] = [start];
   let curr = { ...start };
@@ -475,8 +585,12 @@ export function traceWaterDropPath(
       break;
     }
 
-    const dzdx = (nodeHeight(grid, c + 1, r) - nodeHeight(grid, c - 1, r)) / (2 * grid.cellSize);
-    const dzdy = (nodeHeight(grid, c, r + 1) - nodeHeight(grid, c, r - 1)) / (2 * grid.cellSize);
+    const dzdx =
+      (nodeHeight(grid, c + 1, r) - nodeHeight(grid, c - 1, r)) /
+      (2 * grid.cellSize);
+    const dzdy =
+      (nodeHeight(grid, c, r + 1) - nodeHeight(grid, c, r - 1)) /
+      (2 * grid.cellSize);
 
     const grad = { x: dzdx, y: dzdy };
     const lenVal = length(grad);
@@ -486,7 +600,7 @@ export function traceWaterDropPath(
 
     const next = {
       x: curr.x - (grad.x / lenVal) * stepSize,
-      y: curr.y - (grad.y / lenVal) * stepSize
+      y: curr.y - (grad.y / lenVal) * stepSize,
     };
 
     if (distance(next, curr) < 1e-3) {

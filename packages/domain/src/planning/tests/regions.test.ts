@@ -37,7 +37,9 @@ describe("Georgia Land Lot System", () => {
     expect(formatLandLot({ district: 9, landLot: 12 })).toBe(
       "Land Lot 12 of the 9th Land District",
     );
-    expect(formatLandLotShort({ district: 9, landLot: 12 })).toBe("LL 12, 9th Dist.");
+    expect(formatLandLotShort({ district: 9, landLot: 12 })).toBe(
+      "LL 12, 9th Dist.",
+    );
   });
 });
 
@@ -55,7 +57,9 @@ describe("region plug-ins", () => {
     expect(newton.defaults.units).toBe("feet");
     expect(newton.standards?.landLotAcres).toBe(202.5);
     // Georgia-specific certificate present.
-    expect(newton.certificates.some((c) => /Georgia/i.test(c.title))).toBe(true);
+    expect(newton.certificates.some((c) => /Georgia/i.test(c.title))).toBe(
+      true,
+    );
     // Enabling a plug-in keeps every capability on unless it opts out.
     expect(resolveCapabilities(newton).platComposer).toBe(true);
   });

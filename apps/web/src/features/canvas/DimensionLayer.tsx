@@ -14,20 +14,46 @@ const HALO = "hsl(var(--canvas))";
 function Terminator({ arrow }: { arrow: DimArrow }) {
   switch (arrow) {
     case "tick":
-      return <line x1={-4} y1={4} x2={4} y2={-4} stroke={INK} strokeWidth={1.2} vectorEffect="non-scaling-stroke" />;
+      return (
+        <line
+          x1={-4}
+          y1={4}
+          x2={4}
+          y2={-4}
+          stroke={INK}
+          strokeWidth={1.2}
+          vectorEffect="non-scaling-stroke"
+        />
+      );
     case "dot":
       return <circle cx={0} cy={0} r={2.2} fill={INK} />;
     case "open":
-      return <path d="M8 -3 L0 0 L8 3" fill="none" stroke={INK} strokeWidth={1.2} vectorEffect="non-scaling-stroke" />;
+      return (
+        <path
+          d="M8 -3 L0 0 L8 3"
+          fill="none"
+          stroke={INK}
+          strokeWidth={1.2}
+          vectorEffect="non-scaling-stroke"
+        />
+      );
     case "arrow":
     default:
       return <path d="M0 0 L9 -3 L9 3 Z" fill={INK} stroke="none" />;
   }
 }
 
-export function DimensionLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
+export function DimensionLayer({
+  site,
+  viewport,
+}: {
+  site: Site;
+  viewport: Viewport;
+}) {
   const dimensions = site.dimensions;
-  if (!dimensions || dimensions.length === 0) {return null;}
+  if (!dimensions || dimensions.length === 0) {
+    return null;
+  }
 
   const project = (p: Point) => worldToScreen(p, viewport);
   const showLabels = viewport.zoom > 1.2;
@@ -60,7 +86,10 @@ export function DimensionLayer({ site, viewport }: { site: Site; viewport: Viewp
           const s = project(t.at);
           const angle = (Math.atan2(t.dir.y, t.dir.x) * 180) / Math.PI;
           return (
-            <g key={`t${i}`} transform={`translate(${s.x} ${s.y}) rotate(${angle})`}>
+            <g
+              key={`t${i}`}
+              transform={`translate(${s.x} ${s.y}) rotate(${angle})`}
+            >
               <Terminator arrow={style.arrow} />
             </g>
           );
@@ -77,7 +106,11 @@ export function DimensionLayer({ site, viewport }: { site: Site; viewport: Viewp
                   fontSize={10}
                   textAnchor="middle"
                   fill={INK}
-                  style={{ paintOrder: "stroke", stroke: HALO, strokeWidth: 2.5 }}
+                  style={{
+                    paintOrder: "stroke",
+                    stroke: HALO,
+                    strokeWidth: 2.5,
+                  }}
                 >
                   {m.label}
                 </text>

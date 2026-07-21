@@ -1,4 +1,8 @@
-import { type InfrastructureNetwork, type NetworkNode, type NetworkEdge } from "./network";
+import {
+  type InfrastructureNetwork,
+  type NetworkNode,
+  type NetworkEdge,
+} from "./network";
 import { type ElevationGrid, elevationAt } from "./terrain";
 import { distance } from "../spatial/geometry";
 import type {
@@ -21,9 +25,9 @@ export type {
 
 /** Design rules settings for utility networks validation. */
 export interface PipeDesignRules {
-  minCover: number;     // Minimum depth from terrain surface to top of pipe, in plan units
-  minSlope: number;     // Minimum pipe gradient slope (e.g. 0.005 = 0.5%)
-  maxSlope: number;     // Maximum pipe gradient slope (e.g. 0.08 = 8.0%)
+  minCover: number; // Minimum depth from terrain surface to top of pipe, in plan units
+  minSlope: number; // Minimum pipe gradient slope (e.g. 0.005 = 0.5%)
+  maxSlope: number; // Maximum pipe gradient slope (e.g. 0.08 = 8.0%)
   minPipeDiameter: number; // Minimum pipe size diameter, in plan units
   defaultSumpDepth: number; // Default sump depth below lowest invert
 }
@@ -62,7 +66,7 @@ export function validatePipeNetwork(
   terrain: ElevationGrid,
   rules: PipeDesignRules,
   nodeInverts: Record<string, number>, // Map from nodeId to invert elevation (at center)
-  nodeRims?: Record<string, number>,    // Optional manual rims overrides
+  nodeRims?: Record<string, number>, // Optional manual rims overrides
 ): {
   violations: PipeRuleViolation[];
   nodeElevations: StructureElevationDetails[];
@@ -72,11 +76,15 @@ export function validatePipeNetwork(
   const nodeElevations: StructureElevationDetails[] = [];
   const edgeElevations: PipeElevationDetails[] = [];
 
-  const nodesMap = new Map<string, NetworkNode>(network.nodes.map((n) => [n.id, n]));
+  const nodesMap = new Map<string, NetworkNode>(
+    network.nodes.map((n) => [n.id, n]),
+  );
 
   // Calculate rims and sumps for structures
   const nodeConnectedEdges = new Map<string, NetworkEdge[]>();
-  for (const n of network.nodes) {nodeConnectedEdges.set(n.id, []);}
+  for (const n of network.nodes) {
+    nodeConnectedEdges.set(n.id, []);
+  }
   for (const e of network.edges) {
     nodeConnectedEdges.get(e.from)?.push(e);
     nodeConnectedEdges.get(e.to)?.push(e);
@@ -84,7 +92,7 @@ export function validatePipeNetwork(
 
   for (const node of network.nodes) {
     const rim = nodeRims?.[node.id] ?? elevationAt(terrain, node.point);
-    const lowestConnectedInvert = nodeInverts[node.id] ?? (rim - 6); // default invert 6 units below
+    const lowestConnectedInvert = nodeInverts[node.id] ?? rim - 6; // default invert 6 units below
 
     const sumpDepth = rules.defaultSumpDepth;
     const sump = lowestConnectedInvert - sumpDepth;
@@ -102,13 +110,19 @@ export function validatePipeNetwork(
   for (const edge of network.edges) {
     const fromNode = nodesMap.get(edge.from);
     const toNode = nodesMap.get(edge.to);
-    if (!fromNode || !toNode) {continue;}
+    if (!fromNode || !toNode) {
+      continue;
+    }
 
     const len = distance(fromNode.point, toNode.point);
-    if (len <= 0.0001) {continue;}
+    if (len <= 0.0001) {
+      continue;
+    }
 
-    const startInvert = nodeInverts[edge.from] ?? (elevationAt(terrain, fromNode.point) - 6);
-    const endInvert = nodeInverts[edge.to] ?? (elevationAt(terrain, toNode.point) - 6);
+    const startInvert =
+      nodeInverts[edge.from] ?? elevationAt(terrain, fromNode.point) - 6;
+    const endInvert =
+      nodeInverts[edge.to] ?? elevationAt(terrain, toNode.point) - 6;
     const pipeDiameter = edge.width ?? 1.0; // default 1 plan unit
 
     const slope = Math.abs(endInvert - startInvert) / len;

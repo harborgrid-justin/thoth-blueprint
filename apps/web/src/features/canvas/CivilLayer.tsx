@@ -8,9 +8,17 @@ import {
 } from "./helpers/civilHelpers";
 
 /** Renders the site's civil/erosion-control lines with drafting symbology. */
-export function CivilLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
+export function CivilLayer({
+  site,
+  viewport,
+}: {
+  site: Site;
+  viewport: Viewport;
+}) {
   const lines = site.controlLines;
-  if (!lines || lines.length === 0) {return null;}
+  if (!lines || lines.length === 0) {
+    return null;
+  }
   const project = (p: Point) => worldToScreen(p, viewport);
   return (
     <g className="pointer-events-none">
@@ -30,17 +38,31 @@ export function ControlLineShape({
   project: (p: Point) => Point;
 }) {
   const screen = line.path.map(project);
-  if (screen.length < 2) {return null;}
+  if (screen.length < 2) {
+    return null;
+  }
 
   switch (line.type) {
     case "silt-fence": {
       const posts = sampleAlong(screen, 15);
       return (
         <g>
-          <polyline points={polyPoints(screen)} fill="none" stroke="hsl(var(--foreground))" strokeWidth={1.4} />
+          <polyline
+            points={polyPoints(screen)}
+            fill="none"
+            stroke="hsl(var(--foreground))"
+            strokeWidth={1.4}
+          />
           {posts.map((s, i) => (
             <g key={i}>
-              <line x1={s.point.x - s.nrm.x * 3} y1={s.point.y - s.nrm.y * 3} x2={s.point.x + s.nrm.x * 3} y2={s.point.y + s.nrm.y * 3} stroke="hsl(var(--foreground))" strokeWidth={1} />
+              <line
+                x1={s.point.x - s.nrm.x * 3}
+                y1={s.point.y - s.nrm.y * 3}
+                x2={s.point.x + s.nrm.x * 3}
+                y2={s.point.y + s.nrm.y * 3}
+                stroke="hsl(var(--foreground))"
+                strokeWidth={1}
+              />
               {/* Fabric triangle, alternating side. */}
               <path
                 d={triangle(s, i % 2 === 0 ? 1 : -1)}
@@ -56,9 +78,21 @@ export function ControlLineShape({
       const marks = sampleAlong(screen, 16);
       return (
         <g>
-          <polyline points={polyPoints(screen)} fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth={1.2} />
+          <polyline
+            points={polyPoints(screen)}
+            fill="none"
+            stroke="hsl(var(--muted-foreground))"
+            strokeWidth={1.2}
+          />
           {marks.map((s, i) => (
-            <text key={i} x={s.point.x} y={s.point.y + 3} textAnchor="middle" fontSize={9} fill="hsl(var(--muted-foreground))">
+            <text
+              key={i}
+              x={s.point.x}
+              y={s.point.y + 3}
+              textAnchor="middle"
+              fontSize={9}
+              fill="hsl(var(--muted-foreground))"
+            >
               ✕
             </text>
           ))}
@@ -83,9 +117,23 @@ export function ControlLineShape({
       const hach = sampleAlong(screen, 12);
       return (
         <g>
-          <polyline points={polyPoints(screen)} fill="none" stroke="#92400e" strokeWidth={1.2} strokeDasharray="6 3" />
+          <polyline
+            points={polyPoints(screen)}
+            fill="none"
+            stroke="#92400e"
+            strokeWidth={1.2}
+            strokeDasharray="6 3"
+          />
           {hach.map((s, i) => (
-            <line key={i} x1={s.point.x} y1={s.point.y} x2={s.point.x + s.nrm.x * 5} y2={s.point.y + s.nrm.y * 5} stroke="#92400e" strokeWidth={0.9} />
+            <line
+              key={i}
+              x1={s.point.x}
+              y1={s.point.y}
+              x2={s.point.x + s.nrm.x * 5}
+              y2={s.point.y + s.nrm.y * 5}
+              stroke="#92400e"
+              strokeWidth={0.9}
+            />
           ))}
         </g>
       );
@@ -94,7 +142,13 @@ export function ControlLineShape({
       const arrows = sampleAlong(screen, 26);
       return (
         <g>
-          <polyline points={polyPoints(screen)} fill="none" stroke="#0ea5e9" strokeWidth={1.1} strokeDasharray="7 4" />
+          <polyline
+            points={polyPoints(screen)}
+            fill="none"
+            stroke="#0ea5e9"
+            strokeWidth={1.1}
+            strokeDasharray="7 4"
+          />
           {arrows.slice(1).map((s, i) => (
             <path key={i} d={arrowhead(s)} fill="#0ea5e9" />
           ))}
@@ -102,6 +156,13 @@ export function ControlLineShape({
       );
     }
     default:
-      return <polyline points={polyPoints(screen)} fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth={1.2} />;
+      return (
+        <polyline
+          points={polyPoints(screen)}
+          fill="none"
+          stroke="hsl(var(--muted-foreground))"
+          strokeWidth={1.2}
+        />
+      );
   }
 }

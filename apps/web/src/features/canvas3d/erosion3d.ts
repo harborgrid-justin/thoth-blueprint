@@ -1,6 +1,11 @@
 import * as THREE from "three";
 import _ from "lodash";
-import { length, type Point, type SimulationFrame, elevationAt } from "@thoth/domain";
+import {
+  length,
+  type Point,
+  type SimulationFrame,
+  elevationAt,
+} from "@thoth/domain";
 
 /** Grid dimensions passed from the terrain model so the elevation lookup is accurate. */
 export interface ErosionGridConfig {
@@ -26,8 +31,8 @@ const DEFAULT_GRID: ErosionGridConfig = {
 // These are only used inside update() which runs synchronously.
 const _fastColor = new THREE.Color(0x7df9ff); // electric cyan
 const _slowColor = new THREE.Color(0x1a6ebd); // deep blue
-const _mudColor  = new THREE.Color(0x78350f); // earth brown
-const _scratch   = new THREE.Color();
+const _mudColor = new THREE.Color(0x78350f); // earth brown
+const _scratch = new THREE.Color();
 
 /** Build a 64×64 radial gradient canvas texture for a glowing water droplet. */
 function buildParticleSprite(): THREE.CanvasTexture {
@@ -105,7 +110,8 @@ export class Erosion3DVisualizer {
         }
 
         // Cache original terrain vertex colors for restoration later
-        const colorAttr = geo.attributes.color as THREE.BufferAttribute | undefined;
+        const colorAttr = geo.attributes.color as
+          THREE.BufferAttribute | undefined;
         if (colorAttr && !this.originalTerrainColors) {
           this.originalTerrainColors = new Float32Array(colorAttr.array);
         }
@@ -123,7 +129,9 @@ export class Erosion3DVisualizer {
         }
 
         posAttr.needsUpdate = true;
-        if (colorAttr) {colorAttr.needsUpdate = true;}
+        if (colorAttr) {
+          colorAttr.needsUpdate = true;
+        }
         geo.computeVertexNormals();
       }
     }
@@ -146,12 +154,12 @@ export class Erosion3DVisualizer {
     // Grow typed-array pool only when particle count increases — reuse otherwise.
     if (vertexCount * 3 > this._positions.length) {
       this._positions = new Float32Array(vertexCount * 3);
-      this._colors    = new Float32Array(vertexCount * 3);
-      this._sizes     = new Float32Array(vertexCount);
+      this._colors = new Float32Array(vertexCount * 3);
+      this._sizes = new Float32Array(vertexCount);
     }
     const positions = this._positions;
-    const colors    = this._colors;
-    const sizes     = this._sizes;
+    const colors = this._colors;
+    const sizes = this._sizes;
 
     activeParticles.forEach((p, idx) => {
       const px = p.position.x - this.center.x;
@@ -169,20 +177,23 @@ export class Erosion3DVisualizer {
       // Uses module-level scratch Color objects — no heap allocation per particle.
       const speed = length(p.velocity);
       const sedimentT = Math.min(1.0, p.sediment * 12.0);
-      const speedT    = Math.min(1.0, speed * 2.5);
+      const speedT = Math.min(1.0, speed * 2.5);
 
       // fast/clear=electric cyan → slow/deep=deep blue, then mud tint
       _scratch.copy(_fastColor).lerp(_slowColor, 1 - speedT);
       _scratch.lerp(_mudColor, sedimentT * 0.75);
 
-      colors[idx * 3]     = _scratch.r;
+      colors[idx * 3] = _scratch.r;
       colors[idx * 3 + 1] = _scratch.g;
       colors[idx * 3 + 2] = _scratch.b;
     });
 
     if (!this.particlesMesh) {
       const pointsGeo = new THREE.BufferGeometry();
-      pointsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      pointsGeo.setAttribute(
+        "position",
+        new THREE.BufferAttribute(positions, 3),
+      );
       pointsGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
       pointsGeo.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
 
@@ -203,12 +214,19 @@ export class Erosion3DVisualizer {
       this.container.add(this.particlesMesh);
     } else {
       const pointsGeo = this.particlesMesh.geometry;
-      pointsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      pointsGeo.setAttribute(
+        "position",
+        new THREE.BufferAttribute(positions, 3),
+      );
       pointsGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
       pointsGeo.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
       pointsGeo.attributes.position.needsUpdate = true;
-      if (pointsGeo.attributes.color) {pointsGeo.attributes.color.needsUpdate = true;}
-      if (pointsGeo.attributes.size) {pointsGeo.attributes.size.needsUpdate = true;}
+      if (pointsGeo.attributes.color) {
+        pointsGeo.attributes.color.needsUpdate = true;
+      }
+      if (pointsGeo.attributes.size) {
+        pointsGeo.attributes.size.needsUpdate = true;
+      }
     }
   }
 
@@ -228,8 +246,12 @@ export class Erosion3DVisualizer {
   clearParticles(): void {
     // Restore original terrain vertex colors using the stored mesh ref.
     if (this.originalTerrainColors && this.terrainMeshRef) {
-      const colorAttr = this.terrainMeshRef.geometry.attributes.color as THREE.BufferAttribute | undefined;
-      if (colorAttr && colorAttr.array.length === this.originalTerrainColors.length) {
+      const colorAttr = this.terrainMeshRef.geometry.attributes.color as
+        THREE.BufferAttribute | undefined;
+      if (
+        colorAttr &&
+        colorAttr.array.length === this.originalTerrainColors.length
+      ) {
         colorAttr.set(this.originalTerrainColors);
         colorAttr.needsUpdate = true;
       }
@@ -243,11 +265,15 @@ export class Erosion3DVisualizer {
       const mat = this.particlesMesh.material;
       if (Array.isArray(mat)) {
         mat.forEach((m) => {
-          if ((m as THREE.PointsMaterial).map) {(m as THREE.PointsMaterial).map!.dispose();}
+          if ((m as THREE.PointsMaterial).map) {
+            (m as THREE.PointsMaterial).map!.dispose();
+          }
           m.dispose();
         });
       } else {
-        if ((mat as THREE.PointsMaterial).map) {(mat as THREE.PointsMaterial).map!.dispose();}
+        if ((mat as THREE.PointsMaterial).map) {
+          (mat as THREE.PointsMaterial).map!.dispose();
+        }
         mat.dispose();
       }
       this.particlesMesh = null;

@@ -1,4 +1,13 @@
-import { distance, area as polygonArea, add, scale, subtract, length, type Point, type Polygon } from "../spatial/geometry";
+import {
+  distance,
+  area as polygonArea,
+  add,
+  scale,
+  subtract,
+  length,
+  type Point,
+  type Polygon,
+} from "../spatial/geometry";
 import type { Lot } from "../spatial/primitives";
 
 /**
@@ -6,7 +15,11 @@ import type { Lot } from "../spatial/primitives";
  * Returns [leftPolygon, rightPolygon] or null if no split occurs.
  * Left/Right are determined relative to the line direction p1 -> p2.
  */
-export function splitPolygonByLine(polygon: Polygon, p1: Point, p2: Point): Polygon[] | null {
+export function splitPolygonByLine(
+  polygon: Polygon,
+  p1: Point,
+  p2: Point,
+): Polygon[] | null {
   const A = p2.y - p1.y;
   const B = p1.x - p2.x;
   const C = p2.x * p1.y - p1.x * p2.y;
@@ -14,7 +27,9 @@ export function splitPolygonByLine(polygon: Polygon, p1: Point, p2: Point): Poly
   const left: Point[] = [];
   const right: Point[] = [];
   const n = polygon.length;
-  if (n < 3) {return null;}
+  if (n < 3) {
+    return null;
+  }
 
   const side = (p: Point) => A * p.x + B * p.y + C;
 
@@ -62,8 +77,15 @@ export function splitPolygonByLine(polygon: Polygon, p1: Point, p2: Point): Poly
   const cleanLeft = clean(left);
   const cleanRight = clean(right);
 
-  if (cleanLeft.length < 3 || cleanRight.length < 3) {return null;}
-  if (Math.abs(polygonArea(cleanLeft)) < 1e-3 || Math.abs(polygonArea(cleanRight)) < 1e-3) {return null;}
+  if (cleanLeft.length < 3 || cleanRight.length < 3) {
+    return null;
+  }
+  if (
+    Math.abs(polygonArea(cleanLeft)) < 1e-3 ||
+    Math.abs(polygonArea(cleanRight)) < 1e-3
+  ) {
+    return null;
+  }
 
   return [cleanLeft, cleanRight];
 }
@@ -76,8 +98,18 @@ export type { SlideLineOptions, SwingLineOptions };
  * Slide Line Subdivision: Walk along a frontage path and slide a lot partition line
  * perpendicular (or at an angle) to the frontage to cut off a lot of targetArea.
  */
-export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions): Lot[] {
-  const { targetArea, frontage, angle = 90, layerId, makeId, setback } = options;
+export function subdivideSlideLine(
+  boundary: Polygon,
+  options: SlideLineOptions,
+): Lot[] {
+  const {
+    targetArea,
+    frontage,
+    angle = 90,
+    layerId,
+    makeId,
+    setback,
+  } = options;
   if (frontage.length < 2) {
     throw new Error("Invalid frontage: must contain at least 2 points.");
   }
@@ -86,7 +118,9 @@ export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions)
   }
   const totalArea = polygonArea(boundary);
   if (targetArea > totalArea) {
-    throw new Error(`Unrealistic subdivision: target area (${targetArea.toFixed(2)}) exceeds total parcel area (${totalArea.toFixed(2)}).`);
+    throw new Error(
+      `Unrealistic subdivision: target area (${targetArea.toFixed(2)}) exceeds total parcel area (${totalArea.toFixed(2)}).`,
+    );
   }
   if (totalArea < 10) {
     throw new Error("Parcel area is too small to subdivide.");
@@ -99,11 +133,13 @@ export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions)
   for (let idx = 0; idx < frontage.length - 1; idx++) {
     const startPt = frontage[idx];
     const endPt = frontage[idx + 1];
-    
+
     // Frontage direction vector
     const ab = subtract(endPt, startPt);
     const segLen = length(ab);
-    if (segLen < 1e-4) {continue;}
+    if (segLen < 1e-4) {
+      continue;
+    }
 
     const dx = ab.x;
     const dy = ab.y;
@@ -118,7 +154,9 @@ export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions)
       const splitPt = { x: startPt.x + t * dx, y: startPt.y + t * dy };
       const p2 = { x: splitPt.x + px, y: splitPt.y + py };
       const split = splitPolygonByLine(remainder, splitPt, p2);
-      if (!split) {return null;}
+      if (!split) {
+        return null;
+      }
 
       // Line equation to check which side contains the frontage start point
       const lineA = p2.y - splitPt.y;
@@ -128,7 +166,9 @@ export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions)
       const sideF0 = lineA * frontage[0].x + lineB * frontage[0].y + lineC;
       const containsFrontStart = sideF0 >= 0;
 
-      return containsFrontStart ? { lot: split[0], rem: split[1] } : { lot: split[1], rem: split[0] };
+      return containsFrontStart
+        ? { lot: split[0], rem: split[1] }
+        : { lot: split[1], rem: split[0] };
     };
 
     // First check: does the whole remainder segment fit?
@@ -153,7 +193,7 @@ export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions)
     let high = 1;
     let bestLot: Polygon | null = null;
     let bestRem: Polygon | null = null;
-    
+
     for (let iter = 0; iter < 20; iter++) {
       const mid = (low + high) / 2;
       const res = getSplit(mid);
@@ -193,13 +233,14 @@ export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions)
   return lots;
 }
 
-
-
 /**
  * Swing Line Subdivision: Pivot a partition line from a fixed point on the parcel boundary
  * and binary search the sweep fraction s in [0, 1] between the two adjacent corner edges.
  */
-export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions): Lot[] {
+export function subdivideSwingLine(
+  boundary: Polygon,
+  options: SwingLineOptions,
+): Lot[] {
   const { targetArea, pivot, layerId, makeId, setback } = options;
   if (boundary.length < 3) {
     throw new Error("Invalid boundary: must contain at least 3 points.");
@@ -209,7 +250,9 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
   }
   const totalArea = polygonArea(boundary);
   if (targetArea > totalArea) {
-    throw new Error(`Unrealistic subdivision: target area (${targetArea.toFixed(2)}) exceeds total parcel area (${totalArea.toFixed(2)}).`);
+    throw new Error(
+      `Unrealistic subdivision: target area (${targetArea.toFixed(2)}) exceeds total parcel area (${totalArea.toFixed(2)}).`,
+    );
   }
 
   // Find pivot vertex index in boundary
@@ -234,7 +277,9 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
       const p2 = boundary[(i + 1) % boundary.length];
       const ab = subtract(p2, p1);
       const len = length(ab);
-      if (len < 1e-4) {continue;}
+      if (len < 1e-4) {
+        continue;
+      }
       const dx = ab.x;
       const dy = ab.y;
       const t = ((pivot.x - p1.x) * dx + (pivot.y - p1.y) * dy) / (len * len);
@@ -263,25 +308,33 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
 
   // Compute interior sweep angle
   let sweepAngle = theta2 - theta1;
-  while (sweepAngle <= -Math.PI) {sweepAngle += 2 * Math.PI;}
-  while (sweepAngle > Math.PI) {sweepAngle -= 2 * Math.PI;}
+  while (sweepAngle <= -Math.PI) {
+    sweepAngle += 2 * Math.PI;
+  }
+  while (sweepAngle > Math.PI) {
+    sweepAngle -= 2 * Math.PI;
+  }
 
   const getSplit = (s: number) => {
     const rad = theta1 + s * sweepAngle;
     const dir = { x: Math.cos(rad), y: Math.sin(rad) };
     const p2 = add(pivot, dir);
     const split = splitPolygonByLine(boundary, pivot, p2);
-    if (!split) {return null;}
+    if (!split) {
+      return null;
+    }
 
     // Line equation to find which side contains prevPt
     const lineA = p2.y - pivot.y;
     const lineB = pivot.x - p2.x;
     const lineC = p2.x * pivot.y - pivot.x * p2.y;
-    
+
     const sidePrev = lineA * prevPt.x + lineB * prevPt.y + lineC;
     const containsPrev = sidePrev >= 0;
-    
-    return containsPrev ? { lot: split[0], rem: split[1] } : { lot: split[1], rem: split[0] };
+
+    return containsPrev
+      ? { lot: split[0], rem: split[1] }
+      : { lot: split[1], rem: split[0] };
   };
 
   // Binary search sweep fraction s in [0, 1]
@@ -314,14 +367,16 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
   }
 
   if (bestLot) {
-    return [{
-      id: makeId(),
-      kind: "lot",
-      name: `Lot ${boundary.length + 1}`,
-      layerId,
-      boundary: bestLot,
-      setback,
-    }];
+    return [
+      {
+        id: makeId(),
+        kind: "lot",
+        name: `Lot ${boundary.length + 1}`,
+        layerId,
+        boundary: bestLot,
+        setback,
+      },
+    ];
   }
 
   return [];
@@ -331,13 +386,20 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
  * Merge adjacent lots by dissolving their shared boundaries.
  * Collects edges, discards matching reverse edges, and reconstructs the outer loop.
  */
-export function mergeLots(lots: Lot[], layerId: string, makeId: () => string): Lot {
+export function mergeLots(
+  lots: Lot[],
+  layerId: string,
+  makeId: () => string,
+): Lot {
   if (lots.length === 0) {
     throw new Error("No lots provided for merge");
   }
-  if (lots.length === 1) {return { ...lots[0] };}
+  if (lots.length === 1) {
+    return { ...lots[0] };
+  }
 
-  const pointKey = (p: Point) => `${Math.round(p.x * 1000)}:${Math.round(p.y * 1000)}`;
+  const pointKey = (p: Point) =>
+    `${Math.round(p.x * 1000)}:${Math.round(p.y * 1000)}`;
 
   interface DirectedEdge {
     from: Point;
@@ -364,7 +426,10 @@ export function mergeLots(lots: Lot[], layerId: string, makeId: () => string): L
   }
 
   const outerEdges = allEdges.filter((e) => {
-    const normKey = e.keyFrom < e.keyTo ? `${e.keyFrom}_${e.keyTo}` : `${e.keyTo}_${e.keyFrom}`;
+    const normKey =
+      e.keyFrom < e.keyTo
+        ? `${e.keyFrom}_${e.keyTo}`
+        : `${e.keyTo}_${e.keyFrom}`;
     return edgeCounts.get(normKey) === 1;
   });
 

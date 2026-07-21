@@ -6,15 +6,31 @@ import {
   type PointCloud,
   type PointCloudFormat,
 } from "@thoth/domain";
-import { downloadArrayBuffer, downloadText, readFileAsArrayBuffer, readFileAsText, slugify } from "./fileIo";
+import {
+  downloadArrayBuffer,
+  downloadText,
+  readFileAsArrayBuffer,
+  readFileAsText,
+  slugify,
+} from "./fileIo";
 
 export const POINT_CLOUD_ACCEPT = ".xyz,.pts,.ply,.las,.dxf";
-export const POINT_CLOUD_FORMATS: PointCloudFormat[] = ["xyz", "pts", "ply", "las", "dxf"];
+export const POINT_CLOUD_FORMATS: PointCloudFormat[] = [
+  "xyz",
+  "pts",
+  "ply",
+  "las",
+  "dxf",
+];
 
 /** Read and parse a point-cloud file, inferring the format from its name. */
-export async function importPointCloudFile(file: File): Promise<{ name: string; cloud: PointCloud }> {
+export async function importPointCloudFile(
+  file: File,
+): Promise<{ name: string; cloud: PointCloud }> {
   const format = pointCloudFormatFromName(file.name);
-  if (!format) {throw new Error(`Unsupported point-cloud file: ${file.name}`);}
+  if (!format) {
+    throw new Error(`Unsupported point-cloud file: ${file.name}`);
+  }
   const data = isBinaryPointCloudFormat(format)
     ? await readFileAsArrayBuffer(file)
     : await readFileAsText(file);
@@ -23,7 +39,11 @@ export async function importPointCloudFile(file: File): Promise<{ name: string; 
 }
 
 /** Serialize a point cloud to a format and download it. */
-export function exportPointCloud(cloud: PointCloud, format: PointCloudFormat, baseName: string): void {
+export function exportPointCloud(
+  cloud: PointCloud,
+  format: PointCloudFormat,
+  baseName: string,
+): void {
   const data = serializePointCloud(cloud, format);
   const filename = `${slugify(baseName)}.${format}`;
   if (typeof data === "string") {

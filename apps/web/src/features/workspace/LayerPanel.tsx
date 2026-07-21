@@ -31,12 +31,16 @@ export function LayerPanel() {
     setEditingId,
   } = useLayerPanelState();
 
-  if (!site) {return null;}
+  if (!site) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-3 pb-2 pt-1">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Layers</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Layers
+        </h3>
         <Button
           variant="ghost"
           size="icon-sm"
@@ -68,12 +72,18 @@ export function LayerPanel() {
                   defaultValue={layer.name}
                   className="h-6 flex-1 px-1 py-0 text-sm"
                   onBlur={(e) => {
-                    updateLayer(layer.id, { name: e.target.value || layer.name });
+                    updateLayer(layer.id, {
+                      name: e.target.value || layer.name,
+                    });
                     setEditingId(null);
                   }}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") {(e.target as HTMLInputElement).blur();}
-                    if (e.key === "Escape") {setEditingId(null);}
+                    if (e.key === "Enter") {
+                      (e.target as HTMLInputElement).blur();
+                    }
+                    if (e.key === "Escape") {
+                      setEditingId(null);
+                    }
                   }}
                   onClick={(e) => e.stopPropagation()}
                 />
@@ -129,7 +139,11 @@ export function LayerPanel() {
                   updateLayer(layer.id, { locked: !layer.locked });
                 }}
               >
-                {layer.locked ? <Lock className="h-3.5 w-3.5" /> : <Unlock className="h-3.5 w-3.5 opacity-40" />}
+                {layer.locked ? (
+                  <Lock className="h-3.5 w-3.5" />
+                ) : (
+                  <Unlock className="h-3.5 w-3.5 opacity-40" />
+                )}
               </IconButton>
               <IconButton
                 label={layer.visible ? "Hide" : "Show"}
@@ -138,7 +152,11 @@ export function LayerPanel() {
                   updateLayer(layer.id, { visible: !layer.visible });
                 }}
               >
-                {layer.visible ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5 opacity-40" />}
+                {layer.visible ? (
+                  <Eye className="h-3.5 w-3.5" />
+                ) : (
+                  <EyeOff className="h-3.5 w-3.5 opacity-40" />
+                )}
               </IconButton>
             </div>
           );
@@ -148,7 +166,9 @@ export function LayerPanel() {
       <div className="my-2 border-t border-border" />
 
       <div className="flex items-center justify-between px-3 pb-2 pt-1">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">COGO Point Groups</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          COGO Point Groups
+        </h3>
       </div>
       <div className="flex flex-col gap-1 px-2 pb-4">
         {evaluatedGroups.map((group) => (
@@ -157,8 +177,12 @@ export function LayerPanel() {
             className="flex items-center justify-between rounded-md px-2 py-1 text-sm hover:bg-accent/40"
           >
             <div className="flex items-center gap-1.5">
-              <span className="text-muted-foreground text-xs font-mono">[{group.query}]</span>
-              <span className="font-medium text-foreground text-xs">{group.name}</span>
+              <span className="text-muted-foreground text-xs font-mono">
+                [{group.query}]
+              </span>
+              <span className="font-medium text-foreground text-xs">
+                {group.name}
+              </span>
             </div>
             <span className="text-xs font-semibold px-1.5 py-0.5 rounded-full bg-accent text-accent-foreground font-mono">
               {group.matchedIds.length}

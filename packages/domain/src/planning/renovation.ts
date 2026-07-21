@@ -10,7 +10,9 @@ export type { RenovationTakeoff };
  * Compute material quantity takeoffs separated by renovation status.
  * Satisfies REQ-UNIMP-006: Quantity takeoffs separating calculations.
  */
-export function computeRenovationTakeoffs(site: Site): Record<string, RenovationTakeoff> {
+export function computeRenovationTakeoffs(
+  site: Site,
+): Record<string, RenovationTakeoff> {
   const takeoffs: Record<string, RenovationTakeoff> = {
     existing: { status: "existing", count: 0, totalArea: 0 },
     new: { status: "new", count: 0, totalArea: 0 },
@@ -39,9 +41,13 @@ export function runRenovationAudit(site: Site): string[] {
   const warnings: string[] = [];
 
   const elements = site.elements;
-  const existingElements = elements.filter((e) => (e.renovationStatus || "existing") === "existing");
+  const existingElements = elements.filter(
+    (e) => (e.renovationStatus || "existing") === "existing",
+  );
   const newElements = elements.filter((e) => e.renovationStatus === "new");
-  const demolishedElements = elements.filter((e) => e.renovationStatus === "demolished");
+  const demolishedElements = elements.filter(
+    (e) => e.renovationStatus === "demolished",
+  );
 
   // Rule 1: Placing a new structure inside a demolished parcel or zone
   for (const elNew of newElements) {
@@ -51,7 +57,7 @@ export function runRenovationAudit(site: Site): string[] {
         if (elDemo.kind === "parcel" && isSpatialElement(elDemo)) {
           if (polygonsIntersect(elNew.boundary, elDemo.boundary)) {
             warnings.push(
-              `Violation: New building "${elNew.name}" intersects with demolished parcel "${elDemo.name}".`
+              `Violation: New building "${elNew.name}" intersects with demolished parcel "${elDemo.name}".`,
             );
           }
         }
@@ -61,8 +67,14 @@ export function runRenovationAudit(site: Site): string[] {
 
   // Rule 2: Demolishing elements that are on protected or existing locked standard zones
   for (const elDemo of demolishedElements) {
-    if (elDemo.kind === "parcel" && "apn" in elDemo && elDemo.apn === "PROTECTED") {
-      warnings.push(`Violation: Cannot demolish protected parcel "${elDemo.name}".`);
+    if (
+      elDemo.kind === "parcel" &&
+      "apn" in elDemo &&
+      elDemo.apn === "PROTECTED"
+    ) {
+      warnings.push(
+        `Violation: Cannot demolish protected parcel "${elDemo.name}".`,
+      );
     }
   }
 
@@ -73,7 +85,7 @@ export function runRenovationAudit(site: Site): string[] {
         if (elExist.kind === "building" && isSpatialElement(elExist)) {
           if (polygonsIntersect(elNew.boundary, elExist.boundary)) {
             warnings.push(
-              `Violation: New building "${elNew.name}" overlaps with existing building "${elExist.name}".`
+              `Violation: New building "${elNew.name}" overlaps with existing building "${elExist.name}".`,
             );
           }
         }
@@ -86,7 +98,9 @@ export function runRenovationAudit(site: Site): string[] {
 
 // Simple polygon intersection check for centroid / bounding-box overlap or edge crossings
 function polygonsIntersect(polyA: Point[], polyB: Point[]): boolean {
-  if (polyA.length === 0 || polyB.length === 0) {return false;}
+  if (polyA.length === 0 || polyB.length === 0) {
+    return false;
+  }
 
   const boxA = getBounds(polyA);
   const boxB = getBounds(polyB);
@@ -101,12 +115,23 @@ function polygonsIntersect(polyA: Point[], polyB: Point[]): boolean {
 }
 
 function getBounds(poly: Point[]) {
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  let minX = Infinity,
+    minY = Infinity,
+    maxX = -Infinity,
+    maxY = -Infinity;
   for (const p of poly) {
-    if (p.x < minX) {minX = p.x;}
-    if (p.x > maxX) {maxX = p.x;}
-    if (p.y < minY) {minY = p.y;}
-    if (p.y > maxY) {maxY = p.y;}
+    if (p.x < minX) {
+      minX = p.x;
+    }
+    if (p.x > maxX) {
+      maxX = p.x;
+    }
+    if (p.y < minY) {
+      minY = p.y;
+    }
+    if (p.y > maxY) {
+      maxY = p.y;
+    }
   }
   return { minX, minY, maxX, maxY };
 }

@@ -79,7 +79,12 @@ export type AlignmentElement =
       /** Azimuth of the tangent, degrees clockwise from north. */
       bearing: number;
     }
-  | { kind: "curve"; curve: AlignmentCurve; beginStation: number; endStation: number };
+  | {
+      kind: "curve";
+      curve: AlignmentCurve;
+      beginStation: number;
+      endStation: number;
+    };
 
 /** A fully-resolved alignment: traveled elements, curve table, and extents. */
 export interface ResolvedAlignment {

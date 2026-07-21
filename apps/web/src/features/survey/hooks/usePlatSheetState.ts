@@ -20,7 +20,9 @@ export function usePlatSheetState() {
 
   function exportSvg() {
     const svg = svgRef.current;
-    if (!svg) {return;}
+    if (!svg) {
+      return;
+    }
     const src = new XMLSerializer().serializeToString(svg);
     const blob = new Blob([`<?xml version="1.0" encoding="UTF-8"?>\n${src}`], {
       type: "image/svg+xml;charset=utf-8",

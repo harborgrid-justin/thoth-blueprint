@@ -37,7 +37,12 @@ describe("area & perimeter", () => {
   });
 
   it("treats degenerate rings as zero area", () => {
-    expect(area([{ x: 0, y: 0 }, { x: 1, y: 1 }])).toBe(0);
+    expect(
+      area([
+        { x: 0, y: 0 },
+        { x: 1, y: 1 },
+      ]),
+    ).toBe(0);
   });
 });
 
@@ -60,7 +65,12 @@ describe("centroid & bounds", () => {
   });
 
   it("computes bounding boxes", () => {
-    expect(bounds(unitSquare)).toEqual({ minX: 0, minY: 0, maxX: 10, maxY: 10 });
+    expect(bounds(unitSquare)).toEqual({
+      minX: 0,
+      minY: 0,
+      maxX: 10,
+      maxY: 10,
+    });
   });
 });
 
@@ -82,6 +92,11 @@ describe("isValidPolygon", () => {
   });
 
   it("rejects degenerate rings", () => {
-    expect(isValidPolygon([{ x: 0, y: 0 }, { x: 1, y: 1 }])).toBe(false);
+    expect(
+      isValidPolygon([
+        { x: 0, y: 0 },
+        { x: 1, y: 1 },
+      ]),
+    ).toBe(false);
   });
 });

@@ -1,6 +1,12 @@
 import type { Site } from "@thoth/domain";
 import type { ApiClient, CreateProjectInput } from "./client";
-import type { Checkpoint, Project, ProjectSummary, ReviewThread, User } from "./types";
+import type {
+  Checkpoint,
+  Project,
+  ProjectSummary,
+  ReviewThread,
+  User,
+} from "./types";
 
 /**
  * An HTTP implementation of {@link ApiClient} that communicates with the
@@ -25,7 +31,9 @@ export class HttpApiClient implements ApiClient {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`API Request failed: ${response.status} ${response.statusText} - ${errorText}`);
+      throw new Error(
+        `API Request failed: ${response.status} ${response.statusText} - ${errorText}`,
+      );
     }
 
     if (response.status === 204) {
@@ -54,7 +62,11 @@ export class HttpApiClient implements ApiClient {
     });
   }
 
-  async renameProject(id: string, name: string, description?: string): Promise<Project> {
+  async renameProject(
+    id: string,
+    name: string,
+    description?: string,
+  ): Promise<Project> {
     return this.request<Project>(`/api/projects/${id}`, {
       method: "PATCH",
       body: JSON.stringify({ name, description }),
@@ -78,23 +90,39 @@ export class HttpApiClient implements ApiClient {
     return this.request<Checkpoint[]>(`/api/projects/${projectId}/checkpoints`);
   }
 
-  async createCheckpoint(projectId: string, name: string, note?: string): Promise<Checkpoint> {
+  async createCheckpoint(
+    projectId: string,
+    name: string,
+    note?: string,
+  ): Promise<Checkpoint> {
     return this.request<Checkpoint>(`/api/projects/${projectId}/checkpoints`, {
       method: "POST",
       body: JSON.stringify({ name, note }),
     });
   }
 
-  async restoreCheckpoint(projectId: string, checkpointId: string): Promise<Project> {
-    return this.request<Project>(`/api/projects/${projectId}/checkpoints/${checkpointId}/restore`, {
-      method: "POST",
-    });
+  async restoreCheckpoint(
+    projectId: string,
+    checkpointId: string,
+  ): Promise<Project> {
+    return this.request<Project>(
+      `/api/projects/${projectId}/checkpoints/${checkpointId}/restore`,
+      {
+        method: "POST",
+      },
+    );
   }
 
-  async deleteCheckpoint(projectId: string, checkpointId: string): Promise<void> {
-    return this.request<void>(`/api/projects/${projectId}/checkpoints/${checkpointId}`, {
-      method: "DELETE",
-    });
+  async deleteCheckpoint(
+    projectId: string,
+    checkpointId: string,
+  ): Promise<void> {
+    return this.request<void>(
+      `/api/projects/${projectId}/checkpoints/${checkpointId}`,
+      {
+        method: "DELETE",
+      },
+    );
   }
 
   async resetWorkspace(mode: "samples" | "empty"): Promise<void> {
@@ -119,9 +147,15 @@ export class HttpApiClient implements ApiClient {
     });
   }
 
-  async resolveThread(projectId: string, threadId: string): Promise<ReviewThread> {
-    return this.request<ReviewThread>(`/api/projects/${projectId}/threads/${threadId}/resolve`, {
-      method: "POST",
-    });
+  async resolveThread(
+    projectId: string,
+    threadId: string,
+  ): Promise<ReviewThread> {
+    return this.request<ReviewThread>(
+      `/api/projects/${projectId}/threads/${threadId}/resolve`,
+      {
+        method: "POST",
+      },
+    );
   }
 }

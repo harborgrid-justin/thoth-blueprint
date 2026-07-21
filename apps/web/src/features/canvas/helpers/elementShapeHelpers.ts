@@ -21,7 +21,10 @@ export interface PointElementStyle {
   noteFill: string;
 }
 
-export function getPointElementStyle(renovationMode: boolean, renovationStatus: string) {
+export function getPointElementStyle(
+  renovationMode: boolean,
+  renovationStatus: string,
+) {
   let canopyFill = "#22c55e";
   let canopyStroke = "#16a34a";
   let spotFill = "#d97706";
@@ -73,17 +76,21 @@ export function computeElementShapeStyle(
   spatialUnits: SpatialContext,
   moveDelta?: Point,
   overrideBoundary?: Polygon,
-  renovationMode?: boolean
+  renovationMode?: boolean,
 ): ShapeStyle {
   const shift = moveDelta ?? { x: 0, y: 0 };
-  const boundary = ((overrideBoundary ?? (element as any).boundary) as Point[]).map((p) => ({
+  const boundary = (
+    (overrideBoundary ?? (element as any).boundary) as Point[]
+  ).map((p) => ({
     x: p.x + shift.x,
     y: p.y + shift.y,
   }));
 
   const elem = element as any;
   const hasArc = !!elem.arcs && Object.keys(elem.arcs).length > 0;
-  const displayRing = hasArc ? densifyBoundary(boundary, elem.arcs, 2) : boundary;
+  const displayRing = hasArc
+    ? densifyBoundary(boundary, elem.arcs, 2)
+    : boundary;
   const category = element.kind === "landuse" ? element.category : undefined;
   const color = elementColor(element.kind, category);
   const path = toPath(displayRing, viewport);
@@ -121,7 +128,11 @@ export function computeElementShapeStyle(
       : null;
 
   let envelopePath: string | null = null;
-  if (element.kind === "lot" && (element as any).setback && (element as any).setback > 0) {
+  if (
+    element.kind === "lot" &&
+    (element as any).setback &&
+    (element as any).setback > 0
+  ) {
     const shiftedLot = { ...element, boundary } as any;
     const env = buildableEnvelope(shiftedLot);
     if (env) {
@@ -131,9 +142,19 @@ export function computeElementShapeStyle(
 
   const patternId = isLine ? null : patternFor(element);
 
-  let strokeColor = selected ? "hsl(var(--primary))" : hovered ? "hsl(var(--warning))" : color;
+  let strokeColor = selected
+    ? "hsl(var(--primary))"
+    : hovered
+      ? "hsl(var(--warning))"
+      : color;
   let strokeDash = dash;
-  const strokeWidth = selected ? 2.5 : hovered ? 2.25 : element.kind === "building" ? 1.5 : 1.75;
+  const strokeWidth = selected
+    ? 2.5
+    : hovered
+      ? 2.25
+      : element.kind === "building"
+        ? 1.5
+        : 1.75;
   let fillOpacityOverride = isLine ? 0.25 : fillOpacity;
   let elementColorOverride = color;
 

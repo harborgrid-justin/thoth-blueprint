@@ -25,7 +25,9 @@ class DIContainer {
     }
     const loader = this.loaders.get(name);
     if (!loader) {
-      throw new Error(`Service "${name}" is not registered in the DI container.`);
+      throw new Error(
+        `Service "${name}" is not registered in the DI container.`,
+      );
     }
     const service = await loader();
     this.services.set(name, service);
@@ -72,7 +74,10 @@ class DIContainer {
 export const container = new DIContainer();
 
 // Register dynamic loaders
-container.registerLoader("pdfExport", () => import("@/features/sheets/pdfExport"));
+container.registerLoader(
+  "pdfExport",
+  () => import("@/features/sheets/pdfExport"),
+);
 
 // React Hook to consume DI services reactively
 export function useService<T>(name: string): {
@@ -80,8 +85,12 @@ export function useService<T>(name: string): {
   loading: boolean;
   error: Error | null;
 } {
-  const [service, setService] = React.useState<T | null>(() => container.getSync<T>(name));
-  const [loading, setLoading] = React.useState(() => !container.getSync<T>(name));
+  const [service, setService] = React.useState<T | null>(() =>
+    container.getSync<T>(name),
+  );
+  const [loading, setLoading] = React.useState(
+    () => !container.getSync<T>(name),
+  );
   const [error, setError] = React.useState<Error | null>(null);
 
   React.useEffect(() => {
@@ -103,7 +112,8 @@ export function useService<T>(name: string): {
       }
     });
 
-    container.get<T>(name)
+    container
+      .get<T>(name)
       .then((res) => {
         if (active) {
           setService(res);

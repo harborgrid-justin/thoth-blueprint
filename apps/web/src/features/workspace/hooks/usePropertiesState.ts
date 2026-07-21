@@ -12,7 +12,9 @@ export function usePropertiesState() {
   const openPlat = useUiStore((s) => s.openPlat);
 
   const selectedElement = React.useMemo(() => {
-    if (!site || selection.length !== 1) {return null;}
+    if (!site || selection.length !== 1) {
+      return null;
+    }
     return site.elements.find((e) => e.id === selection[0]) ?? null;
   }, [site, selection]);
 

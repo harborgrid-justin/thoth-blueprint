@@ -1,26 +1,78 @@
+import { type PayItem, evaluatePayItemCost } from "@thoth/domain";
 import {
-  type PayItem,
-  evaluatePayItemCost,
-} from "@thoth/domain";
-import { formatNumber, formatRatio, formatPercent, formatArea } from "@/lib/format";
+  formatNumber,
+  formatRatio,
+  formatPercent,
+  formatArea,
+} from "@/lib/format";
 import { formatLength, resolveLengthUnit } from "@/lib/units";
 
 export const DEFAULT_PAY_ITEMS: PayItem[] = [
-  { id: "201-100", name: "Clearing & Grubbing", unit: "acres", unitCost: 3500.0, category: "Earthworks" },
-  { id: "203-010", name: "Road Excavation (Cut)", unit: "sqm", unitCost: 15.0, category: "Earthworks" },
-  { id: "301-050", name: "Aggregate Base Course", unit: "sy", unitCost: 22.0, category: "Pavement" },
-  { id: "401-200", name: "Concrete Curb & Gutter Type A", unit: "LF", unitCost: 35.0, category: "Pavement" },
-  { id: "601-500", name: "18-inch RCP Storm Pipe", unit: "feet", unitCost: 65.0, category: "Drainage" },
-  { id: "601-510", name: "Precast Cylindrical Manhole", unit: "count", unitCost: 2500.0, category: "Drainage" },
+  {
+    id: "201-100",
+    name: "Clearing & Grubbing",
+    unit: "acres",
+    unitCost: 3500.0,
+    category: "Earthworks",
+  },
+  {
+    id: "203-010",
+    name: "Road Excavation (Cut)",
+    unit: "sqm",
+    unitCost: 15.0,
+    category: "Earthworks",
+  },
+  {
+    id: "301-050",
+    name: "Aggregate Base Course",
+    unit: "sy",
+    unitCost: 22.0,
+    category: "Pavement",
+  },
+  {
+    id: "401-200",
+    name: "Concrete Curb & Gutter Type A",
+    unit: "LF",
+    unitCost: 35.0,
+    category: "Pavement",
+  },
+  {
+    id: "601-500",
+    name: "18-inch RCP Storm Pipe",
+    unit: "feet",
+    unitCost: 65.0,
+    category: "Drainage",
+  },
+  {
+    id: "601-510",
+    name: "Precast Cylindrical Manhole",
+    unit: "count",
+    unitCost: 2500.0,
+    category: "Drainage",
+  },
 ];
 
 export const DEFAULT_ASSIGNMENTS = [
-  { elementId: "road-edge", payItemId: "401-200", formula: "length * unitCost" },
-  { elementId: "building-lot", payItemId: "201-100", formula: "area * unitCost" },
+  {
+    elementId: "road-edge",
+    payItemId: "401-200",
+    formula: "length * unitCost",
+  },
+  {
+    elementId: "building-lot",
+    payItemId: "201-100",
+    formula: "area * unitCost",
+  },
 ];
 
-export function computeAssignedReports(site: any, assignments = DEFAULT_ASSIGNMENTS, payItems = DEFAULT_PAY_ITEMS) {
-  if (!site) {return [];}
+export function computeAssignedReports(
+  site: any,
+  assignments = DEFAULT_ASSIGNMENTS,
+  payItems = DEFAULT_PAY_ITEMS,
+) {
+  if (!site) {
+    return [];
+  }
   return assignments.map((as) => {
     const item = payItems.find((p) => p.id === as.payItemId)!;
     const el = site.elements.find((e: any) => e.id === as.elementId);
@@ -30,14 +82,23 @@ export function computeAssignedReports(site: any, assignments = DEFAULT_ASSIGNME
     const evalRes = evaluatePayItemCost(
       item,
       { length: lengthVal, area: areaVal, count: 1 },
-      as.formula
+      as.formula,
     );
 
-    const elementName = el ? ("name" in el ? (el as any).name : el.id) : `Site Object (${as.elementId})`;
+    const elementName = el
+      ? "name" in el
+        ? (el as any).name
+        : el.id
+      : `Site Object (${as.elementId})`;
     const formattedQty = formatNumber(evalRes.quantity, 1);
     const formattedCost = formatNumber(evalRes.cost, 2);
     const formattedAreaText = formatArea(areaVal, "acres");
-    const formattedLengthText = formatLength(lengthVal, site.spatial, "auto", 1);
+    const formattedLengthText = formatLength(
+      lengthVal,
+      site.spatial,
+      "auto",
+      1,
+    );
     const resolvedUnit = resolveLengthUnit(site.spatial, "auto");
     const ratioText = formatRatio(evalRes.cost / Math.max(1, evalRes.quantity));
 

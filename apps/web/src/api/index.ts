@@ -9,7 +9,9 @@ const apiUrl = (import.meta.env.VITE_API_URL as string) || "";
  * it points to the remote HTTP backend; otherwise, it falls back to the local
  * browser-persisted (localStorage) implementation.
  */
-export const api: ApiClient = apiUrl ? new HttpApiClient(apiUrl) : new LocalApiClient();
+export const api: ApiClient = apiUrl
+  ? new HttpApiClient(apiUrl)
+  : new LocalApiClient();
 
 export type { ApiClient, CreateProjectInput } from "./client";
 export * from "./types";

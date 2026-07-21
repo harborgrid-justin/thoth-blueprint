@@ -4,8 +4,20 @@
  * core principle — geometry never travels without this context.
  */
 
-import type { Polygon, Polyline, Unit, CRS, Scale, SpatialContext, AreaUnit } from "./types";
-import { area as polygonArea, perimeter as polygonPerimeter, polylineLength } from "./geometry";
+import type {
+  Polygon,
+  Polyline,
+  Unit,
+  CRS,
+  Scale,
+  SpatialContext,
+  AreaUnit,
+} from "./types";
+import {
+  area as polygonArea,
+  perimeter as polygonPerimeter,
+  polylineLength,
+} from "./geometry";
 export type { Unit, CRS, Scale, SpatialContext, AreaUnit };
 
 /** Meters per one unit of the given length {@link Unit}. */
@@ -27,23 +39,33 @@ export const SQM_PER_AREA_UNIT: Record<AreaUnit, number> = {
 const DEFAULT_CRS: CRS = "EPSG:3857";
 
 /** A sensible default spatial context (Web Mercator, meters, 1:1). */
-export function defaultSpatialContext(overrides: Partial<SpatialContext> = {}): SpatialContext {
+export function defaultSpatialContext(
+  overrides: Partial<SpatialContext> = {},
+): SpatialContext {
   return { crs: DEFAULT_CRS, units: "meters", scale: 1, ...overrides };
 }
 
 /** Convert a length between two units. */
 export function convertLength(value: number, from: Unit, to: Unit): number {
-  if (from === to) {return value;}
+  if (from === to) {
+    return value;
+  }
   return (value * METERS_PER_UNIT[from]) / METERS_PER_UNIT[to];
 }
 
 /** Convert a raw plan-unit length into meters using the context's units. */
-export function lengthToMeters(planLength: number, spatial: SpatialContext): number {
+export function lengthToMeters(
+  planLength: number,
+  spatial: SpatialContext,
+): number {
   return planLength * METERS_PER_UNIT[spatial.units];
 }
 
 /** Convert a raw plan-unit area (units²) into square meters. */
-export function areaToSquareMeters(planArea: number, spatial: SpatialContext): number {
+export function areaToSquareMeters(
+  planArea: number,
+  spatial: SpatialContext,
+): number {
   const factor = METERS_PER_UNIT[spatial.units];
   return planArea * factor * factor;
 }
@@ -67,12 +89,18 @@ export function measuredArea(
 }
 
 /** Perimeter of a polygon in meters, honoring the plan's units. */
-export function measuredPerimeter(polygon: Polygon, spatial: SpatialContext): number {
+export function measuredPerimeter(
+  polygon: Polygon,
+  spatial: SpatialContext,
+): number {
   return lengthToMeters(polygonPerimeter(polygon), spatial);
 }
 
 /** Length of a polyline in meters, honoring the plan's units. */
-export function measuredLength(line: Polyline, spatial: SpatialContext): number {
+export function measuredLength(
+  line: Polyline,
+  spatial: SpatialContext,
+): number {
   return lengthToMeters(polylineLength(line), spatial);
 }
 

@@ -7,7 +7,14 @@
  * and schedules (A-601). Ids are deterministic so re-builds are stable.
  */
 
-import type { DisciplineCode, DrawingSet, RegionPlugin, Sheet, SheetTypeDigit, Site } from "@thoth/domain";
+import type {
+  DisciplineCode,
+  DrawingSet,
+  RegionPlugin,
+  Sheet,
+  SheetTypeDigit,
+  Site,
+} from "@thoth/domain";
 
 function mkSheet(
   discipline: DisciplineCode,
@@ -32,15 +39,25 @@ function mkSheet(
 
 /** The site's own drawing set, or a standard one derived from its contents. */
 export function ensureDrawingSet(site: Site, plugin: RegionPlugin): DrawingSet {
-  if (site.drawingSets && site.drawingSets.length) {return site.drawingSets[0];}
+  if (site.drawingSets && site.drawingSets.length) {
+    return site.drawingSets[0];
+  }
 
-  const sheets: Sheet[] = [mkSheet("G", 0, 1, "Cover Sheet & Drawing Index", plugin)];
+  const sheets: Sheet[] = [
+    mkSheet("G", 0, 1, "Cover Sheet & Drawing Index", plugin),
+  ];
 
-  const hasSurvey = (site.monuments?.length ?? 0) > 0 || !!site.plss || !!site.landLot;
-  if (hasSurvey) {sheets.push(mkSheet("V", 1, 1, "Boundary & Control Survey", plugin));}
+  const hasSurvey =
+    (site.monuments?.length ?? 0) > 0 || !!site.plss || !!site.landLot;
+  if (hasSurvey) {
+    sheets.push(mkSheet("V", 1, 1, "Boundary & Control Survey", plugin));
+  }
 
   sheets.push(mkSheet("C", 1, 1, "Overall Site Plan", plugin));
-  if ((site.controlLines?.length ?? 0) > 0 || (site.civilSymbols?.length ?? 0) > 0) {
+  if (
+    (site.controlLines?.length ?? 0) > 0 ||
+    (site.civilSymbols?.length ?? 0) > 0
+  ) {
     sheets.push(mkSheet("C", 1, 2, "Erosion Control Plan", plugin));
   }
   sheets.push(mkSheet("C", 5, 1, "Civil Details", plugin));

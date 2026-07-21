@@ -22,7 +22,12 @@ export function snapPoint(
   screen: Point,
   viewport: Viewport,
   elements: PlanElement[],
-  options: { gridStep: number; snapToGrid: boolean; snapToVertices: boolean; vertexPx?: number },
+  options: {
+    gridStep: number;
+    snapToGrid: boolean;
+    snapToVertices: boolean;
+    vertexPx?: number;
+  },
 ): SnapResult {
   const vertexPx = options.vertexPx ?? 10;
 
@@ -30,7 +35,9 @@ export function snapPoint(
     let best: Point | null = null;
     let bestDist = vertexPx;
     for (const el of elements) {
-      if (!isSpatialElement(el)) {continue;}
+      if (!isSpatialElement(el)) {
+        continue;
+      }
       for (const v of el.boundary) {
         const s = worldToScreen(v, viewport);
         const d = Math.hypot(s.x - screen.x, s.y - screen.y);
@@ -40,11 +47,16 @@ export function snapPoint(
         }
       }
     }
-    if (best) {return { point: best, snappedToVertex: true };}
+    if (best) {
+      return { point: best, snappedToVertex: true };
+    }
   }
 
   if (options.snapToGrid) {
-    return { point: snapToGrid(world, options.gridStep), snappedToVertex: false };
+    return {
+      point: snapToGrid(world, options.gridStep),
+      snappedToVertex: false,
+    };
   }
   return { point: world, snappedToVertex: false };
 }
@@ -56,5 +68,8 @@ export function eventToWorld(
   rect: DOMRect,
   viewport: Viewport,
 ): Point {
-  return screenToWorld({ x: clientX - rect.left, y: clientY - rect.top }, viewport);
+  return screenToWorld(
+    { x: clientX - rect.left, y: clientY - rect.top },
+    viewport,
+  );
 }

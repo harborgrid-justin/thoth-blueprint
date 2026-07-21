@@ -1,6 +1,12 @@
 import * as THREE from "three";
 import _ from "lodash";
-import { type Point, type RoofElement, calculateRoofGeometry, bounds, boundsCenter } from "@thoth/domain";
+import {
+  type Point,
+  type RoofElement,
+  calculateRoofGeometry,
+  bounds,
+  boundsCenter,
+} from "@thoth/domain";
 
 export function enterpriseRoof(
   roof: RoofElement,
@@ -14,7 +20,9 @@ export function enterpriseRoof(
 
   const geom = calculateRoofGeometry(roof);
   const boundary = roof.boundary || [];
-  if (boundary.length < 3) {return roofGroup;}
+  if (boundary.length < 3) {
+    return roofGroup;
+  }
 
   // 1. Determine Roof Material Color (REQ-UNIMP-059)
   let roofColor = 0x374151; // asphalt charcoal grey
@@ -38,7 +46,12 @@ export function enterpriseRoof(
     roughness: 0.65,
     metalness: roof.shingleMaterial === "metal" ? 0.8 : 0.1,
     transparent: roof.renovationStatus !== undefined,
-    opacity: roof.renovationStatus === "new" ? 0.75 : roof.renovationStatus === "demolished" ? 0.35 : 1.0,
+    opacity:
+      roof.renovationStatus === "new"
+        ? 0.75
+        : roof.renovationStatus === "demolished"
+          ? 0.35
+          : 1.0,
     side: THREE.DoubleSide,
   });
   disposables.push(mat);
@@ -115,7 +128,10 @@ export function enterpriseRoof(
   }
 
   const geo = new THREE.BufferGeometry();
-  geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(vertices), 3));
+  geo.setAttribute(
+    "position",
+    new THREE.BufferAttribute(new Float32Array(vertices), 3),
+  );
   geo.setIndex(indices);
   geo.computeVertexNormals();
   disposables.push(geo);
@@ -126,11 +142,16 @@ export function enterpriseRoof(
   roofGroup.add(mesh);
 
   // 3. Draw structural rafters underneath (REQ-UNIMP-056)
-  const rafterMat = new THREE.MeshStandardMaterial({ color: 0x854d0e, roughness: 0.9 }); // wood brown
+  const rafterMat = new THREE.MeshStandardMaterial({
+    color: 0x854d0e,
+    roughness: 0.9,
+  }); // wood brown
   disposables.push(rafterMat);
 
   _.forEach(geom.rafterLines, (line) => {
-    if (line.length < 2) {return;}
+    if (line.length < 2) {
+      return;
+    }
     const p1 = line[0];
     const p2 = line[1];
 
@@ -159,11 +180,17 @@ export function enterpriseRoof(
 
   // 4. Draw Gutters (REQ-UNIMP-058)
   if (roof.gutters) {
-    const gutterMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.8, roughness: 0.2 });
+    const gutterMat = new THREE.MeshStandardMaterial({
+      color: 0x475569,
+      metalness: 0.8,
+      roughness: 0.2,
+    });
     disposables.push(gutterMat);
 
     _.forEach(geom.gutterPaths, (line) => {
-      if (line.length < 2) {return;}
+      if (line.length < 2) {
+        return;
+      }
       const p1 = line[0];
       const p2 = line[1];
 

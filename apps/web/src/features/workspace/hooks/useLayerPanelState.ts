@@ -1,6 +1,9 @@
 import * as React from "react";
 import { useWorkspaceStore } from "@/store/workspaceStore";
-import { countLayerElements, evaluatePointGroups } from "../helpers/layerPanelHelpers";
+import {
+  countLayerElements,
+  evaluatePointGroups,
+} from "../helpers/layerPanelHelpers";
 
 export function useLayerPanelState() {
   const site = useWorkspaceStore((s) => s.site);
@@ -14,17 +17,18 @@ export function useLayerPanelState() {
 
   const layers = React.useMemo(
     () => (site ? [...site.layers].sort((a, b) => b.order - a.order) : []),
-    [site]
+    [site],
   );
 
   const counts = React.useMemo(
-    () => (site ? countLayerElements(site.elements) : new Map<string, number>()),
-    [site]
+    () =>
+      site ? countLayerElements(site.elements) : new Map<string, number>(),
+    [site],
   );
 
   const evaluatedGroups = React.useMemo(
     () => (site ? evaluatePointGroups(site.elements) : []),
-    [site]
+    [site],
   );
 
   function handleAddLayer() {

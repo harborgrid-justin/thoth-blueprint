@@ -88,9 +88,19 @@ export interface WorkspaceState {
   clearArcs(id: string): void;
 
   // --- element mutations (each records history) ---
-  addDrawnElement(kind: Exclude<ElementKind, "note" | "tree" | "spot">, boundary: Polygon): string | null;
-  addPointElement(kind: "note" | "tree" | "spot", position: Point): string | null;
-  addNetworkPath(kind: NetworkKind, path: Polyline, edge?: Partial<NetworkEdge>): string | null;
+  addDrawnElement(
+    kind: Exclude<ElementKind, "note" | "tree" | "spot">,
+    boundary: Polygon,
+  ): string | null;
+  addPointElement(
+    kind: "note" | "tree" | "spot",
+    position: Point,
+  ): string | null;
+  addNetworkPath(
+    kind: NetworkKind,
+    path: Polyline,
+    edge?: Partial<NetworkEdge>,
+  ): string | null;
   /** Add a stationed horizontal alignment from a chain of PI points. */
   addAlignment(pis: Point[], radius?: number): string | null;
   addElements(elements: PlanElement[]): void;
@@ -126,7 +136,9 @@ export interface WorkspaceState {
   renovationMode: boolean;
   activeRenovationCategory: "existing" | "new" | "demolished";
   toggleRenovationMode(): void;
-  setActiveRenovationCategory(category: "existing" | "new" | "demolished"): void;
+  setActiveRenovationCategory(
+    category: "existing" | "new" | "demolished",
+  ): void;
 }
 
 function snapshot<T>(value: T): T {
@@ -143,7 +155,9 @@ let clipboard: PlanElement[] = [];
 
 /** A "nice" paste offset derived from the copied elements' own extent. */
 function pasteOffset(elements: PlanElement[]): Point {
-  const boxes = elements.filter(isSpatialElement).map((e) => bounds(e.boundary));
+  const boxes = elements
+    .filter(isSpatialElement)
+    .map((e) => bounds(e.boundary));
   const b = boxes.length ? unionBounds(boxes) : null;
   if (b) {
     const step = Math.max(1, Math.max(b.maxX - b.minX, b.maxY - b.minY) * 0.05);
@@ -164,7 +178,9 @@ function reindexArcsAfterInsert(
   const out: Record<string, number> = {};
   for (const [k, v] of Object.entries(arcs)) {
     const i = Number(k);
-    if (i === afterIndex) {continue;}
+    if (i === afterIndex) {
+      continue;
+    }
     out[String(i > afterIndex ? i + 1 : i)] = v;
   }
   return out;
@@ -184,7 +200,9 @@ function reindexArcsAfterDelete(
   const out: Record<string, number> = {};
   for (const [k, v] of Object.entries(arcs)) {
     const i = Number(k);
-    if (i === index || i === removedPrev) {continue;}
+    if (i === index || i === removedPrev) {
+      continue;
+    }
     out[String(i > index ? i - 1 : i)] = v;
   }
   return out;
@@ -201,16 +219,28 @@ function offsetElement(
   const layerId = layerExists(el.layerId) ? el.layerId : fallbackLayer;
   const id = createId(el.kind);
   if (isPointElement(el)) {
-    return { ...el, id, layerId, position: { x: el.position.x + dx, y: el.position.y + dy } };
+    return {
+      ...el,
+      id,
+      layerId,
+      position: { x: el.position.x + dx, y: el.position.y + dy },
+    };
   }
-  return { ...el, id, layerId, boundary: el.boundary.map((p) => ({ x: p.x + dx, y: p.y + dy })) };
+  return {
+    ...el,
+    id,
+    layerId,
+    boundary: el.boundary.map((p) => ({ x: p.x + dx, y: p.y + dy })),
+  };
 }
 
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
   /** Apply a pure change to the site, recording the previous state for undo. */
   function mutate(recipe: (site: Site) => Site) {
     const { site, history } = get();
-    if (!site) {return;}
+    if (!site) {
+      return;
+    }
     const nextSite = recipe(snapshot(site));
     const past = [...history.past, site].slice(-HISTORY_LIMIT);
     set({ site: nextSite, history: { past, future: [] }, dirty: true });
@@ -231,8 +261,10 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     matchLines: [],
     renovationMode: false,
     activeRenovationCategory: "new",
-    toggleRenovationMode: () => set((state) => ({ renovationMode: !state.renovationMode })),
-    setActiveRenovationCategory: (category) => set({ activeRenovationCategory: category }),
+    toggleRenovationMode: () =>
+      set((state) => ({ renovationMode: !state.renovationMode })),
+    setActiveRenovationCategory: (category) =>
+      set({ activeRenovationCategory: category }),
 
     loadProject(project) {
       set({
@@ -273,7 +305,9 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     addDrawingSet(setObj) {
       mutate((site) => {
-        if (!site.drawingSets) {site.drawingSets = [];}
+        if (!site.drawingSets) {
+          site.drawingSets = [];
+        }
         site.drawingSets.unshift(setObj);
         return site;
       });
@@ -314,7 +348,9 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     selectAll() {
       const { site } = get();
-      if (!site) {return;}
+      if (!site) {
+        return;
+      }
       set({ selection: site.elements.map((e) => e.id) });
     },
 
@@ -324,20 +360,28 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     copySelection() {
       const { site, selection } = get();
-      if (!site || selection.length === 0) {return;}
+      if (!site || selection.length === 0) {
+        return;
+      }
       const ids = new Set(selection);
-      clipboard = site.elements.filter((e) => ids.has(e.id)).map((e) => snapshot(e));
+      clipboard = site.elements
+        .filter((e) => ids.has(e.id))
+        .map((e) => snapshot(e));
     },
 
     cutSelection() {
-      if (get().selection.length === 0) {return;}
+      if (get().selection.length === 0) {
+        return;
+      }
       get().copySelection();
       get().deleteSelection();
     },
 
     paste() {
       const { site, activeLayerId } = get();
-      if (!site || clipboard.length === 0) {return;}
+      if (!site || clipboard.length === 0) {
+        return;
+      }
       const fallback = activeLayerId ?? site.layers[0]?.id ?? "";
       const layerExists = (id: string) => site.layers.some((l) => l.id === id);
       const off = pasteOffset(clipboard);
@@ -350,10 +394,14 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     duplicateSelection() {
       const { site, selection, activeLayerId } = get();
-      if (!site || selection.length === 0) {return;}
+      if (!site || selection.length === 0) {
+        return;
+      }
       const ids = new Set(selection);
       const originals = site.elements.filter((e) => ids.has(e.id));
-      if (originals.length === 0) {return;}
+      if (originals.length === 0) {
+        return;
+      }
       const fallback = activeLayerId ?? site.layers[0]?.id ?? "";
       const layerExists = (id: string) => site.layers.some((l) => l.id === id);
       const off = pasteOffset(originals);
@@ -372,18 +420,28 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       const { site, renovationMode } = get();
       if (site) {
         const el = site.elements.find((e) => e.id === id);
-        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
-          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be modified.");
+        if (
+          el &&
+          renovationMode &&
+          (el.renovationStatus || "existing") === "existing"
+        ) {
+          alert(
+            "Renovation Mode Lock: Elements with status 'Existing' cannot be modified.",
+          );
           return;
         }
       }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
-          if (e.id !== id || !isSpatialElement(e)) {return e;}
+          if (e.id !== id || !isSpatialElement(e)) {
+            return e;
+          }
           const boundary = e.boundary.slice();
           boundary.splice(afterIndex + 1, 0, point);
-          const arcs = e.arcs ? reindexArcsAfterInsert(e.arcs, afterIndex) : undefined;
+          const arcs = e.arcs
+            ? reindexArcsAfterInsert(e.arcs, afterIndex)
+            : undefined;
           return { ...e, boundary, arcs };
         }),
       }));
@@ -393,17 +451,31 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       const { site, renovationMode } = get();
       if (site) {
         const el = site.elements.find((e) => e.id === id);
-        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
-          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be modified.");
+        if (
+          el &&
+          renovationMode &&
+          (el.renovationStatus || "existing") === "existing"
+        ) {
+          alert(
+            "Renovation Mode Lock: Elements with status 'Existing' cannot be modified.",
+          );
           return;
         }
       }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
-          if (e.id !== id || !isSpatialElement(e) || e.boundary.length <= 3) {return e;}
-          const arcs = e.arcs ? reindexArcsAfterDelete(e.arcs, index, e.boundary.length) : undefined;
-          return { ...e, boundary: e.boundary.filter((_, i) => i !== index), arcs };
+          if (e.id !== id || !isSpatialElement(e) || e.boundary.length <= 3) {
+            return e;
+          }
+          const arcs = e.arcs
+            ? reindexArcsAfterDelete(e.arcs, index, e.boundary.length)
+            : undefined;
+          return {
+            ...e,
+            boundary: e.boundary.filter((_, i) => i !== index),
+            arcs,
+          };
         }),
       }));
     },
@@ -412,18 +484,29 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       const { site, renovationMode } = get();
       if (site) {
         const el = site.elements.find((e) => e.id === id);
-        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
-          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be modified.");
+        if (
+          el &&
+          renovationMode &&
+          (el.renovationStatus || "existing") === "existing"
+        ) {
+          alert(
+            "Renovation Mode Lock: Elements with status 'Existing' cannot be modified.",
+          );
           return;
         }
       }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
-          if (e.id !== id || !isSpatialElement(e)) {return e;}
+          if (e.id !== id || !isSpatialElement(e)) {
+            return e;
+          }
           const arcs: Record<string, number> = { ...(e.arcs ?? {}) };
-          if (Math.abs(bulge) < 1e-4) {delete arcs[String(edgeIndex)];}
-          else {arcs[String(edgeIndex)] = bulge;}
+          if (Math.abs(bulge) < 1e-4) {
+            delete arcs[String(edgeIndex)];
+          } else {
+            arcs[String(edgeIndex)] = bulge;
+          }
           return { ...e, arcs };
         }),
       }));
@@ -433,8 +516,14 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       const { site, renovationMode } = get();
       if (site) {
         const el = site.elements.find((e) => e.id === id);
-        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
-          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be modified.");
+        if (
+          el &&
+          renovationMode &&
+          (el.renovationStatus || "existing") === "existing"
+        ) {
+          alert(
+            "Renovation Mode Lock: Elements with status 'Existing' cannot be modified.",
+          );
           return;
         }
       }
@@ -447,8 +536,11 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     addDrawnElement(kind, boundary) {
-      const { site, activeLayerId, renovationMode, activeRenovationCategory } = get();
-      if (!site) {return null;}
+      const { site, activeLayerId, renovationMode, activeRenovationCategory } =
+        get();
+      if (!site) {
+        return null;
+      }
       let layerId = activeLayerId ?? elementMeta(kind).defaultLayerId;
 
       // Demolition layer auto-routing (REQ-UNIMP-002)
@@ -456,7 +548,9 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         layerId = `D-${layerId}`;
         const layerExists = site.layers.some((l) => l.id === layerId);
         if (!layerExists) {
-          const originalLayer = site.layers.find((l) => l.id === (activeLayerId || elementMeta(kind).defaultLayerId));
+          const originalLayer = site.layers.find(
+            (l) => l.id === (activeLayerId || elementMeta(kind).defaultLayerId),
+          );
           const demoLayer: Layer = {
             id: layerId,
             name: `Demolition - ${originalLayer?.name || kind.toUpperCase()}`,
@@ -470,7 +564,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       }
 
       const element = createSpatialElement(site, kind, boundary, layerId);
-      
+
       // Auto classify renovation status (REQ-UNIMP-005)
       if (renovationMode) {
         element.renovationStatus = activeRenovationCategory;
@@ -482,9 +576,15 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     addPointElement(kind, position) {
-      const { site, activeLayerId, renovationMode, activeRenovationCategory } = get();
-      if (!site) {return null;}
-      const rawDesc = prompt("Enter COGO Point Description (e.g. TR-Oak, MH-Storm, BM-Main):") || "";
+      const { site, activeLayerId, renovationMode, activeRenovationCategory } =
+        get();
+      if (!site) {
+        return null;
+      }
+      const rawDesc =
+        prompt(
+          "Enter COGO Point Description (e.g. TR-Oak, MH-Storm, BM-Main):",
+        ) || "";
       let layerId = activeLayerId ?? elementMeta(kind).defaultLayerId;
       let finalKind = kind;
       let finalDesc = rawDesc || `${kind.toUpperCase()}`;
@@ -505,7 +605,13 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         layerId = `D-${layerId}`;
         const layerExists = site.layers.some((l) => l.id === layerId);
         if (!layerExists) {
-          const originalLayer = site.layers.find((l) => l.id === (matchingKey?.layerId || activeLayerId || elementMeta(kind).defaultLayerId));
+          const originalLayer = site.layers.find(
+            (l) =>
+              l.id ===
+              (matchingKey?.layerId ||
+                activeLayerId ||
+                elementMeta(kind).defaultLayerId),
+          );
           const demoLayer: Layer = {
             id: layerId,
             name: `Demolition - ${originalLayer?.name || kind.toUpperCase()}`,
@@ -518,7 +624,12 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         }
       }
 
-      const element: any = createPointElement(site, finalKind, position, layerId);
+      const element: any = createPointElement(
+        site,
+        finalKind,
+        position,
+        layerId,
+      );
       element.description = rawDesc;
       element.label = finalDesc;
       if (finalKind === "tree") {
@@ -540,17 +651,28 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     addNetworkPath(kind, path, edge) {
       const { site } = get();
-      if (!site || path.length < 2) {return null;}
+      if (!site || path.length < 2) {
+        return null;
+      }
       const count = (site.networks ?? []).filter((n) => n.kind === kind).length;
       const name = `${kind === "road" ? "Road" : "Main"} ${count + 1}`;
-      const network = networkFromPath(createId("net"), name, kind, path, () => createId("nn"), edge);
+      const network = networkFromPath(
+        createId("net"),
+        name,
+        kind,
+        path,
+        () => createId("nn"),
+        edge,
+      );
       mutate((s) => ({ ...s, networks: [...(s.networks ?? []), network] }));
       return network.id;
     },
 
     addAlignment(pis, radius = 0) {
       const { site } = get();
-      if (!site || pis.length < 2) {return null;}
+      if (!site || pis.length < 2) {
+        return null;
+      }
       const count = (site.alignments ?? []).length;
       const id = createId("algn");
       const alignment = {
@@ -560,15 +682,21 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         pis: pis.map((point, i) => ({
           point,
           // Interior PIs get a default curve radius; endpoints stay sharp.
-          radius: radius > 0 && i > 0 && i < pis.length - 1 ? radius : undefined,
+          radius:
+            radius > 0 && i > 0 && i < pis.length - 1 ? radius : undefined,
         })),
       };
-      mutate((s) => ({ ...s, alignments: [...(s.alignments ?? []), alignment] }));
+      mutate((s) => ({
+        ...s,
+        alignments: [...(s.alignments ?? []), alignment],
+      }));
       return id;
     },
 
     addElements(elements) {
-      if (elements.length === 0) {return;}
+      if (elements.length === 0) {
+        return;
+      }
       mutate((s) => ({ ...s, elements: [...s.elements, ...elements] }));
     },
 
@@ -576,17 +704,25 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       const { site, renovationMode } = get();
       if (site) {
         const el = site.elements.find((e) => e.id === id);
-        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
+        if (
+          el &&
+          renovationMode &&
+          (el.renovationStatus || "existing") === "existing"
+        ) {
           const keys = Object.keys(patch);
           if (keys.length > 1 || keys[0] !== "renovationStatus") {
-            alert("Renovation Mode Lock: Elements with status 'Existing' cannot be modified.");
+            alert(
+              "Renovation Mode Lock: Elements with status 'Existing' cannot be modified.",
+            );
             return;
           }
         }
       }
       mutate((s) => ({
         ...s,
-        elements: s.elements.map((e) => (e.id === id ? ({ ...e, ...patch } as PlanElement) : e)),
+        elements: s.elements.map((e) =>
+          e.id === id ? ({ ...e, ...patch } as PlanElement) : e,
+        ),
       }));
     },
 
@@ -594,8 +730,14 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       const { site, renovationMode } = get();
       if (site) {
         const el = site.elements.find((e) => e.id === id);
-        if (el && renovationMode && (el.renovationStatus || "existing") === "existing") {
-          alert("Renovation Mode Lock: Elements with status 'Existing' boundary cannot be modified.");
+        if (
+          el &&
+          renovationMode &&
+          (el.renovationStatus || "existing") === "existing"
+        ) {
+          alert(
+            "Renovation Mode Lock: Elements with status 'Existing' boundary cannot be modified.",
+          );
           return;
         }
       }
@@ -609,39 +751,67 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     moveSelection(delta) {
       const { selection, site, renovationMode } = get();
-      if (selection.length === 0 || !site) {return;}
+      if (selection.length === 0 || !site) {
+        return;
+      }
       const ids = new Set(selection);
       if (renovationMode) {
-        const hasExisting = site.elements.some((e) => ids.has(e.id) && (e.renovationStatus || "existing") === "existing");
+        const hasExisting = site.elements.some(
+          (e) =>
+            ids.has(e.id) && (e.renovationStatus || "existing") === "existing",
+        );
         if (hasExisting) {
-          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be translated or edited.");
+          alert(
+            "Renovation Mode Lock: Elements with status 'Existing' cannot be translated or edited.",
+          );
           return;
         }
       }
       mutate((s) => ({
         ...s,
         elements: s.elements.map((e) => {
-          if (!ids.has(e.id)) {return e;}
-          if (isSpatialElement(e)) {
-            return { ...e, boundary: e.boundary.map((p) => ({ x: p.x + delta.x, y: p.y + delta.y })) };
+          if (!ids.has(e.id)) {
+            return e;
           }
-          return { ...e, position: { x: e.position.x + delta.x, y: e.position.y + delta.y } };
+          if (isSpatialElement(e)) {
+            return {
+              ...e,
+              boundary: e.boundary.map((p) => ({
+                x: p.x + delta.x,
+                y: p.y + delta.y,
+              })),
+            };
+          }
+          return {
+            ...e,
+            position: { x: e.position.x + delta.x, y: e.position.y + delta.y },
+          };
         }),
       }));
     },
 
     deleteSelection() {
       const { selection, site, renovationMode } = get();
-      if (selection.length === 0 || !site) {return;}
+      if (selection.length === 0 || !site) {
+        return;
+      }
       const ids = new Set(selection);
       if (renovationMode) {
-        const hasExisting = site.elements.some((e) => ids.has(e.id) && (e.renovationStatus || "existing") === "existing");
+        const hasExisting = site.elements.some(
+          (e) =>
+            ids.has(e.id) && (e.renovationStatus || "existing") === "existing",
+        );
         if (hasExisting) {
-          alert("Renovation Mode Lock: Elements with status 'Existing' cannot be deleted.");
+          alert(
+            "Renovation Mode Lock: Elements with status 'Existing' cannot be deleted.",
+          );
           return;
         }
       }
-      mutate((s) => ({ ...s, elements: s.elements.filter((e) => !ids.has(e.id)) }));
+      mutate((s) => ({
+        ...s,
+        elements: s.elements.filter((e) => !ids.has(e.id)),
+      }));
       set({ selection: [] });
     },
 
@@ -650,13 +820,18 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     },
 
     addBuildingModel(model) {
-      mutate((s) => ({ ...s, buildingModels: [...(s.buildingModels ?? []), model] }));
+      mutate((s) => ({
+        ...s,
+        buildingModels: [...(s.buildingModels ?? []), model],
+      }));
     },
 
     updateBuildingModel(id, patch) {
       mutate((s) => ({
         ...s,
-        buildingModels: (s.buildingModels ?? []).map((m) => (m.id === id ? { ...m, ...patch } : m)),
+        buildingModels: (s.buildingModels ?? []).map((m) =>
+          m.id === id ? { ...m, ...patch } : m,
+        ),
       }));
     },
 
@@ -670,11 +845,19 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         const next: Site = { ...s, jurisdictionId: id ?? undefined };
         // Anchor the Georgia Land Lot framework if the jurisdiction needs it.
         if (plugin?.surveyFramework === "georgia-land-lot" && !s.landLot) {
-          const boxes = s.elements.filter(isSpatialElement).map((e) => bounds(e.boundary));
+          const boxes = s.elements
+            .filter(isSpatialElement)
+            .map((e) => bounds(e.boundary));
           const b = boxes.length ? unionBounds(boxes) : null;
-          const nwCorner = b ? { x: b.minX - 20, y: b.minY - 20 } : { x: 0, y: 0 };
+          const nwCorner = b
+            ? { x: b.minX - 20, y: b.minY - 20 }
+            : { x: 0, y: 0 };
           next.landLot = {
-            ref: { district: 9, landLot: 12, acres: plugin.standards?.landLotAcres ?? 202.5 },
+            ref: {
+              district: 9,
+              landLot: 12,
+              acres: plugin.standards?.landLotAcres ?? 202.5,
+            },
             nwCorner,
           };
         }
@@ -684,7 +867,8 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     addLayer(name) {
       mutate((s) => {
-        const order = s.layers.reduce((max, l) => Math.max(max, l.order), -1) + 1;
+        const order =
+          s.layers.reduce((max, l) => Math.max(max, l.order), -1) + 1;
         const layer: Layer = {
           id: `layer-${order}-${Math.random().toString(36).slice(2, 7)}`,
           name,
@@ -705,23 +889,33 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     removeLayer(id) {
       const { site } = get();
-      if (!site || site.layers.length <= 1) {return;}
+      if (!site || site.layers.length <= 1) {
+        return;
+      }
       const fallback = site.layers.find((l) => l.id !== id)!;
       mutate((s) => ({
         ...s,
         layers: s.layers.filter((l) => l.id !== id),
-        elements: s.elements.map((e) => (e.layerId === id ? { ...e, layerId: fallback.id } : e)),
+        elements: s.elements.map((e) =>
+          e.layerId === id ? { ...e, layerId: fallback.id } : e,
+        ),
       }));
-      if (get().activeLayerId === id) {set({ activeLayerId: fallback.id });}
+      if (get().activeLayerId === id) {
+        set({ activeLayerId: fallback.id });
+      }
     },
 
     reorderLayer(id, direction) {
       mutate((s) => {
         const sorted = [...s.layers].sort((a, b) => a.order - b.order);
         const index = sorted.findIndex((l) => l.id === id);
-        if (index < 0) {return s;}
+        if (index < 0) {
+          return s;
+        }
         const swapWith = direction === "up" ? index - 1 : index + 1;
-        if (swapWith < 0 || swapWith >= sorted.length) {return s;}
+        if (swapWith < 0 || swapWith >= sorted.length) {
+          return s;
+        }
         const a = sorted[index];
         const b = sorted[swapWith];
         const aOrder = a.order;
@@ -733,7 +927,9 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     undo() {
       const { site, history } = get();
-      if (!site || history.past.length === 0) {return;}
+      if (!site || history.past.length === 0) {
+        return;
+      }
       const previous = history.past[history.past.length - 1];
       set({
         site: previous,
@@ -747,7 +943,9 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
 
     redo() {
       const { site, history } = get();
-      if (!site || history.future.length === 0) {return;}
+      if (!site || history.future.length === 0) {
+        return;
+      }
       const next = history.future[0];
       set({
         site: next,

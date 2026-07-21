@@ -1,12 +1,6 @@
 /** Named tiers of the ISO line-weight pen set. */
 export type LineWeightName =
-  | "fine"
-  | "thin"
-  | "light"
-  | "medium"
-  | "wide"
-  | "x-wide"
-  | "xx-wide";
+  "fine" | "thin" | "light" | "medium" | "wide" | "x-wide" | "xx-wide";
 
 /** Named CAD line types. */
 export type LineTypeName =

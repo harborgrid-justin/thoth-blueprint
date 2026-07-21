@@ -16,7 +16,11 @@ export function azimuth(a: Point, b: Point): number {
 }
 
 /** Convert a decimal-degree angle into whole degrees/minutes/seconds with carry. */
-export function toDms(angleDeg: number): { degrees: number; minutes: number; seconds: number } {
+export function toDms(angleDeg: number): {
+  degrees: number;
+  minutes: number;
+  seconds: number;
+} {
   const sign = angleDeg < 0 ? -1 : 1;
   const a = Math.abs(angleDeg);
   let degrees = Math.floor(a);
@@ -39,10 +43,46 @@ export function azimuthToBearing(az: number): QuadrantBearing {
   const a = ((az % 360) + 360) % 360;
 
   // Cardinal directions.
-  if (approx(a, 0)) {return { ns: "N", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "N" };}
-  if (approx(a, 90)) {return { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "E", cardinal: "E" };}
-  if (approx(a, 180)) {return { ns: "S", degrees: 0, minutes: 0, seconds: 0, ew: "E", cardinal: "S" };}
-  if (approx(a, 270)) {return { ns: "N", degrees: 90, minutes: 0, seconds: 0, ew: "W", cardinal: "W" };}
+  if (approx(a, 0)) {
+    return {
+      ns: "N",
+      degrees: 0,
+      minutes: 0,
+      seconds: 0,
+      ew: "E",
+      cardinal: "N",
+    };
+  }
+  if (approx(a, 90)) {
+    return {
+      ns: "N",
+      degrees: 90,
+      minutes: 0,
+      seconds: 0,
+      ew: "E",
+      cardinal: "E",
+    };
+  }
+  if (approx(a, 180)) {
+    return {
+      ns: "S",
+      degrees: 0,
+      minutes: 0,
+      seconds: 0,
+      ew: "E",
+      cardinal: "S",
+    };
+  }
+  if (approx(a, 270)) {
+    return {
+      ns: "N",
+      degrees: 90,
+      minutes: 0,
+      seconds: 0,
+      ew: "W",
+      cardinal: "W",
+    };
+  }
 
   let ns: "N" | "S";
   let ew: "E" | "W";
@@ -71,7 +111,9 @@ export function azimuthToBearing(az: number): QuadrantBearing {
 /** Format a quadrant bearing as e.g. `N45°30′15″E`, or `Due North`. */
 export function formatBearing(b: QuadrantBearing): string {
   if (b.cardinal) {
-    return { N: "Due North", S: "Due South", E: "Due East", W: "Due West" }[b.cardinal];
+    return { N: "Due North", S: "Due South", E: "Due East", W: "Due West" }[
+      b.cardinal
+    ];
   }
   const d = String(b.degrees).padStart(2, "0");
   const m = String(b.minutes).padStart(2, "0");
@@ -90,10 +132,18 @@ export function bearingText(a: Point, b: Point): string {
  * the *recorded* (rounded) bearings actually printed on the plat.
  */
 export function bearingToAzimuth(b: QuadrantBearing): number {
-  if (b.cardinal) {return { N: 0, E: 90, S: 180, W: 270 }[b.cardinal];}
+  if (b.cardinal) {
+    return { N: 0, E: 90, S: 180, W: 270 }[b.cardinal];
+  }
   const angle = b.degrees + b.minutes / 60 + b.seconds / 3600;
-  if (b.ns === "N" && b.ew === "E") {return angle;}
-  if (b.ns === "S" && b.ew === "E") {return 180 - angle;}
-  if (b.ns === "S" && b.ew === "W") {return 180 + angle;}
+  if (b.ns === "N" && b.ew === "E") {
+    return angle;
+  }
+  if (b.ns === "S" && b.ew === "E") {
+    return 180 - angle;
+  }
+  if (b.ns === "S" && b.ew === "W") {
+    return 180 + angle;
+  }
   return 360 - angle; // N…W
 }

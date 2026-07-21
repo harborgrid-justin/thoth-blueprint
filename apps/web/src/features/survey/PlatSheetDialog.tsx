@@ -51,15 +51,19 @@ import {
 /** The plat-sheet composer: a jurisdiction-driven plan sheet with title block,
  * certificates, the site plan, a consolidated curve table, and a legend. */
 export function PlatSheetDialog() {
-  const { open, setOpen, site, plugin, caps, svgRef, exportSvg } = usePlatSheetState();
-  if (!site) {return null;}
+  const { open, setOpen, site, plugin, caps, svgRef, exportSvg } =
+    usePlatSheetState();
+  if (!site) {
+    return null;
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-6xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <LayoutTemplate className="h-5 w-5 text-primary" /> Plat Sheet Composer
+            <LayoutTemplate className="h-5 w-5 text-primary" /> Plat Sheet
+            Composer
           </DialogTitle>
           <DialogDescription>
             {site.name} — driven by the {plugin.name} region plug-in.
@@ -70,7 +74,9 @@ export function PlatSheetDialog() {
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span>
               Survey framework:{" "}
-              <span className="font-medium text-foreground">{plugin.surveyFramework}</span>
+              <span className="font-medium text-foreground">
+                {plugin.surveyFramework}
+              </span>
             </span>
             <Badge variant="outline">{plugin.name}</Badge>
           </div>
@@ -90,8 +96,24 @@ export function PlatSheetDialog() {
               fontFamily="ui-monospace, Menlo, Consolas, monospace"
             >
               <CanvasPatterns />
-              <rect x={8} y={8} width={W - 16} height={H - 16} fill="none" stroke={INK} strokeWidth={1.6} />
-              <rect x={13} y={13} width={W - 26} height={H - 26} fill="none" stroke={INK} strokeWidth={0.6} />
+              <rect
+                x={8}
+                y={8}
+                width={W - 16}
+                height={H - 16}
+                fill="none"
+                stroke={INK}
+                strokeWidth={1.6}
+              />
+              <rect
+                x={13}
+                y={13}
+                width={W - 26}
+                height={H - 26}
+                fill="none"
+                stroke={INK}
+                strokeWidth={0.6}
+              />
               <PlanWindow site={site} plugin={plugin} />
               <TitleStrip site={site} plugin={plugin} caps={caps} />
             </svg>
@@ -104,7 +126,10 @@ export function PlatSheetDialog() {
               </h4>
               <div className="grid gap-3 sm:grid-cols-2">
                 {plugin.certificates.map((c) => (
-                  <div key={c.id} className="rounded-md border border-border bg-background/60 p-3">
+                  <div
+                    key={c.id}
+                    className="rounded-md border border-border bg-background/60 p-3"
+                  >
                     <div className="text-xs font-semibold uppercase tracking-wide text-foreground">
                       {c.title}
                     </div>
@@ -116,7 +141,9 @@ export function PlatSheetDialog() {
                         {c.signatures.map((s) => (
                           <div key={s} className="min-w-[120px] flex-1">
                             <div className="h-4 border-b border-foreground/50" />
-                            <div className="mt-0.5 text-[10px] text-muted-foreground">{s}</div>
+                            <div className="mt-0.5 text-[10px] text-muted-foreground">
+                              {s}
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -141,7 +168,12 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
   const hoveredElementId = useWorkspaceStore((s) => s.hoveredElementId);
   const ext = planExtent(site);
   const clipId = "sheet-plan-clip";
-  const inner = { x: MAIN.x + 8, y: MAIN.y + 8, w: MAIN.w - 16, h: MAIN.h - 40 };
+  const inner = {
+    x: MAIN.x + 8,
+    y: MAIN.y + 8,
+    w: MAIN.w - 16,
+    h: MAIN.h - 40,
+  };
 
   let project = (p: Point) => ({ x: p.x, y: p.y });
   let scalePx = 1;
@@ -158,9 +190,22 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
 
   return (
     <g>
-      <rect x={MAIN.x} y={MAIN.y} width={MAIN.w} height={MAIN.h} fill="none" stroke={INK} strokeWidth={1} />
+      <rect
+        x={MAIN.x}
+        y={MAIN.y}
+        width={MAIN.w}
+        height={MAIN.h}
+        fill="none"
+        stroke={INK}
+        strokeWidth={1}
+      />
       <clipPath id={clipId}>
-        <rect x={MAIN.x + 1} y={MAIN.y + 1} width={MAIN.w - 2} height={MAIN.h - 2} />
+        <rect
+          x={MAIN.x + 1}
+          y={MAIN.y + 1}
+          width={MAIN.w - 2}
+          height={MAIN.h - 2}
+        />
       </clipPath>
 
       <g clipPath={`url(#${clipId})`}>
@@ -168,7 +213,10 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
 
         {_.map(_.filter(site.elements, isSpatialElement), (el) => {
           const ring = _.map(densifyBoundary(el.boundary, el.arcs, 2), project);
-          const pts = _.map(ring, (s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ");
+          const pts = _.map(
+            ring,
+            (s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`,
+          ).join(" ");
           const cat = el.kind === "landuse" ? el.category : undefined;
           const color = elementColor(el.kind, cat);
           const isEsmt = el.kind === "easement";
@@ -179,7 +227,9 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
             <g
               key={el.id}
               className="cursor-pointer"
-              onMouseEnter={() => useWorkspaceStore.getState().hoverElement(el.id)}
+              onMouseEnter={() =>
+                useWorkspaceStore.getState().hoverElement(el.id)
+              }
               onMouseLeave={() => {
                 if (useWorkspaceStore.getState().hoveredElementId === el.id) {
                   useWorkspaceStore.getState().hoverElement(null);
@@ -190,13 +240,41 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
               <polygon
                 points={pts}
                 fill={isHovered ? "#f59e0b" : color}
-                fillOpacity={isHovered ? 0.35 : isSelected ? 0.3 : isEsmt ? 0.05 : el.kind === "building" ? 0.6 : 0.14}
-                stroke={isSelected ? "#0284c7" : isHovered ? "#f59e0b" : isEsmt ? MUTED : INK}
-                strokeWidth={isSelected || isHovered ? 2.5 : el.kind === "parcel" ? 1.4 : 0.9}
-                strokeDasharray={isEsmt ? "6 3 2 3" : el.kind === "zone" ? "5 3" : undefined}
+                fillOpacity={
+                  isHovered
+                    ? 0.35
+                    : isSelected
+                      ? 0.3
+                      : isEsmt
+                        ? 0.05
+                        : el.kind === "building"
+                          ? 0.6
+                          : 0.14
+                }
+                stroke={
+                  isSelected
+                    ? "#0284c7"
+                    : isHovered
+                      ? "#f59e0b"
+                      : isEsmt
+                        ? MUTED
+                        : INK
+                }
+                strokeWidth={
+                  isSelected || isHovered
+                    ? 2.5
+                    : el.kind === "parcel"
+                      ? 1.4
+                      : 0.9
+                }
+                strokeDasharray={
+                  isEsmt ? "6 3 2 3" : el.kind === "zone" ? "5 3" : undefined
+                }
                 vectorEffect="non-scaling-stroke"
               />
-              {pattern && <polygon points={pts} fill={`url(#${pattern})`} stroke="none" />}
+              {pattern && (
+                <polygon points={pts} fill={`url(#${pattern})`} stroke="none" />
+              )}
             </g>
           );
         })}
@@ -206,33 +284,57 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
         ))}
 
         {_.map(
-          _.filter(site.elements, (e) => e.kind === "lot" || e.kind === "parcel"),
+          _.filter(
+            site.elements,
+            (e) => e.kind === "lot" || e.kind === "parcel",
+          ),
           (el) => {
-            if (!isSpatialElement(el)) {return null;}
+            if (!isSpatialElement(el)) {
+              return null;
+            }
             const ring = densifyBoundary(el.boundary, el.arcs, 2);
-            const c = ring.reduce((a, p) => ({ x: a.x + p.x, y: a.y + p.y }), { x: 0, y: 0 });
-            const center = project({ x: c.x / ring.length, y: c.y / ring.length });
+            const c = ring.reduce((a, p) => ({ x: a.x + p.x, y: a.y + p.y }), {
+              x: 0,
+              y: 0,
+            });
+            const center = project({
+              x: c.x / ring.length,
+              y: c.y / ring.length,
+            });
             const acres = measuredArea(el.boundary, site.spatial, areaUnit);
             return (
-              <text key={`l${el.id}`} x={center.x} y={center.y} textAnchor="middle" fontSize={7} fill={INK}>
-                <tspan x={center.x} fontWeight={700}>{el.name}</tspan>
+              <text
+                key={`l${el.id}`}
+                x={center.x}
+                y={center.y}
+                textAnchor="middle"
+                fontSize={7}
+                fill={INK}
+              >
+                <tspan x={center.x} fontWeight={700}>
+                  {el.name}
+                </tspan>
                 <tspan x={center.x} dy={8} fill={MUTED}>
                   {acres.toFixed(2)} {areaUnitLabel(areaUnit)}
                 </tspan>
               </text>
             );
-          }
+          },
         )}
 
         {_.map(site.alignments ?? [], (a) => {
           const r = resolveAlignment(a);
-          if (!r) {return null;}
+          if (!r) {
+            return null;
+          }
           return (a.offsets ?? []).map((off, oi) => {
             const path = offsetAlignmentPath(r, off.distance).map(project);
             return (
               <polyline
                 key={`${a.id}-off${oi}`}
-                points={path.map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ")}
+                points={path
+                  .map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`)
+                  .join(" ")}
                 fill="none"
                 stroke={off.kind === "row" ? "#7c3aed" : "#334155"}
                 strokeWidth={0.7}
@@ -245,24 +347,41 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
         {/* Alignment centerlines. */}
         {(site.alignments ?? []).map((a) => {
           const r = resolveAlignment(a);
-          if (!r) {return null;}
+          if (!r) {
+            return null;
+          }
           const pts: Point[] = [];
           for (const el of r.elements) {
             if (el.kind === "tangent") {
-              if (pts.length === 0) {pts.push(el.from);}
+              if (pts.length === 0) {
+                pts.push(el.from);
+              }
               pts.push(el.to);
             } else {
               const c = el.curve;
               const steps = Math.max(2, Math.ceil(c.deltaDeg / 3));
               for (let i = 0; i <= steps; i++) {
                 const ang = c.startAngle + (c.sweep * i) / steps;
-                pts.push({ x: c.center.x + c.radius * Math.cos(ang), y: c.center.y + c.radius * Math.sin(ang) });
+                pts.push({
+                  x: c.center.x + c.radius * Math.cos(ang),
+                  y: c.center.y + c.radius * Math.sin(ang),
+                });
               }
             }
           }
-          const poly = pts.map(project).map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ");
+          const poly = pts
+            .map(project)
+            .map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`)
+            .join(" ");
           return (
-            <polyline key={a.id} points={poly} fill="none" stroke="#b91c1c" strokeWidth={1.1} strokeDasharray="12 3 3 3" />
+            <polyline
+              key={a.id}
+              points={poly}
+              fill="none"
+              stroke="#b91c1c"
+              strokeWidth={1.1}
+              strokeDasharray="12 3 3 3"
+            />
           );
         })}
 
@@ -280,7 +399,10 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
         {(site.civilSymbols ?? []).map((sym) => {
           const s = project(sym.position);
           return (
-            <g key={sym.id} transform={`translate(${s.x} ${s.y}) rotate(${sym.rotation ?? 0}) scale(0.85)`}>
+            <g
+              key={sym.id}
+              transform={`translate(${s.x} ${s.y}) rotate(${sym.rotation ?? 0}) scale(0.85)`}
+            >
               <CivilSymbolGlyph type={sym.type} subtype={sym.subtype} />
             </g>
           );
@@ -288,8 +410,19 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
       </g>
 
       <NorthArrow x={MAIN.x + MAIN.w - 34} y={MAIN.y + 14} />
-      <GraphicScale x={MAIN.x + 16} y={MAIN.y + MAIN.h - 16} scalePx={scalePx} site={site} />
-      <text x={MAIN.x + 8} y={MAIN.y + MAIN.h - 6} fontSize={9} fontWeight={700} fill={INK}>
+      <GraphicScale
+        x={MAIN.x + 16}
+        y={MAIN.y + MAIN.h - 16}
+        scalePx={scalePx}
+        site={site}
+      />
+      <text
+        x={MAIN.x + 8}
+        y={MAIN.y + MAIN.h - 6}
+        fontSize={9}
+        fontWeight={700}
+        fill={INK}
+      >
         SHEET 1 OF 1
       </text>
     </g>
@@ -307,11 +440,26 @@ function FrameworkOnSheet({
 }) {
   if (plugin.surveyFramework === "georgia-land-lot" && site.landLot?.nwCorner) {
     const acres = site.landLot.ref.acres ?? 202.5;
-    const side = (landLotSide(acres) * 0.3048) / METERS_PER_UNIT[site.spatial.units];
-    return <FrameworkSquareSheet frame={sectionFrame(site.landLot.nwCorner, side)} project={project} />;
+    const side =
+      (landLotSide(acres) * 0.3048) / METERS_PER_UNIT[site.spatial.units];
+    return (
+      <FrameworkSquareSheet
+        frame={sectionFrame(site.landLot.nwCorner, side)}
+        project={project}
+      />
+    );
   }
-  if (plugin.surveyFramework !== "georgia-land-lot" && site.plss?.sectionNwCorner && site.plss.sectionSide) {
-    return <FrameworkSquareSheet frame={sectionFrame(site.plss.sectionNwCorner, site.plss.sectionSide)} project={project} />;
+  if (
+    plugin.surveyFramework !== "georgia-land-lot" &&
+    site.plss?.sectionNwCorner &&
+    site.plss.sectionSide
+  ) {
+    return (
+      <FrameworkSquareSheet
+        frame={sectionFrame(site.plss.sectionNwCorner, site.plss.sectionSide)}
+        project={project}
+      />
+    );
   }
   return null;
 }
@@ -327,16 +475,48 @@ function FrameworkSquareSheet({
   const [nw, ne, sw, se] = [p(f.nw), p(f.ne), p(f.sw), p(f.se)];
   return (
     <g>
-      <polygon points={[nw, ne, se, sw].map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ")} fill="none" stroke={MUTED} strokeWidth={1} strokeDasharray="14 4 3 4" />
-      <line x1={p(f.north).x} y1={p(f.north).y} x2={p(f.south).x} y2={p(f.south).y} stroke={MUTED} strokeWidth={0.5} strokeDasharray="8 5" />
-      <line x1={p(f.west).x} y1={p(f.west).y} x2={p(f.east).x} y2={p(f.east).y} stroke={MUTED} strokeWidth={0.5} strokeDasharray="8 5" />
+      <polygon
+        points={[nw, ne, se, sw]
+          .map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`)
+          .join(" ")}
+        fill="none"
+        stroke={MUTED}
+        strokeWidth={1}
+        strokeDasharray="14 4 3 4"
+      />
+      <line
+        x1={p(f.north).x}
+        y1={p(f.north).y}
+        x2={p(f.south).x}
+        y2={p(f.south).y}
+        stroke={MUTED}
+        strokeWidth={0.5}
+        strokeDasharray="8 5"
+      />
+      <line
+        x1={p(f.west).x}
+        y1={p(f.west).y}
+        x2={p(f.east).x}
+        y2={p(f.east).y}
+        stroke={MUTED}
+        strokeWidth={0.5}
+        strokeDasharray="8 5"
+      />
     </g>
   );
 }
 
 // --- SVG right strip: title block, legend, curve table ---------------------
 
-function TitleStrip({ site, plugin, caps }: { site: Site; plugin: RegionPlugin; caps: ReturnType<typeof resolveCapabilities> }) {
+function TitleStrip({
+  site,
+  plugin,
+  caps,
+}: {
+  site: Site;
+  plugin: RegionPlugin;
+  caps: ReturnType<typeof resolveCapabilities>;
+}) {
   const framework =
     plugin.surveyFramework === "georgia-land-lot" && site.landLot
       ? formatLandLotShort(site.landLot.ref)
@@ -365,24 +545,59 @@ function TitleStrip({ site, plugin, caps }: { site: Site; plugin: RegionPlugin; 
   const curves = caps.curveTable ? collectSiteCurves(site) : [];
   const u = unitLabel(site.spatial.units);
 
-  const titleH = 30 + (plugin.titleBlock.firmLines?.length ?? 0) * 12 + plugin.titleBlock.fields.length * 15;
+  const titleH =
+    30 +
+    (plugin.titleBlock.firmLines?.length ?? 0) * 12 +
+    plugin.titleBlock.fields.length * 15;
 
   return (
     <g>
-      <rect x={STRIP.x} y={STRIP.y} width={STRIP.w} height={STRIP.h} fill="none" stroke={INK} strokeWidth={1} />
+      <rect
+        x={STRIP.x}
+        y={STRIP.y}
+        width={STRIP.w}
+        height={STRIP.h}
+        fill="none"
+        stroke={INK}
+        strokeWidth={1}
+      />
 
       {/* Title block */}
-      <rect x={STRIP.x} y={STRIP.y} width={STRIP.w} height={titleH} fill="none" stroke={INK} strokeWidth={0.8} />
-      <text x={STRIP.x + 8} y={STRIP.y + 16} fontSize={11} fontWeight={700} fill={INK}>
+      <rect
+        x={STRIP.x}
+        y={STRIP.y}
+        width={STRIP.w}
+        height={titleH}
+        fill="none"
+        stroke={INK}
+        strokeWidth={0.8}
+      />
+      <text
+        x={STRIP.x + 8}
+        y={STRIP.y + 16}
+        fontSize={11}
+        fontWeight={700}
+        fill={INK}
+      >
         PLAT OF {site.name.toUpperCase()}
       </text>
       {(plugin.titleBlock.firmLines ?? []).map((line, i) => (
-        <text key={i} x={STRIP.x + 8} y={STRIP.y + 30 + i * 12} fontSize={8} fill={MUTED}>
+        <text
+          key={i}
+          x={STRIP.x + 8}
+          y={STRIP.y + 30 + i * 12}
+          fontSize={8}
+          fill={MUTED}
+        >
           {line}
         </text>
       ))}
       {plugin.titleBlock.fields.map((field, i) => {
-        const fy = STRIP.y + 34 + (plugin.titleBlock.firmLines?.length ?? 0) * 12 + i * 15;
+        const fy =
+          STRIP.y +
+          34 +
+          (plugin.titleBlock.firmLines?.length ?? 0) * 12 +
+          i * 15;
         return (
           <text key={field.key} x={STRIP.x + 8} y={fy} fontSize={9} fill={INK}>
             <tspan fill={MUTED}>{field.label}: </tspan>
@@ -393,21 +608,29 @@ function TitleStrip({ site, plugin, caps }: { site: Site; plugin: RegionPlugin; 
 
       {/* Legend */}
       <g transform={`translate(${STRIP.x + 8}, ${STRIP.y + titleH + 16})`}>
-        <text x={0} y={0} fontSize={9} fontWeight={700} fill={INK}>LEGEND</text>
-        {[...new Set((site.monuments ?? []).map((m) => m.type))].slice(0, 6).map((t, i) => (
-          <g key={t} transform={`translate(6, ${14 + i * 15})`}>
-            <g transform="scale(0.7)">
-              <MonumentSymbol type={t} filled />
+        <text x={0} y={0} fontSize={9} fontWeight={700} fill={INK}>
+          LEGEND
+        </text>
+        {[...new Set((site.monuments ?? []).map((m) => m.type))]
+          .slice(0, 6)
+          .map((t, i) => (
+            <g key={t} transform={`translate(6, ${14 + i * 15})`}>
+              <g transform="scale(0.7)">
+                <MonumentSymbol type={t} filled />
+              </g>
+              <text x={12} y={3} fontSize={8} fill={INK}>
+                {t.replace(/-/g, " ")}
+              </text>
             </g>
-            <text x={12} y={3} fontSize={8} fill={INK}>{t.replace(/-/g, " ")}</text>
-          </g>
-        ))}
+          ))}
       </g>
 
       {/* Curve table */}
       {curves.length > 0 && (
         <g transform={`translate(${STRIP.x + 8}, ${STRIP.y + titleH + 130})`}>
-          <text x={0} y={0} fontSize={9} fontWeight={700} fill={INK}>CURVE DATA</text>
+          <text x={0} y={0} fontSize={9} fontWeight={700} fill={INK}>
+            CURVE DATA
+          </text>
           <text x={0} y={13} fontSize={7} fill={MUTED}>
             {`CV   R(${u})    L(${u})    Δ        CHORD`}
           </text>
@@ -429,26 +652,66 @@ function NorthArrow({ x, y }: { x: number; y: number }) {
     <g transform={`translate(${x} ${y})`} fill={INK} stroke={INK}>
       <path d="M0 30 L0 4" strokeWidth={1.1} />
       <path d="M0 0 L5 12 L0 8 L-5 12 Z" strokeWidth={0.5} />
-      <text x={0} y={42} textAnchor="middle" fontSize={10} fontWeight={700} stroke="none">N</text>
+      <text
+        x={0}
+        y={42}
+        textAnchor="middle"
+        fontSize={10}
+        fontWeight={700}
+        stroke="none"
+      >
+        N
+      </text>
     </g>
   );
 }
 
-function GraphicScale({ x, y, scalePx, site }: { x: number; y: number; scalePx: number; site: Site }) {
+function GraphicScale({
+  x,
+  y,
+  scalePx,
+  site,
+}: {
+  x: number;
+  y: number;
+  scalePx: number;
+  site: Site;
+}) {
   const u = unitLabel(site.spatial.units);
   const { nice, barPx, seg } = computeGraphicScaleBar(scalePx, site);
   return (
     <g transform={`translate(${x} ${y})`}>
       {Array.from({ length: 4 }).map((_, i) => (
-        <rect key={i} x={i * seg} y={0} width={seg} height={6} fill={i % 2 === 0 ? INK : SHEET} stroke={INK} strokeWidth={0.7} />
+        <rect
+          key={i}
+          x={i * seg}
+          y={0}
+          width={seg}
+          height={6}
+          fill={i % 2 === 0 ? INK : SHEET}
+          stroke={INK}
+          strokeWidth={0.7}
+        />
       ))}
-      <text x={0} y={16} fontSize={7} textAnchor="middle" fill={INK}>0</text>
-      <text x={barPx} y={16} fontSize={7} textAnchor="middle" fill={INK}>{`${nice.toLocaleString()} ${u}`}</text>
+      <text x={0} y={16} fontSize={7} textAnchor="middle" fill={INK}>
+        0
+      </text>
+      <text
+        x={barPx}
+        y={16}
+        fontSize={7}
+        textAnchor="middle"
+        fill={INK}
+      >{`${nice.toLocaleString()} ${u}`}</text>
     </g>
   );
 }
 
-function CapabilitiesRow({ caps }: { caps: ReturnType<typeof resolveCapabilities> }) {
+function CapabilitiesRow({
+  caps,
+}: {
+  caps: ReturnType<typeof resolveCapabilities>;
+}) {
   return (
     <div className="mt-4">
       <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -456,7 +719,11 @@ function CapabilitiesRow({ caps }: { caps: ReturnType<typeof resolveCapabilities
       </h4>
       <div className="flex flex-wrap gap-1.5">
         {Object.entries(caps).map(([k, on]) => (
-          <Badge key={k} variant={on ? "default" : "outline"} className={on ? "" : "opacity-50"}>
+          <Badge
+            key={k}
+            variant={on ? "default" : "outline"}
+            className={on ? "" : "opacity-50"}
+          >
             {k}
           </Badge>
         ))}

@@ -5,9 +5,17 @@ const GRID = "#64748b";
 const INK = "hsl(var(--foreground))";
 const HALO = "hsl(var(--canvas))";
 
-export function GridBubbleLayer({ site, viewport }: { site: Site; viewport: Viewport }) {
+export function GridBubbleLayer({
+  site,
+  viewport,
+}: {
+  site: Site;
+  viewport: Viewport;
+}) {
   const gridLines = site.annotations?.gridLines;
-  if (!gridLines || gridLines.length === 0) {return null;}
+  if (!gridLines || gridLines.length === 0) {
+    return null;
+  }
 
   const project = (p: Point) => worldToScreen(p, viewport);
   const gap = 16;
@@ -34,8 +42,23 @@ export function GridBubbleLayer({ site, viewport }: { site: Site; viewport: View
               const c = project(bub.center);
               return (
                 <g key={i}>
-                  <circle cx={c.x} cy={c.y} r={11} fill={HALO} stroke={INK} strokeWidth={1.1} vectorEffect="non-scaling-stroke" />
-                  <text x={c.x} y={c.y + 3.5} fontSize={11} fontWeight={700} textAnchor="middle" fill={INK}>
+                  <circle
+                    cx={c.x}
+                    cy={c.y}
+                    r={11}
+                    fill={HALO}
+                    stroke={INK}
+                    strokeWidth={1.1}
+                    vectorEffect="non-scaling-stroke"
+                  />
+                  <text
+                    x={c.x}
+                    y={c.y + 3.5}
+                    fontSize={11}
+                    fontWeight={700}
+                    textAnchor="middle"
+                    fill={INK}
+                  >
                     {bub.label}
                   </text>
                 </g>

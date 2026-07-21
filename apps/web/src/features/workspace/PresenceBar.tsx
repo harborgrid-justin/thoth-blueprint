@@ -1,5 +1,9 @@
 import type { Member } from "@/api";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { usePresenceState } from "./hooks/usePresenceState";
 import { initials } from "./helpers/presenceHelpers";
 

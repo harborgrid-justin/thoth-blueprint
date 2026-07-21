@@ -7,8 +7,8 @@ export interface ViewFrame {
   stationStart: number;
   stationEnd: number;
   center: Point;
-  width: number;       // viewport width in model units
-  height: number;      // viewport height in model units
+  width: number; // viewport width in model units
+  height: number; // viewport height in model units
   rotationDeg: number; // clockwise rotation angle in degrees to align viewport
 }
 

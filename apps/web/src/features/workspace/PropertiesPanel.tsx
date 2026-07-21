@@ -14,7 +14,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { usePropertiesState } from "./hooks/usePropertiesState";
 import { countCurvedEdges } from "./helpers/propertiesHelpers";
@@ -29,12 +35,16 @@ export function PropertiesPanel() {
     deleteSelection,
   } = usePropertiesState();
 
-  if (!site) {return null;}
+  if (!site) {
+    return null;
+  }
 
   if (selection.length === 0) {
     return (
       <div className="flex flex-col gap-3 p-3">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Site</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Site
+        </h3>
         <Field label="Name" value={site.name} readOnly />
         <div className="grid grid-cols-3 gap-2">
           <Field label="CRS" value={site.spatial.crs} readOnly />
@@ -52,7 +62,10 @@ export function PropertiesPanel() {
               {validatedAlignments.map((item: any) => {
                 const { align, resolved, speed, violations } = item;
                 return (
-                  <div key={align.id} className="rounded border border-border bg-muted/10 p-2">
+                  <div
+                    key={align.id}
+                    className="rounded border border-border bg-muted/10 p-2"
+                  >
                     <div className="flex justify-between items-center text-[11px] font-semibold">
                       <span className="text-primary">{align.name}</span>
                       <span className="text-muted-foreground">{speed} MPH</span>
@@ -61,13 +74,17 @@ export function PropertiesPanel() {
                       <span>Length: {resolved.length.toFixed(1)} ft</span>
                       <span>Curves: {resolved.curves.length}</span>
                     </div>
-                    
+
                     {/* Violations List */}
                     {violations.length > 0 ? (
                       <div className="mt-1.5 flex flex-col gap-1">
                         {violations.map((v: any, idx: number) => (
-                          <div key={idx} className="text-[9px] text-rose-400 bg-rose-500/10 rounded px-1.5 py-0.5 border border-rose-500/15">
-                            ⚠️ Min R: {v.requiredRadius} ft | Curve R: {v.curveRadius.toFixed(1)} ft
+                          <div
+                            key={idx}
+                            className="text-[9px] text-rose-400 bg-rose-500/10 rounded px-1.5 py-0.5 border border-rose-500/15"
+                          >
+                            ⚠️ Min R: {v.requiredRadius} ft | Curve R:{" "}
+                            {v.curveRadius.toFixed(1)} ft
                           </div>
                         ))}
                       </div>
@@ -84,8 +101,8 @@ export function PropertiesPanel() {
         )}
 
         <p className="text-xs leading-relaxed text-muted-foreground/70 mt-1">
-          Select an element to edit its planning attributes, or pick a drawing tool to add parcels,
-          zones, lots, land uses, and buildings.
+          Select an element to edit its planning attributes, or pick a drawing
+          tool to add parcels, zones, lots, land uses, and buildings.
         </p>
       </div>
     );
@@ -94,23 +111,37 @@ export function PropertiesPanel() {
   if (selection.length > 1) {
     return (
       <div className="flex flex-col gap-3 p-3">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Selection</h3>
-        <p className="text-sm text-foreground">{selection.length} elements selected</p>
-        <Button variant="destructive" size="sm" onClick={deleteSelection} className="w-full">
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Selection
+        </h3>
+        <p className="text-sm text-foreground">
+          {selection.length} elements selected
+        </p>
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={deleteSelection}
+          className="w-full"
+        >
           <Trash2 className="h-4 w-4" /> Delete {selection.length} elements
         </Button>
       </div>
     );
   }
 
-  if (!selectedElement) {return null;}
+  if (!selectedElement) {
+    return null;
+  }
 
   return <SingleElementInspector element={selectedElement} />;
 }
 
 function SingleElementInspector({ element }: { element: PlanElement }) {
-  const { site, updateElement, deleteSelection, openPlat } = usePropertiesState();
-  if (!site) {return null;}
+  const { site, updateElement, deleteSelection, openPlat } =
+    usePropertiesState();
+  if (!site) {
+    return null;
+  }
   const meta = elementMeta(element.kind);
 
   const set = (patch: Partial<PlanElement>) => updateElement(element.id, patch);
@@ -118,36 +149,69 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
   return (
     <div className="flex flex-col gap-3 p-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Properties</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          Properties
+        </h3>
         <Badge variant="outline" className="capitalize">
           {meta.label}
         </Badge>
       </div>
 
       {element.kind === "note" ? (
-        <TextField label="Text" value={element.text} onCommit={(text) => set({ text })} />
+        <TextField
+          label="Text"
+          value={element.text}
+          onCommit={(text) => set({ text })}
+        />
       ) : element.kind === "tree" ? (
-        <TextField label="Species" value={element.species ?? ""} onCommit={(species) => set({ species })} />
+        <TextField
+          label="Species"
+          value={element.species ?? ""}
+          onCommit={(species) => set({ species })}
+        />
       ) : element.kind === "spot" ? (
-        <TextField label="Label" value={element.label ?? ""} onCommit={(label) => set({ label })} />
+        <TextField
+          label="Label"
+          value={element.label ?? ""}
+          onCommit={(label) => set({ label })}
+        />
       ) : (
-        <TextField label="Name" value={element.name} onCommit={(name) => set({ name })} />
+        <TextField
+          label="Name"
+          value={element.name}
+          onCommit={(name) => set({ name })}
+        />
       )}
 
       {isSpatialElement(element) && (
         <div className="grid grid-cols-2 gap-2">
-          <Field label="Area" value={formatArea(measuredArea(element.boundary, site.spatial, "sqm"), "sqm")} readOnly />
+          <Field
+            label="Area"
+            value={formatArea(
+              measuredArea(element.boundary, site.spatial, "sqm"),
+              "sqm",
+            )}
+            readOnly
+          />
           <Field
             label="Perimeter"
             value={`${formatNumber(measuredPerimeter(element.boundary, site.spatial), 1)} m`}
             readOnly
           />
-          <Field label="Vertices" value={String(element.boundary.length)} readOnly />
+          <Field
+            label="Vertices"
+            value={String(element.boundary.length)}
+            readOnly
+          />
         </div>
       )}
 
       {element.kind === "parcel" && (
-        <TextField label="APN" value={element.apn ?? ""} onCommit={(apn) => set({ apn })} />
+        <TextField
+          label="APN"
+          value={element.apn ?? ""}
+          onCommit={(apn) => set({ apn })}
+        />
       )}
 
       {element.kind === "zone" && (
@@ -158,41 +222,91 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
             onCommit={(designation) => set({ designation })}
           />
           <div className="grid grid-cols-2 gap-2">
-            <NumberField label="Max coverage" value={element.maxCoverage ?? 0} step={0.05} onCommit={(v) => set({ maxCoverage: v })} />
-            <NumberField label="Max FAR" value={element.maxFar ?? 0} step={0.1} onCommit={(v) => set({ maxFar: v })} />
-            <NumberField label="Max height" value={element.maxHeight ?? 0} onCommit={(v) => set({ maxHeight: v })} />
-            <NumberField label="Min setback" value={element.minSetback ?? 0} onCommit={(v) => set({ minSetback: v })} />
+            <NumberField
+              label="Max coverage"
+              value={element.maxCoverage ?? 0}
+              step={0.05}
+              onCommit={(v) => set({ maxCoverage: v })}
+            />
+            <NumberField
+              label="Max FAR"
+              value={element.maxFar ?? 0}
+              step={0.1}
+              onCommit={(v) => set({ maxFar: v })}
+            />
+            <NumberField
+              label="Max height"
+              value={element.maxHeight ?? 0}
+              onCommit={(v) => set({ maxHeight: v })}
+            />
+            <NumberField
+              label="Min setback"
+              value={element.minSetback ?? 0}
+              onCommit={(v) => set({ minSetback: v })}
+            />
           </div>
         </>
       )}
 
       {element.kind === "landuse" && (
-        <LandUseSelect value={element.category} onChange={(category) => set({ category })} />
+        <LandUseSelect
+          value={element.category}
+          onChange={(category) => set({ category })}
+        />
       )}
 
       {element.kind === "lot" && (
-        <NumberField label="Setback" value={element.setback ?? 0} onCommit={(v) => set({ setback: v })} />
+        <NumberField
+          label="Setback"
+          value={element.setback ?? 0}
+          onCommit={(v) => set({ setback: v })}
+        />
       )}
 
       {element.kind === "building" && (
         <>
           <div className="grid grid-cols-2 gap-2">
-            <NumberField label="Storeys" value={element.storeys} onCommit={(v) => set({ storeys: Math.max(1, Math.round(v)) })} />
-            <NumberField label="Height" value={element.height ?? 0} onCommit={(v) => set({ height: v })} />
-            <NumberField label="Dwelling units" value={element.dwellingUnits ?? 0} onCommit={(v) => set({ dwellingUnits: Math.max(0, Math.round(v)) })} />
+            <NumberField
+              label="Storeys"
+              value={element.storeys}
+              onCommit={(v) => set({ storeys: Math.max(1, Math.round(v)) })}
+            />
+            <NumberField
+              label="Height"
+              value={element.height ?? 0}
+              onCommit={(v) => set({ height: v })}
+            />
+            <NumberField
+              label="Dwelling units"
+              value={element.dwellingUnits ?? 0}
+              onCommit={(v) =>
+                set({ dwellingUnits: Math.max(0, Math.round(v)) })
+              }
+            />
           </div>
-          <LandUseSelect label="Use" value={element.use ?? "residential"} onChange={(use) => set({ use })} />
+          <LandUseSelect
+            label="Use"
+            value={element.use ?? "residential"}
+            onChange={(use) => set({ use })}
+          />
         </>
       )}
 
       {element.kind === "row" && (
-        <NumberField label="Width" value={element.width ?? 0} onCommit={(v) => set({ width: v })} />
+        <NumberField
+          label="Width"
+          value={element.width ?? 0}
+          onCommit={(v) => set({ width: v })}
+        />
       )}
 
       {element.kind === "openspace" && (
         <div className="flex items-center justify-between rounded-md border border-border px-3 py-2">
           <Label className="text-sm text-foreground">Public dedication</Label>
-          <Switch checked={element.dedicated ?? false} onCheckedChange={(dedicated) => set({ dedicated })} />
+          <Switch
+            checked={element.dedicated ?? false}
+            onCheckedChange={(dedicated) => set({ dedicated })}
+          />
         </div>
       )}
 
@@ -200,8 +314,17 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
         <SelectField
           label="Region type"
           value={element.regionType ?? "estate"}
-          options={["estate", "district", "watershed", "reserve", "agricultural", "settlement"]}
-          onChange={(regionType) => set({ regionType: regionType as typeof element.regionType })}
+          options={[
+            "estate",
+            "district",
+            "watershed",
+            "reserve",
+            "agricultural",
+            "settlement",
+          ]}
+          onChange={(regionType) =>
+            set({ regionType: regionType as typeof element.regionType })
+          }
         />
       )}
 
@@ -210,7 +333,9 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
           label="Water type"
           value={element.waterType ?? "pond"}
           options={["lake", "pond", "river", "stream", "wetland", "reservoir"]}
-          onChange={(waterType) => set({ waterType: waterType as typeof element.waterType })}
+          onChange={(waterType) =>
+            set({ waterType: waterType as typeof element.waterType })
+          }
         />
       )}
 
@@ -220,7 +345,9 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
             label="Planting type"
             value={element.plantingType ?? "forest"}
             options={["lawn", "forest", "garden", "orchard", "crop", "meadow"]}
-            onChange={(plantingType) => set({ plantingType: plantingType as typeof element.plantingType })}
+            onChange={(plantingType) =>
+              set({ plantingType: plantingType as typeof element.plantingType })
+            }
           />
           <NumberField
             label="Canopy cover (0–1)"
@@ -243,7 +370,9 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
             label="Method"
             value={element.method ?? "flat"}
             options={["flat", "terrace"]}
-            onChange={(method) => set({ method: method as typeof element.method })}
+            onChange={(method) =>
+              set({ method: method as typeof element.method })
+            }
           />
         </>
       )}
@@ -258,7 +387,12 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
       )}
 
       {element.kind === "spot" && (
-        <NumberField label="Elevation (z)" value={element.z} step={0.5} onCommit={(z) => set({ z })} />
+        <NumberField
+          label="Elevation (z)"
+          value={element.z}
+          step={0.5}
+          onCommit={(z) => set({ z })}
+        />
       )}
 
       <LayerSelect
@@ -270,12 +404,22 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
       {isSpatialElement(element) && <CurveControl element={element} />}
 
       {isSpatialElement(element) && (
-        <Button variant="outline" size="sm" onClick={() => openPlat(element.id)} className="w-full">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => openPlat(element.id)}
+          className="w-full"
+        >
           <Ruler className="h-4 w-4" /> Survey / plat report
         </Button>
       )}
 
-      <Button variant="destructive" size="sm" onClick={deleteSelection} className="mt-1 w-full">
+      <Button
+        variant="destructive"
+        size="sm"
+        onClick={deleteSelection}
+        className="mt-1 w-full"
+      >
         <Trash2 className="h-4 w-4" /> Delete
       </Button>
     </div>
@@ -285,20 +429,29 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
 /** Curve editing affordance for a spatial element (see canvas ◇ edge handles). */
 function CurveControl({ element }: { element: PlanElement }) {
   const { clearArcs } = usePropertiesState();
-  if (!isSpatialElement(element)) {return null;}
+  if (!isSpatialElement(element)) {
+    return null;
+  }
   const curveCount = countCurvedEdges(element);
   return (
     <div className="flex flex-col gap-1.5 rounded-md border border-border px-3 py-2">
       <div className="flex items-center justify-between">
         <Label className="text-sm text-foreground">Curved edges</Label>
-        <span className="text-xs tabular-nums text-muted-foreground">{curveCount}</span>
+        <span className="text-xs tabular-nums text-muted-foreground">
+          {curveCount}
+        </span>
       </div>
       <p className="text-xs leading-snug text-muted-foreground/80">
         Drag an edge&apos;s ◇ midpoint handle on the canvas to turn it into a
         circular arc.
       </p>
       {curveCount > 0 && (
-        <Button variant="outline" size="sm" onClick={() => clearArcs(element.id)} className="w-full">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => clearArcs(element.id)}
+          className="w-full"
+        >
           Straighten {curveCount} curve{curveCount === 1 ? "" : "s"}
         </Button>
       )}
@@ -318,7 +471,10 @@ function LandUseSelect({
   return (
     <div className="flex flex-col gap-1">
       <Label>{label}</Label>
-      <Select value={value} onValueChange={(v) => onChange(v as LandUseCategory)}>
+      <Select
+        value={value}
+        onValueChange={(v) => onChange(v as LandUseCategory)}
+      >
         <SelectTrigger className="h-8">
           <SelectValue />
         </SelectTrigger>
@@ -326,7 +482,10 @@ function LandUseSelect({
           {LAND_USE_DEFINITIONS.map((d) => (
             <SelectItem key={d.category} value={d.category}>
               <span className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: d.color }} />
+                <span
+                  className="h-2.5 w-2.5 rounded-sm"
+                  style={{ backgroundColor: d.color }}
+                />
                 {d.label}
               </span>
             </SelectItem>
@@ -395,7 +554,15 @@ function SelectField({
   );
 }
 
-function Field({ label, value, readOnly }: { label: string; value: string; readOnly?: boolean }) {
+function Field({
+  label,
+  value,
+  readOnly,
+}: {
+  label: string;
+  value: string;
+  readOnly?: boolean;
+}) {
   return (
     <div className="flex flex-col gap-1">
       <Label>{label}</Label>
@@ -424,7 +591,9 @@ function TextField({
         onChange={(e) => setDraft(e.target.value)}
         onBlur={() => draft !== value && onCommit(draft)}
         onKeyDown={(e) => {
-          if (e.key === "Enter") {(e.target as HTMLInputElement).blur();}
+          if (e.key === "Enter") {
+            (e.target as HTMLInputElement).blur();
+          }
         }}
       />
     </div>
@@ -455,10 +624,14 @@ function NumberField({
         onChange={(e) => setDraft(e.target.value)}
         onBlur={() => {
           const parsed = Number(draft);
-          if (!Number.isNaN(parsed) && parsed !== value) {onCommit(parsed);}
+          if (!Number.isNaN(parsed) && parsed !== value) {
+            onCommit(parsed);
+          }
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter") {(e.target as HTMLInputElement).blur();}
+          if (e.key === "Enter") {
+            (e.target as HTMLInputElement).blur();
+          }
         }}
       />
     </div>

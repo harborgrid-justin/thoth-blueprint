@@ -1,10 +1,12 @@
 import type { Point } from "../../spatial/geometry";
 
 /** The kind of system a network carries. */
-export type NetworkKind = "road" | "path" | "water" | "sewer" | "storm" | "power";
+export type NetworkKind =
+  "road" | "path" | "water" | "sewer" | "storm" | "power";
 
 /** Functional road classification (drives width and hierarchy). */
-export type RoadClass = "arterial" | "collector" | "local" | "alley" | "private";
+export type RoadClass =
+  "arterial" | "collector" | "local" | "alley" | "private";
 
 /** A junction/vertex in a network. */
 export interface NetworkNode {

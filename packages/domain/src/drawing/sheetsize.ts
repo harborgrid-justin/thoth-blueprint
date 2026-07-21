@@ -41,11 +41,32 @@ function ansiOrArch(
   wIn: number,
   hIn: number,
 ): SheetSize {
-  return { id, label, series, wIn, hIn, wMm: wIn * MM_PER_IN, hMm: hIn * MM_PER_IN };
+  return {
+    id,
+    label,
+    series,
+    wIn,
+    hIn,
+    wMm: wIn * MM_PER_IN,
+    hMm: hIn * MM_PER_IN,
+  };
 }
 
-function iso(id: SheetSizeId, label: string, wMm: number, hMm: number): SheetSize {
-  return { id, label, series: "iso", wMm, hMm, wIn: wMm * IN_PER_MM, hIn: hMm * IN_PER_MM };
+function iso(
+  id: SheetSizeId,
+  label: string,
+  wMm: number,
+  hMm: number,
+): SheetSize {
+  return {
+    id,
+    label,
+    series: "iso",
+    wMm,
+    hMm,
+    wIn: wMm * IN_PER_MM,
+    hIn: hMm * IN_PER_MM,
+  };
 }
 
 /** The registry of standard sheet sizes (portrait-native dimensions). */
@@ -79,7 +100,6 @@ export function listSheetSizes(): SheetSize[] {
   return SHEET_SIZES;
 }
 
-
 /**
  * The outer page dimensions of a sheet in the requested paper unit and
  * orientation. Portrait keeps short-edge as width; landscape swaps them.
@@ -99,7 +119,6 @@ export function sheetDimensions(
     : { w: short, h: long, unit };
 }
 
-
 /** Default NCS-style margins (inches): 1.5" binding edge, 0.5" elsewhere. */
 export const DEFAULT_MARGINS_IN: SheetMargins = {
   left: 1.5,
@@ -117,7 +136,6 @@ export const DEFAULT_MARGINS_MM: SheetMargins = {
   bottom: 10,
   unit: "mm",
 };
-
 
 /** Default margins for a paper unit. */
 export function defaultMargins(unit: PaperUnit): SheetMargins {

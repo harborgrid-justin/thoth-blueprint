@@ -36,7 +36,9 @@ export function evaluatePointGroups(elements: any[]) {
 }
 
 export function filterLayerElements(elements: any[], query: string) {
-  if (!query.trim()) {return elements;}
+  if (!query.trim()) {
+    return elements;
+  }
   return elements.filter((el) => elementMatches(el, query, "all"));
 }
 

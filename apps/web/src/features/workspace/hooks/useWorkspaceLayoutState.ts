@@ -11,7 +11,9 @@ import { TOOLS, type ToolId } from "@/lib/tools";
 import { useKeyboardShortcut } from "@/lib/hooks";
 import type { CommandActions } from "@/features/command/commands";
 
-const TOOL_BY_KEY = new Map<string, ToolId>(TOOLS.map((t) => [t.shortcut.toLowerCase(), t.id]));
+const TOOL_BY_KEY = new Map<string, ToolId>(
+  TOOLS.map((t) => [t.shortcut.toLowerCase(), t.id]),
+);
 const AUTOSAVE_MS = 1500;
 
 export function useWorkspaceLayoutState() {
@@ -54,9 +56,13 @@ export function useWorkspaceLayoutState() {
   }, []);
 
   const onSidebarPointerMove = React.useCallback((e: React.PointerEvent) => {
-    if (!isResizingRef.current) { return; }
+    if (!isResizingRef.current) {
+      return;
+    }
     const container = e.currentTarget.parentElement;
-    if (!container) { return; }
+    if (!container) {
+      return;
+    }
     const containerRect = container.getBoundingClientRect();
     const newWidth = containerRect.right - e.clientX;
     setSidebarWidth(Math.max(200, Math.min(600, newWidth)));
@@ -69,14 +75,18 @@ export function useWorkspaceLayoutState() {
 
   // Load the project into the workspace store.
   React.useEffect(() => {
-    if (!projectId) { return; }
+    if (!projectId) {
+      return;
+    }
     let cancelled = false;
     setLoading(true);
     setError(null);
     api
       .getProject(projectId)
       .then((p) => {
-        if (cancelled) { return; }
+        if (cancelled) {
+          return;
+        }
         setProject(p);
         loadProject(p);
       })
@@ -91,7 +101,9 @@ export function useWorkspaceLayoutState() {
 
   const save = React.useCallback(async () => {
     const current = useWorkspaceStore.getState();
-    if (!projectId || !current.site || !current.dirty) { return; }
+    if (!projectId || !current.site || !current.dirty) {
+      return;
+    }
     setSaving(true);
     try {
       const updated = await api.saveSite(projectId, current.site);
@@ -104,7 +116,9 @@ export function useWorkspaceLayoutState() {
 
   // Debounced autosave whenever the site becomes dirty.
   React.useEffect(() => {
-    if (!dirty) { return; }
+    if (!dirty) {
+      return;
+    }
     const handle = window.setTimeout(() => void save(), AUTOSAVE_MS);
     return () => window.clearTimeout(handle);
   }, [dirty, site, save]);
@@ -112,7 +126,9 @@ export function useWorkspaceLayoutState() {
   // Focus the inspector when the selection changes to something.
   const prevSelLen = React.useRef(0);
   React.useEffect(() => {
-    if (selection.length > 0 && prevSelLen.current === 0) { setTab("inspect"); }
+    if (selection.length > 0 && prevSelLen.current === 0) {
+      setTab("inspect");
+    }
     prevSelLen.current = selection.length;
   }, [selection]);
 
@@ -127,10 +143,16 @@ export function useWorkspaceLayoutState() {
     }
   });
   useKeyboardShortcut("mod+s", () => void save());
-  useKeyboardShortcut("mod+c", () => useWorkspaceStore.getState().copySelection());
-  useKeyboardShortcut("mod+x", () => useWorkspaceStore.getState().cutSelection());
+  useKeyboardShortcut("mod+c", () =>
+    useWorkspaceStore.getState().copySelection(),
+  );
+  useKeyboardShortcut("mod+x", () =>
+    useWorkspaceStore.getState().cutSelection(),
+  );
   useKeyboardShortcut("mod+v", () => useWorkspaceStore.getState().paste());
-  useKeyboardShortcut("mod+d", () => useWorkspaceStore.getState().duplicateSelection());
+  useKeyboardShortcut("mod+d", () =>
+    useWorkspaceStore.getState().duplicateSelection(),
+  );
   useKeyboardShortcut("mod+a", () => useWorkspaceStore.getState().selectAll());
   useKeyboardShortcut("mod+f", () => useFindStore.getState().openFind());
   useKeyboardShortcut("delete", () => {
@@ -147,7 +169,9 @@ export function useWorkspaceLayoutState() {
   });
   useKeyboardShortcut("?", () => useUiStore.getState().setShortcutsOpen(true));
   useKeyboardShortcut("1", () => useCanvasStore.getState().requestFit());
-  useKeyboardShortcut("2", () => useCanvasStore.getState().requestFitSelection());
+  useKeyboardShortcut("2", () =>
+    useCanvasStore.getState().requestFitSelection(),
+  );
 
   // Unified single-letter tool selection shortcuts (FE-CMD-001)
   React.useEffect(() => {
@@ -157,7 +181,9 @@ export function useWorkspaceLayoutState() {
         target.tagName === "INPUT" ||
         target.tagName === "TEXTAREA" ||
         target.isContentEditable;
-      if (typing || e.metaKey || e.ctrlKey || e.altKey) { return; }
+      if (typing || e.metaKey || e.ctrlKey || e.altKey) {
+        return;
+      }
       const toolId = TOOL_BY_KEY.get(e.key.toLowerCase());
       if (toolId) {
         e.preventDefault();

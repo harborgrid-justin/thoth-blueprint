@@ -6,8 +6,20 @@
  */
 
 import type { Point, Polygon } from "../spatial/geometry";
-import { area as polygonArea, bounds, centroid, offsetPolygon, pointInPolygon } from "../spatial/geometry";
-import type { Building, Lot, Site, Zone, ComplianceFinding } from "../spatial/types";
+import {
+  area as polygonArea,
+  bounds,
+  centroid,
+  offsetPolygon,
+  pointInPolygon,
+} from "../spatial/geometry";
+import type {
+  Building,
+  Lot,
+  Site,
+  Zone,
+  ComplianceFinding,
+} from "../spatial/types";
 import { auditErosionCompliance } from "./erosion.js";
 
 /**
@@ -16,7 +28,9 @@ import { auditErosionCompliance } from "./erosion.js";
  */
 export function buildableEnvelope(lot: Lot): Polygon | null {
   const setback = lot.setback ?? 0;
-  if (setback <= 0) {return lot.boundary.slice();}
+  if (setback <= 0) {
+    return lot.boundary.slice();
+  }
   return offsetPolygon(lot.boundary, setback);
 }
 
@@ -36,16 +50,23 @@ export type { SubdivisionOptions };
  * not a survey-grade metes-and-bounds subdivision — adequate for early
  * feasibility sketches.
  */
-export function subdivideGrid(boundary: Polygon, options: SubdivisionOptions): Lot[] {
+export function subdivideGrid(
+  boundary: Polygon,
+  options: SubdivisionOptions,
+): Lot[] {
   const { columns, rows, gap = 0, layerId, makeId, setback } = options;
-  if (columns < 1 || rows < 1) {return [];}
+  if (columns < 1 || rows < 1) {
+    return [];
+  }
 
   const box = bounds(boundary);
   const totalW = box.maxX - box.minX;
   const totalH = box.maxY - box.minY;
   const cellW = (totalW - gap * (columns - 1)) / columns;
   const cellH = (totalH - gap * (rows - 1)) / rows;
-  if (cellW <= 0 || cellH <= 0) {return [];}
+  if (cellW <= 0 || cellH <= 0) {
+    return [];
+  }
 
   const lots: Lot[] = [];
   for (let r = 0; r < rows; r++) {
@@ -59,7 +80,9 @@ export function subdivideGrid(boundary: Polygon, options: SubdivisionOptions): L
         { x: x0, y: y0 + cellH },
       ];
       const center: Point = { x: x0 + cellW / 2, y: y0 + cellH / 2 };
-      if (!pointInPolygon(center, boundary)) {continue;}
+      if (!pointInPolygon(center, boundary)) {
+        continue;
+      }
       lots.push({
         id: makeId(),
         kind: "lot",
@@ -83,7 +106,9 @@ export function subdivideGrid(boundary: Polygon, options: SubdivisionOptions): L
 export function checkCompliance(site: Site): ComplianceFinding[] {
   const findings: ComplianceFinding[] = [];
   const zones = site.elements.filter((e): e is Zone => e.kind === "zone");
-  const buildings = site.elements.filter((e): e is Building => e.kind === "building");
+  const buildings = site.elements.filter(
+    (e): e is Building => e.kind === "building",
+  );
   const lots = site.elements.filter((e): e is Lot => e.kind === "lot");
 
   for (const building of buildings) {
@@ -119,7 +144,11 @@ export function checkCompliance(site: Site): ComplianceFinding[] {
         }
       }
 
-      if (zone.maxHeight != null && building.height != null && building.height > zone.maxHeight) {
+      if (
+        zone.maxHeight != null &&
+        building.height != null &&
+        building.height > zone.maxHeight
+      ) {
         findings.push({
           severity: "error",
           code: "height.exceeded",
@@ -128,7 +157,11 @@ export function checkCompliance(site: Site): ComplianceFinding[] {
         });
       }
 
-      if (zone.allowedUses.length > 0 && building.use && !zone.allowedUses.includes(building.use)) {
+      if (
+        zone.allowedUses.length > 0 &&
+        building.use &&
+        !zone.allowedUses.includes(building.use)
+      ) {
         findings.push({
           severity: "warning",
           code: "use.disallowed",

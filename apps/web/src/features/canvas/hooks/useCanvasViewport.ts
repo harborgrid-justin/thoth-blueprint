@@ -23,12 +23,8 @@ export function useCanvasViewportController(
 ) {
   const [size, setSize] = React.useState<Size>({ width: 0, height: 0 });
 
-  const {
-    viewport,
-    setViewport,
-    fitRequestId,
-    fitSelectionRequestId,
-  } = useCanvasStore();
+  const { viewport, setViewport, fitRequestId, fitSelectionRequestId } =
+    useCanvasStore();
 
   // --- Size tracking -------------------------------------------------------
   useResizeObserver(containerRef.current, (entry) => {
@@ -70,7 +66,9 @@ export function useCanvasViewportController(
     if (!site) {
       return null;
     }
-    const boxes = site.elements.filter(isSpatialElement).map((e) => bounds(e.boundary));
+    const boxes = site.elements
+      .filter(isSpatialElement)
+      .map((e) => bounds(e.boundary));
     return boxes.length ? unionBounds(boxes) : null;
   }, [site]);
 
@@ -96,7 +94,11 @@ export function useCanvasViewportController(
     if (planBounds) {
       setViewport(fitBounds(planBounds, size.width, size.height));
     } else {
-      setViewport({ offsetX: size.width / 2, offsetY: size.height / 2, zoom: 3 });
+      setViewport({
+        offsetX: size.width / 2,
+        offsetY: size.height / 2,
+        zoom: 3,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fitRequestId]);

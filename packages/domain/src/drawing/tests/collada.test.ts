@@ -12,8 +12,8 @@ describe("writeCollada", () => {
   it("emits a valid COLLADA document with geometry", () => {
     const dae = writeCollada([tri]);
     expect(dae).toContain('<?xml version="1.0"');
-    expect(dae).toContain('<COLLADA');
-    expect(dae).toContain("version=\"1.4.1\"");
+    expect(dae).toContain("<COLLADA");
+    expect(dae).toContain('version="1.4.1"');
     expect(dae).toContain("<library_geometries>");
     expect(dae).toContain("<float_array");
     expect(dae).toContain("0 1 2"); // the triangle indices

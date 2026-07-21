@@ -1,7 +1,4 @@
-import {
-  type ElevationGrid,
-  type InfrastructureNetwork,
-} from "@thoth/domain";
+import { type ElevationGrid, type InfrastructureNetwork } from "@thoth/domain";
 import { type Viewport } from "./helpers/viewport";
 import {
   computeUnderlayBounds,
@@ -64,7 +61,12 @@ export function TerrainOverlay({
   interval: number;
 }) {
   const slopeCells = computeSlopeCells(surface, viewport, showSlope);
-  const contourEls = computeContourPaths(surface, viewport, showContours, interval);
+  const contourEls = computeContourPaths(
+    surface,
+    viewport,
+    showContours,
+    interval,
+  );
 
   return (
     <g className="pointer-events-none">
@@ -101,14 +103,26 @@ export function NetworkShape({
   network: InfrastructureNetwork;
   viewport: Viewport;
 }) {
-  const { edges, nodes, isRoad, color } = computeNetworkShapeData(network, viewport);
+  const { edges, nodes, isRoad, color } = computeNetworkShapeData(
+    network,
+    viewport,
+  );
 
   return (
     <g className="pointer-events-none">
       {edges.map((e) => (
         <g key={e.id}>
           {isRoad && (
-            <line x1={e.sa.x} y1={e.sa.y} x2={e.sb.x} y2={e.sb.y} stroke={color} strokeOpacity={0.35} strokeWidth={e.widthPx} strokeLinecap="round" />
+            <line
+              x1={e.sa.x}
+              y1={e.sa.y}
+              x2={e.sb.x}
+              y2={e.sb.y}
+              stroke={color}
+              strokeOpacity={0.35}
+              strokeWidth={e.widthPx}
+              strokeLinecap="round"
+            />
           )}
           <line
             x1={e.sa.x}

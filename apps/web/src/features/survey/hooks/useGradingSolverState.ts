@@ -15,25 +15,29 @@ export function useGradingSolverState() {
   const setOpen = useUiStore((s) => s.setGradingOpen);
   const site = useWorkspaceStore((s) => s.site);
 
-  const terrain = React.useMemo(() => (site ? buildTerrainModel(site) : null), [site]);
+  const terrain = React.useMemo(
+    () => (site ? buildTerrainModel(site) : null),
+    [site],
+  );
   const terrainSurface = terrain?.existing ?? null;
 
   const [cutSlope, setCutSlope] = React.useState<number>(2);
   const [fillSlope, setFillSlope] = React.useState<number>(3);
   const [targetVolume, setTargetVolume] = React.useState<number>(0);
-  
+
   const [padElevation, setPadElevation] = React.useState<number>(15.5);
   const [solving, setSolving] = React.useState<boolean>(false);
   const [volumes, setVolumes] = React.useState<any | null>(null);
 
   const gradingPad = React.useMemo(
     () => createGradingPad({ padElevation, cutSlope, fillSlope }),
-    [padElevation, cutSlope, fillSlope]
+    [padElevation, cutSlope, fillSlope],
   );
 
   React.useEffect(() => {
     if (open && site) {
-      const matchingPad = _.find(site.elements, (e) => e.kind === "parcel") ?? site.elements[0];
+      const matchingPad =
+        _.find(site.elements, (e) => e.kind === "parcel") ?? site.elements[0];
       if (matchingPad) {
         useWorkspaceStore.getState().hoverElement(matchingPad.id);
       }
@@ -44,13 +48,20 @@ export function useGradingSolverState() {
 
   React.useEffect(() => {
     if (open && terrainSurface) {
-      const report = calculateGradingVolumes(gradingPad, padElevation, terrainSurface, 10);
+      const report = calculateGradingVolumes(
+        gradingPad,
+        padElevation,
+        terrainSurface,
+        10,
+      );
       setVolumes(report);
     }
   }, [open, padElevation, gradingPad, terrainSurface]);
 
   function runBalanceSolver() {
-    if (!terrainSurface) {return;}
+    if (!terrainSurface) {
+      return;
+    }
     setSolving(true);
     solveGradingBalance({
       gradingPad,

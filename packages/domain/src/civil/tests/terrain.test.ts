@@ -31,7 +31,11 @@ import {
 function ramp(size: number, slope: number): ElevationGrid {
   const n = size + 1;
   const heights: number[] = [];
-  for (let r = 0; r < n; r++) {for (let c = 0; c < n; c++) {heights.push(slope * c);}}
+  for (let r = 0; r < n; r++) {
+    for (let c = 0; c < n; c++) {
+      heights.push(slope * c);
+    }
+  }
   return { origin: { x: 0, y: 0 }, cellSize: 1, cols: n, rows: n, heights };
 }
 
@@ -42,7 +46,7 @@ function flat(size: number, z: number): ElevationGrid {
     cellSize: 1,
     cols: n,
     rows: n,
-    heights: new Array((n) * (n)).fill(z),
+    heights: new Array(n * n).fill(z),
   };
 }
 
@@ -224,8 +228,14 @@ describe("Grading & Topographic calculations", () => {
       { x: 20, y: 50, z: 12 },
       { x: 80, y: 50, z: 12 },
     ];
-    
-    const daylightFill = calculateDaylightLine(featureLineFill, flatSurface, 2.0, 3.0, 50);
+
+    const daylightFill = calculateDaylightLine(
+      featureLineFill,
+      flatSurface,
+      2.0,
+      3.0,
+      50,
+    );
     expect(daylightFill).toHaveLength(2);
     expect(daylightFill[0].y).toBeCloseTo(56, 1);
     expect(daylightFill[1].y).toBeCloseTo(56, 1);
@@ -234,8 +244,14 @@ describe("Grading & Topographic calculations", () => {
       { x: 20, y: 50, z: 8 },
       { x: 80, y: 50, z: 8 },
     ];
-    
-    const daylightCut = calculateDaylightLine(featureLineCut, flatSurface, 2.0, 3.0, 50);
+
+    const daylightCut = calculateDaylightLine(
+      featureLineCut,
+      flatSurface,
+      2.0,
+      3.0,
+      50,
+    );
     expect(daylightCut).toHaveLength(2);
     expect(daylightCut[0].y).toBeCloseTo(54, 1);
     expect(daylightCut[1].y).toBeCloseTo(54, 1);

@@ -7,15 +7,16 @@
  */
 
 import _ from "lodash";
-import {
-  roomArea,
-  type BuildingModel,
-} from "../planning/building";
+import { roomArea, type BuildingModel } from "../planning/building";
 import type { SiteCurve } from "./platset";
 import type { AreaUnit, SpatialContext } from "../spatial/spatial";
 import { areaUnitLabel } from "../spatial/spatial";
 
-import type { ScheduleColumn, ScheduleRow, ScheduleTable } from "./types/schedule";
+import type {
+  ScheduleColumn,
+  ScheduleRow,
+  ScheduleTable,
+} from "./types/schedule";
 
 export type { ScheduleColumn, ScheduleRow, ScheduleTable };
 

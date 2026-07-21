@@ -28,12 +28,18 @@ export function landLotSide(acres = LAND_LOT_ACRES_202): number {
 }
 
 /** The corners/controlling points of a land lot, given its NW corner + acreage. */
-export function landLotFrame(nwCorner: Point, acres = LAND_LOT_ACRES_202): SectionFrame {
+export function landLotFrame(
+  nwCorner: Point,
+  acres = LAND_LOT_ACRES_202,
+): SectionFrame {
   return sectionFrame(nwCorner, landLotSide(acres));
 }
 
 /** The land-lot square as a closed ring (NW, NE, SE, SW). */
-export function landLotRect(nwCorner: Point, acres = LAND_LOT_ACRES_202): Polygon {
+export function landLotRect(
+  nwCorner: Point,
+  acres = LAND_LOT_ACRES_202,
+): Polygon {
   const s = landLotSide(acres);
   const { x, y } = nwCorner;
   return [
@@ -48,7 +54,9 @@ export function landLotRect(nwCorner: Point, acres = LAND_LOT_ACRES_202): Polygo
 export function ordinal(n: number): string {
   const v = Math.abs(Math.trunc(n));
   const tens = v % 100;
-  if (tens >= 11 && tens <= 13) {return `${n}th`;}
+  if (tens >= 11 && tens <= 13) {
+    return `${n}th`;
+  }
   switch (v % 10) {
     case 1:
       return `${n}st`;

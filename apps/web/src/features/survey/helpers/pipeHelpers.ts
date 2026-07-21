@@ -1,9 +1,10 @@
-import {
-  validatePipeNetwork,
-  type PipeDesignRules,
-} from "@thoth/domain";
+import { validatePipeNetwork, type PipeDesignRules } from "@thoth/domain";
 
-export function initializeNodeInverts(networks: any[], site: any, terrainSurface: any): Record<string, number> {
+export function initializeNodeInverts(
+  networks: any[],
+  site: any,
+  terrainSurface: any,
+): Record<string, number> {
   const initInverts: Record<string, number> = {};
   if (site && terrainSurface) {
     for (const net of networks) {
@@ -26,6 +27,8 @@ export function runPipeValidation({
   rules: PipeDesignRules;
   inverts: Record<string, number>;
 }) {
-  if (!activeNet || !terrainSurface) {return null;}
+  if (!activeNet || !terrainSurface) {
+    return null;
+  }
   return validatePipeNetwork(activeNet, terrainSurface, rules, inverts);
 }

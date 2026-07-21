@@ -4,10 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
 const Dashboard = React.lazy(() =>
-  import("@/features/dashboard/Dashboard").then((m) => ({ default: m.Dashboard }))
+  import("@/features/dashboard/Dashboard").then((m) => ({
+    default: m.Dashboard,
+  })),
 );
 const Workspace = React.lazy(() =>
-  import("@/features/workspace/Workspace").then((m) => ({ default: m.Workspace }))
+  import("@/features/workspace/Workspace").then((m) => ({
+    default: m.Workspace,
+  })),
 );
 
 export default function App() {
@@ -45,4 +49,3 @@ function NotFound() {
     </div>
   );
 }
-
