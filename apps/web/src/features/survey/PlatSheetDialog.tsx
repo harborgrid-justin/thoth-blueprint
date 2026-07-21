@@ -171,6 +171,8 @@ function planExtent(site: Site): Bounds | null {
 }
 
 function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
+  const selection = useWorkspaceStore((s) => s.selection);
+  const hoveredElementId = useWorkspaceStore((s) => s.hoveredElementId);
   const ext = planExtent(site);
   const clipId = "sheet-plan-clip";
   const inner = { x: MAIN.x + 8, y: MAIN.y + 8, w: MAIN.w - 16, h: MAIN.h - 40 };
@@ -205,14 +207,26 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
           const color = elementColor(el.kind, cat);
           const isEsmt = el.kind === "easement";
           const pattern = isEsmt ? null : patternFor(el);
+          const isHovered = hoveredElementId === el.id;
+          const isSelected = selection.includes(el.id);
           return (
-            <g key={el.id}>
+            <g
+              key={el.id}
+              className="cursor-pointer"
+              onMouseEnter={() => useWorkspaceStore.getState().hoverElement(el.id)}
+              onMouseLeave={() => {
+                if (useWorkspaceStore.getState().hoveredElementId === el.id) {
+                  useWorkspaceStore.getState().hoverElement(null);
+                }
+              }}
+              onClick={() => useWorkspaceStore.getState().select(el.id)}
+            >
               <polygon
                 points={pts}
-                fill={color}
-                fillOpacity={isEsmt ? 0.05 : el.kind === "building" ? 0.6 : 0.14}
-                stroke={isEsmt ? MUTED : INK}
-                strokeWidth={el.kind === "parcel" ? 1.4 : 0.9}
+                fill={isHovered ? "#f59e0b" : color}
+                fillOpacity={isHovered ? 0.35 : isSelected ? 0.3 : isEsmt ? 0.05 : el.kind === "building" ? 0.6 : 0.14}
+                stroke={isSelected ? "#0284c7" : isHovered ? "#f59e0b" : isEsmt ? MUTED : INK}
+                strokeWidth={isSelected || isHovered ? 2.5 : el.kind === "parcel" ? 1.4 : 0.9}
                 strokeDasharray={isEsmt ? "6 3 2 3" : el.kind === "zone" ? "5 3" : undefined}
                 vectorEffect="non-scaling-stroke"
               />

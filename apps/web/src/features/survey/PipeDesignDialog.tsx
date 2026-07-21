@@ -24,6 +24,10 @@ export function PipeDesignDialog() {
   const open = useUiStore((s) => s.pipeOpen);
   const setOpen = useUiStore((s) => s.setPipeOpen);
   const site = useWorkspaceStore((s) => s.site);
+  const selection = useWorkspaceStore((s) => s.selection);
+  const hoveredElementId = useWorkspaceStore((s) => s.hoveredElementId);
+  const hoverElement = useWorkspaceStore((s) => s.hoverElement);
+  const select = useWorkspaceStore((s) => s.select);
 
   const networks = site?.networks ?? [];
   const [selectedNetId, setSelectedNetId] = React.useState<string | null>(null);
@@ -172,8 +176,20 @@ export function PipeDesignDialog() {
                       </tr>
                     </thead>
                     <tbody>
-                      {_.map(validation?.nodeElevations, (row) => (
-                        <tr key={row.nodeId} className="border-b border-border/60">
+                      {_.map(validation?.nodeElevations, (row) => {
+                        const isHovered = hoveredElementId === row.nodeId;
+                        const isSelected = selection.includes(row.nodeId);
+                        return (
+                          <tr
+                            key={row.nodeId}
+                            onMouseEnter={() => hoverElement(row.nodeId)}
+                            onMouseLeave={() => hoverElement(null)}
+                            onClick={() => select(row.nodeId)}
+                            className={cn(
+                              "border-b border-border/60 cursor-pointer transition-colors duration-150",
+                              isHovered ? "bg-amber-500/10" : isSelected ? "bg-primary/10" : "hover:bg-muted/40"
+                            )}
+                          >
                           <td className="p-2 font-mono font-medium">{row.name}</td>
                           <td className="p-2">{row.rimElevation.toFixed(2)}</td>
                           <td className="p-2">{row.sumpElevation.toFixed(2)}</td>
@@ -185,8 +201,9 @@ export function PipeDesignDialog() {
                               onChange={(e) => handleInvertChange(row.nodeId, parseFloat(e.target.value) || 0)}
                             />
                           </td>
-                        </tr>
-                      ))}
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>

@@ -112,13 +112,16 @@ export function buildScene(site: Site): SceneResult | null {
       const height = (el.height ?? storeys * 3.2) * exag;
       const base = elevAt(centroid(ring)) * exag;
       const bGroup = enterpriseBuilding(ring, center, base, storeys, height, el.use, el.renovationStatus, disposables);
+      bGroup.name = el.id;
       buildingMeshes.set(el.id, bGroup);
+      group.add(bGroup);
       continue;
     }
 
     if (el.kind === "stair") {
       const base = elevAt(centroid(ring)) * exag;
       const sGroup = enterpriseStair(el as Stair, center, base, exag, disposables);
+      sGroup.name = el.id;
       group.add(sGroup);
       continue;
     }
@@ -126,6 +129,7 @@ export function buildScene(site: Site): SceneResult | null {
     if (el.kind === "curtainwall") {
       const base = elevAt(centroid(ring)) * exag;
       const cwGroup = enterpriseCurtainWall(el as CurtainWall, center, base, exag, disposables);
+      cwGroup.name = el.id;
       group.add(cwGroup);
       continue;
     }
@@ -133,6 +137,7 @@ export function buildScene(site: Site): SceneResult | null {
     if (el.kind === "door") {
       const base = elevAt(centroid(ring)) * exag;
       const dGroup = enterpriseDoor(el as DoorElement, center, base, exag, disposables);
+      dGroup.name = el.id;
       group.add(dGroup);
       continue;
     }
@@ -140,6 +145,7 @@ export function buildScene(site: Site): SceneResult | null {
     if (el.kind === "window") {
       const base = elevAt(centroid(ring)) * exag;
       const wGroup = enterpriseWindow(el as WindowElement, center, base, exag, disposables);
+      wGroup.name = el.id;
       group.add(wGroup);
       continue;
     }
@@ -147,6 +153,7 @@ export function buildScene(site: Site): SceneResult | null {
     if (el.kind === "roof") {
       const base = elevAt(centroid(ring)) * exag;
       const rGroup = enterpriseRoof(el as RoofElement, center, base, exag, disposables);
+      rGroup.name = el.id;
       group.add(rGroup);
       continue;
     }

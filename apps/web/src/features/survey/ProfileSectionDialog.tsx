@@ -122,7 +122,12 @@ export function ProfileSectionDialog() {
                     <button
                       key={a.id}
                       type="button"
-                      onClick={() => setSelectedAlignId(a.id)}
+                      onClick={() => {
+                        setSelectedAlignId(a.id);
+                        useWorkspaceStore.getState().select(a.id);
+                      }}
+                      onMouseEnter={() => useWorkspaceStore.getState().hoverElement(a.id)}
+                      onMouseLeave={() => useWorkspaceStore.getState().hoverElement(null)}
                       className={cn(
                         "rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                         a.id === selectedAlignId ? "bg-primary/15 text-primary font-medium" : "hover:bg-accent text-muted-foreground"

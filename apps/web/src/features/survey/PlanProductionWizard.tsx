@@ -67,9 +67,7 @@ export function PlanProductionWizard() {
     setGeneratedMatches(vfg.matchLines);
 
     // Dynamic store update to render frames on canvas
-    if (useWorkspaceStore.getState().setViewFrames) {
-      useWorkspaceStore.getState().setViewFrames(vfg.frames, vfg.matchLines);
-    }
+    useWorkspaceStore.getState().setViewFrames(vfg.frames, vfg.matchLines);
   }
 
   function handleCreateSheets() {

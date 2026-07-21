@@ -44,6 +44,7 @@ export interface WorkspaceState {
   activeTool: ToolId;
   activeLayerId: string | null;
   selection: string[];
+  hoveredElementId: string | null;
   /** Set when the site diverges from the last saved server state. */
   dirty: boolean;
   lastSavedAt: string | null;
@@ -64,6 +65,7 @@ export interface WorkspaceState {
   select(id: string | null, additive?: boolean): void;
   selectMany(ids: string[]): void;
   selectAll(): void;
+  hoverElement(id: string | null): void;
 
   // --- clipboard & structural editing ---
   copySelection(): void;
@@ -222,6 +224,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
     activeTool: "select",
     activeLayerId: null,
     selection: [],
+    hoveredElementId: null,
     dirty: false,
     lastSavedAt: null,
     viewFrames: [],
@@ -240,6 +243,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
         activeTool: "select",
         activeLayerId: project.site.layers[0]?.id ?? null,
         selection: [],
+        hoveredElementId: null,
         dirty: false,
         lastSavedAt: project.updatedAt,
         viewFrames: [],
@@ -312,6 +316,10 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => {
       const { site } = get();
       if (!site) {return;}
       set({ selection: site.elements.map((e) => e.id) });
+    },
+
+    hoverElement(id) {
+      set({ hoveredElementId: id });
     },
 
     copySelection() {

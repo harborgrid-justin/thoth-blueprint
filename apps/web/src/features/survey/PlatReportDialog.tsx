@@ -129,6 +129,12 @@ function TractList({
                   key={el.id}
                   type="button"
                   onClick={() => onSelect(el.id)}
+                  onMouseEnter={() => useWorkspaceStore.getState().hoverElement(el.id)}
+                  onMouseLeave={() => {
+                    if (useWorkspaceStore.getState().hoveredElementId === el.id) {
+                      useWorkspaceStore.getState().hoverElement(null);
+                    }
+                  }}
                   className={cn(
                     "truncate rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                     el.id === selectedId

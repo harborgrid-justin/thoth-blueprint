@@ -66,7 +66,12 @@ export function AlignmentReportDialog() {
                 <button
                   key={a.id}
                   type="button"
-                  onClick={() => setSelectedId(a.id)}
+                  onClick={() => {
+                    setSelectedId(a.id);
+                    useWorkspaceStore.getState().select(a.id);
+                  }}
+                  onMouseEnter={() => useWorkspaceStore.getState().hoverElement(a.id)}
+                  onMouseLeave={() => useWorkspaceStore.getState().hoverElement(null)}
                   className={cn(
                     "truncate rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                     a.id === (selected?.id ?? "")

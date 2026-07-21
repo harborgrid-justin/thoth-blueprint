@@ -53,6 +53,18 @@ export function GradingSolverDialog() {
     };
   }, [padElevation, cutSlope, fillSlope]);
 
+  // Highlight target pad on opening
+  React.useEffect(() => {
+    if (open && site) {
+      const matchingPad = _.find(site.elements, (e) => e.kind === "parcel") ?? site.elements[0];
+      if (matchingPad) {
+        useWorkspaceStore.getState().hoverElement(matchingPad.id);
+      }
+    } else if (!open) {
+      useWorkspaceStore.getState().hoverElement(null);
+    }
+  }, [open, site]);
+
   // Compute volumes on load or elevation change
   React.useEffect(() => {
     if (open && terrainSurface) {

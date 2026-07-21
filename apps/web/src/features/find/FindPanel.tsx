@@ -48,6 +48,7 @@ export function FindPanel() {
 
   const site = useWorkspaceStore((s) => s.site);
   const selection = useWorkspaceStore((s) => s.selection);
+  const hoveredElementId = useWorkspaceStore((s) => s.hoveredElementId);
   const select = useWorkspaceStore((s) => s.select);
   const selectMany = useWorkspaceStore((s) => s.selectMany);
   const requestFitSelection = useCanvasStore((s) => s.requestFitSelection);
@@ -135,9 +136,15 @@ export function FindPanel() {
               key={el.id}
               type="button"
               onClick={() => pick(el)}
+              onMouseEnter={() => useWorkspaceStore.getState().hoverElement(el.id)}
+              onMouseLeave={() => {
+                if (useWorkspaceStore.getState().hoveredElementId === el.id) {
+                  useWorkspaceStore.getState().hoverElement(null);
+                }
+              }}
               className={cn(
                 "flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm transition-colors hover:bg-accent",
-                selectedSet.has(el.id) && "bg-accent",
+                (selectedSet.has(el.id) || hoveredElementId === el.id) && "bg-accent border border-amber-500/30",
               )}
             >
               <span

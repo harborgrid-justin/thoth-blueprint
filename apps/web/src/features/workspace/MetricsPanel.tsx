@@ -182,6 +182,12 @@ export function MetricsPanel() {
                       select(f.elementId!);
                       requestFitSelection();
                     }}
+                    onMouseEnter={() => useWorkspaceStore.getState().hoverElement(f.elementId!)}
+                    onMouseLeave={() => {
+                      if (useWorkspaceStore.getState().hoveredElementId === f.elementId) {
+                        useWorkspaceStore.getState().hoverElement(null);
+                      }
+                    }}
                     className="flex w-full items-start gap-2 rounded px-1 py-0.5 text-left text-xs leading-snug transition-colors hover:bg-accent"
                   >
                     {icon}

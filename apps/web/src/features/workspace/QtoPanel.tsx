@@ -24,6 +24,9 @@ import { cn } from "@/lib/utils";
 export function QtoPanel() {
   const site = useWorkspaceStore((s) => s.site);
   const selection = useWorkspaceStore((s) => s.selection);
+  const hoveredElementId = useWorkspaceStore((s) => s.hoveredElementId);
+  const hoverElement = useWorkspaceStore((s) => s.hoverElement);
+  const select = useWorkspaceStore((s) => s.select);
 
   // Predefined default pay item catalog items
   const payItems: PayItem[] = [
@@ -340,8 +343,19 @@ export function QtoPanel() {
                 <div className="flex flex-col gap-3">
                   {stairs.map((stair) => {
                     const geom = calculateStairGeometry(stair);
+                    const isHovered = hoveredElementId === stair.id;
+                    const isSelected = selection.includes(stair.id);
                     return (
-                      <div key={stair.id} className="border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                      <div
+                        key={stair.id}
+                        className={cn(
+                          "border-b border-border/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
+                          isHovered ? "bg-amber-500/10 border-amber-500/30" : isSelected ? "bg-primary/10 border-primary/30" : "border-transparent"
+                        )}
+                        onMouseEnter={() => hoverElement(stair.id)}
+                        onMouseLeave={() => hoverElement(null)}
+                        onClick={() => select(stair.id)}
+                      >
                         <div className="font-semibold text-foreground mb-1">{stair.name} ({stair.stairType})</div>
                         <table className="w-full text-left text-[10px]">
                           <tbody>
@@ -427,8 +441,19 @@ export function QtoPanel() {
                 <div className="flex flex-col gap-3">
                   {walls.map((wall) => {
                     const geom = calculateCurtainWallGeometry(wall);
+                    const isHovered = hoveredElementId === wall.id;
+                    const isSelected = selection.includes(wall.id);
                     return (
-                      <div key={wall.id} className="border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                      <div
+                        key={wall.id}
+                        className={cn(
+                          "border-b border-border/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
+                          isHovered ? "bg-amber-500/10 border-amber-500/30" : isSelected ? "bg-primary/10 border-primary/30" : "border-transparent"
+                        )}
+                        onMouseEnter={() => hoverElement(wall.id)}
+                        onMouseLeave={() => hoverElement(null)}
+                        onClick={() => select(wall.id)}
+                      >
                         <div className="font-semibold text-foreground mb-1 flex justify-between">
                           <span>{wall.name}</span>
                           <span className="text-muted-foreground text-[9px]">U-Factor: {geom.overallUFactor.toFixed(3)} W/m²K</span>
@@ -517,9 +542,21 @@ export function QtoPanel() {
               }
               return (
                 <div className="flex flex-col gap-3 max-h-[220px] overflow-y-auto pr-1">
-                  {schedule.map((item) => (
-                    <div key={item.id} className="border-b border-border/40 pb-2 last:border-0 last:pb-0">
-                      <div className="font-semibold text-foreground mb-1 flex justify-between">
+                  {schedule.map((item) => {
+                    const isHovered = hoveredElementId === item.id;
+                    const isSelected = selection.includes(item.id);
+                    return (
+                      <div
+                        key={item.id}
+                        className={cn(
+                          "border-b border-border/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
+                          isHovered ? "bg-amber-500/10 border-amber-500/30" : isSelected ? "bg-primary/10 border-primary/30" : "border-transparent"
+                        )}
+                        onMouseEnter={() => hoverElement(item.id)}
+                        onMouseLeave={() => hoverElement(null)}
+                        onClick={() => select(item.id)}
+                      >
+                        <div className="font-semibold text-foreground mb-1 flex justify-between">
                         <span>{item.name} ({item.kind})</span>
                         <span className="text-muted-foreground text-[9px] capitalize">{item.type}</span>
                       </div>
@@ -539,8 +576,9 @@ export function QtoPanel() {
                           </tr>
                         </tbody>
                       </table>
-                    </div>
-                  ))}
+                      </div>
+                    );
+                  })}
                 </div>
               );
             })()}
@@ -609,8 +647,19 @@ export function QtoPanel() {
                 <div className="flex flex-col gap-3 max-h-[220px] overflow-y-auto pr-1">
                   {roofs.map((roof) => {
                     const res = calculateRoofGeometry(roof);
+                    const isHovered = hoveredElementId === roof.id;
+                    const isSelected = selection.includes(roof.id);
                     return (
-                      <div key={roof.id} className="border-b border-border/40 pb-2 last:border-0 last:pb-0">
+                      <div
+                        key={roof.id}
+                        className={cn(
+                          "border-b border-border/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
+                          isHovered ? "bg-amber-500/10 border-amber-500/30" : isSelected ? "bg-primary/10 border-primary/30" : "border-transparent"
+                        )}
+                        onMouseEnter={() => hoverElement(roof.id)}
+                        onMouseLeave={() => hoverElement(null)}
+                        onClick={() => select(roof.id)}
+                      >
                         <div className="font-semibold text-foreground mb-1 flex justify-between">
                           <span>{roof.name}</span>
                           <span className="text-muted-foreground text-[9px] capitalize">{roof.roofType} Roof</span>

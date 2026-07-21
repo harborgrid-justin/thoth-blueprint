@@ -23,6 +23,8 @@ const SUN_AZIMUTH = 150;
 export function Scene3D() {
   const mountRef = React.useRef<HTMLDivElement>(null);
   const site = useWorkspaceStore((s) => s.site);
+  const selection = useWorkspaceStore((s) => s.selection);
+  const hoveredElementId = useWorkspaceStore((s) => s.hoveredElementId);
   const clouds = useInteropStore((s) => s.clouds);
   const meshes = useInteropStore((s) => s.meshes);
 
@@ -295,6 +297,84 @@ export function Scene3D() {
       controls.update();
     }
   }, [site, clouds, meshes]);
+
+  // Synchronized Selection and Hover Highlights in 3D View (Feature 6 & 7 & 8)
+  React.useEffect(() => {
+    const rootGroup = contentRef.current?.group;
+    if (!rootGroup) {return;}
+
+    // Restore original colors/emissive properties for all meshes before applying new ones.
+    rootGroup.traverse((child) => {
+      if (child instanceof THREE.Mesh && child.material) {
+        const mats = Array.isArray(child.material) ? child.material : [child.material];
+        for (const mat of mats) {
+          if ("emissive" in mat && mat.emissive instanceof THREE.Color) {
+            mat.emissive.setHex(0x000000);
+          }
+        }
+      }
+    });
+
+    // If an element is hovered, highlight it in warning yellow
+    if (hoveredElementId) {
+      rootGroup.traverse((child) => {
+        let current: THREE.Object3D | null = child;
+        let matched = false;
+        while (current && current !== rootGroup) {
+          if (current.name === hoveredElementId) {
+            matched = true;
+            break;
+          }
+          current = current.parent;
+        }
+        if (matched && child instanceof THREE.Mesh && child.material) {
+          const mats = Array.isArray(child.material) ? child.material : [child.material];
+          for (const mat of mats) {
+            if ("emissive" in mat && mat.emissive instanceof THREE.Color) {
+              mat.emissive.setHex(0x332600); // subtle yellow glow
+            }
+          }
+        }
+      });
+    }
+
+    // If an element is selected, highlight it in cyan-primary
+    if (selection.length > 0) {
+      const selectedId = selection[0]!;
+      rootGroup.traverse((child) => {
+        let current: THREE.Object3D | null = child;
+        let matched = false;
+        while (current && current !== rootGroup) {
+          if (current.name === selectedId) {
+            matched = true;
+            break;
+          }
+          current = current.parent;
+        }
+        if (matched && child instanceof THREE.Mesh && child.material) {
+          const mats = Array.isArray(child.material) ? child.material : [child.material];
+          for (const mat of mats) {
+            if ("emissive" in mat && mat.emissive instanceof THREE.Color) {
+              mat.emissive.setHex(0x001f3f); // subtle blue glow
+            }
+          }
+        }
+      });
+
+      // Camera Focal Sync (Feature 7): focus 3D camera onto selected element
+      const selectedObj = rootGroup.getObjectByName(selectedId);
+      const controls = controlsRef.current;
+      const camera = cameraRef.current;
+      if (selectedObj && controls && camera) {
+        const box = new THREE.Box3().setFromObject(selectedObj);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+        
+        controls.target.copy(center);
+        controls.update();
+      }
+    }
+  }, [selection, hoveredElementId]);
 
   return <div ref={mountRef} className="h-full w-full" />;
 }
