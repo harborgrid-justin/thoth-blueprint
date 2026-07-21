@@ -1,10 +1,24 @@
 import type { Point } from "../../spatial/geometry";
 
 /** A Point of Intersection on an alignment; interior PIs may carry a curve. */
+export interface AlignmentSpiral {
+  length: number;
+  spiralType: "clothoid" | "bloss" | "biquadratic";
+  thetaRad: number;
+  x: number;
+  y: number;
+  k: number;
+}
+
+/** A Point of Intersection on an alignment; interior PIs may carry a curve & spirals. */
 export interface AlignmentPI {
   point: Point;
   /** Circular curve radius at this PI, plan units; 0/undefined ⇒ no curve. */
   radius?: number;
+  /** Entrance spiral length in plan units (REQ-10-007). */
+  spiralIn?: number;
+  /** Exit spiral length in plan units (REQ-10-007). */
+  spiralOut?: number;
 }
 
 /** A parallel offset line carried alongside an alignment (pavement edge, R/W…). */
@@ -13,6 +27,16 @@ export interface AlignmentOffset {
   distance: number;
   kind: "pavement" | "shoulder" | "row" | "ditch";
   label?: string;
+}
+
+export interface WideningRegion {
+  id: string;
+  startStation: number;
+  endStation: number;
+  addedWidth: number;
+  entryTaperLength: number;
+  exitTaperLength: number;
+  side: "left" | "right" | "both";
 }
 
 /** A horizontal alignment definition (the PI chain + its start station). */
@@ -24,6 +48,8 @@ export interface HorizontalAlignment {
   startStation: number;
   /** Parallel offset lines to generate (edge of pavement, right-of-way, …). */
   offsets?: AlignmentOffset[];
+  /** Widening regions on offset alignments (REQ-11-007). */
+  widenings?: WideningRegion[];
   /** Default Design Speed in mph (e.g. 45) */
   designSpeed?: number;
   /** Station-specific design speeds (e.g., zones) */
@@ -65,6 +91,8 @@ export interface AlignmentCurve {
   /** Signed swept angle start→end (radians). */
   sweep: number;
   startAngle: number;
+  spiralIn?: AlignmentSpiral;
+  spiralOut?: AlignmentSpiral;
 }
 
 /** One element of the traveled centerline: a tangent run or a circular curve. */
@@ -82,6 +110,12 @@ export type AlignmentElement =
   | {
       kind: "curve";
       curve: AlignmentCurve;
+      beginStation: number;
+      endStation: number;
+    }
+  | {
+      kind: "spiral";
+      spiral: AlignmentSpiral;
       beginStation: number;
       endStation: number;
     };
@@ -107,3 +141,4 @@ export interface DesignSpeedCheckResult {
   isViolation: boolean;
   message: string;
 }
+

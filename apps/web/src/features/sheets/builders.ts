@@ -461,8 +461,9 @@ function drawSitePlan(
           cl.push(project(el.from));
         }
         cl.push(project(el.to));
-      } else {
+      } else if (el.kind === "curve") {
         const c = el.curve;
+
         const steps = Math.max(2, Math.ceil(c.deltaDeg / 3));
         for (let i = 0; i <= steps; i++) {
           const ang = c.startAngle + (c.sweep * i) / steps;

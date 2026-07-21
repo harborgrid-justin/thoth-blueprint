@@ -12,6 +12,9 @@ import type { Point } from "../spatial/geometry";
 import { add, distance, normalize, scale, subtract } from "../spatial/geometry";
 import { METERS_PER_UNIT, type SpatialContext } from "../spatial/spatial";
 import type { CoordinateBasis } from "../survey/survey";
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultDrafting = federalData.standards.drafting;
 
 import type {
   DimArrow,
@@ -49,18 +52,18 @@ export const DEFAULT_DIM_STYLES: DimensionStyle[] = [
     id: "arch-tick",
     label: "Architectural (tick)",
     arrow: "tick",
-    textHeight: 2.5,
+    textHeight: defaultDrafting.defaultTextHeightMm,
     precision: 0,
     unit: "ft-in",
-    extensionGap: 0.5,
-    extensionBeyond: 0.5,
+    extensionGap: defaultDrafting.defaultExtensionGap,
+    extensionBeyond: defaultDrafting.defaultExtensionBeyond,
     suppressZero: true,
   },
   {
     id: "eng-arrow",
     label: "Engineering (arrow)",
     arrow: "arrow",
-    textHeight: 2.5,
+    textHeight: defaultDrafting.defaultTextHeightMm,
     precision: 2,
     unit: "ft-dec",
     extensionGap: 1,
@@ -71,7 +74,7 @@ export const DEFAULT_DIM_STYLES: DimensionStyle[] = [
     id: "metric",
     label: "Metric (arrow)",
     arrow: "arrow",
-    textHeight: 2.5,
+    textHeight: defaultDrafting.defaultTextHeightMm,
     precision: 0,
     unit: "mm",
     extensionGap: 1,
@@ -82,7 +85,7 @@ export const DEFAULT_DIM_STYLES: DimensionStyle[] = [
     id: "dual-unit",
     label: "Dual Unit",
     arrow: "arrow",
-    textHeight: 2.5,
+    textHeight: defaultDrafting.defaultTextHeightMm,
     precision: 2,
     unit: "ft-dec",
     secondaryUnit: "m",
@@ -94,7 +97,7 @@ export const DEFAULT_DIM_STYLES: DimensionStyle[] = [
     id: "suppressed-ext",
     label: "Suppressed Extensions",
     arrow: "tick",
-    textHeight: 2.5,
+    textHeight: defaultDrafting.defaultTextHeightMm,
     precision: 2,
     unit: "ft-dec",
     extensionGap: 1,

@@ -146,7 +146,7 @@ function AlignmentReport({
                   </Td>
                   <Td>{bearingText(el.from, el.to)}</Td>
                 </tr>
-              ) : (
+              ) : el.kind === "curve" ? (
                 <tr key={i} className="border-b border-border/50">
                   <Td>Curve {curveLabel(r, el.curve.piIndex)}</Td>
                   <Td>{formatStation(el.beginStation)}</Td>
@@ -158,7 +158,8 @@ function AlignmentReport({
                     {el.curve.direction} · R={el.curve.radius.toFixed(1)} {u}
                   </Td>
                 </tr>
-              ),
+              ) : null,
+
             )}
           </tbody>
         </table>

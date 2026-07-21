@@ -1,6 +1,6 @@
 import * as React from "react";
 import _ from "lodash";
-import { calculateGradingVolumes } from "@thoth/domain";
+import { calculateGradingVolumes, elevationAt } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useUiStore } from "@/store/uiStore";
 import { buildTerrainModel } from "@/features/terrain/terrainModel";
@@ -25,7 +25,23 @@ export function useGradingSolverState() {
   const [fillSlope, setFillSlope] = React.useState<number>(3);
   const [targetVolume, setTargetVolume] = React.useState<number>(0);
 
-  const [padElevation, setPadElevation] = React.useState<number>(15.5);
+  const defaultElev = React.useMemo(() => {
+    if (terrainSurface) {
+      return elevationAt(terrainSurface, { x: 0, y: 0 });
+    }
+    return 100;
+  }, [terrainSurface]);
+
+
+
+  const [padElevation, setPadElevation] = React.useState<number>(defaultElev);
+
+  React.useEffect(() => {
+    if (defaultElev !== 100) {
+      setPadElevation(defaultElev);
+    }
+  }, [defaultElev]);
+
   const [solving, setSolving] = React.useState<boolean>(false);
   const [volumes, setVolumes] = React.useState<any | null>(null);
 
@@ -33,6 +49,7 @@ export function useGradingSolverState() {
     () => createGradingPad({ padElevation, cutSlope, fillSlope }),
     [padElevation, cutSlope, fillSlope],
   );
+
 
   React.useEffect(() => {
     if (open && site) {

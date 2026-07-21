@@ -1,7 +1,7 @@
 import {
   formatLandLotShort,
   formatPLSSShort,
-  getRegionPlugin,
+  geoidRegistry,
   landLotSide,
   METERS_PER_UNIT,
   sectionFrame,
@@ -19,7 +19,8 @@ export function FrameworkLayer({
   site: Site;
   viewport: Viewport;
 }) {
-  const framework = getRegionPlugin(site.jurisdictionId)?.surveyFramework;
+  const activeGeoid = (site as any)?.geoid || (site as any)?.jurisdictionId || "51153";
+  const framework = geoidRegistry.resolve(activeGeoid).surveyFramework;
 
   if (framework === "georgia-land-lot" && site.landLot?.nwCorner) {
     const acres = site.landLot.ref.acres ?? 202.5;

@@ -28,8 +28,14 @@ interface UiState {
   corridorOpen: boolean;
   /** Whether the grading pad zero-volume solver is open. */
   gradingOpen: boolean;
-  /** Whether the COGO Metes & Bounds Traverse Plat Builder dialog is open. */
+  /** Whether superelevation wizard is open. */
+  superelevationOpen: boolean;
+  /** Whether COGO Metes & Bounds Traverse Plat Builder dialog is open. */
   cogoOpen: boolean;
+  /** Parcel ID selected for auto-subdivision, or null if closed. */
+  subdivisionTargetId: string | null;
+  /** Whether main screen canvas renders in hand-drawn surveyor mode. */
+  handDrawnMode: boolean;
 
   openPlat(targetId?: string | null): void;
   closePlat(): void;
@@ -42,6 +48,10 @@ interface UiState {
   setCorridorOpen(open: boolean): void;
   setGradingOpen(open: boolean): void;
   setSuperelevationOpen(open: boolean): void;
+  setCogoOpen(open: boolean): void;
+  setSubdivisionTargetId(id: string | null): void;
+  setHandDrawnMode(open: boolean): void;
+  toggleHandDrawnMode(): void;
   setCommandOpen(open: boolean): void;
   toggleCommand(): void;
   setShortcutsOpen(open: boolean): void;
@@ -64,6 +74,8 @@ export const useUiStore = create<UiState>((set) => ({
   gradingOpen: false,
   superelevationOpen: false,
   cogoOpen: false,
+  subdivisionTargetId: null,
+  handDrawnMode: true,
 
   openPlat(targetId = null) {
     set({ platOpen: true, platTargetId: targetId });
@@ -100,6 +112,15 @@ export const useUiStore = create<UiState>((set) => ({
   },
   setCogoOpen(cogoOpen) {
     set({ cogoOpen });
+  },
+  setSubdivisionTargetId(subdivisionTargetId) {
+    set({ subdivisionTargetId });
+  },
+  setHandDrawnMode(handDrawnMode) {
+    set({ handDrawnMode });
+  },
+  toggleHandDrawnMode() {
+    set((s) => ({ handDrawnMode: !s.handDrawnMode }));
   },
   setCommandOpen(commandOpen) {
     set({ commandOpen });

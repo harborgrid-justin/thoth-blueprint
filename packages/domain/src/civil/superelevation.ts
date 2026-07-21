@@ -1,6 +1,9 @@
 import _ from "lodash";
 import type { HorizontalAlignment } from "./alignment";
 import { resolveAlignment } from "./alignment";
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultRoads = federalData.standards.roads;
 
 import type {
   SuperelevationStation,
@@ -15,10 +18,11 @@ export type { SuperelevationStation, SuperelevationCurve };
 export function calculateSuperelevationRunoff(
   alignment: HorizontalAlignment,
   designSpeed: number,
-  eMax: number = 0.06,
-  normalCrown: number = -0.02,
+  eMax: number = defaultRoads.eMax,
+  normalCrown: number = defaultRoads.normalCrown,
+  speedMultiplier: number = defaultRoads.transitionSpeedMultiplier,
 ): SuperelevationCurve {
-  const transitionLength = designSpeed * 4;
+  const transitionLength = designSpeed * speedMultiplier;
   const tangentRunout = (Math.abs(normalCrown) / eMax) * transitionLength;
 
   const resolved = resolveAlignment(alignment);
@@ -142,3 +146,73 @@ export function getSuperelevationSlope(
 
   return { leftSlope: nc, rightSlope: nc };
 }
+
+/**
+ * Detects and resolves overlap between transition runoffs of adjacent curves (REQ-11-015, REQ-11-022).
+ */
+export function detectAndResolveSuperelevationOverlap(
+  curves: SuperelevationCurve[],
+): { hasOverlap: boolean; resolvedCurves: SuperelevationCurve[] } {
+  if (curves.length <= 1) {
+    return { hasOverlap: false, resolvedCurves: curves };
+  }
+
+  let hasOverlap = false;
+  const sorted = _.sortBy(curves, (c) => c.transitionStations[0]?.station ?? 0);
+  const resolved = [...sorted];
+
+  for (let i = 0; i < resolved.length - 1; i++) {
+    const c1 = resolved[i];
+    const c2 = resolved[i + 1];
+    const end1 = c1.transitionStations[c1.transitionStations.length - 1]?.station ?? 0;
+    const start2 = c2.transitionStations[0]?.station ?? 0;
+
+    if (end1 > start2) {
+      hasOverlap = true;
+      // Pro-rate transition lengths to meet at midpoint
+      const mid = (end1 + start2) / 2;
+      c1.transitionStations[c1.transitionStations.length - 1].station = mid;
+      c2.transitionStations[0].station = mid;
+    }
+  }
+
+  return { hasOverlap, resolvedCurves: resolved };
+}
+
+/**
+ * Validates shoulder rollover limit against lane cross slope (REQ-11-021).
+ */
+export function checkShoulderRollover(
+  laneSlope: number,
+  shoulderSlope: number,
+  maxRollover = 0.07,
+): { isViolation: boolean; rollover: number; maxRollover: number } {
+  const rollover = Math.abs(laneSlope - shoulderSlope);
+  return {
+    isViolation: rollover > maxRollover,
+    rollover,
+    maxRollover,
+  };
+}
+
+/**
+ * Exports superelevation critical stations to LandXML 1.2 schema (REQ-11-027).
+ */
+export function exportSuperelevationLandXML(curve: SuperelevationCurve): string {
+  const stationsXml = curve.transitionStations
+    .map(
+      (s) =>
+        `      <SuperelevationStation sta="${s.station.toFixed(3)}" leftGrade="${(s.leftOuterSlope * 100).toFixed(2)}" rightGrade="${(s.rightOuterSlope * 100).toFixed(2)}"/>`
+    )
+    .join("\n");
+
+  return (
+    `<?xml version="1.0" encoding="utf-8"?>\n` +
+    `<LandXML xmlns="http://www.landxml.org/schema/LandXML-1.2" version="1.2">\n` +
+    `  <Superelevation alignmentRef="${curve.alignmentId}" eMax="${(curve.eMax * 100).toFixed(1)}%">\n` +
+    stationsXml + "\n" +
+    `  </Superelevation>\n` +
+    `</LandXML>`
+  );
+}
+

@@ -32,10 +32,12 @@ import {
 } from "./hooks/useCanvasViewport";
 import { usePlanningCanvasState } from "./hooks/usePlanningCanvasState";
 import { useCanvasInteractions } from "./hooks/useCanvasInteractions";
+import { useUiStore } from "@/store/uiStore";
 import { ElementContextMenu } from "./ElementContextMenu";
 
 export function PlanningCanvas() {
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const handDrawnMode = useUiStore((s) => s.handDrawnMode);
   const state = usePlanningCanvasState();
   const { site, viewport, setViewport, size } = {
     ...state,
@@ -124,7 +126,9 @@ export function PlanningCanvas() {
     >
       <div
         ref={containerRef}
-        className={`relative h-full w-full overflow-hidden bg-[hsl(var(--canvas))] ${cursorClass}`}
+        className={`relative h-full w-full overflow-hidden transition-colors ${
+          handDrawnMode ? "bg-[#faf8f5]" : "bg-[hsl(var(--canvas))]"
+        } ${cursorClass}`}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -135,8 +139,20 @@ export function PlanningCanvas() {
         width={size.width}
         height={size.height}
         className="absolute inset-0 select-none"
+        style={{
+          fontFamily: handDrawnMode
+            ? "'Architects Daughter', 'Patrick Hand', 'Comic Sans MS', cursive"
+            : undefined,
+        }}
       >
+        <defs>
+          <filter id="canvas-hand-sketch" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.4" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
         <CanvasPatterns />
+        <g filter={handDrawnMode ? "url(#canvas-hand-sketch)" : undefined}>
         {underlay?.visible && (
           <UnderlayImage underlay={underlay} viewport={viewport} />
         )}
@@ -405,6 +421,7 @@ export function PlanningCanvas() {
             spatial={site.spatial}
           />
         )}
+        </g>
       </svg>
 
       <CanvasHud

@@ -71,3 +71,27 @@ export function formatElementSummary(
   const formattedCount = formatNumber(vertexCount);
   return { areaText, ratioText, lengthText, formattedCount };
 }
+
+export function updateUnderlayDimension(
+  currBounds: { minX: number; maxX: number; minY: number; maxY: number },
+  field: "width" | "height" | "centerX" | "centerY",
+  val: number,
+) {
+  let cx = (currBounds.minX + currBounds.maxX) / 2;
+  let cy = (currBounds.minY + currBounds.maxY) / 2;
+  let w = currBounds.maxX - currBounds.minX;
+  let h = currBounds.maxY - currBounds.minY;
+
+  if (field === "width") w = val;
+  else if (field === "height") h = val;
+  else if (field === "centerX") cx = val;
+  else if (field === "centerY") cy = val;
+
+  return {
+    minX: cx - w / 2,
+    maxX: cx + w / 2,
+    minY: cy - h / 2,
+    maxY: cy + h / 2,
+  };
+}
+

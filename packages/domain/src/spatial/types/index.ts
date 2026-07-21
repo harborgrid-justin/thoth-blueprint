@@ -501,8 +501,10 @@ export interface Site {
     /** Plan-coordinate NW corner of the controlling land lot. */
     nwCorner?: Point;
   };
-  /** Active region plug-in (jurisdiction) id ΓÇö see `./regions`. */
+  /** Active region plug-in (jurisdiction) id — see `./regions`. */
   jurisdictionId?: string;
+  /** Active GEOID standard identifier. */
+  geoid?: string;
   /** CAD sheet drawing sets composed from this site (see `./sheet`). */
   drawingSets?: DrawingSet[];
   /** Paper-space viewports referenced by sheets (see `./sheetview`). */

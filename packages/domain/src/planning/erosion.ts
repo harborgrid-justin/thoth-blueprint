@@ -1,6 +1,9 @@
 import type { Site, Point, ComplianceFinding } from "../spatial/types.js";
 import type { ElevationGrid } from "../civil/terrain.js";
 import { distance, length } from "../spatial/geometry.js";
+import federalData from "./geoid/data/federalReference.json";
+
+const defaultErosion = federalData.standards.erosion;
 
 import type {
   ErosionParticle,
@@ -16,8 +19,8 @@ export class ErosionSimulator {
   private steps: SimulationFrame[] = [];
 
   // Parameters
-  private rainIntensity = 40; // particles per step
-  private soilErodibility = 0.055;
+  private rainIntensity = defaultErosion.defaultRainIntensityParticles || 40; // particles per step
+  private soilErodibility = defaultErosion.soilErodibilityLoam || 0.055;
   private depositRate = 0.12;
   private gravity = 9.81;
   constructor(site: Site, soilType?: "sand" | "silt" | "clay" | "loam") {
@@ -25,16 +28,16 @@ export class ErosionSimulator {
     this.grid = (site as any).terrain?.existing || this.makeDefaultGrid();
     if (soilType) {
       if (soilType === "sand") {
-        this.soilErodibility = 0.025;
+        this.soilErodibility = defaultErosion.soilErodibilitySand || 0.025;
         this.depositRate = 0.25;
       } else if (soilType === "clay") {
-        this.soilErodibility = 0.04;
+        this.soilErodibility = defaultErosion.soilErodibilityClay || 0.04;
         this.depositRate = 0.05;
       } else if (soilType === "silt") {
-        this.soilErodibility = 0.08;
+        this.soilErodibility = defaultErosion.soilErodibilitySilt || 0.08;
         this.depositRate = 0.15;
       } else {
-        this.soilErodibility = 0.055;
+        this.soilErodibility = defaultErosion.soilErodibilityLoam || 0.055;
         this.depositRate = 0.12;
       }
     }

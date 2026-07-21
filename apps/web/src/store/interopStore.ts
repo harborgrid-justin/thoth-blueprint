@@ -28,6 +28,7 @@ export interface Underlay {
   name: string;
   url: string;
   bounds: Bounds;
+  rotation: number;
   opacity: number;
   visible: boolean;
 }

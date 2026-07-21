@@ -168,10 +168,12 @@ export function buildKnightsbridgePlatFromScratch(): Site {
   const floodNote: PlanNote = {
     id: "note-scratch-flood",
     kind: "note",
-    name: "HUD Flood Certification",
+    text: "HUD Flood Certification",
     position: { x: 50, y: 120 },
     layerId: "c-prop",
   };
+
+
 
   const elements = [
     parcel,

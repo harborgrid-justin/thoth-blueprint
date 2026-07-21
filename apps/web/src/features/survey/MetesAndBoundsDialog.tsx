@@ -1,23 +1,8 @@
 import * as React from "react";
-import { Compass, Plus, Trash2, CheckCircle2, Ruler } from "lucide-react";
-import {
-  bearingToAzimuth,
-  boundaryArea,
-  densifyBoundary,
-  defaultSpatialContext,
-  type Point,
-  type Polygon,
-  type Parcel,
-  type Lot,
-  type Building,
-  type Easement,
-  type RightOfWay,
-} from "@thoth/domain";
-import { useWorkspaceStore } from "@/store/workspaceStore";
-import { useUiStore } from "@/store/uiStore";
+import { Compass, Plus, Trash2, CheckCircle2 } from "lucide-react";
+import { densifyBoundary } from "@thoth/domain";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
@@ -27,216 +12,30 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-interface CourseRow {
-  id: string;
-  ns: "N" | "S";
-  deg: number;
-  min: number;
-  sec: number;
-  ew: "E" | "W";
-  distance: number;
-  isCurve: boolean;
-  arcLength: number;
-  radius: number;
-}
-
-const DEFAULT_COURSES: CourseRow[] = [
-  { id: "c1", ns: "N", deg: 3, min: 52, sec: 8, ew: "E", distance: 178.64, isCurve: false, arcLength: 0, radius: 0 },
-  { id: "c2", ns: "N", deg: 81, min: 44, sec: 15, ew: "E", distance: 82.79, isCurve: false, arcLength: 0, radius: 0 },
-  { id: "c3", ns: "S", deg: 9, min: 56, sec: 35, ew: "E", distance: 189.40, isCurve: false, arcLength: 0, radius: 0 },
-  { id: "c4", ns: "N", deg: 86, min: 7, sec: 52, ew: "W", distance: 16.99, isCurve: true, arcLength: 110.05, radius: 498.00 },
-];
+import { useMetesAndBoundsState } from "./hooks/useMetesAndBoundsState";
 
 export function MetesAndBoundsDialog() {
-  const open = useUiStore((s) => s.cogoOpen);
-  const setOpen = useUiStore((s) => s.setCogoOpen);
-  const site = useWorkspaceStore((s) => s.site);
+  const {
+    open,
+    setOpen,
+    site,
+    courses,
+    includeResidence,
+    setIncludeResidence,
+    includeEasements,
+    setIncludeEasements,
+    boundary,
+    arcs,
+    totalPerimeter,
+    calculatedAreaSqFt,
+    closureError,
+    addCourse,
+    updateCourse,
+    removeCourse,
+    commitPlatToCanvas,
+  } = useMetesAndBoundsState();
 
-  const [pobX, setPobX] = React.useState<number>(0);
-  const [pobY, setPobY] = React.useState<number>(0);
-  const [courses, setCourses] = React.useState<CourseRow[]>(DEFAULT_COURSES);
-  const [lotName, setLotName] = React.useState<string>("Lot 11, Section 6 — Knightsbridge Drive");
-  const [includeResidence, setIncludeResidence] = React.useState<boolean>(true);
-  const [includeEasements, setIncludeEasements] = React.useState<boolean>(true);
-
-  // Calculate polygon vertices from bearing + distance calls
-  const { boundary, arcs, totalPerimeter, calculatedAreaSqFt, closureError } = React.useMemo(() => {
-    const pts: Point[] = [{ x: pobX, y: pobY }];
-    const edgeArcs: Record<number, number> = {};
-    let current = { x: pobX, y: pobY };
-    let perimeter = 0;
-
-    courses.forEach((c, idx) => {
-      const az = bearingToAzimuth({ ns: c.ns, deg: c.deg, min: c.min, sec: c.sec, ew: c.ew });
-      // Convert azimuth to radians (0 = North/up = -Y, 90 = East = +X)
-      const rad = (az * Math.PI) / 180;
-      const dx = c.distance * Math.sin(rad);
-      const dy = -c.distance * Math.cos(rad); // North is -Y in plan coordinates
-
-      current = { x: current.x + dx, y: current.y + dy };
-      perimeter += c.distance;
-
-      if (idx < courses.length - 1) {
-        pts.push(current);
-      }
-
-      if (c.isCurve && c.radius > 0 && c.arcLength > 0) {
-        const delta = c.arcLength / c.radius;
-        const bulge = Math.tan(delta / 4) * (c.ew === "W" ? -1 : 1);
-        edgeArcs[idx] = bulge;
-      }
-    });
-
-    const closePt = pts[0];
-    const dx = current.x - closePt.x;
-    const dy = current.y - closePt.y;
-    const error = Math.sqrt(dx * dx + dy * dy);
-
-    const area = boundaryArea(pts, edgeArcs);
-
-    return {
-      boundary: pts,
-      arcs: edgeArcs,
-      totalPerimeter: perimeter,
-      calculatedAreaSqFt: area,
-      closureError: error,
-    };
-  }, [pobX, pobY, courses]);
-
-  function addCourse() {
-    setCourses((prev) => [
-      ...prev,
-      {
-        id: `c_${Date.now()}`,
-        ns: "N",
-        deg: 0,
-        min: 0,
-        sec: 0,
-        ew: "E",
-        distance: 100,
-        isCurve: false,
-        arcLength: 0,
-        radius: 0,
-      },
-    ]);
-  }
-
-  function updateCourse(id: string, patch: Partial<CourseRow>) {
-    setCourses((prev) => prev.map((c) => (c.id === id ? { ...c, ...patch } : c)));
-  }
-
-  function removeCourse(id: string) {
-    setCourses((prev) => prev.filter((c) => c.id !== id));
-  }
-
-  function commitPlatToCanvas() {
-    if (!site) return;
-
-    // Build parcel & lot elements
-    const parcel: Parcel = {
-      id: `parcel_cogo_${Date.now()}`,
-      kind: "parcel",
-      name: `${lotName} (${calculatedAreaSqFt.toFixed(0)} sq ft)`,
-      boundary,
-      arcs,
-      layerId: "c-prop",
-    };
-
-    const lot: Lot = {
-      id: `lot_cogo_${Date.now()}`,
-      kind: "lot",
-      name: lotName,
-      boundary,
-      arcs,
-      setback: 25,
-      layerId: "c-prop-lot",
-    };
-
-    const newElements = [parcel, lot];
-
-    // Optional Residence Footprint (#12720)
-    if (includeResidence) {
-      const house: Building = {
-        id: `bldg_cogo_${Date.now()}`,
-        kind: "building",
-        name: "Two Story Brick & Frame House with Basement #12720",
-        boundary: [
-          { x: pobX + 26.65, y: pobY + 42.0 },
-          { x: pobX + 66.55, y: pobY + 42.0 },
-          { x: pobX + 66.55, y: pobY + 78.4 },
-          { x: pobX + 52.05, y: pobY + 78.4 },
-          { x: pobX + 52.05, y: pobY + 90.4 },
-          { x: pobX + 26.65, y: pobY + 90.4 },
-        ],
-        storeys: 2,
-        height: 30,
-        dwellingUnits: 1,
-        layerId: "a-bldg",
-      };
-      newElements.push(house);
-    }
-
-    // Optional Easements & R.O.W.
-    if (includeEasements) {
-      const row: RightOfWay = {
-        id: `row_cogo_${Date.now()}`,
-        kind: "row",
-        name: "Knightsbridge Drive (54' R/W — 650.98' to P.C. @ Berwick Place)",
-        boundary: [
-          { x: pobX - 20, y: pobY - 54 },
-          { x: pobX + 150, y: pobY - 54 },
-          { x: pobX + 150, y: pobY },
-          { x: pobX - 20, y: pobY },
-        ],
-        layerId: "c-road",
-      };
-
-      const northSewer: Easement = {
-        id: `esmt_sewer_${Date.now()}`,
-        kind: "easement",
-        name: "20' Sanitary Sewer Easement",
-        boundary: [
-          { x: pobX + 12.05, y: pobY + 158.23 },
-          { x: pobX + 93.98, y: pobY + 170.12 },
-          { x: pobX + 93.98, y: pobY + 190.12 },
-          { x: pobX + 12.05, y: pobY + 178.23 },
-        ],
-        layerId: "c-ease",
-      };
-
-      const westStorm: Easement = {
-        id: `esmt_storm_${Date.now()}`,
-        kind: "easement",
-        name: "20' Storm Drainage Easement",
-        boundary: [
-          { x: pobX, y: pobY },
-          { x: pobX + 20, y: pobY },
-          { x: pobX + 32.05, y: pobY + 178.23 },
-          { x: pobX + 12.05, y: pobY + 178.23 },
-        ],
-        layerId: "c-ease",
-      };
-
-      const eastUtility: Easement = {
-        id: `esmt_ingress_${Date.now()}`,
-        kind: "easement",
-        name: "40' Ingress-Egress and Utility Easement",
-        boundary: [
-          { x: pobX + 86.68, y: pobY + 3.57 },
-          { x: pobX + 126.68, y: pobY + 3.57 },
-          { x: pobX + 93.98, y: pobY + 190.12 },
-          { x: pobX + 53.98, y: pobY + 190.12 },
-        ],
-        layerId: "c-ease",
-      };
-
-      newElements.push(row, northSewer, westStorm, eastUtility);
-    }
-
-    useWorkspaceStore.getState().addElements(newElements);
-    setOpen(false);
-  }
+  if (!site) return null;
 
   // Preview ViewBox
   const densified = densifyBoundary(boundary, arcs, 2);
@@ -248,6 +47,7 @@ export function MetesAndBoundsDialog() {
   const vh = Math.max(maxY - minY, 50);
 
   return (
+
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-4xl">
         <DialogHeader>
@@ -284,8 +84,9 @@ export function MetesAndBoundsDialog() {
                   </tr>
                 </thead>
                 <tbody>
-                  {courses.map((c, i) => (
+                  {courses.map((c) => (
                     <React.Fragment key={c.id}>
+
                       <tr className="border-b hover:bg-muted/50">
                         <td className="p-1">
                           <select

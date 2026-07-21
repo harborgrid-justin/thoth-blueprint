@@ -1,4 +1,17 @@
-import { type PayItem, evaluatePayItemCost } from "@thoth/domain";
+import {
+  type PayItem,
+  evaluatePayItemCost,
+  calculateStairGeometry,
+  calculateCurtainWallGeometry,
+  calculateDoorGeometry,
+  calculateWindowGeometry,
+  calculateRoofGeometry,
+  type Stair,
+  type CurtainWall,
+  type DoorElement,
+  type WindowElement,
+  type RoofElement,
+} from "@thoth/domain";
 import {
   formatNumber,
   formatRatio,
@@ -6,6 +19,7 @@ import {
   formatArea,
 } from "@/lib/format";
 import { formatLength, resolveLengthUnit } from "@/lib/units";
+
 
 export const DEFAULT_PAY_ITEMS: PayItem[] = [
   {
@@ -125,3 +139,59 @@ export function formatTotalTakeoffCost(total: number): string {
 export function formatTaxPercent(rate: number): string {
   return formatPercent(rate, 1);
 }
+
+export function getStairsSafetyWarnings(site: any): string[] {
+  if (!site) return [];
+  const stairs = site.elements.filter((e: any) => e.kind === "stair") as Stair[];
+  const warnings: string[] = [];
+  stairs.forEach((stair) => {
+    const geom = calculateStairGeometry(stair);
+    geom.warnings.forEach((w) => warnings.push(`${stair.name}: ${w}`));
+  });
+  return warnings;
+}
+
+export function getCurtainWallWarnings(site: any): string[] {
+  if (!site) return [];
+  const walls = site.elements.filter((e: any) => e.kind === "curtainwall") as CurtainWall[];
+  const warnings: string[] = [];
+  walls.forEach((wall) => {
+    const geom = calculateCurtainWallGeometry(wall);
+    geom.warnings.forEach((w) => warnings.push(`${wall.name}: ${w}`));
+  });
+  return warnings;
+}
+
+export function getDoorWindowCodeWarnings(site: any): string[] {
+  if (!site) return [];
+  const warnings: string[] = [];
+  const doors = site.elements.filter((e: any) => e.kind === "door") as DoorElement[];
+  const windows = site.elements.filter((e: any) => e.kind === "window") as WindowElement[];
+
+  doors.forEach((door) => {
+    const geom = calculateDoorGeometry(door);
+    geom.warnings.forEach((w) => warnings.push(`${door.name}: ${w}`));
+  });
+
+  windows.forEach((win) => {
+    const geom = calculateWindowGeometry(win);
+    geom.warnings.forEach((w) => warnings.push(`${win.name}: ${w}`));
+  });
+
+  return warnings;
+}
+
+export function getRoofWarnings(site: any): string[] {
+  if (!site) return [];
+  const warnings: string[] = [];
+  const roofs = site.elements.filter((e: any) => e.kind === "roof") as RoofElement[];
+
+  roofs.forEach((roof) => {
+    const res = calculateRoofGeometry(roof);
+    res.warnings.forEach((w) => warnings.push(`${roof.name}: ${w}`));
+    res.ventilationWarnings.forEach((w) => warnings.push(`${roof.name}: ${w}`));
+  });
+
+  return warnings;
+}
+

@@ -10,6 +10,10 @@ import type {
   LabelStyle,
 } from "./types/labeling";
 
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultDrafting = federalData.standards.drafting;
+
 export type {
   LabelStyleGeneral,
   LabelStyleLayout,
@@ -29,14 +33,14 @@ export function resolveLabelStyle(
   draggedState: LabelStyleDraggedState;
 } {
   const defaultStyle = {
-    general: { layer: "C-ANNO-LABL", visible: true, planReadable: true },
+    general: { layer: (defaultDrafting.defaultAnnotationLayer as string) || "C-ANNO-LABL", visible: true, planReadable: true },
     layout: {
       textTemplate: "{Name}",
-      fontSize: 8,
+      fontSize: defaultDrafting.defaultFontSizePt || 8,
       fontColor: "#000000",
       anchorPoint: "center",
     },
-    draggedState: { leaderVisible: true, stackedText: true, gap: 2 },
+    draggedState: { leaderVisible: true, stackedText: true, gap: defaultDrafting.defaultLeaderGapMm || 2 },
   };
 
   const chain: LabelStyle[] = [];

@@ -114,6 +114,11 @@ const MetesAndBoundsDialog = React.lazy(() =>
     default: m.MetesAndBoundsDialog,
   })),
 );
+const SubdivisionBuilderDialog = React.lazy(() =>
+  import("@/features/survey/SubdivisionBuilderDialog").then((m) => ({
+    default: m.SubdivisionBuilderDialog,
+  })),
+);
 
 export function Workspace() {
   const {
@@ -157,55 +162,71 @@ export function Workspace() {
 
   return (
     <TooltipProvider>
-      <div className="flex h-screen flex-col bg-background">
-        <TopBar
-          project={project}
-          saving={saving}
-          onSave={() => void save()}
-          onOpenCheckpoints={() => setCheckpointsOpen(true)}
-        />
-        <div className="flex min-h-0 flex-1">
-          <Toolbar />
-          <main className="relative min-w-0 flex-1">
-            <CanvasArea />
-            <FindPanel />
-          </main>
+      <div className="relative h-screen w-screen overflow-hidden bg-background">
+        {/* Edge-to-edge canvas */}
+        <main className="absolute inset-0 z-0">
+          <CanvasArea />
+          <FindPanel />
+        </main>
 
+        {/* Floating TopBar */}
+        <div className="absolute top-4 left-4 right-4 z-10 pointer-events-none">
+          <div className="pointer-events-auto glass-panel rounded-xl overflow-hidden shadow-sm">
+            <TopBar
+              project={project}
+              saving={saving}
+              onSave={() => void save()}
+              onOpenCheckpoints={() => setCheckpointsOpen(true)}
+            />
+          </div>
+        </div>
+
+        {/* Floating Toolbar */}
+        <div className="absolute top-20 left-4 z-10 pointer-events-none">
+          <div className="pointer-events-auto glass-panel rounded-xl overflow-hidden shadow-lg p-1">
+            <Toolbar />
+          </div>
+        </div>
+
+        {/* Floating Sidebar (Properties / Layers / etc.) */}
+        <div className="absolute top-20 right-4 bottom-4 z-10 flex pointer-events-none">
           {/* Resize handle */}
           <div
-            className="w-1 hover:w-1.5 active:w-1.5 shrink-0 bg-border hover:bg-primary active:bg-primary cursor-col-resize select-none transition-all duration-150"
+            className="w-3 shrink-0 cursor-col-resize pointer-events-auto flex items-center justify-center group"
             onPointerDown={onSidebarPointerDown}
             onPointerMove={onSidebarPointerMove}
             onPointerUp={onSidebarPointerUp}
-          />
+          >
+            <div className="h-12 w-1 rounded-full bg-border/40 group-hover:bg-primary transition-colors duration-200" />
+          </div>
 
           <aside
             style={{ width: sidebarWidth }}
-            className="flex shrink-0 flex-col bg-card"
+            className="flex flex-col glass-panel rounded-xl pointer-events-auto ml-1 overflow-hidden shadow-2xl"
           >
             <Tabs
               value={tab}
               onValueChange={setTab}
               className="flex min-h-0 flex-1 flex-col"
             >
-              <TabsList className="m-2 grid grid-cols-6">
-                <TabsTrigger value="inspect" title="Inspect">
-                  <SlidersHorizontal className="h-3 w-3" />
+              <TabsList className="m-2 grid grid-cols-6 bg-muted/50 rounded-lg">
+                <TabsTrigger value="inspect" title="Inspect" className="rounded-md">
+                  <SlidersHorizontal className="h-4 w-4" />
                 </TabsTrigger>
-                <TabsTrigger value="layers" title="Layers">
-                  <Layers className="h-3 w-3" />
+                <TabsTrigger value="layers" title="Layers" className="rounded-md">
+                  <Layers className="h-4 w-4" />
                 </TabsTrigger>
-                <TabsTrigger value="terrain" title="Terrain">
-                  <Mountain className="h-3 w-3" />
+                <TabsTrigger value="terrain" title="Terrain" className="rounded-md">
+                  <Mountain className="h-4 w-4" />
                 </TabsTrigger>
-                <TabsTrigger value="metrics" title="Metrics">
-                  <Ruler className="h-3 w-3" />
+                <TabsTrigger value="metrics" title="Metrics" className="rounded-md">
+                  <Ruler className="h-4 w-4" />
                 </TabsTrigger>
-                <TabsTrigger value="qto" title="QTO">
-                  <HardHat className="h-3 w-3" />
+                <TabsTrigger value="qto" title="QTO" className="rounded-md">
+                  <HardHat className="h-4 w-4" />
                 </TabsTrigger>
-                <TabsTrigger value="erosion" title="Erosion">
-                  <Waves className="h-3 w-3" />
+                <TabsTrigger value="erosion" title="Erosion" className="rounded-md">
+                  <Waves className="h-4 w-4" />
                 </TabsTrigger>
               </TabsList>
               <ScrollArea className="min-h-0 flex-1">
@@ -329,6 +350,9 @@ export function Workspace() {
             <MetesAndBoundsDialog />
           </React.Suspense>
         )}
+        <React.Suspense fallback={null}>
+          <SubdivisionBuilderDialog />
+        </React.Suspense>
       </div>
     </TooltipProvider>
   );

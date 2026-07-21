@@ -19,6 +19,12 @@
     "civil": {
       "minSiltFenceBuffer": 10,
       "maxDisturbedSlopePercent": 30
+    },
+    "climate": {
+      "rainfallIntensity100Yr": 4.5,
+      "windVelocityMph": 130,
+      "snowLoadPsf": 0,
+      "soilBearingPsf": 1500
     }
   }
 }

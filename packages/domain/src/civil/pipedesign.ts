@@ -23,6 +23,10 @@ export type {
   PipeNetworkAnalysisReport,
 };
 
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultRoads = federalData.standards.roads;
+
 /** Design rules settings for utility networks validation. */
 export interface PipeDesignRules {
   minCover: number; // Minimum depth from terrain surface to top of pipe, in plan units
@@ -31,6 +35,15 @@ export interface PipeDesignRules {
   minPipeDiameter: number; // Minimum pipe size diameter, in plan units
   defaultSumpDepth: number; // Default sump depth below lowest invert
 }
+
+/** Default Federal DOT utility network design rules. */
+export const DEFAULT_PIPE_DESIGN_RULES: PipeDesignRules = {
+  minCover: defaultRoads.minCoverFt,
+  minSlope: defaultRoads.minPipeSlope,
+  maxSlope: defaultRoads.maxPipeSlope,
+  minPipeDiameter: defaultRoads.minPipeDiameterIn / 12,
+  defaultSumpDepth: defaultRoads.defaultSumpDepthFt,
+};
 
 /** Warning or clearance violation on a pipe network element. */
 export interface PipeRuleViolation {
@@ -64,7 +77,7 @@ export interface PipeElevationDetails {
 export function validatePipeNetwork(
   network: InfrastructureNetwork,
   terrain: ElevationGrid,
-  rules: PipeDesignRules,
+  rules: PipeDesignRules = DEFAULT_PIPE_DESIGN_RULES,
   nodeInverts: Record<string, number>, // Map from nodeId to invert elevation (at center)
   nodeRims?: Record<string, number>, // Optional manual rims overrides
 ): {

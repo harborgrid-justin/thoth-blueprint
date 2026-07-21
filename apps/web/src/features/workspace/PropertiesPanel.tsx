@@ -22,8 +22,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { useInteropStore } from "@/store/interopStore";
 import { usePropertiesState } from "./hooks/usePropertiesState";
-import { countCurvedEdges } from "./helpers/propertiesHelpers";
+import { countCurvedEdges, updateUnderlayDimension } from "./helpers/propertiesHelpers";
+
 
 /** Inspector for the current selection: element attributes and measurements. */
 export function PropertiesPanel() {
@@ -34,6 +36,10 @@ export function PropertiesPanel() {
     validatedAlignments,
     deleteSelection,
   } = usePropertiesState();
+
+  const underlay = useInteropStore((s) => s.underlay);
+  const updateUnderlay = useInteropStore((s) => s.updateUnderlay);
+  const clearUnderlay = useInteropStore((s) => s.clearUnderlay);
 
   if (!site) {
     return null;
@@ -97,6 +103,37 @@ export function PropertiesPanel() {
                 );
               })}
             </div>
+          </div>
+        )}
+
+        {/* Underlay Settings */}
+        {underlay && (
+          <div className="mt-2 border-t border-border/40 pt-3">
+            <div className="flex justify-between items-center mb-1.5">
+               <h4 className="font-semibold text-muted-foreground text-[10px] uppercase tracking-wide">
+                 Blueprint Underlay
+               </h4>
+               <Button variant="ghost" size="sm" onClick={clearUnderlay} className="h-5 px-1.5 text-rose-500">
+                 Clear
+               </Button>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <NumberField label="Opacity (0-1)" value={underlay.opacity} step={0.1} onCommit={(v) => updateUnderlay({ opacity: Math.max(0, Math.min(1, v)) })} />
+              <NumberField label="Rotation (deg)" value={underlay.rotation || 0} step={1} onCommit={(v) => updateUnderlay({ rotation: v })} />
+              <NumberField label="Width" value={underlay.bounds.maxX - underlay.bounds.minX} step={10} onCommit={(w) => {
+                 updateUnderlay({ bounds: updateUnderlayDimension(underlay.bounds, "width", w) });
+              }} />
+              <NumberField label="Height" value={underlay.bounds.maxY - underlay.bounds.minY} step={10} onCommit={(h) => {
+                 updateUnderlay({ bounds: updateUnderlayDimension(underlay.bounds, "height", h) });
+              }} />
+              <NumberField label="Center X" value={(underlay.bounds.minX + underlay.bounds.maxX) / 2} step={10} onCommit={(cx) => {
+                 updateUnderlay({ bounds: updateUnderlayDimension(underlay.bounds, "centerX", cx) });
+              }} />
+              <NumberField label="Center Y" value={(underlay.bounds.minY + underlay.bounds.maxY) / 2} step={10} onCommit={(cy) => {
+                 updateUnderlay({ bounds: updateUnderlayDimension(underlay.bounds, "centerY", cy) });
+              }} />
+            </div>
+
           </div>
         )}
 

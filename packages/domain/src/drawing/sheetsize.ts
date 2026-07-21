@@ -31,8 +31,12 @@ export type {
   PaperRect,
 };
 
-const IN_PER_MM = 1 / 25.4;
-const MM_PER_IN = 25.4;
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultDrafting = federalData.standards.drafting;
+
+const MM_PER_IN = defaultDrafting.mmPerInch;
+const IN_PER_MM = 1 / MM_PER_IN;
 
 function ansiOrArch(
   id: SheetSizeId,
@@ -92,7 +96,7 @@ const BY_ID = new Map(SHEET_SIZES.map((s) => [s.id, s]));
 
 /** Look up a sheet size by id (falls back to ARCH D). */
 export function sheetSize(id: SheetSizeId): SheetSize {
-  return BY_ID.get(id) ?? BY_ID.get("arch-d")!;
+  return BY_ID.get(id) ?? BY_ID.get(defaultDrafting.defaultSheetId as SheetSizeId) ?? BY_ID.get("arch-d")!;
 }
 
 /** All registered sheet sizes. */

@@ -15,6 +15,12 @@
       "minDoorWidth": 32,
       "minDoorHeight": 80,
       "minEgressWindowArea": 5.7
+    },
+    "climate": {
+      "rainfallIntensity100Yr": 4.5,
+      "windVelocityMph": 130,
+      "snowLoadPsf": 0,
+      "soilBearingPsf": 1500
     }
   }
 }

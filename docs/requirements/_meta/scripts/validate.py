@@ -27,7 +27,8 @@ errors = []
 
 def rows(path):
     out = []
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
+
         for ln in f:
             if not ln.startswith("|"):
                 continue
@@ -65,20 +66,21 @@ for parts in rows(P("03-nonfunctional/nonfunctional-requirements.md")):
 # BR/STK/CON/DEP ids
 for rel in ("01-business/business-requirements.md", "01-business/stakeholders.md",
             "00-overview/scope-and-context.md"):
-    with open(P(rel)) as f:
+    with open(P(rel), encoding="utf-8") as f:
         for m in re.finditer(r'`(BR-\d{3}|STK-\d{3}|CON-\d{3}|DEP-\d{3})`', f.read()):
             pass  # existence collected below
 
 # STK Satisfies -> BR (R1)
-with open(P("01-business/stakeholders.md")) as f:
+with open(P("01-business/stakeholders.md"), encoding="utf-8") as f:
     txt = f.read()
 for m in re.finditer(r'\*\*Satisfies:\*\*\s*(.+)', txt):
     br_satisfied.update(re.findall(r'BR-\d{3}', m.group(1)))
 
 # existence sets
 def ids_in(rel, pat):
-    with open(P(rel)) as f:
+    with open(P(rel), encoding="utf-8") as f:
         return set(re.findall(pat, f.read()))
+
 BR = ids_in("01-business/business-requirements.md", r'\bBR-\d{3}\b')
 STK = ids_in("01-business/stakeholders.md", r'\bSTK-\d{3}\b')
 CON = ids_in("00-overview/scope-and-context.md", r'\bCON-\d{3}\b')

@@ -21,7 +21,7 @@ export function centerlinePoints(r: ResolvedAlignment): Point[] {
         pts.push(el.from);
       }
       pts.push(el.to);
-    } else {
+    } else if (el.kind === "curve") {
       const c = el.curve;
       const steps = Math.max(2, Math.ceil(c.deltaDeg / 2));
       for (let i = 0; i <= steps; i++) {
@@ -32,6 +32,7 @@ export function centerlinePoints(r: ResolvedAlignment): Point[] {
         });
       }
     }
+
   }
   return pts;
 }

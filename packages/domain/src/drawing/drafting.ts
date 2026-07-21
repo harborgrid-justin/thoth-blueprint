@@ -19,6 +19,10 @@ import type {
   PlotStyle,
 } from "./types/drafting";
 
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultDrafting = federalData.standards.drafting;
+
 export type {
   LineWeightName,
   LineTypeName,
@@ -33,20 +37,10 @@ export type {
 // --- line weights ----------------------------------------------------------
 
 /** Millimetre width for each named line weight (ISO pen ladder). */
-export const LINE_WEIGHTS: Record<LineWeightName, number> = {
-  fine: 0.13,
-  thin: 0.18,
-  light: 0.25,
-  medium: 0.35,
-  wide: 0.5,
-  "x-wide": 0.7,
-  "xx-wide": 1.0,
-};
+export const LINE_WEIGHTS: Record<LineWeightName, number> = defaultDrafting.lineWeightsMm as Record<LineWeightName, number>;
 
 /** The full ISO pen ladder in millimetres, for style pickers. */
-export const ISO_PEN_LADDER_MM = [
-  0.13, 0.18, 0.25, 0.35, 0.5, 0.7, 1.0, 1.4, 2.0,
-];
+export const ISO_PEN_LADDER_MM: number[] = defaultDrafting.isoPenLadderMm;
 
 /** Millimetre width for a named line weight. */
 export function lineWeightMm(name: LineWeightName): number {

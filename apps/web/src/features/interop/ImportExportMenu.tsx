@@ -37,7 +37,7 @@ import {
 } from "./pointCloudIo";
 import { importMeshFile, MESH_ACCEPT } from "./meshIo";
 import { exportPlanPng, exportSiteDae } from "./blueprintExport";
-import { importUnderlayImage } from "./underlayIo";
+import { importUnderlayImage, importUnderlayImageUrl } from "./underlayIo";
 
 /** The Import / Export menu: mesh, point-cloud, and blueprint interchange. */
 export function ImportExportMenu() {
@@ -106,6 +106,21 @@ export function ImportExportMenu() {
         return;
       }
       setUnderlay(await importUnderlayImage(file, s));
+    });
+  }
+
+  async function importUnderlayUrl() {
+    const url = window.prompt("Enter image URL (e.g. /@fs/F:/AutoCAD Competitor/REF Plat.jpg or https://...)");
+    if (!url) {
+      return;
+    }
+    await run("Blueprint URL import", async () => {
+      const s = site();
+      if (!s) {
+        return;
+      }
+      const name = url.split("/").pop() || "url-underlay";
+      setUnderlay(await importUnderlayImageUrl(url, name, s));
     });
   }
 
@@ -218,6 +233,12 @@ export function ImportExportMenu() {
           <ImageIcon /> Blueprint image{" "}
           <span className="ml-auto text-[10px] text-muted-foreground">
             png·jpg
+          </span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={importUnderlayUrl}>
+          <ImageIcon /> Blueprint from URL{" "}
+          <span className="ml-auto text-[10px] text-muted-foreground">
+            url
           </span>
         </DropdownMenuItem>
         <DropdownMenuItem

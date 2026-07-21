@@ -11,6 +11,9 @@ import {
 } from "../spatial/geometry";
 import type { ElevationGrid } from "./terrain";
 import { elevationAt } from "./terrain";
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultGrading = federalData.standards.grading;
 
 import type {
   GradingPad,
@@ -141,8 +144,9 @@ export function calculateGradingVolumes(
   }
 
   // Convert cubic units to Cubic Yards (1 cubic yard = 27 cubic feet)
-  const cutVolume = totalCutVolume / 27;
-  const fillVolume = totalFillVolume / 27;
+  const cuFtDivisor = defaultGrading.cuFtPerCuYd || 27;
+  const cutVolume = totalCutVolume / cuFtDivisor;
+  const fillVolume = totalFillVolume / cuFtDivisor;
 
   return {
     cutVolume,

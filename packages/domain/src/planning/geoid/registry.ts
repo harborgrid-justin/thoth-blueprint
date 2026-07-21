@@ -11,6 +11,7 @@ import type {
   ResolvedLocalCode,
 } from "./types.js";
 import { getGeoidHierarchy, normalizeGeoid, parseGeoid } from "./utils.js";
+import federalData from "./data/federalReference.json";
 
 /** Default national baseline code standards (IRC / IBC sensible defaults). */
 export const DEFAULT_NATIONAL_STANDARDS: LocalCodeStandards = {
@@ -46,7 +47,36 @@ export const DEFAULT_NATIONAL_STANDARDS: LocalCodeStandards = {
     maxRunoffCoefficient: 0.8,
     streamBufferDistance: 25,
   },
-  roads: {},
+  climate: {
+    ...federalData.standards.climate,
+  },
+  hydraulics: {
+    ...federalData.standards.hydraulics,
+  },
+  geometry: {
+    ...federalData.standards.geometry,
+  },
+  grading: {
+    ...federalData.standards.grading,
+  },
+  subdivision: {
+    ...federalData.standards.subdivision,
+  },
+  structural: {
+    ...federalData.standards.structural,
+  },
+  erosion: {
+    ...federalData.standards.erosion,
+  },
+  planProduction: {
+    ...federalData.standards.planProduction,
+  },
+  drafting: {
+    ...federalData.standards.drafting,
+  },
+  roads: {
+    ...federalData.standards.roads,
+  },
   electrical: {},
   mechanical: {},
   custom: {},
@@ -122,7 +152,16 @@ export class GeoidPluginRegistry {
         appliedPlugins.push(plugin);
         resolutionChain.push(key);
         resolvedName = plugin.name;
+      }
+    }
 
+    let surveyFramework: "plss" | "georgia-land-lot" | "metes-and-bounds" | "texas-headright" | undefined;
+
+    for (const plugin of appliedPlugins) {
+      if (plugin.surveyFramework) {
+        surveyFramework = plugin.surveyFramework;
+      }
+      if (plugin.standards) {
         // Cascade zoning
         if (plugin.standards.zoning) {
           Object.assign(merged.zoning, plugin.standards.zoning);
@@ -138,6 +177,33 @@ export class GeoidPluginRegistry {
         // Cascade civil
         if (plugin.standards.civil) {
           Object.assign(merged.civil, plugin.standards.civil);
+        }
+        if (plugin.standards.climate) {
+          Object.assign(merged.climate, plugin.standards.climate);
+        }
+        if (plugin.standards.hydraulics) {
+          Object.assign(merged.hydraulics, plugin.standards.hydraulics);
+        }
+        if (plugin.standards.geometry) {
+          Object.assign(merged.geometry, plugin.standards.geometry);
+        }
+        if (plugin.standards.grading) {
+          Object.assign(merged.grading, plugin.standards.grading);
+        }
+        if (plugin.standards.subdivision) {
+          Object.assign(merged.subdivision, plugin.standards.subdivision);
+        }
+        if (plugin.standards.structural) {
+          Object.assign(merged.structural, plugin.standards.structural);
+        }
+        if (plugin.standards.erosion) {
+          Object.assign(merged.erosion, plugin.standards.erosion);
+        }
+        if (plugin.standards.planProduction) {
+          Object.assign(merged.planProduction, plugin.standards.planProduction);
+        }
+        if (plugin.standards.drafting) {
+          Object.assign(merged.drafting, plugin.standards.drafting);
         }
         if (plugin.standards.roads) {
           Object.assign(merged.roads, plugin.standards.roads);
@@ -169,6 +235,33 @@ export class GeoidPluginRegistry {
       if (customOverrides.civil) {
         Object.assign(merged.civil, customOverrides.civil);
       }
+      if (customOverrides.climate) {
+        Object.assign(merged.climate, customOverrides.climate);
+      }
+      if (customOverrides.hydraulics) {
+        Object.assign(merged.hydraulics, customOverrides.hydraulics);
+      }
+      if (customOverrides.geometry) {
+        Object.assign(merged.geometry, customOverrides.geometry);
+      }
+      if (customOverrides.grading) {
+        Object.assign(merged.grading, customOverrides.grading);
+      }
+      if (customOverrides.subdivision) {
+        Object.assign(merged.subdivision, customOverrides.subdivision);
+      }
+      if (customOverrides.structural) {
+        Object.assign(merged.structural, customOverrides.structural);
+      }
+      if (customOverrides.erosion) {
+        Object.assign(merged.erosion, customOverrides.erosion);
+      }
+      if (customOverrides.planProduction) {
+        Object.assign(merged.planProduction, customOverrides.planProduction);
+      }
+      if (customOverrides.drafting) {
+        Object.assign(merged.drafting, customOverrides.drafting);
+      }
       if (customOverrides.roads) {
         Object.assign(merged.roads, customOverrides.roads);
       }
@@ -189,6 +282,7 @@ export class GeoidPluginRegistry {
       name: resolvedName,
       resolutionChain,
       appliedPlugins,
+      surveyFramework,
       standards: merged,
     };
   }
@@ -196,3 +290,40 @@ export class GeoidPluginRegistry {
 
 /** Global default singleton instance of GeoidPluginRegistry. */
 export const geoidRegistry = new GeoidPluginRegistry();
+
+import { isSpatialElement } from "../../spatial/primitives";
+import { bounds, unionBounds } from "../../spatial/geometry";
+import type { Site } from "../../spatial/types";
+
+/**
+ * Generically configures site survey framework baselines (e.g. Georgia Land Lot, PLSS, Texas Headright)
+ * based on the resolved GEOID metadata without ad-hoc jurisdiction checks.
+ */
+export function initializeSiteSurveyFramework(site: Site, resolvedCode: ResolvedLocalCode): Site {
+  const framework = resolvedCode.surveyFramework;
+  if (!framework) {
+    return site;
+  }
+
+  const next: Site = { ...site };
+
+  if (framework === "georgia-land-lot" && !site.landLot) {
+    const boxes = site.elements
+      .filter(isSpatialElement)
+      .map((e) => bounds(e.boundary));
+    const b = boxes.length ? unionBounds(boxes) : null;
+    const nwCorner = b
+      ? { x: b.minX - 20, y: b.minY - 20 }
+      : { x: 0, y: 0 };
+    next.landLot = {
+      ref: {
+        district: 9,
+        landLot: 12,
+        acres: (resolvedCode.standards as any)?.landLotAcres ?? 202.5,
+      },
+      nwCorner,
+    };
+  }
+
+  return next;
+}

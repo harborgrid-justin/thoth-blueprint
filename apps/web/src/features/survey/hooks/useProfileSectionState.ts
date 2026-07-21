@@ -2,10 +2,12 @@ import * as React from "react";
 import _ from "lodash";
 import {
   resolveAlignment,
+  elevationAt,
   type VerticalProfile,
   type VerticalPVI,
   type CrossSection,
 } from "@thoth/domain";
+
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useUiStore } from "@/store/uiStore";
 import { buildTerrainModel } from "@/features/terrain/terrainModel";
@@ -32,16 +34,44 @@ export function useProfileSectionState() {
   );
   const terrainSurface = terrain?.existing ?? null;
 
-  const [profile, setProfile] = React.useState<VerticalProfile>({
-    id: "vp-1",
-    name: "Design Profile 1",
-    alignmentId: "",
-    pvis: [
-      { station: 0, elevation: 12 },
-      { station: 400, elevation: 22, curveLength: 100 },
-      { station: 800, elevation: 15 },
-    ],
-  });
+  const alignment =
+    _.find(alignments, (a) => a.id === selectedAlignId) ??
+    alignments[0] ??
+    null;
+  const resolved = alignment ? resolveAlignment(alignment) : null;
+
+  const dynamicProfile = React.useMemo<VerticalProfile>(() => {
+    const startStn = alignment?.startStation ?? 0;
+    const len = resolved?.length ?? 800;
+    const midStn = startStn + len / 2;
+    const endStn = startStn + len;
+
+    const startP = alignment?.pis[0]?.point ?? { x: 0, y: 0 };
+    const midP = alignment?.pis[1]?.point ?? { x: 400, y: 0 };
+    const endP = alignment?.pis[alignment.pis.length - 1]?.point ?? { x: 800, y: 0 };
+
+    const e1 = terrainSurface ? elevationAt(terrainSurface, startP) : 100;
+    const e2 = terrainSurface ? elevationAt(terrainSurface, midP) : 110;
+    const e3 = terrainSurface ? elevationAt(terrainSurface, endP) : 105;
+
+
+    return {
+      id: `vp-${alignment?.id ?? "1"}`,
+      name: `${alignment?.name ?? "Design"} Finished Grade`,
+      alignmentId: alignment?.id ?? "",
+      pvis: [
+        { station: startStn, elevation: e1 },
+        { station: midStn, elevation: e2, curveLength: Math.min(200, len / 4) },
+        { station: endStn, elevation: e3 },
+      ],
+    };
+  }, [alignment, resolved, terrainSurface]);
+
+  const [profile, setProfile] = React.useState<VerticalProfile>(dynamicProfile);
+
+  React.useEffect(() => {
+    setProfile(dynamicProfile);
+  }, [dynamicProfile]);
 
   const [selectedStation, setSelectedStation] = React.useState<number>(200);
   const [swathWidth, setSwathWidth] = React.useState<number>(50);
@@ -52,11 +82,6 @@ export function useProfileSectionState() {
     }
   }, [open, alignments]);
 
-  const alignment =
-    _.find(alignments, (a) => a.id === selectedAlignId) ??
-    alignments[0] ??
-    null;
-  const resolved = alignment ? resolveAlignment(alignment) : null;
 
   const crossSection = React.useMemo<CrossSection | null>(() => {
     return computeCrossSection({

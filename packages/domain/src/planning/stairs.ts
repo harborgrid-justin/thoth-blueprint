@@ -1,9 +1,15 @@
 import type { Stair, Point } from "../spatial/types.js";
 import { centroid, distance, add, scale } from "../spatial/geometry.js";
+import federalData from "./geoid/data/federalReference.json";
 
 import type { StairGeometryResults } from "./types/stairs";
 
 export type { StairGeometryResults };
+
+const defaultStairs = federalData.standards.structural;
+const DEFAULT_RISER_LIMIT_M = Number((defaultStairs.ibcMaxRiserHeightIn * 0.0254).toFixed(4));
+const DEFAULT_TREAD_LIMIT_M = Number((defaultStairs.ibcMinTreadDepthIn * 0.0254).toFixed(4));
+const DEFAULT_OVERHEAD_LIMIT_M = Number((defaultStairs.ibcMinHeadroomIn * 0.0254).toFixed(4));
 
 /**
  * Computes all design parameters, structural stringer centerlines, 2D plan annotations,
@@ -13,8 +19,8 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
   const warnings: string[] = [];
 
   // 1. Riser & Tread limit checking (REQ-UNIMP-014)
-  const riserHeightLimit = stair.riserHeightLimit || 0.18; // Default 18cm (7 inches)
-  const treadDepthLimit = stair.treadDepthLimit || 0.28; // Default 28cm (11 inches)
+  const riserHeightLimit = stair.riserHeightLimit || DEFAULT_RISER_LIMIT_M;
+  const treadDepthLimit = stair.treadDepthLimit || DEFAULT_TREAD_LIMIT_M;
 
   if (riserHeightLimit > 0.21) {
     warnings.push(
@@ -54,7 +60,7 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
   const actualTreadDepth = footprintLength / Math.max(1, totalTreadCount);
 
   // 2. Safety overhead clearance calculations (REQ-UNIMP-017)
-  const overheadLimit = stair.overheadClearanceLimit || 2.03; // Default 6'8"
+  const overheadLimit = stair.overheadClearanceLimit || DEFAULT_OVERHEAD_LIMIT_M;
   if (stair.ceilingElevation !== undefined) {
     // Check clearance at the critical top step or mid-point
     const criticalClearance = stair.ceilingElevation - height;

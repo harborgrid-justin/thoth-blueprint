@@ -44,6 +44,8 @@ export function useTopBarState() {
   const setPipeOpen = useUiStore((s) => s.setPipeOpen);
   const setProductionOpen = useUiStore((s) => s.setProductionOpen);
   const setCogoOpen = useUiStore((s) => s.setCogoOpen);
+  const handDrawnMode = useUiStore((s) => s.handDrawnMode);
+  const toggleHandDrawnMode = useUiStore((s) => s.toggleHandDrawnMode);
   const openFind = useFindStore((s) => s.openFind);
 
   return {
@@ -79,6 +81,8 @@ export function useTopBarState() {
     setPipeOpen,
     setProductionOpen,
     setCogoOpen,
+    handDrawnMode,
+    toggleHandDrawnMode,
     openFind,
   };
 }

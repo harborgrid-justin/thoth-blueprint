@@ -28,6 +28,7 @@ import {
 import type {
   AlignmentPI,
   AlignmentOffset,
+  WideningRegion,
   HorizontalAlignment,
   AlignmentCurve,
   AlignmentElement,
@@ -40,12 +41,14 @@ export { formatStation };
 export type {
   AlignmentPI,
   AlignmentOffset,
+  WideningRegion,
   HorizontalAlignment,
   AlignmentCurve,
   AlignmentElement,
   ResolvedAlignment,
   DesignSpeedCheckResult,
 };
+
 
 // --- resolve ---------------------------------------------------------------
 
@@ -218,16 +221,18 @@ export function pointAtStation(
           bearing: el.bearing,
         };
       }
-      const c = el.curve;
-      const frac = (station - el.beginStation) / Math.max(1e-9, c.length);
-      const ang = c.startAngle + c.sweep * frac;
-      const point = {
-        x: c.center.x + c.radius * Math.cos(ang),
-        y: c.center.y + c.radius * Math.sin(ang),
-      };
-      const sign = c.sweep >= 0 ? 1 : -1;
-      const dir = { x: -Math.sin(ang) * sign, y: Math.cos(ang) * sign };
-      return { point, bearing: azimuthOf(dir) };
+      if (el.kind === "curve") {
+        const c = el.curve;
+        const frac = (station - el.beginStation) / Math.max(1e-9, c.length);
+        const ang = c.startAngle + c.sweep * frac;
+        const point = {
+          x: c.center.x + c.radius * Math.cos(ang),
+          y: c.center.y + c.radius * Math.sin(ang),
+        };
+        const sign = c.sweep >= 0 ? 1 : -1;
+        const dir = { x: -Math.sin(ang) * sign, y: Math.cos(ang) * sign };
+        return { point, bearing: azimuthOf(dir) };
+      }
     }
   }
   return null;
@@ -263,10 +268,11 @@ export function stationOffsetOfPoint(
           side: Math.abs(side) < 1e-9 ? "on" : side > 0 ? "right" : "left",
         };
       }
-    } else {
+    } else if (el.kind === "curve") {
       const c = el.curve;
       const toP = sub(p, c.center);
       const ang = Math.atan2(toP.y, toP.x);
+
       // Clamp the angle to the swept arc.
       const a0 = c.startAngle;
       const a1 = c.startAngle + c.sweep;
@@ -415,3 +421,108 @@ export function validateAlignmentDesignSpeed(
 
   return checks;
 }
+
+/**
+ * Creates a HorizontalAlignment from existing polyline or line vertices. (REQ-10-002)
+ */
+export function createAlignmentFromObjects(
+  name: string,
+  points: Point[],
+  defaultRadius = 300,
+  startStation = 1000,
+): HorizontalAlignment {
+  const pis: AlignmentPI[] = points.map((p, i) => ({
+    point: p,
+    radius: i > 0 && i < points.length - 1 ? defaultRadius : 0,
+  }));
+  return {
+    id: `align-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+    name,
+    pis,
+    startStation,
+  };
+}
+
+/**
+ * Creates an offset alignment baseline parallel to parent. (REQ-11-006)
+ */
+export function createOffsetAlignment(
+  parent: HorizontalAlignment,
+  distance: number, // positive for right, negative for left
+  label = "Offset Alignment",
+): HorizontalAlignment {
+  const resolved = resolveAlignment(parent);
+  if (!resolved) {
+    return parent;
+  }
+  const offsetPts = offsetAlignmentPath(resolved, distance, Math.max(10, Math.floor(resolved.length / 25)));
+  const pis: AlignmentPI[] = offsetPts.map((p) => ({ point: p, radius: 0 }));
+  return {
+    id: `${parent.id}-offset-${Math.sign(distance) > 0 ? "R" : "L"}-${Math.abs(distance)}`,
+    name: `${parent.name} - ${label}`,
+    pis,
+    startStation: parent.startStation,
+  };
+}
+
+/**
+ * Adds a widening region to an alignment offset. (REQ-11-007)
+ */
+export function addWideningRegion(
+  alignment: HorizontalAlignment,
+  widening: WideningRegion,
+): HorizontalAlignment {
+  const widenings = alignment.widenings ?? [];
+  return {
+    ...alignment,
+    widenings: [...widenings, widening],
+  };
+}
+
+/**
+ * Exports alignment geometry and stationing to LandXML 1.2 format string. (REQ-11-027)
+ */
+export function exportAlignmentToLandXML(
+  alignment: HorizontalAlignment,
+  resolved: ResolvedAlignment | null,
+): string {
+  const res = resolved ?? resolveAlignment(alignment);
+  if (!res) {
+    return "";
+  }
+  const coordGeom: string[] = [];
+
+  for (const elem of res.elements) {
+    if (elem.kind === "tangent") {
+      coordGeom.push(
+        `    <Line staStart="${elem.beginStation.toFixed(3)}">\n` +
+        `      <Start>${elem.from.x.toFixed(4)} ${elem.from.y.toFixed(4)}</Start>\n` +
+        `      <End>${elem.to.x.toFixed(4)} ${elem.to.y.toFixed(4)}</End>\n` +
+        `    </Line>`
+      );
+    } else if (elem.kind === "curve") {
+      const c = elem.curve;
+      coordGeom.push(
+        `    <Curve staStart="${c.pcStation.toFixed(3)}" rot="${c.direction === "right" ? "cw" : "ccw"}" radius="${c.radius.toFixed(3)}">\n` +
+        `      <Start>${c.pc.x.toFixed(4)} ${c.pc.y.toFixed(4)}</Start>\n` +
+        `      <Center>${c.center.x.toFixed(4)} ${c.center.y.toFixed(4)}</Center>\n` +
+        `      <End>${c.pt.x.toFixed(4)} ${c.pt.y.toFixed(4)}</End>\n` +
+        `    </Curve>`
+      );
+    }
+  }
+
+  return (
+    `<?xml version="1.0" encoding="utf-8"?>\n` +
+    `<LandXML xmlns="http://www.landxml.org/schema/LandXML-1.2" version="1.2">\n` +
+    `  <Alignments>\n` +
+    `    <Alignment name="${alignment.name}" staStart="${alignment.startStation.toFixed(3)}" length="${res.length.toFixed(3)}">\n` +
+    `      <CoordGeom>\n` +
+    coordGeom.join("\n") + "\n" +
+    `      </CoordGeom>\n` +
+    `    </Alignment>\n` +
+    `  </Alignments>\n` +
+    `</LandXML>`
+  );
+}
+

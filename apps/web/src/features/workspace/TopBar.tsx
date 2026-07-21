@@ -26,6 +26,8 @@ import {
   SlidersHorizontal,
   HardHat,
   Mountain,
+  Edit3,
+  ChevronDown,
 } from "lucide-react";
 import type { Project } from "@/api";
 import { cn } from "@/lib/utils";
@@ -36,9 +38,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { PresenceBar } from "./PresenceBar";
 import { ImportExportMenu } from "@/features/interop/ImportExportMenu";
 import { NamedViewsMenu } from "./NamedViewsMenu";
+import { JurisdictionSelector } from "./JurisdictionSelector";
 import { useTopBarState } from "./hooks/useTopBarState";
 import { zoomPercentage } from "./helpers/topBarHelpers";
 
@@ -88,11 +97,13 @@ export function TopBar({
     setPipeOpen,
     setProductionOpen,
     setCogoOpen,
+    handDrawnMode,
+    toggleHandDrawnMode,
     openFind,
   } = useTopBarState();
 
   return (
-    <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border bg-card px-3">
+    <header className="flex h-12 shrink-0 items-center gap-2 bg-transparent px-3">
       <Link
         to="/"
         className="flex items-center gap-2 rounded-md px-1.5 py-1 text-sm font-semibold hover:bg-accent"
@@ -110,9 +121,14 @@ export function TopBar({
         <SaveStatus dirty={dirty} saving={saving} />
       </div>
 
+      <Separator orientation="vertical" className="mx-1 h-6" />
+
+      {/* Dynamic Jurisdiction & GEOID Switcher */}
+      <JurisdictionSelector />
+
       <div className="ml-auto flex items-center gap-1">
         {/* Renovation Mode Controls */}
-        <div className="mr-2 flex items-center gap-1 rounded-md border border-border bg-card px-2 py-0.5">
+        <div className="mr-2 flex items-center gap-1 rounded-lg border border-border bg-transparent px-2 py-0.5">
           <label className="flex items-center gap-1.5 text-xs font-semibold cursor-pointer text-foreground select-none">
             <input
               type="checkbox"
@@ -146,10 +162,10 @@ export function TopBar({
             onClick={() => setViewMode("2d")}
             aria-pressed={viewMode === "2d"}
             className={cn(
-              "flex h-7 items-center gap-1 rounded px-2 text-xs font-medium transition-colors",
+              "flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium transition-all duration-200 hover:scale-105 active:scale-95",
               viewMode === "2d"
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:text-foreground",
+                ? "bg-gradient-to-br from-primary to-blue-600 text-white shadow-md"
+                : "text-muted-foreground hover:bg-white/10 hover:text-foreground",
             )}
           >
             <Square className="h-3.5 w-3.5" /> 2D
@@ -159,10 +175,10 @@ export function TopBar({
             onClick={() => setViewMode("3d")}
             aria-pressed={viewMode === "3d"}
             className={cn(
-              "flex h-7 items-center gap-1 rounded px-2 text-xs font-medium transition-colors",
+              "flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium transition-all duration-200 hover:scale-105 active:scale-95",
               viewMode === "3d"
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:text-foreground",
+                ? "bg-gradient-to-br from-primary to-blue-600 text-white shadow-md"
+                : "text-muted-foreground hover:bg-white/10 hover:text-foreground",
             )}
           >
             <Box className="h-3.5 w-3.5" /> 3D
@@ -203,70 +219,85 @@ export function TopBar({
         >
           <Compass className="h-4 w-4" />
         </Toggle>
+        <Toggle
+          label="Hand-Drawn Surveyor Mode"
+          active={handDrawnMode}
+          onClick={toggleHandDrawnMode}
+        >
+          <Edit3 className="h-4 w-4 text-amber-500" />
+        </Toggle>
 
         <Separator orientation="vertical" className="mx-1 h-6" />
 
         <ImportExportMenu />
         <NamedViewsMenu />
-        <Button variant="ghost" size="sm" onClick={() => openPlat(null)}>
-          <ScrollText className="h-4 w-4" />{" "}
-          <span className="hidden md:inline">Plat</span>
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => setCogoOpen(true)}>
-          <Compass className="h-4 w-4" />{" "}
-          <span className="hidden md:inline">COGO Builder</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setAlignmentOpen(true)}
-        >
-          <Spline className="h-4 w-4" />{" "}
-          <span className="hidden lg:inline">Stationing</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setSuperelevationOpen(true)}
-        >
-          <SlidersHorizontal className="h-4 w-4" />{" "}
-          <span className="hidden xl:inline">Superelevation</span>
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => setCorridorOpen(true)}>
-          <HardHat className="h-4 w-4" />{" "}
-          <span className="hidden xl:inline">Corridor</span>
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => setGradingOpen(true)}>
-          <Mountain className="h-4 w-4" />{" "}
-          <span className="hidden xl:inline">Grading</span>
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => setProfileOpen(true)}>
-          <LayoutTemplate className="h-4 w-4" />{" "}
-          <span className="hidden lg:inline">Profile &amp; Sections</span>
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => setPipeOpen(true)}>
-          <Files className="h-4 w-4" />{" "}
-          <span className="hidden lg:inline">Pipes Audit</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setProductionOpen(true)}
-        >
-          <LayoutTemplate className="h-4 w-4" />{" "}
-          <span className="hidden lg:inline">Framing Wizard</span>
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => setSheetOpen(true)}>
-          <LayoutTemplate className="h-4 w-4" />{" "}
-          <span className="hidden lg:inline">Sheet</span>
-        </Button>
-        <Button variant="ghost" size="sm" onClick={() => setSheetSetOpen(true)}>
-          <Files className="h-4 w-4" />{" "}
-          <span className="hidden lg:inline">Drawings</span>
-        </Button>
-        <Button variant="ghost" size="sm" onClick={onOpenCheckpoints}>
+        {/* Dropdowns for condensed layout */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="hidden md:flex gap-1.5 hover:bg-white/10 transition-colors">
+              <HardHat className="h-4 w-4" /> Design <ChevronDown className="h-3 w-3 opacity-50" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48 bg-background/80 backdrop-blur-xl border-white/10">
+            <DropdownMenuItem onClick={() => setCogoOpen(true)}>
+              <Compass className="mr-2 h-4 w-4" /> COGO Builder
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setAlignmentOpen(true)}>
+              <Spline className="mr-2 h-4 w-4" /> Stationing
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setSuperelevationOpen(true)}>
+              <SlidersHorizontal className="mr-2 h-4 w-4" /> Superelevation
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setCorridorOpen(true)}>
+              <HardHat className="mr-2 h-4 w-4" /> Corridor
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setGradingOpen(true)}>
+              <Mountain className="mr-2 h-4 w-4" /> Grading
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="hidden lg:flex gap-1.5 hover:bg-white/10 transition-colors">
+              <Search className="h-4 w-4" /> Analysis <ChevronDown className="h-3 w-3 opacity-50" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48 bg-background/80 backdrop-blur-xl border-white/10">
+            <DropdownMenuItem onClick={() => setProfileOpen(true)}>
+              <LayoutTemplate className="mr-2 h-4 w-4" /> Profile & Sections
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setPipeOpen(true)}>
+              <Files className="mr-2 h-4 w-4" /> Pipes Audit
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="hidden md:flex gap-1.5 hover:bg-white/10 transition-colors">
+              <ScrollText className="h-4 w-4" /> Docs <ChevronDown className="h-3 w-3 opacity-50" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48 bg-background/80 backdrop-blur-xl border-white/10">
+            <DropdownMenuItem onClick={() => openPlat(null)}>
+              <ScrollText className="mr-2 h-4 w-4" /> Plat Report
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setProductionOpen(true)}>
+              <LayoutTemplate className="mr-2 h-4 w-4" /> Framing Wizard
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setSheetOpen(true)}>
+              <LayoutTemplate className="mr-2 h-4 w-4" /> Sheet
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setSheetSetOpen(true)}>
+              <Files className="mr-2 h-4 w-4" /> Drawings
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <Button variant="ghost" size="sm" onClick={onOpenCheckpoints} className="hidden xl:flex hover:bg-white/10">
           <History className="h-4 w-4" />{" "}
-          <span className="hidden md:inline">Checkpoints</span>
+          <span className="hidden md:inline ml-1">Checkpoints</span>
         </Button>
 
         <Button
@@ -378,7 +409,7 @@ function IconBtn({
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="flex h-7 w-7 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+      className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-all duration-200 hover:bg-white/10 hover:text-foreground hover:scale-110 active:scale-95"
     >
       {children}
     </button>
@@ -405,10 +436,10 @@ function Toggle({
           aria-pressed={active}
           onClick={onClick}
           className={cn(
-            "flex h-8 w-8 items-center justify-center rounded-md border transition-colors",
+            "flex h-8 w-8 items-center justify-center rounded-lg border transition-all duration-200 hover:scale-110 active:scale-95",
             active
-              ? "border-primary/40 bg-primary/10 text-primary"
-              : "border-border text-muted-foreground hover:text-foreground",
+              ? "border-primary/40 bg-gradient-to-br from-primary/20 to-primary/5 text-primary shadow-sm"
+              : "border-border text-muted-foreground hover:bg-white/10 hover:text-foreground",
           )}
         >
           {children}

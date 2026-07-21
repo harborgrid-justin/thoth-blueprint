@@ -18,6 +18,15 @@ export async function importUnderlayImage(
   site: Site,
 ): Promise<Underlay> {
   const url = URL.createObjectURL(file);
+  const name = file.name.replace(/\.[^.]+$/, "");
+  return importUnderlayImageUrl(url, name, site);
+}
+
+export async function importUnderlayImageUrl(
+  url: string,
+  name: string,
+  site: Site,
+): Promise<Underlay> {
   const { width, height } = await imageSize(url);
   const aspect = width / height || 1;
 
@@ -36,7 +45,7 @@ export async function importUnderlayImage(
 
   return {
     id: createId("underlay"),
-    name: file.name.replace(/\.[^.]+$/, ""),
+    name,
     url,
     bounds: {
       minX: cx - fitW / 2,
@@ -44,6 +53,7 @@ export async function importUnderlayImage(
       maxX: cx + fitW / 2,
       maxY: cy + fitH / 2,
     },
+    rotation: 0,
     opacity: 0.75,
     visible: true,
   };

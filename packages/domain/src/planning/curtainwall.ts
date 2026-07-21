@@ -1,5 +1,8 @@
 import type { CurtainWall, CurtainWallGrid, Point } from "../spatial/types.js";
 import { distance } from "../spatial/geometry.js";
+import federalData from "./geoid/data/federalReference.json";
+
+const defaultStructural = federalData.standards.structural;
 
 import type {
   CurtainWallPanel,
@@ -278,15 +281,15 @@ export function calculateCurtainWallGeometry(
     const area = p.width * p.height;
     totalArea += area;
 
-    let r = 2.5;
+    let r = defaultStructural.defaultGlassRValue || 2.5;
     if (p.material === "brick") {
-      r = 12.0;
+      r = defaultStructural.defaultBrickRValue || 12.0;
     } else if (p.material === "insulation") {
-      r = 20.0;
+      r = defaultStructural.defaultInsulationRValue || 20.0;
     } else if (p.material === "door") {
       r = 3.0;
     } else if (p.material === "window") {
-      r = 3.0;
+      r = defaultStructural.defaultGlassRValue || 2.5;
     }
 
     weightedU += (1.0 / r) * area;

@@ -1,5 +1,8 @@
 import type { DoorElement, WindowElement, Point } from "../spatial/types.js";
 import { distance } from "../spatial/geometry.js";
+import federalData from "./geoid/data/federalReference.json";
+
+const defaultStructural = federalData.standards.structural;
 
 import type {
   DoorGeometryResults,
@@ -310,12 +313,13 @@ export function calculateWindowGeometry(
 
   // Safety rating checking (natural light area ratio natural lighting compliance check)
   const glazingArea = glassW * (win.height || 1.2) * 0.9;
-  const defaultRoomArea = 12.0; // standard room size reference (sqm)
+  const defaultRoomArea = defaultStructural.defaultRoomAreaSqm || 12.0; // standard room size reference (sqm)
   const ratio = glazingArea / defaultRoomArea;
+  const minRatio = defaultStructural.ibcMinNaturalLightRatio || 0.08;
 
-  if (ratio < 0.08) {
+  if (ratio < minRatio) {
     warnings.push(
-      `Natural lighting area ratio (${(ratio * 100).toFixed(1)}%) is below standard building code compliance limit (8.0% of served room area).`,
+      `Natural lighting area ratio (${(ratio * 100).toFixed(1)}%) is below standard building code compliance limit (${(minRatio * 100).toFixed(1)}% of served room area).`,
     );
   }
 

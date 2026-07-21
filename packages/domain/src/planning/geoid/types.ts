@@ -71,13 +71,43 @@ export interface CivilErosionStandards {
   streamBufferDistance?: number;
 }
 
+export interface ClimateStandards {
+  rainfallIntensity100Yr?: number;
+  windVelocityMph?: number;
+  snowLoadPsf?: number;
+  soilBearingPsf?: number;
+}
+
+export interface RoadStandards {
+  normalCrown?: number;
+  eMax?: number;
+  transitionSpeedMultiplier?: number;
+  minCoverFt?: number;
+  minPipeSlope?: number;
+  maxPipeSlope?: number;
+  minPipeDiameterIn?: number;
+  defaultSumpDepthFt?: number;
+  defaultLaneWidthFt?: number;
+  defaultShoulderWidthFt?: number;
+  degreeOfCurveConst?: number;
+}
+
 /** Flexible dynamic standard container. */
 export interface LocalCodeStandards {
   zoning: ZoningStandards;
   stairs: StairStandards;
   egress: EgressStandards;
   civil: CivilErosionStandards;
-  roads: Record<string, unknown>;
+  climate: ClimateStandards;
+  hydraulics: Record<string, unknown>;
+  geometry: Record<string, unknown>;
+  grading: Record<string, unknown>;
+  subdivision: Record<string, unknown>;
+  structural: Record<string, unknown>;
+  erosion: Record<string, unknown>;
+  planProduction: Record<string, unknown>;
+  drafting: Record<string, unknown>;
+  roads: RoadStandards;
   electrical: Record<string, unknown>;
   mechanical: Record<string, unknown>;
   /** Flexible key-value extensions for custom jurisdiction rules. */
@@ -114,13 +144,24 @@ export interface LocalCodePlugin {
     stairs?: Partial<StairStandards>;
     egress?: Partial<EgressStandards>;
     civil?: Partial<CivilErosionStandards>;
-    roads?: Record<string, unknown>;
+    climate?: Partial<ClimateStandards>;
+    hydraulics?: Record<string, unknown>;
+    geometry?: Record<string, unknown>;
+    grading?: Record<string, unknown>;
+    subdivision?: Record<string, unknown>;
+    structural?: Record<string, unknown>;
+    erosion?: Record<string, unknown>;
+    planProduction?: Record<string, unknown>;
+    drafting?: Record<string, unknown>;
+    roads?: Partial<RoadStandards>;
     electrical?: Record<string, unknown>;
     mechanical?: Record<string, unknown>;
     custom?: Record<string, unknown>;
   };
   /** Executable rule evaluators provided by this plugin. */
   customRules?: GeoidRuleEvaluator[];
+  /** Survey framework used in this jurisdiction. */
+  surveyFramework?: "plss" | "georgia-land-lot" | "metes-and-bounds" | "texas-headright";
   /** Arbitrary metadata. */
   metadata?: Record<string, unknown>;
 }
@@ -137,6 +178,8 @@ export interface ResolvedLocalCode {
   resolutionChain: string[];
   /** List of plugins that contributed to the final resolved standards. */
   appliedPlugins: LocalCodePlugin[];
+  /** Survey framework used in this jurisdiction. */
+  surveyFramework?: "plss" | "georgia-land-lot" | "metes-and-bounds" | "texas-headright";
   /** Merged effective standards. */
   standards: LocalCodeStandards;
 }

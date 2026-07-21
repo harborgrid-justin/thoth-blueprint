@@ -49,6 +49,9 @@ export * from "./civil/pointcloud";
 export * from "./civil/network";
 export * from "./civil/pipedesign";
 export * from "./civil/partbuilder";
+export * from "./civil/intersection";
+export * from "./civil/sections";
+
 
 // Drawing / Drafting / Sheet generation
 export * from "./drawing/sheetsize";
@@ -67,4 +70,8 @@ export * from "./drawing/collada";
 export * from "./planning/sampleData";
 export * from "./planning/presets/princeWilliamHousePlat";
 export * from "./planning/presets/knightsbridgeLot11Plat";
+
+// Smart Automated Engineering Engine (100 Experiences)
+export * from "./smart/index";
+
 

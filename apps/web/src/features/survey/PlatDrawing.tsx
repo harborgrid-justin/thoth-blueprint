@@ -1,6 +1,6 @@
 import * as React from "react";
 import _ from "lodash";
-import { Download } from "lucide-react";
+import { Download, Edit3 } from "lucide-react";
 import {
   boundaryEdges,
   buildableEnvelope,
@@ -46,6 +46,7 @@ export function PlatDrawing({
   report: SurveyReport;
   siteName: string;
 }) {
+  const [mode, setMode] = React.useState<"handdrawn" | "cad">("handdrawn");
   const svgRef = React.useRef<SVGSVGElement>(null);
   const boundary = element.boundary;
   const u = unitLabel(spatial.units);
@@ -106,9 +107,35 @@ export function PlatDrawing({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Plat of Survey
-        </h4>
+        <div className="flex items-center gap-2">
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Plat of Survey
+          </h4>
+          <div className="flex items-center rounded-md border border-border bg-muted p-0.5 text-xs">
+            <button
+              type="button"
+              onClick={() => setMode("handdrawn")}
+              className={`flex items-center gap-1 rounded px-2 py-0.5 font-semibold transition-colors ${
+                mode === "handdrawn"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Edit3 className="h-3 w-3" /> Hand-Drawn Surveyor
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("cad")}
+              className={`flex items-center gap-1 rounded px-2 py-0.5 font-semibold transition-colors ${
+                mode === "cad"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Standard CAD
+            </button>
+          </div>
+        </div>
         <Button variant="outline" size="sm" onClick={exportSvg}>
           <Download className="h-4 w-4" /> Drawing (SVG)
         </Button>
@@ -119,9 +146,21 @@ export function PlatDrawing({
           viewBox={`0 0 ${W} ${H}`}
           width="100%"
           xmlns="http://www.w3.org/2000/svg"
-          style={{ display: "block", background: SHEET }}
-          fontFamily="ui-monospace, Menlo, Consolas, monospace"
+          style={{ display: "block", background: mode === "handdrawn" ? "#faf8f5" : SHEET }}
+          fontFamily={
+            mode === "handdrawn"
+              ? "'Architects Daughter', 'Patrick Hand', 'Comic Sans MS', cursive"
+              : "ui-monospace, Menlo, Consolas, monospace"
+          }
         >
+          <defs>
+            <filter id="plat-hand-sketch" x="-5%" y="-5%" width="110%" height="110%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.4" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+          </defs>
+
+          <g filter={mode === "handdrawn" ? "url(#plat-hand-sketch)" : undefined}>
           {/* Sheet border */}
           <rect
             x={8}
@@ -330,6 +369,7 @@ export function PlatDrawing({
             u={u}
             areaSecondary={areaLine2}
           />
+          </g>
         </svg>
       </div>
       <p className="text-[11px] leading-relaxed text-muted-foreground">

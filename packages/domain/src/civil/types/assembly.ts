@@ -3,11 +3,24 @@ export interface SubassemblyParam {
   value: number;
 }
 
+export type SubassemblyType =
+  | "Lane"
+  | "CurbAndGutter"
+  | "Sidewalk"
+  | "Daylight"
+  | "Median"
+  | "ConditionalCutOrFill"
+  | "RetainingWall"
+  | "DaylightBench"
+  | "LinkWidthAndSlope"
+  | "LinkSlopeToSurface"
+  | "SubassemblyTransition";
+
 export interface Subassembly {
   id: string;
   name: string;
   side: "left" | "right";
-  type: "Lane" | "CurbAndGutter" | "Sidewalk" | "Daylight";
+  type: SubassemblyType;
   parameters: SubassemblyParam[];
 }
 
@@ -23,3 +36,4 @@ export interface AssemblyPoint {
   x: number;
   y: number;
 }
+

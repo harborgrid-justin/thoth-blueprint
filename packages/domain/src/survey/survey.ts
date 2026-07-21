@@ -35,6 +35,9 @@ import {
   squareMetersTo,
   unitLabel,
 } from "../spatial/spatial";
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultSurvey = (federalData.standards as any).survey;
 
 const DEG = 180 / Math.PI;
 
@@ -295,8 +298,8 @@ export function boundaryCoordinates(
   polygon: Polygon,
   basis: CoordinateBasis = {},
 ): CornerCoordinate[] {
-  const falseEasting = basis.falseEasting ?? 5000;
-  const falseNorthing = basis.falseNorthing ?? 5000;
+  const falseEasting = basis.falseEasting ?? defaultSurvey?.falseEasting ?? 5000;
+  const falseNorthing = basis.falseNorthing ?? defaultSurvey?.falseNorthing ?? 5000;
   return polygon.map((point, index) => ({
     index,
     label: cornerLabel(index),

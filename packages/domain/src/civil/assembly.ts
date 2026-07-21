@@ -4,6 +4,9 @@ import type {
   Assembly,
   AssemblyPoint,
 } from "./types/assembly";
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultRoads = federalData.standards.roads;
 
 export type { SubassemblyParam, Subassembly, Assembly, AssemblyPoint };
 
@@ -12,8 +15,8 @@ export type { SubassemblyParam, Subassembly, Assembly, AssemblyPoint };
  */
 export function resolveAssemblyOffset(
   assembly: Assembly,
-  leftSuperelevationSlope: number = -0.02,
-  rightSuperelevationSlope: number = -0.02,
+  leftSuperelevationSlope: number = defaultRoads.normalCrown,
+  rightSuperelevationSlope: number = defaultRoads.normalCrown,
 ): AssemblyPoint[] {
   const points: AssemblyPoint[] = [{ code: "Centerline", x: 0, y: 0 }];
 
@@ -31,7 +34,7 @@ export function resolveAssemblyOffset(
         sub.parameters.find((p) => p.name === name)?.value ?? def;
 
       if (sub.type === "Lane") {
-        const width = getVal("Width", 12);
+        const width = getVal("Width", defaultRoads.defaultLaneWidthFt);
         currentX += width * sideSign;
         currentY += width * slope;
         points.push({
@@ -61,15 +64,55 @@ export function resolveAssemblyOffset(
           x: currentX,
           y: currentY,
         });
+      } else if (sub.type === "Median") {
+        const width = getVal("Width", 10);
+        const depth = getVal("DepressionDepth", 0.5);
+        points.push({ code: `MedianEdge_${sub.side}`, x: currentX, y: currentY });
+        currentX += (width / 2) * sideSign;
+        currentY -= depth;
+        points.push({ code: `MedianCenter_${sub.side}`, x: currentX, y: currentY });
+        currentX += (width / 2) * sideSign;
+        currentY += depth;
+        points.push({ code: `MedianOuter_${sub.side}`, x: currentX, y: currentY });
+      } else if (sub.type === "RetainingWall") {
+        const height = getVal("WallHeight", 6.0);
+        const thickness = getVal("WallThickness", 1.0);
+        points.push({ code: `RetainingWallBase_${sub.side}`, x: currentX, y: currentY });
+        currentY += height;
+        points.push({ code: `RetainingWallTop_${sub.side}`, x: currentX, y: currentY });
+        currentX += thickness * sideSign;
+        points.push({ code: `RetainingWallBack_${sub.side}`, x: currentX, y: currentY });
+      } else if (sub.type === "DaylightBench") {
+        const benchWidth = getVal("BenchWidth", 4.0);
+        const benchHeight = getVal("BenchHeight", 10.0);
+        const slope = getVal("Slope", 2.0);
+        currentX += (benchHeight * slope) * sideSign;
+        currentY -= benchHeight;
+        points.push({ code: `BenchStep_${sub.side}`, x: currentX, y: currentY });
+        currentX += benchWidth * sideSign;
+        points.push({ code: `BenchFlat_${sub.side}`, x: currentX, y: currentY });
+      } else if (sub.type === "LinkWidthAndSlope") {
+        const width = getVal("Width", 8.0);
+        const linkSlope = getVal("Slope", -0.04);
+        currentX += width * sideSign;
+        currentY += width * linkSlope;
+        points.push({ code: `LinkWidthSlope_${sub.side}`, x: currentX, y: currentY });
+      } else if (sub.type === "ConditionalCutOrFill") {
+        // Evaluates conditional branching placeholder point
+        const mode = getVal("IsCut", 1) === 1 ? "Cut" : "Fill";
+        points.push({ code: `Conditional_${mode}_${sub.side}`, x: currentX, y: currentY });
       } else if (sub.type === "Daylight") {
         const fillSlope = getVal("FillSlope", 3.0);
-        // Standard daylight step logic
-        const daylightWidth = 8;
-        currentX += daylightWidth * sideSign;
-        // Assume daylight goes downwards if fill, upwards if cut. Default to fill.
-        currentY -= daylightWidth / fillSlope;
-        points.push({ code: `Daylight_${sub.side}`, x: currentX, y: currentY });
+        const assumedDepth = 10;
+        currentX += (assumedDepth * fillSlope) * sideSign;
+        currentY -= assumedDepth;
+        points.push({
+          code: `DaylightTarget_${sub.side}`,
+          x: currentX,
+          y: currentY,
+        });
       }
+
     }
   };
 
@@ -77,6 +120,51 @@ export function resolveAssemblyOffset(
   resolveSide(assembly.rightSubassemblies, 1, rightSuperelevationSlope);
 
   return points;
+}
+
+/**
+ * Mirrors subassemblies from one side to the opposite side while flipping side parameters (REQ-17-007).
+ */
+export function mirrorSubassemblies(
+  subassemblies: Subassembly[],
+  targetSide: "left" | "right",
+): Subassembly[] {
+  return subassemblies.map((sub) => ({
+    ...sub,
+    id: sub.id.replace(sub.side, targetSide) + "-mirrored",
+    name: sub.name.replace(sub.side === "left" ? "Left" : "Right", targetSide === "left" ? "Left" : "Right"),
+    side: targetSide,
+    parameters: sub.parameters.map((p) => ({ ...p })),
+  }));
+}
+
+/**
+ * Exports an Assembly configuration to an Assembly Set XML string (REQ-17-018).
+ */
+export function exportAssemblySetToXML(assembly: Assembly): string {
+  const formatSub = (subs: Subassembly[]) =>
+    subs
+      .map(
+        (s) =>
+          `        <Subassembly id="${s.id}" name="${s.name}" side="${s.side}" type="${s.type}">\n` +
+          s.parameters.map((p) => `          <Param name="${p.name}" value="${p.value}"/>`).join("\n") + "\n" +
+          `        </Subassembly>`
+      )
+      .join("\n");
+
+  return (
+    `<?xml version="1.0" encoding="utf-8"?>\n` +
+    `<AssemblySet name="${assembly.name}">\n` +
+    `  <Assembly id="${assembly.id}">\n` +
+    `    <LeftSubassemblies>\n` +
+    formatSub(assembly.leftSubassemblies) + "\n" +
+    `    </LeftSubassemblies>\n` +
+    `    <RightSubassemblies>\n` +
+    formatSub(assembly.rightSubassemblies) + "\n" +
+    `    </RightSubassemblies>\n` +
+    `  </Assembly>\n` +
+    `</AssemblySet>`
+  );
 }
 
 /**
@@ -126,3 +214,4 @@ export function getDefaultSubassemblies(side: "left" | "right"): Subassembly[] {
     },
   ];
 }
+

@@ -11,6 +11,7 @@ import { usePropertiesState } from "../workspace/hooks/usePropertiesState";
 import { elementMeta } from "@/lib/elementMeta";
 import { formatArea, formatNumber } from "@/lib/format";
 import { isSpatialElement, measuredArea, measuredPerimeter } from "@thoth/domain";
+import { useUiStore } from "@/store/uiStore";
 
 export function ElementContextMenu({
   children,
@@ -20,6 +21,7 @@ export function ElementContextMenu({
   onContextMenu?: (e: React.MouseEvent) => void;
 }) {
   const { site, selectedElement, selection, deleteSelection } = usePropertiesState();
+  const setSubdivisionTargetId = useUiStore((s) => s.setSubdivisionTargetId);
 
   const getElementName = (el: any) => {
     if (el.kind === "note") {return el.text;}
@@ -70,6 +72,17 @@ export function ElementContextMenu({
                     1
                   )}{" "}
                   m
+                </ContextMenuItem>
+                <ContextMenuSeparator />
+              </>
+            )}
+            {selectedElement.kind === "parcel" && (
+              <>
+                <ContextMenuItem 
+                  className="cursor-pointer font-medium text-primary"
+                  onSelect={() => setSubdivisionTargetId(selectedElement.id)}
+                >
+                  Auto Subdivide...
                 </ContextMenuItem>
                 <ContextMenuSeparator />
               </>

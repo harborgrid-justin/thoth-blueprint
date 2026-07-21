@@ -19,26 +19,40 @@ export function useCorridorDesignerState() {
     null,
   );
 
-  const [profiles] = React.useState<any[]>([
-    {
-      id: "prof-1",
-      name: "Design Profile 1",
-      pvis: [
-        { station: 0, elevation: 12 },
-        { station: 400, elevation: 22 },
-        { station: 800, elevation: 15 },
-      ],
-    },
-  ]);
+  const profiles = React.useMemo(() => {
+    const align = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0];
+    const startStation = align?.startStation ?? 0;
+    return [
+      {
+        id: `prof-${align?.id ?? "main"}`,
+        name: `${align?.name ?? "Design"} Vertical Profile`,
+        alignmentId: align?.id ?? "",
+        pvis: [
+          { station: startStation, elevation: 100 },
+          { station: startStation + 400, elevation: 112, curveLength: 150 },
+          { station: startStation + 800, elevation: 105 },
+        ],
+      },
+    ];
+  }, [alignments, selectedAlignId]);
+
+
   const [selectedProfileId, setSelectedProfileId] =
-    React.useState<string>("prof-1");
+    React.useState<string>("");
+
+  React.useEffect(() => {
+    if (profiles.length > 0 && !selectedProfileId) {
+      setSelectedProfileId(profiles[0].id);
+    }
+  }, [profiles, selectedProfileId]);
 
   const [assembly] = React.useState<Assembly>({
     id: "assembly-main",
-    name: "Primary Highway 2-Lane",
+    name: `${site?.name || "Primary"} Highway Assembly`,
     leftSubassemblies: getDefaultSubassemblies("left"),
     rightSubassemblies: getDefaultSubassemblies("right"),
   });
+
 
   const [frequency, setFrequency] = React.useState<number>(50);
 

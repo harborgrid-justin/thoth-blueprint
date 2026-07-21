@@ -14,6 +14,9 @@ import {
   type Polyline,
 } from "../spatial/geometry";
 import type { SpatialContext } from "../spatial/spatial";
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultRoads = federalData.standards.roads;
 
 import type {
   NetworkKind,
@@ -199,7 +202,7 @@ export function serviceCoverage(
 }
 
 /** Default ROW widths (plan units) by road class. */
-export const DEFAULT_ROAD_WIDTH: Record<RoadClass, number> = {
+export const DEFAULT_ROAD_WIDTH: Record<RoadClass, number> = (defaultRoads as any).roadWidthsMeters || {
   arterial: 30,
   collector: 22,
   local: 15,

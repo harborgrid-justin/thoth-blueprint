@@ -16,6 +16,9 @@ export function UnderlayImage({
   viewport: Viewport;
 }) {
   const rect = computeUnderlayBounds(underlay, viewport);
+  const cx = rect.x + rect.width / 2;
+  const cy = rect.y + rect.height / 2;
+  const rotation = underlay.rotation || 0;
   return (
     <image
       href={underlay.url}
@@ -25,6 +28,7 @@ export function UnderlayImage({
       height={rect.height}
       opacity={underlay.opacity}
       preserveAspectRatio="none"
+      transform={`rotate(${rotation}, ${cx}, ${cy})`}
       className="pointer-events-none"
     />
   );

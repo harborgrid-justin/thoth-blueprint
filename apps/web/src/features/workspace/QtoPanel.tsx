@@ -5,19 +5,23 @@ import {
   runRenovationAudit,
   calculateStairGeometry,
   calculateCurtainWallGeometry,
-  calculateDoorGeometry,
-  calculateWindowGeometry,
   calculateRoofGeometry,
   compileUnitSchedule,
   type Stair,
   type CurtainWall,
-  type DoorElement,
-  type WindowElement,
   type RoofElement,
 } from "@thoth/domain";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useQtoState } from "./hooks/useQtoState";
+import {
+  getStairsSafetyWarnings,
+  getCurtainWallWarnings,
+  getDoorWindowCodeWarnings,
+  getRoofWarnings,
+} from "./helpers/qtoHelpers";
+
 
 export function QtoPanel() {
   const {
@@ -479,17 +483,7 @@ export function QtoPanel() {
               </Badge>
             </h4>
             {(() => {
-              const stairs = site.elements.filter(
-                (e) => e.kind === "stair",
-              ) as Stair[];
-              const warnings: string[] = [];
-              stairs.forEach((stair) => {
-                const geom = calculateStairGeometry(stair);
-                geom.warnings.forEach((w) =>
-                  warnings.push(`${stair.name}: ${w}`),
-                );
-              });
-
+              const warnings = getStairsSafetyWarnings(site);
               if (warnings.length === 0) {
                 return (
                   <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2 text-[10px] text-emerald-500">
@@ -511,6 +505,7 @@ export function QtoPanel() {
                 </div>
               );
             })()}
+
           </div>
         </div>
       )}
@@ -616,17 +611,7 @@ export function QtoPanel() {
               </Badge>
             </h4>
             {(() => {
-              const walls = site.elements.filter(
-                (e) => e.kind === "curtainwall",
-              ) as CurtainWall[];
-              const warnings: string[] = [];
-              walls.forEach((wall) => {
-                const geom = calculateCurtainWallGeometry(wall);
-                geom.warnings.forEach((w) =>
-                  warnings.push(`${wall.name}: ${w}`),
-                );
-              });
-
+              const warnings = getCurtainWallWarnings(site);
               if (warnings.length === 0) {
                 return (
                   <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2 text-[10px] text-emerald-500">
@@ -647,6 +632,7 @@ export function QtoPanel() {
                 </div>
               );
             })()}
+
           </div>
         </div>
       )}
@@ -745,28 +731,7 @@ export function QtoPanel() {
               </Badge>
             </h4>
             {(() => {
-              const warnings: string[] = [];
-              const doors = site.elements.filter(
-                (e) => e.kind === "door",
-              ) as DoorElement[];
-              const windows = site.elements.filter(
-                (e) => e.kind === "window",
-              ) as WindowElement[];
-
-              doors.forEach((door) => {
-                const geom = calculateDoorGeometry(door);
-                geom.warnings.forEach((w) =>
-                  warnings.push(`${door.name}: ${w}`),
-                );
-              });
-
-              windows.forEach((win) => {
-                const geom = calculateWindowGeometry(win);
-                geom.warnings.forEach((w) =>
-                  warnings.push(`${win.name}: ${w}`),
-                );
-              });
-
+              const warnings = getDoorWindowCodeWarnings(site);
               if (warnings.length === 0) {
                 return (
                   <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2 text-[10px] text-emerald-500">
@@ -788,6 +753,7 @@ export function QtoPanel() {
                 </div>
               );
             })()}
+
           </div>
         </div>
       )}
@@ -911,22 +877,10 @@ export function QtoPanel() {
               </Badge>
             </h4>
             {(() => {
-              const warnings: string[] = [];
-              const roofs = site.elements.filter(
-                (e) => e.kind === "roof",
-              ) as RoofElement[];
+              const warnings = getRoofWarnings(site);
+              const hasRoofs = site.elements.some((e: any) => e.kind === "roof");
 
-              roofs.forEach((roof) => {
-                const res = calculateRoofGeometry(roof);
-                res.warnings.forEach((w) =>
-                  warnings.push(`${roof.name}: ${w}`),
-                );
-                res.ventilationWarnings.forEach((w) =>
-                  warnings.push(`${roof.name}: ${w}`),
-                );
-              });
-
-              if (roofs.length === 0) {
+              if (!hasRoofs) {
                 return (
                   <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
                     No roofs drafted to audit.
@@ -956,6 +910,7 @@ export function QtoPanel() {
                 </div>
               );
             })()}
+
           </div>
         </div>
       )}

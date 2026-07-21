@@ -172,3 +172,92 @@ export function sampleCrossSection(
     proposedPoints,
   };
 }
+
+/**
+ * Extracts Existing Ground (EG) surface profile elevations along an alignment baseline. (REQ-12-001)
+ */
+export function extractSurfaceProfile(
+  grid: ElevationGrid,
+  resolved: ResolvedAlignment,
+  sampleInterval = 25,
+): VerticalProfile {
+  const pvis: VerticalPVI[] = [];
+  const totalLen = resolved.length;
+  const count = Math.max(2, Math.floor(totalLen / sampleInterval));
+
+  for (let i = 0; i <= count; i++) {
+    const station = resolved.startStation + (totalLen * i) / count;
+    const at = pointAtStation(resolved, station);
+    if (!at) {
+      continue;
+    }
+    const elev = elevationAt(grid, at.point);
+    pvis.push({ station, elevation: elev });
+  }
+
+  return {
+    id: `eg-prof-${Date.now()}`,
+    name: `${resolved.name} - Existing Ground Profile`,
+    alignmentId: resolved.name,
+    pvis,
+  };
+}
+
+/**
+ * Validates vertical design profile K-values against minimum stopping sight distance criteria. (REQ-12-012, REQ-12-013)
+ */
+export function validateProfileKValues(
+  profile: VerticalProfile,
+  designSpeed = 45,
+): { pviIndex: number; station: number; kValue: number; minK: number; isViolation: boolean; message: string }[] {
+  const pvis = _.sortBy(profile.pvis, "station");
+  const results: { pviIndex: number; station: number; kValue: number; minK: number; isViolation: boolean; message: string }[] = [];
+
+  // AASHTO minimum K-values for crest curves (e.g. 45 mph => Crest K=61, Sag K=79)
+  const minKCrest = designSpeed <= 25 ? 12 : designSpeed <= 35 ? 29 : designSpeed <= 45 ? 61 : 151;
+  const minKSag = designSpeed <= 25 ? 26 : designSpeed <= 35 ? 49 : designSpeed <= 45 ? 79 : 136;
+
+  for (let i = 1; i < pvis.length - 1; i++) {
+    const pvi = pvis[i];
+    if (!pvi.curveLength || pvi.curveLength <= 0) {
+      continue;
+    }
+    const curve = resolveVerticalCurve(pvi, pvis[i - 1], pvis[i + 1]);
+    if (!curve) {
+      continue;
+    }
+    const isCrest = curve.gradeIn > curve.gradeOut;
+    const minK = isCrest ? minKCrest : minKSag;
+    const isViolation = curve.kValue < minK;
+
+    results.push({
+      pviIndex: i,
+      station: pvi.station,
+      kValue: curve.kValue,
+      minK,
+      isViolation,
+      message: isViolation
+        ? `Vertical curve at station ${pvi.station.toFixed(2)} has K=${curve.kValue.toFixed(1)} below AASHTO minimum K=${minK} for ${designSpeed} mph.`
+        : `Vertical curve at station ${pvi.station.toFixed(2)} meets AASHTO standards.`,
+    });
+  }
+
+  return results;
+}
+
+/**
+ * Copies a profile and applies a constant vertical offset (REQ-12-011).
+ */
+export function copyAndOffsetProfile(
+  profile: VerticalProfile,
+  verticalDelta: number,
+  nameSuffix = "Offset",
+): VerticalProfile {
+  return {
+    id: `${profile.id}-off-${verticalDelta}`,
+    name: `${profile.name} ${nameSuffix} (${verticalDelta >= 0 ? "+" : ""}${verticalDelta.toFixed(1)}ft)`,
+    alignmentId: profile.alignmentId,
+    pvis: profile.pvis.map((p) => ({ ...p, elevation: p.elevation + verticalDelta })),
+  };
+}
+

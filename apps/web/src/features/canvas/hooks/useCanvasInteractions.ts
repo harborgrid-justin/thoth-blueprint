@@ -172,8 +172,9 @@ export function useCanvasInteractions({
               if (pointSegmentDistance(c, p1, p2) < 10) {
                 return align.id;
               }
-            } else {
+            } else if (el.kind === "curve") {
               const c = el.curve;
+
               const steps = Math.max(2, Math.ceil(c.deltaDeg / 2));
               let prevPt = {
                 x: c.center.x + c.radius * Math.cos(c.startAngle),

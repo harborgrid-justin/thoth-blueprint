@@ -16,7 +16,7 @@ export function Toolbar() {
     useToolbarState();
 
   return (
-    <div className="flex w-12 flex-col items-center gap-1 overflow-y-auto border-r border-border bg-card py-2 no-scrollbar">
+    <div className="flex w-12 flex-col items-center gap-1.5 overflow-y-auto py-3 no-scrollbar">
       {tools.map((tool, i) => {
         const Icon = tool.icon;
         const active = tool.id === activeTool;
@@ -32,10 +32,10 @@ export function Toolbar() {
                   aria-pressed={active}
                   aria-label={tool.label}
                   className={cn(
-                    "flex h-9 w-9 items-center justify-center rounded-md transition-colors",
+                    "flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-200",
                     active
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                      ? "bg-gradient-to-br from-primary to-blue-600 text-white shadow-md shadow-primary/20 scale-105"
+                      : "text-muted-foreground hover:bg-white/10 hover:text-foreground hover:scale-110 active:scale-95",
                   )}
                 >
                   <Icon className="h-[18px] w-[18px]" />
@@ -59,7 +59,7 @@ export function Toolbar() {
             onClick={undo}
             disabled={!canUndo}
             aria-label="Undo"
-            className="flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-30"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-all duration-200 hover:bg-white/10 hover:text-foreground hover:scale-110 active:scale-95 disabled:opacity-30 disabled:hover:scale-100 disabled:hover:bg-transparent"
           >
             <Undo2 className="h-[18px] w-[18px]" />
           </button>
@@ -73,7 +73,7 @@ export function Toolbar() {
             onClick={redo}
             disabled={!canRedo}
             aria-label="Redo"
-            className="flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-30"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-all duration-200 hover:bg-white/10 hover:text-foreground hover:scale-110 active:scale-95 disabled:opacity-30 disabled:hover:scale-100 disabled:hover:bg-transparent"
           >
             <Redo2 className="h-[18px] w-[18px]" />
           </button>

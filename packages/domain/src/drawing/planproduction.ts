@@ -6,6 +6,10 @@ import { type Unit } from "../spatial/spatial";
 import { type PaperUnit } from "./sheetsize";
 import { type Sheet, type DrawingSet } from "./sheet";
 
+import federalData from "../planning/geoid/data/federalReference.json";
+
+const defaultDrafting = federalData.standards.drafting;
+
 import type {
   ViewFrame,
   PlanMatchLine,
@@ -25,7 +29,7 @@ export function generateViewFrames(
   viewportWidthIn: number, // paper sheet viewport width in inches
   viewportHeightIn: number, // paper sheet viewport height in inches
   modelUnit: Unit,
-  overlapRatio = 0.15,
+  overlapRatio = defaultDrafting.defaultViewFrameOverlapRatio,
 ): ViewFrameGroup {
   const paperUnit: PaperUnit = "in";
   // Model units per paper unit (inches)

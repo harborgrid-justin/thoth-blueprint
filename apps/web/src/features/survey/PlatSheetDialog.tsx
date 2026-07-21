@@ -1,5 +1,6 @@
+import * as React from "react";
 import _ from "lodash";
-import { Download, LayoutTemplate } from "lucide-react";
+import { Download, LayoutTemplate, Edit3 } from "lucide-react";
 import {
   densifyBoundary,
   isSpatialElement,
@@ -67,22 +68,50 @@ function formatSegmentBearing(p1: Point, p2: Point): string {
   return `${ns} ${d}°${String(m).padStart(2, "0")}'${String(s).padStart(2, "0")}" ${ew}`;
 }
 
+
 /** The plat-sheet composer: a jurisdiction-driven plan sheet with title block,
  * certificates, the site plan, a consolidated curve table, and a legend. */
 export function PlatSheetDialog() {
+  const [sheetView, setSheetView] = React.useState<"handdrawn" | "sheet">("handdrawn");
   const { open, setOpen, site, plugin, caps, svgRef, exportSvg, exportPdf } =
     usePlatSheetState();
   if (!site) {
     return null;
   }
 
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-6xl">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <LayoutTemplate className="h-5 w-5 text-primary" /> Plat Sheet
-            Composer
+          <DialogTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <LayoutTemplate className="h-5 w-5 text-primary" /> Plat Sheet Composer
+            </div>
+            <div className="flex items-center rounded-md border border-border bg-muted p-0.5 text-xs mr-6">
+              <button
+                type="button"
+                onClick={() => setSheetView("handdrawn")}
+                className={`flex items-center gap-1.5 rounded px-2.5 py-1 font-semibold transition-colors ${
+                  sheetView === "handdrawn"
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <Edit3 className="h-3.5 w-3.5" /> Hand-Drawn Surveyor Plat
+              </button>
+              <button
+                type="button"
+                onClick={() => setSheetView("sheet")}
+                className={`flex items-center gap-1.5 rounded px-2.5 py-1 font-semibold transition-colors ${
+                  sheetView === "sheet"
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Standard CAD Sheet
+              </button>
+            </div>
           </DialogTitle>
           <DialogDescription>
             {site.name} — driven by the {plugin.name} region plug-in.
@@ -137,30 +166,45 @@ export function PlatSheetDialog() {
               viewBox={`0 0 ${W} ${H}`}
               width="100%"
               xmlns="http://www.w3.org/2000/svg"
-              style={{ display: "block", background: SHEET }}
-              fontFamily="Inter, system-ui, -apple-system, sans-serif"
+              style={{
+                display: "block",
+                background: sheetView === "handdrawn" ? "#faf8f5" : SHEET,
+              }}
+              fontFamily={
+                sheetView === "handdrawn"
+                  ? "'Architects Daughter', 'Patrick Hand', 'Comic Sans MS', cursive"
+                  : "Inter, system-ui, -apple-system, sans-serif"
+              }
             >
+              <defs>
+                <filter id="sheet-hand-sketch" x="-5%" y="-5%" width="110%" height="110%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" result="noise" />
+                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.4" xChannelSelector="R" yChannelSelector="G" />
+                </filter>
+              </defs>
               <CanvasPatterns />
-              <rect
-                x={8}
-                y={8}
-                width={W - 16}
-                height={H - 16}
-                fill="none"
-                stroke={INK}
-                strokeWidth={1.6}
-              />
-              <rect
-                x={13}
-                y={13}
-                width={W - 26}
-                height={H - 26}
-                fill="none"
-                stroke={INK}
-                strokeWidth={0.6}
-              />
-              <PlanWindow site={site} plugin={plugin} />
-              <TitleStrip site={site} plugin={plugin} caps={caps} />
+              <g filter={sheetView === "handdrawn" ? "url(#sheet-hand-sketch)" : undefined}>
+                <rect
+                  x={8}
+                  y={8}
+                  width={W - 16}
+                  height={H - 16}
+                  fill="none"
+                  stroke={INK}
+                  strokeWidth={1.6}
+                />
+                <rect
+                  x={13}
+                  y={13}
+                  width={W - 26}
+                  height={H - 26}
+                  fill="none"
+                  stroke={INK}
+                  strokeWidth={0.6}
+                />
+                <PlanWindow site={site} plugin={plugin} />
+                <TitleStrip site={site} plugin={plugin} caps={caps} />
+              </g>
             </svg>
           </div>
 

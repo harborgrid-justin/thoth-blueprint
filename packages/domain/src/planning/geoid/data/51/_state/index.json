@@ -10,6 +10,12 @@
       "rearSetback": 25,
       "maxHeight": 35,
       "maxCoverage": 0.45
+    },
+    "climate": {
+      "rainfallIntensity100Yr": 3.5,
+      "windVelocityMph": 120,
+      "snowLoadPsf": 35,
+      "soilBearingPsf": 2000
     }
   }
 }
