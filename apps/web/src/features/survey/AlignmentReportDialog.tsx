@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "lodash";
 import { Spline } from "lucide-react";
 import {
   bearingText,
@@ -39,7 +40,7 @@ export function AlignmentReportDialog() {
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!site) {return null;}
-  const selected = alignments.find((a) => a.id === selectedId) ?? alignments[0] ?? null;
+  const selected = _.find(alignments, (a) => a.id === selectedId) ?? alignments[0] ?? null;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -61,7 +62,7 @@ export function AlignmentReportDialog() {
         ) : (
           <div className="grid grid-cols-[180px_1fr] gap-4">
             <div className="flex flex-col gap-0.5">
-              {alignments.map((a) => (
+              {_.map(alignments, (a) => (
                 <button
                   key={a.id}
                   type="button"
@@ -69,8 +70,8 @@ export function AlignmentReportDialog() {
                   className={cn(
                     "truncate rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                     a.id === (selected?.id ?? "")
-                      ? "bg-primary/15 text-primary"
-                      : "text-foreground hover:bg-accent",
+                      ? "bg-primary/15 text-primary font-medium"
+                      : "text-muted-foreground hover:bg-accent hover:text-foreground",
                   )}
                 >
                   {a.name}
@@ -119,7 +120,7 @@ function AlignmentReport({
             </tr>
           </thead>
           <tbody className="font-mono">
-            {r.elements.map((el, i) =>
+            {_.map(r.elements, (el, i) =>
               el.kind === "tangent" ? (
                 <tr key={i} className="border-b border-border/50">
                   <Td>Tangent</Td>
@@ -165,7 +166,7 @@ function AlignmentReport({
                 </tr>
               </thead>
               <tbody className="font-mono">
-                {r.curves.map((c, i) => (
+                {_.map(r.curves, (c, i) => (
                   <tr key={i} className="border-b border-border/50">
                     <Td>{curveLabel(r, c.piIndex)}</Td>
                     <Td>{formatStation(c.pcStation)}</Td>
@@ -197,7 +198,7 @@ function AlignmentReport({
 
 /** Curve label C1, C2… in traversal order. */
 function curveLabel(r: ResolvedAlignment, piIndex: number): string {
-  const n = r.curves.findIndex((c) => c.piIndex === piIndex);
+  const n = _.findIndex(r.curves, (c) => c.piIndex === piIndex);
   return `C${n + 1}`;
 }
 

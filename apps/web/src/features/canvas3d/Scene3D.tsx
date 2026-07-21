@@ -8,7 +8,8 @@ import { useInteropStore } from "@/store/interopStore";
 import { useErosionStore } from "@/store/erosionStore";
 import { buildScene, type SceneResult } from "./buildScene";
 import { ThothPhysicsEngine } from "./physics";
-import { Erosion3DVisualizer } from "./erosion3d";
+import { Erosion3DVisualizer, type ErosionGridConfig } from "./erosion3d";
+import { buildTerrainModel } from "@/features/terrain/terrainModel";
 
 // Sun placement (degrees) — a mid-morning light that reads well for massing.
 const SUN_ELEVATION = 34;
@@ -36,6 +37,8 @@ export function Scene3D() {
   const framedRef = React.useRef(false);
   const physicsRef = React.useRef<ThothPhysicsEngine | null>(null);
   const visualizerRef = React.useRef<Erosion3DVisualizer | null>(null);
+  /** Cache of the last collision result — avoids re-traversing meshes every frame. */
+  const lastCollisionsRef = React.useRef<Set<string>>(new Set());
 
   const currentFrame = useErosionStore((s) => s.currentFrame);
 
@@ -44,21 +47,29 @@ export function Scene3D() {
     const scene = sceneRef.current;
     if (!scene || !contentRef.current) {return;}
 
-    // Find terrain mesh inside contentRef.current.group
-    let terrainMesh: THREE.Mesh | null = null;
-    contentRef.current.group.traverse((child) => {
-      if (child instanceof THREE.Mesh && child.geometry instanceof THREE.PlaneGeometry) {
-        terrainMesh = child;
-      }
-    });
-
     if (!visualizerRef.current) {
+      // Derive accurate grid dimensions from the terrain model so the elevation
+      // lookup in the visualizer uses bilinear interpolation on the correct grid.
+      const currentSite = useWorkspaceStore.getState().site;
+      let gridConfig: ErosionGridConfig | undefined;
+      if (currentSite) {
+        const terrain = buildTerrainModel(currentSite);
+        if (terrain.existing) {
+          const { cols, rows, cellSize, origin } = terrain.existing;
+          gridConfig = { cols, rows, cellSize, origin };
+        }
+      }
+
       visualizerRef.current = new Erosion3DVisualizer(
         contentRef.current.group,
         contentRef.current.center,
         contentRef.current.exaggeration,
+        gridConfig,
       );
     }
+
+    // Use the terrainMesh exposed directly on SceneResult — no group traversal needed.
+    const terrainMesh = contentRef.current.terrainMesh;
 
     if (currentFrame) {
       visualizerRef.current.update(currentFrame, terrainMesh);
@@ -151,30 +162,39 @@ export function Scene3D() {
       raf = requestAnimationFrame(animate);
       controls.update();
 
-      // Run collision checking if physics engine is loaded
+      // Run collision checking if physics engine is loaded.
+      // checkCollisions() is cheap when nothing has changed (needsStep=false),
+      // but we still need the last known set to maintain emissive state.
       if (physicsRef.current && contentRef.current) {
         const collisions = physicsRef.current.checkCollisions();
         const buildingMeshes = contentRef.current.buildingMeshes;
+        const prev = lastCollisionsRef.current;
 
-        buildingMeshes.forEach((mesh, id) => {
-          const isColliding = collisions.has(id);
-          mesh.traverse((child) => {
-            if (child instanceof THREE.Mesh) {
-              const mat = child.material as THREE.MeshStandardMaterial;
-              if (mat) {
-                if (isColliding) {
-                  // Set emissive red glow on overlap
-                  mat.emissive.setHex(0xff0000);
-                  mat.emissiveIntensity = 0.45;
-                } else {
-                  // Reset emissive color
-                  mat.emissive.setHex(0x000000);
-                  mat.emissiveIntensity = 0;
+        // Only traverse & update materials when the set of colliding IDs changes.
+        const changed =
+          collisions.size !== prev.size ||
+          [...collisions].some((id) => !prev.has(id));
+
+        if (changed) {
+          lastCollisionsRef.current = collisions;
+          buildingMeshes.forEach((mesh, id) => {
+            const isColliding = collisions.has(id);
+            mesh.traverse((child) => {
+              if (child instanceof THREE.Mesh) {
+                const mat = child.material as THREE.MeshStandardMaterial;
+                if (mat) {
+                  if (isColliding) {
+                    mat.emissive.setHex(0xff0000);
+                    mat.emissiveIntensity = 0.45;
+                  } else {
+                    mat.emissive.setHex(0x000000);
+                    mat.emissiveIntensity = 0;
+                  }
                 }
               }
-            }
+            });
           });
-        });
+        }
       }
 
       renderer.render(scene, camera);

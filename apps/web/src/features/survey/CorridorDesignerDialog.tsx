@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "lodash";
 import { HardHat, Compass, Link2 } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useUiStore } from "@/store/uiStore";
@@ -56,8 +57,8 @@ export function CorridorDesignerDialog() {
 
   if (!site) {return null;}
 
-  const alignment = alignments.find((a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
-  const profile = profiles.find((p) => p.id === selectedProfileId) ?? profiles[0] ?? null;
+  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
+  const profile = _.find(profiles, (p) => p.id === selectedProfileId) ?? profiles[0] ?? null;
 
   function handleExtrude() {
     if (!alignment || !profile) {return;}
@@ -77,12 +78,12 @@ export function CorridorDesignerDialog() {
     const featureLines = extractCorridorFeatureLines(sections);
 
     // Save feature lines as spatial elements inside the store
-    const newElements = featureLines.map((fl) => ({
+    const newElements = _.map(featureLines, (fl) => ({
       id: `fl-${fl.code}`,
       kind: "corridor" as any,
       layerId: "c-road",
       name: `${fl.code} Feature Line`,
-      boundary: fl.points.map((p) => ({ x: p.x, y: p.y })),
+      boundary: _.map(fl.points, (p) => ({ x: p.x, y: p.y })),
       properties: { code: fl.code, points3D: fl.points },
     }));
 
@@ -95,12 +96,12 @@ export function CorridorDesignerDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-5xl bg-card border border-border/80 text-foreground shadow-2xl">
+      <DialogContent className="max-w-5xl">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-primary font-bold">
+          <DialogTitle className="flex items-center gap-2">
             <HardHat className="h-5 w-5 text-primary" /> Corridor Assembly Designer
           </DialogTitle>
-          <DialogDescription className="text-muted-foreground">
+          <DialogDescription>
             Interlock alignments, design profiles, and custom lane templates to model and generate 3D roadway corridors.
           </DialogDescription>
         </DialogHeader>
@@ -115,11 +116,11 @@ export function CorridorDesignerDialog() {
             <div className="flex flex-col gap-1">
               <label className="text-[10px] text-muted-foreground font-medium">Horizontal Alignment</label>
               <select
-                className="bg-background border border-border/60 rounded px-2.5 py-1.5 text-xs"
+                className="rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 value={selectedAlignId ?? ""}
                 onChange={(e) => setSelectedAlignId(e.target.value)}
               >
-                {alignments.map((a) => (
+                {_.map(alignments, (a) => (
                   <option key={a.id} value={a.id}>{a.name}</option>
                 ))}
               </select>
@@ -128,11 +129,11 @@ export function CorridorDesignerDialog() {
             <div className="flex flex-col gap-1">
               <label className="text-[10px] text-muted-foreground font-medium">Vertical Profile</label>
               <select
-                className="bg-background border border-border/60 rounded px-2.5 py-1.5 text-xs"
+                className="rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 value={selectedProfileId}
                 onChange={(e) => setSelectedProfileId(e.target.value)}
               >
-                {profiles.map((p) => (
+                {_.map(profiles, (p) => (
                   <option key={p.id} value={p.id}>{p.name}</option>
                 ))}
               </select>
@@ -169,7 +170,7 @@ export function CorridorDesignerDialog() {
               <div className="rounded border border-border/40 bg-muted/10 p-3">
                 <h4 className="font-semibold text-[10px] text-blue-400 uppercase tracking-wider mb-2">Left Side Templates</h4>
                 <div className="flex flex-col gap-1.5">
-                  {assembly.leftSubassemblies.map((sub) => (
+                  {_.map(assembly.leftSubassemblies, (sub) => (
                     <div key={sub.id} className="flex justify-between items-center text-[11px] bg-background border border-border/30 rounded p-1.5 px-2">
                       <span className="font-medium text-foreground">{sub.name}</span>
                       <span className="text-[10px] text-muted-foreground">{sub.type}</span>
@@ -182,7 +183,7 @@ export function CorridorDesignerDialog() {
               <div className="rounded border border-border/40 bg-muted/10 p-3">
                 <h4 className="font-semibold text-[10px] text-amber-500 uppercase tracking-wider mb-2">Right Side Templates</h4>
                 <div className="flex flex-col gap-1.5">
-                  {assembly.rightSubassemblies.map((sub) => (
+                  {_.map(assembly.rightSubassemblies, (sub) => (
                     <div key={sub.id} className="flex justify-between items-center text-[11px] bg-background border border-border/30 rounded p-1.5 px-2">
                       <span className="font-medium text-foreground">{sub.name}</span>
                       <span className="text-[10px] text-muted-foreground">{sub.type}</span>
@@ -202,8 +203,7 @@ export function CorridorDesignerDialog() {
                 
                 {/* Drawn Assembly Points */}
                 <polyline
-                  points={offsetPoints
-                    .map((pt) => {
+                  points={_.map(offsetPoints, (pt) => {
                       const x = 250 + pt.x * 8;
                       const y = 80 - pt.y * 20;
                       return `${x},${y}`;
@@ -216,7 +216,7 @@ export function CorridorDesignerDialog() {
                 />
 
                 {/* Nodes markers */}
-                {offsetPoints.map((pt, i) => (
+                {_.map(offsetPoints, (pt, i) => (
                   <circle
                     key={i}
                     cx={250 + pt.x * 8}

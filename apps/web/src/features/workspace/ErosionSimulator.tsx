@@ -131,7 +131,7 @@ export function ErosionSimulatorPanel() {
             <select
               value={soilType}
               onChange={(e) => setSoilType(e.target.value as any)}
-              className="bg-background border border-border rounded px-1.5 py-0.5 text-[10px] text-muted-foreground"
+              className="rounded border border-border bg-background px-2 py-0.5 text-[10px] text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
             >
               <option value="loam">Loam Soil</option>
               <option value="sand">Sandy Soil</option>
@@ -141,7 +141,7 @@ export function ErosionSimulatorPanel() {
             <select
               value={speed}
               onChange={(e) => setSpeed(Number(e.target.value))}
-              className="bg-background border border-border rounded px-1.5 py-0.5 text-[10px] text-muted-foreground"
+              className="rounded border border-border bg-background px-2 py-0.5 text-[10px] text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
             >
               <option value={200}>0.5x</option>
               <option value={100}>1.0x</option>

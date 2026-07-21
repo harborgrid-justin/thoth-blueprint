@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { area as polygonArea, type Point, type Polygon } from "./geometry";
+import { area as polygonArea, distance, type Point, type Polygon } from "./geometry";
 import {
   boundaryArea,
   boundaryPerimeter,
@@ -23,7 +23,7 @@ describe("bulgeToArc", () => {
     expect(arc.arcLength).toBeCloseTo(Math.PI * 5, 9);
     expect(arc.chordLength).toBeCloseTo(10, 9);
     // The mid-arc point is one radius from the center.
-    expect(Math.hypot(arc.mid.x - arc.center.x, arc.mid.y - arc.center.y)).toBeCloseTo(5, 9);
+    expect(distance(arc.mid, arc.center)).toBeCloseTo(5, 9);
   });
 
   it("resolves a quarter circle and its tangent", () => {
@@ -55,7 +55,7 @@ describe("densifyArc", () => {
   it("stays on the circle of radius R", () => {
     const arc = bulgeToArc(S, E, 0.6)!;
     for (const p of densifyArc(S, E, 0.6, 5)) {
-      expect(Math.hypot(p.x - arc.center.x, p.y - arc.center.y)).toBeCloseTo(arc.radius, 6);
+      expect(distance(p, arc.center)).toBeCloseTo(arc.radius, 6);
     }
   });
 });

@@ -8,6 +8,7 @@ import { elementMatches } from "@/lib/search";
 import { elementMeta } from "@/lib/elementMeta";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
+import { useDebounce } from "@/lib/hooks";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import {
@@ -56,9 +57,11 @@ export function FindPanel() {
     if (open) {inputRef.current?.focus();}
   }, [open]);
 
+  const debouncedQuery = useDebounce(query, 200);
+
   const matches = React.useMemo(
-    () => (site ? site.elements.filter((el) => elementMatches(el, query, kind)) : []),
-    [site, query, kind],
+    () => (site ? site.elements.filter((el) => elementMatches(el, debouncedQuery, kind)) : []),
+    [site, debouncedQuery, kind],
   );
 
   // Kinds actually present in the plan, for the type filter.

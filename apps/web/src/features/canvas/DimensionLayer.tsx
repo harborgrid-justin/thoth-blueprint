@@ -8,7 +8,7 @@ import {
 } from "@thoth/domain";
 import { worldToScreen, type Viewport } from "./viewport";
 
-const INK = "#0f172a";
+const INK = "hsl(var(--foreground))";
 const HALO = "hsl(var(--canvas))";
 
 /**

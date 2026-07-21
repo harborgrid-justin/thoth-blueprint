@@ -28,7 +28,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { PresenceBar } from "@/features/workspace/PresenceBar";
-import { CreateProjectDialog } from "./CreateProjectDialog";
+
+const CreateProjectDialog = React.lazy(() =>
+  import("./CreateProjectDialog").then((m) => ({ default: m.CreateProjectDialog }))
+);
+
 
 export function Dashboard() {
   const { theme, toggleTheme } = useTheme();
@@ -129,7 +133,11 @@ export function Dashboard() {
           )}
         </main>
 
-        <CreateProjectDialog open={createOpen} onOpenChange={setCreateOpen} onCreated={refresh} />
+        {createOpen && (
+          <React.Suspense fallback={null}>
+            <CreateProjectDialog open={createOpen} onOpenChange={setCreateOpen} onCreated={refresh} />
+          </React.Suspense>
+        )}
       </div>
     </TooltipProvider>
   );

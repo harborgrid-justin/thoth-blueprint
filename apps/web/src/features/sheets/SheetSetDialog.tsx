@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FileDown, Files, Layers } from "lucide-react";
+import { FileDown, Files, Layers, Loader2 } from "lucide-react";
 import {
   disciplineName,
   formatSheetNumber,
@@ -28,7 +28,7 @@ import {
 import { ensureDrawingSet } from "./defaultSet";
 import { buildSheetPrimitives, sheetLayout } from "./builders";
 import { SvgSheet } from "./SvgSheet";
-import { exportDrawingSetPdf } from "./pdfExport";
+import { container } from "@/lib/di";
 
 /**
  * The multi-sheet CAD drawing-set composer: a sheet navigator, a live vector
@@ -91,7 +91,8 @@ export function SheetSetDialog() {
     if (!set || !site) {return;}
     setBusy(true);
     try {
-      await exportDrawingSetPdf(set, site, `${site.name.replace(/\s+/g, "-").toLowerCase()}-drawings.pdf`);
+      const pdfService = await container.get<typeof import("./pdfExport")>("pdfExport");
+      await pdfService.exportDrawingSetPdf(set, site, `${site.name.replace(/\s+/g, "-").toLowerCase()}-drawings.pdf`);
     } finally {
       setBusy(false);
     }
@@ -114,7 +115,7 @@ export function SheetSetDialog() {
             <label className="flex items-center gap-1 text-muted-foreground">
               <Layers className="h-3.5 w-3.5" /> Size
               <select
-                className="rounded border border-border bg-background px-1.5 py-0.5 text-foreground"
+                className="rounded border border-border bg-background px-2.5 py-1 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 value={sizeOverride}
                 onChange={(e) => setSizeOverride(e.target.value as SheetSizeId | "")}
               >
@@ -129,7 +130,7 @@ export function SheetSetDialog() {
             <label className="flex items-center gap-1 text-muted-foreground">
               Orientation
               <select
-                className="rounded border border-border bg-background px-1.5 py-0.5 text-foreground"
+                className="rounded border border-border bg-background px-2.5 py-1 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 value={orientOverride}
                 onChange={(e) => setOrientOverride(e.target.value as Orientation | "")}
               >
@@ -144,7 +145,16 @@ export function SheetSetDialog() {
               <FileDown className="h-4 w-4" /> Sheet (SVG)
             </Button>
             <Button size="sm" onClick={exportPdf} disabled={busy}>
-              <FileDown className="h-4 w-4" /> {busy ? "Building…" : "Set (PDF)"}
+              {busy ? (
+                <>
+                  <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
+                  Generating PDF...
+                </>
+              ) : (
+                <>
+                  <FileDown className="h-4 w-4" /> Set (PDF)
+                </>
+              )}
             </Button>
           </div>
         </div>
@@ -159,7 +169,7 @@ export function SheetSetDialog() {
                   <li key={s.id}>
                     <button
                       onClick={() => setSelectedId(s.id)}
-                      className={`w-full rounded px-2 py-1.5 text-left text-xs ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted"}`}
+                      className={`w-full rounded px-2 py-1.5 text-left text-xs transition-colors ${active ? "bg-primary/15 text-primary font-medium" : "text-muted-foreground hover:bg-accent hover:text-foreground"}`}
                     >
                       <div className="font-mono font-semibold text-foreground">{formatSheetNumber(s.number)}</div>
                       <div className="truncate">{s.title}</div>

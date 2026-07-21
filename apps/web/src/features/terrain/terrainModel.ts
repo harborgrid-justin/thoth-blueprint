@@ -1,3 +1,4 @@
+import _ from "lodash";
 import {
   bounds,
   gradePad,
@@ -29,11 +30,13 @@ const MIN_CELL = 0.5;
 /** The planning extent of a site (union of spatial element bounds + spot points). */
 export function siteExtent(site: Site): Bounds | null {
   const boxes: Bounds[] = [];
-  for (const el of site.elements) {
-    if (isSpatialElement(el)) {boxes.push(bounds(el.boundary));}
-    else if (el.kind === "spot" || el.kind === "tree" || el.kind === "note")
-      {boxes.push(bounds([el.position]));}
-  }
+  _.forEach(site.elements, (el) => {
+    if (isSpatialElement(el)) {
+      boxes.push(bounds(el.boundary));
+    } else if (el.kind === "spot" || el.kind === "tree" || el.kind === "note") {
+      boxes.push(bounds([el.position]));
+    }
+  });
   return boxes.length ? unionBounds(boxes) : null;
 }
 
@@ -43,10 +46,11 @@ export function siteExtent(site: Site): Bounds | null {
  * `hasTerrain: false` when there are too few spots to define a surface.
  */
 export function buildTerrainModel(site: Site): TerrainModel {
-  const spots: SpotElevation[] = site.elements
-    .filter((e): e is SpotElevationPoint => e.kind === "spot")
-    .map((s) => ({ point: s.position, z: s.z }));
-  const grades = site.elements.filter((e): e is GradeRegion => e.kind === "grade");
+  const spots: SpotElevation[] = _.map(
+    _.filter(site.elements, (e): e is SpotElevationPoint => e.kind === "spot"),
+    (s) => ({ point: s.position, z: s.z }),
+  );
+  const grades = _.filter(site.elements, (e): e is GradeRegion => e.kind === "grade");
   const extent = siteExtent(site);
 
   if (spots.length < 2 || !extent) {

@@ -1,5 +1,5 @@
 import type { Stair, Point } from "../spatial/types.js";
-import { centroid } from "../spatial/geometry.js";
+import { centroid, distance, add, scale } from "../spatial/geometry.js";
 
 export interface StairGeometryResults {
   riserCount: number;
@@ -62,9 +62,9 @@ export function calculateStairGeometry(stair: Stair): StairGeometryResults {
     const p1 = stair.boundary[1];
     const p2 = stair.boundary[2];
     const p3 = stair.boundary[3];
-    const startMid = { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 };
-    const endMid = { x: (p2.x + p3.x) / 2, y: (p2.y + p3.y) / 2 };
-    footprintLength = Math.hypot(endMid.x - startMid.x, endMid.y - startMid.y);
+    const startMid = scale(add(p0, p1), 0.5);
+    const endMid = scale(add(p2, p3), 0.5);
+    footprintLength = distance(endMid, startMid);
   }
   
   const actualTreadDepth = footprintLength / Math.max(1, totalTreadCount);

@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "lodash";
 import { Download, LayoutTemplate } from "lucide-react";
 import {
   areaUnitLabel,
@@ -162,7 +163,7 @@ export function PlatSheetDialog() {
 // --- SVG plan window -------------------------------------------------------
 
 function planExtent(site: Site): Bounds | null {
-  const boxes = site.elements.filter(isSpatialElement).map((e) => boundsOf(e.boundary));
+  const boxes = _.map(_.filter(site.elements, isSpatialElement), (e) => boundsOf(e.boundary));
   for (const m of site.monuments ?? []) {
     boxes.push({ minX: m.position.x, minY: m.position.y, maxX: m.position.x, maxY: m.position.y });
   }
@@ -197,9 +198,9 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
       <g clipPath={`url(#${clipId})`}>
         <FrameworkOnSheet site={site} plugin={plugin} project={project} />
 
-        {site.elements.filter(isSpatialElement).map((el) => {
-          const ring = densifyBoundary(el.boundary, el.arcs, 2).map(project);
-          const pts = ring.map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ");
+        {_.map(_.filter(site.elements, isSpatialElement), (el) => {
+          const ring = _.map(densifyBoundary(el.boundary, el.arcs, 2), project);
+          const pts = _.map(ring, (s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ");
           const cat = el.kind === "landuse" ? el.category : undefined;
           const color = elementColor(el.kind, cat);
           const isEsmt = el.kind === "easement";
@@ -220,15 +221,13 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
           );
         })}
 
-        {/* Civil / erosion-control lines. */}
-        {(site.controlLines ?? []).map((line) => (
+        {_.map(site.controlLines ?? [], (line) => (
           <ControlLineShape key={line.id} line={line} project={project} />
         ))}
 
-        {/* Lot / parcel labels with area. */}
-        {site.elements
-          .filter((e) => e.kind === "lot" || e.kind === "parcel")
-          .map((el) => {
+        {_.map(
+          _.filter(site.elements, (e) => e.kind === "lot" || e.kind === "parcel"),
+          (el) => {
             if (!isSpatialElement(el)) {return null;}
             const ring = densifyBoundary(el.boundary, el.arcs, 2);
             const c = ring.reduce((a, p) => ({ x: a.x + p.x, y: a.y + p.y }), { x: 0, y: 0 });
@@ -242,10 +241,10 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
                 </tspan>
               </text>
             );
-          })}
+          }
+        )}
 
-        {/* Alignment offset bands (edge of pavement, R/W). */}
-        {(site.alignments ?? []).map((a) => {
+        {_.map(site.alignments ?? [], (a) => {
           const r = resolveAlignment(a);
           if (!r) {return null;}
           return (a.offsets ?? []).map((off, oi) => {

@@ -1,5 +1,5 @@
 import type { RoofElement, Point } from "../spatial/types.js";
-import { area } from "../spatial/geometry.js";
+import { area, distance } from "../spatial/geometry.js";
 
 export interface RoofGeometryResults {
   pitchAngleRad: number;
@@ -158,7 +158,7 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
   // Ridge vent (length of ridge * free area width ~ 0.05m)
   let ridgeVentArea = 0;
   if (roof.roofType !== "flat" && ridgeLine.length >= 2) {
-    const rLen = Math.hypot(ridgeLine[1].x - ridgeLine[0].x, ridgeLine[1].y - ridgeLine[0].y);
+    const rLen = distance(ridgeLine[1], ridgeLine[0]);
     ridgeVentArea = rLen * 0.05;
   }
   // Soffit vents (eaves perimeter * vent slot ~ 0.02m)

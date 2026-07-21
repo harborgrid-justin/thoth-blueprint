@@ -1,4 +1,5 @@
 import {
+  distance,
   revisionCloudBumps,
   sectionGaze,
   type Point,
@@ -6,7 +7,7 @@ import {
 } from "@thoth/domain";
 import { worldToScreen, type Viewport } from "./viewport";
 
-const INK = "#0f172a";
+const INK = "hsl(var(--foreground))";
 const RED = "#b91c1c";
 const HALO = "hsl(var(--canvas))";
 
@@ -76,7 +77,7 @@ export function AnnotationLayer({ site, viewport }: { site: Site; viewport: View
       {(ann.detailMarks ?? []).map((dm) => {
         const c = project(dm.center);
         const edge = project({ x: dm.center.x + dm.radius, y: dm.center.y });
-        const rr = Math.hypot(edge.x - c.x, edge.y - c.y);
+        const rr = distance(edge, c);
         const tag = { x: c.x + rr + 16, y: c.y - rr };
         return (
           <g key={dm.id}>

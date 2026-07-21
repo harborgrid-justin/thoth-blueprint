@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "lodash";
 import { AreaChart, Plus, Trash2 } from "lucide-react";
 import {
   resolveAlignment,
@@ -53,7 +54,7 @@ export function ProfileSectionDialog() {
     }
   }, [open, alignments]);
 
-  const alignment = alignments.find((a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
+  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
   const resolved = alignment ? resolveAlignment(alignment) : null;
 
   // Sample cross section using the active terrain
@@ -88,7 +89,7 @@ export function ProfileSectionDialog() {
 
   function removePvi(index: number) {
     if (profile.pvis.length <= 1) {return;}
-    const updated = profile.pvis.filter((_, i) => i !== index);
+    const updated = _.filter(profile.pvis, (_, i) => i !== index);
     setProfile({ ...profile, pvis: updated });
   }
 
@@ -117,7 +118,7 @@ export function ProfileSectionDialog() {
                   Select Alignment
                 </label>
                 <div className="mt-1 flex flex-col gap-1">
-                  {alignments.map((a) => (
+                  {_.map(alignments, (a) => (
                     <button
                       key={a.id}
                       type="button"
@@ -153,7 +154,7 @@ export function ProfileSectionDialog() {
                       </tr>
                     </thead>
                     <tbody>
-                      {profile.pvis.map((pvi, idx) => (
+                      {_.map(profile.pvis, (pvi, idx) => (
                         <tr key={idx} className="border-b border-border/50">
                           <td className="py-1">
                             <input

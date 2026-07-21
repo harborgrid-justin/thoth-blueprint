@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "lodash";
 import { Check, Copy, Download, Ruler } from "lucide-react";
 import {
   formatPLSS,
@@ -39,7 +40,7 @@ export function PlatReportDialog() {
   const site = useWorkspaceStore((s) => s.site);
 
   const surveyable = React.useMemo<SpatialElement[]>(
-    () => (site ? (site.elements.filter(isSpatialElement) as SpatialElement[]) : []),
+    () => (site ? (_.filter(site.elements, isSpatialElement) as SpatialElement[]) : []),
     [site],
   );
 
@@ -48,15 +49,15 @@ export function PlatReportDialog() {
   React.useEffect(() => {
     if (!platOpen) {return;}
     const preferred =
-      (platTargetId && surveyable.find((e) => e.id === platTargetId)?.id) ??
-      surveyable.find((e) => e.kind === "lot")?.id ??
+      (platTargetId && _.find(surveyable, (e) => e.id === platTargetId)?.id) ??
+      _.find(surveyable, (e) => e.kind === "lot")?.id ??
       surveyable[0]?.id ??
       null;
     setSelectedId(preferred);
   }, [platOpen, platTargetId, surveyable]);
 
   if (!site) {return null;}
-  const selected = surveyable.find((e) => e.id === selectedId) ?? null;
+  const selected = _.find(surveyable, (e) => e.id === selectedId) ?? null;
 
   return (
     <Dialog open={platOpen} onOpenChange={(o) => !o && closePlat()}>
@@ -117,13 +118,13 @@ function TractList({
   return (
     <ScrollArea className="max-h-[60vh]">
       <div className="flex flex-col gap-3 pr-2">
-        {[...groups.entries()].map(([kind, list]) => (
+        {_.map([...groups.entries()], ([kind, list]) => (
           <div key={kind}>
             <div className="mb-1 px-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
               {elementMeta(kind as SpatialElement["kind"]).label}
             </div>
             <div className="flex flex-col gap-0.5">
-              {list.map((el) => (
+              {_.map(list, (el) => (
                 <button
                   key={el.id}
                   type="button"
@@ -131,8 +132,8 @@ function TractList({
                   className={cn(
                     "truncate rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                     el.id === selectedId
-                      ? "bg-primary/15 text-primary"
-                      : "text-foreground hover:bg-accent",
+                      ? "bg-primary/15 text-primary font-medium"
+                      : "text-muted-foreground hover:bg-accent hover:text-foreground",
                   )}
                 >
                   {el.name}
@@ -174,7 +175,7 @@ function TractReport({
   function exportCsv() {
     const rows = [
       ["Course", "From", "To", "Bearing", `Distance (${u})`, `Latitude (${u})`, `Departure (${u})`],
-      ...report.courses.map((c) => [
+      ..._.map(report.courses, (c) => [
         String(c.index),
         c.fromLabel,
         c.toLabel,
@@ -184,7 +185,7 @@ function TractReport({
         c.departure.toFixed(2),
       ]),
     ];
-    const csv = rows.map((r) => r.map(csvCell).join(",")).join("\n");
+    const csv = _.map(rows, (r) => _.map(r, csvCell).join(",")).join("\n");
     downloadText(`${slug(element.name)}-courses.csv`, csv);
   }
 
@@ -223,7 +224,7 @@ function TractReport({
             </tr>
           </thead>
           <tbody className="font-mono">
-            {report.courses.map((c) => (
+            {_.map(report.courses, (c) => (
               <tr key={c.index} className="border-b border-border/50">
                 <Td>
                   {c.curve ? c.curve.label : `L${c.index}`} · {c.fromLabel}–{c.toLabel}
@@ -266,7 +267,7 @@ function TractReport({
             </tr>
           </thead>
           <tbody className="font-mono">
-            {report.angles.map((a) => (
+            {_.map(report.angles, (a) => (
               <tr key={a.label} className="border-b border-border/50">
                 <Td>{a.label}</Td>
                 <Td className="text-right tabular-nums">{dmsText(a.dms)}</Td>
@@ -305,7 +306,7 @@ function TractReport({
                 </tr>
               </thead>
               <tbody className="font-mono">
-                {report.curves.map((cv) => (
+                {_.map(report.curves, (cv) => (
                   <tr key={cv.label} className="border-b border-border/50">
                     <Td>{cv.label}</Td>
                     <Td className="text-right tabular-nums">{cv.radius.toFixed(2)}</Td>
@@ -340,7 +341,7 @@ function TractReport({
             </tr>
           </thead>
           <tbody className="font-mono">
-            {report.coordinates.map((c) => (
+            {_.map(report.coordinates, (c) => (
               <tr key={c.label} className="border-b border-border/50">
                 <Td>{c.label}</Td>
                 <Td className="text-right tabular-nums">{c.northing.toFixed(2)}</Td>

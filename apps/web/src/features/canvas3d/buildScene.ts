@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import _ from "lodash";
 import {
   boundsCenter,
   centroid,
@@ -33,6 +34,8 @@ export interface SceneResult {
   baseElevation: number;
   exaggeration: number;
   buildingMeshes: Map<string, THREE.Object3D>;
+  /** The terrain height-field mesh, exposed for direct use by the erosion visualizer. */
+  terrainMesh: THREE.Mesh | null;
   dispose: () => void;
 }
 
@@ -57,9 +60,10 @@ export function buildScene(site: Site): SceneResult | null {
 
   // --- Ground surface ------------------------------------------------------
   const surface = terrain.existing;
+  let sceneTerrainMesh: THREE.Mesh | null = null;
   if (surface) {
-    const mesh = terrainMesh(surface, center, exag, disposables);
-    group.add(mesh);
+    sceneTerrainMesh = terrainMesh(surface, center, exag, disposables);
+    group.add(sceneTerrainMesh);
   }
 
   // Ground plane
@@ -106,7 +110,7 @@ export function buildScene(site: Site): SceneResult | null {
     if (el.kind === "building") {
       const storeys = Math.max(1, el.storeys);
       const height = (el.height ?? storeys * 3.2) * exag;
-      const base = elevAt(centroidOf(ring)) * exag;
+      const base = elevAt(centroid(ring)) * exag;
       const bGroup = enterpriseBuilding(ring, center, base, storeys, height, el.use, el.renovationStatus, disposables);
       buildingMeshes.set(el.id, bGroup);
       continue;
@@ -219,6 +223,7 @@ export function buildScene(site: Site): SceneResult | null {
     baseElevation: elevAt(center) * exag,
     exaggeration: exag,
     buildingMeshes,
+    terrainMesh: sceneTerrainMesh,
     dispose: () => disposables.forEach((d) => d.dispose()),
   };
 }
@@ -259,18 +264,44 @@ function terrainMesh(
   geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
   geo.computeVertexNormals();
 
-  const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95, flatShading: false });
+  const mat = new THREE.MeshStandardMaterial({
+    vertexColors: true,
+    roughness: 0.88,
+    metalness: 0.05, // slight IBL response for a subtle wet-ground sheen
+    flatShading: false,
+  });
   disposables.push(geo, mat);
   const mesh = new THREE.Mesh(geo, mat);
   mesh.receiveShadow = true;
+  mesh.castShadow = true; // needed for self-shadowing on steep hillsides
   return mesh;
 }
 
+/**
+ * 5-stop hypsometric tint ramp:
+ *   0.00 – deep lowland green
+ *   0.25 – mid-slope olive
+ *   0.50 – sandy / transitional
+ *   0.75 – rocky brown
+ *   1.00 – light peak (near-snow)
+ */
 function terrainColor(t: number): THREE.Color {
-  const low = new THREE.Color(0x4b7a43);
-  const mid = new THREE.Color(0xb8a06a);
-  const high = new THREE.Color(0x8a7360);
-  return t < 0.5 ? low.clone().lerp(mid, t * 2) : mid.clone().lerp(high, (t - 0.5) * 2);
+  const stops: [number, THREE.Color][] = [
+    [0.00, new THREE.Color(0x3a6b32)], // deep green lowland
+    [0.25, new THREE.Color(0x6b8c4a)], // mid-slope olive
+    [0.50, new THREE.Color(0xb8a06a)], // sandy transition
+    [0.75, new THREE.Color(0x8a6e52)], // rocky brown
+    [1.00, new THREE.Color(0xc8bfb0)], // light peak
+  ];
+
+  for (let i = 0; i < stops.length - 1; i++) {
+    const [t0, c0] = stops[i]!;
+    const [t1, c1] = stops[i + 1]!;
+    if (t <= t1) {
+      return c0.clone().lerp(c1, (t - t0) / (t1 - t0));
+    }
+  }
+  return stops[stops.length - 1]![1].clone();
 }
 
 const OUTLINE_KINDS = new Set(["parcel", "lot", "zone", "block", "openspace"]);
@@ -416,7 +447,4 @@ function networkEdge(
   return new THREE.Line(geo, mat);
 }
 
-function centroidOf(boundary: Polygon): Point {
-  const sum = boundary.reduce((acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 });
-  return { x: sum.x / boundary.length, y: sum.y / boundary.length };
-}
+

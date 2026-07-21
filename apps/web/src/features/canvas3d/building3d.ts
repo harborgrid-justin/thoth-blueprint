@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import _ from "lodash";
 import { type Point, type Polygon, type LandUseCategory, type BuildingModel, wallPolygon } from "@thoth/domain";
 
 export function shapeFromBoundary(boundary: Polygon, center: Point): THREE.Shape {
@@ -76,7 +77,7 @@ export function enterpriseBuilding(
 
   // Per-storey floor lines around the footprint.
   if (storeys > 1) {
-    const local = ring.map((p) => new THREE.Vector2(p.x - center.x, p.y - center.y));
+    const local = _.map(ring, (p) => new THREE.Vector2(p.x - center.x, p.y - center.y));
     const bandPts: THREE.Vector3[] = [];
     for (let k = 1; k < storeys; k++) {
       const y = (k / storeys) * height;
@@ -104,7 +105,7 @@ export function buildingInterior(
   disposables: Array<{ dispose: () => void }>,
 ): THREE.Group {
   const g = new THREE.Group();
-  const levelBase = new Map(model.levels.map((l) => [l.id, l.elevation]));
+  const levelBase = new Map(_.map(model.levels, (l) => [l.id, l.elevation]));
   const mat = new THREE.MeshStandardMaterial({ color: 0xe2e0d8, roughness: 0.7, metalness: 0.04 });
   disposables.push(mat);
 

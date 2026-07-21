@@ -1,5 +1,15 @@
 import * as THREE from "three";
-import { type Point, type DoorElement, type WindowElement } from "@thoth/domain";
+import _ from "lodash";
+import {
+  add,
+  subtract,
+  scale,
+  normalize,
+  distance,
+  type Point,
+  type DoorElement,
+  type WindowElement,
+} from "@thoth/domain";
 
 export function enterpriseDoor(
   door: DoorElement,
@@ -18,12 +28,10 @@ export function enterpriseDoor(
     pRight = door.boundary[1];
   }
 
-  const dx = pRight.x - pLeft.x;
-  const dy = pRight.y - pLeft.y;
-  const width = door.width || Math.hypot(dx, dy) || 0.9;
-  const cos = dx / (width || 1);
-  const sin = dy / (width || 1);
-  const wallAngle = Math.atan2(dy, dx);
+  const d = subtract(pRight, pLeft);
+  const width = door.width || distance(pRight, pLeft) || 0.9;
+  const dir = normalize(d);
+  const wallAngle = Math.atan2(d.y, d.x);
 
   const frameWidth = 0.05;
   const thickness = door.depth || 0.15;
@@ -49,13 +57,15 @@ export function enterpriseDoor(
     disposables.push(geo);
 
     const lp = new THREE.Mesh(geo, woodMat);
-    lp.position.set(pLeft.x + (frameWidth / 2) * cos - center.x, baseElevation + (height * exag) / 2, pLeft.y + (frameWidth / 2) * sin - center.y);
+    const lpPos = add(pLeft, scale(dir, frameWidth / 2));
+    lp.position.set(lpPos.x - center.x, baseElevation + (height * exag) / 2, lpPos.y - center.y);
     lp.rotation.y = -wallAngle;
     lp.castShadow = true;
     dGroup.add(lp);
 
     const rp = new THREE.Mesh(geo, woodMat);
-    rp.position.set(pRight.x - (frameWidth / 2) * cos - center.x, baseElevation + (height * exag) / 2, pRight.y - (frameWidth / 2) * sin - center.y);
+    const rpPos = subtract(pRight, scale(dir, frameWidth / 2));
+    rp.position.set(rpPos.x - center.x, baseElevation + (height * exag) / 2, rpPos.y - center.y);
     rp.rotation.y = -wallAngle;
     rp.castShadow = true;
     dGroup.add(rp);
@@ -65,7 +75,8 @@ export function enterpriseDoor(
     disposables.push(geo);
 
     const hp = new THREE.Mesh(geo, woodMat);
-    hp.position.set((pLeft.x + pRight.x) / 2 - center.x, baseElevation + height * exag - (frameWidth / 2) * exag, (pLeft.y + pRight.y) / 2 - center.y);
+    const hpPos = scale(add(pLeft, pRight), 0.5);
+    hp.position.set(hpPos.x - center.x, baseElevation + height * exag - (frameWidth / 2) * exag, hpPos.y - center.y);
     hp.rotation.y = -wallAngle;
     hp.castShadow = true;
     dGroup.add(hp);
@@ -81,27 +92,24 @@ export function enterpriseDoor(
 
     const mesh = new THREE.Mesh(geo, woodMat);
     
-    let px = pLeft.x + frameWidth * cos;
-    let py = pLeft.y + frameWidth * sin;
+    let p = add(pLeft, scale(dir, frameWidth));
     let rotY = -wallAngle;
 
     if (door.doorOperation === "swing") {
       rotY = -wallAngle - swingRad;
-      px += (panelW / 2) * Math.cos(wallAngle + swingRad);
-      py += (panelW / 2) * Math.sin(wallAngle + swingRad);
+      const angle = wallAngle + swingRad;
+      p = add(p, scale({ x: Math.cos(angle), y: Math.sin(angle) }, panelW / 2));
     } else if (door.doorOperation === "double-swing") {
       rotY = -wallAngle - swingRad;
-      px += (panelW / 2) * Math.cos(wallAngle + swingRad);
-      py += (panelW / 2) * Math.sin(wallAngle + swingRad);
+      const angle = wallAngle + swingRad;
+      p = add(p, scale({ x: Math.cos(angle), y: Math.sin(angle) }, panelW / 2));
     } else if (door.doorOperation === "pocket" || door.doorOperation === "slide") {
-      px += (panelW / 2 + panelW * 0.8) * cos;
-      py += (panelW / 2 + panelW * 0.8) * sin;
+      p = add(p, scale(dir, panelW / 2 + panelW * 0.8));
     } else {
-      px += (panelW / 2) * cos;
-      py += (panelW / 2) * sin;
+      p = add(p, scale(dir, panelW / 2));
     }
 
-    mesh.position.set(px - center.x, baseElevation + (panelH * exag) / 2, py - center.y);
+    mesh.position.set(p.x - center.x, baseElevation + (panelH * exag) / 2, p.y - center.y);
     mesh.rotation.y = rotY;
     mesh.castShadow = true;
     mesh.receiveShadow = true;
@@ -112,17 +120,15 @@ export function enterpriseDoor(
       disposables.push(knobGeo);
       const knob = new THREE.Mesh(knobGeo, metalMat);
       
-      let kx = pLeft.x + frameWidth * cos;
-      let ky = pLeft.y + frameWidth * sin;
+      let kp = add(pLeft, scale(dir, frameWidth));
       if (door.doorOperation === "swing") {
-        kx += (panelW * 0.85) * Math.cos(wallAngle + swingRad);
-        ky += (panelW * 0.85) * Math.sin(wallAngle + swingRad);
+        const angle = wallAngle + swingRad;
+        kp = add(kp, scale({ x: Math.cos(angle), y: Math.sin(angle) }, panelW * 0.85));
       } else {
-        kx += (panelW * 0.85) * cos;
-        ky += (panelW * 0.85) * sin;
+        kp = add(kp, scale(dir, panelW * 0.85));
       }
       
-      knob.position.set(kx - center.x, baseElevation + 0.95 * exag, ky - center.y);
+      knob.position.set(kp.x - center.x, baseElevation + 0.95 * exag, kp.y - center.y);
       dGroup.add(knob);
     }
   }
@@ -135,7 +141,8 @@ export function enterpriseDoor(
     disposables.push(geo);
 
     const m = new THREE.Mesh(geo, woodMat);
-    m.position.set((pLeft.x + pRight.x) / 2 - center.x, baseElevation + (sillThick * exag) / 2, (pLeft.y + pRight.y) / 2 - center.y);
+    const sillPos = scale(add(pLeft, pRight), 0.5);
+    m.position.set(sillPos.x - center.x, baseElevation + (sillThick * exag) / 2, sillPos.y - center.y);
     m.rotation.y = -wallAngle;
     m.receiveShadow = true;
     dGroup.add(m);
@@ -161,10 +168,9 @@ export function enterpriseWindow(
     pRight = win.boundary[1];
   }
 
-  const dx = pRight.x - pLeft.x;
-  const dy = pRight.y - pLeft.y;
-  const width = win.width || Math.hypot(dx, dy) || 1.2;
-  const wallAngle = Math.atan2(dy, dx);
+  const d = subtract(pRight, pLeft);
+  const width = win.width || distance(pRight, pLeft) || 1.2;
+  const wallAngle = Math.atan2(d.y, d.x);
 
   const frameWidth = 0.05;
   const thickness = win.depth || 0.15;
@@ -188,7 +194,8 @@ export function enterpriseWindow(
   disposables.push(frameGeo);
   
   const frameMesh = new THREE.Mesh(frameGeo, frameMat);
-  frameMesh.position.set((pLeft.x + pRight.x) / 2 - center.x, baseElevation + (height * exag) / 2, (pLeft.y + pRight.y) / 2 - center.y);
+  const mid = scale(add(pLeft, pRight), 0.5);
+  frameMesh.position.set(mid.x - center.x, baseElevation + (height * exag) / 2, mid.y - center.y);
   frameMesh.rotation.y = -wallAngle;
   frameMesh.castShadow = true;
   wGroup.add(frameMesh);
@@ -199,14 +206,14 @@ export function enterpriseWindow(
   disposables.push(glassGeo);
 
   const glassMesh = new THREE.Mesh(glassGeo, glassMat);
-  glassMesh.position.set((pLeft.x + pRight.x) / 2 - center.x, baseElevation + (height * exag) / 2, (pLeft.y + pRight.y) / 2 - center.y);
+  glassMesh.position.set(mid.x - center.x, baseElevation + (height * exag) / 2, mid.y - center.y);
   glassMesh.rotation.y = -wallAngle;
   wGroup.add(glassMesh);
 
   const sillGeo = new THREE.BoxGeometry(width + 0.08, sillThick * exag, thickness + 0.04);
   disposables.push(sillGeo);
   const sillMesh = new THREE.Mesh(sillGeo, frameMat);
-  sillMesh.position.set((pLeft.x + pRight.x) / 2 - center.x, baseElevation - (sillThick * exag) / 2, (pLeft.y + pRight.y) / 2 - center.y);
+  sillMesh.position.set(mid.x - center.x, baseElevation - (sillThick * exag) / 2, mid.y - center.y);
   sillMesh.rotation.y = -wallAngle;
   sillMesh.receiveShadow = true;
   wGroup.add(sillMesh);

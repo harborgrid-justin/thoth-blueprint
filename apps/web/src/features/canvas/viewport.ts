@@ -1,4 +1,4 @@
-import type { Bounds, Point } from "@thoth/domain";
+import { boundsCenter, type Bounds, type Point } from "@thoth/domain";
 
 /**
  * The canvas viewport: a pan/zoom transform mapping world (plan) coordinates to
@@ -51,8 +51,9 @@ export function fitBounds(
   const zoom = clampZoom(
     Math.min((width - padding * 2) / bw, (height - padding * 2) / bh),
   );
-  const cx = (bounds.minX + bounds.maxX) / 2;
-  const cy = (bounds.minY + bounds.maxY) / 2;
+  const center = boundsCenter(bounds);
+  const cx = center.x;
+  const cy = center.y;
   return {
     zoom,
     offsetX: width / 2 - cx * zoom,

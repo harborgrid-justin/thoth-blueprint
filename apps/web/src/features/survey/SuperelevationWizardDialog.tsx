@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "lodash";
 import { SlidersHorizontal, Settings2, Sparkles } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useUiStore } from "@/store/uiStore";
@@ -31,7 +32,7 @@ export function SuperelevationWizardDialog() {
     }
   }, [open, alignments]);
 
-  const alignment = alignments.find((a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
+  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
 
   const superCurve = React.useMemo(() => {
     if (!alignment) {return null;}
@@ -51,7 +52,7 @@ export function SuperelevationWizardDialog() {
     };
 
     // Update in workspace store list
-    const updatedAlignments = site?.alignments?.map((a) => a.id === alignment.id ? patch : a) ?? [];
+    const updatedAlignments = _.map(site?.alignments ?? [], (a) => a.id === alignment.id ? patch : a);
     useWorkspaceStore.getState().updateElement(alignment.id, { alignments: updatedAlignments } as any);
 
     // Save superelevation curve directly to store state for visual overlay
@@ -64,12 +65,12 @@ export function SuperelevationWizardDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-4xl bg-card border border-border/80 text-foreground shadow-2xl">
+      <DialogContent className="max-w-4xl">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-primary font-bold">
+          <DialogTitle className="flex items-center gap-2">
             <SlidersHorizontal className="h-5 w-5 text-primary" /> Superelevation Attainment Wizard
           </DialogTitle>
-          <DialogDescription className="text-muted-foreground">
+          <DialogDescription>
             Calculate AASHTO standard crown runoff transitions, lane tilt adjustments, and critical transition stations.
           </DialogDescription>
         </DialogHeader>
@@ -84,11 +85,11 @@ export function SuperelevationWizardDialog() {
             <div className="flex flex-col gap-1.5">
               <label className="text-[11px] text-muted-foreground font-medium">Reference Alignment</label>
               <select
-                className="bg-background border border-border/60 rounded px-2.5 py-1.5 text-xs focus:ring-1 focus:ring-primary"
+                className="rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 value={selectedAlignId ?? ""}
                 onChange={(e) => setSelectedAlignId(e.target.value)}
               >
-                {alignments.map((a) => (
+                {_.map(alignments, (a) => (
                   <option key={a.id} value={a.id}>{a.name}</option>
                 ))}
               </select>
@@ -107,7 +108,7 @@ export function SuperelevationWizardDialog() {
             <div className="flex flex-col gap-1.5">
               <label className="text-[11px] text-muted-foreground font-medium">Max Superelevation eMax</label>
               <select
-                className="bg-background border border-border/60 rounded px-2.5 py-1.5 text-xs focus:ring-1 focus:ring-primary"
+                className="rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                 value={eMax}
                 onChange={(e) => setEMax(Number(e.target.value))}
               >
@@ -151,7 +152,7 @@ export function SuperelevationWizardDialog() {
                       </tr>
                     </thead>
                     <tbody>
-                      {superCurve.transitionStations.map((st, i) => (
+                      {_.map(superCurve.transitionStations, (st, i) => (
                         <tr key={i} className="border-b border-border/30 hover:bg-muted/10">
                           <td className="py-1 font-mono text-primary">{(st.station).toFixed(2)}</td>
                           <td className="py-1">{(st.leftOuterSlope * 100).toFixed(1)}%</td>
@@ -175,8 +176,7 @@ export function SuperelevationWizardDialog() {
                     
                     {/* Left and Right Lane slope lines */}
                     <polyline
-                      points={superCurve.transitionStations
-                        .map((st, i) => {
+                      points={_.map(superCurve.transitionStations, (st, i) => {
                           const x = (i / (superCurve.transitionStations.length - 1)) * 500;
                           const y = 60 - st.leftOuterSlope * 400;
                           return `${x},${y}`;
@@ -187,8 +187,7 @@ export function SuperelevationWizardDialog() {
                       strokeWidth="2"
                     />
                     <polyline
-                      points={superCurve.transitionStations
-                        .map((st, i) => {
+                      points={_.map(superCurve.transitionStations, (st, i) => {
                           const x = (i / (superCurve.transitionStations.length - 1)) * 500;
                           const y = 60 - st.rightOuterSlope * 400;
                           return `${x},${y}`;

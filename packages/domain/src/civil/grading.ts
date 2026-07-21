@@ -1,8 +1,6 @@
-import { vec2 } from "gl-matrix";
+import { pointInPolygon, distance, length, add, scale, subtract, dot, type Point, type Polygon } from "../spatial/geometry";
 import type { ElevationGrid } from "./terrain";
 import { elevationAt } from "./terrain";
-import type { Point, Polygon } from "../spatial/geometry";
-import { pointInPolygon } from "../spatial/geometry";
 
 export interface GradingPad {
   id: string;
@@ -37,32 +35,22 @@ function isPointInPolygon(p: { x: number; y: number }, polygon: { x: number; y: 
 /**
  * Calculates distance from a point to the nearest segment of a polygon.
  */
-function getDistanceToPolygon(p: { x: number; y: number }, polygon: { x: number; y: number }[]): number {
+function getDistanceToPolygon(p: Point, polygon: Point[]): number {
   let minDist = Infinity;
-  const pVec = vec2.fromValues(p.x, p.y);
   for (let i = 0; i < polygon.length; i++) {
     const p1 = polygon[i];
     const p2 = polygon[(i + 1) % polygon.length];
     
-    const p1Vec = vec2.fromValues(p1.x, p1.y);
-    const p2Vec = vec2.fromValues(p2.x, p2.y);
-    
-    const ab = vec2.create();
-    vec2.sub(ab, p2Vec, p1Vec);
-    
-    const lenSq = vec2.sqrLen(ab);
+    const ab = subtract(p2, p1);
+    const lenSq = dot(ab, ab);
     if (lenSq < 1e-12) {continue;}
 
-    const ap = vec2.create();
-    vec2.sub(ap, pVec, p1Vec);
-
-    let t = vec2.dot(ap, ab) / lenSq;
+    const ap = subtract(p, p1);
+    let t = dot(ap, ab) / lenSq;
     t = Math.max(0, Math.min(1, t));
 
-    const proj = vec2.create();
-    vec2.scaleAndAdd(proj, p1Vec, ab, t);
-    
-    const dist = vec2.distance(pVec, proj);
+    const proj = add(p1, scale(ab, t));
+    const dist = distance(p, proj);
     if (dist < minDist) {minDist = dist;}
   }
   return minDist;
@@ -210,7 +198,7 @@ export function calculateDaylightLine(
   for (let i = 0; i < n; i++) {
     const curr = featureLine[i];
     
-    // Calculate 2D tangent vector using gl-matrix
+    // Calculate 2D tangent vector
     let tx: number;
     let ty: number;
     if (i === 0) {
@@ -220,21 +208,24 @@ export function calculateDaylightLine(
       tx = curr.x - featureLine[n - 2].x;
       ty = curr.y - featureLine[n - 2].y;
     } else {
-      const t1 = vec2.fromValues(curr.x - featureLine[i - 1].x, curr.y - featureLine[i - 1].y);
-      const t2 = vec2.fromValues(featureLine[i + 1].x - curr.x, featureLine[i + 1].y - curr.y);
-      const len1 = vec2.len(t1);
-      const len2 = vec2.len(t2);
-      tx = (len1 > 0 ? t1[0] / len1 : 0) + (len2 > 0 ? t2[0] / len2 : 0);
-      ty = (len1 > 0 ? t1[1] / len1 : 0) + (len2 > 0 ? t2[1] / len2 : 0);
+      const t1 = subtract(curr, featureLine[i - 1]);
+      const t2 = subtract(featureLine[i + 1], curr);
+      const len1 = length(t1);
+      const len2 = length(t2);
+      const n1 = len1 > 0 ? scale(t1, 1 / len1) : { x: 0, y: 0 };
+      const n2 = len2 > 0 ? scale(t2, 1 / len2) : { x: 0, y: 0 };
+      const sum = add(n1, n2);
+      tx = sum.x;
+      ty = sum.y;
     }
     
-    const tangent = vec2.fromValues(tx, ty);
-    const tangentLen = vec2.len(tangent);
+    const tangent = { x: tx, y: ty };
+    const tangentLen = length(tangent);
     if (tangentLen < 1e-4) {continue;}
     
     // Left normal vector
-    const nx = -tangent[1] / tangentLen;
-    const ny = tangent[0] / tangentLen;
+    const nx = -tangent.y / tangentLen;
+    const ny = tangent.x / tangentLen;
     
     const terrainAtStart = elevationAt(surface, curr);
     const isCut = curr.z < terrainAtStart;
@@ -341,12 +332,12 @@ export function calculateDrainageFlow(
       
       const gradX = (zR - zL) / (2 * dx);
       const gradY = (zB - zT) / (2 * dx);
-      const grad = vec2.fromValues(gradX, gradY);
-      const slope = vec2.len(grad);
+      const grad = { x: gradX, y: gradY };
+      const slope = length(grad);
       if (slope > 1e-4) {
         arrows.push({
           point: { x, y },
-          direction: { x: -grad[0] / slope, y: -grad[1] / slope },
+          direction: { x: -grad.x / slope, y: -grad.y / slope },
           slope
         });
       }

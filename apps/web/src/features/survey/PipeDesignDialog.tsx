@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "lodash";
 import { Activity, ShieldAlert, CheckCircle } from "lucide-react";
 import {
   validatePipeNetwork,
@@ -59,7 +60,7 @@ export function PipeDesignDialog() {
     }
   }, [open, networks, site, terrainSurface]);
 
-  const activeNet = networks.find((n) => n.id === selectedNetId) ?? networks[0] ?? null;
+  const activeNet = _.find(networks, (n) => n.id === selectedNetId) ?? networks[0] ?? null;
 
   // Run validation
   const validation = React.useMemo(() => {
@@ -98,7 +99,7 @@ export function PipeDesignDialog() {
                   Select Utility Line
                 </label>
                 <div className="mt-1.5 flex flex-col gap-1">
-                  {networks.map((n) => (
+                  {_.map(networks, (n) => (
                     <button
                       key={n.id}
                       type="button"
@@ -171,7 +172,7 @@ export function PipeDesignDialog() {
                       </tr>
                     </thead>
                     <tbody>
-                      {validation?.nodeElevations.map((row) => (
+                      {_.map(validation?.nodeElevations, (row) => (
                         <tr key={row.nodeId} className="border-b border-border/60">
                           <td className="p-2 font-mono font-medium">{row.name}</td>
                           <td className="p-2">{row.rimElevation.toFixed(2)}</td>
@@ -211,7 +212,7 @@ export function PipeDesignDialog() {
                     </div>
                   ) : (
                     <div className="flex flex-col gap-1.5">
-                      {validation?.violations.map((v, i) => (
+                      {_.map(validation?.violations, (v, i) => (
                         <div key={i} className="flex gap-2 rounded border border-yellow-500/20 bg-yellow-500/5 p-2 text-yellow-600 dark:text-yellow-400">
                           <ShieldAlert className="h-4 w-4 shrink-0" />
                           <div>

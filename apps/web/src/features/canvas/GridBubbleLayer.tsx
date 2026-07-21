@@ -2,7 +2,7 @@ import { gridBubbleGeometry, type Point, type Site } from "@thoth/domain";
 import { worldToScreen, type Viewport } from "./viewport";
 
 const GRID = "#64748b";
-const INK = "#0f172a";
+const INK = "hsl(var(--foreground))";
 const HALO = "hsl(var(--canvas))";
 
 /**

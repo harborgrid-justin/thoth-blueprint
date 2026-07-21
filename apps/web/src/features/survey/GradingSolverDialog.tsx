@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "lodash";
 import { Mountain, Flame, Compass, Calculator } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useUiStore } from "@/store/uiStore";
@@ -73,8 +74,7 @@ export function GradingSolverDialog() {
   }
 
   function handleSave() {
-    // Save pad target elevation back to workspace elements if found
-    const matchingPad = site?.elements.find((e) => e.kind === "parcel") ?? site?.elements[0];
+    const matchingPad = _.find(site?.elements, (e) => e.kind === "parcel") ?? site?.elements[0];
     if (matchingPad) {
       const patch = {
         ...matchingPad,
@@ -92,12 +92,12 @@ export function GradingSolverDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-4xl bg-card border border-border/80 text-foreground shadow-2xl">
+      <DialogContent className="max-w-4xl">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-primary font-bold">
+          <DialogTitle className="flex items-center gap-2">
             <Mountain className="h-5 w-5 text-primary" /> Earthworks Volume Balance Solver
           </DialogTitle>
-          <DialogDescription className="text-muted-foreground">
+          <DialogDescription>
             Analyze grading group criteria and solve for balanced elevations to achieve zero net-volume site footprints.
           </DialogDescription>
         </DialogHeader>
@@ -151,9 +151,10 @@ export function GradingSolverDialog() {
             </div>
 
             <Button
+              variant="secondary"
               onClick={runBalanceSolver}
               disabled={solving}
-              className="mt-2 text-xs bg-secondary text-secondary-foreground font-semibold hover:bg-secondary/90 flex items-center gap-1.5"
+              className="mt-2 text-xs font-semibold flex items-center gap-1.5"
             >
               <Calculator className="h-3.5 w-3.5" /> {solving ? "Solving..." : "Run Balance Solver"}
             </Button>

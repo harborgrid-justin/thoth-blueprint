@@ -1,5 +1,6 @@
 import { isSpatialElement, type PlanElement, type Point } from "@thoth/domain";
 import { screenToWorld, worldToScreen, type Viewport } from "./viewport";
+import { snapPointToGrid } from "@/lib/math";
 
 export interface SnapResult {
   point: Point;
@@ -9,7 +10,7 @@ export interface SnapResult {
 
 /** Round a world point to the nearest grid intersection. */
 export function snapToGrid(p: Point, step: number): Point {
-  return { x: Math.round(p.x / step) * step, y: Math.round(p.y / step) * step };
+  return snapPointToGrid(p, step);
 }
 
 /**

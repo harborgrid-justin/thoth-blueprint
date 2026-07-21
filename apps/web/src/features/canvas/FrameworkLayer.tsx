@@ -10,7 +10,7 @@ import {
 } from "@thoth/domain";
 import { worldToScreen, type Viewport } from "./viewport";
 
-const INK = "#475569";
+const INK = "hsl(var(--muted-foreground))";
 
 /**
  * Draws the controlling survey framework the plat is tied to — a PLSS section or

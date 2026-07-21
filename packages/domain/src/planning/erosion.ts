@@ -1,5 +1,6 @@
 import type { Site, Point, ComplianceFinding } from "../spatial/types.js";
 import type { ElevationGrid } from "../civil/terrain.js";
+import { distance, length } from "../spatial/geometry.js";
 
 export interface ErosionParticle {
   id: string;
@@ -116,7 +117,7 @@ export class ErosionSimulator {
 
           // Compute terrain normal gradient at current position
           const grad = this.getGradientAt(part.position, heights);
-          if (Math.hypot(grad.x, grad.y) < 1e-4) {
+          if (length(grad) < 1e-4) {
             part.isDead = true;
             break;
           }
@@ -163,7 +164,7 @@ export class ErosionSimulator {
           }
 
           // Perform erosion & deposition math (based on sediment capacity)
-          const speed = Math.hypot(part.velocity.x, part.velocity.y);
+          const speed = length(part.velocity);
           const capacity = Math.max(0.01, speed * part.waterVolume * 0.15);
 
           const cellIndex = this.getCellIndex(part.position);
@@ -252,9 +253,7 @@ export class ErosionSimulator {
       } else if ((el as any).type === "erosion-bale") {
         const pos = (el as any).position;
         if (pos) {
-          const dx = to.x - pos.x;
-          const dy = to.y - pos.y;
-          if (Math.hypot(dx, dy) < 1.5) {
+          if (distance(to, pos) < 1.5) {
             return { id: el.id };
           }
         }
@@ -496,9 +495,7 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
     net.nodes.forEach((node) => {
       const hasProtection = civilSymbols.some((sym) => {
         if (sym.type !== "inlet-protection") {return false;}
-        const dx = sym.position.x - node.point.x;
-        const dy = sym.position.y - node.point.y;
-        return Math.hypot(dx, dy) < 5.0; // within 5m
+        return distance(sym.position, node.point) < 5.0; // within 5m
       });
 
       if (!hasProtection) {
@@ -520,9 +517,7 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
       if (connectedEdges.length === 1) {
         const hasRiprap = civilSymbols.some((sym) => {
           if (sym.type !== "riprap") {return false;}
-          const dx = sym.position.x - node.point.x;
-          const dy = sym.position.y - node.point.y;
-          return Math.hypot(dx, dy) < 5.0;
+          return distance(sym.position, node.point) < 5.0;
         });
 
         if (!hasRiprap) {
@@ -557,7 +552,7 @@ export function auditErosionCompliance(site: Site): ComplianceFinding[] {
       const fromNode = net.nodes.find((n) => n.id === edge.from);
       const toNode = net.nodes.find((n) => n.id === edge.to);
       if (fromNode && toNode) {
-        totalLength += Math.hypot(toNode.point.x - fromNode.point.x, toNode.point.y - fromNode.point.y);
+        totalLength += distance(toNode.point, fromNode.point);
       }
     });
 

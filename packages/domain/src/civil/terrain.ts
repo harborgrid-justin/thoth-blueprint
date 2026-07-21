@@ -11,8 +11,7 @@
  * horizontal coordinates, so slope is a true rise-over-run.
  */
 
-import { vec2 } from "gl-matrix";
-import { bounds, pointInPolygon, type Bounds, type Point, type Polygon, type Polyline } from "../spatial/geometry";
+import { bounds, pointInPolygon, distance, length, type Bounds, type Point, type Polygon, type Polyline } from "../spatial/geometry";
 import type { SpatialContext } from "../spatial/spatial";
 
 /** A surveyed elevation at a point (a spot grade / benchmark). */
@@ -284,10 +283,10 @@ export interface SlopeSample {
 export function slopeAtNode(grid: ElevationGrid, c: number, r: number): SlopeSample {
   const dzdx = (nodeHeight(grid, c + 1, r) - nodeHeight(grid, c - 1, r)) / (2 * grid.cellSize);
   const dzdy = (nodeHeight(grid, c, r + 1) - nodeHeight(grid, c, r - 1)) / (2 * grid.cellSize);
-  const grad = vec2.fromValues(dzdx, dzdy);
-  const slope = vec2.len(grad);
+  const grad = { x: dzdx, y: dzdy };
+  const slope = length(grad);
   const aspect =
-    slope < 1e-9 ? null : (Math.atan2(grad[0], grad[1]) * (180 / Math.PI) + 360) % 360;
+    slope < 1e-9 ? null : (Math.atan2(grad.x, grad.y) * (180 / Math.PI) + 360) % 360;
   return { slope, percent: slope * 100, degrees: Math.atan(slope) * (180 / Math.PI), aspect };
 }
 
@@ -470,18 +469,18 @@ export function traceWaterDropPath(
     const dzdx = (nodeHeight(grid, c + 1, r) - nodeHeight(grid, c - 1, r)) / (2 * grid.cellSize);
     const dzdy = (nodeHeight(grid, c, r + 1) - nodeHeight(grid, c, r - 1)) / (2 * grid.cellSize);
 
-    const grad = vec2.fromValues(dzdx, dzdy);
-    const length = vec2.len(grad);
-    if (length < 0.005) {
+    const grad = { x: dzdx, y: dzdy };
+    const lenVal = length(grad);
+    if (lenVal < 0.005) {
       break;
     }
 
     const next = {
-      x: curr.x - (grad[0] / length) * stepSize,
-      y: curr.y - (grad[1] / length) * stepSize
+      x: curr.x - (grad.x / lenVal) * stepSize,
+      y: curr.y - (grad.y / lenVal) * stepSize
     };
 
-    if (vec2.distance(vec2.fromValues(next.x, next.y), vec2.fromValues(curr.x, curr.y)) < 1e-3) {
+    if (distance(next, curr) < 1e-3) {
       break;
     }
 

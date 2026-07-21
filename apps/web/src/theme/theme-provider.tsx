@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useLocalStorage } from "@/lib/hooks";
 
 type Theme = "light" | "dark";
 
@@ -12,20 +13,15 @@ const ThemeContext = React.createContext<ThemeContextValue | null>(null);
 
 const STORAGE_KEY = "thoth.theme";
 
-function initialTheme(): Theme {
-  if (typeof window === "undefined") {return "dark";}
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === "light" || stored === "dark") {return stored;}
-  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-}
-
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = React.useState<Theme>(initialTheme);
+  const [theme, setThemeState] = useLocalStorage<Theme>(
+    STORAGE_KEY,
+    typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
+  );
 
   React.useEffect(() => {
     const root = document.documentElement;
     root.classList.toggle("dark", theme === "dark");
-    window.localStorage.setItem(STORAGE_KEY, theme);
   }, [theme]);
 
   const value = React.useMemo<ThemeContextValue>(

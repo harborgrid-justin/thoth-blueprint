@@ -1,4 +1,5 @@
 import type { CurtainWall, CurtainWallGrid, Point } from "../spatial/types.js";
+import { distance } from "../spatial/geometry.js";
 
 export interface CurtainWallPanel {
   key: string;
@@ -58,7 +59,7 @@ export function calculateCurtainWallGeometry(wall: CurtainWall): CurtainWallGeom
 
   const dx = endPt.x - startPt.x;
   const dy = endPt.y - startPt.y;
-  const planLen = Math.hypot(dx, dy) || 1.0;
+  const planLen = distance(endPt, startPt) || 1.0;
   const cos = dx / planLen;
   const sin = dy / planLen;
 

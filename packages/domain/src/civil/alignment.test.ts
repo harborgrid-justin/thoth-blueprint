@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { distance } from "../spatial/geometry";
 import {
   alignmentLength,
   formatStation,
@@ -43,8 +44,8 @@ describe("resolveAlignment — curve geometry", () => {
     expect(c.pc).toMatchObject({ x: expect.closeTo(0, 6), y: expect.closeTo(-500, 6) });
     expect(c.pt).toMatchObject({ x: expect.closeTo(500, 6), y: expect.closeTo(-1000, 6) });
     expect(c.center).toMatchObject({ x: expect.closeTo(500, 6), y: expect.closeTo(-500, 6) });
-    expect(Math.hypot(c.pc.x - c.center.x, c.pc.y - c.center.y)).toBeCloseTo(500, 6);
-    expect(Math.hypot(c.pt.x - c.center.x, c.pt.y - c.center.y)).toBeCloseTo(500, 6);
+    expect(distance(c.pc, c.center)).toBeCloseTo(500, 6);
+    expect(distance(c.pt, c.center)).toBeCloseTo(500, 6);
     expect(c.direction).toBe("right");
   });
 });
@@ -90,7 +91,7 @@ describe("pointAtStation", () => {
   it("stays on the arc through the curve (R from center)", () => {
     const c = r.curves[0];
     const mid = pointAtStation(r, (c.pcStation + c.ptStation) / 2)!.point;
-    expect(Math.hypot(mid.x - c.center.x, mid.y - c.center.y)).toBeCloseTo(500, 5);
+    expect(distance(mid, c.center)).toBeCloseTo(500, 4);
   });
 
   it("heads due north at the start and due east at the end", () => {

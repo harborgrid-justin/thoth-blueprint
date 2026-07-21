@@ -1,5 +1,6 @@
 import * as THREE from "three";
-import { type Point, type RoofElement, calculateRoofGeometry } from "@thoth/domain";
+import _ from "lodash";
+import { type Point, type RoofElement, calculateRoofGeometry, bounds, boundsCenter } from "@thoth/domain";
 
 export function enterpriseRoof(
   roof: RoofElement,
@@ -47,16 +48,14 @@ export function enterpriseRoof(
   const vertices: number[] = [];
   const indices: number[] = [];
 
-  // Find bounding box
-  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-  boundary.forEach((pt) => {
-    if (pt.x < minX) {minX = pt.x;}
-    if (pt.x > maxX) {maxX = pt.x;}
-    if (pt.y < minY) {minY = pt.y;}
-    if (pt.y > maxY) {maxY = pt.y;}
-  });
+  // Find bounding box using our domain geometry library
+  const box = bounds(boundary);
+  const minX = box.minX;
+  const maxX = box.maxX;
+  const minY = box.minY;
+  const maxY = box.maxY;
   const width = maxX - minX;
-  const midX = (minX + maxX) / 2;
+  const midX = boundsCenter(box).x;
 
   const pitchVal = roof.pitch || 4;
   const height = (width / 2) * (pitchVal / 12) * exag;
@@ -87,7 +86,7 @@ export function enterpriseRoof(
   };
 
   // Add boundary points as vertices
-  boundary.forEach((p) => {
+  _.forEach(boundary, (p) => {
     const rx = p.x - center.x;
     const rz = p.y - center.y;
     const ry = getElevation(p, false);
@@ -95,7 +94,7 @@ export function enterpriseRoof(
   });
 
   // Add ridge projection points as vertices
-  boundary.forEach((p) => {
+  _.forEach(boundary, (p) => {
     const ridgePt = projectToRidge(p);
     const rx = ridgePt.x - center.x;
     const rz = ridgePt.y - center.y;
@@ -130,7 +129,7 @@ export function enterpriseRoof(
   const rafterMat = new THREE.MeshStandardMaterial({ color: 0x854d0e, roughness: 0.9 }); // wood brown
   disposables.push(rafterMat);
 
-  geom.rafterLines.forEach((line) => {
+  _.forEach(geom.rafterLines, (line) => {
     if (line.length < 2) {return;}
     const p1 = line[0];
     const p2 = line[1];
@@ -163,7 +162,7 @@ export function enterpriseRoof(
     const gutterMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.8, roughness: 0.2 });
     disposables.push(gutterMat);
 
-    geom.gutterPaths.forEach((line) => {
+    _.forEach(geom.gutterPaths, (line) => {
       if (line.length < 2) {return;}
       const p1 = line[0];
       const p2 = line[1];
@@ -190,7 +189,7 @@ export function enterpriseRoof(
     });
 
     // 5. Draw Downspouts (REQ-UNIMP-058)
-    geom.downspoutAnchors.forEach((pt) => {
+    _.forEach(geom.downspoutAnchors, (pt) => {
       const rx = pt.x - center.x;
       const rz = pt.y - center.y;
       const h = baseElevation;

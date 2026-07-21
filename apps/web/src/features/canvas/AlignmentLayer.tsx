@@ -1,4 +1,7 @@
 import {
+  add,
+  scale,
+  subtract,
   formatStation,
   fullStations,
   offsetAlignmentPath,
@@ -95,14 +98,16 @@ export function AlignmentLayer({ site, viewport }: { site: Site; viewport: Viewp
               const s = worldToScreen(at.point, viewport);
               const d = dirFor(at.bearing);
               const perp = { x: -d.y, y: d.x };
+              const start = subtract(s, scale(perp, tickHalf));
+              const end = add(s, scale(perp, tickHalf));
               const showLabel = viewport.zoom > 1.2 || i % 2 === 0;
               return (
                 <g key={st}>
                   <line
-                    x1={s.x - perp.x * tickHalf}
-                    y1={s.y - perp.y * tickHalf}
-                    x2={s.x + perp.x * tickHalf}
-                    y2={s.y + perp.y * tickHalf}
+                    x1={start.x}
+                    y1={start.y}
+                    x2={end.x}
+                    y2={end.y}
                     stroke={CENTERLINE}
                     strokeWidth={1}
                   />

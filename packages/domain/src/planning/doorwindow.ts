@@ -1,4 +1,5 @@
 import type { DoorElement, WindowElement, Point } from "../spatial/types.js";
+import { distance } from "../spatial/geometry.js";
 
 export interface DoorGeometryResults {
   swingPath: Point[];
@@ -34,7 +35,7 @@ export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
       y: (door.boundary[1].y + door.boundary[2].y) / 2,
     };
     // compute depth thickness from actual polygon
-    wallThickness = Math.hypot(door.boundary[3].x - door.boundary[0].x, door.boundary[3].y - door.boundary[0].y) || wallThickness;
+    wallThickness = distance(door.boundary[3], door.boundary[0]) || wallThickness;
   } else if (door.boundary && door.boundary.length >= 2) {
     pLeft = door.boundary[0];
     pRight = door.boundary[1];
@@ -42,7 +43,7 @@ export function calculateDoorGeometry(door: DoorElement): DoorGeometryResults {
 
   const dx = pRight.x - pLeft.x;
   const dy = pRight.y - pLeft.y;
-  const width = door.width || Math.hypot(dx, dy) || 0.9;
+  const width = door.width || distance(pRight, pLeft) || 0.9;
   const cos = dx / (width || 1);
   const sin = dy / (width || 1);
   const normalX = -sin;
@@ -168,7 +169,7 @@ export function calculateWindowGeometry(win: WindowElement): WindowGeometryResul
       x: (win.boundary[1].x + win.boundary[2].x) / 2,
       y: (win.boundary[1].y + win.boundary[2].y) / 2,
     };
-    wallThickness = Math.hypot(win.boundary[3].x - win.boundary[0].x, win.boundary[3].y - win.boundary[0].y) || wallThickness;
+    wallThickness = distance(win.boundary[3], win.boundary[0]) || wallThickness;
   } else if (win.boundary && win.boundary.length >= 2) {
     pLeft = win.boundary[0];
     pRight = win.boundary[1];
@@ -176,7 +177,7 @@ export function calculateWindowGeometry(win: WindowElement): WindowGeometryResul
 
   const dx = pRight.x - pLeft.x;
   const dy = pRight.y - pLeft.y;
-  const width = win.width || Math.hypot(dx, dy) || 1.2;
+  const width = win.width || distance(pRight, pLeft) || 1.2;
   const cos = dx / (width || 1);
   const sin = dy / (width || 1);
   const normalX = -sin;

@@ -225,7 +225,7 @@ export function QtoPanel() {
             <span className="font-semibold text-[10px] uppercase text-muted-foreground">Assign Item to Selection</span>
             {selection.length > 0 ? (
               <div className="flex gap-1.5 items-center">
-                <select className="flex-1 bg-background border border-border rounded p-1 outline-none text-xs">
+                <select className="flex-1 rounded border border-border bg-background px-2.5 py-1 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
                   {payItems.map((item) => (
                     <option key={item.id} value={item.id}>
                       {item.id} - {item.name}

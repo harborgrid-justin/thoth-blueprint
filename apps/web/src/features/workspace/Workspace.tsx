@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { Layers, Mountain, Ruler, SlidersHorizontal, HardHat, Waves } from "lucide-react";
+import { Layers, Mountain, Ruler, SlidersHorizontal, HardHat, Waves, Loader2 } from "lucide-react";
 import { api, type Project } from "@/api";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useCanvasStore } from "@/store/canvasStore";
@@ -10,7 +10,6 @@ import { useFindStore } from "@/store/findStore";
 import { usePrefsStore } from "@/store/prefsStore";
 import { TOOLS, type ToolId } from "@/lib/tools";
 import { PlanningCanvas } from "@/features/canvas/PlanningCanvas";
-import { Scene3D } from "@/features/canvas3d/Scene3D";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,26 +17,32 @@ import { TopBar } from "./TopBar";
 import { Toolbar } from "./Toolbar";
 import { LayerPanel } from "./LayerPanel";
 import { PropertiesPanel } from "./PropertiesPanel";
-import { MetricsPanel } from "./MetricsPanel";
-import { CheckpointsDialog } from "./CheckpointsDialog";
-import { PlatReportDialog } from "@/features/survey/PlatReportDialog";
-import { AlignmentReportDialog } from "@/features/survey/AlignmentReportDialog";
-import { PlatSheetDialog } from "@/features/survey/PlatSheetDialog";
-import { SheetSetDialog } from "@/features/sheets/SheetSetDialog";
-import { TerrainPanel } from "@/features/terrain/TerrainPanel";
-import { CommandPalette } from "@/features/command/CommandPalette";
-import { ShortcutsDialog } from "@/features/command/ShortcutsDialog";
-import { PreferencesDialog } from "@/features/preferences/PreferencesDialog";
 import { FindPanel } from "@/features/find/FindPanel";
-import { QtoPanel } from "./QtoPanel";
-import { ErosionSimulatorPanel } from "./ErosionSimulator";
-import { ProfileSectionDialog } from "@/features/survey/ProfileSectionDialog";
-import { PipeDesignDialog } from "@/features/survey/PipeDesignDialog";
-import { PlanProductionWizard } from "@/features/survey/PlanProductionWizard";
-import { SuperelevationWizardDialog } from "@/features/survey/SuperelevationWizardDialog";
-import { CorridorDesignerDialog } from "@/features/survey/CorridorDesignerDialog";
-import { GradingSolverDialog } from "@/features/survey/GradingSolverDialog";
 import type { CommandActions } from "@/features/command/commands";
+import { useKeyboardShortcut } from "@/lib/hooks";
+
+// Lazy-loaded dialogs & panels to optimize bundle sizes and speed up initialization
+const Scene3D = React.lazy(() => import("@/features/canvas3d/Scene3D").then((m) => ({ default: m.Scene3D })));
+const TerrainPanel = React.lazy(() => import("@/features/terrain/TerrainPanel").then((m) => ({ default: m.TerrainPanel })));
+const MetricsPanel = React.lazy(() => import("./MetricsPanel").then((m) => ({ default: m.MetricsPanel })));
+const QtoPanel = React.lazy(() => import("./QtoPanel").then((m) => ({ default: m.QtoPanel })));
+const ErosionSimulatorPanel = React.lazy(() => import("./ErosionSimulator").then((m) => ({ default: m.ErosionSimulatorPanel })));
+
+const CheckpointsDialog = React.lazy(() => import("./CheckpointsDialog").then((m) => ({ default: m.CheckpointsDialog })));
+const PlatReportDialog = React.lazy(() => import("@/features/survey/PlatReportDialog").then((m) => ({ default: m.PlatReportDialog })));
+const AlignmentReportDialog = React.lazy(() => import("@/features/survey/AlignmentReportDialog").then((m) => ({ default: m.AlignmentReportDialog })));
+const ProfileSectionDialog = React.lazy(() => import("@/features/survey/ProfileSectionDialog").then((m) => ({ default: m.ProfileSectionDialog })));
+const PipeDesignDialog = React.lazy(() => import("@/features/survey/PipeDesignDialog").then((m) => ({ default: m.PipeDesignDialog })));
+const PlanProductionWizard = React.lazy(() => import("@/features/survey/PlanProductionWizard").then((m) => ({ default: m.PlanProductionWizard })));
+const SuperelevationWizardDialog = React.lazy(() => import("@/features/survey/SuperelevationWizardDialog").then((m) => ({ default: m.SuperelevationWizardDialog })));
+const CorridorDesignerDialog = React.lazy(() => import("@/features/survey/CorridorDesignerDialog").then((m) => ({ default: m.CorridorDesignerDialog })));
+const GradingSolverDialog = React.lazy(() => import("@/features/survey/GradingSolverDialog").then((m) => ({ default: m.GradingSolverDialog })));
+const PlatSheetDialog = React.lazy(() => import("@/features/survey/PlatSheetDialog").then((m) => ({ default: m.PlatSheetDialog })));
+const SheetSetDialog = React.lazy(() => import("@/features/sheets/SheetSetDialog").then((m) => ({ default: m.SheetSetDialog })));
+const CommandPalette = React.lazy(() => import("@/features/command/CommandPalette").then((m) => ({ default: m.CommandPalette })));
+const ShortcutsDialog = React.lazy(() => import("@/features/command/ShortcutsDialog").then((m) => ({ default: m.ShortcutsDialog })));
+const PreferencesDialog = React.lazy(() => import("@/features/preferences/PreferencesDialog").then((m) => ({ default: m.PreferencesDialog })));
+
 
 /** Tool single-letter shortcuts (e.g. "v" → select), for keyboard-first drawing. */
 const TOOL_BY_KEY = new Map<string, ToolId>(TOOLS.map((t) => [t.shortcut.toLowerCase(), t.id]));
@@ -60,16 +65,54 @@ export function Workspace() {
   const [checkpointsOpen, setCheckpointsOpen] = React.useState(false);
   const [tab, setTab] = React.useState("inspect");
 
+  // Dialog visibility states for lazy loading / conditional mounting
+  const platOpen = useUiStore((s) => s.platOpen);
+  const alignmentOpen = useUiStore((s) => s.alignmentOpen);
+  const profileOpen = useUiStore((s) => s.profileOpen);
+  const pipeOpen = useUiStore((s) => s.pipeOpen);
+  const productionOpen = useUiStore((s) => s.productionOpen);
+  const superelevationOpen = useUiStore((s) => s.superelevationOpen);
+  const corridorOpen = useUiStore((s) => s.corridorOpen);
+  const gradingOpen = useUiStore((s) => s.gradingOpen);
+  const sheetOpen = useUiStore((s) => s.sheetOpen);
+  const sheetSetOpen = useUiStore((s) => s.sheetSetOpen);
+  const commandOpen = useUiStore((s) => s.commandOpen);
+  const shortcutsOpen = useUiStore((s) => s.shortcutsOpen);
+  const prefsOpen = useUiStore((s) => s.prefsOpen);
+
+
+  const [sidebarWidth, setSidebarWidth] = React.useState(320);
+  const isResizingRef = React.useRef(false);
+
+  const onSidebarPointerDown = React.useCallback((e: React.PointerEvent) => {
+    isResizingRef.current = true;
+    e.currentTarget.setPointerCapture(e.pointerId);
+  }, []);
+
+  const onSidebarPointerMove = React.useCallback((e: React.PointerEvent) => {
+    if (!isResizingRef.current) { return; }
+    const container = e.currentTarget.parentElement;
+    if (!container) { return; }
+    const containerRect = container.getBoundingClientRect();
+    const newWidth = containerRect.right - e.clientX;
+    setSidebarWidth(Math.max(200, Math.min(600, newWidth)));
+  }, []);
+
+  const onSidebarPointerUp = React.useCallback((e: React.PointerEvent) => {
+    isResizingRef.current = false;
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  }, []);
+
   // Load the project into the workspace store.
   React.useEffect(() => {
-    if (!projectId) {return;}
+    if (!projectId) { return; }
     let cancelled = false;
     setLoading(true);
     setError(null);
     api
       .getProject(projectId)
       .then((p) => {
-        if (cancelled) {return;}
+        if (cancelled) { return; }
         setProject(p);
         loadProject(p);
       })
@@ -84,7 +127,7 @@ export function Workspace() {
 
   const save = React.useCallback(async () => {
     const current = useWorkspaceStore.getState();
-    if (!projectId || !current.site || !current.dirty) {return;}
+    if (!projectId || !current.site || !current.dirty) { return; }
     setSaving(true);
     try {
       const updated = await api.saveSite(projectId, current.site);
@@ -97,7 +140,7 @@ export function Workspace() {
 
   // Debounced autosave whenever the site becomes dirty.
   React.useEffect(() => {
-    if (!dirty) {return;}
+    if (!dirty) { return; }
     const handle = window.setTimeout(() => void save(), AUTOSAVE_MS);
     return () => window.clearTimeout(handle);
   }, [dirty, site, save]);
@@ -105,100 +148,61 @@ export function Workspace() {
   // Focus the inspector when the selection changes to something.
   const prevSelLen = React.useRef(0);
   React.useEffect(() => {
-    if (selection.length > 0 && prevSelLen.current === 0) {setTab("inspect");}
+    if (selection.length > 0 && prevSelLen.current === 0) { setTab("inspect"); }
     prevSelLen.current = selection.length;
   }, [selection]);
 
-  // Unified keyboard shortcuts: command palette, editing, navigation, and
-  // single-letter tool selection (FE-CMD-001/002/003, FE-EDIT-001/002).
+  // --- keyboard shortcuts --------------------------------------------------
+  useKeyboardShortcut("mod+k", () => useUiStore.getState().toggleCommand());
+  useKeyboardShortcut("mod+z", (e) => {
+    const ws = useWorkspaceStore.getState();
+    if (e.shiftKey) {
+      ws.redo();
+    } else {
+      ws.undo();
+    }
+  });
+  useKeyboardShortcut("mod+s", () => void save());
+  useKeyboardShortcut("mod+c", () => useWorkspaceStore.getState().copySelection());
+  useKeyboardShortcut("mod+x", () => useWorkspaceStore.getState().cutSelection());
+  useKeyboardShortcut("mod+v", () => useWorkspaceStore.getState().paste());
+  useKeyboardShortcut("mod+d", () => useWorkspaceStore.getState().duplicateSelection());
+  useKeyboardShortcut("mod+a", () => useWorkspaceStore.getState().selectAll());
+  useKeyboardShortcut("mod+f", () => useFindStore.getState().openFind());
+  useKeyboardShortcut("delete", () => {
+    const ws = useWorkspaceStore.getState();
+    if (ws.selection.length > 0) {
+      ws.deleteSelection();
+    }
+  });
+  useKeyboardShortcut("backspace", () => {
+    const ws = useWorkspaceStore.getState();
+    if (ws.selection.length > 0) {
+      ws.deleteSelection();
+    }
+  });
+  useKeyboardShortcut("?", () => useUiStore.getState().setShortcutsOpen(true));
+  useKeyboardShortcut("1", () => useCanvasStore.getState().requestFit());
+  useKeyboardShortcut("2", () => useCanvasStore.getState().requestFitSelection());
+
+  // Unified single-letter tool selection shortcuts (FE-CMD-001)
   React.useEffect(() => {
-    function onKey(e: KeyboardEvent) {
+    function onToolKey(e: KeyboardEvent) {
       const target = e.target as HTMLElement;
       const typing =
         target.tagName === "INPUT" ||
         target.tagName === "TEXTAREA" ||
         target.isContentEditable;
-      const mod = e.metaKey || e.ctrlKey;
-      const ws = useWorkspaceStore.getState();
-
-      // The command palette toggles even while typing in a field.
-      if (mod && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        useUiStore.getState().toggleCommand();
-        return;
-      }
-      if (typing) {return;}
-
-      if (mod) {
-        switch (e.key.toLowerCase()) {
-          case "z":
-            e.preventDefault();
-            if (e.shiftKey) {
-              ws.redo();
-            } else {
-              ws.undo();
-            }
-            return;
-          case "s":
-            e.preventDefault();
-            void save();
-            return;
-          case "c":
-            e.preventDefault();
-            ws.copySelection();
-            return;
-          case "x":
-            e.preventDefault();
-            ws.cutSelection();
-            return;
-          case "v":
-            e.preventDefault();
-            ws.paste();
-            return;
-          case "d":
-            e.preventDefault();
-            ws.duplicateSelection();
-            return;
-          case "a":
-            e.preventDefault();
-            ws.selectAll();
-            return;
-          case "f":
-            e.preventDefault();
-            useFindStore.getState().openFind();
-            return;
-        }
-        return;
-      }
-
-      if (e.key === "Delete" || e.key === "Backspace") {
-        if (ws.selection.length > 0) {
-          e.preventDefault();
-          ws.deleteSelection();
-        }
-        return;
-      }
-      if (e.key === "?") {
-        useUiStore.getState().setShortcutsOpen(true);
-        return;
-      }
-      if (e.key === "1") {
-        useCanvasStore.getState().requestFit();
-        return;
-      }
-      if (e.key === "2") {
-        useCanvasStore.getState().requestFitSelection();
-        return;
-      }
+      if (typing || e.metaKey || e.ctrlKey || e.altKey) { return; }
       const toolId = TOOL_BY_KEY.get(e.key.toLowerCase());
       if (toolId) {
         e.preventDefault();
-        ws.setTool(toolId);
+        useWorkspaceStore.getState().setTool(toolId);
       }
     }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [save]);
+    window.addEventListener("keydown", onToolKey);
+    return () => window.removeEventListener("keydown", onToolKey);
+  }, []);
 
   // Warn before leaving with unsynced edits (FE-STATE-006).
   React.useEffect(() => {
@@ -250,7 +254,19 @@ export function Workspace() {
             <CanvasArea />
             <FindPanel />
           </main>
-          <aside className="flex w-[320px] shrink-0 flex-col border-l border-border bg-card">
+
+          {/* Resize handle */}
+          <div
+            className="w-1 hover:w-1.5 active:w-1.5 shrink-0 bg-border hover:bg-primary active:bg-primary cursor-col-resize select-none transition-all duration-150"
+            onPointerDown={onSidebarPointerDown}
+            onPointerMove={onSidebarPointerMove}
+            onPointerUp={onSidebarPointerUp}
+          />
+
+          <aside
+            style={{ width: sidebarWidth }}
+            className="flex shrink-0 flex-col bg-card"
+          >
             <Tabs value={tab} onValueChange={setTab} className="flex min-h-0 flex-1 flex-col">
               <TabsList className="m-2 grid grid-cols-6">
                 <TabsTrigger value="inspect" title="Inspect">
@@ -280,35 +296,107 @@ export function Workspace() {
                   <LayerPanel />
                 </TabsContent>
                 <TabsContent value="terrain" className="mt-0">
-                  <TerrainPanel />
+                  {tab === "terrain" && (
+                    <React.Suspense fallback={<TabLoading label="terrain" />}>
+                      <TerrainPanel />
+                    </React.Suspense>
+                  )}
                 </TabsContent>
                 <TabsContent value="metrics" className="mt-0">
-                  <MetricsPanel />
+                  {tab === "metrics" && (
+                    <React.Suspense fallback={<TabLoading label="metrics" />}>
+                      <MetricsPanel />
+                    </React.Suspense>
+                  )}
                 </TabsContent>
                 <TabsContent value="qto" className="mt-0">
-                  <QtoPanel />
+                  {tab === "qto" && (
+                    <React.Suspense fallback={<TabLoading label="quantities" />}>
+                      <QtoPanel />
+                    </React.Suspense>
+                  )}
                 </TabsContent>
                 <TabsContent value="erosion" className="mt-0">
-                  <ErosionSimulatorPanel />
+                  {tab === "erosion" && (
+                    <React.Suspense fallback={<TabLoading label="erosion simulation" />}>
+                      <ErosionSimulatorPanel />
+                    </React.Suspense>
+                  )}
                 </TabsContent>
               </ScrollArea>
             </Tabs>
           </aside>
         </div>
-        <CheckpointsDialog open={checkpointsOpen} onOpenChange={setCheckpointsOpen} />
-        <PlatReportDialog />
-        <AlignmentReportDialog />
-        <ProfileSectionDialog />
-        <PipeDesignDialog />
-        <PlanProductionWizard />
-        <SuperelevationWizardDialog />
-        <CorridorDesignerDialog />
-        <GradingSolverDialog />
-        <PlatSheetDialog />
-        <SheetSetDialog />
-        <CommandPalette actions={commandActions} />
-        <ShortcutsDialog />
-        <PreferencesDialog />
+        {checkpointsOpen && (
+          <React.Suspense fallback={null}>
+            <CheckpointsDialog open={checkpointsOpen} onOpenChange={setCheckpointsOpen} />
+          </React.Suspense>
+        )}
+        {platOpen && (
+          <React.Suspense fallback={null}>
+            <PlatReportDialog />
+          </React.Suspense>
+        )}
+        {alignmentOpen && (
+          <React.Suspense fallback={null}>
+            <AlignmentReportDialog />
+          </React.Suspense>
+        )}
+        {profileOpen && (
+          <React.Suspense fallback={null}>
+            <ProfileSectionDialog />
+          </React.Suspense>
+        )}
+        {pipeOpen && (
+          <React.Suspense fallback={null}>
+            <PipeDesignDialog />
+          </React.Suspense>
+        )}
+        {productionOpen && (
+          <React.Suspense fallback={null}>
+            <PlanProductionWizard />
+          </React.Suspense>
+        )}
+        {superelevationOpen && (
+          <React.Suspense fallback={null}>
+            <SuperelevationWizardDialog />
+          </React.Suspense>
+        )}
+        {corridorOpen && (
+          <React.Suspense fallback={null}>
+            <CorridorDesignerDialog />
+          </React.Suspense>
+        )}
+        {gradingOpen && (
+          <React.Suspense fallback={null}>
+            <GradingSolverDialog />
+          </React.Suspense>
+        )}
+        {sheetOpen && (
+          <React.Suspense fallback={null}>
+            <PlatSheetDialog />
+          </React.Suspense>
+        )}
+        {sheetSetOpen && (
+          <React.Suspense fallback={null}>
+            <SheetSetDialog />
+          </React.Suspense>
+        )}
+        {commandOpen && (
+          <React.Suspense fallback={null}>
+            <CommandPalette actions={commandActions} />
+          </React.Suspense>
+        )}
+        {shortcutsOpen && (
+          <React.Suspense fallback={null}>
+            <ShortcutsDialog />
+          </React.Suspense>
+        )}
+        {prefsOpen && (
+          <React.Suspense fallback={null}>
+            <PreferencesDialog />
+          </React.Suspense>
+        )}
       </div>
     </TooltipProvider>
   );
@@ -316,7 +404,29 @@ export function Workspace() {
 
 function CanvasArea() {
   const viewMode = useCanvasStore((s) => s.viewMode);
-  return viewMode === "3d" ? <Scene3D /> : <PlanningCanvas />;
+  return (
+    <React.Suspense
+      fallback={
+        <div className="flex h-full items-center justify-center bg-background text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+            Initializing 3D viewport...
+          </div>
+        </div>
+      }
+    >
+      {viewMode === "3d" ? <Scene3D /> : <PlanningCanvas />}
+    </React.Suspense>
+  );
+}
+
+function TabLoading({ label }: { label: string }) {
+  return (
+    <div className="flex h-32 flex-col items-center justify-center gap-2 text-xs text-muted-foreground">
+      <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+      Loading {label}...
+    </div>
+  );
 }
 
 function CenterMessage({ children }: { children: React.ReactNode }) {

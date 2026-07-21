@@ -1,5 +1,11 @@
 import * as React from "react";
 import {
+  add,
+  subtract,
+  scale,
+  normalize,
+  dot,
+  length,
   bounds,
   buildableEnvelope,
   bulgeToArc,
@@ -63,6 +69,7 @@ import { AnnotationLayer } from "./AnnotationLayer";
 import { FrameworkLayer } from "./FrameworkLayer";
 import { SurveyLegend } from "./SurveyLegend";
 import { formatArea } from "@/lib/format";
+import { useResizeObserver, useKeyboardShortcut } from "@/lib/hooks";
 
 interface Size {
   width: number;
@@ -88,14 +95,13 @@ function edgeMidpoint(a: Point, b: Point, bulge: number): Point {
 
 /** The bulge that makes edge a→b pass through the cursor at its midpoint. */
 function bulgeThroughCursor(a: Point, b: Point, cursor: Point): number {
-  const cx = b.x - a.x;
-  const cy = b.y - a.y;
-  const len = Math.hypot(cx, cy);
+  const d = subtract(b, a);
+  const len = length(d);
   if (len < 1e-6) {return 0;}
-  const nx = -cy / len;
-  const ny = cx / len;
-  const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-  const off = (cursor.x - mid.x) * nx + (cursor.y - mid.y) * ny;
+  const edge = normalize(d);
+  const normal = { x: -edge.y, y: edge.x };
+  const mid = scale(add(a, b), 0.5);
+  const off = dot(subtract(cursor, mid), normal);
   return (2 * off) / len;
 }
 
@@ -185,17 +191,34 @@ export function PlanningCanvas() {
   }, [activeTool]);
 
   // --- size tracking -------------------------------------------------------
+  useResizeObserver(containerRef.current, (entry) => {
+    const rect = entry.contentRect;
+    setSize({ width: rect.width, height: rect.height });
+  });
+
   React.useEffect(() => {
     const el = containerRef.current;
-    if (!el) {return;}
-    const observer = new ResizeObserver((entries) => {
-      const rect = entries[0].contentRect;
-      setSize({ width: rect.width, height: rect.height });
-    });
-    observer.observe(el);
-    setSize({ width: el.clientWidth, height: el.clientHeight });
-    return () => observer.disconnect();
+    if (el) {
+      setSize({ width: el.clientWidth, height: el.clientHeight });
+    }
   }, []);
+
+  const prevSizeRef = React.useRef<Size>({ width: 0, height: 0 });
+  React.useEffect(() => {
+    if (prevSizeRef.current.width > 0 && prevSizeRef.current.height > 0 && size.width > 0 && size.height > 0) {
+      const dw = size.width - prevSizeRef.current.width;
+      const dh = size.height - prevSizeRef.current.height;
+      if (dw !== 0 || dh !== 0) {
+        const currentViewport = useCanvasStore.getState().viewport;
+        setViewport({
+          zoom: currentViewport.zoom,
+          offsetX: currentViewport.offsetX + dw / 2,
+          offsetY: currentViewport.offsetY + dh / 2,
+        });
+      }
+    }
+    prevSizeRef.current = size;
+  }, [size, setViewport]);
 
   // --- fit to bounds on request & first load -------------------------------
   const planBounds = React.useMemo<Bounds | null>(() => {
@@ -344,20 +367,22 @@ export function PlanningCanvas() {
   }, []);
 
   // --- keyboard ------------------------------------------------------------
-  React.useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      const target = e.target as HTMLElement;
-      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {return;}
-      if (e.key === "Escape") {cancelDraft();}
-      if (e.key === "Enter" && draft.length >= 2) {completeDraft();}
-      if (e.key === "Backspace" && draft.length > 0) {
-        e.preventDefault();
-        setDraft((d) => d.slice(0, -1));
-      }
+  useKeyboardShortcut("escape", () => {
+    cancelDraft();
+  });
+
+  useKeyboardShortcut("enter", () => {
+    if (draft.length >= 2) {
+      completeDraft();
     }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [draft, cancelDraft, completeDraft]);
+  });
+
+  useKeyboardShortcut("backspace", (e) => {
+    if (draft.length > 0) {
+      e.preventDefault();
+      setDraft((d) => d.slice(0, -1));
+    }
+  });
 
   // --- pointer handlers ----------------------------------------------------
   function onPointerDown(e: React.PointerEvent) {

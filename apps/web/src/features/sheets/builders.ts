@@ -39,6 +39,7 @@ import {
   sheetDimensions,
   sheetIndex,
   unionBounds,
+  distance,
   wallPolygon,
   windowSchedule,
   type BuildingModel,
@@ -398,7 +399,7 @@ function drawMarks(site: Site, project: (p: Point) => Pt): SheetPrimitive[] {
     const c = project(dm.center);
     // radius scaled roughly by the projector via two projected points.
     const edge = project({ x: dm.center.x + dm.radius, y: dm.center.y });
-    const rr = Math.hypot(edge.x - c.x, edge.y - c.y);
+    const rr = distance(edge, c);
     out.push({ t: "circle", c, r: rr, sw: 0.8, stroke: INK, fill: "transparent", fillOpacity: 0 });
     out.push({ t: "circle", c: { x: c.x + rr + 12, y: c.y - rr }, r: 9, sw: 0.9, stroke: INK, fill: "#ffffff" });
     out.push({ t: "text", at: { x: c.x + rr + 12, y: c.y - rr + 3 }, text: dm.tag, size: 8, color: INK, anchor: "middle", weight: 700 });

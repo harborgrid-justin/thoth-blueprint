@@ -1,6 +1,12 @@
 import * as React from "react";
+import _ from "lodash";
 import { Download } from "lucide-react";
 import {
+  add,
+  subtract,
+  scale,
+  normalize,
+  dot,
   boundaryEdges,
   buildableEnvelope,
   centroid,
@@ -136,7 +142,7 @@ export function PlatDrawing({
           {/* Setback / buildable envelope */}
           {envelope && (
             <polygon
-              points={envelope.map((p) => screenPair(project(p))).join(" ")}
+              points={_.map(envelope, (p) => screenPair(project(p))).join(" ")}
               fill="none"
               stroke={INK_MUTED}
               strokeWidth={0.9}
@@ -146,7 +152,7 @@ export function PlatDrawing({
 
           {/* Boundary (arcs tessellated so curves render smoothly). */}
           <polygon
-            points={densifyBoundary(boundary, element.arcs, 1).map((p) => screenPair(project(p))).join(" ")}
+            points={_.map(densifyBoundary(boundary, element.arcs, 1), (p) => screenPair(project(p))).join(" ")}
             fill={INK}
             fillOpacity={0.04}
             stroke={INK}
@@ -155,7 +161,7 @@ export function PlatDrawing({
           />
 
           {/* Course labels: bearing + distance for lines, curve data for arcs. */}
-          {boundaryEdges(boundary, element.arcs).map((edge, i) => {
+          {_.map(boundaryEdges(boundary, element.arcs), (edge, i) => {
             const a = edge.from;
             const b = edge.to;
             const course = report.courses[i];
@@ -210,9 +216,9 @@ export function PlatDrawing({
           })}
 
           {/* Interior angle labels, offset inward toward the centroid. */}
-          {report.angles.map((ang, i) => {
+          {_.map(report.angles, (ang, i) => {
             const v = project(boundary[i]);
-            const dir = unit({ x: cScreen.x - v.x, y: cScreen.y - v.y });
+            const dir = normalize({ x: cScreen.x - v.x, y: cScreen.y - v.y });
             const pos = { x: v.x + dir.x * 26, y: v.y + dir.y * 26 };
             return (
               <text
@@ -229,9 +235,9 @@ export function PlatDrawing({
           })}
 
           {/* Corner monuments + labels; the first corner is the Point of Beginning. */}
-          {boundary.map((p, i) => {
+          {_.map(boundary, (p, i) => {
             const s = project(p);
-            const dir = unit({ x: s.x - cScreen.x, y: s.y - cScreen.y });
+            const dir = normalize({ x: s.x - cScreen.x, y: s.y - cScreen.y });
             const lp = { x: s.x + dir.x * 15, y: s.y + dir.y * 15 };
             const pob = i === 0;
             return (
@@ -316,21 +322,18 @@ function screenPair(p: Point): string {
   return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
 }
 
-function unit(v: Point): Point {
-  const len = Math.hypot(v.x, v.y);
-  return len < 1e-9 ? { x: 0, y: 0 } : { x: v.x / len, y: v.y / len };
-}
-
 function offset(p: Point, dir: Point, px: number): Point {
-  return { x: p.x + dir.x * px, y: p.y + dir.y * px };
+  return add(p, scale(dir, px));
 }
 
 /** Unit normal of edge a→b that points away from the polygon centroid. */
 function outwardNormal(a: Point, b: Point, c: Point): Point {
-  const e = unit({ x: b.x - a.x, y: b.y - a.y });
+  const e = normalize(subtract(b, a));
   let nrm = { x: -e.y, y: e.x };
-  const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-  if (nrm.x * (mid.x - c.x) + nrm.y * (mid.y - c.y) < 0) {nrm = { x: -nrm.x, y: -nrm.y };}
+  const mid = scale(add(a, b), 0.5);
+  if (dot(nrm, subtract(mid, c)) < 0) {
+    nrm = scale(nrm, -1);
+  }
   return nrm;
 }
 

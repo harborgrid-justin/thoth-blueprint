@@ -1,6 +1,4 @@
-import { vec2 } from "gl-matrix";
-import type { Point, Polygon } from "../spatial/geometry";
-import { distance, area as polygonArea } from "../spatial/geometry";
+import { distance, area as polygonArea, add, scale, subtract, length, type Point, type Polygon } from "../spatial/geometry";
 import type { Lot } from "../spatial/primitives";
 
 /**
@@ -107,13 +105,13 @@ export function subdivideSlideLine(boundary: Polygon, options: SlideLineOptions)
     const startPt = frontage[idx];
     const endPt = frontage[idx + 1];
     
-    // Frontage direction vector using gl-matrix
-    const ab = vec2.fromValues(endPt.x - startPt.x, endPt.y - startPt.y);
-    const segLen = vec2.len(ab);
+    // Frontage direction vector
+    const ab = subtract(endPt, startPt);
+    const segLen = length(ab);
     if (segLen < 1e-4) {continue;}
 
-    const dx = ab[0];
-    const dy = ab[1];
+    const dx = ab.x;
+    const dy = ab.y;
 
     // Angle of partition line in radians
     const theta = Math.atan2(dy, dx) + (angle * Math.PI) / 180;
@@ -246,16 +244,15 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
     for (let i = 0; i < boundary.length; i++) {
       const p1 = boundary[i];
       const p2 = boundary[(i + 1) % boundary.length];
-      const ab = vec2.fromValues(p2.x - p1.x, p2.y - p1.y);
-      const len = vec2.len(ab);
+      const ab = subtract(p2, p1);
+      const len = length(ab);
       if (len < 1e-4) {continue;}
-      const dx = ab[0];
-      const dy = ab[1];
+      const dx = ab.x;
+      const dy = ab.y;
       const t = ((pivot.x - p1.x) * dx + (pivot.y - p1.y) * dy) / (len * len);
       if (t >= 0 && t <= 1) {
-        const px = p1.x + t * dx;
-        const py = p1.y + t * dy;
-        const d = vec2.distance(vec2.fromValues(pivot.x, pivot.y), vec2.fromValues(px, py));
+        const pLoc = add(p1, scale(ab, t));
+        const d = distance(pivot, pLoc);
         if (d < minEdgeDist) {
           minEdgeDist = d;
           edgeIdx = i;
@@ -270,11 +267,11 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
     nextPt = boundary[(idx + 1) % n];
   }
 
-  // Angles to prev and next vertices using gl-matrix
-  const v1 = vec2.fromValues(prevPt.x - pivot.x, prevPt.y - pivot.y);
-  const v2 = vec2.fromValues(nextPt.x - pivot.x, nextPt.y - pivot.y);
-  const theta1 = Math.atan2(v1[1], v1[0]);
-  const theta2 = Math.atan2(v2[1], v2[0]);
+  // Angles to prev and next vertices
+  const v1 = subtract(prevPt, pivot);
+  const v2 = subtract(nextPt, pivot);
+  const theta1 = Math.atan2(v1.y, v1.x);
+  const theta2 = Math.atan2(v2.y, v2.x);
 
   // Compute interior sweep angle
   let sweepAngle = theta2 - theta1;
@@ -283,10 +280,8 @@ export function subdivideSwingLine(boundary: Polygon, options: SwingLineOptions)
 
   const getSplit = (s: number) => {
     const rad = theta1 + s * sweepAngle;
-    const dir = vec2.fromValues(Math.cos(rad), Math.sin(rad));
-    const p2Pos = vec2.create();
-    vec2.scaleAndAdd(p2Pos, vec2.fromValues(pivot.x, pivot.y), dir, 1);
-    const p2 = { x: p2Pos[0], y: p2Pos[1] };
+    const dir = { x: Math.cos(rad), y: Math.sin(rad) };
+    const p2 = add(pivot, dir);
     const split = splitPolygonByLine(boundary, pivot, p2);
     if (!split) {return null;}
 

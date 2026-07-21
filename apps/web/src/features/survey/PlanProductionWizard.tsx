@@ -1,4 +1,5 @@
 import * as React from "react";
+import _ from "lodash";
 import { Layout, FileText, ChevronRight, HelpCircle } from "lucide-react";
 import {
   resolveAlignment,
@@ -41,7 +42,7 @@ export function PlanProductionWizard() {
   }, [open, alignments]);
 
   if (!site) {return null;}
-  const alignment = alignments.find((a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
+  const alignment = _.find(alignments, (a) => a.id === selectedAlignId) ?? alignments[0] ?? null;
 
   function handleSplit() {
     if (!alignment || !site) {return;}
@@ -116,7 +117,7 @@ export function PlanProductionWizard() {
                   Select Alignment
                 </label>
                 <div className="flex flex-col gap-1">
-                  {alignments.map((a) => (
+                  {_.map(alignments, (a) => (
                     <button
                       key={a.id}
                       type="button"
@@ -141,7 +142,7 @@ export function PlanProductionWizard() {
                   Sheet Size Template (DWT)
                 </label>
                 <select
-                  className="w-full bg-background border border-border rounded p-1.5 text-xs text-foreground outline-none"
+                  className="w-full rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                   value={pageSize}
                   onChange={(e) => setPageSize(e.target.value)}
                 >
@@ -157,7 +158,7 @@ export function PlanProductionWizard() {
                     Plot Scale
                   </label>
                   <select
-                    className="w-full bg-background border border-border rounded p-1.5 text-xs text-foreground outline-none"
+                    className="w-full rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                     value={scale}
                     onChange={(e) => setScale(e.target.value)}
                   >
@@ -171,7 +172,7 @@ export function PlanProductionWizard() {
                     Frame Overlap
                   </label>
                   <select
-                    className="w-full bg-background border border-border rounded p-1.5 text-xs text-foreground outline-none"
+                    className="w-full rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                     value={overlap}
                     onChange={(e) => setOverlap(parseInt(e.target.value))}
                   >
@@ -200,7 +201,7 @@ export function PlanProductionWizard() {
                       Generated Layout Pages List ({generatedFrames.length} Sheets)
                     </h4>
                     <div className="flex flex-col gap-1.5">
-                      {generatedFrames.map((f) => (
+                      {_.map(generatedFrames, (f) => (
                         <div key={f.id} className="flex items-center justify-between border-b border-border/40 pb-1.5">
                           <span className="flex items-center gap-1.5 text-foreground font-medium">
                             <FileText className="h-4 w-4 text-primary" /> {f.name}

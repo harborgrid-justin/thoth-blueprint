@@ -1,10 +1,11 @@
 import RAPIER from "@dimforge/rapier3d-compat";
+import _ from "lodash";
 import {
   isSpatialElement,
   boundsCenter,
+  centroid,
+  elevationAt,
   type Site,
-  type Point,
-  type ElevationGrid,
 } from "@thoth/domain";
 import { buildTerrainModel, siteExtent } from "@/features/terrain/terrainModel";
 
@@ -18,6 +19,13 @@ export class ThothPhysicsEngine {
   private colliders: Map<string, RAPIER.Collider> = new Map();
   private elementIdsByHandle: Map<number, string> = new Map();
   private initialized = false;
+
+  /**
+   * Dirty flag: set to true by syncWorld so that the next checkCollisions call
+   * actually steps the simulation. Avoids burning CPU every RAF tick for a
+   * completely static world.
+   */
+  private needsStep = false;
 
   private constructor() {
     // Zero gravity since CAD layouts are static, constraint-based systems
@@ -58,27 +66,38 @@ export class ThothPhysicsEngine {
     // 1. Create Terrain Heightfield Collider
     if (surface) {
       const { cols, rows, cellSize, origin, heights } = surface;
-      
-      // Rapier expects heights as a flat Float32Array in row-major order
-      const floatHeights = new Float32Array(heights.map((h) => h * exaggeration));
-      
+
+      // Compute the actual elevation range after exaggeration for correct scale.y.
+      // Rapier normalises the heightfield to [0,1] in Y, then scales by scale.y,
+      // so scale.y must equal the full exaggerated elevation span.
+      const minH = _.min(heights) ?? 0;
+      const maxH = _.max(heights) ?? 0;
+      const elevRange = Math.max(1e-3, maxH - minH) * exaggeration;
+
+      // Rapier expects heights as a flat Float32Array normalised to [0, 1].
+      // The scale vector carries the actual physical dimensions, so the
+      // heights must NOT be pre-multiplied by exaggeration.
+      const floatHeights = new Float32Array(
+        heights.map((h) => (h - minH) / (maxH - minH || 1e-3)),
+      );
+
       const width = (cols - 1) * cellSize;
       const depth = (rows - 1) * cellSize;
-      const scale = { x: width, y: 1.0, z: depth };
+      const scale = { x: width, y: elevRange, z: depth };
 
       try {
         const terrainShape = RAPIER.ColliderDesc.heightfield(
           rows - 1,
           cols - 1,
           floatHeights,
-          scale
+          scale,
         );
-        
-        // Setup fixed rigid body for terrain
+
+        // Terrain is a fixed rigid body — it never moves.
         const bodyDesc = RAPIER.RigidBodyDesc.fixed();
         const offsetX = origin.x + width / 2 - center.x;
         const offsetZ = origin.y + depth / 2 - center.y;
-        bodyDesc.setTranslation(offsetX, 0, offsetZ);
+        bodyDesc.setTranslation(offsetX, minH * exaggeration, offsetZ);
 
         const body = this.world.createRigidBody(bodyDesc);
         const terrainCollider = this.world.createCollider(terrainShape, body);
@@ -98,8 +117,8 @@ export class ThothPhysicsEngine {
       if (boundary.length < 3) {continue;}
 
       // Extract footprint elevations conforming to terrain at centroid
-      const centroid = polygonCentroid(boundary);
-      const elev = surface ? elevationAtLocal(surface, centroid) * exaggeration : 0;
+      const bldgCentroid = centroid(boundary);
+      const elev = surface ? elevationAt(surface, bldgCentroid) * exaggeration : 0;
       const storeys = Math.max(1, el.storeys);
       const height = (el.height ?? storeys * 3.2) * exaggeration;
 
@@ -124,13 +143,18 @@ export class ThothPhysicsEngine {
       try {
         const shape = RAPIER.ColliderDesc.convexHull(vertices);
         if (shape) {
+          // Sensor colliders on dynamic bodies with locked DOF: dynamic bodies stay
+          // awake and participate in Rapier's narrow-phase intersection detection,
+          // unlike kinematic/fixed bodies which may be skipped or sleeping.
+          // Locking all translations and rotations makes them effectively immovable
+          // while still triggering intersection pair events.
           shape.setSensor(true);
           const bodyDesc = RAPIER.RigidBodyDesc.dynamic();
           const body = this.world.createRigidBody(bodyDesc);
           body.lockTranslations(true, true);
           body.lockRotations(true, true);
           const collider = this.world.createCollider(shape, body);
-          
+
           this.colliders.set(el.id, collider);
           this.elementIdsByHandle.set(collider.handle, el.id);
         }
@@ -139,18 +163,31 @@ export class ThothPhysicsEngine {
         console.warn(`Failed to create collider for building ${el.id}:`, err);
       }
     }
+
+    // Step immediately after building the world so intersection pairs are
+    // registered in the broad phase — Rapier requires at least one step before
+    // intersectionPair() can return true for newly added colliders.
+    this.world.step();
+    // Mark dirty so checkCollisions will step once more on the first call,
+    // ensuring contact pairs from any subsequent geometry are also captured.
+    this.needsStep = true;
   }
 
   /**
    * Run collision checks across all building colliders.
    * Returns a set of element IDs currently in collision.
+   * Only steps the physics simulation when the world has changed (needsStep flag).
    */
   checkCollisions(): Set<string> {
     const collidingIds = new Set<string>();
     if (!this.initialized) {return collidingIds;}
 
-    // Step the physics simulation to update contact/intersection pairs
-    this.world.step();
+    // Only step when something has actually changed — avoids wasting CPU every
+    // animation frame for a completely static scene.
+    if (this.needsStep) {
+      this.world.step();
+      this.needsStep = false;
+    }
 
     const buildingColliders = Array.from(this.colliders.entries())
       .filter(([id]) => id !== "terrain");
@@ -171,45 +208,37 @@ export class ThothPhysicsEngine {
 
     return collidingIds;
   }
-}
 
-// --- Local Helpers for Terrain elevation conforming ----------------------
+  /**
+   * Cast a downward ray from above the given (x, z) world-space coordinate and
+   * return the Y elevation where it first contacts the terrain, or null if the
+   * terrain heightfield collider is not present.
+   *
+   * This API surface is provided for future use by UI snapping tools (e.g.
+   * snapping elements to the terrain surface).
+   */
+  raycastElevation(x: number, z: number): number | null {
+    if (!this.initialized) {return null;}
+    const terrainCollider = this.colliders.get("terrain");
+    if (!terrainCollider) {return null;}
 
-function polygonCentroid(poly: Point[]): Point {
-  let cx = 0;
-  let cy = 0;
-  for (const p of poly) {
-    cx += p.x;
-    cy += p.y;
+    const rayOrigin = { x, y: 100000, z };
+    const rayDir = { x: 0, y: -1, z: 0 };
+    const maxToi = 200000;
+    const solid = true;
+
+    const hit = this.world.castRay(
+      new RAPIER.Ray(rayOrigin, rayDir),
+      maxToi,
+      solid,
+      undefined,
+      undefined,
+      terrainCollider,
+    );
+
+    if (hit === null) {return null;}
+    return rayOrigin.y + rayDir.y * hit.timeOfImpact;
   }
-  return { x: cx / poly.length, y: cy / poly.length };
 }
 
-function elevationAtLocal(grid: ElevationGrid, p: Point): number {
-  const { origin, cellSize, cols, rows, heights } = grid;
-  const c = (p.x - origin.x) / cellSize;
-  const r = (p.y - origin.y) / cellSize;
 
-  const c0 = Math.floor(c);
-  const r0 = Math.floor(r);
-  const c1 = c0 + 1;
-  const r1 = r0 + 1;
-
-  if (c0 < 0 || c1 >= cols || r0 < 0 || r1 >= rows) {
-    return heights[Math.max(0, Math.min(heights.length - 1, Math.round(r) * cols + Math.round(c)))] || 0;
-  }
-
-  const h00 = heights[r0 * cols + c0] || 0;
-  const h10 = heights[r0 * cols + c1] || 0;
-  const h01 = heights[r1 * cols + c0] || 0;
-  const h11 = heights[r1 * cols + c1] || 0;
-
-  const tx = c - c0;
-  const ty = r - r0;
-
-  // Bilinear interpolation
-  return (1 - tx) * (1 - ty) * h00 +
-         tx * (1 - ty) * h10 +
-         (1 - tx) * ty * h01 +
-         tx * ty * h11;
-}

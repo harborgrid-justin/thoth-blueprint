@@ -1,5 +1,15 @@
 import * as THREE from "three";
-import { type Point, type CurtainWall, calculateCurtainWallGeometry } from "@thoth/domain";
+import _ from "lodash";
+import {
+  add,
+  subtract,
+  scale,
+  normalize,
+  distance,
+  type Point,
+  type CurtainWall,
+  calculateCurtainWallGeometry,
+} from "@thoth/domain";
 
 export function enterpriseCurtainWall(
   wall: CurtainWall,
@@ -20,12 +30,10 @@ export function enterpriseCurtainWall(
     endPt = wall.boundary[1];
   }
 
-  const dx = endPt.x - startPt.x;
-  const dy = endPt.y - startPt.y;
-  const planLen = Math.hypot(dx, dy) || 1.0;
-  const cos = dx / planLen;
-  const sin = dy / planLen;
-  const wallAngle = Math.atan2(dy, dx);
+  const d = subtract(endPt, startPt);
+  const planLen = distance(endPt, startPt) || 1.0;
+  const dir = normalize(d);
+  const wallAngle = Math.atan2(d.y, d.x);
 
   const totalHeight = wall.height || 3.0;
   const frameWidth = wall.frameProfileWidth || 0.1;
@@ -60,14 +68,16 @@ export function enterpriseCurtainWall(
 
   disposables.push(metalMat, glassMat, brickMat, insMat, doorMat);
 
+  const mid = scale(add(startPt, endPt), 0.5);
+
   // 1. Bottom frame
   {
     const geo = new THREE.BoxGeometry(planLen, frameWidth * exag, 0.12);
     const m = new THREE.Mesh(geo, metalMat);
     m.position.set(
-      (startPt.x + endPt.x) / 2 - center.x,
+      mid.x - center.x,
       baseElevation + (frameWidth / 2) * exag,
-      (startPt.y + endPt.y) / 2 - center.y,
+      mid.y - center.y,
     );
     m.rotation.y = -wallAngle;
     m.castShadow = true;
@@ -79,9 +89,9 @@ export function enterpriseCurtainWall(
     const geo = new THREE.BoxGeometry(planLen, frameWidth * exag, 0.12);
     const m = new THREE.Mesh(geo, metalMat);
     m.position.set(
-      (startPt.x + endPt.x) / 2 - center.x,
+      mid.x - center.x,
       baseElevation + totalHeight * exag - (frameWidth / 2) * exag,
-      (startPt.y + endPt.y) / 2 - center.y,
+      mid.y - center.y,
     );
     m.rotation.y = -wallAngle;
     m.castShadow = true;
@@ -92,10 +102,11 @@ export function enterpriseCurtainWall(
   {
     const geo = new THREE.BoxGeometry(frameWidth, totalHeight * exag, 0.12);
     const m = new THREE.Mesh(geo, metalMat);
+    const lpPos = add(startPt, scale(dir, frameWidth / 2));
     m.position.set(
-      startPt.x + (frameWidth / 2) * cos - center.x,
+      lpPos.x - center.x,
       baseElevation + (totalHeight * exag) / 2,
-      startPt.y + (frameWidth / 2) * sin - center.y,
+      lpPos.y - center.y,
     );
     m.rotation.y = -wallAngle;
     m.castShadow = true;
@@ -106,10 +117,11 @@ export function enterpriseCurtainWall(
   {
     const geo = new THREE.BoxGeometry(frameWidth, totalHeight * exag, 0.12);
     const m = new THREE.Mesh(geo, metalMat);
+    const rpPos = subtract(endPt, scale(dir, frameWidth / 2));
     m.position.set(
-      endPt.x - (frameWidth / 2) * cos - center.x,
+      rpPos.x - center.x,
       baseElevation + (totalHeight * exag) / 2,
-      endPt.y - (frameWidth / 2) * sin - center.y,
+      rpPos.y - center.y,
     );
     m.rotation.y = -wallAngle;
     m.castShadow = true;
@@ -118,16 +130,15 @@ export function enterpriseCurtainWall(
   }
 
   // 2. Vertical mullion beams
-  cwGeom.mullions.forEach((mull) => {
+  _.forEach(cwGeom.mullions, (mull) => {
     if (mull.direction !== "vertical") {return;}
-    const lx = startPt.x + mull.xStart * cos;
-    const ly = startPt.y + mull.xStart * sin;
+    const lxly = add(startPt, scale(dir, mull.xStart));
     const geo = new THREE.BoxGeometry(mull.width, (mull.yEnd - mull.yStart) * exag, 0.1);
     const m = new THREE.Mesh(geo, metalMat);
     m.position.set(
-      lx - center.x,
+      lxly.x - center.x,
       baseElevation + ((mull.yStart + mull.yEnd) / 2) * exag,
-      ly - center.y,
+      lxly.y - center.y,
     );
     m.rotation.y = -wallAngle;
     m.castShadow = true;
@@ -136,14 +147,14 @@ export function enterpriseCurtainWall(
   });
 
   // 3. Horizontal mullion beams
-  cwGeom.mullions.forEach((mull) => {
+  _.forEach(cwGeom.mullions, (mull) => {
     if (mull.direction !== "horizontal") {return;}
     const geo = new THREE.BoxGeometry(planLen, mull.width * exag, 0.08);
     const m = new THREE.Mesh(geo, metalMat);
     m.position.set(
-      (startPt.x + endPt.x) / 2 - center.x,
+      mid.x - center.x,
       baseElevation + mull.yStart * exag,
-      (startPt.y + endPt.y) / 2 - center.y,
+      mid.y - center.y,
     );
     m.rotation.y = -wallAngle;
     m.castShadow = true;
@@ -152,10 +163,10 @@ export function enterpriseCurtainWall(
   });
 
   // 4. Infill Panels
-  cwGeom.panels.forEach((pan) => {
+  const perpNormal = { x: -dir.y, y: dir.x };
+  _.forEach(cwGeom.panels, (pan) => {
     const mx = (pan.xStart + pan.xEnd) / 2;
-    const pX = startPt.x + mx * cos - paneOffset * -sin;
-    const pY = startPt.y + mx * sin - paneOffset * cos;
+    const pXY = add(add(startPt, scale(dir, mx)), scale(perpNormal, paneOffset));
 
     let useMat = glassMat;
     let thickness = 0.02;
@@ -173,9 +184,9 @@ export function enterpriseCurtainWall(
     const geo = new THREE.BoxGeometry(pan.width, pan.height * exag, thickness);
     const mesh = new THREE.Mesh(geo, useMat);
     mesh.position.set(
-      pX - center.x,
+      pXY.x - center.x,
       baseElevation + ((pan.yStart + pan.yEnd) / 2) * exag,
-      pY - center.y,
+      pXY.y - center.y,
     );
     mesh.rotation.y = -wallAngle;
     mesh.castShadow = true;
@@ -186,12 +197,11 @@ export function enterpriseCurtainWall(
     if (pan.material === "door") {
       const handleGeo = new THREE.BoxGeometry(0.05, 0.15 * exag, 0.05);
       const handle = new THREE.Mesh(handleGeo, metalMat);
-      const hX = startPt.x + (pan.xStart + 0.1) * cos - (paneOffset + 0.04) * -sin;
-      const hY = startPt.y + (pan.xStart + 0.1) * sin - (paneOffset + 0.04) * cos;
+      const hXY = add(add(startPt, scale(dir, pan.xStart + 0.1)), scale(perpNormal, paneOffset + 0.04));
       handle.position.set(
-        hX - center.x,
+        hXY.x - center.x,
         baseElevation + 0.9 * exag,
-        hY - center.y,
+        hXY.y - center.y,
       );
       handle.rotation.y = -wallAngle;
       cwGroup.add(handle);

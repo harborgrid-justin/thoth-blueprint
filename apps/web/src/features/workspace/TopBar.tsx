@@ -111,7 +111,7 @@ export function TopBar({ project, saving, onSave, onOpenCheckpoints }: TopBarPro
             <select
               value={activeRenovationCategory}
               onChange={(e) => setActiveRenovationCategory(e.target.value as "existing" | "new" | "demolished")}
-              className="ml-1 h-6 rounded border border-border bg-background px-1 text-[11px] font-medium text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+              className="ml-1 h-6 rounded border border-border bg-background px-1.5 text-[11px] text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
             >
               <option value="existing">Existing</option>
               <option value="new">New</option>
