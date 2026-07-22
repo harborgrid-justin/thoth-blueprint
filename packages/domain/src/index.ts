@@ -39,6 +39,9 @@ export * from "./planning/doorwindow";
 export * from "./planning/roof";
 export * from "./planning/erosion";
 export * from "./planning/geoid/index";
+export * from "./planning/sampleData";
+export * from "./planning/presets/princeWilliamHousePlat";
+export * from "./planning/presets/knightsbridgeLot11Plat";
 
 // Civil
 export * from "./civil/alignment";
@@ -65,7 +68,6 @@ export * from "./civil/gisAnd3DVisualization";
 export * from "./civil/layoutTemplates";
 export * from "./civil/scriptsAnd3DObjects";
 
-
 // Drawing / Drafting / Sheet generation
 export * from "./drawing/sheetsize";
 export * from "./drawing/sheet";
@@ -80,11 +82,6 @@ export * from "./drawing/schedule";
 export * from "./drawing/platset";
 export * from "./drawing/qto";
 export * from "./drawing/collada";
-export * from "./planning/sampleData";
-export * from "./planning/presets/princeWilliamHousePlat";
-export * from "./planning/presets/knightsbridgeLot11Plat";
 
 // Smart Automated Engineering Engine (100 Experiences)
 export * from "./smart/index";
-
-

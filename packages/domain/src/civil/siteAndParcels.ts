@@ -3,68 +3,21 @@
  */
 
 import type { Point2D, LineSegment } from '../survey/transparentCommands';
+import type {
+  ParcelStyle,
+  ParcelLayoutParameters,
+  UserDefinedClassificationData,
+  ParcelObject,
+  SiteContainer,
+} from './types/siteAndParcels';
 
-export interface ParcelStyle {
-  id: string;
-  name: string;
-  boundaryColor: string;
-  linetype: string;
-  layer: string;
-}
-
-export interface ParcelLayoutParameters {
-  minimumAreaSqFt: number; // REQ-118
-  minimumFrontageFt: number; // REQ-119
-  frontageOffsetFt: number;
-  minimumWidthFt: number;
-  minimumDepthFt: number;
-  maximumDepthFt?: number; // REQ-120
-  layoutPreference?: 'shortest_frontage' | 'equal_area'; // REQ-121
-  remainderDistribution: 'last_parcel' | 'redistribute_all'; // REQ-122
-}
-
-export interface UserDefinedClassificationData { // REQ-128
-  zoningDistrict?: string;
-  maxImperviousRatio?: number;
-  ownerName?: string;
-  landUseCode?: string;
-  customProperties?: Record<string, string | number>;
-}
-
-export interface ParcelObject {
-  id: string;
-  name: string;
-  number: number;
-  siteId: string;
-  boundaryVertices: Point2D[];
-  arcs?: Array<{ vertexIndex: number; radius: number; deltaAngleDeg: number }>;
-  style: ParcelStyle;
-  areaSqFt: number;
-  perimeterFt: number;
-  elevationFt?: number; // REQ-125
-  address?: string;
-  taxId?: string;
-  userClassification?: UserDefinedClassificationData; // REQ-128
-}
-
-export interface SiteContainer {
-  id: string;
-  name: string;
-  startingParcelNumber: number;
-  parcels: ParcelObject[];
-  alignments: Array<{ id: string; name: string }>;
-  gradingObjects: Array<{ id: string; name: string }>;
-  featureLines: Array<{ id: string; name: string }>;
-}
-
-export interface ParcelLayoutParameters {
-  minimumAreaSqFt: number;
-  minimumFrontageFt: number;
-  frontageOffsetFt: number;
-  minimumWidthFt: number;
-  minimumDepthFt: number;
-  remainderDistribution: 'last_parcel' | 'redistribute_all';
-}
+export type {
+  ParcelStyle,
+  ParcelLayoutParameters,
+  UserDefinedClassificationData,
+  ParcelObject,
+  SiteContainer,
+};
 
 export class SiteManager {
   private sites: Map<string, SiteContainer> = new Map();
@@ -377,32 +330,4 @@ export function calculatePolygonGeometry(vertices: Point2D[]): { area: number; p
   };
 }
 
-export function calculatePolygonCentroid(vertices: Point2D[]): Point2D {
-  if (vertices.length === 0) return { x: 0, y: 0 };
-
-  let cx = 0;
-  let cy = 0;
-  let factor = 0;
-
-  for (let i = 0; i < vertices.length; i++) {
-    const curr = vertices[i];
-    const next = vertices[(i + 1) % vertices.length];
-
-    const f = curr.x * next.y - next.x * curr.y;
-    factor += f;
-    cx += (curr.x + next.x) * f;
-    cy += (curr.y + next.y) * f;
-  }
-
-  const area = factor / 2;
-  if (Math.abs(area) < 1e-5) {
-    const sumX = vertices.reduce((acc, v) => acc + v.x, 0);
-    const sumY = vertices.reduce((acc, v) => acc + v.y, 0);
-    return { x: sumX / vertices.length, y: sumY / vertices.length };
-  }
-
-  return {
-    x: cx / (6 * area),
-    y: cy / (6 * area),
-  };
-}
+export { calculatePolygonCentroid } from './common/geometryHelpers';

@@ -4,7 +4,7 @@
 
 import type { Point2D, LineSegment } from '../survey/transparentCommands';
 import type { ParcelObject } from './siteAndParcels';
-import { calculatePolygonCentroid } from './siteAndParcels';
+import { calculatePolygonCentroid } from './common/geometryHelpers';
 
 export interface AnnotationLabelStyle {
   id: string;

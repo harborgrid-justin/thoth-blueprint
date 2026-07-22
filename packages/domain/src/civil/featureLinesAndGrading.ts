@@ -4,46 +4,26 @@
 
 import type { Point2D, LineSegment } from '../survey/transparentCommands';
 import type { Point3D } from './grading';
+import type {
+  Arc3D,
+  ElevationPoint,
+  FeatureLine,
+  PanoramaElevationEditorRow,
+  LineWeedingConfig,
+} from './types/featureLinesAndGrading';
 
-export interface Arc3D {
-  vertexIndex: number;
-  radius: number;
-  elevationStart: number;
-  elevationEnd: number;
-}
-
-export interface ElevationPoint { // REQ-196
-  distanceAlongSegmentFt: number;
-  elevationFt: number;
-}
-
-export interface FeatureLine {
-  id: string;
-  name: string;
-  siteId: string;
-  styleName?: string; // REQ-199
-  points: Point3D[]; // 3D vertices with elevation
-  arcs?: Arc3D[];    // REQ-089: 3D Feature Lines with true geometric arcs & elevation attributes
-  elevationPoints?: ElevationPoint[]; // REQ-196
-  dynamicSurfaceLinkId?: string; // REQ-092 & REQ-182
-  dynamicCorridorLinkId?: string;
-  dynamicAlignmentLinkId?: string; // REQ-185
-  relativeVerticalOffsetFt?: number; // REQ-181
-  spiralTessellationFactorFt?: number; // REQ-186
-}
+export type {
+  Arc3D,
+  ElevationPoint,
+  FeatureLine,
+  PanoramaElevationEditorRow,
+  LineWeedingConfig,
+};
 
 export interface WeedingParameters {
   angleThresholdDeg: number; // REQ-183
   gradeThresholdPercent: number; // REQ-183
   threeDDistanceThresholdFt: number; // REQ-184
-}
-
-export interface PanoramaElevationEditorRow { // REQ-191
-  station: number;
-  elevation: number;
-  length: number;
-  gradeBackPercent: number;
-  gradeAheadPercent: number;
 }
 
 export interface FeatureLineSiteProperties { // REQ-198
@@ -212,6 +192,7 @@ export class FeatureLineEngine {
       }
 
       rows.push({
+        vertexIndex: i,
         station: cumStation,
         elevation: curr.z,
         length: len,
