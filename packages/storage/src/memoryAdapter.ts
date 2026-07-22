@@ -20,18 +20,24 @@ export class MemoryStorageAdapter implements StorageAdapter {
   }
 
   async list<T extends StorageRecord>(collection: string): Promise<T[]> {
-    return Array.from(this.collectionFor(collection).values()) as T[];
+    return Array.from(this.collectionFor(collection).values()).map(
+      (record) => structuredClone(record) as T,
+    );
   }
 
   async get<T extends StorageRecord>(
     collection: string,
     id: string,
   ): Promise<T | undefined> {
-    return this.collectionFor(collection).get(id) as T | undefined;
+    const record = this.collectionFor(collection).get(id);
+    return record ? (structuredClone(record) as T) : undefined;
   }
 
   async put<T extends StorageRecord>(collection: string, value: T): Promise<T> {
-    this.collectionFor(collection).set(value.id, value);
+    // Store a clone, matching the SQLite adapter's JSON round-trip: mutating
+    // the caller's object (or a value handed back by get/list) after put()
+    // must not silently mutate what's stored.
+    this.collectionFor(collection).set(value.id, structuredClone(value));
     return value;
   }
 

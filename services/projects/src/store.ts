@@ -220,9 +220,18 @@ export async function writeStore(store: Store): Promise<void> {
   await persist(getStorage(), store);
 }
 
+/** Releases the underlying storage connection. Call on process shutdown. */
+export async function closeStorage(): Promise<void> {
+  if (storage) {
+    await storage.close();
+    storage = undefined;
+  }
+}
+
 export const db = {
   loadStore,
   writeStore,
+  closeStorage,
   summarize,
   CURRENT_USER,
   defaultMembers,

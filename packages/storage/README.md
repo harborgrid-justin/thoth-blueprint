@@ -64,7 +64,7 @@ This package exists so that swap is cheap. To move off SQLite:
 2. A natural relational shape for each collection is a table with
    `id TEXT PRIMARY KEY`, `data JSONB NOT NULL`, `updated_at TIMESTAMPTZ NOT NULL`
    — the same document-per-row model the SQLite adapter uses, so the port is
-   mechanical. Normalize into real columns later, per collection, if and when
+   mechanical. Normalize into real columns later, per collection, once real
    query needs justify it; nothing above this interface depends on the
    storage shape.
 3. Wire it into `createStorage`'s `"postgres"` case (already switched on
