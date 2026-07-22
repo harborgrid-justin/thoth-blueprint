@@ -10,9 +10,22 @@ import {
   Unlock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLayerPanelState } from "./hooks/useLayerPanelState";
+
+const ACI_COLORS = [
+  "#ff0000", "#ffff00", "#00ff00", "#00ffff", "#0000ff", "#ff00ff", "#ffffff", "#808080", "#c0c0c0",
+  "#ff7f7f", "#ffff7f", "#7fff7f", "#7fffff", "#7f7fff", "#ff7fff", "#ff0000", "#ff3f00", "#ff7f00",
+  "#ffbf00", "#ffff00", "#bfff00", "#7fff00", "#3fff00", "#00ff00", "#00ff3f", "#00ff7f", "#00ffbf",
+  "#00ffff", "#00bfff", "#007fff", "#003fff", "#0000ff", "#3f00ff", "#7f00ff", "#bf00ff", "#ff00ff"
+];
 
 /** The layer manager: visibility, lock, order, naming, and the active layer. */
 export function LayerPanel() {
@@ -58,19 +71,37 @@ export function LayerPanel() {
               key={layer.id}
               onClick={() => setActiveLayer(layer.id)}
               className={cn(
-                "group flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm transition-colors",
+                "group flex items-center gap-1.5 rounded px-1.5 py-0.5 text-xs font-cad transition-colors",
                 active ? "bg-accent" : "hover:bg-accent/60",
               )}
             >
-              <span
-                className="h-3 w-3 shrink-0 rounded-sm"
-                style={{ backgroundColor: layer.color ?? "#64748b" }}
-              />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="h-3 w-3 shrink-0 rounded-sm cursor-pointer border border-black/20"
+                    style={{ backgroundColor: layer.color ?? "#64748b" }}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-[148px] p-1 grid grid-cols-6 gap-0.5 bg-neutral-900 border-neutral-800">
+                  {ACI_COLORS.map(c => (
+                    <DropdownMenuItem 
+                      key={c}
+                      className="h-5 w-5 rounded-none p-0 cursor-pointer"
+                      style={{ backgroundColor: c }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        updateLayer(layer.id, { color: c });
+                      }}
+                    />
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
               {editingId === layer.id ? (
                 <Input
                   autoFocus
                   defaultValue={layer.name}
-                  className="h-6 flex-1 px-1 py-0 text-sm"
+                  className="h-6 flex-1 px-1 py-0 text-xs font-cad"
                   onBlur={(e) => {
                     updateLayer(layer.id, {
                       name: e.target.value || layer.name,

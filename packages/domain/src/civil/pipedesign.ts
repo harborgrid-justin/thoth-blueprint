@@ -12,7 +12,7 @@ import type {
   PipeNetwork,
   PipeCheckViolation,
   PipeNetworkAnalysisReport,
-} from "./types/pipedesign";
+} from "./types/pipeDesign";
 
 export type {
   PipeMaterial,

@@ -8,7 +8,7 @@ const defaultRoads = federalData.standards.roads;
 import type {
   SuperelevationStation,
   SuperelevationCurve,
-} from "./types/superelevation";
+} from "./types/superElevation";
 
 export type { SuperelevationStation, SuperelevationCurve };
 

@@ -16,10 +16,7 @@ const STORAGE_KEY = "thoth.theme";
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useLocalStorage<Theme>(
     STORAGE_KEY,
-    typeof window !== "undefined" &&
-      window.matchMedia("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark",
+    "light",
   );
 
   React.useEffect(() => {

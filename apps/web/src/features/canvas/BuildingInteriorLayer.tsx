@@ -177,10 +177,7 @@ function BuildingPlan({
                 key={`t${room.id}`}
                 x={c.x}
                 y={c.y}
-                textAnchor="middle"
-                fontSize={10}
-                fill={INK}
-                style={{ paintOrder: "stroke", stroke: HALO, strokeWidth: 2.5 }}
+                className="cad-halo"
               >
                 <tspan x={c.x} fontWeight={700}>
                   {room.name}

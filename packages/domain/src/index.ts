@@ -20,6 +20,9 @@ export * from "./survey/plss";
 export * from "./survey/monument";
 export * from "./survey/controls";
 export * from "./survey/descriptionKeys";
+export * from "./survey/points";
+export * from "./survey/transparentCommands";
+export * from "./survey/advancedLinework";
 
 // Planning
 export * from "./planning/landuse";
@@ -41,16 +44,26 @@ export * from "./planning/geoid/index";
 export * from "./civil/alignment";
 export * from "./civil/corridor";
 export * from "./civil/profile";
-export * from "./civil/superelevation";
+export * from "./civil/superElevation";
 export * from "./civil/assembly";
 export * from "./civil/grading";
 export * from "./civil/terrain";
-export * from "./civil/pointcloud";
+export * from "./civil/pointCloud";
 export * from "./civil/network";
-export * from "./civil/pipedesign";
-export * from "./civil/partbuilder";
+export * from "./civil/pipeDesign";
+export * from "./civil/partBuilder";
 export * from "./civil/intersection";
 export * from "./civil/sections";
+export * from "./civil/siteAndParcels";
+export * from "./civil/labelsAndUDP";
+export * from "./civil/parcelTables";
+export * from "./civil/viewFramesAndMatchLines";
+export * from "./civil/sheetsAndDataRefs";
+export * from "./civil/sampleLinesAndSections";
+export * from "./civil/featureLinesAndGrading";
+export * from "./civil/gisAnd3DVisualization";
+export * from "./civil/layoutTemplates";
+export * from "./civil/scriptsAnd3DObjects";
 
 
 // Drawing / Drafting / Sheet generation

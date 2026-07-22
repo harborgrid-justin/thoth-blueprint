@@ -33,6 +33,8 @@ docs/requirements/
 │   ├── frontend-requirements.md  FE — browser planning workspace
 │   ├── backend-requirements.md   BE — cloud services
 │   ├── domain-requirements.md    DOM — framework-agnostic planning model
+│   ├── civil-3d-suite-requirements.md Civil 3D Competitor Suite (REQ-001 through REQ-100)
+│   ├── civil-3d-expansion-suite-requirements.md Civil 3D Expansion Suite (REQ-101 through REQ-200)
 │   ├── prince-william-va-requirements.md PWC — Prince William County, VA Plat Submissions
 │   └── interoperability-requirements.md IOP — import/export
 ├── 03-nonfunctional/
@@ -45,6 +47,7 @@ docs/requirements/
 
 ## Related Documents
 
+- [Civil 3D Suite Functional Requirements](02-functional/civil-3d-suite-requirements.md)
 - [Prince William County Virginia Functional Requirements](02-functional/prince-william-va-requirements.md)
 - [Master Requirements Traceability Matrix](04-traceability/traceability-matrix.md)
 - [Requirements Traceability Matrix - Part 101 (Prince William County, VA)](04-traceability/rtm_part_101.md)

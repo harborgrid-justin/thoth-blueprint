@@ -2,7 +2,7 @@ import type {
   PartParam,
   CustomPartDefinition,
   CustomPartCatalog,
-} from "./types/partbuilder";
+} from "./types/partBuilder";
 
 export type { PartParam, CustomPartDefinition, CustomPartCatalog };
 

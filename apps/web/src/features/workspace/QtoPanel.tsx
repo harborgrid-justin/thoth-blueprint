@@ -13,6 +13,7 @@ import {
 } from "@thoth/domain";
 
 import { Button } from "@/components/ui/button";
+import { DataGrid } from "@/components/ui/data-grid";
 import { cn } from "@/lib/utils";
 import { useQtoState } from "./hooks/useQtoState";
 import {
@@ -139,48 +140,26 @@ export function QtoPanel() {
                 TIN Ground
               </Badge>
             </h4>
-            <table className="w-full text-left">
-              <thead>
-                <tr className="border-b border-border/60 text-muted-foreground text-[10px]">
-                  <th className="py-1">Station Interval</th>
-                  <th className="py-1 text-right">Cut (CY)</th>
-                  <th className="py-1 text-right">Fill (CY)</th>
-                  <th className="py-1 text-right">Net</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-border/40">
-                  <td className="py-1">0+00 to 2+00</td>
-                  <td className="py-1 text-right">150.0</td>
-                  <td className="py-1 text-right">320.0</td>
-                  <td className="py-1 text-right text-rose-500">-170.0 (F)</td>
-                </tr>
-                <tr className="border-b border-border/40">
-                  <td className="py-1">2+00 to 5+00</td>
-                  <td className="py-1 text-right">450.0</td>
-                  <td className="py-1 text-right">180.0</td>
-                  <td className="py-1 text-right text-emerald-500">
-                    +270.0 (C)
-                  </td>
-                </tr>
-                <tr className="border-b border-border/40">
-                  <td className="py-1">5+00 to 8+00</td>
-                  <td className="py-1 text-right">610.0</td>
-                  <td className="py-1 text-right">120.0</td>
-                  <td className="py-1 text-right text-emerald-500">
-                    +490.0 (C)
-                  </td>
-                </tr>
-                <tr className="font-semibold">
-                  <td className="py-1.5">Cumulative Total</td>
-                  <td className="py-1.5 text-right">1,210.0</td>
-                  <td className="py-1.5 text-right">620.0</td>
-                  <td className="py-1.5 text-right text-emerald-500">
-                    +590.0 (C)
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <DataGrid
+              title="Average End Area Volumes"
+              onExportCsv={() => {}}
+              columns={[
+                { id: "station", header: "Station Interval", width: 100, pinned: true },
+                { id: "cut", header: "Cut (CY)", width: 80, align: "right" },
+                { id: "fill", header: "Fill (CY)", width: 80, align: "right" },
+                { id: "net", header: "Net", width: 90, align: "right", accessor: (row: any) => (
+                  <span className={row.net < 0 ? "text-rose-500" : "text-emerald-500"}>
+                    {row.net > 0 ? `+${row.net.toFixed(1)} (C)` : `${row.net.toFixed(1)} (F)`}
+                  </span>
+                )}
+              ]}
+              data={[
+                { station: "0+00 to 2+00", cut: 150.0, fill: 320.0, net: -170.0 },
+                { station: "2+00 to 5+00", cut: 450.0, fill: 180.0, net: 270.0 },
+                { station: "5+00 to 8+00", cut: 610.0, fill: 120.0, net: 490.0 },
+                { station: "Cumulative", cut: 1210.0, fill: 620.0, net: 590.0 }
+              ]}
+            />
           </div>
 
           {/* Mass Haul Diagram */}

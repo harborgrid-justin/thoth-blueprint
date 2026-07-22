@@ -18,7 +18,7 @@ import { SurveyLegend } from "./SurveyLegend";
 import { orderedVisibleElements } from "./helpers/canvasHelpers";
 import { ElementShape } from "./ElementShape";
 import { BoundaryDimensions, SurveyEdgeLabels } from "./BoundaryDimensions";
-import { DraftOverlay, MeasureOverlay, CanvasHud } from "./DraftOverlays";
+import { DraftOverlay, MeasureOverlay, CanvasHud, CrosshairOverlay } from "./DraftOverlays";
 import { AlignmentHandles, VertexHandles, EdgeHandles } from "./handles";
 import {
   UnderlayImage,
@@ -93,6 +93,7 @@ export function PlanningCanvas() {
     onPointerUp,
     onWheel,
     onDoubleClick,
+    boxSelection,
   } = interactions;
 
   const ordered = orderedVisibleElements(site);
@@ -109,9 +110,7 @@ export function PlanningCanvas() {
   const cursorClass =
     tool.mode === "pan"
       ? "cursor-grab"
-      : tool.mode === "select"
-        ? "cursor-default"
-        : "cursor-crosshair";
+      : "cursor-none";
 
   return (
     <ElementContextMenu
@@ -421,12 +420,33 @@ export function PlanningCanvas() {
             spatial={site.spatial}
           />
         )}
+        
+        {boxSelection && (
+          <rect
+            x={Math.min(boxSelection.startScreen.x, boxSelection.currentScreen.x)}
+            y={Math.min(boxSelection.startScreen.y, boxSelection.currentScreen.y)}
+            width={Math.abs(boxSelection.currentScreen.x - boxSelection.startScreen.x)}
+            height={Math.abs(boxSelection.currentScreen.y - boxSelection.startScreen.y)}
+            fill={boxSelection.currentScreen.x < boxSelection.startScreen.x ? "rgba(34, 197, 94, 0.15)" : "rgba(59, 130, 246, 0.15)"}
+            stroke={boxSelection.currentScreen.x < boxSelection.startScreen.x ? "rgb(34, 197, 94)" : "rgb(59, 130, 246)"}
+            strokeWidth={1.5}
+            strokeDasharray={boxSelection.currentScreen.x < boxSelection.startScreen.x ? "4 4" : undefined}
+            className="pointer-events-none"
+          />
+        )}
+
+        <CrosshairOverlay
+          cursorScreen={cursor ? worldToScreen(cursor, viewport) : null}
+          viewport={viewport}
+          snappedToVertex={cursorSnappedToVertex}
+        />
         </g>
       </svg>
 
       <CanvasHud
         tool={tool.label}
         cursor={cursor}
+        cursorScreen={cursor ? worldToScreen(cursor, viewport) : null}
         draft={draft.length}
         elevation={
           terrainSurface && cursor ? elevationAt(terrainSurface, cursor) : null
@@ -461,35 +481,45 @@ function Grid({
   const endWorldY = (size.height - viewport.offsetY) / viewport.zoom;
 
   let idx = 0;
-  for (let x = startWorldX; x <= endWorldX; x += step) {
-    const sx = x * viewport.zoom + viewport.offsetX;
-    const major = Math.round(x / step) % 5 === 0;
-    lines.push(
-      <line
-        key={`vx${idx++}`}
-        x1={sx}
-        y1={0}
-        x2={sx}
-        y2={size.height}
-        stroke={`hsl(var(${major ? "--canvas-grid-major" : "--canvas-grid"}))`}
-        strokeWidth={major ? 1 : 0.5}
-      />,
-    );
-  }
-  for (let y = startWorldY; y <= endWorldY; y += step) {
-    const sy = y * viewport.zoom + viewport.offsetY;
-    const major = Math.round(y / step) % 5 === 0;
-    lines.push(
-      <line
-        key={`hz${idx++}`}
-        x1={0}
-        y1={sy}
-        x2={size.width}
-        y2={sy}
-        stroke={`hsl(var(${major ? "--canvas-grid-major" : "--canvas-grid"}))`}
-        strokeWidth={major ? 1 : 0.5}
-      />,
-    );
+  // Adaptive Grid Fading
+  const screenStep = viewport.zoom * step;
+  const minorOpacity = Math.max(0, Math.min(1, (screenStep - 5) / 15));
+  
+  if (minorOpacity > 0 || true) {
+    for (let x = startWorldX; x <= endWorldX; x += step) {
+      const sx = x * viewport.zoom + viewport.offsetX;
+      const major = Math.round(x / step) % 5 === 0;
+      if (!major && minorOpacity === 0) continue;
+      lines.push(
+        <line
+          key={`vx${idx++}`}
+          x1={sx}
+          y1={0}
+          x2={sx}
+          y2={size.height}
+          stroke={`hsl(var(${major ? "--canvas-grid-major" : "--canvas-grid"}))`}
+          strokeWidth={major ? 1 : 0.5}
+          opacity={major ? 1 : minorOpacity}
+        />,
+      );
+    }
+    for (let y = startWorldY; y <= endWorldY; y += step) {
+      const sy = y * viewport.zoom + viewport.offsetY;
+      const major = Math.round(y / step) % 5 === 0;
+      if (!major && minorOpacity === 0) continue;
+      lines.push(
+        <line
+          key={`hz${idx++}`}
+          x1={0}
+          y1={sy}
+          x2={size.width}
+          y2={sy}
+          stroke={`hsl(var(${major ? "--canvas-grid-major" : "--canvas-grid"}))`}
+          strokeWidth={major ? 1 : 0.5}
+          opacity={major ? 1 : minorOpacity}
+        />,
+      );
+    }
   }
   return <g>{lines}</g>;
 }

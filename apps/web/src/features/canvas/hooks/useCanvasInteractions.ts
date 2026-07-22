@@ -11,6 +11,7 @@ import {
   type Polygon,
 } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
+import { useCanvasStore } from "@/store/canvasStore";
 import { useKeyboardShortcut } from "@/lib/hooks";
 import {
   niceGridStep,
@@ -39,7 +40,8 @@ export type Interaction =
       from: Point;
       to: Point;
       bulge: number;
-    };
+    }
+  | { type: "boxSelecting"; startWorld: Point; currentWorld: Point; startScreen: Point; currentScreen: Point };
 
 export interface CanvasInteractionsProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
@@ -401,12 +403,24 @@ export function useCanvasInteractions({
       };
     } else {
       select(null);
+      if (tool.mode === "select") {
+        const rect = getRect();
+        e.currentTarget.setPointerCapture(e.pointerId);
+        interactionRef.current = {
+          type: "boxSelecting",
+          startWorld: world,
+          currentWorld: world,
+          startScreen: { x: e.clientX - rect.left, y: e.clientY - rect.top },
+          currentScreen: { x: e.clientX - rect.left, y: e.clientY - rect.top },
+        };
+      }
     }
   }
 
   function onPointerMove(e: React.PointerEvent) {
     const { snapped, snappedToVertex } = resolveWorld(e.clientX, e.clientY);
     setCursor(snapped);
+    useCanvasStore.getState().setCursor(snapped);
     setCursorSnappedToVertex(snappedToVertex);
     const interaction = interactionRef.current;
 
@@ -442,6 +456,14 @@ export function useCanvasInteractions({
       return;
     }
 
+    if (interaction.type === "boxSelecting") {
+      const rect = getRect();
+      interaction.currentScreen = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      interaction.currentWorld = snapped;
+      forceRender();
+      return;
+    }
+
     if (interaction.type === "alignmentPI") {
       interaction.boundary = interaction.boundary.map((v, i) =>
         i === interaction.index ? snapped : v,
@@ -466,6 +488,38 @@ export function useCanvasInteractions({
     if (interaction.type === "moving") {
       if (interaction.delta.x !== 0 || interaction.delta.y !== 0) {
         moveSelection(interaction.delta);
+      }
+    } else if (interaction.type === "boxSelecting") {
+      const minX = Math.min(interaction.startWorld.x, interaction.currentWorld.x);
+      const maxX = Math.max(interaction.startWorld.x, interaction.currentWorld.x);
+      const minY = Math.min(interaction.startWorld.y, interaction.currentWorld.y);
+      const maxY = Math.max(interaction.startWorld.y, interaction.currentWorld.y);
+      
+      const isCrossing = interaction.currentScreen.x < interaction.startScreen.x;
+      const newSelection: string[] = [];
+
+      site?.elements.forEach((el) => {
+        if (!isSpatialElement(el) || el.layerId && site.layers?.find(l => l.id === el.layerId)?.locked) return;
+        
+        let fullyInside = true;
+        let anyInside = false;
+
+        for (const pt of el.boundary) {
+          const inside = pt.x >= minX && pt.x <= maxX && pt.y >= minY && pt.y <= maxY;
+          if (!inside) fullyInside = false;
+          if (inside) anyInside = true;
+        }
+
+        if (isCrossing ? anyInside : fullyInside) {
+          newSelection.push(el.id);
+        }
+      });
+
+      if (e.shiftKey) {
+        newSelection.forEach(id => select(id, true));
+      } else if (newSelection.length > 0) {
+        useWorkspaceStore.getState().select(null);
+        newSelection.forEach(id => select(id, true));
       }
     } else if (interaction.type === "vertex") {
       updateBoundary(interaction.elementId, interaction.boundary);
@@ -559,5 +613,9 @@ export function useCanvasInteractions({
     onPointerUp,
     onWheel,
     onDoubleClick,
+    boxSelection:
+      interactionRef.current.type === "boxSelecting"
+        ? interactionRef.current
+        : null,
   };
 }

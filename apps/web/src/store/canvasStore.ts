@@ -1,8 +1,11 @@
 import { create } from "zustand";
 import { clampZoom, type Viewport } from "@/features/canvas/helpers/viewport";
+import type { Point } from "@thoth/domain";
 
 interface CanvasState {
   viewport: Viewport;
+  cursor: Point | null;
+  setCursor: (p: Point | null) => void;
   showGrid: boolean;
   snapToGrid: boolean;
   snapToVertices: boolean;
@@ -63,6 +66,8 @@ interface CanvasState {
 
 export const useCanvasStore = create<CanvasState>((set, get) => ({
   viewport: { offsetX: 0, offsetY: 0, zoom: 3 },
+  cursor: null,
+  setCursor: (p) => set({ cursor: p }),
   showGrid: true,
   snapToGrid: true,
   snapToVertices: true,

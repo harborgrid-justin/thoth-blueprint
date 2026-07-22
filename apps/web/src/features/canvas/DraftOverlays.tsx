@@ -2,10 +2,40 @@ import { type Point, type SpatialContext } from "@thoth/domain";
 import { usePrefsStore } from "@/store/prefsStore";
 import { formatCoord } from "@/lib/units";
 import { type Viewport } from "./helpers/viewport";
-import {
-  computeDraftPoints,
-  computeMeasureReadout,
-} from "./helpers/draftHelpers";
+import { computeDraftPoints, computeMeasureReadout } from "./helpers/draftHelpers";
+
+export function CrosshairOverlay({
+  cursorScreen,
+  viewport: _viewport,
+  snappedToVertex,
+}: {
+  cursorScreen: Point | null;
+  viewport?: Viewport;
+  snappedToVertex?: boolean;
+}) {
+  if (!cursorScreen) return null;
+  return (
+    <g className="pointer-events-none">
+      <g className="opacity-50 mix-blend-difference" stroke="white" strokeWidth={0.5}>
+        <line x1={-10000} y1={cursorScreen.y} x2={10000} y2={cursorScreen.y} />
+        <line x1={cursorScreen.x} y1={-10000} x2={cursorScreen.x} y2={10000} />
+        <rect x={cursorScreen.x - 3} y={cursorScreen.y - 3} width={6} height={6} fill="none" />
+      </g>
+      {snappedToVertex && (
+        <rect
+          x={cursorScreen.x - 5}
+          y={cursorScreen.y - 5}
+          width={10}
+          height={10}
+          fill="none"
+          stroke="rgb(34, 197, 94)"
+          strokeWidth={2}
+          className="animate-pulse"
+        />
+      )}
+    </g>
+  );
+}
 
 export function DraftOverlay({
   draft,
@@ -33,6 +63,35 @@ export function DraftOverlay({
         strokeWidth={1.75}
         strokeDasharray="5 3"
       />
+      
+      {/* Polar Tracking Vector */}
+      {draft.length > 0 && cursorScreen && (() => {
+        const lastScreen = screenPts[screenPts.length - 2]; // the last clicked point
+        if (!lastScreen) return null;
+        
+        const dx = Math.abs(cursorScreen.x - lastScreen.x);
+        const dy = Math.abs(cursorScreen.y - lastScreen.y);
+        
+        // Tolerance for polar tracking visual (5 pixels)
+        const isHorizontal = dy < 5;
+        const isVertical = dx < 5;
+        
+        if (!isHorizontal && !isVertical) return null;
+        
+        return (
+          <line
+            x1={isHorizontal ? -10000 : lastScreen.x}
+            y1={isHorizontal ? lastScreen.y : -10000}
+            x2={isHorizontal ? 10000 : lastScreen.x}
+            y2={isHorizontal ? lastScreen.y : 10000}
+            stroke="rgb(34, 197, 94)"
+            strokeWidth={1}
+            strokeDasharray="8 4"
+            className="pointer-events-none opacity-60"
+          />
+        );
+      })()}
+
       {screenPts.map((s, i) => (
         <circle
           key={i}
@@ -136,6 +195,7 @@ export function MeasureOverlay({
 export function CanvasHud({
   tool,
   cursor,
+  cursorScreen,
   draft,
   elevation,
   units,
@@ -143,44 +203,56 @@ export function CanvasHud({
 }: {
   tool: string;
   cursor: Point | null;
+  cursorScreen: Point | null;
   draft: number;
   elevation: number | null;
   units: string;
   snappedToVertex: boolean;
 }) {
   const coordFormat = usePrefsStore((s) => s.coordFormat);
+
+  if (!cursorScreen) return null;
+
   return (
-    <div className="pointer-events-none absolute bottom-4 left-4 z-10 flex select-none items-center gap-2.5 rounded-xl border border-border/60 bg-card/85 px-3 py-1.5 text-xs text-muted-foreground shadow-lg backdrop-blur-md transition-all duration-200 hover:bg-card/95">
-      <span className="rounded-md bg-primary/10 px-2 py-0.5 font-semibold text-primary">
-        {tool}
-      </span>
-      {cursor && (
-        <span className="font-mono tabular-nums text-foreground">
-          {formatCoord(cursor, coordFormat)}
+    <div
+      className="pointer-events-none absolute z-20 flex select-none flex-col gap-1.5 rounded-lg border border-border/40 bg-background/90 p-2 text-xs text-muted-foreground shadow-2xl backdrop-blur-md transition-opacity duration-150"
+      style={{
+        left: cursorScreen.x + 20,
+        top: cursorScreen.y + 20,
+      }}
+    >
+      <div className="flex items-center gap-2">
+        <span className="rounded bg-primary/10 px-1.5 py-0.5 font-semibold text-primary text-[10px] uppercase tracking-wider">
+          {tool}
         </span>
-      )}
-      {snappedToVertex && (
-        <span className="flex items-center gap-1 rounded-md bg-emerald-500/10 px-2 py-0.5 font-semibold text-emerald-600 dark:text-emerald-400">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          ⌖ vertex
-        </span>
-      )}
-      {elevation != null && (
-        <span className="font-mono tabular-nums text-amber-600 dark:text-amber-400">
-          z {elevation.toFixed(1)} {units}
-        </span>
-      )}
+        {cursor && (
+          <span className="font-cad tabular-nums text-foreground">
+            {formatCoord(cursor, coordFormat)}
+          </span>
+        )}
+      </div>
+
+      <div className="flex items-center gap-2">
+        {snappedToVertex && (
+          <span className="flex items-center gap-1 rounded bg-emerald-500/10 px-1.5 py-0.5 font-semibold text-emerald-600 dark:text-emerald-400 text-[10px] uppercase">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            Snapping
+          </span>
+        )}
+        {elevation != null && (
+          <span className="font-cad tabular-nums text-amber-600 dark:text-amber-400">
+            Z: {elevation.toFixed(1)} {units}
+          </span>
+        )}
+      </div>
+
       {draft > 0 && (
-        <span className="font-medium text-primary">
+        <span className="mt-1 font-medium text-primary text-[10px]">
           {draft} pts ·{" "}
-          <kbd className="rounded bg-muted px-1 py-0.5 text-[10px] text-foreground">
-            Enter
-          </kbd>{" "}
-          to finish ·{" "}
-          <kbd className="rounded bg-muted px-1 py-0.5 text-[10px] text-foreground">
-            Esc
-          </kbd>{" "}
-          to cancel
+          <kbd className="rounded bg-muted px-1 py-0.5 text-foreground font-cad">Enter</kbd>{" "}
+          finish ·{" "}
+          <kbd className="rounded bg-muted px-1 py-0.5 text-foreground font-cad">Esc</kbd>{" "}
+          cancel
         </span>
       )}
     </div>

@@ -5,8 +5,8 @@ import type { VerticalProfile } from "./profile";
 import { profileElevationAt } from "./profile";
 import type { Assembly } from "./assembly";
 import { resolveAssemblyOffset } from "./assembly";
-import type { SuperelevationCurve } from "./superelevation";
-import { getSuperelevationSlope } from "./superelevation";
+import type { SuperelevationCurve } from "./superElevation";
+import { getSuperelevationSlope } from "./superElevation";
 import type { ElevationGrid } from "./terrain";
 import { elevationAt } from "./terrain";
 

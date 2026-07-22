@@ -73,35 +73,35 @@
     --border: 240 5% 85%;
     --input: 240 5% 85%;
     --ring: 221 83% 53%;
-    --radius: 1rem;
+    --radius: 0.125rem;
     --canvas: 240 10% 95%;
     --canvas-grid: 214 20% 88%;
     --canvas-grid-major: 214 18% 80%;
   }
 
   .dark {
-    --background: 240 6% 8%;
+    --background: 0 0% 8%;
     --foreground: 0 0% 98%;
-    --card: 240 6% 12%;
+    --card: 0 0% 12%;
     --card-foreground: 0 0% 98%;
-    --popover: 240 6% 12%;
+    --popover: 0 0% 12%;
     --popover-foreground: 0 0% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 240 6% 8%;
-    --secondary: 240 6% 16%;
+    --primary: 199 92% 60%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 0 0% 16%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 6% 16%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 240 6% 20%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 20%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 240 6% 20%;
-    --input: 240 6% 22%;
-    --ring: 217 91% 60%;
-    --canvas: 240 8% 6%;
-    --canvas-grid: 217 19% 18%;
-    --canvas-grid-major: 217 19% 26%;
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 199 92% 60%;
+    --canvas: 0 0% 4%;
+    --canvas-grid: 0 0% 15%;
+    --canvas-grid-major: 0 0% 22%;
   }
 
   /* High-contrast display mode (FE-PREFS-005 / NFR-A11Y-001): stronger borders
@@ -123,6 +123,11 @@
 
   * {
     border-color: hsl(var(--border));
+  }
+
+  /* Hardware-Accelerated 1px Lines for CAD Geometry */
+  svg path, svg line, svg polyline, svg polygon, svg circle, svg rect {
+    vector-effect: non-scaling-stroke;
   }
 
   html,
@@ -152,11 +157,35 @@
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.02em;
   }
+
+  /* Centralized CAD Utilities */
+  .cad-halo {
+    paint-order: stroke;
+    stroke: #0f172a;
+    stroke-width: 2.5px;
+  }
+
+  .cad-hot-grip {
+    cursor: pointer;
+    transition: fill 0.15s ease, stroke 0.15s ease, transform 0.15s ease;
+  }
+
+  .cad-hot-grip:hover {
+    fill: #ef4444;
+    stroke: #b91c1c;
+  }
+
+  .cad-hud-overlay {
+    pointer-events: none;
+    position: absolute;
+    z-index: 20;
+    user-select: none;
+  }
   
   .glass-panel {
-    @apply bg-background/80 backdrop-blur-xl border border-white/10 shadow-2xl;
+    @apply bg-background border border-border shadow-2xl;
   }
   .dark .glass-panel {
-    @apply bg-background/60 border-white/5;
+    @apply bg-card border-border;
   }
 }

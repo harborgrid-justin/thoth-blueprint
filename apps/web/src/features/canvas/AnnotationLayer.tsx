@@ -225,11 +225,7 @@ export function AnnotationLayer({
             <text
               x={mx}
               y={my - 5}
-              fontSize={9}
-              fontWeight={700}
-              textAnchor="middle"
-              fill={RED}
-              style={{ paintOrder: "stroke", stroke: HALO, strokeWidth: 2.5 }}
+              className="cad-halo"
             >
               MATCH LINE — SEE {ml.adjoiningSheet}
             </text>

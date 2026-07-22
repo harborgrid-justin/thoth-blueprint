@@ -30,9 +30,7 @@ export function CivilSymbolGlyph({
               x={10}
               y={4}
               fontSize={9}
-              fontWeight={700}
-              fill={INK}
-              style={{ paintOrder: "stroke", stroke: HALO, strokeWidth: 2.5 }}
+              className="cad-halo"
             >
               {subtype}
             </text>

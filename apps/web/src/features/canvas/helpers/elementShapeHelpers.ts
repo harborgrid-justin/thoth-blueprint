@@ -145,17 +145,20 @@ export function computeElementShapeStyle(
   let strokeColor = selected
     ? "hsl(var(--primary))"
     : hovered
-      ? "hsl(var(--warning))"
+      ? "hsl(var(--primary))" // AutoCAD uses a thick blue or white for hover preview
       : color;
   let strokeDash = dash;
   const strokeWidth = selected
     ? 2.5
     : hovered
-      ? 2.25
+      ? 4.0 // boldly thicken instantly before clicking
       : element.kind === "building"
         ? 1.5
         : 1.75;
   let fillOpacityOverride = isLine ? 0.25 : fillOpacity;
+  if (hovered && !isLine) {
+    fillOpacityOverride = Math.min(1.0, fillOpacity * 1.5);
+  }
   let elementColorOverride = color;
 
   const renovationStatus = element.renovationStatus || "existing";

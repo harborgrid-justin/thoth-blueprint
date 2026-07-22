@@ -292,11 +292,11 @@ export function MetricsPanel() {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-border bg-background/50 px-2.5 py-1.5">
-      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+    <div className="rounded border border-border bg-background/50 px-2 py-1">
+      <div className="text-[9px] uppercase tracking-wide text-muted-foreground">
         {label}
       </div>
-      <div className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">
+      <div className="mt-0.5 text-xs font-semibold tabular-nums text-foreground font-cad">
         {value}
       </div>
     </div>

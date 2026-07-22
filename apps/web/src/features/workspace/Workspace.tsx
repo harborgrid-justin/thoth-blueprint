@@ -13,11 +13,15 @@ import { PlanningCanvas } from "@/features/canvas/PlanningCanvas";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AliasMappingDialog } from "./AliasMappingDialog";
 import { TopBar } from "./TopBar";
 import { Toolbar } from "./Toolbar";
 import { LayerPanel } from "./LayerPanel";
 import { PropertiesPanel } from "./PropertiesPanel";
 import { FindPanel } from "@/features/find/FindPanel";
+import { CommandLine } from "@/features/command/CommandLine";
+import { StatusBar } from "./StatusBar";
+import { ViewportControls } from "./ViewportControls";
 import { useWorkspaceLayoutState } from "./hooks/useWorkspaceLayoutState";
 
 // Lazy-loaded dialogs & panels to optimize bundle sizes and speed up initialization
@@ -137,6 +141,7 @@ export function Workspace() {
     setCheckpointsOpen,
     save,
     commandActions,
+    // Dialog states
     platOpen,
     alignmentOpen,
     profileOpen,
@@ -152,6 +157,25 @@ export function Workspace() {
     prefsOpen,
     cogoOpen,
   } = useWorkspaceLayoutState();
+
+  const [aliasOpen, setAliasOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      // alt + a to open alias mapping
+      if (e.altKey && e.key.toLowerCase() === 'a') {
+        e.preventDefault();
+        setAliasOpen(true);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // Initialize workspace from DB ID
+  React.useEffect(() => {
+    useCanvasStore.getState().setCursor(null);
+  }, []);
 
   if (loading) {
     return <CenterMessage>Loading project…</CenterMessage>;
@@ -182,11 +206,15 @@ export function Workspace() {
         </div>
 
         {/* Floating Toolbar */}
-        <div className="absolute top-20 left-4 z-10 pointer-events-none">
-          <div className="pointer-events-auto glass-panel rounded-xl overflow-hidden shadow-lg p-1">
+        <div className="absolute top-20 left-4 bottom-4 z-10 pointer-events-none flex">
+          <div className="pointer-events-auto glass-panel rounded overflow-hidden shadow-lg p-1 flex">
             <Toolbar />
           </div>
         </div>
+
+        <ViewportControls />
+        <CommandLine />
+        <StatusBar />
 
         {/* Floating Sidebar (Properties / Layers / etc.) */}
         <div className="absolute top-20 right-4 bottom-4 z-10 flex pointer-events-none">
@@ -350,6 +378,7 @@ export function Workspace() {
             <MetesAndBoundsDialog />
           </React.Suspense>
         )}
+        <AliasMappingDialog open={aliasOpen} onOpenChange={setAliasOpen} />
         <React.Suspense fallback={null}>
           <SubdivisionBuilderDialog />
         </React.Suspense>

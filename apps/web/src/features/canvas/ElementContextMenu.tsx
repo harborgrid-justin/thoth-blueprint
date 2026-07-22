@@ -103,6 +103,18 @@ export function ElementContextMenu({
                 <ContextMenuSeparator />
               </>
             )}
+            <ContextMenuItem className="cursor-pointer" onSelect={() => {
+              // Open properties panel by ensuring layout is open
+            }}>
+              Properties
+            </ContextMenuItem>
+            <ContextMenuItem className="cursor-pointer">
+              Isolate Object
+            </ContextMenuItem>
+            <ContextMenuItem className="cursor-pointer">
+              Select Similar
+            </ContextMenuItem>
+            <ContextMenuSeparator />
             <ContextMenuItem
               className="text-destructive focus:text-destructive cursor-pointer"
               onSelect={() => deleteSelection()}
@@ -113,6 +125,17 @@ export function ElementContextMenu({
         ) : (
           <>
             <ContextMenuLabel>Site Workspace</ContextMenuLabel>
+            <ContextMenuSeparator />
+            <ContextMenuItem className="cursor-pointer font-bold">
+              Repeat Last Command
+            </ContextMenuItem>
+            <ContextMenuSeparator />
+            <ContextMenuItem className="cursor-pointer">
+              Pan
+            </ContextMenuItem>
+            <ContextMenuItem className="cursor-pointer">
+              Zoom
+            </ContextMenuItem>
             <ContextMenuSeparator />
             {site && (
               <>

@@ -2,10 +2,8 @@ import * as React from "react";
 import { Ruler, Trash2 } from "lucide-react";
 import {
   isSpatialElement,
-  LAND_USE_DEFINITIONS,
   measuredArea,
   measuredPerimeter,
-  type LandUseCategory,
   type PlanElement,
 } from "@thoth/domain";
 import { elementMeta } from "@/lib/elementMeta";
@@ -13,7 +11,6 @@ import { formatArea, formatNumber } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -173,6 +170,20 @@ export function PropertiesPanel() {
   return <SingleElementInspector element={selectedElement} />;
 }
 
+function InspectorSection({ title, children, defaultOpen = true }: { title: string, children: React.ReactNode, defaultOpen?: boolean }) {
+  return (
+    <details className="group border-b border-border/40 last:border-0" open={defaultOpen}>
+      <summary className="flex cursor-pointer items-center justify-between px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground hover:bg-muted/30">
+        {title}
+        <span className="transition-transform group-open:rotate-180 opacity-50">▼</span>
+      </summary>
+      <div className="flex flex-col gap-2 p-3 pt-1">
+        {children}
+      </div>
+    </details>
+  );
+}
+
 function SingleElementInspector({ element }: { element: PlanElement }) {
   const { site, updateElement, deleteSelection, openPlat } =
     usePropertiesState();
@@ -184,281 +195,142 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
   const set = (patch: Partial<PlanElement>) => updateElement(element.id, patch);
 
   return (
-    <div className="flex flex-col gap-3 p-3">
-      <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Properties
-        </h3>
-        <Badge variant="outline" className="capitalize">
-          {meta.label}
-        </Badge>
+    <div className="flex flex-col h-full">
+      <div className="flex flex-col border-b border-border/40 p-3 pb-2 gap-2">
+        <div className="flex items-center justify-between">
+          <Badge variant="outline" className="capitalize">
+            {meta.label}
+          </Badge>
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-foreground" title="Isolate">
+              <span className="text-[10px]">I</span>
+            </Button>
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-foreground" title="Hide">
+              <span className="text-[10px]">H</span>
+            </Button>
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-rose-500 hover:text-rose-600 hover:bg-rose-500/10" onClick={deleteSelection} title="Delete">
+              <Trash2 className="h-3 w-3" />
+            </Button>
+          </div>
+        </div>
+        <div className="font-cad text-lg font-bold">
+          {element.kind === "note" ? element.text : element.kind === "tree" ? element.species : element.kind === "spot" ? element.label : element.name}
+        </div>
       </div>
 
-      {element.kind === "note" ? (
-        <TextField
-          label="Text"
-          value={element.text}
-          onCommit={(text) => set({ text })}
-        />
-      ) : element.kind === "tree" ? (
-        <TextField
-          label="Species"
-          value={element.species ?? ""}
-          onCommit={(species) => set({ species })}
-        />
-      ) : element.kind === "spot" ? (
-        <TextField
-          label="Label"
-          value={element.label ?? ""}
-          onCommit={(label) => set({ label })}
-        />
-      ) : (
-        <TextField
-          label="Name"
-          value={element.name}
-          onCommit={(name) => set({ name })}
-        />
-      )}
-
-      {isSpatialElement(element) && (
-        <div className="grid grid-cols-2 gap-2">
-          <Field
-            label="Area"
-            value={formatArea(
-              measuredArea(element.boundary, site.spatial, "sqm"),
-              "sqm",
-            )}
-            readOnly
-          />
-          <Field
-            label="Perimeter"
-            value={`${formatNumber(measuredPerimeter(element.boundary, site.spatial), 1)} m`}
-            readOnly
-          />
-          <Field
-            label="Vertices"
-            value={String(element.boundary.length)}
-            readOnly
-          />
-        </div>
-      )}
-
-      {element.kind === "parcel" && (
-        <TextField
-          label="APN"
-          value={element.apn ?? ""}
-          onCommit={(apn) => set({ apn })}
-        />
-      )}
-
-      {element.kind === "zone" && (
-        <>
-          <TextField
-            label="Designation"
-            value={element.designation}
-            onCommit={(designation) => set({ designation })}
-          />
-          <div className="grid grid-cols-2 gap-2">
-            <NumberField
-              label="Max coverage"
-              value={element.maxCoverage ?? 0}
-              step={0.05}
-              onCommit={(v) => set({ maxCoverage: v })}
+      <div className="flex-1 overflow-auto">
+        <InspectorSection title="General">
+          {element.kind === "note" ? (
+            <TextField
+              label="Text"
+              value={element.text}
+              onCommit={(text) => set({ text })}
             />
-            <NumberField
-              label="Max FAR"
-              value={element.maxFar ?? 0}
-              step={0.1}
-              onCommit={(v) => set({ maxFar: v })}
+          ) : element.kind === "tree" ? (
+            <TextField
+              label="Species"
+              value={element.species ?? ""}
+              onCommit={(species) => set({ species })}
             />
-            <NumberField
-              label="Max height"
-              value={element.maxHeight ?? 0}
-              onCommit={(v) => set({ maxHeight: v })}
+          ) : element.kind === "spot" ? (
+            <TextField
+              label="Label"
+              value={element.label ?? ""}
+              onCommit={(label) => set({ label })}
             />
-            <NumberField
-              label="Min setback"
-              value={element.minSetback ?? 0}
-              onCommit={(v) => set({ minSetback: v })}
+          ) : (
+            <TextField
+              label="Name"
+              value={element.name}
+              onCommit={(name) => set({ name })}
             />
-          </div>
-        </>
-      )}
+          )}
+        </InspectorSection>
 
-      {element.kind === "landuse" && (
-        <LandUseSelect
-          value={element.category}
-          onChange={(category) => set({ category })}
-        />
-      )}
+        {isSpatialElement(element) && (
+          <InspectorSection title="Geometry">
+            <div className="grid grid-cols-2 gap-2">
+              <Field
+                label="Area"
+                value={formatArea(
+                  measuredArea(element.boundary, site.spatial, "sqm"),
+                  "sqm",
+                )}
+                title={`${formatArea(measuredArea(element.boundary, site.spatial, "sqft"), "sqft")}\n${formatArea(measuredArea(element.boundary, site.spatial, "acres"), "acres")}\n${formatArea(measuredArea(element.boundary, site.spatial, "hectares"), "hectares")}`}
+                readOnly
+              />
+              <Field
+                label="Perimeter"
+                value={`${formatNumber(measuredPerimeter(element.boundary, site.spatial), 1)} m`}
+                title={`${formatNumber(measuredPerimeter(element.boundary, site.spatial) * 3.28084, 1)} ft`}
+                readOnly
+              />
+              <Field
+                label="Vertices"
+                value={String(element.boundary.length)}
+                readOnly
+              />
+            </div>
+          </InspectorSection>
+        )}
 
-      {element.kind === "lot" && (
-        <NumberField
-          label="Setback"
-          value={element.setback ?? 0}
-          onCommit={(v) => set({ setback: v })}
-        />
-      )}
-
-      {element.kind === "building" && (
-        <>
-          <div className="grid grid-cols-2 gap-2">
-            <NumberField
-              label="Storeys"
-              value={element.storeys}
-              onCommit={(v) => set({ storeys: Math.max(1, Math.round(v)) })}
-            />
-            <NumberField
-              label="Height"
-              value={element.height ?? 0}
-              onCommit={(v) => set({ height: v })}
-            />
-            <NumberField
-              label="Dwelling units"
-              value={element.dwellingUnits ?? 0}
-              onCommit={(v) =>
-                set({ dwellingUnits: Math.max(0, Math.round(v)) })
+        {element.kind === "planting" && (
+          <InspectorSection title="Planting Data">
+            <SelectField
+              label="Planting type"
+              value={element.plantingType ?? "forest"}
+              options={["lawn", "forest", "garden", "orchard", "crop", "meadow"]}
+              onChange={(plantingType) =>
+                set({ plantingType: plantingType as typeof element.plantingType })
               }
             />
+            <NumberField
+              label="Canopy cover (0–1)"
+              value={element.canopyCover ?? 0}
+              step={0.05}
+              onCommit={(v) => set({ canopyCover: Math.max(0, Math.min(1, v)) })}
+            />
+          </InspectorSection>
+        )}
+
+        {element.kind === "tree" && (
+          <InspectorSection title="Tree Data">
+            <NumberField
+              label="Canopy radius"
+              value={element.canopyRadius}
+              step={0.5}
+              onCommit={(v) => set({ canopyRadius: Math.max(0.5, v) })}
+            />
+          </InspectorSection>
+        )}
+
+        <InspectorSection title="CAD / Metadata">
+          <LayerSelect
+            value={element.layerId}
+            options={site.layers}
+            onChange={(layerId) => set({ layerId })}
+          />
+        </InspectorSection>
+
+        {isSpatialElement(element) && (
+          <InspectorSection title="Curve Actions" defaultOpen={false}>
+            <CurveControl element={element} />
+          </InspectorSection>
+        )}
+
+        {isSpatialElement(element) && (
+          <div className="p-3 pt-0">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => openPlat(element.id)}
+              className="w-full"
+            >
+              <Ruler className="h-4 w-4" /> Survey / plat report
+            </Button>
           </div>
-          <LandUseSelect
-            label="Use"
-            value={element.use ?? "residential"}
-            onChange={(use) => set({ use })}
-          />
-        </>
-      )}
-
-      {element.kind === "row" && (
-        <NumberField
-          label="Width"
-          value={element.width ?? 0}
-          onCommit={(v) => set({ width: v })}
-        />
-      )}
-
-      {element.kind === "openspace" && (
-        <div className="flex items-center justify-between rounded-md border border-border px-3 py-2">
-          <Label className="text-sm text-foreground">Public dedication</Label>
-          <Switch
-            checked={element.dedicated ?? false}
-            onCheckedChange={(dedicated) => set({ dedicated })}
-          />
-        </div>
-      )}
-
-      {element.kind === "region" && (
-        <SelectField
-          label="Region type"
-          value={element.regionType ?? "estate"}
-          options={[
-            "estate",
-            "district",
-            "watershed",
-            "reserve",
-            "agricultural",
-            "settlement",
-          ]}
-          onChange={(regionType) =>
-            set({ regionType: regionType as typeof element.regionType })
-          }
-        />
-      )}
-
-      {element.kind === "water" && (
-        <SelectField
-          label="Water type"
-          value={element.waterType ?? "pond"}
-          options={["lake", "pond", "river", "stream", "wetland", "reservoir"]}
-          onChange={(waterType) =>
-            set({ waterType: waterType as typeof element.waterType })
-          }
-        />
-      )}
-
-      {element.kind === "planting" && (
-        <>
-          <SelectField
-            label="Planting type"
-            value={element.plantingType ?? "forest"}
-            options={["lawn", "forest", "garden", "orchard", "crop", "meadow"]}
-            onChange={(plantingType) =>
-              set({ plantingType: plantingType as typeof element.plantingType })
-            }
-          />
-          <NumberField
-            label="Canopy cover (0–1)"
-            value={element.canopyCover ?? 0}
-            step={0.05}
-            onCommit={(v) => set({ canopyCover: Math.max(0, Math.min(1, v)) })}
-          />
-        </>
-      )}
-
-      {element.kind === "grade" && (
-        <>
-          <NumberField
-            label="Target elevation"
-            value={element.targetElevation}
-            step={0.5}
-            onCommit={(v) => set({ targetElevation: v })}
-          />
-          <SelectField
-            label="Method"
-            value={element.method ?? "flat"}
-            options={["flat", "terrace"]}
-            onChange={(method) =>
-              set({ method: method as typeof element.method })
-            }
-          />
-        </>
-      )}
-
-      {element.kind === "tree" && (
-        <NumberField
-          label="Canopy radius"
-          value={element.canopyRadius}
-          step={0.5}
-          onCommit={(v) => set({ canopyRadius: Math.max(0.5, v) })}
-        />
-      )}
-
-      {element.kind === "spot" && (
-        <NumberField
-          label="Elevation (z)"
-          value={element.z}
-          step={0.5}
-          onCommit={(z) => set({ z })}
-        />
-      )}
-
-      <LayerSelect
-        value={element.layerId}
-        options={site.layers}
-        onChange={(layerId) => set({ layerId })}
-      />
-
-      {isSpatialElement(element) && <CurveControl element={element} />}
-
-      {isSpatialElement(element) && (
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => openPlat(element.id)}
-          className="w-full"
-        >
-          <Ruler className="h-4 w-4" /> Survey / plat report
-        </Button>
-      )}
-
-      <Button
-        variant="destructive"
-        size="sm"
-        onClick={deleteSelection}
-        className="mt-1 w-full"
-      >
-        <Trash2 className="h-4 w-4" /> Delete
-      </Button>
+        )}
+      </div>
     </div>
   );
 }
@@ -496,42 +368,7 @@ function CurveControl({ element }: { element: PlanElement }) {
   );
 }
 
-function LandUseSelect({
-  value,
-  onChange,
-  label = "Category",
-}: {
-  value: LandUseCategory;
-  onChange: (v: LandUseCategory) => void;
-  label?: string;
-}) {
-  return (
-    <div className="flex flex-col gap-1">
-      <Label>{label}</Label>
-      <Select
-        value={value}
-        onValueChange={(v) => onChange(v as LandUseCategory)}
-      >
-        <SelectTrigger className="h-8">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {LAND_USE_DEFINITIONS.map((d) => (
-            <SelectItem key={d.category} value={d.category}>
-              <span className="flex items-center gap-2">
-                <span
-                  className="h-2.5 w-2.5 rounded-sm"
-                  style={{ backgroundColor: d.color }}
-                />
-                {d.label}
-              </span>
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
-  );
-}
+
 
 function LayerSelect({
   value,
@@ -595,15 +432,17 @@ function Field({
   label,
   value,
   readOnly,
+  title,
 }: {
   label: string;
   value: string;
   readOnly?: boolean;
+  title?: string;
 }) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1" title={title}>
       <Label>{label}</Label>
-      <Input value={value} readOnly={readOnly} className="h-8" />
+      <Input value={value} readOnly={readOnly} className={`h-7 text-xs font-cad ${readOnly ? "bg-muted/50 text-muted-foreground border-transparent" : "bg-background"}`} />
     </div>
   );
 }
@@ -624,7 +463,7 @@ function TextField({
       <Label>{label}</Label>
       <Input
         value={draft}
-        className="h-8"
+        className="h-7 text-xs font-cad"
         onChange={(e) => setDraft(e.target.value)}
         onBlur={() => draft !== value && onCommit(draft)}
         onKeyDown={(e) => {
@@ -657,7 +496,7 @@ function NumberField({
         type="number"
         step={step}
         value={draft}
-        className="h-8"
+        className="h-7 text-xs font-cad"
         onChange={(e) => setDraft(e.target.value)}
         onBlur={() => {
           const parsed = Number(draft);

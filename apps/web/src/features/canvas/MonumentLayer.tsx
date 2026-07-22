@@ -114,8 +114,7 @@ export function MonumentLayer({
                 x={8}
                 y={3.5}
                 fontSize={8.5}
-                fill={INK}
-                style={{ paintOrder: "stroke", stroke: HALO, strokeWidth: 2.5 }}
+                className="cad-halo"
               >
                 {m.label ?? monumentLabel(m)}
               </text>

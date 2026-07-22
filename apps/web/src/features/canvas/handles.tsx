@@ -64,10 +64,10 @@ export function VertexHandles({
           y={s.y - 4}
           width={8}
           height={8}
-          rx={1.5}
-          fill="hsl(var(--background))"
-          stroke="hsl(var(--primary))"
-          strokeWidth={1.5}
+          fill="#3b82f6"
+          stroke="#1d4ed8"
+          strokeWidth={1}
+          className="cad-hot-grip hover:scale-110"
         />
       ))}
     </g>
@@ -97,11 +97,11 @@ export function EdgeHandles({
           y={h.y - 3.5}
           width={7}
           height={7}
+          fill="#3b82f6"
+          stroke="#1d4ed8"
+          strokeWidth={1}
           transform={`rotate(45 ${h.x} ${h.y})`}
-          fill={h.bulge ? "hsl(var(--primary))" : "hsl(var(--background))"}
-          stroke="hsl(var(--primary))"
-          strokeWidth={1.2}
-          opacity={0.85}
+          className="cad-hot-grip hover:scale-125"
         />
       ))}
     </g>
