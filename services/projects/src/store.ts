@@ -1,6 +1,6 @@
-import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { createStorage, type StorageAdapter } from "@thoth/storage";
 import {
   createId,
   subdivisionSite,
@@ -13,7 +13,7 @@ import {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_DIR = path.join(__dirname, "../data");
-const DB_FILE = path.join(DATA_DIR, "db.json");
+const SQLITE_FILE = path.join(DATA_DIR, "thoth.sqlite3");
 
 // Define basic interface types matching frontend / types
 export interface User {
@@ -168,35 +168,56 @@ function seedStore(): Store {
   };
 }
 
-export function loadStore(): Store {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
+// Persistence goes through @thoth/storage (SQLite by default — see
+// packages/storage/README.md for how this swaps to an enterprise backend).
+// Created lazily so tests can select a different STORAGE_DRIVER before the
+// first read/write.
+let storage: StorageAdapter | undefined;
 
-  if (!fs.existsSync(DB_FILE)) {
-    const store = seedStore();
-    fs.writeFileSync(DB_FILE, JSON.stringify(store, null, 2), "utf-8");
-    return store;
+function getStorage(): StorageAdapter {
+  if (!storage) {
+    storage = createStorage({ sqlite: { file: SQLITE_FILE } });
   }
-
-  try {
-    const content = fs.readFileSync(DB_FILE, "utf-8");
-    return JSON.parse(content) as Store;
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(
-      "Failed to parse database file, loading seed store instead.",
-      err,
-    );
-    return seedStore();
-  }
+  return storage;
 }
 
-export function writeStore(store: Store): void {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
+async function persist(target: StorageAdapter, store: Store): Promise<void> {
+  await target.transaction(async () => {
+    await target.clear("projects");
+    await target.clear("checkpoints");
+    await target.clear("threads");
+    for (const project of store.projects) {
+      await target.put<Project>("projects", project);
+    }
+    for (const checkpoint of store.checkpoints) {
+      await target.put<Checkpoint>("checkpoints", checkpoint);
+    }
+    for (const thread of store.threads) {
+      await target.put<ReviewThread>("threads", thread);
+    }
+  });
+}
+
+export async function loadStore(): Promise<Store> {
+  const target = getStorage();
+  const projects = await target.list<Project>("projects");
+
+  if (projects.length === 0) {
+    const seeded = seedStore();
+    await persist(target, seeded);
+    return seeded;
   }
-  fs.writeFileSync(DB_FILE, JSON.stringify(store, null, 2), "utf-8");
+
+  const [checkpoints, threads] = await Promise.all([
+    target.list<Checkpoint>("checkpoints"),
+    target.list<ReviewThread>("threads"),
+  ]);
+
+  return { projects, checkpoints, threads };
+}
+
+export async function writeStore(store: Store): Promise<void> {
+  await persist(getStorage(), store);
 }
 
 export const db = {
@@ -205,4 +226,11 @@ export const db = {
   summarize,
   CURRENT_USER,
   defaultMembers,
+};
+
+/** Test-only hook: lets tests reset the lazily-created storage singleton. */
+export const __test__ = {
+  resetStorage(): void {
+    storage = undefined;
+  },
 };

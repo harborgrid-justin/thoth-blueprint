@@ -91,6 +91,21 @@ modular monolith to start) is an implementation decision captured in the roadmap
 The Phase-6 CAD-sheet capability adds new logical areas inside the existing
 `projects` and `geospatial` services â€” no new top-level service is introduced.
 
+### `packages/storage` â€” the default internal storage layer
+
+Every service persists through a single `StorageAdapter` interface
+(`list`/`get`/`put`/`delete`/`clear`/`transaction` over named collections)
+instead of talking to a database driver directly. The default implementation
+is a local SQLite file â€” no server process, installed as a normal npm
+dependency (`better-sqlite3`) â€” which is enough for local development and
+small deployments. An in-memory adapter backs tests.
+
+This is the seam for growing into a larger enterprise backend later: a
+Postgres (or other) adapter implements the same `StorageAdapter` interface
+and is selected with `STORAGE_DRIVER`, with no changes at any call site. See
+[`packages/storage/README.md`](../packages/storage/README.md) for the
+adapter contract and the migration notes.
+
 ## Key architectural decisions
 
 | Decision | Rationale |

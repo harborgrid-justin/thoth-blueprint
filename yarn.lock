@@ -2417,6 +2417,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^10.0.1"
     "@thoth/domain": "npm:^0.1.0"
+    "@thoth/storage": "npm:^0.1.0"
     "@types/cors": "npm:^2.8.17"
     "@types/express": "npm:^5.0.0"
     "@types/morgan": "npm:^1.9.9"
@@ -2428,6 +2429,22 @@ __metadata:
     globals: "npm:^17.7.0"
     morgan: "npm:^1.10.0"
     tsx: "npm:^4.19.2"
+    typescript: "npm:^5.7.2"
+    typescript-eslint: "npm:^8.19.0"
+    vitest: "npm:^2.1.9"
+  languageName: unknown
+  linkType: soft
+
+"@thoth/storage@npm:^0.1.0, @thoth/storage@workspace:packages/storage":
+  version: 0.0.0-use.local
+  resolution: "@thoth/storage@workspace:packages/storage"
+  dependencies:
+    "@eslint/js": "npm:^10.0.1"
+    "@types/better-sqlite3": "npm:^7.6.13"
+    "@types/node": "npm:^22.10.2"
+    better-sqlite3: "npm:^13.0.1"
+    eslint: "npm:^10.7.0"
+    globals: "npm:^17.7.0"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.19.0"
     vitest: "npm:^2.1.9"
@@ -2538,6 +2555,15 @@ __metadata:
   dependencies:
     "@babel/types": "npm:^7.28.2"
   checksum: 10c0/b52d7d4e8fc6a9018fe7361c4062c1c190f5778cf2466817cb9ed19d69fbbb54f9a85ffedeb748ed8062d2cf7d4cc088ee739848f47c57740de1c48cbf0d0994
+  languageName: node
+  linkType: hard
+
+"@types/better-sqlite3@npm:^7.6.13":
+  version: 7.6.13
+  resolution: "@types/better-sqlite3@npm:7.6.13"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/c4336e7b92343eb0e988ded007c53fa9887b98a38d61175226e86124a1a2c28b1a4e3892873c5041e350b7bfa2901f85c82db1542c4f0eed1d3a899682c92106
   languageName: node
   linkType: hard
 
@@ -3102,6 +3128,16 @@ __metadata:
   dependencies:
     safe-buffer: "npm:5.1.2"
   checksum: 10c0/05f56db3a0fc31c89c86b605231e32ee143fb6ae38dc60616bc0970ae6a0f034172def99e69d3aed0e2c9e7cac84e2d63bc51a0b5ff6ab5fc8808cc8b29923c1
+  languageName: node
+  linkType: hard
+
+"better-sqlite3@npm:^13.0.1":
+  version: 13.0.1
+  resolution: "better-sqlite3@npm:13.0.1"
+  dependencies:
+    node-addon-api: "npm:^8.0.0"
+    node-gyp: "npm:latest"
+  checksum: 10c0/dab0d720e7b215490d68733c657de75f6fcffe1ce61d737ace9d2f195d02e90be9f19ced28f407247237aad7a5a371e044e601df9caa9d5617cff6a7a756ede5
   languageName: node
   linkType: hard
 
@@ -4676,6 +4712,15 @@ __metadata:
   version: 0.6.3
   resolution: "negotiator@npm:0.6.3"
   checksum: 10c0/3ec9fd413e7bf071c937ae60d572bc67155262068ed522cf4b3be5edbe6ddf67d095ec03a3a14ebf8fc8e95f8e1d61be4869db0dbb0de696f6b837358bd43fc2
+  languageName: node
+  linkType: hard
+
+"node-addon-api@npm:^8.0.0":
+  version: 8.9.0
+  resolution: "node-addon-api@npm:8.9.0"
+  dependencies:
+    node-gyp: "npm:latest"
+  checksum: 10c0/6d687ffbc66e9735f4182e4c05d137d083be1fa5972b1762307e007804a85b70f810fed5b908f27f48caa4ed831517c95eec5137c8a02eaa08893bdef7fec05e
   languageName: node
   linkType: hard
 

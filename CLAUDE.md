@@ -24,6 +24,7 @@ Read these before doing substantive work:
 apps/            client apps (apps/web = planning workspace)      ← new product
 services/        cloud backend (auth, projects, geospatial, collaboration)
 packages/domain  framework-agnostic planning domain model         ← start here
+packages/storage default internal storage layer (SQLite by default, swappable)
 docs/            product & engineering docs
 artifact/        ARCHIVED original DB-design app (read-only)
 .claude/         project agents & skills

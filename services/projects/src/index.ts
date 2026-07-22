@@ -25,7 +25,7 @@ app.get("/api/user", (_req, res) => {
 });
 
 // 2. Reset workspace (samples or empty)
-app.post("/api/workspace/reset", (req, res) => {
+app.post("/api/workspace/reset", async (req, res) => {
   const { mode } = req.body;
   if (mode !== "samples" && mode !== "empty") {
     return res
@@ -33,7 +33,7 @@ app.post("/api/workspace/reset", (req, res) => {
       .json({ error: "Invalid mode. Must be 'samples' or 'empty'." });
   }
 
-  const store = db.loadStore();
+  const store = await db.loadStore();
   if (mode === "empty") {
     store.projects = [];
     store.checkpoints = [];
@@ -41,19 +41,19 @@ app.post("/api/workspace/reset", (req, res) => {
   } else {
     // Actually let's just write seed data directly:
     const emptySeed = { projects: [], checkpoints: [], threads: [] };
-    db.writeStore(emptySeed);
-    const newSeeded = db.loadStore();
+    await db.writeStore(emptySeed);
+    const newSeeded = await db.loadStore();
     store.projects = newSeeded.projects;
     store.checkpoints = [];
     store.threads = [];
   }
-  db.writeStore(store);
+  await db.writeStore(store);
   return res.json({ message: "Workspace reset complete." });
 });
 
 // 3. List projects
-app.get("/api/projects", (_req, res) => {
-  const store = db.loadStore();
+app.get("/api/projects", async (_req, res) => {
+  const store = await db.loadStore();
   const summaries = store.projects
     .map((p) => db.summarize(p))
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
@@ -61,8 +61,8 @@ app.get("/api/projects", (_req, res) => {
 });
 
 // 4. Get project by ID
-app.get("/api/projects/:id", (req, res) => {
-  const store = db.loadStore();
+app.get("/api/projects/:id", async (req, res) => {
+  const store = await db.loadStore();
   const project = store.projects.find((p) => p.id === req.params.id);
   if (!project) {
     return res.status(404).json({ error: "Project not found" });
@@ -71,13 +71,13 @@ app.get("/api/projects/:id", (req, res) => {
 });
 
 // 5. Create project
-app.post("/api/projects", (req, res) => {
+app.post("/api/projects", async (req, res) => {
   const { name, description, template } = req.body;
   if (!name) {
     return res.status(400).json({ error: "Missing required field: name" });
   }
 
-  const store = db.loadStore();
+  const store = await db.loadStore();
   const site = siteForTemplate(name, template ?? "empty");
   const project: Project = {
     id: createId("proj"),
@@ -92,14 +92,14 @@ app.post("/api/projects", (req, res) => {
   };
 
   store.projects.push(project);
-  db.writeStore(store);
+  await db.writeStore(store);
   return res.status(201).json(project);
 });
 
 // 6. Rename/patch project metadata
-app.patch("/api/projects/:id", (req, res) => {
+app.patch("/api/projects/:id", async (req, res) => {
   const { name, description } = req.body;
-  const store = db.loadStore();
+  const store = await db.loadStore();
   const project = store.projects.find((p) => p.id === req.params.id);
   if (!project) {
     return res.status(404).json({ error: "Project not found" });
@@ -113,13 +113,13 @@ app.patch("/api/projects/:id", (req, res) => {
   }
   project.updatedAt = new Date().toISOString();
 
-  db.writeStore(store);
+  await db.writeStore(store);
   return res.json(project);
 });
 
 // 7. Delete project
-app.delete("/api/projects/:id", (req, res) => {
-  const store = db.loadStore();
+app.delete("/api/projects/:id", async (req, res) => {
+  const store = await db.loadStore();
   const index = store.projects.findIndex((p) => p.id === req.params.id);
   if (index === -1) {
     return res.status(404).json({ error: "Project not found" });
@@ -132,18 +132,18 @@ app.delete("/api/projects/:id", (req, res) => {
   );
   store.threads = store.threads.filter((t) => t.projectId !== req.params.id);
 
-  db.writeStore(store);
+  await db.writeStore(store);
   return res.status(204).end();
 });
 
 // 8. Save/autosave project site layout
-app.post("/api/projects/:id/save", (req, res) => {
+app.post("/api/projects/:id/save", async (req, res) => {
   const { site } = req.body;
   if (!site) {
     return res.status(400).json({ error: "Missing required field: site" });
   }
 
-  const store = db.loadStore();
+  const store = await db.loadStore();
   const project = store.projects.find((p) => p.id === req.params.id);
   if (!project) {
     return res.status(404).json({ error: "Project not found" });
@@ -152,13 +152,13 @@ app.post("/api/projects/:id/save", (req, res) => {
   project.site = site;
   project.updatedAt = new Date().toISOString();
 
-  db.writeStore(store);
+  await db.writeStore(store);
   return res.json(project);
 });
 
 // 9. List checkpoints
-app.get("/api/projects/:id/checkpoints", (req, res) => {
-  const store = db.loadStore();
+app.get("/api/projects/:id/checkpoints", async (req, res) => {
+  const store = await db.loadStore();
   const list = store.checkpoints
     .filter((c) => c.projectId === req.params.id)
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
@@ -166,13 +166,13 @@ app.get("/api/projects/:id/checkpoints", (req, res) => {
 });
 
 // 10. Create checkpoint
-app.post("/api/projects/:id/checkpoints", (req, res) => {
+app.post("/api/projects/:id/checkpoints", async (req, res) => {
   const { name, note } = req.body;
   if (!name) {
     return res.status(400).json({ error: "Missing required field: name" });
   }
 
-  const store = db.loadStore();
+  const store = await db.loadStore();
   const project = store.projects.find((p) => p.id === req.params.id);
   if (!project) {
     return res.status(404).json({ error: "Project not found" });
@@ -189,35 +189,39 @@ app.post("/api/projects/:id/checkpoints", (req, res) => {
   };
 
   store.checkpoints.push(checkpoint);
-  db.writeStore(store);
+  await db.writeStore(store);
   return res.status(201).json(checkpoint);
 });
 
 // 11. Restore project to checkpoint
-app.post("/api/projects/:id/checkpoints/:checkpointId/restore", (req, res) => {
-  const store = db.loadStore();
-  const project = store.projects.find((p) => p.id === req.params.id);
-  if (!project) {
-    return res.status(404).json({ error: "Project not found" });
-  }
+app.post(
+  "/api/projects/:id/checkpoints/:checkpointId/restore",
+  async (req, res) => {
+    const store = await db.loadStore();
+    const project = store.projects.find((p) => p.id === req.params.id);
+    if (!project) {
+      return res.status(404).json({ error: "Project not found" });
+    }
 
-  const checkpoint = store.checkpoints.find(
-    (c) => c.projectId === req.params.id && c.id === req.params.checkpointId,
-  );
-  if (!checkpoint) {
-    return res.status(404).json({ error: "Checkpoint not found" });
-  }
+    const checkpoint = store.checkpoints.find(
+      (c) =>
+        c.projectId === req.params.id && c.id === req.params.checkpointId,
+    );
+    if (!checkpoint) {
+      return res.status(404).json({ error: "Checkpoint not found" });
+    }
 
-  project.site = JSON.parse(JSON.stringify(checkpoint.site));
-  project.updatedAt = new Date().toISOString();
+    project.site = JSON.parse(JSON.stringify(checkpoint.site));
+    project.updatedAt = new Date().toISOString();
 
-  db.writeStore(store);
-  return res.json(project);
-});
+    await db.writeStore(store);
+    return res.json(project);
+  },
+);
 
 // 12. Delete checkpoint
-app.delete("/api/projects/:id/checkpoints/:checkpointId", (req, res) => {
-  const store = db.loadStore();
+app.delete("/api/projects/:id/checkpoints/:checkpointId", async (req, res) => {
+  const store = await db.loadStore();
   const index = store.checkpoints.findIndex(
     (c) => c.projectId === req.params.id && c.id === req.params.checkpointId,
   );
@@ -226,25 +230,25 @@ app.delete("/api/projects/:id/checkpoints/:checkpointId", (req, res) => {
   }
 
   store.checkpoints.splice(index, 1);
-  db.writeStore(store);
+  await db.writeStore(store);
   return res.status(204).end();
 });
 
 // 13. List comment threads
-app.get("/api/projects/:id/threads", (req, res) => {
-  const store = db.loadStore();
+app.get("/api/projects/:id/threads", async (req, res) => {
+  const store = await db.loadStore();
   const list = store.threads.filter((t) => t.projectId === req.params.id);
   res.json(list);
 });
 
 // 14. Add comment/thread
-app.post("/api/projects/:id/threads", (req, res) => {
+app.post("/api/projects/:id/threads", async (req, res) => {
   const { elementId, body } = req.body;
   if (!body) {
     return res.status(400).json({ error: "Missing required field: body" });
   }
 
-  const store = db.loadStore();
+  const store = await db.loadStore();
   const project = store.projects.find((p) => p.id === req.params.id);
   if (!project) {
     return res.status(404).json({ error: "Project not found" });
@@ -277,13 +281,13 @@ app.post("/api/projects/:id/threads", (req, res) => {
     store.threads.push(thread);
   }
 
-  db.writeStore(store);
+  await db.writeStore(store);
   return res.status(201).json(thread);
 });
 
 // 15. Resolve comment thread
-app.post("/api/projects/:id/threads/:threadId/resolve", (req, res) => {
-  const store = db.loadStore();
+app.post("/api/projects/:id/threads/:threadId/resolve", async (req, res) => {
+  const store = await db.loadStore();
   const thread = store.threads.find(
     (t) => t.projectId === req.params.id && t.id === req.params.threadId,
   );
@@ -292,7 +296,7 @@ app.post("/api/projects/:id/threads/:threadId/resolve", (req, res) => {
   }
 
   thread.resolved = true;
-  db.writeStore(store);
+  await db.writeStore(store);
   return res.json(thread);
 });
 

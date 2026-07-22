@@ -1,44 +1,20 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { db } from "./store.js";
+import { describe, it, expect, beforeAll, beforeEach } from "vitest";
+import { db, __test__, type Project } from "./store.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const DATA_DIR = path.join(__dirname, "../data");
-const DB_FILE = path.join(DATA_DIR, "db.json");
+// The store persists through @thoth/storage; the "memory" driver keeps
+// these tests fast and isolated from the filesystem.
+beforeAll(() => {
+  process.env.STORAGE_DRIVER = "memory";
+});
+
+beforeEach(() => {
+  __test__.resetStorage();
+});
 
 describe("Projects Service Store", () => {
-  let dbBackup: string | null = null;
+  it("should seed store on initial load if none exists", async () => {
+    const store = await db.loadStore();
 
-  beforeEach(() => {
-    // Back up existing DB if any
-    if (fs.existsSync(DB_FILE)) {
-      dbBackup = fs.readFileSync(DB_FILE, "utf-8");
-      fs.unlinkSync(DB_FILE);
-    } else {
-      dbBackup = null;
-    }
-  });
-
-  afterEach(() => {
-    // Restore DB backup
-    if (dbBackup !== null) {
-      if (!fs.existsSync(DATA_DIR)) {
-        fs.mkdirSync(DATA_DIR, { recursive: true });
-      }
-      fs.writeFileSync(DB_FILE, dbBackup, "utf-8");
-    } else if (fs.existsSync(DB_FILE)) {
-      fs.unlinkSync(DB_FILE);
-    }
-  });
-
-  it("should seed store on initial load if database file does not exist", () => {
-    expect(fs.existsSync(DB_FILE)).toBe(false);
-    const store = db.loadStore();
-
-    expect(fs.existsSync(DB_FILE)).toBe(true);
     expect(store.projects.length).toBe(3);
     expect(store.checkpoints.length).toBe(0);
     expect(store.threads.length).toBe(0);
@@ -49,11 +25,19 @@ describe("Projects Service Store", () => {
     expect(projectNames).toContain("Kestrel Ridge Estate");
   });
 
-  it("should successfully persist changes to the file system", () => {
-    const store = db.loadStore();
+  it("does not reseed once projects already exist", async () => {
+    const first = await db.loadStore();
+    await db.writeStore({ ...first, projects: [first.projects[0]] });
+
+    const second = await db.loadStore();
+    expect(second.projects.length).toBe(1);
+  });
+
+  it("should successfully persist changes across loadStore/writeStore calls", async () => {
+    const store = await db.loadStore();
     const originalCount = store.projects.length;
 
-    const newProject = {
+    const newProject: Project = {
       id: "proj-test-123",
       name: "Test persistence project",
       description: "Unit testing store persistence",
@@ -62,14 +46,14 @@ describe("Projects Service Store", () => {
       siteAreaAcres: 10,
       lotCount: 5,
       members: db.defaultMembers(),
-      site: { id: "site-123", name: "Test site", layers: [], elements: [] },
+      site: store.projects[0].site,
     };
 
     store.projects.push(newProject);
-    db.writeStore(store);
+    await db.writeStore(store);
 
-    // Load from disk again to verify persistence
-    const loadedStore = db.loadStore();
+    // Reload to verify persistence went through the storage layer.
+    const loadedStore = await db.loadStore();
     expect(loadedStore.projects.length).toBe(originalCount + 1);
 
     const savedProject = loadedStore.projects.find(
@@ -79,8 +63,34 @@ describe("Projects Service Store", () => {
     expect(savedProject?.name).toBe("Test persistence project");
   });
 
-  it("should generate correct project summaries", () => {
-    const store = db.loadStore();
+  it("round-trips checkpoints and review threads", async () => {
+    const store = await db.loadStore();
+    const project = store.projects[0];
+
+    store.checkpoints.push({
+      id: "cp-1",
+      projectId: project.id,
+      name: "Before rezoning",
+      createdAt: new Date().toISOString(),
+      authorName: "You",
+      site: project.site,
+    });
+    store.threads.push({
+      id: "thrd-1",
+      projectId: project.id,
+      elementId: null,
+      resolved: false,
+      comments: [],
+    });
+    await db.writeStore(store);
+
+    const reloaded = await db.loadStore();
+    expect(reloaded.checkpoints.map((c) => c.id)).toContain("cp-1");
+    expect(reloaded.threads.map((t) => t.id)).toContain("thrd-1");
+  });
+
+  it("should generate correct project summaries", async () => {
+    const store = await db.loadStore();
     const project = store.projects[0];
 
     const summary = db.summarize(project);
@@ -88,7 +98,6 @@ describe("Projects Service Store", () => {
     expect(summary.name).toBe(project.name);
     expect(summary.members.length).toBe(project.members.length);
     // Project object has site, summary shouldn't expose it
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((summary as any).site).toBeUndefined();
+    expect((summary as Partial<Project>).site).toBeUndefined();
   });
 });

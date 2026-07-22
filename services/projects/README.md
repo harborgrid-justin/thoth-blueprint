@@ -17,6 +17,10 @@ Project lifecycle & persistence for Thoth Blueprint.
 
 - Stores and versions domain state; it does not compute planning rules (that's
   `@thoth/domain`) and does not own identity (that's `@thoth/service-auth`).
+- Persists through `@thoth/storage`, never through a database driver directly
+  — projects, checkpoints, and review threads are collections in the default
+  SQLite-backed adapter. See [`packages/storage/README.md`](../../packages/storage/README.md)
+  for the storage layer and how it swaps to an enterprise database later.
 
 ---
 

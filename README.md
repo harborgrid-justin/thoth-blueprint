@@ -94,7 +94,8 @@ thoth-blueprint/
 │   ├── geospatial/     #   coordinate systems, layers, spatial ops
 │   └── collaboration/  #   real-time multi-user editing & presence
 ├── packages/
-│   └── domain/         # Framework-agnostic planning domain model — implemented + tested
+│   ├── domain/         # Framework-agnostic planning domain model — implemented + tested
+│   └── storage/        # Default internal storage layer — SQLite by default, swappable backend
 ├── docs/               # Vision, architecture, roadmap, glossary, migration
 ├── artifact/           # ARCHIVED original DB-design app (see artifact/README.md)
 ├── CLAUDE.md           # Guidance for AI agents working in this repo
