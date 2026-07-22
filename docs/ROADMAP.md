@@ -44,7 +44,9 @@ A usable, server-backed planning canvas for one user.
   cloud API interface, currently backed by a local (browser) implementation
   pending the real services below.
 - ⚪ `services/auth`: sign-in, organizations, basic roles.
-- ⚪ `services/projects`: create/open/save projects; server persistence.
+- 🟡 `services/projects`: create/open/save projects; server persistence via
+  `packages/storage` (SQLite by default, swappable for an enterprise backend
+  later).
 
 ## Phase 3 — Interoperability
 

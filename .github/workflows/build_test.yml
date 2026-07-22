@@ -73,6 +73,34 @@ jobs:
       - name: Run tests
         run: npm test
 
+  # The default internal storage layer (SQLite by default, swappable backend).
+  storage-test:
+    name: Test storage layer (packages/storage)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/storage
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type-check
+        run: npm run type-check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test
+
   # The cloud planning workspace (browser client).
   web-build:
     name: Build planning workspace (apps/web)
