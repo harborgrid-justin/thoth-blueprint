@@ -12,11 +12,11 @@
   "scripts": {
     "dev": "yarn workspace @thoth/web dev",
     "start": "yarn workspace @thoth/web dev",
-    "build": "yarn workspace @thoth/domain build && yarn workspace @thoth/web build",
+    "build": "yarn workspace @thoth/domain build && yarn workspace @thoth/storage build && yarn workspace @thoth/web build",
     "preview": "yarn workspace @thoth/web preview",
-    "test": "yarn workspace @thoth/domain test && yarn workspace @thoth/storage test && yarn workspace @thoth/service-projects test && yarn workspace @thoth/service-geospatial test && yarn workspace @thoth/web test",
-    "type-check": "yarn workspace @thoth/domain type-check && yarn workspace @thoth/storage type-check && yarn workspace @thoth/web type-check && yarn workspace @thoth/service-projects type-check && yarn workspace @thoth/service-geospatial type-check",
-    "lint": "yarn workspace @thoth/domain lint && yarn workspace @thoth/storage lint && yarn workspace @thoth/service-projects lint && yarn workspace @thoth/service-geospatial lint && yarn workspace @thoth/web lint"
+    "test": "yarn workspace @thoth/domain test && yarn workspace @thoth/storage test && yarn workspace @thoth/web test",
+    "type-check": "yarn workspace @thoth/domain type-check && yarn workspace @thoth/storage type-check && yarn workspace @thoth/web type-check",
+    "lint": "yarn workspace @thoth/domain lint && yarn workspace @thoth/storage lint && yarn workspace @thoth/web lint"
   },
   "engines": {
     "node": ">=20"

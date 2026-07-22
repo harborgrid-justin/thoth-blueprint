@@ -1,1 +1,2 @@
-export * from "./bearing";
+export * from './bearing';
+export * from './result';

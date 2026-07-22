@@ -47,6 +47,20 @@ export function useWorkspaceLayoutState() {
   const shortcutsOpen = useUiStore((s) => s.shortcutsOpen);
   const prefsOpen = useUiStore((s) => s.prefsOpen);
   const cogoOpen = useUiStore((s) => s.cogoOpen);
+  const panoramaOpen = useUiStore((s) => s.panoramaOpen);
+  const modelBuilderOpen = useUiStore((s) => s.modelBuilderOpen);
+  const lineworkOpen = useUiStore((s) => s.lineworkOpen);
+  const parcelLayoutOpen = useUiStore((s) => s.parcelLayoutOpen);
+  const sectionGridOpen = useUiStore((s) => s.sectionGridOpen);
+  const scriptsOpen = useUiStore((s) => s.scriptsOpen);
+  const roadStudioOpen = useUiStore((s) => s.roadStudioOpen);
+  const assemblyOpen = useUiStore((s) => s.assemblyOpen);
+  const subdivisionStudioOpen = useUiStore((s) => s.subdivisionStudioOpen);
+  const gradingStudioOpen = useUiStore((s) => s.gradingStudioOpen);
+  const pipeStudioOpen = useUiStore((s) => s.pipeStudioOpen);
+  const modelBuilderStudioOpen = useUiStore((s) => s.modelBuilderStudioOpen);
+  const surveyCogoStudioOpen = useUiStore((s) => s.surveyCogoStudioOpen);
+  const workspaceLayout = useUiStore((s) => s.workspaceLayout);
 
   const [sidebarWidth, setSidebarWidth] = React.useState(320);
   const isResizingRef = React.useRef(false);
@@ -253,5 +267,19 @@ export function useWorkspaceLayoutState() {
     shortcutsOpen,
     prefsOpen,
     cogoOpen,
+    panoramaOpen,
+    modelBuilderOpen,
+    lineworkOpen,
+    parcelLayoutOpen,
+    sectionGridOpen,
+    scriptsOpen,
+    roadStudioOpen,
+    assemblyOpen,
+    subdivisionStudioOpen,
+    gradingStudioOpen,
+    pipeStudioOpen,
+    modelBuilderStudioOpen,
+    surveyCogoStudioOpen,
+    workspaceLayout,
   };
 }

@@ -15,6 +15,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useToolbarState } from "./hooks/useToolbarState";
 import { isGroupStart } from "./helpers/toolbarHelpers";
+import { useUiStore } from "@/store/uiStore";
 
 /** The vertical drawing toolbar down the left edge of the workspace. */
 export function Toolbar() {
@@ -100,13 +101,16 @@ export function Toolbar() {
                   </div>
                 </TooltipContent>
               </Tooltip>
-              {['parcel', 'region', 'road'].includes(tool.id as string) && (
-                <DropdownMenuContent side="right" align="start" className="w-48 ml-2">
+              {['parcel', 'region', 'road', 'alignment', 'grade', 'spot'].includes(tool.id as string) && (
+                <DropdownMenuContent side="right" align="start" className="w-52 ml-2">
                   {tool.id === 'parcel' && (
                     <>
                       <DropdownMenuItem onClick={() => setTool('parcel')}>Parcel Boundary</DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setTool('lot')}>Lot Split</DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setTool('easement')}>Easement Area</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => useUiStore.getState().setParcelLayoutOpen(true)}>
+                        Slide-Line Layout (REQ-023)
+                      </DropdownMenuItem>
                     </>
                   )}
                   {tool.id === 'region' && (
@@ -114,6 +118,9 @@ export function Toolbar() {
                       <DropdownMenuItem onClick={() => setTool('region')}>Boundary Polygon</DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setTool('zone')}>Zoning Region</DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setTool('building')}>Building Footprint</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => useUiStore.getState().setModelBuilderOpen(true)}>
+                        Model Builder GIS (REQ-161)
+                      </DropdownMenuItem>
                     </>
                   )}
                   {tool.id === 'road' && (
@@ -121,6 +128,39 @@ export function Toolbar() {
                       <DropdownMenuItem onClick={() => setTool('road')}>Road Corridor</DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setTool('utility')}>Utility Line</DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setTool('alignment')}>Station Alignment</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => useUiStore.getState().setRoadStudioOpen(true)}>
+                        Road Design Studio (REQ-010)
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                  {tool.id === 'alignment' && (
+                    <>
+                      <DropdownMenuItem onClick={() => setTool('alignment')}>Station Alignment</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => useUiStore.getState().setAlignmentOpen(true)}>
+                        Alignment Report
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => useUiStore.getState().setLineworkOpen(true)}>
+                        Advanced Linework & Curves
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                  {tool.id === 'grade' && (
+                    <>
+                      <DropdownMenuItem onClick={() => setTool('grade')}>Grading Region</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => useUiStore.getState().setGradingOpen(true)}>
+                        Zero-Volume Solver
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => useUiStore.getState().setPanoramaOpen(true)}>
+                        Panorama Elevation Editor
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                  {tool.id === 'spot' && (
+                    <>
+                      <DropdownMenuItem onClick={() => setTool('spot')}>Spot Elevation Point</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => useUiStore.getState().setSectionGridOpen(true)}>
+                        Section Plotting Grid & QTO
+                      </DropdownMenuItem>
                     </>
                   )}
                 </DropdownMenuContent>

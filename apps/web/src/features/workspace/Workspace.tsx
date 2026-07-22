@@ -7,6 +7,7 @@ import {
   HardHat,
   Waves,
   Loader2,
+  FolderTree,
 } from "lucide-react";
 import { useCanvasStore } from "@/store/canvasStore";
 import { PlanningCanvas } from "@/features/canvas/PlanningCanvas";
@@ -23,6 +24,7 @@ import { CommandLine } from "@/features/command/CommandLine";
 import { StatusBar } from "./StatusBar";
 import { ViewportControls } from "./ViewportControls";
 import { useWorkspaceLayoutState } from "./hooks/useWorkspaceLayoutState";
+import { useUiStore } from "@/store/uiStore";
 
 // Lazy-loaded dialogs & panels to optimize bundle sizes and speed up initialization
 const Scene3D = React.lazy(() =>
@@ -124,6 +126,83 @@ const SubdivisionBuilderDialog = React.lazy(() =>
   })),
 );
 
+// Civil 3D Suite & Feature Dialogs
+const CivilStudioWorkspace = React.lazy(() =>
+  import("@/features/civil/CivilStudioWorkspace").then((m) => ({
+    default: m.CivilStudioWorkspace,
+  })),
+);
+const ProspectorTreePalette = React.lazy(() =>
+  import("@/features/civil/ProspectorTreePalette").then((m) => ({
+    default: m.ProspectorTreePalette,
+  })),
+);
+const PanoramaElevationEditorDialog = React.lazy(() =>
+  import("@/features/civil/PanoramaElevationEditorDialog").then((m) => ({
+    default: m.PanoramaElevationEditorDialog,
+  })),
+);
+const ModelBuilderGISDialog = React.lazy(() =>
+  import("@/features/civil/ModelBuilderGISDialog").then((m) => ({
+    default: m.ModelBuilderGISDialog,
+  })),
+);
+const AdvancedLineworkGeometryDialog = React.lazy(() =>
+  import("@/features/civil/AdvancedLineworkGeometryDialog").then((m) => ({
+    default: m.AdvancedLineworkGeometryDialog,
+  })),
+);
+const ParcelSizingLayoutDialog = React.lazy(() =>
+  import("@/features/civil/ParcelSizingLayoutDialog").then((m) => ({
+    default: m.ParcelSizingLayoutDialog,
+  })),
+);
+const SectionPlottingGridDialog = React.lazy(() =>
+  import("@/features/civil/SectionPlottingGridDialog").then((m) => ({
+    default: m.SectionPlottingGridDialog,
+  })),
+);
+const Scripts3DObjectsDialog = React.lazy(() =>
+  import("@/features/civil/Scripts3DObjectsDialog").then((m) => ({
+    default: m.Scripts3DObjectsDialog,
+  })),
+);
+const RoadDesignStudioDialog = React.lazy(() =>
+  import("@/features/survey/RoadDesignStudioDialog").then((m) => ({
+    default: m.RoadDesignStudioDialog,
+  })),
+);
+const AssemblyBuilderPanel = React.lazy(() =>
+  import("@/features/survey/AssemblyBuilderPanel").then((m) => ({
+    default: m.AssemblyBuilderPanel,
+  })),
+);
+const SubdivisionStudioDialog = React.lazy(() =>
+  import("@/features/survey/SubdivisionStudioDialog").then((m) => ({
+    default: m.SubdivisionStudioDialog,
+  })),
+);
+const GradingStudioDialog = React.lazy(() =>
+  import("@/features/civil/GradingStudioDialog").then((m) => ({
+    default: m.GradingStudioDialog,
+  })),
+);
+const PipeNetworkStudioDialog = React.lazy(() =>
+  import("@/features/survey/PipeNetworkStudioDialog").then((m) => ({
+    default: m.PipeNetworkStudioDialog,
+  })),
+);
+const ModelBuilderStudioDialog = React.lazy(() =>
+  import("@/features/civil/ModelBuilderStudioDialog").then((m) => ({
+    default: m.ModelBuilderStudioDialog,
+  })),
+);
+const SurveyCogoStudioDialog = React.lazy(() =>
+  import("@/features/survey/SurveyCogoStudioDialog").then((m) => ({
+    default: m.SurveyCogoStudioDialog,
+  })),
+);
+
 export function Workspace() {
   const {
     project,
@@ -156,6 +235,20 @@ export function Workspace() {
     shortcutsOpen,
     prefsOpen,
     cogoOpen,
+    panoramaOpen,
+    modelBuilderOpen,
+    lineworkOpen,
+    parcelLayoutOpen,
+    sectionGridOpen,
+    scriptsOpen,
+    roadStudioOpen,
+    assemblyOpen,
+    subdivisionStudioOpen,
+    gradingStudioOpen,
+    pipeStudioOpen,
+    modelBuilderStudioOpen,
+    surveyCogoStudioOpen,
+    workspaceLayout,
   } = useWorkspaceLayoutState();
 
   const [aliasOpen, setAliasOpen] = React.useState(false);
@@ -182,6 +275,14 @@ export function Workspace() {
   }
   if (error || !site) {
     return <CenterMessage>Could not load this project.</CenterMessage>;
+  }
+
+  if (workspaceLayout === "civil-studio") {
+    return (
+      <React.Suspense fallback={<CenterMessage>Loading Civil 3D Studio Workspace…</CenterMessage>}>
+        <CivilStudioWorkspace />
+      </React.Suspense>
+    );
   }
 
   return (
@@ -237,9 +338,12 @@ export function Workspace() {
               onValueChange={setTab}
               className="flex min-h-0 flex-1 flex-col"
             >
-              <TabsList className="m-2 grid grid-cols-6 bg-muted/50 rounded-lg">
+              <TabsList className="m-2 grid grid-cols-7 bg-muted/50 rounded-lg">
                 <TabsTrigger value="inspect" title="Inspect" className="rounded-md">
                   <SlidersHorizontal className="h-4 w-4" />
+                </TabsTrigger>
+                <TabsTrigger value="prospector" title="Prospector Tree" className="rounded-md">
+                  <FolderTree className="h-4 w-4 text-cyan-400" />
                 </TabsTrigger>
                 <TabsTrigger value="layers" title="Layers" className="rounded-md">
                   <Layers className="h-4 w-4" />
@@ -260,6 +364,13 @@ export function Workspace() {
               <ScrollArea className="min-h-0 flex-1">
                 <TabsContent value="inspect" className="mt-0">
                   <PropertiesPanel />
+                </TabsContent>
+                <TabsContent value="prospector" className="mt-0">
+                  {tab === "prospector" && (
+                    <React.Suspense fallback={<TabLoading label="prospector tree" />}>
+                      <ProspectorTreePalette />
+                    </React.Suspense>
+                  )}
                 </TabsContent>
                 <TabsContent value="layers" className="mt-0 py-2">
                   <LayerPanel />
@@ -376,6 +487,116 @@ export function Workspace() {
         {cogoOpen && (
           <React.Suspense fallback={null}>
             <MetesAndBoundsDialog />
+          </React.Suspense>
+        )}
+        {panoramaOpen && (
+          <React.Suspense fallback={null}>
+            <PanoramaElevationEditorDialog
+              isOpen={panoramaOpen}
+              onClose={() => useUiStore.getState().setPanoramaOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {modelBuilderOpen && (
+          <React.Suspense fallback={null}>
+            <ModelBuilderGISDialog
+              isOpen={modelBuilderOpen}
+              onClose={() => useUiStore.getState().setModelBuilderOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {lineworkOpen && (
+          <React.Suspense fallback={null}>
+            <AdvancedLineworkGeometryDialog
+              isOpen={lineworkOpen}
+              onClose={() => useUiStore.getState().setLineworkOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {parcelLayoutOpen && (
+          <React.Suspense fallback={null}>
+            <ParcelSizingLayoutDialog
+              isOpen={parcelLayoutOpen}
+              onClose={() => useUiStore.getState().setParcelLayoutOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {sectionGridOpen && (
+          <React.Suspense fallback={null}>
+            <SectionPlottingGridDialog
+              isOpen={sectionGridOpen}
+              onClose={() => useUiStore.getState().setSectionGridOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {scriptsOpen && (
+          <React.Suspense fallback={null}>
+            <Scripts3DObjectsDialog
+              isOpen={scriptsOpen}
+              onClose={() => useUiStore.getState().setScriptsOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {roadStudioOpen && (
+          <React.Suspense fallback={null}>
+            <RoadDesignStudioDialog
+              isOpen={roadStudioOpen}
+              onClose={() => useUiStore.getState().setRoadStudioOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {assemblyOpen && (
+          <React.Suspense fallback={null}>
+            <AssemblyBuilderPanel
+              open={assemblyOpen}
+              onClose={() => useUiStore.getState().setAssemblyOpen(false)}
+              assembly={{
+                id: "assy-workspace-1",
+                name: "Standard Road Cross-Section Assembly",
+                leftSubassemblies: [],
+                rightSubassemblies: [],
+              }}
+            />
+          </React.Suspense>
+        )}
+        {subdivisionStudioOpen && (
+          <React.Suspense fallback={null}>
+            <SubdivisionStudioDialog
+              isOpen={subdivisionStudioOpen}
+              onClose={() => useUiStore.getState().setSubdivisionStudioOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {gradingStudioOpen && (
+          <React.Suspense fallback={null}>
+            <GradingStudioDialog
+              isOpen={gradingStudioOpen}
+              onClose={() => useUiStore.getState().setGradingStudioOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {pipeStudioOpen && (
+          <React.Suspense fallback={null}>
+            <PipeNetworkStudioDialog
+              isOpen={pipeStudioOpen}
+              onClose={() => useUiStore.getState().setPipeStudioOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {modelBuilderStudioOpen && (
+          <React.Suspense fallback={null}>
+            <ModelBuilderStudioDialog
+              isOpen={modelBuilderStudioOpen}
+              onClose={() => useUiStore.getState().setModelBuilderStudioOpen(false)}
+            />
+          </React.Suspense>
+        )}
+        {surveyCogoStudioOpen && (
+          <React.Suspense fallback={null}>
+            <SurveyCogoStudioDialog
+              isOpen={surveyCogoStudioOpen}
+              onClose={() => useUiStore.getState().setSurveyCogoStudioOpen(false)}
+            />
           </React.Suspense>
         )}
         <AliasMappingDialog open={aliasOpen} onOpenChange={setAliasOpen} />

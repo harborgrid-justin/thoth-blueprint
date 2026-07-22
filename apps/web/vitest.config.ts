@@ -1,13 +1,9 @@
 import { fileURLToPath, URL } from "node:url";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
 
-// The domain model is consumed directly from source via an alias — it is
-// framework-agnostic TypeScript and needs no separate build step here. This
-// keeps apps/web and packages/domain in lockstep during development.
 export default defineConfig({
-  plugins: [tailwindcss(), react()],
+  plugins: [react() as any],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -19,8 +15,7 @@ export default defineConfig({
       ),
     },
   },
-  server: {
-    port: 5173,
-    host: true,
+  test: {
+    exclude: ["**/node_modules/**", "**/e2e/**"],
   },
 });

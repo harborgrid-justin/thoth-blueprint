@@ -1,4 +1,4 @@
-import { Grid2x2, CheckCircle2 } from "lucide-react";
+import { Grid2x2, CheckCircle2, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useSubdivisionBuilderState } from "./hooks/useSubdivisionBuilderState";
+import { useUiStore } from "@/store/uiStore";
 
 export function SubdivisionBuilderDialog() {
   const {
@@ -27,7 +28,6 @@ export function SubdivisionBuilderDialog() {
   if (!parcel) {
     return null;
   }
-
 
   return (
     <Dialog open={!!targetId} onOpenChange={(open) => !open && setTargetId(null)}>
@@ -60,11 +60,24 @@ export function SubdivisionBuilderDialog() {
           </div>
         </div>
 
-        <div className="flex justify-end gap-2">
-          <Button variant="outline" onClick={() => setTargetId(null)}>Cancel</Button>
-          <Button onClick={commitSubdivision}>
-            <CheckCircle2 className="h-4 w-4 mr-2" /> Subdivide
+        <div className="flex justify-between items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setTargetId(null);
+              useUiStore.getState().setSubdivisionStudioOpen(true);
+            }}
+            className="text-cyan-400 hover:text-cyan-300 text-xs"
+          >
+            <Sparkles className="h-3.5 w-3.5 mr-1" /> Subdivision Studio
           </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => setTargetId(null)}>Cancel</Button>
+            <Button onClick={commitSubdivision}>
+              <CheckCircle2 className="h-4 w-4 mr-2" /> Subdivide
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

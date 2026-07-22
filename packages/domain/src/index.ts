@@ -83,5 +83,8 @@ export * from "./drawing/platset";
 export * from "./drawing/qto";
 export * from "./drawing/collada";
 
+// Domain Storage Layer (Pluggable Repositories)
+export * from "./storage/index";
+
 // Smart Automated Engineering Engine (100 Experiences)
 export * from "./smart/index";

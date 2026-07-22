@@ -6,6 +6,7 @@ import {
   Cloud,
   Command,
   Compass,
+  Droplets,
   Grid3x3,
   History,
   LayoutTemplate,
@@ -100,6 +101,20 @@ export function TopBar({
     handDrawnMode,
     toggleHandDrawnMode,
     openFind,
+    setPanoramaOpen,
+    setLineworkOpen,
+    setParcelLayoutOpen,
+    setSectionGridOpen,
+    setScriptsOpen,
+    setRoadStudioOpen,
+    setAssemblyOpen,
+    setSubdivisionStudioOpen,
+    setGradingStudioOpen,
+    setPipeStudioOpen,
+    setModelBuilderStudioOpen,
+    setSurveyCogoStudioOpen,
+    workspaceLayout,
+    toggleWorkspaceLayout,
   } = useTopBarState();
 
   return (
@@ -229,8 +244,63 @@ export function TopBar({
 
         <Separator orientation="vertical" className="mx-1 h-6" />
 
+        {/* Civil Studio Workspace View Toggle */}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={toggleWorkspaceLayout}
+          className="hidden xl:flex gap-1 text-xs border-cyan-500/40 text-cyan-400 hover:bg-cyan-950/40 font-semibold"
+        >
+          {workspaceLayout === "civil-studio" ? "Standard Layout" : "Civil 3D Ribbon"}
+        </Button>
+
         <ImportExportMenu />
         <NamedViewsMenu />
+
+        {/* Civil 3D Studio Suite Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="hidden md:flex gap-1.5 text-cyan-400 hover:bg-cyan-950/30 transition-colors font-medium">
+              <HardHat className="h-4 w-4 text-cyan-400" /> Civil Suite <ChevronDown className="h-3 w-3 opacity-50" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56 bg-background/90 backdrop-blur-xl border-cyan-500/20">
+            <DropdownMenuItem onClick={() => setSubdivisionStudioOpen(true)}>
+              <Grid3x3 className="mr-2 h-4 w-4 text-cyan-400" /> Subdivision Studio & Solvers
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setRoadStudioOpen(true)}>
+              <Spline className="mr-2 h-4 w-4 text-blue-400" /> Road Design Studio
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setGradingStudioOpen(true)}>
+              <Mountain className="mr-2 h-4 w-4 text-emerald-400" /> Grading & Earthwork Studio
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setPipeStudioOpen(true)}>
+              <Droplets className="mr-2 h-4 w-4 text-blue-400" /> Pipe Network & Hydrology Studio
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setModelBuilderStudioOpen(true)}>
+              <Cloud className="mr-2 h-4 w-4 text-purple-400" /> GIS & Model Builder Studio
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setSurveyCogoStudioOpen(true)}>
+              <Compass className="mr-2 h-4 w-4 text-amber-400" /> Survey & COGO Plat Studio
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLineworkOpen(true)}>
+              <Compass className="mr-2 h-4 w-4 text-amber-400" /> Advanced Linework & Curves
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setPanoramaOpen(true)}>
+              <Mountain className="mr-2 h-4 w-4 text-emerald-400" /> Panorama Elevation Editor
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setParcelLayoutOpen(true)}>
+              <Square className="mr-2 h-4 w-4 text-cyan-400" /> Parcel Sizing & Layout
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setSectionGridOpen(true)}>
+              <Grid3x3 className="mr-2 h-4 w-4 text-blue-400" /> Section Plotting Grid
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setScriptsOpen(true)}>
+              <Command className="mr-2 h-4 w-4 text-emerald-400" /> Scripts & 3D Objects
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         {/* Dropdowns for condensed layout */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -238,7 +308,7 @@ export function TopBar({
               <HardHat className="h-4 w-4" /> Design <ChevronDown className="h-3 w-3 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 bg-background/80 backdrop-blur-xl border-white/10">
+          <DropdownMenuContent align="end" className="w-52 bg-background/80 backdrop-blur-xl border-white/10">
             <DropdownMenuItem onClick={() => setCogoOpen(true)}>
               <Compass className="mr-2 h-4 w-4" /> COGO Builder
             </DropdownMenuItem>
@@ -249,10 +319,16 @@ export function TopBar({
               <SlidersHorizontal className="mr-2 h-4 w-4" /> Superelevation
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setCorridorOpen(true)}>
-              <HardHat className="mr-2 h-4 w-4" /> Corridor
+              <HardHat className="mr-2 h-4 w-4" /> Corridor Designer
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setAssemblyOpen(true)}>
+              <HardHat className="mr-2 h-4 w-4 text-blue-400" /> Assembly Builder
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setGradingOpen(true)}>
-              <Mountain className="mr-2 h-4 w-4" /> Grading
+              <Mountain className="mr-2 h-4 w-4" /> Grading Pad Solver
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setParcelLayoutOpen(true)}>
+              <Square className="mr-2 h-4 w-4 text-cyan-400" /> Parcel Slide-Line Sizing
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -263,12 +339,18 @@ export function TopBar({
               <Search className="h-4 w-4" /> Analysis <ChevronDown className="h-3 w-3 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 bg-background/80 backdrop-blur-xl border-white/10">
+          <DropdownMenuContent align="end" className="w-52 bg-background/80 backdrop-blur-xl border-white/10">
             <DropdownMenuItem onClick={() => setProfileOpen(true)}>
               <LayoutTemplate className="mr-2 h-4 w-4" /> Profile & Sections
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setPipeOpen(true)}>
-              <Files className="mr-2 h-4 w-4" /> Pipes Audit
+              <Files className="mr-2 h-4 w-4" /> Pipes Audit & HGL
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setPanoramaOpen(true)}>
+              <Mountain className="mr-2 h-4 w-4 text-emerald-400" /> Panorama Elevation Grid
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setSectionGridOpen(true)}>
+              <Grid3x3 className="mr-2 h-4 w-4 text-blue-400" /> Section Plotting & QTO
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

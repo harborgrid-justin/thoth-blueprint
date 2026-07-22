@@ -37,6 +37,22 @@ interface UiState {
   /** Whether main screen canvas renders in hand-drawn surveyor mode. */
   handDrawnMode: boolean;
 
+  /** Civil 3D Feature Dialog States */
+  panoramaOpen: boolean;
+  modelBuilderOpen: boolean;
+  lineworkOpen: boolean;
+  parcelLayoutOpen: boolean;
+  sectionGridOpen: boolean;
+  scriptsOpen: boolean;
+  roadStudioOpen: boolean;
+  assemblyOpen: boolean;
+  subdivisionStudioOpen: boolean;
+  gradingStudioOpen: boolean;
+  pipeStudioOpen: boolean;
+  modelBuilderStudioOpen: boolean;
+  surveyCogoStudioOpen: boolean;
+  workspaceLayout: "standard" | "civil-studio";
+
   openPlat(targetId?: string | null): void;
   closePlat(): void;
   setAlignmentOpen(open: boolean): void;
@@ -56,6 +72,22 @@ interface UiState {
   toggleCommand(): void;
   setShortcutsOpen(open: boolean): void;
   setPrefsOpen(open: boolean): void;
+
+  setPanoramaOpen(open: boolean): void;
+  setModelBuilderOpen(open: boolean): void;
+  setLineworkOpen(open: boolean): void;
+  setParcelLayoutOpen(open: boolean): void;
+  setSectionGridOpen(open: boolean): void;
+  setScriptsOpen(open: boolean): void;
+  setRoadStudioOpen(open: boolean): void;
+  setAssemblyOpen(open: boolean): void;
+  setSubdivisionStudioOpen(open: boolean): void;
+  setGradingStudioOpen(open: boolean): void;
+  setPipeStudioOpen(open: boolean): void;
+  setModelBuilderStudioOpen(open: boolean): void;
+  setSurveyCogoStudioOpen(open: boolean): void;
+  setWorkspaceLayout(layout: "standard" | "civil-studio"): void;
+  toggleWorkspaceLayout(): void;
 }
 
 export const useUiStore = create<UiState>((set) => ({
@@ -76,6 +108,21 @@ export const useUiStore = create<UiState>((set) => ({
   cogoOpen: false,
   subdivisionTargetId: null,
   handDrawnMode: true,
+
+  panoramaOpen: false,
+  modelBuilderOpen: false,
+  lineworkOpen: false,
+  parcelLayoutOpen: false,
+  sectionGridOpen: false,
+  scriptsOpen: false,
+  roadStudioOpen: false,
+  assemblyOpen: false,
+  subdivisionStudioOpen: false,
+  gradingStudioOpen: false,
+  pipeStudioOpen: false,
+  modelBuilderStudioOpen: false,
+  surveyCogoStudioOpen: false,
+  workspaceLayout: "standard",
 
   openPlat(targetId = null) {
     set({ platOpen: true, platTargetId: targetId });
@@ -133,5 +180,53 @@ export const useUiStore = create<UiState>((set) => ({
   },
   setPrefsOpen(prefsOpen) {
     set({ prefsOpen });
+  },
+
+  setPanoramaOpen(panoramaOpen) {
+    set({ panoramaOpen });
+  },
+  setModelBuilderOpen(modelBuilderOpen) {
+    set({ modelBuilderOpen });
+  },
+  setLineworkOpen(lineworkOpen) {
+    set({ lineworkOpen });
+  },
+  setParcelLayoutOpen(parcelLayoutOpen) {
+    set({ parcelLayoutOpen });
+  },
+  setSectionGridOpen(sectionGridOpen) {
+    set({ sectionGridOpen });
+  },
+  setScriptsOpen(scriptsOpen) {
+    set({ scriptsOpen });
+  },
+  setRoadStudioOpen(roadStudioOpen) {
+    set({ roadStudioOpen });
+  },
+  setAssemblyOpen(assemblyOpen) {
+    set({ assemblyOpen });
+  },
+  setSubdivisionStudioOpen(subdivisionStudioOpen) {
+    set({ subdivisionStudioOpen });
+  },
+  setGradingStudioOpen(gradingStudioOpen) {
+    set({ gradingStudioOpen });
+  },
+  setPipeStudioOpen(pipeStudioOpen) {
+    set({ pipeStudioOpen });
+  },
+  setModelBuilderStudioOpen(modelBuilderStudioOpen) {
+    set({ modelBuilderStudioOpen });
+  },
+  setSurveyCogoStudioOpen(surveyCogoStudioOpen) {
+    set({ surveyCogoStudioOpen });
+  },
+  setWorkspaceLayout(workspaceLayout) {
+    set({ workspaceLayout });
+  },
+  toggleWorkspaceLayout() {
+    set((s) => ({
+      workspaceLayout: s.workspaceLayout === "standard" ? "civil-studio" : "standard",
+    }));
   },
 }));

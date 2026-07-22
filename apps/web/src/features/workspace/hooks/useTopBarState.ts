@@ -46,6 +46,21 @@ export function useTopBarState() {
   const setCogoOpen = useUiStore((s) => s.setCogoOpen);
   const handDrawnMode = useUiStore((s) => s.handDrawnMode);
   const toggleHandDrawnMode = useUiStore((s) => s.toggleHandDrawnMode);
+  const setPanoramaOpen = useUiStore((s) => s.setPanoramaOpen);
+  const setModelBuilderOpen = useUiStore((s) => s.setModelBuilderOpen);
+  const setLineworkOpen = useUiStore((s) => s.setLineworkOpen);
+  const setParcelLayoutOpen = useUiStore((s) => s.setParcelLayoutOpen);
+  const setSectionGridOpen = useUiStore((s) => s.setSectionGridOpen);
+  const setScriptsOpen = useUiStore((s) => s.setScriptsOpen);
+  const setRoadStudioOpen = useUiStore((s) => s.setRoadStudioOpen);
+  const setAssemblyOpen = useUiStore((s) => s.setAssemblyOpen);
+  const setSubdivisionStudioOpen = useUiStore((s) => s.setSubdivisionStudioOpen);
+  const setGradingStudioOpen = useUiStore((s) => s.setGradingStudioOpen);
+  const setPipeStudioOpen = useUiStore((s) => s.setPipeStudioOpen);
+  const setModelBuilderStudioOpen = useUiStore((s) => s.setModelBuilderStudioOpen);
+  const setSurveyCogoStudioOpen = useUiStore((s) => s.setSurveyCogoStudioOpen);
+  const workspaceLayout = useUiStore((s) => s.workspaceLayout);
+  const toggleWorkspaceLayout = useUiStore((s) => s.toggleWorkspaceLayout);
   const openFind = useFindStore((s) => s.openFind);
 
   return {
@@ -84,5 +99,20 @@ export function useTopBarState() {
     handDrawnMode,
     toggleHandDrawnMode,
     openFind,
+    setPanoramaOpen,
+    setModelBuilderOpen,
+    setLineworkOpen,
+    setParcelLayoutOpen,
+    setSectionGridOpen,
+    setScriptsOpen,
+    setRoadStudioOpen,
+    setAssemblyOpen,
+    setSubdivisionStudioOpen,
+    setGradingStudioOpen,
+    setPipeStudioOpen,
+    setModelBuilderStudioOpen,
+    setSurveyCogoStudioOpen,
+    workspaceLayout,
+    toggleWorkspaceLayout,
   };
 }
