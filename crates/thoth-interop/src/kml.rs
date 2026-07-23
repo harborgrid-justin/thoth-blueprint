@@ -176,7 +176,7 @@ pub fn write_kmz(placemarks: &[KmlPlacemark], document_name: &str) -> Vec<u8> {
 ///
 /// # Errors
 /// [`crate::error::InteropError::MissingField`] if the archive has no entry
-/// named `doc.kml`; propagates [`crate::zip_store::read_zip`]'s errors for a
+/// named `doc.kml`; propagates the internal ZIP reader's errors for a
 /// malformed archive.
 pub fn extract_kml_from_kmz(kmz: &[u8]) -> InteropResult<String> {
     let entries = crate::zip_store::read_zip(kmz)?;
