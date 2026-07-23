@@ -8,6 +8,12 @@ members = [
     "crates/thoth-drawing",
     "crates/thoth-services",
     "crates/thoth-bindings",
+    # Native Node (napi-rs) binding surface — the integration engineer's
+    # exclusive addition (see crates/README.md and docs/RUST_MIGRATION.md).
+    # Kept separate from thoth-bindings (wasm-bindgen only) rather than one
+    # crate wearing both hats; depends only on the frozen thoth-spatial, so
+    # it doesn't collide with the five domain crates' in-flight work.
+    "crates/thoth-napi",
 ]
 
 [workspace.package]

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "lum-2x4-df-8ft",
+    "sku": "L-2X4-DF-08",
+    "name": "2x4x8' Douglas Fir #2 & Better Framing Stud",
+    "category": "lumber",
+    "subcategory": "dimensional_lumber",
+    "description": "Kiln-dried 2in x 4in x 8ft Douglas Fir dimension lumber stud.",
+    "manufacturer": "Weyerhaeuser",
+    "unit": "ea",
+    "cost": 5.25,
+    "dimensions": {
+      "width": 0.2917,
+      "height": 0.125,
+      "length": 8.0,
+      "thickness": 0.125
+    },
+    "properties": {
+      "nominalSize": "2x4",
+      "actualSize": "1.5 in x 3.5 in",
+      "species": "Douglas Fir",
+      "grade": "#2 & Better",
+      "kilnDried": true
+    },
+    "tags": ["lumber", "framing", "2x4", "stud", "wood"]
+  },
+  {
+    "id": "lum-2x6-syp-12ft",
+    "sku": "L-2X6-SYP-12",
+    "name": "2x6x12' Southern Yellow Pine #2 Lumber",
+    "category": "lumber",
+    "subcategory": "dimensional_lumber",
+    "description": "2in x 6in x 12ft Southern Yellow Pine structural lumber for joists and exterior walls.",
+    "manufacturer": "Georgia-Pacific",
+    "unit": "ea",
+    "cost": 11.8,
+    "dimensions": {
+      "width": 0.4583,
+      "height": 0.125,
+      "length": 12.0
+    },
+    "properties": {
+      "nominalSize": "2x6",
+      "actualSize": "1.5 in x 5.5 in",
+      "species": "Southern Yellow Pine",
+      "grade": "#2"
+    },
+    "tags": ["lumber", "framing", "2x6", "joist", "pine"]
+  },
+  {
+    "id": "lum-plywood-cdx-050-4x8",
+    "sku": "L-PLY-CDX-050",
+    "name": "1/2\" x 4' x 8' CDX Exterior Plywood Sheathing",
+    "category": "lumber",
+    "subcategory": "sheet_goods",
+    "description": "1/2in thick 4ft x 8ft pine CDX plywood panel for roof and wall sheathing.",
+    "manufacturer": "APA Sheathing",
+    "unit": "ea",
+    "cost": 24.5,
+    "dimensions": {
+      "width": 4.0,
+      "length": 8.0,
+      "thickness": 0.04167
+    },
+    "properties": {
+      "thicknessInches": 0.5,
+      "exposureRating": "Exposure 1",
+      "grade": "CDX"
+    },
+    "tags": ["lumber", "plywood", "sheathing", "cdx", "sheet"]
+  },
+  {
+    "id": "lum-board-cedar-1x6-siding",
+    "sku": "L-BRD-CED-1X6",
+    "name": "1x6 Western Red Cedar T&G Siding Board",
+    "category": "lumber",
+    "subcategory": "boards_trim",
+    "description": "Kiln-dried select tight-knot Western Red Cedar tongue-and-groove siding board.",
+    "manufacturer": "Real Cedar",
+    "unit": "linear_ft",
+    "cost": 2.95,
+    "dimensions": {
+      "width": 0.4583,
+      "thickness": 0.0573
+    },
+    "properties": {
+      "species": "Western Red Cedar",
+      "profile": "Tongue & Groove"
+    },
+    "tags": ["lumber", "board", "cedar", "siding", "trim"]
+  }
+]

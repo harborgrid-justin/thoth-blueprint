@@ -13,7 +13,7 @@ const DEFAULT_SPEED_MULT = (catalogStd?.properties?.transitionSpeedMultiplier as
 import type {
   SuperelevationStation,
   SuperelevationCurve,
-} from "./types/superElevation";
+} from "./types/superelevation";
 
 export type { SuperelevationStation, SuperelevationCurve };
 

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "survey-desc-tr",
+    "sku": "SRV-DSC-TR",
+    "name": "Tree Feature Point Symbol Rule",
+    "category": "survey",
+    "subcategory": "description_keys",
+    "description": "Wildcard description key rule for survey tree points.",
+    "unit": "ea",
+    "properties": {
+      "code": "TR*",
+      "layerId": "c-tree",
+      "format": "Tree $*",
+      "elementKind": "tree"
+    },
+    "tags": ["survey", "description_key", "cogo", "tree"]
+  },
+  {
+    "id": "survey-desc-mh",
+    "sku": "SRV-DSC-MH",
+    "name": "Manhole Feature Point Symbol Rule",
+    "category": "survey",
+    "subcategory": "description_keys",
+    "description": "Wildcard description key rule for storm/sanitary manholes.",
+    "unit": "ea",
+    "properties": {
+      "code": "MH*",
+      "layerId": "c-storm",
+      "format": "Manhole $*",
+      "elementKind": "civilSymbol"
+    },
+    "tags": ["survey", "description_key", "cogo", "manhole"]
+  },
+  {
+    "id": "survey-desc-mon",
+    "sku": "SRV-DSC-MON",
+    "name": "Survey Monument Marker Rule",
+    "category": "survey",
+    "subcategory": "description_keys",
+    "description": "Wildcard description key rule for boundary monument markers.",
+    "unit": "ea",
+    "properties": {
+      "code": "MON*",
+      "layerId": "c-monument",
+      "format": "Monument $*",
+      "elementKind": "monument"
+    },
+    "tags": ["survey", "description_key", "cogo", "monument"]
+  }
+]

@@ -1,0 +1,22 @@
+[package]
+name = "thoth-napi"
+description = "napi-rs binding surface exposing the Thoth Blueprint Rust core as a native Node addon, for services/* to call into instead of reimplementing logic in TS. See crates/README.md for why this is a separate crate from thoth-bindings (wasm-bindgen)."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[lib]
+# napi-rs native Node addons are cdylib; rlib keeps `cargo test --workspace`
+# (host target) able to build and unit-test this crate directly, same
+# rationale as thoth-bindings.
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+thoth-spatial = { workspace = true }
+napi = { version = "3.4", default-features = false, features = ["napi4"] }
+napi-derive = "3.3"
+
+[build-dependencies]
+napi-build = "2.2"
