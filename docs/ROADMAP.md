@@ -27,7 +27,7 @@ Reframe the repository and set the foundation for the new product.
   napi-rs, root-level `build:rust`/`build:wasm`/`test:rust` scripts, and a
   `rust-workspace` CI job) is wired end-to-end for one vertical slice
   (pure geometry ops), with one real `apps/web` call site cut over as
-  proof. This does not change Phase 1â€“6 scope below â€” it changes where new
+  proof. This does not change Phase 1-6 scope below; it changes where new
   domain logic should be written (Rust, going forward; see `CLAUDE.md`).
 
 ## Phase 1 — Domain model foundation

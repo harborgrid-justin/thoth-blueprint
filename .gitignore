@@ -57,6 +57,12 @@ tests/
 __tests__/
 spec/
 e2e/
+# The blanket `tests/` rule above is unanchored and would otherwise also
+# swallow legitimate Rust integration-test directories (`cargo test`'s
+# `crates/<crate>/tests/` convention, e.g. crates/thoth-bindings/tests/) --
+# those are source, not build output. Un-ignore them explicitly.
+!crates/**/tests/
+!crates/**/tests/**
 
 # Playwright report data
 apps/web/playwright-report/data/

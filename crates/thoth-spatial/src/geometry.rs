@@ -471,12 +471,20 @@ mod tests {
 
     #[test]
     fn bearing_of_due_north_is_zero() {
-        assert_relative_eq!(bearing(Point::ZERO, Point::new(0.0, 10.0)), 0.0, epsilon = 1e-9);
+        assert_relative_eq!(
+            bearing(Point::ZERO, Point::new(0.0, 10.0)),
+            0.0,
+            epsilon = 1e-9
+        );
     }
 
     #[test]
     fn bearing_of_due_east_is_ninety() {
-        assert_relative_eq!(bearing(Point::ZERO, Point::new(10.0, 0.0)), 90.0, epsilon = 1e-9);
+        assert_relative_eq!(
+            bearing(Point::ZERO, Point::new(10.0, 0.0)),
+            90.0,
+            epsilon = 1e-9
+        );
     }
 
     #[test]

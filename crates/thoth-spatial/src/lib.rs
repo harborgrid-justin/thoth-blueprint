@@ -24,9 +24,9 @@ pub mod types;
 pub mod units;
 
 pub use geometry::{
-    add, area, bearing, bounds, bounds_center, centroid, closest_point_on_segment, cross,
-    distance, dot, ensure_counter_clockwise, format_coord, is_counter_clockwise, is_valid_polygon,
-    length, normalize, offset_polygon, pad_bounds, perimeter, point_in_polygon, point_on_segment,
+    add, area, bearing, bounds, bounds_center, centroid, closest_point_on_segment, cross, distance,
+    dot, ensure_counter_clockwise, format_coord, is_counter_clockwise, is_valid_polygon, length,
+    normalize, offset_polygon, pad_bounds, perimeter, point_in_polygon, point_on_segment,
     polyline_length, scale, signed_area, subtract, translate_polygon, union_bounds, Bounds, Point,
     Polygon, Polyline, GEOMETRY_EPSILON,
 };
