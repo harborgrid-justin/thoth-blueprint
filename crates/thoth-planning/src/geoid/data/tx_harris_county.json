@@ -1,0 +1,20 @@
+{
+  "geoid": "48201",
+  "areaType": "county",
+  "name": "Harris County, TX",
+  "stateName": "Texas",
+  "countyName": "Harris County",
+  "standards": {
+    "zoning": {
+      "frontSetback": 30,
+      "sideSetback": 10,
+      "rearSetback": 25,
+      "minLotArea": 6000,
+      "minRowWidth": 60
+    },
+    "civil": {
+      "minSiltFenceBuffer": 15,
+      "streamBufferDistance": 30
+    }
+  }
+}

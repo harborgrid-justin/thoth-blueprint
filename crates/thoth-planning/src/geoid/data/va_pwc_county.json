@@ -1,0 +1,17 @@
+{
+  "geoid": "51153",
+  "areaType": "county",
+  "name": "Prince William County, VA",
+  "stateName": "Virginia",
+  "countyName": "Prince William County",
+  "standards": {
+    "zoning": {
+      "frontSetback": 35,
+      "sideSetback": 15,
+      "rearSetback": 25,
+      "minLotArea": 28000,
+      "minRowWidth": 50,
+      "maxCoverage": 0.35
+    }
+  }
+}

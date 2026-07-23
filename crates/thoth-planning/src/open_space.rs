@@ -204,6 +204,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         let standard = DedicationStandard {
             sq_m_per_dwelling_unit: Some(30.0),
@@ -232,6 +234,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         let standard = DedicationStandard {
             sq_m_per_dwelling_unit: None,

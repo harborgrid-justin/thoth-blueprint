@@ -476,6 +476,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         }
     }
 
@@ -641,6 +643,8 @@ mod tests {
             control_lines: Some(control_lines),
             civil_symbols: Some(civil_symbols),
             networks: Some(networks),
+            monuments: None,
+            plss: None,
         };
 
         let findings = audit_erosion_compliance(&site);

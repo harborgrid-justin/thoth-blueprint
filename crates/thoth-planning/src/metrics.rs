@@ -370,6 +370,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         }
     }
 
@@ -419,6 +421,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         assert_eq!(site_area(&site, AreaUnit::Sqm), 0.0);
         assert_eq!(coverage(&site), 0.0);

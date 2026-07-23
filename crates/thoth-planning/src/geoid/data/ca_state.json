@@ -1,0 +1,26 @@
+{
+  "geoid": "06",
+  "areaType": "state",
+  "name": "California",
+  "stateName": "California",
+  "standards": {
+    "zoning": {
+      "frontSetback": 20,
+      "sideSetback": 5,
+      "rearSetback": 15,
+      "maxHeight": 35,
+      "maxCoverage": 0.6
+    },
+    "egress": {
+      "minDoorWidth": 32,
+      "minDoorHeight": 80,
+      "minEgressWindowArea": 5.7
+    },
+    "climate": {
+      "rainfallIntensity100Yr": 4.5,
+      "windVelocityMph": 130,
+      "snowLoadPsf": 0,
+      "soilBearingPsf": 1500
+    }
+  }
+}

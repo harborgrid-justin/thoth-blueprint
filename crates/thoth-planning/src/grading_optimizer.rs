@@ -262,6 +262,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         let e = estimate_existing_elevation(&site, Point::new(0.0, 0.0)).unwrap();
         assert_relative_eq!(e, 100.0, epsilon = 1e-9);
@@ -280,6 +282,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         // Equidistant from both spots -> equal weights -> simple average.
         let e = estimate_existing_elevation(&site, Point::new(50.0, 0.0)).unwrap();
@@ -299,6 +303,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         assert!(estimate_existing_elevation(&site, Point::ZERO).is_none());
     }
@@ -325,6 +331,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         // With a single spot at (5,5), both pad centroids are (5,5) and
         // (25,5) respectively -> IDW isn't perfectly flat, but the case is
@@ -356,6 +364,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         assert!(optimize_grading_balance(&site, -5.0, 5.0, 0.1).is_none());
 
@@ -381,6 +391,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         let summary = site_earthwork_summary(&site, 0.0);
         assert_eq!(summary.total_cut, 0.0);

@@ -351,6 +351,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         let findings = check_compliance(&site);
         // Compliant + erosion audit's own default finding.
@@ -397,6 +399,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         let findings = check_compliance(&site);
         assert!(findings.iter().any(|f| f.code == "coverage.exceeded"));
@@ -432,6 +436,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         let findings = check_compliance(&site);
         assert!(findings.iter().any(|f| f.code == "use.disallowed"));

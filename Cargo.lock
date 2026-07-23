@@ -634,6 +634,9 @@ dependencies = [
  "napi-sys",
  "nohash-hasher",
  "rustc-hash",
+ "serde",
+ "serde_json",
+ "tokio",
 ]
 
 [[package]]
@@ -1169,7 +1172,9 @@ dependencies = [
  "serde_json",
  "thiserror",
  "thoth-civil",
+ "thoth-planning",
  "thoth-spatial",
+ "thoth-survey",
 ]
 
 [[package]]
@@ -1221,7 +1226,11 @@ dependencies = [
  "napi",
  "napi-build",
  "napi-derive",
+ "serde",
+ "serde_json",
+ "thoth-services",
  "thoth-spatial",
+ "tokio",
 ]
 
 [[package]]
@@ -1233,6 +1242,7 @@ dependencies = [
  "serde_json",
  "thiserror",
  "thoth-spatial",
+ "thoth-survey",
 ]
 
 [[package]]
@@ -1272,6 +1282,7 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror",
+ "thoth-civil",
  "thoth-spatial",
 ]
 

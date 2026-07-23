@@ -1,0 +1,18 @@
+{
+  "geoid": "4820192975",
+  "areaType": "cousub",
+  "name": "Pasadena CCD, Harris County, TX",
+  "stateName": "Texas",
+  "countyName": "Harris County",
+  "cousubName": "Pasadena CCD",
+  "standards": {
+    "zoning": {
+      "frontSetback": 25,
+      "sideSetback": 7.5,
+      "rearSetback": 20,
+      "maxHeight": 50,
+      "maxFar": 2.0,
+      "allowedUses": ["residential", "commercial", "industrial", "mixed-use"]
+    }
+  }
+}

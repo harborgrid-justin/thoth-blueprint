@@ -273,6 +273,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
 
         let takeoffs = compute_renovation_takeoffs(&site);
@@ -341,6 +343,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
 
         let warnings = run_renovation_audit(&site);

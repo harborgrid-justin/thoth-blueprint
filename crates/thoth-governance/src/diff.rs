@@ -444,6 +444,8 @@ pub fn three_way_merge(base: &Site, ours: &Site, theirs: &Site) -> MergeResult {
             control_lines: base.control_lines.clone(),
             civil_symbols: base.civil_symbols.clone(),
             networks: base.networks.clone(),
+            monuments: base.monuments.clone(),
+            plss: base.plss.clone(),
         },
         conflicts,
     }
@@ -515,6 +517,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         }
     }
 

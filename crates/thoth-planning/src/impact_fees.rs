@@ -203,6 +203,8 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         let a = assess_site_impact_fees(&site, &schedule());
         assert_relative_eq!(a.dwelling_units, 40.0, epsilon = 1e-9);

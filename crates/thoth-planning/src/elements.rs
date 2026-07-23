@@ -17,16 +17,27 @@
 //! inherent-`impl` a same-crate port would give `ElementBase` (Rust's orphan
 //! rule forbids adding inherent methods to a foreign type from this crate).
 //!
-//! **Scoping note** (see `GAPS.md`): the TS `Site` interface also carries
-//! `networks`, `alignments`, `monuments`, `plss`, `drawingSets`,
-//! `sheetViewports`, `dimensions`, `cadLayers`, `buildingModels`, and
-//! `annotations` — fields typed by `thoth-civil`, `thoth-survey`, and
-//! `thoth-drawing`, none of which are dependencies of this crate. This port
-//! keeps the fields this crate's own rules/metrics/subdivision engine reads
-//! (`spatial`, `layers`, `elements`, `jurisdiction_id`, `geoid`) plus the
-//! locally-stubbed `control_lines`/`civil_symbols`/`networks` that the
-//! erosion-compliance audit needs (see [`crate::civil_stub`]), and omits the
-//! rest pending a later integration pass once those sibling crates exist.
+//! **Scoping note** (see `GAPS.md` and `GAP_CLOSE_STATUS.md` item 8): the TS
+//! `Site` interface also carries `networks`, `alignments`, `monuments`,
+//! `plss`, `drawingSets`, `sheetViewports`, `dimensions`, `cadLayers`,
+//! `buildingModels`, and `annotations` — fields typed by `thoth-civil`,
+//! `thoth-survey`, and `thoth-drawing`. As of this pass, `thoth-civil` and
+//! `thoth-survey` are dependencies of this crate, which unlocks `monuments`
+//! (`Vec<thoth_survey::monument::SurveyMonument>`) and `plss` ([`PlssFrame`],
+//! wrapping `thoth_survey::plss::TownshipRange`) — both types fully derive
+//! `PartialEq`/`Serialize`/`Deserialize`, matching every other field on this
+//! struct. **`alignments` stays omitted**: `thoth_civil::alignment::HorizontalAlignment`
+//! derives only `Debug`/`Clone`, not `PartialEq`/`Serialize`/`Deserialize` (see
+//! `crates/thoth-civil/src/alignment.rs`), so it cannot be embedded in a field
+//! of a struct that derives those three without either `thoth-civil` gaining
+//! the derives (a sibling crate this pass must not edit) or `Site` itself
+//! losing `PartialEq`/`Serialize`/`Deserialize` (which every consumer of this
+//! crate already relies on) — a genuine cross-crate trait gap, not a
+//! dependency-ordering one. `thoth-drawing` is *not* a dependency of this
+//! crate (it depends on this one — see `GAP_CLOSE_STATUS.md`'s
+//! dependency-order note), so `drawingSets`, `sheetViewports`, `dimensions`,
+//! `cadLayers`, `buildingModels`, and `annotations` remain omitted pending a
+//! later integration pass.
 
 use serde::de::{self, Deserializer};
 use serde::{Deserialize, Serialize, Serializer};
@@ -38,6 +49,8 @@ use thoth_spatial::{
 
 use crate::civil_stub::{CivilSymbol, ControlLine, InfrastructureNetwork};
 use crate::land_use::LandUseCategory;
+
+use thoth_survey::{monument::SurveyMonument, plss::TownshipRange};
 
 /// Build an [`ElementBase`] with the given required fields and every optional
 /// field unset — the Rust equivalent of a TS object literal that only sets
@@ -766,6 +779,34 @@ impl PlanElement {
         }
     }
 
+    /// Mutable counterpart to [`Self::base`] — used by
+    /// [`crate::vertex::offset_element`] to translate/reparent/re-id a
+    /// cloned spatial element in place without a 21-arm match at every call
+    /// site.
+    pub fn base_mut(&mut self) -> Option<&mut ElementBase> {
+        match self {
+            PlanElement::Region(e) => Some(&mut e.base),
+            PlanElement::Parcel(e) => Some(&mut e.base),
+            PlanElement::Block(e) => Some(&mut e.base),
+            PlanElement::Lot(e) => Some(&mut e.base),
+            PlanElement::Zone(e) => Some(&mut e.base),
+            PlanElement::LandUse(e) => Some(&mut e.base),
+            PlanElement::Building(e) => Some(&mut e.base),
+            PlanElement::RightOfWay(e) => Some(&mut e.base),
+            PlanElement::Easement(e) => Some(&mut e.base),
+            PlanElement::OpenSpace(e) => Some(&mut e.base),
+            PlanElement::WaterBody(e) => Some(&mut e.base),
+            PlanElement::PlantingArea(e) => Some(&mut e.base),
+            PlanElement::GradeRegion(e) => Some(&mut e.base),
+            PlanElement::Stair(e) => Some(&mut e.base),
+            PlanElement::CurtainWall(e) => Some(&mut e.base),
+            PlanElement::Door(e) => Some(&mut e.base),
+            PlanElement::Window(e) => Some(&mut e.base),
+            PlanElement::Roof(e) => Some(&mut e.base),
+            PlanElement::Note(_) | PlanElement::Tree(_) | PlanElement::Spot(_) => None,
+        }
+    }
+
     /// `true` for every kind that carries a boundary polygon (mirrors the TS
     /// `isSpatialElement` predicate).
     pub fn is_spatial(&self) -> bool {
@@ -859,6 +900,21 @@ impl<'de> Deserialize<'de> for PlanElement {
 
 // --- Site -------------------------------------------------------------------
 
+/// The Public Land Survey System framework a [`Site`] is tied to
+/// (Township/Range), with the controlling section and its northwest corner
+/// in plan coordinates. Port of the TS `Site.plss` inline object type.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PlssFrame {
+    pub township_range: TownshipRange,
+    pub section: u32,
+    /// Plan-coordinate NW corner of the controlling section.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub section_nw_corner: Option<Point>,
+    /// Side length of the controlling section, plan units.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub section_side: Option<f64>,
+}
+
 /// The overall area being planned; the top-level container for a project's
 /// spatial content.
 ///
@@ -887,6 +943,12 @@ pub struct Site {
     /// Road and utility networks serving the site.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub networks: Option<Vec<InfrastructureNetwork>>,
+    /// Survey monuments (control) depicted on the plat.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub monuments: Option<Vec<SurveyMonument>>,
+    /// PLSS Township/Range framework this plat is tied to, if any.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub plss: Option<PlssFrame>,
 }
 
 impl Site {
@@ -988,10 +1050,61 @@ mod tests {
             control_lines: None,
             civil_symbols: None,
             networks: None,
+            monuments: None,
+            plss: None,
         };
         assert_eq!(site.elements_of_kind(ElementKind::Lot).len(), 1);
         assert_eq!(site.elements_of_kind(ElementKind::Parcel).len(), 1);
         assert_eq!(site.elements_of_kind(ElementKind::Building).len(), 0);
+    }
+
+    /// `Site.monuments`/`Site.plss` (item 8 of `GAP_CLOSE_STATUS.md`) round-trip
+    /// through JSON exactly like every other optional `Site` field.
+    #[test]
+    fn site_carries_monuments_and_plss_frame_and_round_trips() {
+        use thoth_survey::monument::{MonumentStatus, MonumentType, SurveyMonument};
+        use thoth_survey::plss::{RangeDirection, TownshipDirection, TownshipRange};
+
+        let site = Site {
+            id: "s1".to_string(),
+            name: "Site".to_string(),
+            spatial: ctx(),
+            layers: vec![],
+            elements: vec![],
+            jurisdiction_id: None,
+            geoid: None,
+            control_lines: None,
+            civil_symbols: None,
+            networks: None,
+            monuments: Some(vec![SurveyMonument {
+                id: "m1".to_string(),
+                kind: MonumentType::Prm,
+                status: MonumentStatus::Found,
+                position: Point::new(0.0, 0.0),
+                label: Some("PRM LB6685".to_string()),
+                note: None,
+            }]),
+            plss: Some(PlssFrame {
+                township_range: TownshipRange {
+                    township: 3,
+                    township_dir: TownshipDirection::South,
+                    range: 16,
+                    range_dir: RangeDirection::East,
+                    meridian: Some("Tallahassee".to_string()),
+                },
+                section: 8,
+                section_nw_corner: Some(Point::new(-20.0, -20.0)),
+                section_side: Some(5280.0),
+            }),
+        };
+
+        let json = serde_json::to_value(&site).unwrap();
+        assert_eq!(json["monuments"][0]["id"], "m1");
+        assert_eq!(json["plss"]["section"], 8);
+        assert_eq!(json["plss"]["township_range"]["township"], 3);
+
+        let round_tripped: Site = serde_json::from_value(json).unwrap();
+        assert_eq!(round_tripped, site);
     }
 
     #[test]

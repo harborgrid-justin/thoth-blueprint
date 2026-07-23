@@ -23,18 +23,30 @@
 //! automation layer, sample-data/preset fixtures) are explicitly called out
 //! there rather than silently missing.
 
+pub mod building;
 pub mod civil_stub;
 pub mod common;
+pub mod curtainwall;
 pub mod curve;
+pub mod doorwindow;
+pub mod element_factory;
+pub mod element_meta;
 pub mod elements;
 pub mod erosion;
+pub mod federal_data;
+pub mod geoid;
 pub mod land_use;
 pub mod landlot;
 pub mod metrics;
 pub mod regions;
 pub mod renovation;
+pub mod roof;
 pub mod rules;
+pub mod search;
+pub mod smart;
+pub mod stairs;
 pub mod subdivision;
+pub mod vertex;
 
 // --- Theme 4 subdivision-design-automation additions -----------------------
 // See `GAP_ANALYSIS_STATUS.md` for the item-by-item mapping, algorithmic
