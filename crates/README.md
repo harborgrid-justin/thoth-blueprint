@@ -164,21 +164,32 @@ native (non-wasm32) build of `thoth-bindings` never needs napi's
 platform-specific FFI surface and vice versa — see the crate's own module
 docs for the full reasoning.
 
-`thoth-services` — the crate this binding surface exists to eventually
-front — is still a placeholder as of this writing (check its `STATUS.md`
-once one exists). `thoth-napi` is therefore a **proof of pattern**, not a
-claim that `services/*` can call into Rust today: it exposes the same
-frozen geometry slice as `thoth-bindings`, to prove the napi-rs build
-pipeline (build script, `#[napi(object)]` conversion types, generated
-`.node` addon, panic-safety) works end-to-end. Extend it the same way as
-`thoth-bindings` once `thoth-services` has real, stable functions to
-expose.
+`thoth-services` gained real, tested `auth`, `collaboration`, and Postgres
+`storage` implementations in a later pass (see its `STATUS.md`), and
+`thoth-napi` now wires all three through, in addition to the original
+geometry proof-of-pattern slice:
+
+- [`auth`](thoth-napi/src/auth.rs) — registration, authentication,
+  organizations/teams, and role-based `authorize` checks, consumed by
+  `services/auth`.
+- [`collaboration`](thoth-napi/src/collaboration.rs) — presence
+  (join/leave/cursor) and element-change/comment/thread-resolution
+  publication, consumed by `services/collaboration`.
+- [`storage`](thoth-napi/src/storage.rs) — the real Postgres
+  `StorageAdapter`, consumed by `packages/storage/src/postgresAdapter.ts`.
+
+All three follow a **handle-based** design (a `u32` handle returned by a
+`create*`/`connect` call, passed to every other export) rather than
+napi-rs classes with `&self` async methods — see `thoth-napi/src/registry.rs`'s
+module docs for why. Each module's own doc comment covers its wire format
+and the one thing it deliberately doesn't expose yet (the live
+collaboration event stream; cross-call Postgres transaction atomicity).
 
 Build and smoke-test it:
 
 ```sh
 yarn build:napi                       # runs scripts/build-napi.sh
-node scripts/smoke-test-napi.mjs      # loads the addon, checks known values
+node scripts/smoke-test-napi.mjs      # loads the addon, checks known values (geometry slice)
 ```
 
 Unlike the wasm boundary, `#[napi(object)]` conversion types (`Point` here)
@@ -186,7 +197,12 @@ are plain Rust structs with hand-written `From` impls — no N-API
 environment handle is involved until a real Node host calls through the
 generated entry points — so the conversion logic **is** directly testable
 with plain `#[test]`s on the host target (see `crates/thoth-napi/src/lib.rs`'s
-`tests` module); there's no wasm-bindgen-style split needed here.
+`tests` module, and the `tests` module in each of `auth.rs`/`collaboration.rs`/
+`storage.rs`); there's no wasm-bindgen-style split needed here. The
+`#[napi] async fn` exports themselves are additionally exercised from real
+TypeScript against the compiled addon in `services/auth/src/index.test.ts`,
+`services/collaboration/src/index.test.ts`, and
+`packages/storage/src/postgresAdapter.test.ts`.
 
 ## Adding a new integration crate
 

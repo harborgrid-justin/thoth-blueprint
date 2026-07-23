@@ -3,16 +3,29 @@
 //!
 //! ## Scope of this pass
 //!
-//! Like its sibling `thoth-bindings` (the `wasm-bindgen` boundary for
-//! `apps/web`), this crate exports exactly the one frozen, stable slice:
-//! the pure geometry operations in [`thoth_spatial::geometry`]. `thoth-services`
-//! — the crate this binding surface exists to eventually front — is still a
-//! placeholder as of this pass (see `crates/thoth-services/src/lib.rs`), so
-//! there is nothing service-specific to expose yet. This crate is a proof
-//! that the napi-rs pattern (build script, `#[napi(object)]` types,
-//! generated `.node` addon, error handling) works end-to-end; it is **not**
-//! a claim that `services/*` can call into Rust today. Add sibling modules
-//! here, following the pattern below, as `thoth-services` stabilizes.
+//! The geometry slice below (`area`, `perimeter`, `centroid`,
+//! `pointInPolygon`, `offsetPolygon`) was this crate's original proof of the
+//! napi-rs pattern, from before `thoth-services` had anything stable to
+//! expose. `thoth-services` now has real, tested implementations of
+//! `auth`, `collaboration`, and the Postgres `storage` adapter (see
+//! `crates/thoth-services/STATUS.md`), so this pass adds three sibling
+//! modules wiring them through:
+//!
+//! - [`auth`] — registration, authentication, organizations/teams, and
+//!   role-based `authorize` checks, backed by a real (SQLite-backed) auth
+//!   client. Replaces the TypeScript scaffold that used to live at
+//!   `services/auth/src/index.ts`.
+//! - [`collaboration`] — presence (join/leave/cursor), element-change
+//!   publication under optimistic concurrency control, and comment/
+//!   thread-resolution notifications. Replaces the scaffold that used to
+//!   live at `services/collaboration/src/index.ts`.
+//! - [`storage`] — the real `tokio-postgres`-backed `PostgresStorageAdapter`,
+//!   so `packages/storage/src/postgresAdapter.ts` can delegate to it
+//!   instead of throwing "not implemented yet".
+//!
+//! All three follow the same **handle-based** design — see
+//! [`registry`]'s module docs for why — rather than napi-rs classes with
+//! `&self` async methods.
 //!
 //! ## Why a separate crate from `thoth-bindings`
 //!
@@ -27,7 +40,15 @@
 //! `cargo build -p thoth-bindings --target wasm32-unknown-unknown` and
 //! `cargo build -p thoth-napi` independent, reversible operations.
 //!
-//! ## Wire format
+//! ## Wire format, ownership, and panics (geometry slice)
+//!
+//! The rest of this module's docs (below) describe the original geometry
+//! slice specifically. [`auth`], [`collaboration`], and [`storage`] each
+//! document their own wire format and error-handling conventions inline —
+//! see those modules' docs rather than assuming the geometry slice's notes
+//! apply verbatim (they mostly do, but each module calls out what's
+//! different, e.g. handles instead of value types, and JSON payloads for
+//! collaboration/storage).
 //!
 //! [`Point`] is a local `#[napi(object)]` struct — a plain JS object
 //! `{ x: number, y: number }` — because `thoth_spatial::geometry::Point` is
@@ -57,6 +78,12 @@
 //! and no `Result::Err` to report here, unlike the wasm slice's shape-parsing
 //! step (N-API's own binding-generation already rejects a malformed JS value
 //! before a `#[napi]` function body ever runs, with a standard `TypeError`).
+
+mod registry;
+
+pub mod auth;
+pub mod collaboration;
+pub mod storage;
 
 use napi_derive::napi;
 use thoth_spatial::geometry::Point as SpatialPoint;

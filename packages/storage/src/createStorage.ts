@@ -26,8 +26,9 @@ function resolveDriver(config: StorageConfig): StorageDriver {
  * Backend selection: `config.driver`, then the `STORAGE_DRIVER` env var,
  * defaulting to `"sqlite"` — a single local file, no server to run, the
  * right default for local dev and small deployments. Set
- * `STORAGE_DRIVER=postgres` (once `postgresAdapter.ts` is implemented) to
- * move to an enterprise backend without touching call sites.
+ * `STORAGE_DRIVER=postgres` (with `STORAGE_POSTGRES_URL` set, or
+ * `config.postgres.connectionString`) to move to an enterprise backend
+ * without touching call sites — see `postgresAdapter.ts`.
  */
 export function createStorage(config: StorageConfig = {}): StorageAdapter {
   const driver = resolveDriver(config);

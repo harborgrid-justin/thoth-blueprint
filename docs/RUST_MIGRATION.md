@@ -38,9 +38,9 @@ own file, not just this summary.
 | `thoth-survey` | Metes-and-bounds, PLSS, monuments, points | [`GAPS.md`](../crates/thoth-survey/GAPS.md) (no `STATUS.md` as of this writing) | Substantial — bearing/traverse/legal-description, PLSS section framing, monuments, point groups, transparent commands all present with passing tests as of this snapshot. See `GAPS.md` for the arc/bulge-geometry local port and cross-crate (civil/planning/drawing) helper dependencies it doesn't take. **Check the crate directly for current test status** — this integration pass observed it mid-flight (some transient local test failures were seen and then resolved during this same window; don't take this doc's word for green over the crate's own CI/test run). |
 | `thoth-civil` | Alignments, corridors, grading, terrain, pipe/network design | [`STATUS.md`](../crates/thoth-civil/STATUS.md), [`GAPS.md`](../crates/thoth-civil/GAPS.md) | 22 of 32 TS source files ported (102 passing tests); the 10 not-yet-ported are all blocked on the same cross-crate dependency pattern (types that belong to `thoth-survey`/`thoth-planning`/`thoth-drawing`), documented once rather than repeated per file. |
 | `thoth-drawing` | Sheets, dimensions, hatching, schedules, plat sets | _(no `STATUS.md`/`GAPS.md` as of this writing)_ | **In progress — see crate for latest.** `cargo test -p thoth-drawing` passed with 0 reported failures as observed during this integration pass; no per-file port mapping was published yet at time of writing. |
-| `thoth-services` | Backend logic: auth, projects, geospatial, collaboration, storage | _(no `STATUS.md`/`GAPS.md` as of this writing)_ | **In progress — see crate for latest.** Real dependencies are wired (tokio, argon2, rusqlite, tokio-postgres, chrono) and the crate builds and passes its own tests as observed during this integration pass, but it is explicitly still a work in progress; no per-file port mapping was published yet. This is why `crates/thoth-napi` (below) doesn't yet expose anything service-specific. |
+| `thoth-services` | Backend logic: auth, projects, geospatial, collaboration, storage | [`STATUS.md`](../crates/thoth-services/STATUS.md) | 104 passing tests. `storage` (trait + memory + SQLite adapters, plus a real but server-untested Postgres adapter), `auth`, `collaboration`, `projects`, and `geospatial` are all real implementations — see `STATUS.md` for the full per-area breakdown. `crates/thoth-napi` now exposes `auth`, `collaboration`, and the Postgres `storage` adapter (see below) — the note that used to be here about it having nothing service-specific to expose is superseded. |
 | `thoth-bindings` | **Integration**: wasm-bindgen boundary → `apps/web` | _(this doc + `crates/README.md`)_ | One vertical slice shipped: `area`, `perimeter`, `centroid`, `pointInPolygon`, `offsetPolygon` from `thoth_spatial::geometry`, exported via `wasm-bindgen`, consumed by `apps/web` (real cutover: `PlatDrawing.tsx`'s centroid call — see below). |
-| `thoth-napi` | **Integration**: napi-rs boundary → `services/*` (Node) | _(this doc + `crates/README.md`)_ | Same geometry slice, exported as a native `.node` addon via `napi-rs`. Proof of pattern only — `thoth-services` has nothing stable enough yet to expose beyond the shared geometry slice. |
+| `thoth-napi` | **Integration**: napi-rs boundary → `services/*` (Node) | _(this doc + `crates/README.md`)_ | The geometry slice (proof of pattern), plus real `auth`, `collaboration`, and Postgres `storage` bindings — wired into `services/auth`, `services/collaboration`, and `packages/storage/src/postgresAdapter.ts` respectively. See "What the integration layer actually wired" below. |
 
 **Legend inherited from the crates that define one (`thoth-planning`,
 `thoth-civil`, `thoth-survey`):** ported+tested / ported+partial-tests /
@@ -123,25 +123,53 @@ work; this section is not).
 
 ### `thoth-napi` (napi-rs → `services/*`)
 
-- Same geometry slice as `thoth-bindings`, exposed as a native `.node`
-  addon. **Not wired into any `services/*` package** — `thoth-services` has
-  no stable, service-specific functionality yet to expose (see the table
-  above). This crate exists to prove the napi-rs build pipeline itself
-  (build script, `#[napi(object)]` conversion types, generated addon,
-  panic/error handling) works, so that wiring real `thoth-services`
-  functions through it later is a matter of adding functions, not
-  discovering the pattern from scratch.
-- **Tests:** `cargo test -p thoth-napi` — 5 passing tests exercising the
-  conversion logic directly on the host target (no Node/wasm runtime
-  needed; `#[napi(object)]` types are plain Rust structs until a real N-API
-  environment calls through the generated entry points).
-- `scripts/smoke-test-napi.mjs` additionally loads the actual built
-  `.node` addon under real Node and checks it against the same known
-  values used in the Rust tests and the WASM equivalence test — manually
-  verified passing during this pass (`yarn build:napi && node scripts/smoke-test-napi.mjs`).
-- Added to the workspace's `Cargo.toml` `members` list as a new entry (the
-  only edit made to that file) — the five domain-crate paths already there
-  were left untouched.
+- The original geometry slice (proof of pattern), plus three real,
+  service-backed modules added in a follow-up pass once `thoth-services`
+  had something stable to expose:
+  - `auth.rs` — `thoth_services::auth::AuthService`, backed by a SQLite
+    `StorageAdapter` (see the module's docs for why SQLite over an
+    in-memory store). Wired into `services/auth`.
+  - `collaboration.rs` — `thoth_services::collaboration::CollaborationHub`.
+    Wired into `services/collaboration`. Deliberately doesn't expose the
+    live event-subscription receiver `CollaborationHub::join` also
+    returns — see the module docs for why and what a future pass would
+    need to add to stream it out.
+  - `storage.rs` — `thoth_services::storage::PostgresStorageAdapter`.
+    Wired into `packages/storage/src/postgresAdapter.ts`. Doesn't expose
+    `transaction`'s cross-call atomicity — a documented gap, not a
+    fabricated success (see the module docs).
+  - All three use a **handle-based** design (`registry.rs`): a `u32`
+    handle minted by a `create*`/`connect` call, passed to every other
+    export, rather than a napi-rs class with `&self` async methods — see
+    `registry.rs`'s module docs for why that shape was chosen over the
+    class-based alternative napi-rs also supports.
+- **Tests:** `cargo test -p thoth-napi` — 24 passing tests (the original 5
+  geometry conversion tests, plus `registry`/`auth`/`collaboration`/`storage`
+  tests exercising the new modules' logic and registry/handle behavior
+  directly on the host target, the same host-target-testable-without-Node
+  approach the geometry tests established).
+- `scripts/smoke-test-napi.mjs` continues to cover only the geometry slice
+  (unchanged); the new `auth`/`collaboration`/`storage` bindings are
+  instead proven against the real compiled addon by TypeScript-level Vitest
+  suites: `services/auth/src/index.test.ts`,
+  `services/collaboration/src/index.test.ts`, and
+  `packages/storage/src/postgresAdapter.test.ts`.
+- `services/auth/src/index.ts` and `services/collaboration/src/index.ts`
+  no longer export `__SCAFFOLD__` — both were rewritten to load the
+  compiled `thoth-napi` addon (via `createRequire`, mirroring
+  `apps/web/src/lib/geometryWasm.ts`'s loader pattern, adapted for a native
+  addon instead of a wasm module) and re-export a typed `AuthService`/
+  `CollaborationHub` class backed by it.
+- Added to the workspace's `Cargo.toml` `members` list as a new entry in
+  the original pass (the only edit made to that file); this follow-up pass
+  added `thoth-services` as a `[dependencies]` entry in
+  `crates/thoth-napi/Cargo.toml` (no cycle — `thoth-services` doesn't
+  depend on `thoth-napi`) and enabled napi's `async`/`serde-json`/
+  `dyn-symbols` features (the first two to return real `Promise`s and
+  accept/return `serde_json::Value`; `dyn-symbols` to keep `cargo test`
+  linkable as a standalone host binary once async codegen references
+  N-API symbols a plain executable can't resolve at link time the way a
+  Node-loaded `cdylib` can).
 
 ### CI
 

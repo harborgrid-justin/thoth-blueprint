@@ -15,8 +15,23 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 thoth-spatial = { workspace = true }
-napi = { version = "3.4", default-features = false, features = ["napi4"] }
+thoth-services = { workspace = true }
+# "async" (-> tokio_rt) lets `#[napi] async fn` exports return a real JS
+# Promise, driven by a tokio runtime napi-rs manages internally; "serde-json"
+# lets `serde_json::Value` cross the boundary directly as a plain JS value,
+# used for collaboration's element-change payloads (see collaboration.rs).
+napi = { version = "3.4", default-features = false, features = ["napi4", "async", "serde-json", "dyn-symbols"] }
 napi-derive = "3.3"
+serde = { workspace = true }
+serde_json = { workspace = true }
 
 [build-dependencies]
 napi-build = "2.2"
+
+[dev-dependencies]
+# Only for this crate's own `#[tokio::test]`s, which exercise
+# `thoth-services` async methods directly (bypassing the napi macros) to
+# keep the conversion/registry logic testable on the host target the same
+# way the pre-existing geometry tests are. Not needed by `#[napi] async fn`
+# exports themselves — those are driven by napi's own "tokio_rt" runtime.
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
