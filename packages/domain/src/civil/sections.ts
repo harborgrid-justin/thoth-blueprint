@@ -25,6 +25,11 @@ export type {
   QTOVolumeSummary,
 };
 
+import { globalPartsDb } from "../parts/registry";
+
+const catalogStd = globalPartsDb.getCivilDesignStandards()[0];
+const DEFAULT_SWATH_WIDTH = (catalogStd?.properties?.sectionSwathWidthFt as number) || 50.0;
+
 /**
  * Creates Sample Lines across an alignment baseline by station interval range (REQ-20-001, REQ-20-003).
  */
@@ -32,7 +37,7 @@ export function generateSampleLines(
   alignment: HorizontalAlignment,
   resolved: ResolvedAlignment | null,
   interval = 50,
-  swathWidth = 50,
+  swathWidth = DEFAULT_SWATH_WIDTH,
 ): SampleLineGroup {
   const res = resolved ?? resolveAlignment(alignment);
   if (!res) {

@@ -18,6 +18,11 @@ import type {
 
 export type { Corridor, CorridorSectionPoint, CorridorFeatureLine };
 
+import { globalPartsDb } from "../parts/registry";
+
+const catalogStd = globalPartsDb.getCivilDesignStandards()[0];
+const DEFAULT_SAMPLING_FREQ = (catalogStd?.properties?.corridorSamplingIntervalFt as number) || 25.0;
+
 /**
  * Builds 3D points representing the Corridor model.
  */
@@ -35,10 +40,11 @@ export function buildCorridorSections(
   }
 
   const sections: CorridorSectionPoint[] = [];
-  const stationsCount = Math.floor(resolved.length / corridor.frequency);
+  const freq = corridor.frequency || DEFAULT_SAMPLING_FREQ;
+  const stationsCount = Math.floor(resolved.length / freq);
 
   for (let i = 0; i <= stationsCount; i++) {
-    const station = i * corridor.frequency;
+    const station = i * freq;
     const baseStation = resolved.startStation + station;
     const atStation = pointAtStation(resolved, baseStation);
     if (!atStation) {

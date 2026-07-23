@@ -41,6 +41,12 @@ const defaultSurvey = (federalData.standards as any).survey;
 
 const DEG = 180 / Math.PI;
 
+/** Travel direction (unit vector) for an azimuth in the north=−Y frame. */
+export function dirFor(azimuthDeg: number): Point {
+  const a = (azimuthDeg * Math.PI) / 180;
+  return { x: Math.sin(a), y: -Math.cos(a) };
+}
+
 import type {
   QuadrantBearing,
   CurveRecord,

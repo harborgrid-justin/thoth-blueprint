@@ -1,4 +1,9 @@
 import type { ExperienceResult } from "./types";
+import { globalPartsDb } from "../parts/registry";
+
+const zoningCatalog = globalPartsDb.getZoningDistricts();
+const r1District = zoningCatalog.find((z) => z.properties?.designation === "R-1");
+const DEFAULT_R1_SETBACK_M = (r1District?.properties?.minSetbackMeters as number) || 3.0;
 
 /**
  * Experiences 46 - 60: Subdivision & Site Layout Auto-Solvers
@@ -79,7 +84,11 @@ export function autoSizeHammerheadTurnaround(): ExperienceResult {
 }
 
 // 51. Building envelope setback auto-placement (front, rear, side)
-export function autoPlaceSetbacks(frontFt: number, rearFt: number, sideFt: number): ExperienceResult {
+export function autoPlaceSetbacks(
+  frontFt: number = Number((DEFAULT_R1_SETBACK_M * 3.28084).toFixed(0)),
+  rearFt: number = 25,
+  sideFt: number = 10
+): ExperienceResult {
   return {
     experienceId: "EXP-SUB-051",
     code: "AUTO-PLACE-SETBACKS",

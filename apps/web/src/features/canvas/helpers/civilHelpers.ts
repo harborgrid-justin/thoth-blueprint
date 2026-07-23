@@ -1,44 +1,6 @@
-import { distance, type Point } from "@thoth/domain";
+import { sampleAlong, type Point, type Sample } from "@thoth/domain";
 
-export interface Sample {
-  point: Point;
-  dir: Point;
-  nrm: Point;
-}
-
-/** Evenly-spaced samples (point + direction + normal) along a screen polyline. */
-export function sampleAlong(pts: Point[], spacing: number): Sample[] {
-  const res: Sample[] = [];
-  if (pts.length < 2) {
-    return res;
-  }
-  const segLen: number[] = [];
-  let total = 0;
-  for (let i = 1; i < pts.length; i++) {
-    const l = distance(pts[i], pts[i - 1]);
-    segLen.push(l);
-    total += l;
-  }
-  let seg = 0;
-  let segStart = 0;
-  for (let d = 0; d <= total; d += spacing) {
-    while (seg < segLen.length - 1 && d > segStart + segLen[seg]) {
-      segStart += segLen[seg];
-      seg += 1;
-    }
-    const l = segLen[seg] || 1;
-    const a = pts[seg];
-    const b = pts[seg + 1];
-    const t = Math.min(1, Math.max(0, (d - segStart) / l));
-    const dir = { x: (b.x - a.x) / l, y: (b.y - a.y) / l };
-    res.push({
-      point: { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t },
-      dir,
-      nrm: { x: -dir.y, y: dir.x },
-    });
-  }
-  return res;
-}
+export { sampleAlong, type Sample };
 
 export function polyPoints(pts: Point[]): string {
   return pts.map((s) => `${s.x.toFixed(1)},${s.y.toFixed(1)}`).join(" ");

@@ -1,15 +1,23 @@
 import type { Stair, Point } from "../spatial/types.js";
 import { centroid, distance, add, scale } from "../spatial/geometry.js";
 import federalData from "./geoid/data/federalReference.json";
+import { globalPartsDb } from "../parts/registry";
 
 import type { StairGeometryResults } from "./types/stairs";
 
 export type { StairGeometryResults };
 
 const defaultStairs = federalData.standards.structural;
-const DEFAULT_RISER_LIMIT_M = Number((defaultStairs.ibcMaxRiserHeightIn * 0.0254).toFixed(4));
-const DEFAULT_TREAD_LIMIT_M = Number((defaultStairs.ibcMinTreadDepthIn * 0.0254).toFixed(4));
-const DEFAULT_OVERHEAD_LIMIT_M = Number((defaultStairs.ibcMinHeadroomIn * 0.0254).toFixed(4));
+const catalogStair = globalPartsDb.getStairAssemblies()[0];
+const DEFAULT_RISER_LIMIT_M =
+  (catalogStair?.properties?.maxRiserHeightMeters as number) ||
+  Number((defaultStairs.ibcMaxRiserHeightIn * 0.0254).toFixed(4));
+const DEFAULT_TREAD_LIMIT_M =
+  (catalogStair?.properties?.minTreadDepthMeters as number) ||
+  Number((defaultStairs.ibcMinTreadDepthIn * 0.0254).toFixed(4));
+const DEFAULT_OVERHEAD_LIMIT_M =
+  (catalogStair?.properties?.minHeadroomMeters as number) ||
+  Number((defaultStairs.ibcMinHeadroomIn * 0.0254).toFixed(4));
 
 /**
  * Computes all design parameters, structural stringer centerlines, 2D plan annotations,

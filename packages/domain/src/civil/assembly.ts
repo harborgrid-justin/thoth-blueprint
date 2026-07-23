@@ -167,10 +167,18 @@ export function exportAssemblySetToXML(assembly: Assembly): string {
   );
 }
 
+import { globalPartsDb } from "../parts/registry";
+
 /**
  * Returns default subassembly templates.
  */
 export function getDefaultSubassemblies(side: "left" | "right"): Subassembly[] {
+  const catalogSubs = globalPartsDb.getSubassemblies();
+  const lanePart = catalogSubs.find((s) => s.properties?.subassemblyType === "Lane");
+  const curbPart = catalogSubs.find((s) => s.properties?.subassemblyType === "CurbAndGutter");
+  const sidewalkPart = catalogSubs.find((s) => s.properties?.subassemblyType === "Sidewalk");
+  const daylightPart = catalogSubs.find((s) => s.properties?.subassemblyType === "Daylight");
+
   return [
     {
       id: `${side}-lane-1`,
@@ -178,8 +186,8 @@ export function getDefaultSubassemblies(side: "left" | "right"): Subassembly[] {
       side,
       type: "Lane",
       parameters: [
-        { name: "Width", value: 12 },
-        { name: "Slope", value: -0.02 },
+        { name: "Width", value: (lanePart?.properties?.widthFt as number) || 12 },
+        { name: "Slope", value: (lanePart?.properties?.crossSlope as number) || -0.02 },
       ],
     },
     {
@@ -188,8 +196,8 @@ export function getDefaultSubassemblies(side: "left" | "right"): Subassembly[] {
       side,
       type: "CurbAndGutter",
       parameters: [
-        { name: "CurbWidth", value: 1.5 },
-        { name: "CurbHeight", value: 0.5 },
+        { name: "CurbWidth", value: (curbPart?.properties?.curbWidthFt as number) || 1.5 },
+        { name: "CurbHeight", value: (curbPart?.properties?.curbHeightFt as number) || 0.5 },
       ],
     },
     {
@@ -198,8 +206,8 @@ export function getDefaultSubassemblies(side: "left" | "right"): Subassembly[] {
       side,
       type: "Sidewalk",
       parameters: [
-        { name: "SidewalkWidth", value: 5 },
-        { name: "SidewalkSlope", value: 0.015 },
+        { name: "SidewalkWidth", value: (sidewalkPart?.properties?.sidewalkWidthFt as number) || 5 },
+        { name: "SidewalkSlope", value: (sidewalkPart?.properties?.crossSlope as number) || 0.015 },
       ],
     },
     {
@@ -208,8 +216,8 @@ export function getDefaultSubassemblies(side: "left" | "right"): Subassembly[] {
       side,
       type: "Daylight",
       parameters: [
-        { name: "CutSlope", value: 2 },
-        { name: "FillSlope", value: 3 },
+        { name: "CutSlope", value: (daylightPart?.properties?.cutSlopeH2V as number) || 2 },
+        { name: "FillSlope", value: (daylightPart?.properties?.fillSlopeH2V as number) || 3 },
       ],
     },
   ];

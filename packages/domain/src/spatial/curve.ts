@@ -20,6 +20,9 @@ import {
   GEOMETRY_EPSILON,
   distance,
   add,
+  dot,
+  length,
+  normalize,
   scale,
   subtract,
   type Point,
@@ -27,6 +30,71 @@ import {
 } from "./geometry";
 import type { EdgeArcs } from "./types";
 export type { EdgeArcs };
+
+/** Midpoint of an edge, honoring an existing bulge (the arc's midpoint). */
+export function edgeMidpoint(a: Point, b: Point, bulge: number): Point {
+  if (bulge) {
+    const arc = bulgeToArc(a, b, bulge);
+    if (arc) {
+      return arc.mid;
+    }
+  }
+  return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+}
+
+/** The bulge that makes edge a→b pass through the cursor at its midpoint. */
+export function bulgeThroughCursor(a: Point, b: Point, cursor: Point): number {
+  const d = subtract(b, a);
+  const len = length(d);
+  if (len < 1e-6) {
+    return 0;
+  }
+  const edge = normalize(d);
+  const normal = { x: -edge.y, y: edge.x };
+  const mid = scale(add(a, b), 0.5);
+  const off = dot(subtract(cursor, mid), normal);
+  return (2 * off) / len;
+}
+
+export interface Sample {
+  point: Point;
+  dir: Point;
+  nrm: Point;
+}
+
+/** Evenly-spaced samples (point + direction + normal) along a polyline. */
+export function sampleAlong(pts: Point[], spacing: number): Sample[] {
+  const res: Sample[] = [];
+  if (pts.length < 2) {
+    return res;
+  }
+  const segLen: number[] = [];
+  let total = 0;
+  for (let i = 1; i < pts.length; i++) {
+    const l = distance(pts[i], pts[i - 1]);
+    segLen.push(l);
+    total += l;
+  }
+  let seg = 0;
+  let segStart = 0;
+  for (let d = 0; d <= total; d += spacing) {
+    while (seg < segLen.length - 1 && d > segStart + segLen[seg]) {
+      segStart += segLen[seg];
+      seg += 1;
+    }
+    const l = segLen[seg] || 1;
+    const a = pts[seg];
+    const b = pts[seg + 1];
+    const t = Math.min(1, Math.max(0, (d - segStart) / l));
+    const dir = { x: (b.x - a.x) / l, y: (b.y - a.y) / l };
+    res.push({
+      point: { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t },
+      dir,
+      nrm: { x: -dir.y, y: dir.x },
+    });
+  }
+  return res;
+}
 
 /** A fully-resolved circular arc between two boundary vertices. */
 export interface Arc {

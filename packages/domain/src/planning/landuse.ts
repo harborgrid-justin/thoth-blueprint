@@ -5,15 +5,18 @@
  */
 
 import type { LandUseCategory, LandUseDefinition } from "./types/landuse";
+import { globalPartsDb } from "../parts/registry";
 
 export type { LandUseCategory, LandUseDefinition };
+
+const catalogLandUseParts = globalPartsDb.getLandUseDefinitions();
 
 /** The canonical, ordered registry of land-use categories. */
 export const LAND_USE_DEFINITIONS: readonly LandUseDefinition[] = [
   {
     category: "residential",
-    label: "Residential",
-    color: "#f59e0b",
+    label: (catalogLandUseParts.find((p) => p.properties?.landUseCategory === "residential")?.properties?.label as string) || "Residential",
+    color: (catalogLandUseParts.find((p) => p.properties?.landUseCategory === "residential")?.properties?.color as string) || "#f59e0b",
     impervious: true,
     openSpace: false,
     description: "Housing: single-family, multifamily, and mixed residential.",

@@ -347,6 +347,30 @@ export function offsetAlignmentPath(
 }
 
 /** Full-station values at multiples of `interval` within the alignment range. */
+/** Sample a resolved alignment into a single centerline polyline. */
+export function centerlinePoints(r: ResolvedAlignment): Point[] {
+  const pts: Point[] = [];
+  for (const el of r.elements) {
+    if (el.kind === "tangent") {
+      if (pts.length === 0) {
+        pts.push(el.from);
+      }
+      pts.push(el.to);
+    } else if (el.kind === "curve") {
+      const c = el.curve;
+      const steps = Math.max(2, Math.ceil(c.deltaDeg / 2));
+      for (let i = 0; i <= steps; i++) {
+        const ang = c.startAngle + (c.sweep * i) / steps;
+        pts.push({
+          x: c.center.x + c.radius * Math.cos(ang),
+          y: c.center.y + c.radius * Math.sin(ang),
+        });
+      }
+    }
+  }
+  return pts;
+}
+
 export function fullStations(
   resolved: ResolvedAlignment,
   interval = 100,

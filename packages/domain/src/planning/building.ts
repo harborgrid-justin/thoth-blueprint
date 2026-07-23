@@ -40,23 +40,10 @@ export type {
   BuildingModel,
 };
 
-/** Standard interior/exterior wall types. */
-export const WALL_TYPES: WallType[] = [
-  { id: "ext-8", label: 'Exterior 8"', thickness: 8 / 12, material: "masonry" },
-  { id: "ext-6", label: 'Exterior 6"', thickness: 6 / 12, material: "wood" },
-  {
-    id: "int-5",
-    label: 'Interior 4-7/8"',
-    thickness: 4.875 / 12,
-    material: "wood",
-  },
-  {
-    id: "int-3",
-    label: 'Interior 3-5/8"',
-    thickness: 3.625 / 12,
-    material: "wood",
-  },
-];
+import { globalPartsDb } from "../parts";
+
+/** Standard interior/exterior wall types loaded from Global Parts Database. */
+export const WALL_TYPES: WallType[] = globalPartsDb.getWallTypes();
 
 /** The straight centreline direction (start→end) of a wall. */
 export function wallDirection(wall: Wall): Point {
@@ -187,4 +174,94 @@ export function findWall(
   wallId: string,
 ): Wall | undefined {
   return model.walls.find((w) => w.id === wallId);
+}
+
+/** Resolve a WallType from GlobalPartsDatabase by ID, falling back to default. */
+export function resolveWallType(typeId: string): WallType {
+  const wallTypes = globalPartsDb.getWallTypes();
+  const found = wallTypes.find((w) => w.id === typeId);
+  if (found) {
+    return found;
+  }
+  const part = globalPartsDb.getPart(typeId);
+  if (part) {
+    return {
+      id: part.id,
+      label: part.name,
+      thickness: part.dimensions?.thickness ?? 0.5,
+      material: (part.properties?.material as any) || "wood",
+    };
+  }
+  return { id: "ext-6", label: 'Exterior 6"', thickness: 0.5, material: "wood" };
+}
+
+/** Retrieve all door specifications registered in GlobalPartsDatabase. */
+export function getBuildingDoorsFromCatalog() {
+  return globalPartsDb.getPartsBySubcategory("doors");
+}
+
+/** Retrieve all window specifications registered in GlobalPartsDatabase. */
+export function getBuildingWindowsFromCatalog() {
+  return globalPartsDb.getPartsBySubcategory("windows");
+}
+
+/** Instantiate a Wall primitive using a part specification from GlobalPartsDatabase. */
+export function createWallFromPart(
+  partId: string,
+  baseline: Point[],
+  levelId: string,
+  height = 9,
+): Wall {
+  const wallType = resolveWallType(partId);
+  return {
+    id: `wall-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+    levelId,
+    typeId: wallType.id,
+    baseline,
+    thickness: wallType.thickness,
+    height,
+  };
+}
+
+/** Instantiate a hosted Door primitive using a part specification from GlobalPartsDatabase. */
+export function createDoorFromPart(
+  partId: string,
+  wallId: string,
+  offset: number,
+  swing: "L" | "R" = "L",
+): Door {
+  const part = globalPartsDb.getPart(partId);
+  const width = part?.dimensions?.width ?? 3.0;
+  const height = part?.dimensions?.height ?? 6.6667;
+  return {
+    id: `door-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+    wallId,
+    offset,
+    width,
+    height,
+    mark: part?.sku || "D-101",
+    swing,
+    leaf: "single",
+  };
+}
+
+/** Instantiate a hosted Window primitive using a part specification from GlobalPartsDatabase. */
+export function createWindowFromPart(
+  partId: string,
+  wallId: string,
+  offset: number,
+  sillHeight = 3.0,
+): Window {
+  const part = globalPartsDb.getPart(partId);
+  const width = part?.dimensions?.width ?? 3.0;
+  const height = part?.dimensions?.height ?? 4.0;
+  return {
+    id: `window-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+    wallId,
+    offset,
+    width,
+    height,
+    mark: part?.sku || "W-101",
+    sill: sillHeight,
+  };
 }

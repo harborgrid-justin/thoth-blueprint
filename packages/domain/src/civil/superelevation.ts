@@ -2,8 +2,13 @@ import _ from "lodash";
 import type { HorizontalAlignment } from "./alignment";
 import { resolveAlignment } from "./alignment";
 import federalData from "../planning/geoid/data/federalReference.json";
+import { globalPartsDb } from "../parts/registry";
 
 const defaultRoads = federalData.standards.roads;
+const catalogStd = globalPartsDb.getCivilDesignStandards()[0];
+const DEFAULT_EMAX = (catalogStd?.properties?.eMax as number) || defaultRoads.eMax;
+const DEFAULT_NORMAL_CROWN = (catalogStd?.properties?.normalCrown as number) || defaultRoads.normalCrown;
+const DEFAULT_SPEED_MULT = (catalogStd?.properties?.transitionSpeedMultiplier as number) || defaultRoads.transitionSpeedMultiplier;
 
 import type {
   SuperelevationStation,
@@ -18,9 +23,9 @@ export type { SuperelevationStation, SuperelevationCurve };
 export function calculateSuperelevationRunoff(
   alignment: HorizontalAlignment,
   designSpeed: number,
-  eMax: number = defaultRoads.eMax,
-  normalCrown: number = defaultRoads.normalCrown,
-  speedMultiplier: number = defaultRoads.transitionSpeedMultiplier,
+  eMax: number = DEFAULT_EMAX,
+  normalCrown: number = DEFAULT_NORMAL_CROWN,
+  speedMultiplier: number = DEFAULT_SPEED_MULT,
 ): SuperelevationCurve {
   const transitionLength = designSpeed * speedMultiplier;
   const tangentRunout = (Math.abs(normalCrown) / eMax) * transitionLength;

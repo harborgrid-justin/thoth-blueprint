@@ -2,6 +2,7 @@ import type { RoofElement, Point } from "../spatial/types.js";
 import { area, distance } from "../spatial/geometry.js";
 
 import type { RoofGeometryResults } from "./types/roof";
+import { globalPartsDb } from "../parts/registry";
 
 export type { RoofGeometryResults };
 
@@ -163,10 +164,16 @@ export function calculateRoofGeometry(roof: RoofElement): RoofGeometryResults {
   }
 
   // 5. Material takeoffs (REQ-UNIMP-059)
-  const sheathingVolCuM = trueAreaSqm * 0.015; // 15mm plywood sheathing
+  const roofParts = globalPartsDb.getRoofAssemblies();
+  const catalogRoof = roofParts[0];
+  const sheathingThick = (catalogRoof?.properties?.sheathingThicknessMeters as number) || 0.015;
+  const unitWeightKg = (catalogRoof?.properties?.unitWeightKgPerSqm as number) || 12.0;
+  const timberRatio = (catalogRoof?.properties?.timberBoardFeetPerSqm as number) || 8.5;
+
+  const sheathingVolCuM = trueAreaSqm * sheathingThick; // plywood sheathing from catalog
   const insulationVolCuM = trueAreaSqm * 0.18; // 180mm fiberglass insulation
-  const shingleWeightKg = trueAreaSqm * 12.0; // ~12kg/sqm asphalt shingles
-  const timberBoardFeet = trueAreaSqm * 8.5; // rafter lumber estimate
+  const shingleWeightKg = trueAreaSqm * unitWeightKg; // unit weight from catalog
+  const timberBoardFeet = trueAreaSqm * timberRatio; // rafter lumber estimate
 
   // 6. Ventilation Area Verification (REQ-UNIMP-060)
   // International Residential Code (IRC R806.1): Net free vent area >= 1:150 of plan area

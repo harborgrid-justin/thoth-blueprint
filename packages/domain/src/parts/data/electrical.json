@@ -1,0 +1,111 @@
+[
+  {
+    "id": "elec-outlet-duplex-15a",
+    "sku": "E-OUT-15A-W",
+    "name": "Duplex Receptacle Outlet 15A 125V",
+    "category": "electrical",
+    "subcategory": "outlets",
+    "description": "Standard commercial specification grade NEMA 5-15R duplex wall outlet.",
+    "manufacturer": "Leviton",
+    "modelNumber": "CR15-W",
+    "unit": "ea",
+    "cost": 3.45,
+    "dimensions": {
+      "width": 0.11,
+      "height": 0.35,
+      "depth": 0.22
+    },
+    "properties": {
+      "amperage": 15,
+      "voltage": 125,
+      "nemaRating": "5-15R",
+      "tamperResistant": true
+    },
+    "tags": ["electrical", "outlet", "receptacle", "15a", "duplex"]
+  },
+  {
+    "id": "elec-outlet-gfci-20a",
+    "sku": "E-OUT-20A-GFCI",
+    "name": "GFCI Duplex Receptacle Outlet 20A 125V",
+    "category": "electrical",
+    "subcategory": "outlets",
+    "description": "SmartLockPro Self-Test GFCI Duplex Receptacle with status indicator LED.",
+    "manufacturer": "Leviton",
+    "modelNumber": "GFNT2-W",
+    "unit": "ea",
+    "cost": 18.9,
+    "dimensions": {
+      "width": 0.11,
+      "height": 0.35,
+      "depth": 0.25
+    },
+    "properties": {
+      "amperage": 20,
+      "voltage": 125,
+      "nemaRating": "5-20R",
+      "gfciProtected": true
+    },
+    "tags": ["electrical", "outlet", "gfci", "20a", "wet_location"]
+  },
+  {
+    "id": "elec-switch-single-pole-15a",
+    "sku": "E-SW-15A-SP",
+    "name": "Single Pole Wall Toggle Switch 15A",
+    "category": "electrical",
+    "subcategory": "switches",
+    "description": "Commercial grade 15A 120/277V single pole quiet toggle switch.",
+    "manufacturer": "Eaton",
+    "modelNumber": "1201-W",
+    "unit": "ea",
+    "cost": 2.8,
+    "properties": {
+      "amperage": 15,
+      "voltage": 120,
+      "switchType": "Single Pole"
+    },
+    "tags": ["electrical", "switch", "lighting"]
+  },
+  {
+    "id": "elec-fixture-led-troffer-2x4",
+    "sku": "E-FIX-LED-24",
+    "name": "2x4 Recessed LED Panel Troffer Fixture",
+    "category": "electrical",
+    "subcategory": "lighting",
+    "description": "40W 4500 Lumens 4000K 2ft x 4ft flat panel recessed ceiling troffer fixture.",
+    "manufacturer": "Lithonia Lighting",
+    "modelNumber": "CPX 2X4 4000K",
+    "unit": "ea",
+    "cost": 65.0,
+    "dimensions": {
+      "width": 2.0,
+      "length": 4.0,
+      "depth": 0.2
+    },
+    "properties": {
+      "wattage": 40,
+      "lumens": 4500,
+      "colorTempK": 4000
+    },
+    "tags": ["electrical", "lighting", "led", "troffer", "ceiling"]
+  },
+  {
+    "id": "elec-conduit-emt-075",
+    "sku": "E-CND-EMT-075",
+    "name": "3/4\" EMT Electrical Metallic Tubing Conduit",
+    "category": "electrical",
+    "subcategory": "conduit",
+    "description": "Galvanized steel 3/4-inch EMT conduit 10ft length.",
+    "manufacturer": "Wheatland Tube",
+    "unit": "ft",
+    "cost": 1.45,
+    "dimensions": {
+      "diameter": 0.0625,
+      "length": 10.0
+    },
+    "properties": {
+      "material": "galvanized_steel",
+      "tradeSize": "3/4 inch"
+    },
+    "tags": ["electrical", "conduit", "emt", "raceway"]
+  }
+]

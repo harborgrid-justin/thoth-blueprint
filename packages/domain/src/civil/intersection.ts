@@ -57,6 +57,11 @@ export function solveIntersectionCrown(
   }
 }
 
+import { globalPartsDb } from "../parts/registry";
+
+const catalogStd = globalPartsDb.getCivilDesignStandards()[0];
+const DEFAULT_CURB_RADIUS = (catalogStd?.properties?.curbReturnRadiusFt as number) || 25.0;
+
 /**
  * Generates curb return arc polylines connecting intersecting alignments per quadrant. (REQ-19-004, REQ-19-009, REQ-19-032)
  */
@@ -64,7 +69,7 @@ export function generateCurbReturnGeometry(
   intersectionPt: Point,
   primaryBearingDeg: number,
   secondaryBearingDeg: number,
-  radius: number,
+  radius: number = DEFAULT_CURB_RADIUS,
   quadrant: "NE" | "NW" | "SE" | "SW",
   samples = 16,
 ): Point[] {

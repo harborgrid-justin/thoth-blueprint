@@ -1,0 +1,68 @@
+[
+  {
+    "id": "mech-pvc-pipe-2in-dwv",
+    "sku": "M-PIP-PVC-2IN",
+    "name": "2\" Schedule 40 PVC DWV Drain Pipe",
+    "category": "mechanical_plumbing",
+    "subcategory": "piping",
+    "description": "2-inch Sch 40 solid wall PVC drain, waste, and vent pipe (10ft length).",
+    "manufacturer": "Charlotte Pipe",
+    "unit": "ft",
+    "cost": 2.15,
+    "dimensions": {
+      "diameter": 0.1667,
+      "length": 10.0
+    },
+    "properties": {
+      "material": "PVC",
+      "schedule": "Schedule 40",
+      "application": "DWV"
+    },
+    "tags": ["plumbing", "pvc", "pipe", "dwv", "drain"]
+  },
+  {
+    "id": "mech-wc-wall-hung-128gpf",
+    "sku": "M-WC-WH-128",
+    "name": "Wall-Hung Commercial Flushometer Water Closet 1.28 GPF",
+    "category": "mechanical_plumbing",
+    "subcategory": "plumbing_fixtures",
+    "description": "Vitreous china wall-hung elongated bowl with top spud flushometer inlet.",
+    "manufacturer": "Kohler",
+    "modelNumber": "Kingston K-4325",
+    "unit": "ea",
+    "cost": 315.0,
+    "dimensions": {
+      "width": 1.25,
+      "length": 2.16,
+      "height": 1.25
+    },
+    "properties": {
+      "gpf": 1.28,
+      "mounting": "Wall-Hung",
+      "adaCompliant": true
+    },
+    "tags": ["plumbing", "fixture", "toilet", "water_closet", "commercial"]
+  },
+  {
+    "id": "mech-hvac-diffuser-12x12",
+    "sku": "M-HVAC-DIF-1212",
+    "name": "12\"x12\" 4-Way Ceiling Air Supply Diffuser",
+    "category": "mechanical_plumbing",
+    "subcategory": "hvac",
+    "description": "Aluminum square 4-way pattern supply air diffuser with 8-inch neck damper.",
+    "manufacturer": "Titus HVAC",
+    "modelNumber": "TDC-1212",
+    "unit": "ea",
+    "cost": 42.0,
+    "dimensions": {
+      "width": 1.0,
+      "length": 1.0,
+      "depth": 0.4
+    },
+    "properties": {
+      "pattern": "4-Way",
+      "cfmRange": "150-300 CFM"
+    },
+    "tags": ["mechanical", "hvac", "diffuser", "vent", "air"]
+  }
+]

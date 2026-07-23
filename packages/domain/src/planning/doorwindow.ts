@@ -331,6 +331,8 @@ export function calculateWindowGeometry(
   };
 }
 
+import { globalPartsDb } from "../parts/registry";
+
 export function compileUnitSchedule(siteElements: any[]): UnitSchedule {
   const doors: UnitScheduleItem[] = [];
   const windows: UnitScheduleItem[] = [];
@@ -339,6 +341,7 @@ export function compileUnitSchedule(siteElements: any[]): UnitSchedule {
   siteElements.forEach((el) => {
     if (el.kind === "door") {
       const door = el as DoorElement;
+      const partMatch = globalPartsDb.searchParts(door.name || door.id, { subcategory: "doors" })[0];
       const item: UnitScheduleItem = {
         id: door.id,
         kind: "door",
@@ -346,8 +349,8 @@ export function compileUnitSchedule(siteElements: any[]): UnitSchedule {
         type: door.doorOperation,
         width: door.width,
         height: door.height,
-        hardware: door.hardwareTrim || "lever",
-        fireRating: door.fireRating || "none",
+        hardware: door.hardwareTrim || (partMatch?.properties?.coreType as string) || "lever",
+        fireRating: door.fireRating || (partMatch?.properties?.fireRatingHours ? `${partMatch.properties.fireRatingHours} hr` : "none"),
         stcRating: door.stcRating || 32,
         stc: door.stcRating || 32,
         safety: door.safetyGlazing || "none",
@@ -356,6 +359,7 @@ export function compileUnitSchedule(siteElements: any[]): UnitSchedule {
       schedule.push(item);
     } else if (el.kind === "window") {
       const win = el as WindowElement;
+      const partMatch = globalPartsDb.searchParts(win.name || win.id, { subcategory: "windows" })[0];
       const item: UnitScheduleItem = {
         id: win.id,
         kind: "window",
@@ -363,7 +367,7 @@ export function compileUnitSchedule(siteElements: any[]): UnitSchedule {
         type: win.windowType,
         width: win.width,
         height: win.height,
-        hardware: "operator hinges",
+        hardware: (partMatch?.properties?.glazing as string) || "operator hinges",
         fireRating: win.fireRating || "none",
         stcRating: win.stcRating || 35,
         stc: win.stcRating || 35,

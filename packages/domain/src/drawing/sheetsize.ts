@@ -73,8 +73,12 @@ function iso(
   };
 }
 
+import { globalPartsDb } from "../parts/registry";
+
+const catalogSheetParts = globalPartsDb.getSheetSizes();
+
 /** The registry of standard sheet sizes (portrait-native dimensions). */
-export const SHEET_SIZES: SheetSize[] = [
+const DEFAULT_SHEET_SIZES: SheetSize[] = [
   ansiOrArch("ansi-a", 'ANSI A (8.5"×11")', "ansi", 8.5, 11),
   ansiOrArch("ansi-b", 'ANSI B (11"×17")', "ansi", 11, 17),
   ansiOrArch("ansi-c", 'ANSI C (17"×22")', "ansi", 17, 22),
@@ -90,6 +94,19 @@ export const SHEET_SIZES: SheetSize[] = [
   iso("iso-a2", "ISO A2 (420×594)", 420, 594),
   iso("iso-a1", "ISO A1 (594×841)", 594, 841),
   iso("iso-a0", "ISO A0 (841×1189)", 841, 1189),
+];
+
+export const SHEET_SIZES: SheetSize[] = [
+  ...DEFAULT_SHEET_SIZES,
+  ...catalogSheetParts.map((s) => ({
+    id: s.id as any,
+    label: s.name,
+    series: (s.properties?.series as any) || "ansi",
+    wIn: (s.properties?.wIn as number) || 24,
+    hIn: (s.properties?.hIn as number) || 36,
+    wMm: (s.properties?.wMm as number) || 609.6,
+    hMm: (s.properties?.hMm as number) || 914.4,
+  })),
 ];
 
 const BY_ID = new Map(SHEET_SIZES.map((s) => [s.id, s]));

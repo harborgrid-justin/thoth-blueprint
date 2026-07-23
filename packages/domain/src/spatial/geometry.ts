@@ -209,6 +209,17 @@ export function boundsCenter(b: Bounds): Point {
   return { x: (b.minX + b.maxX) / 2, y: (b.minY + b.maxY) / 2 };
 }
 
+/** Expand a bounds by a margin so a tight or zero-size selection keeps context. */
+export function padBounds(b: Bounds): Bounds {
+  const pad = Math.max(b.maxX - b.minX, b.maxY - b.minY) * 0.15 || 10;
+  return {
+    minX: b.minX - pad,
+    minY: b.minY - pad,
+    maxX: b.maxX + pad,
+    maxY: b.maxY + pad,
+  };
+}
+
 /**
  * Point-in-polygon test using the ray-casting (even-odd) rule. Points exactly
  * on an edge are considered inside.

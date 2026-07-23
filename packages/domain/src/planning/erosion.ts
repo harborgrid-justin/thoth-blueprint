@@ -2,6 +2,7 @@ import type { Site, Point, ComplianceFinding } from "../spatial/types.js";
 import type { ElevationGrid } from "../civil/terrain.js";
 import { distance, length } from "../spatial/geometry.js";
 import federalData from "./geoid/data/federalReference.json";
+import { globalPartsDb } from "../parts/registry";
 
 const defaultErosion = federalData.standards.erosion;
 
@@ -27,7 +28,15 @@ export class ErosionSimulator {
     this.site = site;
     this.grid = (site as any).terrain?.existing || this.makeDefaultGrid();
     if (soilType) {
-      if (soilType === "sand") {
+      const catalogSoils = globalPartsDb.getSoilTypes();
+      const matched = catalogSoils.find(
+        (s) => (s.properties?.soilKey as string) === soilType,
+      );
+      if (matched) {
+        this.soilErodibility =
+          (matched.properties?.erodibilityKFactor as number) || 0.055;
+        this.depositRate = (matched.properties?.depositRate as number) || 0.12;
+      } else if (soilType === "sand") {
         this.soilErodibility = defaultErosion.soilErodibilitySand || 0.025;
         this.depositRate = 0.25;
       } else if (soilType === "clay") {

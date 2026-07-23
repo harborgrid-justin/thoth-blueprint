@@ -3,6 +3,7 @@ import { distance } from "../spatial/geometry.js";
 import federalData from "./geoid/data/federalReference.json";
 
 const defaultStructural = federalData.standards.structural;
+import { globalPartsDb } from "../parts/registry";
 
 import type {
   CurtainWallPanel,
@@ -277,19 +278,24 @@ export function calculateCurtainWallGeometry(
 
   let totalArea = 0;
   let weightedU = 0;
+  const catalogPanels = globalPartsDb.getCurtainWallInfillPanels();
+
   panels.forEach((p) => {
     const area = p.width * p.height;
     totalArea += area;
 
-    let r = defaultStructural.defaultGlassRValue || 2.5;
-    if (p.material === "brick") {
+    const matchedPanel = catalogPanels.find(
+      (cp) => (cp.properties?.infillMaterial as string) === p.material,
+    );
+    let r =
+      (matchedPanel?.properties?.rValue as number) ||
+      (defaultStructural.defaultGlassRValue ?? 2.5);
+    if (p.material === "brick" && !matchedPanel) {
       r = defaultStructural.defaultBrickRValue || 12.0;
-    } else if (p.material === "insulation") {
+    } else if (p.material === "insulation" && !matchedPanel) {
       r = defaultStructural.defaultInsulationRValue || 20.0;
     } else if (p.material === "door") {
       r = 3.0;
-    } else if (p.material === "window") {
-      r = defaultStructural.defaultGlassRValue || 2.5;
     }
 
     weightedU += (1.0 / r) * area;

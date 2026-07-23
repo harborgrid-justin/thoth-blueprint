@@ -24,6 +24,7 @@ export type {
 };
 
 import federalData from "../planning/geoid/data/federalReference.json";
+import { globalPartsDb } from "../parts/registry";
 
 const defaultRoads = federalData.standards.roads;
 
@@ -36,12 +37,17 @@ export interface PipeDesignRules {
   defaultSumpDepth: number; // Default sump depth below lowest invert
 }
 
-/** Default Federal DOT utility network design rules. */
+const catalogPipes = globalPartsDb.getPartsBySubcategory("pipes");
+const minPipePart = catalogPipes[0];
+
+/** Default Federal DOT utility network design rules loaded from Parts Database. */
 export const DEFAULT_PIPE_DESIGN_RULES: PipeDesignRules = {
   minCover: defaultRoads.minCoverFt,
   minSlope: defaultRoads.minPipeSlope,
   maxSlope: defaultRoads.maxPipeSlope,
-  minPipeDiameter: defaultRoads.minPipeDiameterIn / 12,
+  minPipeDiameter:
+    (minPipePart?.dimensions?.diameter as number) ||
+    defaultRoads.minPipeDiameterIn / 12,
   defaultSumpDepth: defaultRoads.defaultSumpDepthFt,
 };
 

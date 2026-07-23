@@ -1,5 +1,21 @@
 import { landUseColor } from "./landuse";
-import type { ElementKind, LandUseCategory } from "../spatial/types";
+import type { ElementKind, LandUseCategory, Site } from "../spatial/types";
+
+/** Elements paired with their layer, ordered back-to-front, hidden layers dropped. */
+export function orderedVisibleElements(site: Site) {
+  const layerById = new Map(site.layers.map((l) => [l.id, l]));
+  return site.elements
+    .map((element, index) => ({
+      element,
+      layer: layerById.get(element.layerId),
+      index,
+    }))
+    .filter((entry) => entry.layer && entry.layer.visible)
+    .sort((a, b) => {
+      const lo = (a.layer!.order ?? 0) - (b.layer!.order ?? 0);
+      return lo !== 0 ? lo : a.index - b.index;
+    });
+}
 
 /** Presentation metadata for a planning element kind. */
 export interface ElementKindMeta {

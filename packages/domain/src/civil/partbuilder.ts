@@ -118,21 +118,27 @@ export function validateVaultBoxWall(
   };
 }
 
+import { globalPartsDb } from "../parts/registry";
+
 /**
  * Generates factory default Part Catalog chapters.
  */
 export function getDefaultPartsCatalog(): PartsCatalog {
+  const civilParts = globalPartsDb.getPartsByCategory("civil");
+  const manholePart = civilParts.find((p) => p.id.includes("mh"));
+  const inletPart = civilParts.find((p) => p.id.includes("cb"));
+
   return {
     chapters: [
       {
         name: "Cylindrical Structures",
         families: [
           {
-            id: "fam-cyl-manhole",
-            name: "Cylindrical Manhole",
+            id: manholePart?.id || "fam-cyl-manhole",
+            name: manholePart?.name || "Cylindrical Manhole",
             partType: "JunctionStructure",
             shape: "Cylinder",
-            description: "Standard precast concrete sewer or storm manhole",
+            description: manholePart?.description || "Standard precast concrete sewer or storm manhole",
             parameters: {
               FRH: {
                 name: "FRH",
@@ -168,11 +174,11 @@ export function getDefaultPartsCatalog(): PartsCatalog {
         name: "Inlet & Box Structures",
         families: [
           {
-            id: "fam-box-vault",
-            name: "Concrete Utility Vault",
+            id: inletPart?.id || "fam-box-vault",
+            name: inletPart?.name || "Concrete Utility Vault",
             partType: "JunctionStructure",
             shape: "Box",
-            description: "Rectangular precast vault structure",
+            description: inletPart?.description || "Rectangular precast vault structure",
             parameters: {
               VWD: {
                 name: "VWD",

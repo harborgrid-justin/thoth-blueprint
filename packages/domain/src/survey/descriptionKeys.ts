@@ -50,20 +50,31 @@ export function evaluatePointGroup(
     .map((pt) => pt.id);
 }
 
+import { globalPartsDb } from "../parts/registry";
+
+const catalogKeys = globalPartsDb.getDescriptionKeys();
+
 /** Standard default description key set */
-export const DEFAULT_DESCRIPTION_KEYS: DescriptionKey[] = [
-  { code: "TR*", layerId: "c-tree", format: "Tree $*", elementKind: "tree" },
-  {
-    code: "MH*",
-    layerId: "c-storm",
-    format: "Manhole $*",
-    elementKind: "civilSymbol",
-    symbolName: "Inlet Protection",
-  },
-  {
-    code: "BM*",
-    layerId: "c-survey",
-    format: "Benchmark $*",
-    elementKind: "spot",
-  },
-];
+export const DEFAULT_DESCRIPTION_KEYS: DescriptionKey[] = catalogKeys.length > 0
+  ? catalogKeys.map((k) => ({
+      code: (k.properties?.code as string) || k.id,
+      layerId: (k.properties?.layerId as string) || "c-survey",
+      format: (k.properties?.format as string) || "$*",
+      elementKind: (k.properties?.elementKind as any) || "spot",
+    }))
+  : [
+      { code: "TR*", layerId: "c-tree", format: "Tree $*", elementKind: "tree" },
+      {
+        code: "MH*",
+        layerId: "c-storm",
+        format: "Manhole $*",
+        elementKind: "civilSymbol",
+        symbolName: "Inlet Protection",
+      },
+      {
+        code: "BM*",
+        layerId: "c-survey",
+        format: "Benchmark $*",
+        elementKind: "spot",
+      },
+    ];

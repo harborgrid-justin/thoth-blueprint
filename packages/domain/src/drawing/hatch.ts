@@ -7,16 +7,19 @@
  */
 
 import type { HatchKind, HatchPattern } from "./types/hatch";
+import { globalPartsDb } from "../parts/registry";
 
 export type { HatchKind, HatchPattern };
+
+const catalogHatchParts = globalPartsDb.getHatchPatterns();
 
 /** The standard hatch patterns. */
 export const HATCH_PATTERNS: HatchPattern[] = [
   {
-    id: "ansi31",
-    label: "ANSI31 (diagonal)",
+    id: (catalogHatchParts[0]?.properties?.patternName as string)?.toLowerCase() || "ansi31",
+    label: catalogHatchParts[0]?.name || "ANSI31 (diagonal)",
     kind: "lines",
-    angleDeg: 45,
+    angleDeg: (catalogHatchParts[0]?.properties?.angleDegrees as number) || 45,
     spacing: 2.5,
     lineWeight: "fine",
     color: "#334155",

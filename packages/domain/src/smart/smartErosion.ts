@@ -1,10 +1,9 @@
 import type { ExperienceResult } from "./types";
+import { globalPartsDb } from "../parts/registry";
 
 /**
  * Experiences 76 - 85: Erosion & Sediment Control Auto-Solvers
  */
-
-
 
 // 76. Sediment basin storage volume auto-sizing (3600 cu ft/acre)
 export function autoSizeSedimentBasinVolume(disturbedAcres: number): ExperienceResult {
@@ -25,13 +24,17 @@ export function autoSizeSedimentBasinVolume(disturbedAcres: number): ExperienceR
 
 // 77. Perimeter silt fence barrier auto-placement along contours
 export function autoPlaceSiltFence(contourLengthFt: number): ExperienceResult {
+  const bmpCatalog = globalPartsDb.getErosionControlBmps();
+  const siltFence = bmpCatalog.find((b) => b.id.includes("silt-fence"));
+  const eff = (siltFence?.properties?.trappingEfficiencyPercent as number) || 85;
+
   return {
     experienceId: "EXP-ESC-077",
     code: "AUTO-PLACE-SILT-FENCE",
     name: "Auto-Place Perimeter Silt Fence Filter Barrier",
     category: "erosion",
     status: "autosized",
-    message: `Auto-generated ${contourLengthFt.toFixed(0)} LF Type-A geotextile silt fence along downhill perimeter disturbance boundary.`,
+    message: `Auto-generated ${contourLengthFt.toFixed(0)} LF Type-A geotextile silt fence (${eff}% sediment trapping efficiency) along downhill perimeter disturbance boundary.`,
     recommendedValue: contourLengthFt,
   };
 }

@@ -98,6 +98,20 @@ export function elevationAt(grid: ElevationGrid, p: Point): number {
  * Build a regular elevation grid over the given extent by inverse-distance
  * weighting of spot elevations. With no spots, returns a flat base surface.
  */
+/** Hypsometric tint ramp for terrain slope visualization. */
+export function slopeColor(percent: number): string {
+  if (percent < 5) {
+    return "#10b981"; // 0-5% gentle green
+  }
+  if (percent < 15) {
+    return "#f59e0b"; // 5-15% moderate yellow
+  }
+  if (percent < 25) {
+    return "#f97316"; // 15-25% steep orange
+  }
+  return "#ef4444"; // >25% severe red
+}
+
 export function interpolateGrid(
   spots: SpotElevation[],
   extent: Bounds,

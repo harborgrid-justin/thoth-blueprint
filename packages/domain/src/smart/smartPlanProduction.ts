@@ -1,4 +1,8 @@
 import type { ExperienceResult } from "./types";
+import { globalPartsDb } from "../parts/registry";
+
+const catalogSheets = globalPartsDb.getSheetSizes();
+const defaultSheetWidth = (catalogSheets[0]?.properties?.wIn as number) || 34;
 
 /**
  * Experiences 86 - 100: Plan Production & Drafting Auto-Solvers
@@ -7,7 +11,7 @@ import type { ExperienceResult } from "./types";
 
 
 // 86. Viewport scale auto-fit to standard sheet sizes (ANSI/ARCH)
-export function autoFitViewportScale(extentWidthFt: number, sheetWidthIn: number = 34): ExperienceResult {
+export function autoFitViewportScale(extentWidthFt: number, sheetWidthIn: number = defaultSheetWidth): ExperienceResult {
   const reqScale = extentWidthFt / (sheetWidthIn - 4); // 4" margin
   const standardScales = [10, 20, 30, 40, 50, 60, 100, 200, 500];
   const chosenScale = standardScales.find((s) => s >= reqScale) || 500;

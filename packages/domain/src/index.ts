@@ -15,6 +15,7 @@ export * from "./spatial/id";
 export * from "./spatial/types";
 export * from "./spatial/math";
 export * from "./spatial/units";
+export * from "./spatial/viewport";
 
 // Survey
 export * from "./survey/survey";
@@ -131,3 +132,6 @@ export * from "./storage/index";
 
 // Smart Automated Engineering Engine (100 Experiences)
 export * from "./smart/index";
+
+// Enterprise Global Parts Database
+export * from "./parts/index";

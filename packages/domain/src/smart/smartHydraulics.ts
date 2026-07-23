@@ -1,7 +1,10 @@
 import type { ExperienceResult } from "./types";
 import federalData from "../planning/geoid/data/federalReference.json";
+import { globalPartsDb } from "../parts/registry";
 
 const defaultHyd = federalData.standards.hydraulics;
+const catalogPipes = globalPartsDb.getPartsBySubcategory("pipes");
+const catalogManningN = (catalogPipes[0]?.properties?.manningN as number) || defaultHyd.defaultManningN;
 
 /**
  * Experiences 1 - 15: Hydraulic & Pipe Network Auto-Solvers
@@ -11,7 +14,7 @@ const defaultHyd = federalData.standards.hydraulics;
 export function autoSizeStormPipe(
   Q_cfs: number,
   slope: number,
-  n: number = defaultHyd.defaultManningN,
+  n: number = catalogManningN,
   standardSizes: number[] = defaultHyd.standardPipeSizesIn
 ): ExperienceResult {
   const minSlope = Math.max(0.002, slope);

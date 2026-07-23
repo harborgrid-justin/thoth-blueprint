@@ -12,6 +12,18 @@ function countOfKind(site: Site, kind: ElementKind): number {
  * kinds carry sensible domain defaults (a zone gets a designation, a building a
  * storey count) so a freshly drawn shape is immediately a real planning object.
  */
+import { globalPartsDb } from "../parts/registry";
+
+const catalogZoning = globalPartsDb.getZoningDistricts()[0];
+const DEFAULT_DESIGNATION = (catalogZoning?.properties?.designation as string) || "R-1";
+const DEFAULT_MAX_COVERAGE = (catalogZoning?.properties?.maxCoverage as number) || 0.5;
+const DEFAULT_MAX_FAR = (catalogZoning?.properties?.maxFar as number) || 1.0;
+const DEFAULT_MAX_HEIGHT = (catalogZoning?.properties?.maxHeightMeters as number) || 12.0;
+const DEFAULT_MIN_SETBACK = (catalogZoning?.properties?.minSetbackMeters as number) || 3.0;
+const DEFAULT_STOREYS = (catalogZoning?.properties?.defaultStoreys as number) || 2;
+const DEFAULT_BLDG_HEIGHT = (catalogZoning?.properties?.defaultBuildingHeightMeters as number) || 7.0;
+const DEFAULT_ROW_WIDTH = (catalogZoning?.properties?.rowWidthMeters as number) || 12.0;
+
 export function createSpatialElement(
   site: Site,
   kind: Exclude<ElementKind, "note" | "tree" | "spot">,
@@ -27,28 +39,28 @@ export function createSpatialElement(
       return {
         ...base,
         kind,
-        designation: "R-1",
+        designation: DEFAULT_DESIGNATION,
         allowedUses: ["residential"] as LandUseCategory[],
-        maxCoverage: 0.5,
-        maxFar: 1,
-        maxHeight: 12,
-        minSetback: 3,
+        maxCoverage: DEFAULT_MAX_COVERAGE,
+        maxFar: DEFAULT_MAX_FAR,
+        maxHeight: DEFAULT_MAX_HEIGHT,
+        minSetback: DEFAULT_MIN_SETBACK,
       };
     case "landuse":
       return { ...base, kind, category: "residential" };
     case "lot":
-      return { ...base, kind, setback: 3 };
+      return { ...base, kind, setback: DEFAULT_MIN_SETBACK };
     case "building":
       return {
         ...base,
         kind,
-        storeys: 2,
-        height: 7,
+        storeys: DEFAULT_STOREYS,
+        height: DEFAULT_BLDG_HEIGHT,
         dwellingUnits: 1,
         use: "residential",
       };
     case "row":
-      return { ...base, kind, width: 12 };
+      return { ...base, kind, width: DEFAULT_ROW_WIDTH };
     case "openspace":
       return { ...base, kind, dedicated: false };
     case "region":

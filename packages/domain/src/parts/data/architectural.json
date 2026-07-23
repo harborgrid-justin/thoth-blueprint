@@ -1,0 +1,372 @@
+[
+  {
+    "id": "wall-ext-8-masonry",
+    "sku": "W-EXT-800M",
+    "name": "Exterior 8\" CMU Masonry Wall",
+    "category": "architectural",
+    "subcategory": "wall_assemblies",
+    "description": "Standard 8-inch load-bearing concrete masonry unit exterior wall assembly.",
+    "manufacturer": "Universal Concrete",
+    "unit": "sqft",
+    "cost": 18.5,
+    "dimensions": {
+      "thickness": 0.6667
+    },
+    "properties": {
+      "material": "masonry",
+      "rValue": 12.5,
+      "fireRatingHours": 3,
+      "thicknessInches": 8
+    },
+    "tags": ["wall", "exterior", "masonry", "cmu", "structural"]
+  },
+  {
+    "id": "wall-ext-6-wood",
+    "sku": "W-EXT-600W",
+    "name": "Exterior 6\" Wood Stud Wall",
+    "category": "architectural",
+    "subcategory": "wall_assemblies",
+    "description": "2x6 wood stud exterior wall with R-21 batt insulation and 1/2\" OSB sheathing.",
+    "manufacturer": "Precision Framing",
+    "unit": "sqft",
+    "cost": 12.25,
+    "dimensions": {
+      "thickness": 0.5
+    },
+    "properties": {
+      "material": "wood",
+      "rValue": 21.0,
+      "fireRatingHours": 1,
+      "thicknessInches": 6
+    },
+    "tags": ["wall", "exterior", "wood", "framing"]
+  },
+  {
+    "id": "wall-int-5-drywall",
+    "sku": "W-INT-487G",
+    "name": "Interior 4-7/8\" Wood Stud Wall",
+    "category": "architectural",
+    "subcategory": "wall_assemblies",
+    "description": "2x4 wood stud partition wall with 5/8\" Type X drywall on both sides.",
+    "manufacturer": "USG Gypsum",
+    "unit": "sqft",
+    "cost": 7.8,
+    "dimensions": {
+      "thickness": 0.40625
+    },
+    "properties": {
+      "material": "wood",
+      "stcRating": 45,
+      "fireRatingHours": 1,
+      "thicknessInches": 4.875
+    },
+    "tags": ["wall", "interior", "partition", "gypsum"]
+  },
+  {
+    "id": "wall-int-3-metal",
+    "sku": "W-INT-362M",
+    "name": "Interior 3-5/8\" Metal Stud Wall",
+    "category": "architectural",
+    "subcategory": "wall_assemblies",
+    "description": "3-5/8\" light-gauge steel stud interior wall with 5/8\" gypsum board.",
+    "manufacturer": "ClarkDietrich",
+    "unit": "sqft",
+    "cost": 8.5,
+    "dimensions": {
+      "thickness": 0.30208
+    },
+    "properties": {
+      "material": "metal",
+      "stcRating": 42,
+      "fireRatingHours": 1,
+      "thicknessInches": 3.625
+    },
+    "tags": ["wall", "interior", "metal_stud", "commercial"]
+  },
+  {
+    "id": "win-double-hung-3060",
+    "sku": "WIN-DH-3060",
+    "name": "Double-Hung Vinyl Window 3'0\" x 6'0\"",
+    "category": "architectural",
+    "subcategory": "windows",
+    "description": "Energy Star double-pane Low-E argon filled vinyl double-hung window.",
+    "manufacturer": "Andersen Windows",
+    "modelNumber": "Series 400 DH3060",
+    "unit": "ea",
+    "cost": 340.0,
+    "dimensions": {
+      "width": 3.0,
+      "height": 6.0,
+      "depth": 0.375
+    },
+    "properties": {
+      "glazing": "Double Low-E",
+      "uFactor": 0.27,
+      "shgc": 0.3
+    },
+    "tags": ["window", "double_hung", "vinyl", "fenestration"]
+  },
+  {
+    "id": "door-int-flush-3068",
+    "sku": "DR-INT-3068",
+    "name": "Interior Wood Flush Door 3'0\" x 6'8\"",
+    "category": "architectural",
+    "subcategory": "doors",
+    "description": "Solid core birch veneer interior flush door with mortise hinge prep.",
+    "manufacturer": "JELD-WEN",
+    "modelNumber": "Birch SC 3068",
+    "unit": "ea",
+    "cost": 165.0,
+    "dimensions": {
+      "width": 3.0,
+      "height": 6.6667,
+      "thickness": 0.1458
+    },
+    "properties": {
+      "coreType": "Solid Wood",
+      "finish": "Natural Birch"
+    },
+    "tags": ["door", "interior", "wood", "flush"]
+  },
+  {
+    "id": "cw-mullion-alu-2x4",
+    "sku": "CW-MUL-ALU-24",
+    "name": "Aluminum Curtain Wall Tubular Mullion Profile 2\"x4\"",
+    "category": "architectural",
+    "subcategory": "curtainwall_mullions",
+    "description": "Thermally broken extruded aluminum curtain wall mullion profile.",
+    "manufacturer": "Kawneer",
+    "modelNumber": "1600 System 1",
+    "unit": "ft",
+    "cost": 18.5,
+    "dimensions": {
+      "width": 0.164,
+      "depth": 0.333
+    },
+    "properties": {
+      "material": "aluminum",
+      "thermalBreak": true,
+      "profileWidthMeters": 0.05
+    },
+    "tags": ["curtainwall", "mullion", "aluminum", "facade"]
+  },
+  {
+    "id": "cw-panel-glazing-double",
+    "sku": "CW-PNL-GLZ-2P",
+    "name": "Double-Pane Insulated Glass Curtain Wall Infill Panel",
+    "category": "architectural",
+    "subcategory": "curtainwall_panels",
+    "description": "1-inch double insulated Low-E tempered glass curtain wall infill unit.",
+    "manufacturer": "PPG Solarban",
+    "unit": "sqft",
+    "cost": 28.0,
+    "dimensions": {
+      "thickness": 0.0833
+    },
+    "properties": {
+      "infillMaterial": "glazing",
+      "rValue": 2.5,
+      "uFactor": 0.4,
+      "maxSafeWidthMeters": 2.0,
+      "maxSafeHeightMeters": 3.0
+    },
+    "tags": ["curtainwall", "panel", "glazing", "glass"]
+  },
+  {
+    "id": "cw-panel-brick-spandrel",
+    "sku": "CW-PNL-BRK",
+    "name": "Brick Veneer Spandrel Infill Panel",
+    "category": "architectural",
+    "subcategory": "curtainwall_panels",
+    "description": "Insulated precast brick veneer spandrel infill panel.",
+    "manufacturer": "Architectural Precast",
+    "unit": "sqft",
+    "cost": 45.0,
+    "dimensions": {
+      "thickness": 0.333
+    },
+    "properties": {
+      "infillMaterial": "brick",
+      "rValue": 12.0,
+      "uFactor": 0.0833
+    },
+    "tags": ["curtainwall", "panel", "brick", "spandrel"]
+  },
+  {
+    "id": "cw-panel-insulation-spandrel",
+    "sku": "CW-PNL-INS",
+    "name": "Rigid Foam Insulation Spandrel Panel",
+    "category": "architectural",
+    "subcategory": "curtainwall_panels",
+    "description": "High-density polyisocyanurate rigid foam insulation metal-faced spandrel panel.",
+    "manufacturer": "Kingspan",
+    "unit": "sqft",
+    "cost": 22.0,
+    "dimensions": {
+      "thickness": 0.25
+    },
+    "properties": {
+      "infillMaterial": "insulation",
+      "rValue": 20.0,
+      "uFactor": 0.05
+    },
+    "tags": ["curtainwall", "panel", "insulation", "spandrel"]
+  },
+  {
+    "id": "stair-wood-straight-36",
+    "sku": "STR-WD-36ST",
+    "name": "36\" Residential Wood Straight Run Stair Assembly",
+    "category": "architectural",
+    "subcategory": "stair_assemblies",
+    "description": "Standard 36-inch wide residential straight run wood stair with stringers, risers, and treads.",
+    "manufacturer": "StairCraft",
+    "unit": "ea",
+    "cost": 1200.0,
+    "dimensions": {
+      "width": 3.0
+    },
+    "properties": {
+      "maxRiserHeightMeters": 0.19695,
+      "minTreadDepthMeters": 0.254,
+      "minHeadroomMeters": 2.032,
+      "stringerMaterial": "LVL Wood"
+    },
+    "tags": ["stair", "wood", "assembly", "residential", "straight"]
+  },
+  {
+    "id": "stair-steel-pan-44",
+    "sku": "STR-STL-44CN",
+    "name": "44\" Commercial Steel Pan Concrete Filled Stair Unit",
+    "category": "architectural",
+    "subcategory": "stair_assemblies",
+    "description": "IBC-compliant 44-inch wide commercial steel pan stair assembly with concrete fill treads.",
+    "manufacturer": "Sharon Stair",
+    "unit": "ea",
+    "cost": 2850.0,
+    "dimensions": {
+      "width": 3.6667
+    },
+    "properties": {
+      "maxRiserHeightMeters": 0.1778,
+      "minTreadDepthMeters": 0.2794,
+      "minHeadroomMeters": 2.032,
+      "stringerMaterial": "Structural Steel Channel"
+    },
+    "tags": ["stair", "steel", "commercial", "concrete_pan", "egress"]
+  },
+  {
+    "id": "roof-shingle-asphalt-3tab",
+    "sku": "RF-SHG-ASP-3T",
+    "name": "3-Tab Architectural Asphalt Shingle Roof Assembly",
+    "category": "architectural",
+    "subcategory": "roof_assemblies",
+    "description": "Class A fire-rated 30-year 3-tab architectural asphalt shingle roof assembly over 15mm CDX plywood.",
+    "manufacturer": "GAF Timberline",
+    "unit": "sqft",
+    "cost": 4.85,
+    "dimensions": {
+      "thickness": 0.0492
+    },
+    "properties": {
+      "material": "asphalt_shingle",
+      "sheathingThicknessMeters": 0.015,
+      "unitWeightKgPerSqm": 12.0,
+      "rValue": 20.0,
+      "timberBoardFeetPerSqm": 8.5
+    },
+    "tags": ["roof", "shingle", "asphalt", "pitched", "assembly"]
+  },
+  {
+    "id": "roof-metal-standing-seam",
+    "sku": "RF-MTL-SS-24G",
+    "name": "24-Gauge Standing Seam Metal Roof Assembly",
+    "category": "architectural",
+    "subcategory": "roof_assemblies",
+    "description": "24-gauge Galvalume standing seam concealed-fastener metal roof assembly.",
+    "manufacturer": "MBCI Metalworks",
+    "unit": "sqft",
+    "cost": 9.5,
+    "dimensions": {
+      "thickness": 0.065
+    },
+    "properties": {
+      "material": "metal_standing_seam",
+      "sheathingThicknessMeters": 0.015,
+      "unitWeightKgPerSqm": 6.5,
+      "rValue": 30.0,
+      "timberBoardFeetPerSqm": 8.5
+    },
+    "tags": ["roof", "metal", "standing_seam", "pitched", "commercial"]
+  },
+  {
+    "id": "landuse-residential",
+    "sku": "LND-RES-R1",
+    "name": "Residential Land Use Zone",
+    "category": "architectural",
+    "subcategory": "land_use",
+    "description": "Housing: single-family, multifamily, and mixed residential zoning.",
+    "unit": "sqft",
+    "properties": {
+      "landUseCategory": "residential",
+      "label": "Residential",
+      "color": "#f59e0b",
+      "impervious": true,
+      "openSpace": false
+    },
+    "tags": ["landuse", "zoning", "residential"]
+  },
+  {
+    "id": "landuse-commercial",
+    "sku": "LND-COM-C1",
+    "name": "Commercial Land Use Zone",
+    "category": "architectural",
+    "subcategory": "land_use",
+    "description": "Retail, office, and services commercial zoning.",
+    "unit": "sqft",
+    "properties": {
+      "landUseCategory": "commercial",
+      "label": "Commercial",
+      "color": "#ef4444",
+      "impervious": true,
+      "openSpace": false
+    },
+    "tags": ["landuse", "zoning", "commercial"]
+  },
+  {
+    "id": "landuse-park",
+    "sku": "LND-PRK-P1",
+    "name": "Public Park & Open Space Zone",
+    "category": "architectural",
+    "subcategory": "land_use",
+    "description": "Public parks, greenways, and designated open space.",
+    "unit": "sqft",
+    "properties": {
+      "landUseCategory": "park",
+      "label": "Park",
+      "color": "#22c55e",
+      "impervious": false,
+      "openSpace": true
+    },
+    "tags": ["landuse", "zoning", "park", "openspace"]
+  },
+  {
+    "id": "zoning-dist-r1",
+    "sku": "ZON-DIST-R1",
+    "name": "R-1 Low Density Single Family Residential District",
+    "category": "architectural",
+    "subcategory": "zoning_districts",
+    "description": "Municipal R-1 low density residential zone district parameters.",
+    "unit": "sqft",
+    "properties": {
+      "designation": "R-1",
+      "maxCoverage": 0.5,
+      "maxFar": 1.0,
+      "maxHeightMeters": 12.0,
+      "minSetbackMeters": 3.0,
+      "defaultStoreys": 2,
+      "defaultBuildingHeightMeters": 7.0,
+      "rowWidthMeters": 12.0
+    },
+    "tags": ["zoning", "district", "r1", "residential", "planning"]
+  }
+]
