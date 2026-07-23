@@ -6,19 +6,27 @@
 //!
 //! ## Scope note
 //!
-//! The TS original's top-level composer (`buildSheetScene`/
-//! `buildSheetPrimitives`) and several of its content builders
-//! (`drawSitePlan`, `drawFloorPlan`, `drawFramework`, `schedulesFor`,
-//! `buildIndexSheet`, `buildBuildingViews`) walk a `Site` /
-//! `BuildingModel` / `RegionPlugin` — types owned by `thoth-planning` and
-//! `thoth-civil`, which this crate does not depend on. Those are
-//! **not-yet-ported**; see `STATUS.md`.
+//! Now that this crate depends on `thoth-planning`, `thoth-survey`, and
+//! `thoth-civil` (see `STATUS.md`), most of the `Site`-walking content
+//! builders are ported: [`site_bounds`], [`draw_framework`],
+//! [`draw_site_plan`], [`build_index_sheet`]. What remains
+//! **not-yet-ported** is blocked on `thoth-planning` itself not yet having a
+//! `BuildingModel`/interior-model type (its own `STATUS.md` confirms this):
+//! `buildingBounds`, `drawFloorPlan`, `schedulesFor`'s door/window/room/
+//! finish schedules, `buildBuildingViews`, and the top-level composer
+//! `buildSheetScene`/`buildSheetPrimitives` (which dispatches to those same
+//! building-model builders for architectural/elevation/section sheets) — see
+//! `STATUS.md` for the exact per-function breakdown.
 //!
-//! Everything else is ported, with one adaptation: functions that only ever
-//! touched a couple of fields of the big `Site`/`RegionPlugin` types now take
-//! exactly those fields as parameters, so the real primitive-building logic
-//! (annotation placement, title block layout, schedule table layout) is
-//! fully preserved without inventing a stand-in `Site`/`RegionPlugin` type:
+//! Every ported function that only ever touched a couple of fields of the
+//! big `Site`/`RegionPlugin` types (or a `Site` field this crate's scoped
+//! `thoth_planning::Site` still doesn't carry — `landLot`, `alignments`,
+//! `annotations.matchLines`; note `site.monuments`/`site.plss` *are* now
+//! real `Site` fields and are read directly — see that crate's
+//! `elements.rs` module rustdoc) takes exactly those missing fields as
+//! parameters instead, so the real primitive-building logic (annotation
+//! placement, title block layout, schedule table layout, site-plan
+//! composition) is fully preserved without inventing a stand-in type:
 //!
 //! - `drawDimensions(site, project)` -> [`draw_dimensions`]`(dimensions, spatial, project)`
 //! - `drawGridBubbles(site, project)` -> [`draw_grid_bubbles`]`(grid_lines, project)`
@@ -26,18 +34,40 @@
 //! - `buildTitleBlock(set, sheet, plugin, layout, scaleLabel)` ->
 //!   [`build_title_block`]`(set, sheet, firm_lines_override, layout, scale_label)`
 //!   (only `plugin.titleBlock.firmLines` was ever read)
+//! - `drawFramework(site, project)` -> [`draw_framework`]`(site, ctx, project)`, and
+//!   `drawSitePlan(site, project, _areaUnit)` -> [`draw_site_plan`]`(site, ctx, project)`
+//!   (the TS `_areaUnit` parameter's own leading underscore already marks it
+//!   unused in the original — it is not carried forward here), where `ctx` is
+//!   a [`SitePlanContext`] bundling `site.landLot.nwCorner`/`site.alignments`
+//! - `buildIndexSheet(set, site, layout)` ->
+//!   [`build_index_sheet`]`(set, site, ctx, layout, match_lines)`
 
 use crate::annotation::{grid_bubble_geometry, revision_cloud_bumps, GridLine, RevisionCloud};
 use crate::dimension::{dimension_style, measure_dimension, DimArrow, Dimension};
+use crate::hatch::{hatch_for_material, hatch_pattern};
 use crate::scene::{
-    arrow_head, dim_tick, paper_to_points_for_sheet, Pt, SheetPrimitive, TextAnchor, INK, LIGHT,
-    MUTED,
+    arrow_head, dim_tick, hatch_lines, paper_to_points_for_sheet, Pt, SheetPrimitive, TextAnchor,
+    INK, LIGHT, MUTED,
 };
 use crate::schedule::ScheduleTable;
-use crate::sheet::{resolve_title_block, DrawingSet, Sheet};
+use crate::sheet::{resolve_title_block, sheet_index, DrawingSet, Sheet};
 use crate::sheetsize::{printable_area, sheet_dimensions, PaperUnit};
 use crate::sheetview::{section_gaze, DetailMark, MatchLine, SectionMark};
-use thoth_spatial::{distance, Bounds, Point, SpatialContext};
+use crate::DrawingError;
+
+use thoth_civil::alignment::{
+    full_stations, offset_alignment_path, point_at_station, resolve_alignment, AlignmentElement,
+    HorizontalAlignment, OffsetKind,
+};
+use thoth_planning::elements::{PlanElement, Site};
+use thoth_planning::land_use::{land_use_color, LandUseCategory};
+use thoth_survey::curve::densify_boundary;
+use thoth_survey::monument::{MonumentStatus, MonumentType};
+use thoth_survey::plss::section_frame;
+
+use thoth_spatial::{
+    bounds, centroid, distance, union_bounds, Bounds, ElementKind, Point, SpatialContext,
+};
 
 /// Paper geometry of a sheet in points.
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -745,6 +775,533 @@ fn line_prim(x1: f64, y1: f64, x2: f64, y2: f64, w: f64, color: &str) -> SheetPr
     }
 }
 
+// --- content bounds ---------------------------------------------------------
+
+/// The overall extent of a site's spatial elements plus its survey
+/// monuments. Adapted from `siteBounds(site)` — `site.monuments` is a real
+/// field on this crate's `Site` port, so it's read directly.
+pub fn site_bounds(site: &Site) -> Option<Bounds> {
+    let mut boxes: Vec<Bounds> = site
+        .elements
+        .iter()
+        .filter_map(|e| e.base().map(|b| bounds(&b.boundary)))
+        .collect();
+    for m in site.monuments.iter().flatten() {
+        boxes.push(Bounds {
+            min_x: m.position.x,
+            min_y: m.position.y,
+            max_x: m.position.x,
+            max_y: m.position.y,
+        });
+    }
+    if boxes.is_empty() {
+        None
+    } else {
+        union_bounds(&boxes)
+    }
+}
+
+// --- Site fields this crate's `Site` doesn't carry yet ----------------------
+
+/// External inputs [`draw_framework`], [`draw_site_plan`], and
+/// [`build_index_sheet`] need that today's scoped `thoth_planning::Site`
+/// still doesn't carry — `site.landLot` (the Georgia Land Lot System frame;
+/// `thoth_planning::Site` has no `land_lot` field even though it now has a
+/// real `plss` field, see that crate's `elements.rs`/`GAPS.md`) and
+/// `site.alignments`. Bundled so these functions don't grow an unwieldy
+/// positional parameter list — the same "take exactly the missing fields"
+/// adaptation already used for [`SheetMarks`] elsewhere in this module.
+#[derive(Debug, Clone, Copy, Default)]
+pub struct SitePlanContext<'a> {
+    /// `site.landLot.nwCorner`, when the site uses the Georgia Land Lot System.
+    pub land_lot_nw_corner: Option<Point>,
+    pub alignments: &'a [HorizontalAlignment],
+}
+
+/// The section/land-lot framework outline, if the site carries one.
+/// Adapted from `drawFramework(site, project)`: `site.plss` is read
+/// directly (a real field on this crate's `Site` port); `ctx.land_lot_nw_corner`
+/// stands in for `site.landLot?.nwCorner` — see [`SitePlanContext`].
+pub fn draw_framework(
+    site: &Site,
+    ctx: &SitePlanContext<'_>,
+    project: impl Fn(Point) -> Pt,
+) -> Vec<SheetPrimitive> {
+    let frame = if let Some(nw) = ctx.land_lot_nw_corner {
+        let side = site
+            .plss
+            .as_ref()
+            .and_then(|p| p.section_side)
+            .unwrap_or(2640.0);
+        Some(section_frame(nw, side))
+    } else if let Some(plss) = &site.plss {
+        match (plss.section_nw_corner, plss.section_side) {
+            (Some(nw), Some(side)) => Some(section_frame(nw, side)),
+            _ => None,
+        }
+    } else {
+        None
+    };
+    let Some(frame) = frame else {
+        return Vec::new();
+    };
+    vec![SheetPrimitive::Polygon {
+        pts: vec![
+            project(frame.nw),
+            project(frame.ne),
+            project(frame.se),
+            project(frame.sw),
+        ],
+        w: Some(1.0),
+        stroke: Some(MUTED.to_string()),
+        fill: None,
+        fill_opacity: None,
+        dash: Some(vec![14.0, 4.0, 3.0, 4.0]),
+    }]
+}
+
+// --- element presentation (local mirror of thoth-planning's elementMeta.ts) -
+
+/// Fill color for a plain element kind (no land-use category override).
+/// Local mirror of the `fill` column of `thoth-planning`'s not-yet-ported
+/// `planning/elementMeta.ts` `META` table (that crate's own `STATUS.md`
+/// confirms `elementMeta.ts` isn't ported yet — see the "duplicate now,
+/// unify later" pattern documented in `GAPS.md`).
+fn element_fill_color(kind: ElementKind) -> &'static str {
+    match kind {
+        ElementKind::Region => "#0d9488",
+        ElementKind::Parcel => "#64748b",
+        ElementKind::Block => "#475569",
+        ElementKind::Zone => "#8b5cf6",
+        ElementKind::Landuse => "#22c55e",
+        ElementKind::Lot => "#0ea5e9",
+        ElementKind::Building => "#f59e0b",
+        ElementKind::Row => "#94a3b8",
+        ElementKind::Easement => "#a855f7",
+        ElementKind::Openspace => "#14b8a6",
+        ElementKind::Water => "#38bdf8",
+        ElementKind::Planting => "#4ade80",
+        ElementKind::Grade => "#f59e0b",
+        ElementKind::Tree => "#22c55e",
+        ElementKind::Spot => "#d97706",
+        ElementKind::Note => "#eab308",
+        ElementKind::Stair => "#a8a29e",
+        ElementKind::Curtainwall => "#38bdf8",
+        ElementKind::Door => "#f59e0b",
+        ElementKind::Window => "#22d3ee",
+        ElementKind::Roof => "#f87171",
+    }
+}
+
+/// The canvas color for an element, honoring land-use category when
+/// relevant. Local port of `elementColor` (`planning/elementMeta.ts`) — see
+/// [`element_fill_color`].
+pub fn element_color(kind: ElementKind, category: Option<LandUseCategory>) -> &'static str {
+    if kind == ElementKind::Landuse {
+        if let Some(cat) = category {
+            return land_use_color(cat);
+        }
+    }
+    element_fill_color(kind)
+}
+
+/// The TS string spelling of an [`ElementKind`], used as a
+/// [`crate::hatch::hatch_for_material`] lookup key — mirrors `ElementKind`'s
+/// own `#[serde(rename_all = "lowercase")]` representation.
+fn element_kind_hatch_key(kind: ElementKind) -> &'static str {
+    match kind {
+        ElementKind::Region => "region",
+        ElementKind::Parcel => "parcel",
+        ElementKind::Block => "block",
+        ElementKind::Lot => "lot",
+        ElementKind::Zone => "zone",
+        ElementKind::Landuse => "landuse",
+        ElementKind::Building => "building",
+        ElementKind::Row => "row",
+        ElementKind::Easement => "easement",
+        ElementKind::Openspace => "openspace",
+        ElementKind::Water => "water",
+        ElementKind::Planting => "planting",
+        ElementKind::Grade => "grade",
+        ElementKind::Tree => "tree",
+        ElementKind::Spot => "spot",
+        ElementKind::Note => "note",
+        ElementKind::Stair => "stair",
+        ElementKind::Curtainwall => "curtainwall",
+        ElementKind::Door => "door",
+        ElementKind::Window => "window",
+        ElementKind::Roof => "roof",
+    }
+}
+
+/// The TS string spelling of a [`LandUseCategory`], used as a
+/// [`crate::hatch::hatch_for_material`] lookup key — mirrors that type's own
+/// `#[serde(rename_all = "kebab-case")]` representation.
+fn land_use_hatch_key(category: LandUseCategory) -> &'static str {
+    match category {
+        LandUseCategory::Residential => "residential",
+        LandUseCategory::Commercial => "commercial",
+        LandUseCategory::MixedUse => "mixed-use",
+        LandUseCategory::Civic => "civic",
+        LandUseCategory::Industrial => "industrial",
+        LandUseCategory::Park => "park",
+        LandUseCategory::OpenSpace => "open-space",
+        LandUseCategory::Agricultural => "agricultural",
+        LandUseCategory::Infrastructure => "infrastructure",
+        LandUseCategory::Unassigned => "unassigned",
+    }
+}
+
+// --- site plan ---------------------------------------------------------------
+
+/// Draw the full site plan: element fills/hatches, lot/parcel labels,
+/// alignments (centerline + offsets + station ticks), and monument glyphs,
+/// projected through `project`. Adapted from `drawSitePlan(site, project,
+/// _areaUnit)` — see [`SitePlanContext`] for the parameter adaptation; the
+/// TS `_areaUnit` parameter's own leading underscore already marks it
+/// unused in the original, so it is not carried forward here.
+///
+/// # Errors
+/// Propagates [`DrawingError`] from [`crate::scene::hatch_lines`] if a
+/// hatch pattern's spacing is malformed or an element's densified boundary
+/// has fewer than 3 vertices — a hardening over the TS original, which
+/// would silently drop the hatch or hang (see that function's docs).
+pub fn draw_site_plan(
+    site: &Site,
+    ctx: &SitePlanContext<'_>,
+    project: impl Fn(Point) -> Pt,
+) -> Result<Vec<SheetPrimitive>, DrawingError> {
+    let mut out = draw_framework(site, ctx, &project);
+
+    for el in &site.elements {
+        let Some(base) = el.base() else { continue };
+        let ring: Vec<Pt> = densify_boundary(&base.boundary, base.arcs.as_ref(), 2.0)
+            .into_iter()
+            .map(&project)
+            .collect();
+        let kind = el.kind();
+        let category = match el {
+            PlanElement::LandUse(lu) => Some(lu.category),
+            _ => None,
+        };
+        let color = element_color(kind, category);
+        let is_easement = kind == ElementKind::Easement;
+        out.push(SheetPrimitive::Polygon {
+            pts: ring.clone(),
+            w: Some(if kind == ElementKind::Parcel {
+                1.2
+            } else {
+                0.8
+            }),
+            stroke: Some(if is_easement { MUTED } else { INK }.to_string()),
+            fill: Some(color.to_string()),
+            fill_opacity: Some(if is_easement {
+                0.05
+            } else if kind == ElementKind::Building {
+                0.5
+            } else {
+                0.14
+            }),
+            dash: if is_easement {
+                Some(vec![6.0, 3.0, 2.0, 3.0])
+            } else if kind == ElementKind::Zone {
+                Some(vec![5.0, 3.0])
+            } else {
+                None
+            },
+        });
+
+        let hatch_key = match category {
+            Some(cat) => land_use_hatch_key(cat),
+            None => element_kind_hatch_key(kind),
+        };
+        let hatch_id = base
+            .hatch_id
+            .clone()
+            .or_else(|| hatch_for_material(Some(hatch_key)).map(str::to_string));
+        if !is_easement {
+            if let Some(hp) = hatch_id.and_then(|id| hatch_pattern(&id)) {
+                out.extend(hatch_lines(&ring, &hp)?);
+            }
+        }
+    }
+
+    // Lot/parcel labels.
+    for el in &site.elements {
+        if !matches!(el.kind(), ElementKind::Lot | ElementKind::Parcel) {
+            continue;
+        }
+        let Some(base) = el.base() else { continue };
+        let c = project(centroid(&base.boundary));
+        out.push(text_anchored(
+            c.x,
+            c.y,
+            &base.name,
+            6.0,
+            INK,
+            TextAnchor::Middle,
+            Some(700.0),
+        ));
+    }
+
+    // Alignments: offsets + centerline + station ticks.
+    for a in ctx.alignments {
+        let Ok(resolved) = resolve_alignment(a) else {
+            continue;
+        };
+        for off in &a.offsets {
+            let path: Vec<Pt> = offset_alignment_path(&resolved, off.distance, 120)
+                .into_iter()
+                .map(&project)
+                .collect();
+            let is_row = off.kind == OffsetKind::Row;
+            out.push(SheetPrimitive::Polyline {
+                pts: path,
+                w: Some(0.7),
+                color: Some(if is_row { "#7c3aed" } else { "#334155" }.to_string()),
+                dash: if is_row {
+                    Some(vec![8.0, 2.0, 2.0, 2.0])
+                } else {
+                    None
+                },
+                close: None,
+            });
+        }
+
+        let mut cl: Vec<Pt> = Vec::new();
+        for element in &resolved.elements {
+            match element {
+                AlignmentElement::Tangent { from, to, .. } => {
+                    if cl.is_empty() {
+                        cl.push(project(*from));
+                    }
+                    cl.push(project(*to));
+                }
+                AlignmentElement::Curve { curve, .. } => {
+                    let steps = ((curve.delta_deg / 3.0).ceil() as i64).max(2);
+                    for i in 0..=steps {
+                        let ang = curve.start_angle + (curve.sweep * i as f64) / steps as f64;
+                        cl.push(project(Point::new(
+                            curve.center.x + curve.radius * ang.cos(),
+                            curve.center.y + curve.radius * ang.sin(),
+                        )));
+                    }
+                }
+                AlignmentElement::Spiral { .. } => {}
+            }
+        }
+        out.push(SheetPrimitive::Polyline {
+            pts: cl,
+            w: Some(1.1),
+            color: Some("#b91c1c".to_string()),
+            dash: Some(vec![12.0, 3.0, 3.0, 3.0]),
+            close: None,
+        });
+
+        for st in full_stations(&resolved, 100.0) {
+            let Ok(at) = point_at_station(&resolved, st) else {
+                continue;
+            };
+            let s = project(at.point);
+            out.push(SheetPrimitive::Circle {
+                c: s,
+                r: 1.2,
+                sw: None,
+                stroke: None,
+                fill: Some("#b91c1c".to_string()),
+                fill_opacity: None,
+            });
+        }
+    }
+
+    // Monuments (simple glyphs) + POB.
+    for m in site.monuments.iter().flatten() {
+        let s = project(m.position);
+        let filled = matches!(m.status, MonumentStatus::Set);
+        let fill_color = if filled { INK } else { "#ffffff" };
+        match m.kind {
+            MonumentType::IronRod | MonumentType::IronPipe | MonumentType::RebarCap => {
+                out.push(SheetPrimitive::Circle {
+                    c: s,
+                    r: 2.0,
+                    sw: Some(0.8),
+                    stroke: Some(INK.to_string()),
+                    fill: Some(fill_color.to_string()),
+                    fill_opacity: None,
+                });
+            }
+            _ => {
+                out.push(SheetPrimitive::Rect {
+                    x: s.x - 2.0,
+                    y: s.y - 2.0,
+                    w: 4.0,
+                    h: 4.0,
+                    sw: Some(0.8),
+                    stroke: Some(INK.to_string()),
+                    fill: Some(fill_color.to_string()),
+                    fill_opacity: None,
+                    dash: None,
+                });
+            }
+        }
+    }
+
+    Ok(out)
+}
+
+// --- index sheet -------------------------------------------------------------
+
+/// Build the cover/index sheet's content: the set title, a sheet-index
+/// table, and a fitted key-map thumbnail of the whole site (with match-line
+/// callouts). Adapted from `buildIndexSheet(set, site, layout)` — see
+/// [`SitePlanContext`] for why `ctx`/`match_lines` are explicit parameters
+/// (`site.annotations?.matchLines` isn't carried by this crate's scoped
+/// `Site`).
+///
+/// # Errors
+/// Propagates [`DrawingError`] from [`draw_site_plan`]'s key-map render.
+pub fn build_index_sheet(
+    set: &DrawingSet,
+    site: &Site,
+    ctx: &SitePlanContext<'_>,
+    layout: &SheetLayout,
+    match_lines: &[MatchLine],
+) -> Result<Vec<SheetPrimitive>, DrawingError> {
+    let mut out = Vec::new();
+    let a = layout.draw_area;
+    out.push(text(
+        a.x + 12.0,
+        a.y + 26.0,
+        &set.name.to_uppercase(),
+        18.0,
+        INK,
+        None,
+        Some(700.0),
+    ));
+    out.push(text(
+        a.x + 12.0,
+        a.y + 44.0,
+        set.title_block_defaults.location.as_deref().unwrap_or(""),
+        9.0,
+        MUTED,
+        None,
+        None,
+    ));
+
+    // Sheet index table (left half).
+    let rows = sheet_index(set);
+    let tbl_x = a.x + 12.0;
+    let mut y = a.y + 74.0;
+    out.push(text(
+        tbl_x,
+        y - 6.0,
+        "SHEET INDEX",
+        10.0,
+        INK,
+        None,
+        Some(700.0),
+    ));
+    out.push(SheetPrimitive::Rect {
+        x: tbl_x,
+        y,
+        w: a.w * 0.44,
+        h: 16.0,
+        sw: Some(0.6),
+        stroke: Some(INK.to_string()),
+        fill: Some("#e2e8f0".to_string()),
+        fill_opacity: None,
+        dash: None,
+    });
+    out.push(text(
+        tbl_x + 4.0,
+        y + 11.0,
+        "NO.",
+        6.5,
+        INK,
+        None,
+        Some(700.0),
+    ));
+    out.push(text(
+        tbl_x + 60.0,
+        y + 11.0,
+        "SHEET TITLE",
+        6.5,
+        INK,
+        None,
+        Some(700.0),
+    ));
+    y += 16.0;
+    for r in &rows {
+        out.push(SheetPrimitive::Rect {
+            x: tbl_x,
+            y,
+            w: a.w * 0.44,
+            h: 13.0,
+            sw: Some(0.3),
+            stroke: Some(LIGHT.to_string()),
+            fill: None,
+            fill_opacity: None,
+            dash: None,
+        });
+        out.push(text(
+            tbl_x + 4.0,
+            y + 9.0,
+            &r.number,
+            6.5,
+            INK,
+            None,
+            Some(600.0),
+        ));
+        out.push(text(tbl_x + 60.0, y + 9.0, &r.title, 6.5, INK, None, None));
+        y += 13.0;
+    }
+
+    // Key map (right half): a fitted site thumbnail.
+    if let Some(b) = site_bounds(site) {
+        let km_rect = RectPt {
+            x: a.x + a.w * 0.5,
+            y: a.y + 74.0,
+            w: a.w * 0.46,
+            h: a.h * 0.6,
+        };
+        out.push(SheetPrimitive::Rect {
+            x: km_rect.x,
+            y: km_rect.y,
+            w: km_rect.w,
+            h: km_rect.h,
+            sw: Some(0.8),
+            stroke: Some(INK.to_string()),
+            fill: None,
+            fill_opacity: None,
+            dash: None,
+        });
+        out.push(text(
+            km_rect.x,
+            km_rect.y - 6.0,
+            "KEY MAP",
+            10.0,
+            INK,
+            None,
+            Some(700.0),
+        ));
+        let pr = fit_projector(km_rect, b, 0.08);
+        out.extend(draw_site_plan(site, ctx, |p| pr.project(p))?);
+        for ml in match_lines {
+            let p = pr.project(ml.at_line[0]);
+            let q = pr.project(ml.at_line[1]);
+            out.push(SheetPrimitive::Line {
+                a: p,
+                b: q,
+                w: Some(1.2),
+                color: Some("#b91c1c".to_string()),
+                dash: Some(vec![10.0, 3.0, 3.0, 3.0]),
+            });
+        }
+    }
+
+    Ok(out)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -966,5 +1523,335 @@ mod tests {
         let (prims, height) = draw_schedule_table(&table, 0.0, 0.0, 400.0);
         assert!(!prims.is_empty());
         assert!(height > 0.0);
+    }
+
+    // --- site-walking builders (site_bounds/draw_framework/draw_site_plan/
+    // build_index_sheet) --------------------------------------------------
+
+    use thoth_civil::alignment::AlignmentPi;
+    use thoth_planning::elements::{new_base, Easement, LandUse, Lot, Parcel, PlssFrame};
+    use thoth_survey::monument::SurveyMonument;
+    use thoth_survey::plss::{RangeDirection, TownshipDirection, TownshipRange};
+
+    fn spatial_ctx() -> SpatialContext {
+        SpatialContext {
+            crs: "EPSG:3857".to_string(),
+            units: thoth_spatial::Unit::Feet,
+            scale: 1.0,
+        }
+    }
+
+    fn square(min: f64, max: f64) -> Vec<Point> {
+        vec![
+            Point::new(min, min),
+            Point::new(max, min),
+            Point::new(max, max),
+            Point::new(min, max),
+        ]
+    }
+
+    fn empty_site() -> Site {
+        Site {
+            id: "s1".to_string(),
+            name: "Site".to_string(),
+            spatial: spatial_ctx(),
+            layers: vec![],
+            elements: vec![],
+            jurisdiction_id: None,
+            geoid: None,
+            control_lines: None,
+            civil_symbols: None,
+            networks: None,
+            monuments: None,
+            plss: None,
+        }
+    }
+
+    fn empty_ctx() -> SitePlanContext<'static> {
+        SitePlanContext::default()
+    }
+
+    #[test]
+    fn element_color_uses_land_use_color_for_a_landuse_element_with_a_category() {
+        let residential = element_color(ElementKind::Landuse, Some(LandUseCategory::Residential));
+        let plain_landuse = element_color(ElementKind::Landuse, None);
+        assert_ne!(residential, plain_landuse);
+    }
+
+    #[test]
+    fn element_color_falls_back_to_the_kind_fill_for_non_landuse_kinds() {
+        assert_eq!(element_color(ElementKind::Building, None), "#f59e0b");
+        assert_eq!(element_color(ElementKind::Parcel, None), "#64748b");
+    }
+
+    #[test]
+    fn site_bounds_of_an_empty_site_is_none() {
+        assert!(site_bounds(&empty_site()).is_none());
+    }
+
+    #[test]
+    fn site_bounds_unions_element_and_monument_extents() {
+        let mut site = empty_site();
+        site.elements = vec![PlanElement::Parcel(Parcel {
+            base: new_base(
+                "p1",
+                ElementKind::Parcel,
+                "Parcel 1",
+                "l",
+                square(0.0, 10.0),
+            ),
+            apn: None,
+        })];
+        site.monuments = Some(vec![SurveyMonument {
+            id: "m1".to_string(),
+            kind: MonumentType::IronRod,
+            status: MonumentStatus::Set,
+            position: Point::new(50.0, 50.0),
+            label: None,
+            note: None,
+        }]);
+        let b = site_bounds(&site).unwrap();
+        assert_eq!(b.min_x, 0.0);
+        assert_eq!(b.max_x, 50.0);
+        assert_eq!(b.max_y, 50.0);
+    }
+
+    #[test]
+    fn draw_framework_of_a_site_with_no_plss_or_land_lot_is_empty() {
+        let site = empty_site();
+        let ctx = empty_ctx();
+        assert!(draw_framework(&site, &ctx, |p| Pt::new(p.x, p.y)).is_empty());
+    }
+
+    #[test]
+    fn draw_framework_draws_a_plss_section_frame_when_present() {
+        let mut site = empty_site();
+        site.plss = Some(PlssFrame {
+            township_range: TownshipRange::try_new(
+                1,
+                TownshipDirection::North,
+                1,
+                RangeDirection::East,
+                None,
+            )
+            .unwrap(),
+            section: 12,
+            section_nw_corner: Some(Point::new(0.0, 0.0)),
+            section_side: Some(2640.0),
+        });
+        let ctx = empty_ctx();
+        let prims = draw_framework(&site, &ctx, |p| Pt::new(p.x, p.y));
+        assert_eq!(prims.len(), 1);
+        assert!(matches!(prims[0], SheetPrimitive::Polygon { .. }));
+    }
+
+    #[test]
+    fn draw_framework_prefers_a_land_lot_frame_over_plss_when_both_are_present() {
+        let mut site = empty_site();
+        site.plss = Some(PlssFrame {
+            township_range: TownshipRange::try_new(
+                1,
+                TownshipDirection::North,
+                1,
+                RangeDirection::East,
+                None,
+            )
+            .unwrap(),
+            section: 12,
+            section_nw_corner: Some(Point::new(999.0, 999.0)),
+            section_side: Some(100.0),
+        });
+        let alignments = [];
+        let ctx = SitePlanContext {
+            land_lot_nw_corner: Some(Point::new(0.0, 0.0)),
+            alignments: &alignments,
+        };
+        let prims = draw_framework(&site, &ctx, |p| Pt::new(p.x, p.y));
+        let SheetPrimitive::Polygon { pts, .. } = &prims[0] else {
+            panic!("expected a polygon");
+        };
+        // The land-lot NW corner (0,0) wins, at the PLSS's own default side
+        // (2640 ft) since `site.plss.sectionSide` is only read as a fallback
+        // for the land-lot frame's side length, not overridden by it here.
+        assert_eq!(pts[0], Pt::new(0.0, 0.0));
+    }
+
+    #[test]
+    fn draw_site_plan_fills_elements_and_labels_lots_and_parcels() {
+        let mut site = empty_site();
+        site.elements = vec![
+            PlanElement::Parcel(Parcel {
+                base: new_base(
+                    "p1",
+                    ElementKind::Parcel,
+                    "Parcel 1",
+                    "l",
+                    square(0.0, 100.0),
+                ),
+                apn: None,
+            }),
+            PlanElement::Lot(Lot {
+                base: new_base("lo1", ElementKind::Lot, "Lot 1", "l", square(10.0, 40.0)),
+                parcel_id: None,
+                block_id: None,
+                setback: None,
+            }),
+        ];
+        let ctx = empty_ctx();
+        let prims = draw_site_plan(&site, &ctx, |p| Pt::new(p.x, p.y)).unwrap();
+        let polygons = prims
+            .iter()
+            .filter(|p| matches!(p, SheetPrimitive::Polygon { .. }))
+            .count();
+        assert_eq!(polygons, 2);
+        let has_lot_label = prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Text { text, .. } if text == "Lot 1"));
+        assert!(has_lot_label);
+    }
+
+    #[test]
+    fn draw_site_plan_hatches_a_landuse_element_by_category_but_not_an_easement() {
+        let mut site = empty_site();
+        site.elements = vec![
+            PlanElement::LandUse(LandUse {
+                base: new_base("lu1", ElementKind::Landuse, "Park", "l", square(0.0, 50.0)),
+                category: LandUseCategory::Park,
+            }),
+            PlanElement::Easement(Easement {
+                base: new_base(
+                    "e1",
+                    ElementKind::Easement,
+                    "Easement 1",
+                    "l",
+                    square(0.0, 50.0),
+                ),
+                purpose: None,
+            }),
+        ];
+        let ctx = empty_ctx();
+        let prims = draw_site_plan(&site, &ctx, |p| Pt::new(p.x, p.y)).unwrap();
+        // "park" resolves to the "grass" hatch pattern (a dots pattern, via
+        // `hatchForMaterial`) and so contributes extra circle primitives on
+        // top of its own boundary polygon; the easement never gets hatched
+        // even though "easement" itself resolves to no `MATERIAL_HATCH` key.
+        let landuse_polygon_fill_opacity = prims.iter().find_map(|p| match p {
+            SheetPrimitive::Polygon {
+                fill: Some(f),
+                fill_opacity,
+                ..
+            } if f == thoth_planning::land_use::land_use_color(LandUseCategory::Park) => {
+                *fill_opacity
+            }
+            _ => None,
+        });
+        assert!(landuse_polygon_fill_opacity.is_some());
+        assert!(prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Circle { .. })));
+    }
+
+    #[test]
+    fn draw_site_plan_draws_a_glyph_per_monument() {
+        let mut site = empty_site();
+        site.monuments = Some(vec![
+            SurveyMonument {
+                id: "m1".to_string(),
+                kind: MonumentType::IronRod,
+                status: MonumentStatus::Set,
+                position: Point::new(0.0, 0.0),
+                label: None,
+                note: None,
+            },
+            SurveyMonument {
+                id: "m2".to_string(),
+                kind: MonumentType::Concrete,
+                status: MonumentStatus::Found,
+                position: Point::new(10.0, 10.0),
+                label: None,
+                note: None,
+            },
+        ]);
+        let ctx = empty_ctx();
+        let prims = draw_site_plan(&site, &ctx, |p| Pt::new(p.x, p.y)).unwrap();
+        assert!(prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Circle { r, .. } if *r == 2.0)));
+        assert!(prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Rect { w, .. } if *w == 4.0)));
+    }
+
+    #[test]
+    fn draw_site_plan_draws_an_alignment_centerline_and_offset() {
+        let site = empty_site();
+        let alignment = HorizontalAlignment::new(
+            "a1",
+            "Main Street",
+            vec![
+                AlignmentPi::simple(Point::new(0.0, 0.0)),
+                AlignmentPi::simple(Point::new(0.0, 1000.0)),
+            ],
+            0.0,
+        );
+        let alignments = [alignment];
+        let ctx = SitePlanContext {
+            land_lot_nw_corner: None,
+            alignments: &alignments,
+        };
+        let prims = draw_site_plan(&site, &ctx, |p| Pt::new(p.x, p.y)).unwrap();
+        let polylines: Vec<_> = prims
+            .iter()
+            .filter(|p| matches!(p, SheetPrimitive::Polyline { .. }))
+            .collect();
+        // At least the red centerline itself (no offsets configured on this
+        // alignment, so exactly one polyline).
+        assert_eq!(polylines.len(), 1);
+    }
+
+    #[test]
+    fn build_index_sheet_of_an_empty_site_has_no_key_map_but_has_the_index_table() {
+        let set = sample_set(sample_sheet());
+        let site = empty_site();
+        let ctx = empty_ctx();
+        let layout = sheet_layout(&sample_sheet(), PaperUnit::In);
+        let prims = build_index_sheet(&set, &site, &ctx, &layout, &[]).unwrap();
+        assert!(prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Text { text, .. } if text == "SHEET INDEX")));
+        assert!(!prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Text { text, .. } if text == "KEY MAP")));
+    }
+
+    #[test]
+    fn build_index_sheet_draws_a_key_map_when_the_site_has_bounds() {
+        let set = sample_set(sample_sheet());
+        let mut site = empty_site();
+        site.elements = vec![PlanElement::Parcel(Parcel {
+            base: new_base(
+                "p1",
+                ElementKind::Parcel,
+                "Parcel 1",
+                "l",
+                square(0.0, 100.0),
+            ),
+            apn: None,
+        })];
+        let ctx = empty_ctx();
+        let layout = sheet_layout(&sample_sheet(), PaperUnit::In);
+        let match_line = MatchLine {
+            id: "ml1".to_string(),
+            at_line: [Point::new(0.0, 0.0), Point::new(100.0, 0.0)],
+            adjoining_sheet: "C-102".to_string(),
+            label: None,
+        };
+        let prims = build_index_sheet(&set, &site, &ctx, &layout, &[match_line]).unwrap();
+        assert!(prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Text { text, .. } if text == "KEY MAP")));
+        assert!(prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Line { color, .. } if color.as_deref() == Some("#b91c1c"))));
     }
 }

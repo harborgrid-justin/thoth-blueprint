@@ -7,6 +7,7 @@
 //! Scope (mirrors the TS module split):
 //! - [`annotation`] — text styles, keynotes, column grids, revision clouds, tags.
 //! - [`collada`] — a minimal COLLADA 1.4.1 writer and mesh generator.
+//! - [`default_set`] — the standard multi-discipline drawing set for a site.
 //! - [`dimension`] — dimension styles and the six supported dimension kinds.
 //! - [`drafting`] — line weights/types, drawing scales, NCS disciplines/layers.
 //! - [`hatch`] — the standard hatch pattern catalog and material->hatch mapping.
@@ -38,18 +39,24 @@
 //!
 //! Several TS modules depend on types owned by `thoth-planning`, `thoth-civil`,
 //! and `thoth-survey` (`Site`, `BuildingModel`, `RegionPlugin`,
-//! `ResolvedAlignment`, `CoordinateBasis`, …). This crate does not depend on
-//! those crates (see the top-level task boundary), so functions that need
-//! them are either narrowed to the plain-data subset they actually touch
-//! (documented per-module), or left `not-yet-ported` — see `STATUS.md` for
-//! the exhaustive file-by-file mapping and `GAPS.md` for what's missing from
-//! `thoth-spatial` specifically.
+//! `ResolvedAlignment`, `CoordinateBasis`, …). This crate now depends on all
+//! three (`thoth-planning`/`thoth-survey` were added in the
+//! integration-debt-closing pass — see `STATUS.md`/`GAPS.md` for exactly
+//! which functions that unblocked and the mandatory dependency order:
+//! `thoth-spatial -> thoth-civil -> thoth-survey -> thoth-planning ->
+//! thoth-drawing`), so most cross-crate functions are now ported. What
+//! remains `not-yet-ported` is blocked on `thoth-planning` itself not yet
+//! having a `BuildingModel`/interior-model type (see its own `STATUS.md`) —
+//! not on a dependency this crate lacks. See `STATUS.md` for the exhaustive
+//! file-by-file mapping and `GAPS.md` for what's missing from `thoth-spatial`
+//! specifically.
 
 pub mod annotation;
 pub mod bond;
 pub mod builders;
 pub mod collada;
 pub mod common;
+pub mod default_set;
 pub mod dimension;
 pub mod drafting;
 mod error;

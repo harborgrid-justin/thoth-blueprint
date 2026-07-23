@@ -54,6 +54,19 @@ via the workspace dependency alias that the root `Cargo.toml` already
 declares — no change to the root workspace manifest was needed. No other
 crate boundary in the original task instructions was touched.
 
+> **Update (integration-debt-closing pass):** a later round added
+> `thoth-planning` and `thoth-survey` as further dependencies, per the
+> workspace's mandated dependency order
+> (`thoth-spatial -> thoth-civil -> thoth-survey -> thoth-planning ->
+> thoth-drawing`). That is unrelated to this Theme-5 gap-analysis work
+> above — it closed the `packages/domain/src/drawing/**` migration-pass
+> gaps this document's introduction refers to (`defaultSet.ts`,
+> `collada::siteToMeshes`, `platset::collectSiteCurves`, and several
+> `builders.ts` content builders) — see `STATUS.md` and `GAPS.md` for the
+> current, up-to-date per-function status. Item 51's `StakingPoint`
+> pending-integration note below still stands: it's about `thoth-interop`,
+> a crate this pass didn't touch.
+
 ## Test count
 
 67 new tests across the 10 modules above (207 total in the crate, up from

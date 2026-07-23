@@ -7,19 +7,149 @@
 //!
 //! ## Scope note
 //!
-//! [`meshFormatFromName`]/[`meshes_from_name`], [`prism`], and [`write_collada`]
-//! are fully ported (pure geometry/string generation, no external types).
-//! `siteToMeshes` from the TS source — which walks a `Site`'s terrain and
-//! building elements via `thoth-civil`'s `buildTerrainModel`/`elevationAt` and
-//! `thoth-planning`'s `Site` — is **not-yet-ported**: it needs types owned by
-//! crates this one does not depend on. See `STATUS.md`. When it is ported,
-//! reproduce the TS `VERTICAL_EXAGGERATION = 1.6` constant (a vertical
-//! scale-up applied to terrain/building heights so relief reads clearly in a
-//! 3D export) exactly.
+//! [`meshFormatFromName`]/[`mesh_format_from_name`], [`prism`], and
+//! [`write_collada`] are pure geometry/string generation with no external
+//! types. [`site_to_meshes`] walks a `Site`'s terrain and building elements
+//! via `thoth-civil`'s `build_terrain_model`/`elevation_at` and
+//! `thoth-planning`'s `Site` — both now dependencies of this crate (see
+//! `STATUS.md`). It reproduces the TS `VERTICAL_EXAGGERATION = 1.6` constant
+//! (a vertical scale-up applied to terrain/building heights so relief reads
+//! clearly in a 3D export) exactly.
 
-use thoth_spatial::Point;
+use thoth_civil::terrain::{elevation_at, SpotElevation};
+use thoth_civil::terrain_model::{build_terrain_model, GradeRegionInput};
+use thoth_planning::elements::{PlanElement, Site};
+use thoth_spatial::{bounds, centroid, union_bounds, Bounds, Point};
 
 use crate::common::format::{safe_id, xml_escape};
+
+/// Vertical scale-up applied to terrain/building heights in a 3D export so
+/// relief reads clearly (matches the TS `VERTICAL_EXAGGERATION` constant).
+const VERTICAL_EXAGGERATION: f64 = 1.6;
+
+/// Fallback storey height (plan units) when a [`thoth_planning::elements::Building`]
+/// has no explicit `height`, matching the TS `el.height ?? el.storeys * 3.2`.
+const STOREY_HEIGHT_FALLBACK: f64 = 3.2;
+
+/// The planning extent of a site: the union of every spatial element's
+/// boundary bounds plus every point element's (spot/tree/note) position.
+/// Port of the TS `siteExtent` helper in `civil/terrainModel.ts` — that
+/// module intentionally stops at `extent_of_points`/a plain point list (see
+/// its own module rustdoc) because it doesn't depend on `thoth-planning`;
+/// this crate does, so the full `Site`-walking version lives here.
+fn site_extent(site: &Site) -> Option<Bounds> {
+    let mut boxes: Vec<Bounds> = Vec::new();
+    for el in &site.elements {
+        if let Some(base) = el.base() {
+            boxes.push(bounds(&base.boundary));
+        } else {
+            match el {
+                PlanElement::Spot(s) => boxes.push(bounds(&[s.position])),
+                PlanElement::Tree(t) => boxes.push(bounds(&[t.position])),
+                PlanElement::Note(n) => boxes.push(bounds(&[n.position])),
+                _ => {}
+            }
+        }
+    }
+    if boxes.is_empty() {
+        None
+    } else {
+        union_bounds(&boxes)
+    }
+}
+
+/// Convert a site into triangle meshes: the terrain surface and building
+/// solids. Port of the TS `siteToMeshes`.
+pub fn site_to_meshes(site: &Site) -> Vec<SimpleMesh> {
+    let mut meshes = Vec::new();
+
+    let spots: Vec<SpotElevation> = site
+        .elements
+        .iter()
+        .filter_map(|e| match e {
+            PlanElement::Spot(s) => Some(SpotElevation {
+                point: s.position,
+                z: s.z,
+            }),
+            _ => None,
+        })
+        .collect();
+    let grades: Vec<GradeRegionInput> = site
+        .elements
+        .iter()
+        .filter_map(|e| match e {
+            PlanElement::GradeRegion(g) => Some(GradeRegionInput {
+                boundary: g.base.boundary.clone(),
+                target_elevation: g.target_elevation,
+            }),
+            _ => None,
+        })
+        .collect();
+    let extent = site_extent(site);
+
+    // `build_terrain_model`'s only failure mode is a non-positive cell size,
+    // which cannot happen here: the cell size it derives is always
+    // `max(MIN_CELL, extent_span / TARGET_CELLS_ACROSS)` for a `Some`
+    // extent, both positive constants — see its own doc comment.
+    let terrain = build_terrain_model(&spots, &grades, extent)
+        .expect("build_terrain_model's cell size is always positive for a finite extent");
+
+    let exag = VERTICAL_EXAGGERATION;
+    let elev_at = |p: Point| -> f64 {
+        terrain
+            .existing
+            .as_ref()
+            .map_or(0.0, |grid| elevation_at(grid, p))
+    };
+
+    // Terrain surface as a triangulated grid (y-up).
+    if let Some(grid) = &terrain.existing {
+        let cols = grid.cols();
+        let rows = grid.rows();
+        let mut positions = Vec::with_capacity(rows * cols * 3);
+        let mut indices = Vec::new();
+        for r in 0..rows {
+            for c in 0..cols {
+                let i = r * cols + c;
+                positions.push(grid.origin().x + c as f64 * grid.cell_size());
+                positions.push(grid.heights()[i] * exag);
+                positions.push(grid.origin().y + r as f64 * grid.cell_size());
+            }
+        }
+        for r in 0..rows.saturating_sub(1) {
+            for c in 0..cols.saturating_sub(1) {
+                let a = (r * cols + c) as u32;
+                let b = a + 1;
+                let d = a + cols as u32;
+                let e = d + 1;
+                indices.extend_from_slice(&[a, d, b, b, d, e]);
+            }
+        }
+        meshes.push(SimpleMesh {
+            name: "Terrain".to_string(),
+            positions,
+            indices,
+            color: [0.42, 0.48, 0.32],
+        });
+    }
+
+    // Buildings as extruded prisms.
+    for el in &site.elements {
+        if let PlanElement::Building(b) = el {
+            let base_z = elev_at(centroid(&b.base.boundary)) * exag;
+            let height = b.height.unwrap_or(b.storeys * STOREY_HEIGHT_FALLBACK) * exag;
+            meshes.push(prism(
+                &b.base.name,
+                &b.base.boundary,
+                base_z,
+                base_z + height,
+                [0.85, 0.58, 0.35],
+            ));
+        }
+    }
+
+    meshes
+}
 
 /// A triangle mesh: flat XYZ positions and triangle index triples.
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -196,6 +326,127 @@ pub fn write_collada(meshes: &[SimpleMesh], author: Option<&str>) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use thoth_planning::elements::{new_base, Building, SpotElevationPoint};
+    use thoth_spatial::{ElementKind, SpatialContext, Unit};
+
+    fn ctx() -> SpatialContext {
+        SpatialContext {
+            crs: "EPSG:3857".to_string(),
+            units: Unit::Feet,
+            scale: 1.0,
+        }
+    }
+
+    fn square(min: f64, max: f64) -> Vec<Point> {
+        vec![
+            Point::new(min, min),
+            Point::new(max, min),
+            Point::new(max, max),
+            Point::new(min, max),
+        ]
+    }
+
+    fn site_with_terrain_and_building() -> Site {
+        Site {
+            id: "s1".to_string(),
+            name: "Site".to_string(),
+            spatial: ctx(),
+            layers: vec![],
+            elements: vec![
+                PlanElement::Spot(SpotElevationPoint {
+                    id: "sp1".to_string(),
+                    kind: ElementKind::Spot,
+                    layer_id: "l".to_string(),
+                    position: Point::new(0.0, 0.0),
+                    z: 10.0,
+                    label: None,
+                    renovation_status: Default::default(),
+                }),
+                PlanElement::Spot(SpotElevationPoint {
+                    id: "sp2".to_string(),
+                    kind: ElementKind::Spot,
+                    layer_id: "l".to_string(),
+                    position: Point::new(20.0, 20.0),
+                    z: 20.0,
+                    label: None,
+                    renovation_status: Default::default(),
+                }),
+                PlanElement::Building(Building {
+                    base: new_base("b1", ElementKind::Building, "House", "l", square(5.0, 15.0)),
+                    lot_id: None,
+                    storeys: 2.0,
+                    height: None,
+                    dwelling_units: None,
+                    use_: None,
+                }),
+            ],
+            jurisdiction_id: None,
+            geoid: None,
+            control_lines: None,
+            civil_symbols: None,
+            networks: None,
+            monuments: None,
+            plss: None,
+        }
+    }
+
+    #[test]
+    fn site_to_meshes_emits_a_terrain_mesh_and_one_prism_per_building() {
+        let site = site_with_terrain_and_building();
+        let meshes = site_to_meshes(&site);
+        assert!(meshes.iter().any(|m| m.name == "Terrain"));
+        let building = meshes.iter().find(|m| m.name == "House").unwrap();
+        // 4 bottom + 4 top vertices, 3 floats each.
+        assert_eq!(building.positions.len(), 8 * 3);
+    }
+
+    #[test]
+    fn site_to_meshes_scales_building_height_by_vertical_exaggeration() {
+        let site = site_with_terrain_and_building();
+        let meshes = site_to_meshes(&site);
+        let building = meshes.iter().find(|m| m.name == "House").unwrap();
+        // Every third Y coordinate (index 1, 4, 7, ...) is either the base or
+        // the top; the spread between them is storeys * 3.2 * exaggeration.
+        let ys: Vec<f64> = building
+            .positions
+            .iter()
+            .skip(1)
+            .step_by(3)
+            .copied()
+            .collect();
+        let min_y = ys.iter().cloned().fold(f64::INFINITY, f64::min);
+        let max_y = ys.iter().cloned().fold(f64::NEG_INFINITY, f64::max);
+        let expected_height = 2.0 * STOREY_HEIGHT_FALLBACK * VERTICAL_EXAGGERATION;
+        assert!((max_y - min_y - expected_height).abs() < 1e-9);
+    }
+
+    #[test]
+    fn site_to_meshes_of_a_site_with_no_terrain_data_still_meshes_buildings() {
+        let mut site = site_with_terrain_and_building();
+        site.elements.retain(|e| !matches!(e, PlanElement::Spot(_)));
+        let meshes = site_to_meshes(&site);
+        assert!(!meshes.iter().any(|m| m.name == "Terrain"));
+        assert!(meshes.iter().any(|m| m.name == "House"));
+    }
+
+    #[test]
+    fn site_extent_is_none_for_an_empty_site() {
+        let site = Site {
+            id: "empty".to_string(),
+            name: "Empty".to_string(),
+            spatial: ctx(),
+            layers: vec![],
+            elements: vec![],
+            jurisdiction_id: None,
+            geoid: None,
+            control_lines: None,
+            civil_symbols: None,
+            networks: None,
+            monuments: None,
+            plss: None,
+        };
+        assert!(site_extent(&site).is_none());
+    }
 
     fn tri() -> SimpleMesh {
         SimpleMesh {
