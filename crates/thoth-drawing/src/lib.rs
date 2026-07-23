@@ -22,6 +22,20 @@
 //! - [`builders`] — composing sheet/annotation data into `SheetPrimitive` scenes.
 //! - [`parts`] — the framework-agnostic parts catalog and registry.
 //!
+//! Competitive gap-analysis Theme 5 additions (drawing production and
+//! specialty analysis — see `docs/COMPETITIVE_GAP_ANALYSIS.md` and
+//! `GAP_ANALYSIS_STATUS.md`):
+//! - [`staking`] — construction-staking sheet/schedule generation.
+//! - [`submittal`] — submittal-package / plan-set index generation.
+//! - [`stamp`] — professional-stamp/seal metadata workflow.
+//! - [`bond`] — bond/surety estimate generation from a schedule + pay items.
+//! - [`photometric`] — IES point-by-point illuminance-grid calculation.
+//! - [`signage`] — pavement-marking and MUTCD signage plan placement.
+//! - [`sun`] — solar position and building-shadow projection.
+//! - [`viewshed`] — line-of-sight visibility raster from a DTM.
+//! - [`noise`] — simplified FHWA-style traffic-noise contour prediction.
+//! - [`redline`] — structured plan-revision (redline) diff.
+//!
 //! Several TS modules depend on types owned by `thoth-planning`, `thoth-civil`,
 //! and `thoth-survey` (`Site`, `BuildingModel`, `RegionPlugin`,
 //! `ResolvedAlignment`, `CoordinateBasis`, …). This crate does not depend on
@@ -32,6 +46,7 @@
 //! `thoth-spatial` specifically.
 
 pub mod annotation;
+pub mod bond;
 pub mod builders;
 pub mod collada;
 pub mod common;
@@ -40,14 +55,23 @@ pub mod drafting;
 mod error;
 pub mod hatch;
 pub mod labeling;
+pub mod noise;
 pub mod parts;
+pub mod photometric;
 pub mod planproduction;
 pub mod platset;
 pub mod qto;
+pub mod redline;
 pub mod scene;
 pub mod schedule;
 pub mod sheet;
 pub mod sheetsize;
 pub mod sheetview;
+pub mod signage;
+pub mod stamp;
+pub mod staking;
+pub mod submittal;
+pub mod sun;
+pub mod viewshed;
 
 pub use error::DrawingError;

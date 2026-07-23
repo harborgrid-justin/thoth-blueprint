@@ -151,6 +151,17 @@ pub enum HydrologyError {
     /// a pipe, ...).
     #[error("pipe network error: {reason}")]
     Network { reason: String },
+
+    /// Puls storage routing computed a storage-indication value beyond the
+    /// maximum the caller's stage-storage-discharge curve covers — i.e. the
+    /// pond would overtop the surface the curve describes. Extend the curve
+    /// to a higher stage (including an emergency spillway) rather than
+    /// letting routing silently extrapolate.
+    #[error(
+        "computed storage-indication value {value} exceeds the stage-storage-discharge \
+         curve's maximum of {max}; the pond would overtop the surface this curve describes"
+    )]
+    RoutingExceedsCurveRange { value: f64, max: f64 },
 }
 
 /// Convenience alias used throughout this crate.
