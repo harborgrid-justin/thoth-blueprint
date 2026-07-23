@@ -184,13 +184,13 @@ reference. Do not import from it or extend it for new features. See
 ## Related Requirement Documents
 
 For the complete set of system requirements and traceability matrices, refer to the following documents:
-- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
-- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
-- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
-- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
-- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
-- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
-- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
-- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
-- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+- [Requirements Suite README](requirements/README.md)
+- [Master Requirements Traceability Matrix (RTM)](requirements/04-traceability/traceability-matrix.md)
+- [Requirements Coverage Report](requirements/04-traceability/coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](requirements/04-traceability/unimplemented_requirements.md)
+- [Frontend Functional Requirements](requirements/02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](requirements/02-functional/backend-requirements.md)
+- [Domain Functional Requirements](requirements/02-functional/domain-requirements.md)
+- [Interoperability Requirements](requirements/02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](requirements/03-nonfunctional/nonfunctional-requirements.md)
 

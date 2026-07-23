@@ -8,9 +8,17 @@ location and status. Status values:
 - **ported+partial-tests** — ported, but a known, documented divergence or
   narrower scope than the TS original (see the note).
 - **not-yet-ported** — out of scope for this pass; reason given. See
-  `GAPS.md` for the full explanation of *why* (cross-crate dependencies on
-  `thoth-civil`/`thoth-planning`/`thoth-drawing`, none of which this crate
-  depends on).
+  `GAPS.md` for the full explanation of *why*.
+
+> **Update (cross-crate integration pass):** this crate now depends on
+> `thoth-civil` (added to `Cargo.toml`; safe and non-cyclic per this round's
+> dependency order `thoth-spatial → thoth-civil → thoth-survey →
+> thoth-planning → thoth-drawing`). That unlocked 7 of the 10 helpers
+> previously blocked on `thoth-civil` types. The remaining 3 need
+> `thoth-planning`/`thoth-drawing`, both of which sit *later* in the
+> dependency chain and are now extended to depend on `thoth-survey` — so
+> depending back on either from here would be circular. See `GAPS.md` #3 for
+> the full accounting. Test count: 97 → **135** (all passing).
 
 ## Core modules
 
@@ -52,21 +60,27 @@ location and status. Status values:
 | `helpers/platDrawingHelpers.ts` | `src/helpers/plat_drawing.rs` | ported+tested | Self-contained (only needs `thoth_spatial::geometry`). |
 | `helpers/platReportHelpers.ts` | `src/helpers/plat_report.rs` | ported+tested | Self-contained (only needs `crate::survey::SurveyReport`). |
 | `helpers/subdivisionHelpers.ts` | `src/helpers/subdivision.rs` | ported+tested | Self-contained (only needs `thoth_spatial::distance`). |
-| `helpers/alignmentReportHelpers.ts` | — | not-yet-ported | Needs `civil/alignment::ResolvedAlignment` (`thoth-civil`, not a dependency). |
-| `helpers/assemblyBuilderHelpers.ts` | — | not-yet-ported | Needs `civil/assembly::{Assembly, Subassembly}` (`thoth-civil`). |
-| `helpers/buildPlatFromScratch.ts` | — | not-yet-ported | Needs the full planning element hierarchy (`spatial/types::{Site, Parcel, Lot, Building, Easement, RightOfWay, PlanNote, Layer}`), owned by `thoth-planning`. |
-| `helpers/corridorHelpers.ts` | — | not-yet-ported | Needs `civil/assembly::Assembly` + `civil/corridor::{buildCorridorSections, extractCorridorFeatureLines}` (`thoth-civil`). |
-| `helpers/gradingHelpers.ts` | — | not-yet-ported | Needs `civil/grading::{GradingPad, solveBalancedElevation}` (`thoth-civil`). |
-| `helpers/pipeHelpers.ts` | — | not-yet-ported | Needs `civil/pipeDesign::{validatePipeNetwork, PipeDesignRules}` (`thoth-civil`). |
-| `helpers/planProductionHelpers.ts` | — | not-yet-ported | Needs `civil/alignment::resolveAlignment` (`thoth-civil`) + `drawing/planproduction::{createSheetSetFromFrames, generateViewFrames}` (`thoth-drawing`). |
-| `helpers/platSheetHelpers.ts` | — | not-yet-ported | Needs `spatial/primitives::isSpatialElement` (not in frozen `thoth-spatial`) and `spatial/types::Site` (`thoth-planning`). |
-| `helpers/profileHelpers.ts` | — | not-yet-ported | Needs `civil/profile::{sampleCrossSection, VerticalProfile, VerticalPVI}` (`thoth-civil`). |
-| `helpers/superelevationHelpers.ts` | — | not-yet-ported | Needs `civil/superElevation::calculateSuperelevationRunoff` (`thoth-civil`). |
+| `helpers/alignmentReportHelpers.ts` | `src/helpers/alignment_report.rs` | ported+tested | Needs `civil::alignment::ResolvedAlignment` — unlocked this pass by adding `thoth-civil`. |
+| `helpers/assemblyBuilderHelpers.ts` | `src/helpers/assembly_builder.rs` | ported+tested | Needs `civil::assembly::{Assembly, Subassembly}` — unlocked this pass. |
+| `helpers/buildPlatFromScratch.ts` | — | not-yet-ported | Needs the full planning element hierarchy (`spatial/types::{Site, Parcel, Lot, Building, Easement, RightOfWay, PlanNote, Layer}`), owned by `thoth-planning`. `thoth-planning` sits *after* `thoth-survey` in this round's dependency chain (`thoth-civil → thoth-survey → thoth-planning → thoth-drawing`) and is itself being extended to depend on `thoth-survey` this round, so `thoth-survey` depending back on it would be circular. See `GAPS.md` #3. |
+| `helpers/corridorHelpers.ts` | `src/helpers/corridor.rs` | ported+tested | Needs `civil::assembly::Assembly` + `civil::corridor::{build_corridor_sections, extract_corridor_feature_lines}` — unlocked this pass. The TS `newElements[]` canvas-element shape is ported as a local `CorridorFeatureElement` stand-in (the real planning element type isn't a dependency; see `GAPS.md` #5). |
+| `helpers/gradingHelpers.ts` | `src/helpers/grading.rs` | ported+tested | Needs `civil::grading::{GradingPad, solve_balanced_elevation}` — unlocked this pass. `saveGradingPadElevation`'s untyped `site.elements[]` patch target is ported as a local `SiteElement` stand-in (id/kind/properties bag); see `GAPS.md` #5. |
+| `helpers/pipeHelpers.ts` | `src/helpers/pipe.rs` | ported+tested | Needs `civil::pipedesign::{validate_pipe_network, PipeDesignRules}` — unlocked this pass. |
+| `helpers/planProductionHelpers.ts` | — | not-yet-ported | Needs `civil::alignment::resolve_alignment` (available via `thoth-civil`, now a dependency) **and** `drawing::planproduction::{createSheetSetFromFrames, generateViewFrames}` (`thoth-drawing`). `thoth-drawing` sits *after* `thoth-survey` in this round's dependency chain and is itself being extended to depend on `thoth-survey`, so this stays blocked — not by a missing capability, but by this round's dependency ordering. See `GAPS.md` #3. |
+| `helpers/platSheetHelpers.ts` | — | not-yet-ported | Needs `spatial/primitives::isSpatialElement` (not in frozen `thoth-spatial`) and `spatial/types::Site` (`thoth-planning`). Same circular-dependency reasoning as `buildPlatFromScratch.ts` above. |
+| `helpers/profileHelpers.ts` | `src/helpers/profile.rs` | ported+tested | Needs `civil::profile::{sample_cross_section, VerticalProfile, VerticalPvi}` — unlocked this pass. `updateProfilePvi`'s dynamic `field: keyof VerticalPVI` access is ported as a typed `PviField` enum; see the module doc for the one documented out-of-range-index divergence. |
+| `helpers/superelevationHelpers.ts` | `src/helpers/superelevation.rs` | ported+tested | Needs `civil::superelevation::calculate_superelevation_runoff` — unlocked this pass. |
 
-**Helper coverage: 4/14 ported+tested, 10/14 not-yet-ported** (all ten for
-the same reason: a real, undischargeable dependency on `thoth-civil`,
-`thoth-planning`, and/or `thoth-drawing`, none of which are dependencies of
-`thoth-survey`). See `GAPS.md` #3 for the full accounting.
+**Helper coverage: 11/14 ported+tested, 3/14 not-yet-ported.** The three
+that remain (`buildPlatFromScratch.ts`, `platSheetHelpers.ts`,
+`planProductionHelpers.ts`) are blocked on `thoth-planning`'s `Site`
+and/or `thoth-drawing`'s `planproduction` module — both of which are later
+in this round's dependency chain and are themselves being extended to
+depend on `thoth-survey`, so depending back on either here would be a
+circular crate dependency. This is a dependency-ordering constraint, not a
+missing capability — see `GAPS.md` #3 for the full accounting and what a
+future crate-boundary restructuring (or extracting shared types into
+`thoth-spatial`) would need to do to close them.
 
 ## Tests
 
@@ -78,10 +92,25 @@ the same reason: a real, undischargeable dependency on `thoth-civil`,
 Additional `#[test]` coverage beyond the two `.test.ts` files exists in
 every other module (`bearing.rs`, `curve.rs`, `monument.rs`, `controls.rs`,
 `description_keys.rs`, `points.rs`, `transparent_commands.rs`,
-`advanced_linework.rs`, `fmt_utils.rs`, `lib.rs`, and all four ported
+`advanced_linework.rs`, `fmt_utils.rs`, `lib.rs`, and all eleven ported
 helpers) — the TS source has no corresponding `.test.ts` files for those
-modules, so this crate adds first-party coverage for all of them.
+modules (nor for any of the seven `helpers/*.ts` files that have no
+dedicated `.test.ts`), so this crate adds first-party coverage for all of
+them, including edge cases the TS source never exercised in a test (e.g.
+out-of-range PVI indices in `helpers/profile.rs`, a `NaN` assembly-width
+parameter in `helpers/assembly_builder.rs`, absent-alignment/absent-profile/
+absent-terrain short-circuits across `helpers/corridor.rs`,
+`helpers/grading.rs`, `helpers/pipe.rs`, and `helpers/superelevation.rs`).
 
-**Total: 97 `#[test]` functions, all passing.** `cargo fmt -p thoth-survey
--- --check` and `cargo clippy -p thoth-survey --all-targets -- -D warnings`
-are both clean.
+**Total: 135 `#[test]` functions, all passing** (97 pre-existing + 38 new
+across the seven newly-ported helpers). `cargo fmt -p thoth-survey --
+--check` and `cargo clippy -p thoth-survey --all-targets -- -D warnings`
+are both clean. `cargo check --workspace` was also run to confirm this
+crate's new `thoth-civil` dependency edge doesn't introduce a cycle; at the
+time of this pass it surfaced unrelated, transient failures in
+concurrently-edited sibling crates (`thoth-civil`, `thoth-planning`,
+`thoth-governance`) that are outside this crate's scope and not caused by
+this change — `thoth-survey` and `thoth-civil` each check cleanly in
+isolation (`cargo check -p thoth-survey`, `cargo check -p thoth-civil`).
+See `docs/RUST_MIGRATION.md`'s "moving target" caveat; re-run
+`cargo check --workspace` fresh rather than trusting this snapshot.

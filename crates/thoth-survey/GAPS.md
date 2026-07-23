@@ -49,17 +49,53 @@ underneath.
 
 ## 3. Cross-crate helper dependencies (not a `thoth-spatial` gap — see `STATUS.md`)
 
-Ten of the fourteen `survey/helpers/*.ts` files depend on the `civil/*`
-domain (`Assembly`, `ResolvedAlignment`, `GradingPad`, `PipeDesignRules`,
-`VerticalProfile`, `corridor`/`profile`/`superElevation`/`planproduction`
-functions), the full planning element hierarchy (`spatial/types::{Site,
-Parcel, Lot, Building, Easement, RightOfWay, PlanNote}`, plus
-`spatial/primitives::isSpatialElement`), or `drawing/planproduction`. None
-of `thoth-civil`, `thoth-planning`, or `thoth-drawing` are dependencies of
-`thoth-survey` (by design — those are the concurrently developed sibling
-crates). This is not a `thoth-spatial` gap; it is out-of-scope cross-crate
-wiring left for a later integration pass. See `STATUS.md` for the exact
-file list and status.
+> **Update (cross-crate integration pass):** this crate now depends on
+> `thoth-civil` (added to `Cargo.toml`). Per this migration round's fixed,
+> non-cyclic dependency order —
+>
+> ```text
+> thoth-spatial → thoth-civil → thoth-survey → thoth-planning → thoth-drawing
+> ```
+>
+> — `thoth-civil` sits *earlier* than `thoth-survey` in the chain, so
+> depending on it is safe. `thoth-planning` and `thoth-drawing` sit *later*
+> and are themselves being extended this same round to depend on
+> `thoth-survey` (for `Site`'s PLSS/monument fields, and for survey-derived
+> sheet content, respectively) — so `thoth-survey` depending back on either
+> would create a cycle and break the whole workspace's build. This unlocked
+> 7 of the 10 previously-blocked helpers; the remaining 3 are described
+> below, now with the *specific* reason each one stays blocked.
+
+Originally, all fourteen `survey/helpers/*.ts` files needed either
+self-contained survey/spatial math (4 files, ported from the start — see
+`STATUS.md`) or a real dependency on the `civil/*` domain (`Assembly`,
+`ResolvedAlignment`, `GradingPad`, `PipeDesignRules`, `VerticalProfile`,
+`corridor`/`profile`/`superElevation` functions — 7 files, unlocked this
+pass), the full planning element hierarchy (`spatial/types::{Site, Parcel,
+Lot, Building, Easement, RightOfWay, PlanNote}`, plus
+`spatial/primitives::isSpatialElement` — 2 files), or `drawing/planproduction`
+(1 file, alongside a `thoth-civil` need already covered by the new
+dependency). The three still blocked, and why depending on their crate
+would be circular *this round*:
+
+- `helpers/buildPlatFromScratch.ts` — needs the full planning element
+  hierarchy owned by `thoth-planning`.
+- `helpers/platSheetHelpers.ts` — needs `spatial/types::Site`, also owned by
+  `thoth-planning` (plus `spatial/primitives::isSpatialElement`, itself not
+  in frozen `thoth-spatial` either).
+- `helpers/planProductionHelpers.ts` — needs `thoth-drawing`'s
+  `planproduction` module (its `civil::resolve_alignment` half is now
+  satisfied by the new `thoth-civil` dependency).
+
+This is not a missing-capability gap — it is a dependency-ordering
+constraint specific to this round's parallel-agent plan, which exists
+precisely to keep `thoth-planning`'s and `thoth-drawing`'s own concurrent
+work from creating a build-breaking cycle. A future pass willing to
+restructure crate boundaries (e.g. extracting `Site`'s PLSS/monument-facing
+shape, or the planning element hierarchy's `isSpatialElement`, into
+`thoth-spatial` as a shared leaf type) could close all three without
+`thoth-survey` ever depending on `thoth-planning`/`thoth-drawing` directly.
+See `STATUS.md` for the exact file-by-file status table.
 
 ## 4. `parts/registry.ts`'s live parts catalog (accepted divergence)
 
@@ -81,6 +117,30 @@ dependency of this crate. `crate::advanced_linework::RowParcel`/`RowParcelStyle`
 define the narrow subset of fields the function actually populates, with a
 rustdoc pointer to swap in the real `thoth_civil`/`thoth_planning` type once
 cross-crate wiring lands.
+
+## 5b. `corridorHelpers.ts`/`gradingHelpers.ts`'s untyped canvas-element shapes (local stand-in types)
+
+Two of the helpers unlocked this pass touch the same kind of gap as #5
+above, on the *planning* side rather than the *civil* side:
+
+- `helpers/corridorHelpers.ts`'s `extrudeCorridor` builds `newElements[]`
+  entries shaped like `{ id, kind: "corridor", layerId, name, boundary,
+  properties: { code, points3D } }` — a generic spatial/canvas element. The
+  full element type (`spatial/types::Element` and friends) belongs to
+  `thoth-planning`, not a dependency of this crate. `crate::helpers::corridor::CorridorFeatureElement`
+  defines the narrow, exact subset of fields this function actually
+  populates, field-named to match the real shape for an easy future swap.
+- `helpers/gradingHelpers.ts`'s `saveGradingPadElevation` reads/patches an
+  untyped `site.elements[]` entry (only ever touching `id`, `kind`, and a
+  `properties` bag — the function is generic over element kind, using
+  `kind === "parcel"` as a lookup key rather than any parcel-specific
+  field). `crate::helpers::grading::SiteElement` mirrors exactly that
+  narrow slice, using `serde_json::Map<String, Value>` for `properties`
+  since the TS original treats it as an open bag (`{ ...properties, elevation,
+  cutSlope, fillSlope }`), not a fixed shape.
+
+Both are the same pattern as `RowParcel` in #5: a local, honestly-scoped
+stand-in for a real cross-crate type, not a redesign of the TS behavior.
 
 ## 6. Wildcard matching (`points.ts`'s `PointGroupManager.matchWildcard`)
 

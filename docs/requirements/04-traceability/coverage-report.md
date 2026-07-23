@@ -1,11 +1,11 @@
 ﻿# Coverage Report
 
 Validates the [traceability matrix](traceability-matrix.md) against the suite's
-coverage rules `R1`â€“`R5`
+coverage rules `R1`–`R5`
 ([standards & conventions](../00-overview/standards-and-conventions.md#traceability-model)).
 The RTM is **generated** from the requirement source files and validated by
 [`_meta/scripts/validate.py`](../_meta/scripts/validate.py); this report records
-the result. Date of last validation: **2026-07-20**.
+the result. Date of last validation: **2026-07-23**.
 
 ## Requirement inventory
 
@@ -13,10 +13,10 @@ the result. Date of last validation: **2026-07-20**.
 | --- | --- | :--: |
 | Business (`BR`) | [business-requirements.md](../01-business/business-requirements.md) | 12 |
 | Stakeholder (`STK`) | [stakeholders.md](../01-business/stakeholders.md) | 8 |
-| Functional â€” Frontend (`FE`) | [frontend-requirements.md](../02-functional/frontend-requirements.md) | 175 |
-| Functional â€” Backend (`BE`) | [backend-requirements.md](../02-functional/backend-requirements.md) | 100 |
-| Functional â€” Domain (`DOM`) | [domain-requirements.md](../02-functional/domain-requirements.md) | 166 |
-| Functional â€” Interop (`IOP`) | [interoperability-requirements.md](../02-functional/interoperability-requirements.md) | 59 |
+| Functional — Frontend (`FE`) | [frontend-requirements.md](../02-functional/frontend-requirements.md) | 175 |
+| Functional — Backend (`BE`) | [backend-requirements.md](../02-functional/backend-requirements.md) | 100 |
+| Functional — Domain (`DOM`) | [domain-requirements.md](../02-functional/domain-requirements.md) | 166 |
+| Functional — Interop (`IOP`) | [interoperability-requirements.md](../02-functional/interoperability-requirements.md) | 59 |
 | Non-functional (`NFR`) | [nonfunctional-requirements.md](../03-nonfunctional/nonfunctional-requirements.md) | 86 |
 | Constraints (`CON`) | [scope-and-context.md](../00-overview/scope-and-context.md) | 12 |
 | Dependencies (`DEP`) | [scope-and-context.md](../00-overview/scope-and-context.md) | 6 |
@@ -31,12 +31,12 @@ Functional total: **500**.
 ```
 Functional requirements: 500
 NFRs: 86 | BR: 12 | STK: 8 | CON: 12 | DEP: 6
-PASS â€” R1â€“R5 and ID hygiene OK.
+PASS — R1–R5 and ID hygiene OK.
 ```
 
 ## Rule-by-rule validation
 
-### R1 â€” every `BR` traces down to at least one `STK` âœ…
+### R1 — every `BR` traces down to at least one `STK` ✅
 
 All 12 business requirements are served by at least one stakeholder
 ([Matrix A](traceability-matrix.md#matrix-a--business--stakeholder)). `validate.py`
@@ -44,9 +44,9 @@ confirms every `BR` except `BR-011` (a delivery requirement realized via the pha
 mapping) appears in some stakeholder's **Satisfies** list. `BR-012`
 (architecture & engineering CAD sheets) is claimed by `STK-004` and `STK-008`.
 
-### R2 â€” every `STK` traces down to at least one functional requirement âœ…
+### R2 — every `STK` traces down to at least one functional requirement ✅
 
-`validate.py` confirms all of `STK-001`â€“`STK-008` appear in at least one functional
+`validate.py` confirms all of `STK-001`–`STK-008` appear in at least one functional
 requirement's **Trace** column. `STK-008` is traced across the new Phase-6
 functional areas (`FE-SHEET*`, `FE-VIEWPORT`, `FE-TITLE`, `FE-PLOT`, `FE-ANNO`,
 `FE-SYMBOL`, `FE-GRIDLINE`, `FE-MATCHLINE`, `FE-SCHEDULE`, `FE-REV`,
@@ -57,34 +57,34 @@ services, and the `DOM-SHEET*`/`DOM-TITLEBLOCK`/`DOM-SHEETSET`/`DOM-PLOTSTYLE`/
 model and the `IOP-DXFSHEET`/`IOP-PDFSHEET`/`IOP-PLTSTYLE`/`IOP-LAYERMAP`/
 `IOP-TITLEBLOCK`/`IOP-BLOCK` interop).
 
-### R3 â€” every functional requirement traces up to â‰¥1 `STK` and maps to one module âœ…
+### R3 — every functional requirement traces up to â‰¥1 `STK` and maps to one module ✅
 
 Generation guarantees this: `gen_rtm.py` emits a row only from a source
 requirement, buckets its `Trace` into the â†‘ Stakeholder column, and assigns exactly
 one module ([Matrix F](traceability-matrix.md#matrix-f--module-coverage)).
 `validate.py` fails the build if any functional requirement lacks an STK up-trace.
 
-### R4 â€” every functional requirement has a verification method âœ…
+### R4 — every functional requirement has a verification method ✅
 
 `validate.py` confirms every functional row carries a valid `T`/`D`/`I`/`A` method;
 distribution is in the
 [verification method summary](traceability-matrix.md#verification-method-summary).
 
-### R5 â€” every `NFR` names the requirements/modules it constrains âœ…
+### R5 — every `NFR` names the requirements/modules it constrains ✅
 
 `validate.py` confirms all 86 NFRs have a non-empty **Constrains** cell
 ([Matrix D](traceability-matrix.md#matrix-d--non-functional--constrained-scope)).
 The new `NFR-PLOT` (plot fidelity) and `NFR-STD` (standards conformance)
 categories each constrain the Phase-6 CAD sheet requirements they govern.
 
-### ID hygiene âœ…
+### ID hygiene ✅
 
 `validate.py` confirms no duplicate IDs and that every `BR`/`STK`/`CON`/`DEP`
 referenced in a functional trace exists.
 
 ## Business-requirement coverage detail
 
-Downward reachability BR â†’ STK â†’ functional area (all âœ…):
+Downward reachability BR â†’ STK â†’ functional area (all ✅):
 
 | BR | Reaches functional areas (via STK) |
 | --- | --- |
@@ -116,16 +116,16 @@ Every backend service module named in [ARCHITECTURE.md](../../ARCHITECTURE.md) h
 requirements ([Matrix F](traceability-matrix.md#matrix-f--module-coverage)).
 Phase-6 sheet work adds `BE-SHEET`, `BE-TEMPLATE`, `BE-PLOT`, `BE-SCHEDULE`, and
 `BE-PACKAGE` inside the existing `services/geospatial` and `services/projects`
-modules â€” no new architectural boundary is introduced.
+modules — no new architectural boundary is introduced.
 
 ## Third-pass changes (what the review added/fixed)
 
-This report reflects a third review pass that added Phase 6 â€”
+This report reflects a third review pass that added Phase 6 —
 architecture & engineering CAD sheet production:
 
 - **New business requirement `BR-012`** for producing complete architecture and
   engineering CAD sheet sets.
-- **New stakeholder `STK-008`** â€” Architect / engineer / CAD manager â€” and
+- **New stakeholder `STK-008`** — Architect / engineer / CAD manager — and
   `STK-004` extended with sheet-set output.
 - **New Phase 6** in [`ROADMAP.md`](../../ROADMAP.md) covering sheet
   composition, title blocks, viewports at plot scale, discipline-organised
@@ -144,7 +144,7 @@ architecture & engineering CAD sheet production:
 - **Two new dependencies:** `DEP-005` (PDF generation runtime with PDF/A and
   PDF/E-1 conformance) and `DEP-006` (CAD interchange library for DXF/DWG
   sheet-set export).
-- **New functional area codes** â€” Frontend: `SHEET`, `VIEWPORT`, `TITLE`,
+- **New functional area codes** — Frontend: `SHEET`, `VIEWPORT`, `TITLE`,
   `PLOT`, `ANNO`, `SYMBOL`, `GRIDLINE`, `MATCHLINE`, `SCHEDULE`, `REV`,
   `SHEETSET`. Backend: `SHEET`, `TEMPLATE`, `PLOT`, `SCHEDULE`, `PACKAGE`.
   Domain: `SHEET`, `TITLEBLOCK`, `SHEETSET`, `DISCIPLINE`, `NUMBERING`,
@@ -162,14 +162,14 @@ architecture & engineering CAD sheet production:
   datasets (`BENCH-SHEETS-SMALL/-TYPICAL/-LARGE`) and PERF/SCALE targets
   reference them.
 - **Grounding** captured in
-  [`_meta/research-cad-sheets.md`](../_meta/research-cad-sheets.md) â€”
+  [`_meta/research-cad-sheets.md`](../_meta/research-cad-sheets.md) —
   sheet-set anatomy, discipline designators, sheet numbering, layer
   standards, plot styles, dimensioning standards, model/paper/viewport,
   coordination graphics, schedules, revisions, and packaging.
 
 ## Second-pass changes (from the prior review pass, retained)
 
-- **Benchmark/validation NFRs added** (`NFR-BENCH-001..005`) â€” quantitative
+- **Benchmark/validation NFRs added** (`NFR-BENCH-001..005`) — quantitative
   targets are validated against named datasets on the reference hardware.
 - **Missing domain primitive fixed:** `DOM-BUILDING-*` and `FE-CANVAS-011`.
 - **Model-portability gaps filled:** `DOM-SERIAL-*`, `DOM-IDENT-*`,
@@ -183,16 +183,16 @@ architecture & engineering CAD sheet production:
 
 Honest accounting of what this suite still does **not** do:
 
-1. **No `TC-â€¦` test cases yet.** Verification *methods* are assigned and
-   `NFR-MAINT-006` now requires a traced `TC-â€¦` for every Must before its phase
+1. **No `TC-…` test cases yet.** Verification *methods* are assigned and
+   `NFR-MAINT-006` now requires a traced `TC-…` for every Must before its phase
    ships, but concrete test cases await a test suite (the repo is Phase-0 scaffold).
 2. **Numeric NFR thresholds and tolerances are initial targets.** They are now
    pinned (benchmark datasets, tolerances table) so they are verifiable, but the
-   specific numbers â€” including the Phase-6 plot scale and annotation-size
-   defaults â€” will be confirmed by `NFR-BENCH-003`/`NFR-BENCH-006` benchmarking
+   specific numbers — including the Phase-6 plot scale and annotation-size
+   defaults — will be confirmed by `NFR-BENCH-003`/`NFR-BENCH-006` benchmarking
    and may move.
 3. **3D, engineering-calculation, procedural, financial, and simulation
-   capabilities remain out of scope** â€” documented exclusions, not coverage
+   capabilities remain out of scope** — documented exclusions, not coverage
    gaps. Phase 6 produces the *drawings*, not the calculations that populate
    them.
 4. **Sheet-set import from a DWG/DXF authored elsewhere** (`IOP-DXFSHEET-006`)
@@ -203,7 +203,7 @@ Honest accounting of what this suite still does **not** do:
 
 ```
 python3 docs/requirements/_meta/scripts/gen_rtm.py     # regenerate the RTM from source
-python3 docs/requirements/_meta/scripts/validate.py    # check R1â€“R5 + ID hygiene
+python3 docs/requirements/_meta/scripts/validate.py    # check R1–R5 + ID hygiene
 ```
 
 Both are suitable for CI alongside a relative-link check. The source requirement
@@ -214,13 +214,13 @@ files are authoritative; the RTM is derived.
 ## Related Requirement Documents
 
 For the complete set of system requirements and traceability matrices, refer to the following documents:
-- [Requirements Suite README](file:///f:/AutoCAD%20Competitor/docs/requirements/README.md)
-- [Master Requirements Traceability Matrix (RTM)](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/traceability-matrix.md)
-- [Requirements Coverage Report](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/coverage-report.md)
-- [Unimplemented / Partially-Implemented Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/04-traceability/unimplemented_requirements.md)
-- [Frontend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/frontend-requirements.md)
-- [Backend Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/backend-requirements.md)
-- [Domain Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/domain-requirements.md)
-- [Interoperability Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/02-functional/interoperability-requirements.md)
-- [Non-Functional Requirements](file:///f:/AutoCAD%20Competitor/docs/requirements/03-nonfunctional/nonfunctional-requirements.md)
+- [Requirements Suite README](../README.md)
+- [Master Requirements Traceability Matrix (RTM)](traceability-matrix.md)
+- [Requirements Coverage Report](coverage-report.md)
+- [Unimplemented / Partially-Implemented Requirements](unimplemented_requirements.md)
+- [Frontend Functional Requirements](../02-functional/frontend-requirements.md)
+- [Backend Functional Requirements](../02-functional/backend-requirements.md)
+- [Domain Functional Requirements](../02-functional/domain-requirements.md)
+- [Interoperability Requirements](../02-functional/interoperability-requirements.md)
+- [Non-Functional Requirements](../03-nonfunctional/nonfunctional-requirements.md)
 
