@@ -2482,12 +2482,28 @@ __metadata:
 "@thoth/service-auth@workspace:services/auth":
   version: 0.0.0-use.local
   resolution: "@thoth/service-auth@workspace:services/auth"
+  dependencies:
+    "@eslint/js": "npm:^10.0.1"
+    "@types/node": "npm:^22.10.2"
+    eslint: "npm:^10.7.0"
+    globals: "npm:^17.7.0"
+    typescript: "npm:^5.7.2"
+    typescript-eslint: "npm:^8.19.0"
+    vitest: "npm:^2.1.9"
   languageName: unknown
   linkType: soft
 
 "@thoth/service-collaboration@workspace:services/collaboration":
   version: 0.0.0-use.local
   resolution: "@thoth/service-collaboration@workspace:services/collaboration"
+  dependencies:
+    "@eslint/js": "npm:^10.0.1"
+    "@types/node": "npm:^22.10.2"
+    eslint: "npm:^10.7.0"
+    globals: "npm:^17.7.0"
+    typescript: "npm:^5.7.2"
+    typescript-eslint: "npm:^8.19.0"
+    vitest: "npm:^2.1.9"
   languageName: unknown
   linkType: soft
 

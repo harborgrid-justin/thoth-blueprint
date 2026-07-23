@@ -1,0 +1,21 @@
+{
+  "geoid": "51",
+  "areaType": "state",
+  "name": "Virginia",
+  "stateName": "Virginia",
+  "standards": {
+    "zoning": {
+      "frontSetback": 35,
+      "sideSetback": 15,
+      "rearSetback": 25,
+      "maxHeight": 35,
+      "maxCoverage": 0.45
+    },
+    "climate": {
+      "rainfallIntensity100Yr": 3.5,
+      "windVelocityMph": 120,
+      "snowLoadPsf": 35,
+      "soilBearingPsf": 2000
+    }
+  }
+}

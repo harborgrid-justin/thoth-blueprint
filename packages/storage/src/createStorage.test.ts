@@ -48,9 +48,10 @@ describe("createStorage", () => {
     expect(storage).toBeInstanceOf(MemoryStorageAdapter);
   });
 
-  it("throws a clear error for the unimplemented postgres driver", () => {
+  it("throws a clear error when postgres is selected without a connection string", () => {
+    delete process.env.STORAGE_POSTGRES_URL;
     expect(() => createStorage({ driver: "postgres" })).toThrow(
-      /Postgres storage adapter is not implemented/,
+      /no connection string was supplied/,
     );
   });
 });

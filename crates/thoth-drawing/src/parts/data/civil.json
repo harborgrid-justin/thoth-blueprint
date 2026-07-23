@@ -1,0 +1,274 @@
+[
+  {
+    "id": "civil-mh-48in-precast",
+    "sku": "CIV-MH-48IN",
+    "name": "48\" Precast Concrete Sanitary/Storm Manhole",
+    "category": "civil",
+    "subcategory": "structures",
+    "description": "ASTM C478 precast concrete 48-inch diameter circular manhole barrel section.",
+    "manufacturer": "Oldcastle Infrastructure",
+    "unit": "ea",
+    "cost": 1250.0,
+    "dimensions": {
+      "diameter": 4.0,
+      "height": 6.0
+    },
+    "properties": {
+      "astmSpec": "ASTM C478",
+      "concretePsi": 4000,
+      "barrelDiameterFt": 4.0
+    },
+    "tags": ["civil", "manhole", "structure", "precast", "storm", "sanitary"]
+  },
+  {
+    "id": "civil-cb-24x24-inlet",
+    "sku": "CIV-CB-2424",
+    "name": "24\"x24\" Precast Concrete Catch Basin Inlet",
+    "category": "civil",
+    "subcategory": "structures",
+    "description": "Standard DOT 24in x 24in square catch basin structure with cast iron grate frame.",
+    "manufacturer": "Neenah Foundry",
+    "unit": "ea",
+    "cost": 890.0,
+    "dimensions": {
+      "width": 2.0,
+      "length": 2.0,
+      "height": 4.0
+    },
+    "properties": {
+      "grateType": "H-20 Heavy Duty Cast Iron",
+      "sumpDepthFt": 2.0
+    },
+    "tags": ["civil", "catch_basin", "inlet", "drainage", "stormwater"]
+  },
+  {
+    "id": "civil-pipe-rcp-18in",
+    "sku": "CIV-PIP-RCP-18",
+    "name": "18\" Class III Reinforced Concrete Culvert Pipe",
+    "category": "civil",
+    "subcategory": "pipes",
+    "description": "18-inch internal diameter ASTM C76 Class III tongue-and-groove RCP storm pipe.",
+    "manufacturer": "Forterra Pipe",
+    "unit": "ft",
+    "cost": 34.0,
+    "dimensions": {
+      "diameter": 1.5,
+      "length": 8.0
+    },
+    "properties": {
+      "astmSpec": "ASTM C76 Class III",
+      "innerDiameterInches": 18,
+      "pipeMaterialKey": "RCP",
+      "manningN": 0.013
+    },
+    "tags": ["civil", "pipe", "rcp", "culvert", "storm"]
+  },
+  {
+    "id": "civil-pipe-hdpe-24in",
+    "sku": "CIV-PIP-HDPE-24",
+    "name": "24\" Smooth Interior Corrugated HDPE Pipe",
+    "category": "civil",
+    "subcategory": "pipes",
+    "description": "24-inch dual-wall corrugated HDPE pipe with smooth interior waterway.",
+    "manufacturer": "ADS N-12",
+    "unit": "ft",
+    "cost": 28.5,
+    "dimensions": {
+      "diameter": 2.0,
+      "length": 20.0
+    },
+    "properties": {
+      "astmSpec": "AASHTO M294",
+      "innerDiameterInches": 24,
+      "pipeMaterialKey": "HDPE",
+      "manningN": 0.012
+    },
+    "tags": ["civil", "pipe", "hdpe", "culvert", "stormwater"]
+  },
+  {
+    "id": "civil-pipe-pvc-12in",
+    "sku": "CIV-PIP-PVC-12",
+    "name": "12\" Heavy-Wall PVC Gravity Sewer Pipe",
+    "category": "civil",
+    "subcategory": "pipes",
+    "description": "12-inch SDR-35 PVC gasketed gravity sewer pipe.",
+    "manufacturer": "JM Eagle",
+    "unit": "ft",
+    "cost": 16.0,
+    "dimensions": {
+      "diameter": 1.0,
+      "length": 14.0
+    },
+    "properties": {
+      "astmSpec": "ASTM D3034",
+      "innerDiameterInches": 12,
+      "pipeMaterialKey": "PVC",
+      "manningN": 0.009
+    },
+    "tags": ["civil", "pipe", "pvc", "sewer", "sanitary"]
+  },
+  {
+    "id": "civil-soil-sand",
+    "sku": "CIV-SOL-SND",
+    "name": "Coarse Sand Soil Type",
+    "category": "civil",
+    "subcategory": "soils",
+    "description": "Granular coarse sand soil with high permeability and low cohesion.",
+    "unit": "m",
+    "properties": {
+      "soilKey": "sand",
+      "erodibilityKFactor": 0.025,
+      "depositRate": 0.25
+    },
+    "tags": ["civil", "soil", "sand", "geotechnical"]
+  },
+  {
+    "id": "civil-soil-loam",
+    "sku": "CIV-SOL-LOM",
+    "name": "Agricultural Loam Soil Type",
+    "category": "civil",
+    "subcategory": "soils",
+    "description": "Balanced agricultural loam soil composed of sand, silt, and clay.",
+    "unit": "m",
+    "properties": {
+      "soilKey": "loam",
+      "erodibilityKFactor": 0.055,
+      "depositRate": 0.12
+    },
+    "tags": ["civil", "soil", "loam", "geotechnical"]
+  },
+  {
+    "id": "civil-soil-silt",
+    "sku": "CIV-SOL-SLT",
+    "name": "Fine Silt Soil Type",
+    "category": "civil",
+    "subcategory": "soils",
+    "description": "Highly erodible fine silt soil type subject to sheet erosion.",
+    "unit": "m",
+    "properties": {
+      "soilKey": "silt",
+      "erodibilityKFactor": 0.08,
+      "depositRate": 0.15
+    },
+    "tags": ["civil", "soil", "silt", "geotechnical"]
+  },
+  {
+    "id": "civil-soil-clay",
+    "sku": "CIV-SOL-CLY",
+    "name": "Cohesive Clay Soil Type",
+    "category": "civil",
+    "subcategory": "soils",
+    "description": "Cohesive clay soil with low erodibility K-factor and slow settlement rate.",
+    "unit": "m",
+    "properties": {
+      "soilKey": "clay",
+      "erodibilityKFactor": 0.04,
+      "depositRate": 0.05
+    },
+    "tags": ["civil", "soil", "clay", "geotechnical"]
+  },
+  {
+    "id": "civil-bmp-silt-fence",
+    "sku": "CIV-BMP-SF",
+    "name": "Woven Geotextile Silt Fence Sediment Barrier",
+    "category": "civil",
+    "subcategory": "erosion_bmps",
+    "description": "EPA NPDES compliant woven geotextile silt fence sediment barrier.",
+    "manufacturer": "TenCate Mirafi",
+    "unit": "linear_ft",
+    "cost": 1.85,
+    "properties": {
+      "trappingEfficiencyPercent": 85,
+      "maxSlopeLengthMeters": 30.0
+    },
+    "tags": ["civil", "erosion", "bmp", "silt_fence", "sediment"]
+  },
+  {
+    "id": "civil-subassembly-lane-12ft",
+    "sku": "CIV-SUB-LNE-12",
+    "name": "12ft Asphalt Pavement Travel Lane Subassembly",
+    "category": "civil",
+    "subcategory": "subassemblies",
+    "description": "Standard 12-foot travel lane subassembly with normal crown slope.",
+    "unit": "ft",
+    "dimensions": {
+      "width": 12.0
+    },
+    "properties": {
+      "subassemblyType": "Lane",
+      "widthFt": 12.0,
+      "crossSlope": -0.02
+    },
+    "tags": ["civil", "subassembly", "lane", "roadway", "corridor"]
+  },
+  {
+    "id": "civil-subassembly-curb-gutter-18in",
+    "sku": "CIV-SUB-CRB-18",
+    "name": "18in Standard Concrete Curb & Gutter Subassembly",
+    "category": "civil",
+    "subcategory": "subassemblies",
+    "description": "Standard 18-inch wide barrier curb and gutter subassembly.",
+    "unit": "ft",
+    "dimensions": {
+      "width": 1.5,
+      "height": 0.5
+    },
+    "properties": {
+      "subassemblyType": "CurbAndGutter",
+      "curbWidthFt": 1.5,
+      "curbHeightFt": 0.5
+    },
+    "tags": ["civil", "subassembly", "curb", "gutter", "concrete"]
+  },
+  {
+    "id": "civil-subassembly-sidewalk-5ft",
+    "sku": "CIV-SUB-SWK-5",
+    "name": "5ft Concrete Pedestrian Sidewalk Subassembly",
+    "category": "civil",
+    "subcategory": "subassemblies",
+    "description": "ADA compliant 5-foot concrete pedestrian sidewalk subassembly.",
+    "unit": "ft",
+    "dimensions": {
+      "width": 5.0
+    },
+    "properties": {
+      "subassemblyType": "Sidewalk",
+      "sidewalkWidthFt": 5.0,
+      "crossSlope": 0.015
+    },
+    "tags": ["civil", "subassembly", "sidewalk", "ada", "pedestrian"]
+  },
+  {
+    "id": "civil-subassembly-daylight-bank",
+    "sku": "CIV-SUB-DAY-23",
+    "name": "Standard Embankment Daylight Cut/Fill Subassembly",
+    "category": "civil",
+    "subcategory": "subassemblies",
+    "description": "Daylight slope tie-in subassembly with 2:1 cut slope and 3:1 fill slope.",
+    "unit": "ft",
+    "properties": {
+      "subassemblyType": "Daylight",
+      "cutSlopeH2V": 2.0,
+      "fillSlopeH2V": 3.0
+    },
+    "tags": ["civil", "subassembly", "daylight", "earthwork", "grading"]
+  },
+  {
+    "id": "civil-std-aashto-hwy",
+    "sku": "CIV-STD-AASHTO",
+    "name": "AASHTO Highway Geometric Design Standard",
+    "category": "civil",
+    "subcategory": "civil_design_standards",
+    "description": "AASHTO A Policy on Geometric Design of Highways and Streets design rules.",
+    "unit": "m",
+    "properties": {
+      "eMax": 0.06,
+      "normalCrown": -0.02,
+      "transitionSpeedMultiplier": 0.5,
+      "curbReturnRadiusFt": 25.0,
+      "corridorSamplingIntervalFt": 25.0,
+      "sectionSwathWidthFt": 100.0
+    },
+    "tags": ["civil", "standard", "aashto", "highway", "superelevation"]
+  }
+]

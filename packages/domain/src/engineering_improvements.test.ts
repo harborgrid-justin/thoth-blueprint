@@ -17,7 +17,7 @@ import {
   validateAlignmentDesignSpeed,
 } from "./civil/alignment";
 import { stitchContours, interpolateGrid } from "./civil/terrain";
-import { parseLAS, pointCloudBounds, parseXYZ } from "./civil/pointCloud";
+import { parseLAS, pointCloudBounds, parseXYZ } from "./civil/pointcloud";
 import { formatDimText, stackDimensionChains } from "./drawing/dimension";
 import { writeCollada } from "./drawing/collada";
 import { splitPolygonByLine, mergeLots } from "./planning/subdivision";

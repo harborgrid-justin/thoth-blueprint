@@ -1,4 +1,4 @@
-import { validatePipeNetwork, type PipeDesignRules } from "../../civil/pipeDesign";
+import { validatePipeNetwork, type PipeDesignRules } from "../../civil/pipedesign";
 
 export function initializeNodeInverts(
   networks: any[],

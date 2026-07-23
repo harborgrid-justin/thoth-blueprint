@@ -1,0 +1,39 @@
+[
+  {
+    "id": "sheet-ansi-d-24x36",
+    "sku": "SHT-ANSI-D-2436",
+    "name": "ANSI D 24\" x 36\" Engineering Drawing Sheet",
+    "category": "drawing",
+    "subcategory": "sheet_sizes",
+    "description": "Standard ANSI D 24x36 inch engineering drawing sheet size.",
+    "unit": "in",
+    "dimensions": {
+      "width": 36.0,
+      "height": 24.0
+    },
+    "properties": {
+      "series": "ANSI",
+      "wIn": 36.0,
+      "hIn": 24.0,
+      "wMm": 914.4,
+      "hMm": 609.6
+    },
+    "tags": ["drawing", "sheet", "ansi_d", "24x36", "imperial"]
+  },
+  {
+    "id": "hatch-ansi31-brick",
+    "sku": "HTC-ANSI31",
+    "name": "ANSI31 Brick/Masonry CAD Hatch Pattern",
+    "category": "drawing",
+    "subcategory": "hatch_patterns",
+    "description": "Standard 45-degree parallel linework hatch pattern for masonry.",
+    "unit": "sqft",
+    "properties": {
+      "patternName": "ANSI31",
+      "angleDegrees": 45.0,
+      "scale": 1.0,
+      "spacingMeters": 0.1
+    },
+    "tags": ["drawing", "hatch", "ansi31", "cad", "pattern"]
+  }
+]

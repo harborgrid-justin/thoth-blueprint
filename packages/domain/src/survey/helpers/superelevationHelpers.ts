@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { calculateSuperelevationRunoff } from "../../civil/superElevation";
+import { calculateSuperelevationRunoff } from "../../civil/superelevation";
 
 export function computeSuperelevation({
   alignment,

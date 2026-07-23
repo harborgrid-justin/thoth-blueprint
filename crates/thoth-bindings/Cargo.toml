@@ -1,0 +1,38 @@
+[package]
+name = "thoth-bindings"
+description = "wasm-bindgen binding surface exposing the Thoth Blueprint Rust core (thoth-spatial, thoth-planning) to apps/web. The native Node binding surface lives in the separate thoth-napi crate — see crates/README.md for why they're split."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[lib]
+# cdylib is what wasm-pack/wasm-bindgen-cli actually load; rlib keeps the
+# crate usable as a normal Rust dependency (e.g. from `cargo test`) on the
+# host target, where wasm-bindgen's macro-generated glue is inert.
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+thoth-spatial = { workspace = true }
+thoth-planning = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+wasm-bindgen = "0.2.126"
+serde-wasm-bindgen = "0.6.5"
+console_error_panic_hook = "0.1.7"
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3.49"
+
+# `thoth-spatial` (frozen — cannot be edited here) depends on plain `uuid =
+# "1"` with only the `v4` feature, which has no source of randomness on
+# `wasm32-unknown-unknown` and fails to compile for that target. We deliberately
+# do NOT touch thoth-spatial's Cargo.toml (out of scope, and it's the shared
+# frozen contract every other crate links against). Instead we rely on Cargo's
+# feature unification: declaring the *same* `uuid` dependency here with the
+# `js` feature turns that feature on workspace-wide for the wasm32 build,
+# without thoth-spatial ever knowing or caring. This crate does not call into
+# `uuid` directly — this entry exists purely to unify the feature.
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+uuid = { version = "1", features = ["js"] }

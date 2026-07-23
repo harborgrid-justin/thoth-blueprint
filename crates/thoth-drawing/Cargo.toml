@@ -1,0 +1,33 @@
+[package]
+name = "thoth-drawing"
+description = "CAD sheet/drawing production and parts catalog for Thoth Blueprint. Rust port of packages/domain/src/drawing and src/parts."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+thoth-spatial = { workspace = true }
+# Added for `viewshed` (gap-analysis Theme 5 item 58): thoth-civil's
+# `ElevationGrid` is complete/stable and already the shape every other
+# terrain-consuming crate in the workspace uses, so this depends on it
+# directly rather than duplicating a local elevation-grid type. See
+# `src/viewshed.rs`'s module rustdoc and `GAP_ANALYSIS_STATUS.md`.
+thoth-civil = { workspace = true }
+# Added in the integration-debt-closing pass (see STATUS.md/GAPS.md): both
+# sit earlier in the workspace's frozen dependency order
+# (thoth-spatial -> thoth-civil -> thoth-survey -> thoth-planning ->
+# thoth-drawing), so depending on them here is a safe, non-cyclic edge.
+# `thoth-planning` supplies `Site`/`PlanElement`/`RegionPlugin` (needed by
+# `default_set`, `collada::site_to_meshes`, `platset::collect_site_curves`,
+# and the `builders` site-walking functions); `thoth-survey` supplies
+# `survey_report`/`format_bearing`/`section_frame`/`SurveyMonument`.
+thoth-planning = { workspace = true }
+thoth-survey = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+approx = "0.5"

@@ -1,0 +1,16 @@
+{
+  "geoid": "06037",
+  "areaType": "county",
+  "name": "Los Angeles County, CA",
+  "stateName": "California",
+  "countyName": "Los Angeles County",
+  "standards": {
+    "zoning": {
+      "frontSetback": 20,
+      "sideSetback": 5,
+      "rearSetback": 15,
+      "maxHeight": 35,
+      "maxCoverage": 0.45
+    }
+  }
+}

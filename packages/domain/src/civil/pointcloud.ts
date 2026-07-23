@@ -17,7 +17,7 @@ import type {
   PointCloud,
   PointCloudFormat,
   PointCloudData,
-} from "./types/pointCloud";
+} from "./types/pointcloud";
 
 export type { CloudPoint, PointCloud, PointCloudFormat, PointCloudData };
 

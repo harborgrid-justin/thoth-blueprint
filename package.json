@@ -16,7 +16,14 @@
     "preview": "yarn workspace @thoth/web preview",
     "test": "yarn workspace @thoth/domain test && yarn workspace @thoth/storage test && yarn workspace @thoth/web test",
     "type-check": "yarn workspace @thoth/domain type-check && yarn workspace @thoth/storage type-check && yarn workspace @thoth/web type-check",
-    "lint": "yarn workspace @thoth/domain lint && yarn workspace @thoth/storage lint && yarn workspace @thoth/web lint"
+    "lint": "yarn workspace @thoth/domain lint && yarn workspace @thoth/storage lint && yarn workspace @thoth/web lint",
+    "build:rust": "cargo build --workspace",
+    "build:wasm": "bash scripts/build-wasm.sh",
+    "build:napi": "bash scripts/build-napi.sh",
+    "test:rust": "cargo test --workspace",
+    "fmt:rust": "cargo fmt --all -- --check",
+    "clippy:rust": "cargo clippy --workspace --all-targets -- -D warnings",
+    "lint:rust": "yarn fmt:rust && yarn clippy:rust"
   },
   "engines": {
     "node": ">=20"

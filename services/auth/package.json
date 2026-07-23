@@ -1,13 +1,37 @@
 {
   "name": "@thoth/service-auth",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
-  "description": "Identity and access for Thoth Blueprint — users, organizations/teams, roles, and permissions.",
+  "description": "Identity and access for Thoth Blueprint — users, organizations/teams, roles, and permissions, backed by the thoth-napi native addon (crates/thoth-services::auth).",
   "type": "module",
-  "scripts": {
-    "dev": "echo \"[scaffold] auth service not implemented yet\" && exit 0",
-    "type-check": "echo \"[scaffold] no tsconfig yet\" && exit 0",
-    "test": "echo \"[scaffold] no tests yet\" && exit 0"
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
   },
+  "scripts": {
+    "type-check": "yarn run tsc -p tsconfig.json --noEmit",
+    "test": "yarn run vitest run",
+    "test:watch": "yarn run vitest",
+    "lint": "yarn run eslint src"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.10.2",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0",
+    "vitest": "^2.1.9"
+  },
+  "keywords": [
+    "auth",
+    "identity",
+    "rbac",
+    "organizations"
+  ],
   "license": "GPL-3.0-or-later"
 }

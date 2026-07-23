@@ -60,4 +60,11 @@ export interface StorageConfig {
     /** Path to the SQLite file, or ":memory:". Defaults to `STORAGE_SQLITE_FILE` or "./data/thoth.sqlite3". */
     file?: string;
   };
+  postgres?: {
+    /**
+     * A `postgres://user:pass@host/db` connection string. Defaults to
+     * `STORAGE_POSTGRES_URL` when unset.
+     */
+    connectionString?: string;
+  };
 }

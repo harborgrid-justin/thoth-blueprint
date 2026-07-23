@@ -16,6 +16,19 @@ Reframe the repository and set the foundation for the new product.
 - ✅ Establish agent/automation guidance (`CLAUDE.md`, `.claude/`).
 - ✅ Scaffold the monorepo (`apps/`, `services/`, `packages/domain`).
 - 🟡 Stand up build/test tooling per workspace and CI jobs alongside `artifact-build`.
+- 🟡 **Rust migration underway:** business logic in `packages/domain` and
+  `services/*` is being ported to a Cargo workspace under `crates/` (see
+  [`docs/RUST_MIGRATION.md`](RUST_MIGRATION.md) for per-crate status).
+  `thoth-spatial` (spatial foundation) is complete; `thoth-planning`,
+  `thoth-survey`, and `thoth-civil` have substantial ported+tested surface
+  with documented gaps; `thoth-drawing` and `thoth-services` are earlier in
+  the port. The integration layer (`crates/thoth-bindings` for
+  `apps/web` via wasm-bindgen, `crates/thoth-napi` for `services/*` via
+  napi-rs, root-level `build:rust`/`build:wasm`/`test:rust` scripts, and a
+  `rust-workspace` CI job) is wired end-to-end for one vertical slice
+  (pure geometry ops), with one real `apps/web` call site cut over as
+  proof. This does not change Phase 1-6 scope below; it changes where new
+  domain logic should be written (Rust, going forward; see `CLAUDE.md`).
 
 ## Phase 1 — Domain model foundation
 

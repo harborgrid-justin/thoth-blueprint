@@ -4,7 +4,6 @@ import { Download, Edit3 } from "lucide-react";
 import {
   boundaryEdges,
   buildableEnvelope,
-  centroid,
   densifyBoundary,
   normalize,
   unitLabel,
@@ -13,6 +12,7 @@ import {
   type SurveyReport,
 } from "@thoth/domain";
 import { Button } from "@/components/ui/button";
+import { centroidPreferWasm } from "@/lib/geometryWasm";
 import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 import {
   INK,
@@ -65,7 +65,11 @@ export function PlatDrawing({
     );
   }
   const { project, scalePx } = view;
-  const c = centroid(boundary);
+  // Cut over to the WASM geometry core (falls back to the TS implementation
+  // until it finishes loading, or if it ever errors) — see
+  // apps/web/src/lib/geometryWasm.ts for the full rationale and equivalence
+  // test, and crates/thoth-bindings/src/geometry.rs for the Rust side.
+  const c = centroidPreferWasm(boundary);
   const cScreen = project(c);
 
   // Setback / buildable envelope for a lot, drawn as an interior offset line.

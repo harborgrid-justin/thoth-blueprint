@@ -1,13 +1,36 @@
 {
   "name": "@thoth/service-collaboration",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
-  "description": "Real-time collaboration for Thoth Blueprint — multi-user editing, presence, and comment/review threads.",
+  "description": "Real-time collaboration for Thoth Blueprint — presence and comment/review threads, backed by the thoth-napi native addon (crates/thoth-services::collaboration).",
   "type": "module",
-  "scripts": {
-    "dev": "echo \"[scaffold] collaboration service not implemented yet\" && exit 0",
-    "type-check": "echo \"[scaffold] no tsconfig yet\" && exit 0",
-    "test": "echo \"[scaffold] no tests yet\" && exit 0"
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
   },
+  "scripts": {
+    "type-check": "yarn run tsc -p tsconfig.json --noEmit",
+    "test": "yarn run vitest run",
+    "test:watch": "yarn run vitest",
+    "lint": "yarn run eslint src"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.10.2",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0",
+    "vitest": "^2.1.9"
+  },
+  "keywords": [
+    "collaboration",
+    "presence",
+    "real-time"
+  ],
   "license": "GPL-3.0-or-later"
 }

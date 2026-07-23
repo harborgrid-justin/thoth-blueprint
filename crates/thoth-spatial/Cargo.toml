@@ -1,0 +1,16 @@
+[package]
+name = "thoth-spatial"
+description = "Framework-agnostic spatial foundation for Thoth Blueprint: coordinate primitives, units, and pure geometry ops. Rust port of packages/domain/src/spatial."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+uuid = { version = "1", features = ["v4"] }
+
+[dev-dependencies]
+approx = "0.5"

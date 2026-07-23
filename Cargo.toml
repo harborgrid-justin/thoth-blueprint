@@ -1,0 +1,54 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/thoth-spatial",
+    "crates/thoth-planning",
+    "crates/thoth-survey",
+    "crates/thoth-civil",
+    "crates/thoth-drawing",
+    "crates/thoth-services",
+    "crates/thoth-bindings",
+    # Native Node (napi-rs) binding surface — the integration engineer's
+    # exclusive addition (see crates/README.md and docs/RUST_MIGRATION.md).
+    # Kept separate from thoth-bindings (wasm-bindgen only) rather than one
+    # crate wearing both hats; depends only on the frozen thoth-spatial, so
+    # it doesn't collide with the five domain crates' in-flight work.
+    "crates/thoth-napi",
+    # Competitive gap-analysis implementation pass (5-7 parallel agents),
+    # each owning one exclusive crate directory:
+    "crates/thoth-hydrology",
+    "crates/thoth-transportation",
+    "crates/thoth-interop",
+    "crates/thoth-governance",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+publish = false
+rust-version = "1.82"
+
+[workspace.dependencies]
+thoth-spatial = { path = "crates/thoth-spatial" }
+thoth-planning = { path = "crates/thoth-planning" }
+thoth-survey = { path = "crates/thoth-survey" }
+thoth-civil = { path = "crates/thoth-civil" }
+thoth-drawing = { path = "crates/thoth-drawing" }
+thoth-services = { path = "crates/thoth-services" }
+thoth-hydrology = { path = "crates/thoth-hydrology" }
+thoth-transportation = { path = "crates/thoth-transportation" }
+thoth-interop = { path = "crates/thoth-interop" }
+thoth-governance = { path = "crates/thoth-governance" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "1"
+approx = "0.5"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+
+[profile.dev]
+opt-level = 0
