@@ -13,10 +13,13 @@
 //! a native services library, not a web server; [`projections`] and
 //! [`interop`] are the route handlers' actual logic, callable directly.
 
-pub mod error;
-pub mod interop;
-pub mod projections;
+mod error;
+mod interop;
+mod projections;
 
 pub use error::GeospatialError;
-pub use interop::{elements_to_geojson, geojson_to_elements, GeoJsonFeature, GeoJsonFeatureCollection, GeoJsonGeometry, LandUseCategory, PlanElement};
+pub use interop::{
+    elements_to_geojson, geojson_to_elements, GeoJsonFeature, GeoJsonFeatureCollection,
+    GeoJsonGeometry, LandUseCategory, PlanElement,
+};
 pub use projections::{reproject_bounds, reproject_point, reproject_points};

@@ -81,7 +81,11 @@ pub struct ProfileKValueCheck {
 /// missing a neighbor on either side (matches the TS `null` return exactly —
 /// a PVI without curve data isn't a caller error, it's a legitimate
 /// grade-break point).
-pub fn resolve_vertical_curve(pvi: VerticalPvi, prev: Option<VerticalPvi>, next: Option<VerticalPvi>) -> Option<ResolvedVerticalCurve> {
+pub fn resolve_vertical_curve(
+    pvi: VerticalPvi,
+    prev: Option<VerticalPvi>,
+    next: Option<VerticalPvi>,
+) -> Option<ResolvedVerticalCurve> {
     let l = pvi.curve_length?;
     if l <= 0.0 {
         return None;
@@ -99,7 +103,11 @@ pub fn resolve_vertical_curve(pvi: VerticalPvi, prev: Option<VerticalPvi>, next:
     let end_elevation = pvi.elevation + g2 * (l / 2.0);
 
     let grade_change = (g2 - g1).abs() * 100.0; // percent
-    let k_value = if grade_change > 0.0001 { l / grade_change } else { f64::INFINITY };
+    let k_value = if grade_change > 0.0001 {
+        l / grade_change
+    } else {
+        f64::INFINITY
+    };
 
     // Parabolic equation y = a*x^2 + b*x + c, x = station - start_station in [0, L].
     // At x=0: y=start_elevation, y'=g1 => c=start_elevation, b=g1.
@@ -134,7 +142,11 @@ pub fn profile_elevation_at(profile: &VerticalProfile, station: f64) -> f64 {
         return 0.0;
     }
     let mut sorted = profile.pvis.clone();
-    sorted.sort_by(|a, b| a.station.partial_cmp(&b.station).unwrap_or(std::cmp::Ordering::Equal));
+    sorted.sort_by(|a, b| {
+        a.station
+            .partial_cmp(&b.station)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
 
     if station <= sorted[0].station {
         return sorted[0].elevation;
@@ -164,7 +176,11 @@ pub fn profile_elevation_at(profile: &VerticalProfile, station: f64) -> f64 {
     }
 
     // Check the vertical curve of `next_pvi`.
-    let next_next_pvi = if idx + 2 < sorted.len() { Some(sorted[idx + 2]) } else { None };
+    let next_next_pvi = if idx + 2 < sorted.len() {
+        Some(sorted[idx + 2])
+    } else {
+        None
+    };
     if next_pvi.curve_length.is_some_and(|l| l > 0.0) {
         if let Some(curve) = resolve_vertical_curve(next_pvi, Some(pvi), next_next_pvi) {
             if station >= curve.start_station && station <= curve.end_station {
@@ -185,7 +201,14 @@ pub fn profile_elevation_at(profile: &VerticalProfile, station: f64) -> f64 {
 /// return for `pointAtStation` failing — a legitimate empty result, not a
 /// caller error, since this is routinely called while sweeping a whole
 /// alignment's station range).
-pub fn sample_cross_section(existing_grid: &ElevationGrid, proposed_grid: Option<&ElevationGrid>, resolved: &ResolvedAlignment, station: f64, swath_width: f64, step_size: f64) -> Option<CrossSection> {
+pub fn sample_cross_section(
+    existing_grid: &ElevationGrid,
+    proposed_grid: Option<&ElevationGrid>,
+    resolved: &ResolvedAlignment,
+    station: f64,
+    swath_width: f64,
+    step_size: f64,
+) -> Option<CrossSection> {
     let at = point_at_station(resolved, station).ok()?;
     let rad = at.bearing * std::f64::consts::PI / 180.0;
 
@@ -203,15 +226,26 @@ pub fn sample_cross_section(existing_grid: &ElevationGrid, proposed_grid: Option
     while offset <= max_offset {
         let p_world = Point::new(at.point.x + offset * nx, at.point.y + offset * ny);
 
-        existing_points.push(CrossSectionPoint { offset, elevation: elevation_at(existing_grid, p_world) });
+        existing_points.push(CrossSectionPoint {
+            offset,
+            elevation: elevation_at(existing_grid, p_world),
+        });
 
         if let Some(proposed_grid) = proposed_grid {
-            proposed_points.push(CrossSectionPoint { offset, elevation: elevation_at(proposed_grid, p_world) });
+            proposed_points.push(CrossSectionPoint {
+                offset,
+                elevation: elevation_at(proposed_grid, p_world),
+            });
         }
         offset += step_size;
     }
 
-    Some(CrossSection { station, centerpoint: at.point, existing_points, proposed_points })
+    Some(CrossSection {
+        station,
+        centerpoint: at.point,
+        existing_points,
+        proposed_points,
+    })
 }
 
 /// Extracts Existing Ground (EG) surface profile elevations along an
@@ -220,7 +254,11 @@ pub fn sample_cross_section(existing_grid: &ElevationGrid, proposed_grid: Option
 /// The TS original mints its id from `Date.now()`; this port uses
 /// [`thoth_spatial::create_id`] instead, matching the same deliberate
 /// deviation documented on `alignment::create_alignment_from_objects`.
-pub fn extract_surface_profile(grid: &ElevationGrid, resolved: &ResolvedAlignment, sample_interval: f64) -> VerticalProfile {
+pub fn extract_surface_profile(
+    grid: &ElevationGrid,
+    resolved: &ResolvedAlignment,
+    sample_interval: f64,
+) -> VerticalProfile {
     let mut pvis = Vec::new();
     let total_len = resolved.length;
     let count = ((total_len / sample_interval).floor() as i64).max(2);
@@ -231,7 +269,11 @@ pub fn extract_surface_profile(grid: &ElevationGrid, resolved: &ResolvedAlignmen
             continue;
         };
         let elev = elevation_at(grid, at.point);
-        pvis.push(VerticalPvi { station, elevation: elev, curve_length: None });
+        pvis.push(VerticalPvi {
+            station,
+            elevation: elev,
+            curve_length: None,
+        });
     }
 
     VerticalProfile {
@@ -270,9 +312,16 @@ fn min_k_sag(design_speed: f64) -> f64 {
 
 /// Validates vertical design profile K-values against minimum stopping
 /// sight-distance criteria.
-pub fn validate_profile_k_values(profile: &VerticalProfile, design_speed: f64) -> Vec<ProfileKValueCheck> {
+pub fn validate_profile_k_values(
+    profile: &VerticalProfile,
+    design_speed: f64,
+) -> Vec<ProfileKValueCheck> {
     let mut pvis = profile.pvis.clone();
-    pvis.sort_by(|a, b| a.station.partial_cmp(&b.station).unwrap_or(std::cmp::Ordering::Equal));
+    pvis.sort_by(|a, b| {
+        a.station
+            .partial_cmp(&b.station)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
     let mut results = Vec::new();
 
     for i in 1..pvis.len().saturating_sub(1) {
@@ -284,7 +333,11 @@ pub fn validate_profile_k_values(profile: &VerticalProfile, design_speed: f64) -
             continue;
         };
         let is_crest = curve.grade_in > curve.grade_out;
-        let min_k = if is_crest { min_k_crest(design_speed) } else { min_k_sag(design_speed) };
+        let min_k = if is_crest {
+            min_k_crest(design_speed)
+        } else {
+            min_k_sag(design_speed)
+        };
         let is_violation = curve.k_value < min_k;
 
         results.push(ProfileKValueCheck {
@@ -305,12 +358,29 @@ pub fn validate_profile_k_values(profile: &VerticalProfile, design_speed: f64) -
 }
 
 /// Copies a profile and applies a constant vertical offset.
-pub fn copy_and_offset_profile(profile: &VerticalProfile, vertical_delta: f64, name_suffix: &str) -> VerticalProfile {
+pub fn copy_and_offset_profile(
+    profile: &VerticalProfile,
+    vertical_delta: f64,
+    name_suffix: &str,
+) -> VerticalProfile {
     VerticalProfile {
         id: format!("{}-off-{}", profile.id, vertical_delta),
-        name: format!("{} {} ({}{:.1}ft)", profile.name, name_suffix, if vertical_delta >= 0.0 { "+" } else { "" }, vertical_delta),
+        name: format!(
+            "{} {} ({}{:.1}ft)",
+            profile.name,
+            name_suffix,
+            if vertical_delta >= 0.0 { "+" } else { "" },
+            vertical_delta
+        ),
         alignment_id: profile.alignment_id.clone(),
-        pvis: profile.pvis.iter().map(|p| VerticalPvi { elevation: p.elevation + vertical_delta, ..*p }).collect(),
+        pvis: profile
+            .pvis
+            .iter()
+            .map(|p| VerticalPvi {
+                elevation: p.elevation + vertical_delta,
+                ..*p
+            })
+            .collect(),
     }
 }
 
@@ -325,9 +395,21 @@ mod tests {
             name: "Profile 1".into(),
             alignment_id: "a1".into(),
             pvis: vec![
-                VerticalPvi { station: 0.0, elevation: 50.0, curve_length: None },
-                VerticalPvi { station: 500.0, elevation: 150.0, curve_length: Some(200.0) },
-                VerticalPvi { station: 1000.0, elevation: 100.0, curve_length: None },
+                VerticalPvi {
+                    station: 0.0,
+                    elevation: 50.0,
+                    curve_length: None,
+                },
+                VerticalPvi {
+                    station: 500.0,
+                    elevation: 150.0,
+                    curve_length: Some(200.0),
+                },
+                VerticalPvi {
+                    station: 1000.0,
+                    elevation: 100.0,
+                    curve_length: None,
+                },
             ],
         }
     }
@@ -347,17 +429,38 @@ mod tests {
 
     #[test]
     fn resolve_vertical_curve_is_none_without_neighbors_or_curve_length() {
-        let pvi = VerticalPvi { station: 500.0, elevation: 150.0, curve_length: Some(200.0) };
+        let pvi = VerticalPvi {
+            station: 500.0,
+            elevation: 150.0,
+            curve_length: Some(200.0),
+        };
         assert!(resolve_vertical_curve(pvi, None, None).is_none());
-        let no_curve = VerticalPvi { station: 500.0, elevation: 150.0, curve_length: None };
-        let prev = VerticalPvi { station: 0.0, elevation: 50.0, curve_length: None };
-        let next = VerticalPvi { station: 1000.0, elevation: 100.0, curve_length: None };
+        let no_curve = VerticalPvi {
+            station: 500.0,
+            elevation: 150.0,
+            curve_length: None,
+        };
+        let prev = VerticalPvi {
+            station: 0.0,
+            elevation: 50.0,
+            curve_length: None,
+        };
+        let next = VerticalPvi {
+            station: 1000.0,
+            elevation: 100.0,
+            curve_length: None,
+        };
         assert!(resolve_vertical_curve(no_curve, Some(prev), Some(next)).is_none());
     }
 
     #[test]
     fn empty_profile_elevation_is_zero() {
-        let p = VerticalProfile { id: "e".into(), name: "E".into(), alignment_id: "a".into(), pvis: vec![] };
+        let p = VerticalProfile {
+            id: "e".into(),
+            name: "E".into(),
+            alignment_id: "a".into(),
+            pvis: vec![],
+        };
         assert_eq!(profile_elevation_at(&p, 100.0), 0.0);
     }
 
@@ -377,9 +480,21 @@ mod tests {
             name: "K".into(),
             alignment_id: "a".into(),
             pvis: vec![
-                VerticalPvi { station: 0.0, elevation: 100.0, curve_length: None },
-                VerticalPvi { station: 500.0, elevation: 50.0, curve_length: Some(50.0) },
-                VerticalPvi { station: 1000.0, elevation: 100.0, curve_length: None },
+                VerticalPvi {
+                    station: 0.0,
+                    elevation: 100.0,
+                    curve_length: None,
+                },
+                VerticalPvi {
+                    station: 500.0,
+                    elevation: 50.0,
+                    curve_length: Some(50.0),
+                },
+                VerticalPvi {
+                    station: 1000.0,
+                    elevation: 100.0,
+                    curve_length: None,
+                },
             ],
         };
         let checks = validate_profile_k_values(&p, 45.0);

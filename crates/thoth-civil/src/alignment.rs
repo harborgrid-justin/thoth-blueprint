@@ -64,12 +64,22 @@ pub struct AlignmentPi {
 impl AlignmentPi {
     /// A PI with no curve (a simple angle point / the POB / the POE).
     pub const fn simple(point: Point) -> Self {
-        AlignmentPi { point, radius: None, spiral_in: None, spiral_out: None }
+        AlignmentPi {
+            point,
+            radius: None,
+            spiral_in: None,
+            spiral_out: None,
+        }
     }
 
     /// An interior PI with a circular curve of the given radius.
     pub const fn curved(point: Point, radius: f64) -> Self {
-        AlignmentPi { point, radius: Some(radius), spiral_in: None, spiral_out: None }
+        AlignmentPi {
+            point,
+            radius: Some(radius),
+            spiral_in: None,
+            spiral_out: None,
+        }
     }
 }
 
@@ -140,7 +150,12 @@ pub struct HorizontalAlignment {
 
 impl HorizontalAlignment {
     /// A minimal alignment: just an id, name, PI chain, and start station.
-    pub fn new(id: impl Into<String>, name: impl Into<String>, pis: Vec<AlignmentPi>, start_station: f64) -> Self {
+    pub fn new(
+        id: impl Into<String>,
+        name: impl Into<String>,
+        pis: Vec<AlignmentPi>,
+        start_station: f64,
+    ) -> Self {
         HorizontalAlignment {
             id: id.into(),
             name: name.into(),
@@ -215,7 +230,11 @@ pub enum AlignmentElement {
         bearing: f64,
     },
     Curve {
-        curve: AlignmentCurve,
+        // Boxed so `Tangent`/`Spiral` (the common case, swept many times per
+        // alignment) don't all pay for the much larger `AlignmentCurve`'s stack
+        // size — `AlignmentCurve` itself stays `Copy` for callers that just want
+        // the curve table (`ResolvedAlignment::curves`).
+        curve: Box<AlignmentCurve>,
         begin_station: f64,
         end_station: f64,
     },
@@ -346,7 +365,11 @@ pub fn resolve_alignment(alignment: &HorizontalAlignment) -> CivilResult<Resolve
         let center = add(pc, scale(nrm, r));
         // In the north=−Y frame, a clockwise turn (crossz > 0) curves to the right.
         let turn = cross(back, fwd);
-        let direction = if turn > 0.0 { CurveDirection::Right } else { CurveDirection::Left };
+        let direction = if turn > 0.0 {
+            CurveDirection::Right
+        } else {
+            CurveDirection::Left
+        };
 
         let start_angle = (pc.y - center.y).atan2(pc.x - center.x);
         let end_angle = (pt.y - center.y).atan2(pt.x - center.x);
@@ -392,7 +415,7 @@ pub fn resolve_alignment(alignment: &HorizontalAlignment) -> CivilResult<Resolve
     let mut cursor = pis[0].point; // current traveled position (POB, then each PT)
 
     for i in 1..pis.len() {
-        let curve = if i < pis.len() - 1 { curves[i].clone() } else { None };
+        let curve = if i < pis.len() - 1 { curves[i] } else { None };
         let tangent_end = curve.as_ref().map_or(pis[i].point, |c| c.pc);
         let seg_len = length(subtract(tangent_end, cursor));
         if seg_len > 1e-9 {
@@ -415,8 +438,12 @@ pub fn resolve_alignment(alignment: &HorizontalAlignment) -> CivilResult<Resolve
             let end_station = station + curve.length;
             station += curve.length;
             cursor = curve.pt;
-            resolved_curves.push(curve.clone());
-            elements.push(AlignmentElement::Curve { curve, begin_station, end_station });
+            resolved_curves.push(curve);
+            elements.push(AlignmentElement::Curve {
+                curve: Box::new(curve),
+                begin_station,
+                end_station,
+            });
         } else {
             cursor = pis[i].point;
         }
@@ -464,23 +491,42 @@ pub fn point_at_station(resolved: &ResolvedAlignment, station: f64) -> CivilResu
             low = mid as i64 + 1;
         } else {
             match el {
-                AlignmentElement::Tangent { from, to, begin_station, length: len, .. } => {
+                AlignmentElement::Tangent {
+                    from,
+                    to,
+                    begin_station,
+                    length: len,
+                    ..
+                } => {
                     let t = (station - begin_station) / len.max(1e-9);
                     return Ok(AlignmentPoint {
-                        point: Point::new(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t),
+                        point: Point::new(
+                            from.x + (to.x - from.x) * t,
+                            from.y + (to.y - from.y) * t,
+                        ),
                         bearing: match el {
                             AlignmentElement::Tangent { bearing, .. } => *bearing,
                             _ => unreachable!(),
                         },
                     });
                 }
-                AlignmentElement::Curve { curve, begin_station, .. } => {
+                AlignmentElement::Curve {
+                    curve,
+                    begin_station,
+                    ..
+                } => {
                     let frac = (station - begin_station) / curve.length.max(1e-9);
                     let ang = curve.start_angle + curve.sweep * frac;
-                    let point = Point::new(curve.center.x + curve.radius * ang.cos(), curve.center.y + curve.radius * ang.sin());
+                    let point = Point::new(
+                        curve.center.x + curve.radius * ang.cos(),
+                        curve.center.y + curve.radius * ang.sin(),
+                    );
                     let sign = if curve.sweep >= 0.0 { 1.0 } else { -1.0 };
                     let dir = Point::new(-ang.sin() * sign, ang.cos() * sign);
-                    return Ok(AlignmentPoint { point, bearing: azimuth_of(dir) });
+                    return Ok(AlignmentPoint {
+                        point,
+                        bearing: azimuth_of(dir),
+                    });
                 }
                 AlignmentElement::Spiral { .. } => {
                     // Not constructed by resolve_alignment; see SpiralType docs.
@@ -489,22 +535,40 @@ pub fn point_at_station(resolved: &ResolvedAlignment, station: f64) -> CivilResu
             }
         }
     }
-    Err(CivilError::StationOutOfRange { station, start: resolved.start_station, end: resolved.end_station })
+    Err(CivilError::StationOutOfRange {
+        station,
+        start: resolved.start_station,
+        end: resolved.end_station,
+    })
 }
 
 /// Station/offset of a point relative to the alignment (offset +right/−left
 /// of travel). Always returns the closest element's projection; never fails
 /// on a resolved (non-empty) alignment.
 pub fn station_offset_of_point(resolved: &ResolvedAlignment, p: Point) -> StationOffset {
-    let mut best = StationOffset { station: resolved.start_station, offset: f64::INFINITY, side: Side::On };
+    let mut best = StationOffset {
+        station: resolved.start_station,
+        offset: f64::INFINITY,
+        side: Side::On,
+    };
     let mut best_abs = f64::INFINITY;
 
     for el in &resolved.elements {
         match el {
-            AlignmentElement::Tangent { from, to, begin_station, length: len, .. } => {
+            AlignmentElement::Tangent {
+                from,
+                to,
+                begin_station,
+                length: len,
+                ..
+            } => {
                 let ab = subtract(*to, *from);
                 let l2 = dot(ab, ab);
-                let mut t = if l2 < 1e-12 { 0.0 } else { dot(subtract(p, *from), ab) / l2 };
+                let mut t = if l2 < 1e-12 {
+                    0.0
+                } else {
+                    dot(subtract(p, *from), ab) / l2
+                };
                 t = t.clamp(0.0, 1.0);
                 let foot = add(*from, scale(ab, t));
                 let d = length(subtract(p, foot));
@@ -515,11 +579,21 @@ pub fn station_offset_of_point(resolved: &ResolvedAlignment, p: Point) -> Statio
                     best = StationOffset {
                         station: begin_station + t * len,
                         offset: d,
-                        side: if side.abs() < 1e-9 { Side::On } else if side > 0.0 { Side::Right } else { Side::Left },
+                        side: if side.abs() < 1e-9 {
+                            Side::On
+                        } else if side > 0.0 {
+                            Side::Right
+                        } else {
+                            Side::Left
+                        },
                     };
                 }
             }
-            AlignmentElement::Curve { curve, begin_station, .. } => {
+            AlignmentElement::Curve {
+                curve,
+                begin_station,
+                ..
+            } => {
                 let to_p = subtract(p, curve.center);
                 let ang = to_p.y.atan2(to_p.x);
 
@@ -536,18 +610,31 @@ pub fn station_offset_of_point(resolved: &ResolvedAlignment, p: Point) -> Statio
                     clamped -= 2.0 * std::f64::consts::PI;
                 }
                 clamped = clamped.clamp(lo, hi);
-                let foot = Point::new(curve.center.x + curve.radius * clamped.cos(), curve.center.y + curve.radius * clamped.sin());
+                let foot = Point::new(
+                    curve.center.x + curve.radius * clamped.cos(),
+                    curve.center.y + curve.radius * clamped.sin(),
+                );
                 let d = length(subtract(p, foot));
                 if d < best_abs {
                     best_abs = d;
-                    let frac = if curve.sweep == 0.0 { 0.0 } else { (clamped - curve.start_angle) / curve.sweep };
+                    let frac = if curve.sweep == 0.0 {
+                        0.0
+                    } else {
+                        (clamped - curve.start_angle) / curve.sweep
+                    };
                     let sign = if curve.sweep >= 0.0 { 1.0 } else { -1.0 };
                     let dir = Point::new(-clamped.sin() * sign, clamped.cos() * sign);
                     let side = cross(dir, subtract(p, foot));
                     best = StationOffset {
                         station: begin_station + frac * curve.length,
                         offset: d,
-                        side: if side.abs() < 1e-9 { Side::On } else if side > 0.0 { Side::Right } else { Side::Left },
+                        side: if side.abs() < 1e-9 {
+                            Side::On
+                        } else if side > 0.0 {
+                            Side::Right
+                        } else {
+                            Side::Left
+                        },
                     };
                 }
             }
@@ -563,20 +650,30 @@ pub fn station_offset_of_point(resolved: &ResolvedAlignment, p: Point) -> Statio
 ///
 /// `samples` is the number of intervals to sweep across the full alignment
 /// length (the TS default is 120).
-pub fn offset_alignment_path(resolved: &ResolvedAlignment, offset: f64, samples: u32) -> Vec<Point> {
+pub fn offset_alignment_path(
+    resolved: &ResolvedAlignment,
+    offset: f64,
+    samples: u32,
+) -> Vec<Point> {
     let mut out = Vec::new();
     let total = resolved.length;
     if total <= 0.0 {
         return out;
     }
     for i in 0..=samples {
-        let Ok(at) = point_at_station(resolved, resolved.start_station + (total * i as f64) / samples as f64) else {
+        let Ok(at) = point_at_station(
+            resolved,
+            resolved.start_station + (total * i as f64) / samples as f64,
+        ) else {
             continue;
         };
         let rad = at.bearing * std::f64::consts::PI / 180.0;
         let dir = Point::new(rad.sin(), -rad.cos()); // travel direction
         let nrm = Point::new(-dir.y, dir.x); // right of travel
-        out.push(Point::new(at.point.x + nrm.x * offset, at.point.y + nrm.y * offset));
+        out.push(Point::new(
+            at.point.x + nrm.x * offset,
+            at.point.y + nrm.y * offset,
+        ));
     }
     out
 }
@@ -596,7 +693,10 @@ pub fn centerline_points(r: &ResolvedAlignment) -> Vec<Point> {
                 let steps = (curve.delta_deg / 2.0).ceil().max(2.0) as u32;
                 for i in 0..=steps {
                     let ang = curve.start_angle + (curve.sweep * i as f64) / steps as f64;
-                    pts.push(Point::new(curve.center.x + curve.radius * ang.cos(), curve.center.y + curve.radius * ang.sin()));
+                    pts.push(Point::new(
+                        curve.center.x + curve.radius * ang.cos(),
+                        curve.center.y + curve.radius * ang.sin(),
+                    ));
                 }
             }
             AlignmentElement::Spiral { .. } => {}
@@ -638,15 +738,26 @@ fn min_radius_for_speed(speed: f64) -> f64 {
 
 /// Validates alignment curve radii against AASHTO design speed standards.
 /// Minimum radius values for eMax=6% crown rate.
-pub fn validate_alignment_design_speed(alignment: &HorizontalAlignment, resolved: &ResolvedAlignment) -> Vec<DesignSpeedCheckResult> {
+pub fn validate_alignment_design_speed(
+    alignment: &HorizontalAlignment,
+    resolved: &ResolvedAlignment,
+) -> Vec<DesignSpeedCheckResult> {
     let default_speed = alignment.design_speed.unwrap_or(35.0);
 
     // Zones sorted by descending station (mirrors `_.orderBy(..., ["station"], ["desc"])`).
     let mut sorted_zones = alignment.design_speeds.clone();
-    sorted_zones.sort_by(|a, b| b.station.partial_cmp(&a.station).unwrap_or(std::cmp::Ordering::Equal));
+    sorted_zones.sort_by(|a, b| {
+        b.station
+            .partial_cmp(&a.station)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
 
     let speed_at_station = |station: f64| -> f64 {
-        sorted_zones.iter().find(|z| station >= z.station).map(|z| z.speed).unwrap_or(default_speed)
+        sorted_zones
+            .iter()
+            .find(|z| station >= z.station)
+            .map(|z| z.speed)
+            .unwrap_or(default_speed)
     };
 
     resolved
@@ -686,14 +797,23 @@ pub fn validate_alignment_design_speed(alignment: &HorizontalAlignment, resolved
 /// The TS original mints the id from `Date.now()` + `Math.random()`; this
 /// port uses [`thoth_spatial::create_id`] instead — a real, collision-free id
 /// generator, superior to a timestamp+PRNG for this purpose.
-pub fn create_alignment_from_objects(name: impl Into<String>, points: &[Point], default_radius: f64, start_station: f64) -> HorizontalAlignment {
+pub fn create_alignment_from_objects(
+    name: impl Into<String>,
+    points: &[Point],
+    default_radius: f64,
+    start_station: f64,
+) -> HorizontalAlignment {
     let n = points.len();
     let pis: Vec<AlignmentPi> = points
         .iter()
         .enumerate()
         .map(|(i, &p)| AlignmentPi {
             point: p,
-            radius: if i > 0 && i < n - 1 { Some(default_radius) } else { Some(0.0) },
+            radius: if i > 0 && i < n - 1 {
+                Some(default_radius)
+            } else {
+                Some(0.0)
+            },
             spiral_in: None,
             spiral_out: None,
         })
@@ -704,15 +824,32 @@ pub fn create_alignment_from_objects(name: impl Into<String>, points: &[Point], 
 /// Creates an offset alignment baseline parallel to the parent. Falls back to
 /// a clone of `parent` if it cannot be resolved (mirrors the TS `return
 /// parent;` fallback exactly).
-pub fn create_offset_alignment(parent: &HorizontalAlignment, distance: f64, label: &str) -> HorizontalAlignment {
+pub fn create_offset_alignment(
+    parent: &HorizontalAlignment,
+    distance: f64,
+    label: &str,
+) -> HorizontalAlignment {
     let Ok(resolved) = resolve_alignment(parent) else {
         return parent.clone();
     };
     let samples = (resolved.length / 25.0).floor().max(10.0) as u32;
     let offset_pts = offset_alignment_path(&resolved, distance, samples);
-    let pis: Vec<AlignmentPi> = offset_pts.into_iter().map(|p| AlignmentPi { point: p, radius: Some(0.0), spiral_in: None, spiral_out: None }).collect();
+    let pis: Vec<AlignmentPi> = offset_pts
+        .into_iter()
+        .map(|p| AlignmentPi {
+            point: p,
+            radius: Some(0.0),
+            spiral_in: None,
+            spiral_out: None,
+        })
+        .collect();
     HorizontalAlignment::new(
-        format!("{}-offset-{}-{}", parent.id, if distance.signum() > 0.0 { "R" } else { "L" }, distance.abs()),
+        format!(
+            "{}-offset-{}-{}",
+            parent.id,
+            if distance.signum() > 0.0 { "R" } else { "L" },
+            distance.abs()
+        ),
         format!("{} - {}", parent.name, label),
         pis,
         parent.start_station,
@@ -721,7 +858,10 @@ pub fn create_offset_alignment(parent: &HorizontalAlignment, distance: f64, labe
 
 /// Adds a widening region to an alignment offset, returning the updated
 /// alignment.
-pub fn add_widening_region(alignment: &HorizontalAlignment, widening: WideningRegion) -> HorizontalAlignment {
+pub fn add_widening_region(
+    alignment: &HorizontalAlignment,
+    widening: WideningRegion,
+) -> HorizontalAlignment {
     let mut out = alignment.clone();
     out.widenings.push(widening);
     out
@@ -731,7 +871,10 @@ pub fn add_widening_region(alignment: &HorizontalAlignment, widening: WideningRe
 /// Returns an empty string if `resolved` is absent and the alignment cannot
 /// be resolved (mirrors the TS `resolved ?? resolveAlignment(alignment)` then
 /// `if (!res) return ""`).
-pub fn export_alignment_to_land_xml(alignment: &HorizontalAlignment, resolved: Option<&ResolvedAlignment>) -> String {
+pub fn export_alignment_to_land_xml(
+    alignment: &HorizontalAlignment,
+    resolved: Option<&ResolvedAlignment>,
+) -> String {
     let owned;
     let res = match resolved {
         Some(r) => r,
@@ -747,7 +890,12 @@ pub fn export_alignment_to_land_xml(alignment: &HorizontalAlignment, resolved: O
     let mut coord_geom = Vec::new();
     for elem in &res.elements {
         match elem {
-            AlignmentElement::Tangent { from, to, begin_station, .. } => {
+            AlignmentElement::Tangent {
+                from,
+                to,
+                begin_station,
+                ..
+            } => {
                 coord_geom.push(format!(
                     "    <Line staStart=\"{:.3}\">\n      <Start>{:.4} {:.4}</Start>\n      <End>{:.4} {:.4}</End>\n    </Line>",
                     begin_station, from.x, from.y, to.x, to.y
@@ -810,9 +958,21 @@ mod tests {
         assert_relative_eq!(c.delta_deg, 90.0, epsilon = 1e-6);
         assert_relative_eq!(c.tangent, 500.0, epsilon = 1e-6);
         assert_relative_eq!(c.length, 500.0 * std::f64::consts::PI / 2.0, epsilon = 1e-6);
-        assert_relative_eq!(c.external, 500.0 * (1.0 / (std::f64::consts::PI / 4.0).cos() - 1.0), epsilon = 1e-6);
-        assert_relative_eq!(c.middle_ordinate, 500.0 * (1.0 - (std::f64::consts::PI / 4.0).cos()), epsilon = 1e-6);
-        assert_relative_eq!(c.chord, 2.0 * 500.0 * (std::f64::consts::PI / 4.0).sin(), epsilon = 1e-6);
+        assert_relative_eq!(
+            c.external,
+            500.0 * (1.0 / (std::f64::consts::PI / 4.0).cos() - 1.0),
+            epsilon = 1e-6
+        );
+        assert_relative_eq!(
+            c.middle_ordinate,
+            500.0 * (1.0 - (std::f64::consts::PI / 4.0).cos()),
+            epsilon = 1e-6
+        );
+        assert_relative_eq!(
+            c.chord,
+            2.0 * 500.0 * (std::f64::consts::PI / 4.0).sin(),
+            epsilon = 1e-6
+        );
         assert_relative_eq!(c.degree_of_curve, 5729.5779513 / 500.0, epsilon = 1e-4);
     }
 
@@ -837,9 +997,21 @@ mod tests {
         let c = &r.curves[0];
         assert_relative_eq!(c.pc_station, 10_500.0, epsilon = 1e-6);
         assert_relative_eq!(c.pi_station, 11_000.0, epsilon = 1e-6);
-        assert_relative_eq!(c.pt_station, 10_500.0 + 500.0 * std::f64::consts::PI / 2.0, epsilon = 1e-6);
-        assert_relative_eq!(alignment_length(&r), 500.0 + 500.0 * std::f64::consts::PI / 2.0 + 500.0, epsilon = 1e-6);
-        assert_relative_eq!(r.end_station, 10_000.0 + alignment_length(&r), epsilon = 1e-6);
+        assert_relative_eq!(
+            c.pt_station,
+            10_500.0 + 500.0 * std::f64::consts::PI / 2.0,
+            epsilon = 1e-6
+        );
+        assert_relative_eq!(
+            alignment_length(&r),
+            500.0 + 500.0 * std::f64::consts::PI / 2.0 + 500.0,
+            epsilon = 1e-6
+        );
+        assert_relative_eq!(
+            r.end_station,
+            10_000.0 + alignment_length(&r),
+            epsilon = 1e-6
+        );
     }
 
     #[test]
@@ -869,21 +1041,34 @@ mod tests {
     fn point_at_station_stays_on_arc_through_the_curve() {
         let r = resolve_alignment(&align()).unwrap();
         let c = &r.curves[0];
-        let mid = point_at_station(&r, (c.pc_station + c.pt_station) / 2.0).unwrap().point;
+        let mid = point_at_station(&r, (c.pc_station + c.pt_station) / 2.0)
+            .unwrap()
+            .point;
         assert_relative_eq!(distance(mid, c.center), 500.0, epsilon = 1e-4);
     }
 
     #[test]
     fn point_at_station_heads_north_then_east() {
         let r = resolve_alignment(&align()).unwrap();
-        assert_relative_eq!(point_at_station(&r, 10_100.0).unwrap().bearing, 0.0, epsilon = 1e-4);
-        assert_relative_eq!(point_at_station(&r, r.end_station - 100.0).unwrap().bearing, 90.0, epsilon = 1e-4);
+        assert_relative_eq!(
+            point_at_station(&r, 10_100.0).unwrap().bearing,
+            0.0,
+            epsilon = 1e-4
+        );
+        assert_relative_eq!(
+            point_at_station(&r, r.end_station - 100.0).unwrap().bearing,
+            90.0,
+            epsilon = 1e-4
+        );
     }
 
     #[test]
     fn point_at_station_out_of_range_is_an_error() {
         let r = resolve_alignment(&align()).unwrap();
-        assert!(matches!(point_at_station(&r, r.end_station + 1.0), Err(CivilError::StationOutOfRange { .. })));
+        assert!(matches!(
+            point_at_station(&r, r.end_station + 1.0),
+            Err(CivilError::StationOutOfRange { .. })
+        ));
     }
 
     #[test]
@@ -909,7 +1094,10 @@ mod tests {
         let straight = HorizontalAlignment::new(
             "s",
             "S",
-            vec![AlignmentPi::simple(Point::new(0.0, 0.0)), AlignmentPi::simple(Point::new(0.0, -100.0))],
+            vec![
+                AlignmentPi::simple(Point::new(0.0, 0.0)),
+                AlignmentPi::simple(Point::new(0.0, -100.0)),
+            ],
             0.0,
         );
         let r = resolve_alignment(&straight).unwrap();
@@ -926,9 +1114,15 @@ mod tests {
     #[test]
     fn resolve_alignment_rejects_degenerate_pi_chains() {
         let a = HorizontalAlignment::new("d", "D", vec![AlignmentPi::simple(Point::ZERO)], 0.0);
-        assert!(matches!(resolve_alignment(&a), Err(CivilError::DegenerateAlignment { count: 1 })));
+        assert!(matches!(
+            resolve_alignment(&a),
+            Err(CivilError::DegenerateAlignment { count: 1 })
+        ));
         let empty = HorizontalAlignment::new("e", "E", vec![], 0.0);
-        assert!(matches!(resolve_alignment(&empty), Err(CivilError::DegenerateAlignment { count: 0 })));
+        assert!(matches!(
+            resolve_alignment(&empty),
+            Err(CivilError::DegenerateAlignment { count: 0 })
+        ));
     }
 
     #[test]

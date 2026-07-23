@@ -63,8 +63,14 @@ macro_rules! storage_adapter_contract {
             #[tokio::test]
             async fn lists_every_record_in_a_collection() {
                 let storage = $make;
-                storage.put("widgets", widget("w1", "Bolt", 3)).await.unwrap();
-                storage.put("widgets", widget("w2", "Nut", 5)).await.unwrap();
+                storage
+                    .put("widgets", widget("w1", "Bolt", 3))
+                    .await
+                    .unwrap();
+                storage
+                    .put("widgets", widget("w2", "Nut", 5))
+                    .await
+                    .unwrap();
                 let mut ids: Vec<String> = storage
                     .list::<Widget>("widgets")
                     .await
@@ -79,8 +85,14 @@ macro_rules! storage_adapter_contract {
             #[tokio::test]
             async fn put_replaces_an_existing_record_with_the_same_id() {
                 let storage = $make;
-                storage.put("widgets", widget("w1", "Bolt", 3)).await.unwrap();
-                storage.put("widgets", widget("w1", "Bolt", 9)).await.unwrap();
+                storage
+                    .put("widgets", widget("w1", "Bolt", 3))
+                    .await
+                    .unwrap();
+                storage
+                    .put("widgets", widget("w1", "Bolt", 9))
+                    .await
+                    .unwrap();
                 let all: Vec<Widget> = storage.list("widgets").await.unwrap();
                 assert_eq!(all.len(), 1);
                 assert_eq!(all[0].count, 9);
@@ -89,7 +101,10 @@ macro_rules! storage_adapter_contract {
             #[tokio::test]
             async fn delete_removes_a_record_and_reports_whether_it_existed() {
                 let storage = $make;
-                storage.put("widgets", widget("w1", "Bolt", 3)).await.unwrap();
+                storage
+                    .put("widgets", widget("w1", "Bolt", 3))
+                    .await
+                    .unwrap();
                 assert_eq!(storage.delete("widgets", "w1").await.unwrap(), true);
                 assert_eq!(storage.delete("widgets", "w1").await.unwrap(), false);
                 let found: Option<Widget> = storage.get("widgets", "w1").await.unwrap();
@@ -99,8 +114,14 @@ macro_rules! storage_adapter_contract {
             #[tokio::test]
             async fn clear_empties_a_collection_without_touching_others() {
                 let storage = $make;
-                storage.put("widgets", widget("w1", "Bolt", 3)).await.unwrap();
-                storage.put("gadgets", widget("g1", "Gizmo", 1)).await.unwrap();
+                storage
+                    .put("widgets", widget("w1", "Bolt", 3))
+                    .await
+                    .unwrap();
+                storage
+                    .put("gadgets", widget("g1", "Gizmo", 1))
+                    .await
+                    .unwrap();
                 storage.clear("widgets").await.unwrap();
                 let widgets: Vec<Widget> = storage.list("widgets").await.unwrap();
                 let gadgets: Vec<Widget> = storage.list("gadgets").await.unwrap();
@@ -143,16 +164,24 @@ macro_rules! storage_adapter_contract {
             #[tokio::test]
             async fn rolls_back_every_write_when_a_transaction_throws() {
                 let storage = $make;
-                storage.put("widgets", widget("w1", "Bolt", 1)).await.unwrap();
-                let result: Result<(), super::super::StorageError> = storage
+                storage
+                    .put("widgets", widget("w1", "Bolt", 1))
+                    .await
+                    .unwrap();
+                let result: Result<(), crate::storage::StorageError> = storage
                     .transaction(|| async {
                         storage.put("widgets", widget("w2", "Nut", 2)).await?;
-                        Err(super::super::StorageError::TransactionFailed("boom".into()))
+                        Err(crate::storage::StorageError::TransactionFailed(
+                            "boom".into(),
+                        ))
                     })
                     .await;
                 assert!(result.is_err());
                 let all: Vec<Widget> = storage.list("widgets").await.unwrap();
-                assert_eq!(all.into_iter().map(|w| w.id).collect::<Vec<_>>(), vec!["w1"]);
+                assert_eq!(
+                    all.into_iter().map(|w| w.id).collect::<Vec<_>>(),
+                    vec!["w1"]
+                );
             }
 
             #[tokio::test]
@@ -165,17 +194,22 @@ macro_rules! storage_adapter_contract {
     };
 }
 
-storage_adapter_contract!(memory, super::MemoryStorageAdapter::new());
+storage_adapter_contract!(memory, crate::storage::MemoryStorageAdapter::new());
 
 storage_adapter_contract!(sqlite, {
     let dir = tempfile::tempdir().unwrap();
-    let file = dir.path().join("test.sqlite3").to_string_lossy().into_owned();
+    let file = dir
+        .path()
+        .join("test.sqlite3")
+        .to_string_lossy()
+        .into_owned();
     std::mem::forget(dir); // keep the tempdir alive for the adapter's lifetime
-    super::SqliteStorageAdapter::new(super::SqliteStorageAdapterOptions { file }).unwrap()
+    crate::storage::SqliteStorageAdapter::new(crate::storage::SqliteStorageAdapterOptions { file })
+        .unwrap()
 });
 
 storage_adapter_contract!(sqlite_in_memory, {
-    super::SqliteStorageAdapter::new(super::SqliteStorageAdapterOptions {
+    crate::storage::SqliteStorageAdapter::new(crate::storage::SqliteStorageAdapterOptions {
         file: ":memory:".to_string(),
     })
     .unwrap()

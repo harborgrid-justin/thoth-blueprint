@@ -70,7 +70,10 @@ pub fn match_wildcard(value: &str, pattern: &str) -> bool {
 }
 
 /// Find the first description key whose `code` matches `raw_desc`.
-pub fn find_matching_key<'a>(raw_desc: &str, keys: &'a [DescriptionKey]) -> Option<&'a DescriptionKey> {
+pub fn find_matching_key<'a>(
+    raw_desc: &str,
+    keys: &'a [DescriptionKey],
+) -> Option<&'a DescriptionKey> {
     keys.iter().find(|k| match_wildcard(raw_desc, &k.code))
 }
 
@@ -184,7 +187,10 @@ mod tests {
             },
         ];
         assert_eq!(evaluate_point_group(&points, "TR*"), vec!["p1".to_string()]);
-        assert_eq!(evaluate_point_group(&points, "*"), vec!["p1".to_string(), "p2".to_string()]);
+        assert_eq!(
+            evaluate_point_group(&points, "*"),
+            vec!["p1".to_string(), "p2".to_string()]
+        );
     }
 
     #[test]

@@ -92,7 +92,9 @@ impl CollaborationHub {
         color: &str,
     ) -> (Presence, broadcast::Receiver<CollabEvent>) {
         let mut rooms = self.rooms.write().await;
-        let room = rooms.entry(project_id.to_string()).or_insert_with(Room::new);
+        let room = rooms
+            .entry(project_id.to_string())
+            .or_insert_with(Room::new);
 
         let now = Utc::now();
         let presence = Presence {
@@ -116,7 +118,9 @@ impl CollaborationHub {
     /// [`CollaborationError::NotJoined`] if the user wasn't present.
     pub async fn leave(&self, project_id: &str, user_id: &str) -> Result<(), CollaborationError> {
         let mut rooms = self.rooms.write().await;
-        let room = rooms.get_mut(project_id).ok_or_else(|| not_joined(project_id, user_id))?;
+        let room = rooms
+            .get_mut(project_id)
+            .ok_or_else(|| not_joined(project_id, user_id))?;
         if room.presence.remove(user_id).is_none() {
             return Err(not_joined(project_id, user_id));
         }
@@ -135,7 +139,9 @@ impl CollaborationHub {
         point: Point,
     ) -> Result<(), CollaborationError> {
         let mut rooms = self.rooms.write().await;
-        let room = rooms.get_mut(project_id).ok_or_else(|| not_joined(project_id, user_id))?;
+        let room = rooms
+            .get_mut(project_id)
+            .ok_or_else(|| not_joined(project_id, user_id))?;
         let presence = room
             .presence
             .get_mut(user_id)
@@ -165,7 +171,9 @@ impl CollaborationHub {
         op: ElementOp,
     ) -> Result<u64, CollaborationError> {
         let mut rooms = self.rooms.write().await;
-        let room = rooms.entry(project_id.to_string()).or_insert_with(Room::new);
+        let room = rooms
+            .entry(project_id.to_string())
+            .or_insert_with(Room::new);
         let current = room.revisions.get(element_id).copied().unwrap_or(0);
 
         if let Some(expected) = expected_revision {
@@ -194,7 +202,9 @@ impl CollaborationHub {
     /// live-refresh signal).
     pub async fn publish_comment(&self, project_id: &str, thread_id: &str, comment_id: &str) {
         let mut rooms = self.rooms.write().await;
-        let room = rooms.entry(project_id.to_string()).or_insert_with(Room::new);
+        let room = rooms
+            .entry(project_id.to_string())
+            .or_insert_with(Room::new);
         let _ = room.sender.send(CollabEvent::CommentPosted {
             thread_id: thread_id.to_string(),
             comment_id: comment_id.to_string(),
@@ -204,7 +214,9 @@ impl CollaborationHub {
     /// Notify a room's live viewers that a review thread was resolved.
     pub async fn resolve_thread(&self, project_id: &str, thread_id: &str) {
         let mut rooms = self.rooms.write().await;
-        let room = rooms.entry(project_id.to_string()).or_insert_with(Room::new);
+        let room = rooms
+            .entry(project_id.to_string())
+            .or_insert_with(Room::new);
         let _ = room.sender.send(CollabEvent::ThreadResolved {
             thread_id: thread_id.to_string(),
         });
@@ -340,7 +352,11 @@ mod tests {
             .unwrap_err();
         assert!(matches!(
             err,
-            CollaborationError::StaleEdit { expected: 0, current: 1, .. }
+            CollaborationError::StaleEdit {
+                expected: 0,
+                current: 1,
+                ..
+            }
         ));
 
         // Rebasing on the current revision succeeds.
@@ -374,13 +390,7 @@ mod tests {
         .await
         .unwrap();
         let revision = hub
-            .publish_element_change(
-                "proj-1",
-                "user-2",
-                "el-1",
-                None,
-                ElementOp::Deleted,
-            )
+            .publish_element_change("proj-1", "user-2", "el-1", None, ElementOp::Deleted)
             .await
             .unwrap();
         assert_eq!(revision, 2);
@@ -393,9 +403,15 @@ mod tests {
         let _ = rx.recv().await.unwrap();
 
         hub.publish_comment("proj-1", "thrd-1", "cmt-1").await;
-        assert!(matches!(rx.recv().await.unwrap(), CollabEvent::CommentPosted { .. }));
+        assert!(matches!(
+            rx.recv().await.unwrap(),
+            CollabEvent::CommentPosted { .. }
+        ));
 
         hub.resolve_thread("proj-1", "thrd-1").await;
-        assert!(matches!(rx.recv().await.unwrap(), CollabEvent::ThreadResolved { .. }));
+        assert!(matches!(
+            rx.recv().await.unwrap(),
+            CollabEvent::ThreadResolved { .. }
+        ));
     }
 }

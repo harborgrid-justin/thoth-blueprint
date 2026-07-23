@@ -33,7 +33,9 @@ pub enum AuthError {
 
     /// The caller's role in the organization doesn't permit the attempted
     /// action.
-    #[error("user {user_id} is not authorized to perform {action:?} in organization {organization_id}")]
+    #[error(
+        "user {user_id} is not authorized to perform {action:?} in organization {organization_id}"
+    )]
     Unauthorized {
         user_id: String,
         organization_id: String,

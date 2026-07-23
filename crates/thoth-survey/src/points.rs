@@ -10,8 +10,6 @@
 //! shape — the one below — since that is the one every test and caller
 //! actually uses.
 
-use std::collections::BTreeMap;
-
 use serde::{Deserialize, Serialize};
 
 /// A single COGO point: a numbered survey point with northing/easting,
@@ -118,7 +116,7 @@ pub struct AdvancedPointImportOptions {
 pub struct ImportPreviewResult {
     pub format: PointFileFormat,
     pub delimiter: TextDelimiter,
-    pub headers: Vec<&'static str>,
+    pub headers: Vec<String>,
     pub sample_rows: Vec<Vec<String>>,
     pub total_parsed: usize,
 }
@@ -264,8 +262,8 @@ pub fn parse_ascii_point_file(
             }
         };
 
-        let mut northing = 0.0;
-        let mut easting = 0.0;
+        let mut northing;
+        let mut easting;
         let mut elevation = 0.0;
         let mut raw_desc = String::new();
         let mut rgb_color = None;
@@ -293,7 +291,10 @@ pub fn parse_ascii_point_file(
                 elevation = tokens.get(3).and_then(|t| js_parse_float(t)).unwrap_or(0.0);
             }
             PointFileFormat::XyzRgb => {
-                easting = tokens.first().and_then(|t| js_parse_float(t)).unwrap_or(0.0);
+                easting = tokens
+                    .first()
+                    .and_then(|t| js_parse_float(t))
+                    .unwrap_or(0.0);
                 northing = tokens.get(1).and_then(|t| js_parse_float(t)).unwrap_or(0.0);
                 elevation = tokens.get(2).and_then(|t| js_parse_float(t)).unwrap_or(0.0);
                 let r = tokens.get(3).and_then(|t| js_parse_int(t)).unwrap_or(255) as i32;
@@ -367,10 +368,16 @@ pub fn generate_import_preview(
     let sample_rows: Vec<Vec<String>> = lines
         .iter()
         .take(10)
-        .map(|line| delimiter.split(line).into_iter().map(str::to_string).collect())
+        .map(|line| {
+            delimiter
+                .split(line)
+                .into_iter()
+                .map(str::to_string)
+                .collect()
+        })
         .collect();
 
-    let headers: Vec<&'static str> = match format {
+    let headers: Vec<String> = match format {
         PointFileFormat::Pnezd => vec![
             "Point Number",
             "Northing",
@@ -395,7 +402,10 @@ pub fn generate_import_preview(
             "Green",
             "Blue",
         ],
-    };
+    }
+    .into_iter()
+    .map(str::to_string)
+    .collect();
 
     ImportPreviewResult {
         format,
@@ -578,12 +588,11 @@ impl PointGroupManager {
     ) -> (String, String) {
         for grp in self.groups() {
             if self.is_point_in_group(point, &grp) {
-                return if grp.override_description_keys || description_key_default_styles.is_none()
-                {
-                    (grp.point_style, grp.label_style)
-                } else {
-                    let (p, l) = description_key_default_styles.unwrap();
-                    (p.to_string(), l.to_string())
+                return match description_key_default_styles {
+                    Some((p, l)) if !grp.override_description_keys => {
+                        (p.to_string(), l.to_string())
+                    }
+                    _ => (grp.point_style, grp.label_style),
                 };
             }
         }
@@ -672,7 +681,12 @@ mod tests {
     }
 
     #[test]
-    fn xyz_rgb_assigns_sequential_numbers_and_parses_color() {
+    fn xyz_rgb_parses_color_and_uses_the_leading_column_as_easting() {
+        // XYZ_RGB's first column doubles as the point-number probe *and*
+        // (moments later, unconditionally) the easting value — an ordinary
+        // numeric-looking token like "100.0" parses fine as a leading
+        // integer (`100`), so it becomes the point number too. This is the
+        // TS original's actual (slightly odd) behavior, not a bug.
         let pts = parse_ascii_point_file(
             "100.0,200.0,10.0,255,0,0\n110.0,210.0,11.0,0,255,0",
             PointFileFormat::XyzRgb,
@@ -681,9 +695,27 @@ mod tests {
             None,
         );
         assert_eq!(pts.len(), 2);
-        assert_eq!(pts[0].point_number, 1);
-        assert_eq!(pts[1].point_number, 2);
+        assert_eq!(pts[0].point_number, 100);
+        assert_eq!(pts[0].easting, 100.0);
+        assert_eq!(pts[1].point_number, 110);
         assert_eq!(pts[0].rgb_color, Some(RgbColor { r: 255, g: 0, b: 0 }));
+    }
+
+    #[test]
+    fn xyz_rgb_falls_back_to_sequential_numbering_for_a_non_numeric_leading_column() {
+        // Only when the leading column can't be parsed as an integer at all
+        // (a genuinely malformed/non-numeric X value) does the sequential
+        // `p_count` fallback kick in.
+        let pts = parse_ascii_point_file(
+            "abc,200.0,10.0,255,0,0",
+            PointFileFormat::XyzRgb,
+            TextDelimiter::Comma,
+            None,
+            None,
+        );
+        assert_eq!(pts.len(), 1);
+        assert_eq!(pts[0].point_number, 1);
+        assert_eq!(pts[0].easting, 0.0); // "abc" also fails parseFloat, defaults to 0.
     }
 
     #[test]

@@ -79,7 +79,10 @@ impl StorageAdapter for MemoryStorageAdapter {
         let json = serde_json::to_value(&value)?;
         let id = value.id().to_string();
         let mut state = self.state.lock().await;
-        state.entry(collection.to_string()).or_default().insert(id, json);
+        state
+            .entry(collection.to_string())
+            .or_default()
+            .insert(id, json);
         Ok(value)
     }
 

@@ -46,14 +46,27 @@ pub struct LaneSlopes {
 /// Calculates transition stations for a curve along an alignment per AASHTO
 /// standards: Normal Crown (NC) → Level Crown (LC) → Reverse Crown (RC) →
 /// Full Superelevation (FS), mirrored on the far side of the curve.
-pub fn calculate_superelevation_runoff(alignment: &HorizontalAlignment, design_speed: f64, e_max: f64, normal_crown: f64, speed_multiplier: f64) -> SuperelevationCurve {
+pub fn calculate_superelevation_runoff(
+    alignment: &HorizontalAlignment,
+    design_speed: f64,
+    e_max: f64,
+    normal_crown: f64,
+    speed_multiplier: f64,
+) -> SuperelevationCurve {
     let transition_length = design_speed * speed_multiplier;
     let tangent_runout = (normal_crown.abs() / e_max) * transition_length;
 
     let resolved = resolve_alignment(alignment).ok();
-    let curves = resolved.as_ref().map(|r| r.curves.clone()).unwrap_or_default();
+    let curves = resolved
+        .as_ref()
+        .map(|r| r.curves.clone())
+        .unwrap_or_default();
     let total_length = resolved.as_ref().map_or(1000.0, |r| r.length);
-    let mid_station = if !curves.is_empty() { (curves[0].pc_station + curves[0].pt_station) / 2.0 } else { total_length / 2.0 };
+    let mid_station = if !curves.is_empty() {
+        (curves[0].pc_station + curves[0].pt_station) / 2.0
+    } else {
+        total_length / 2.0
+    };
     let start_fs = mid_station - transition_length / 2.0;
     let end_fs = mid_station + transition_length / 2.0;
 
@@ -66,19 +79,69 @@ pub fn calculate_superelevation_runoff(alignment: &HorizontalAlignment, design_s
     let right_nc = right_lc + tangent_runout / 2.0;
 
     let mut raw_stations = vec![
-        SuperelevationStation { station: left_nc, left_outer_slope: normal_crown, right_outer_slope: normal_crown, description: "Normal Crown (NC)" },
-        SuperelevationStation { station: left_lc, left_outer_slope: 0.0, right_outer_slope: normal_crown, description: "Level Crown (LC)" },
-        SuperelevationStation { station: left_in, left_outer_slope: -normal_crown, right_outer_slope: normal_crown, description: "Reverse Crown (RC)" },
-        SuperelevationStation { station: start_fs, left_outer_slope: e_max, right_outer_slope: -e_max, description: "Full Superelevation Start (FS)" },
-        SuperelevationStation { station: end_fs, left_outer_slope: e_max, right_outer_slope: -e_max, description: "Full Superelevation End (FS)" },
-        SuperelevationStation { station: right_out, left_outer_slope: -normal_crown, right_outer_slope: normal_crown, description: "Reverse Crown (RC)" },
-        SuperelevationStation { station: right_lc, left_outer_slope: 0.0, right_outer_slope: normal_crown, description: "Level Crown (LC)" },
-        SuperelevationStation { station: right_nc, left_outer_slope: normal_crown, right_outer_slope: normal_crown, description: "Normal Crown (NC)" },
+        SuperelevationStation {
+            station: left_nc,
+            left_outer_slope: normal_crown,
+            right_outer_slope: normal_crown,
+            description: "Normal Crown (NC)",
+        },
+        SuperelevationStation {
+            station: left_lc,
+            left_outer_slope: 0.0,
+            right_outer_slope: normal_crown,
+            description: "Level Crown (LC)",
+        },
+        SuperelevationStation {
+            station: left_in,
+            left_outer_slope: -normal_crown,
+            right_outer_slope: normal_crown,
+            description: "Reverse Crown (RC)",
+        },
+        SuperelevationStation {
+            station: start_fs,
+            left_outer_slope: e_max,
+            right_outer_slope: -e_max,
+            description: "Full Superelevation Start (FS)",
+        },
+        SuperelevationStation {
+            station: end_fs,
+            left_outer_slope: e_max,
+            right_outer_slope: -e_max,
+            description: "Full Superelevation End (FS)",
+        },
+        SuperelevationStation {
+            station: right_out,
+            left_outer_slope: -normal_crown,
+            right_outer_slope: normal_crown,
+            description: "Reverse Crown (RC)",
+        },
+        SuperelevationStation {
+            station: right_lc,
+            left_outer_slope: 0.0,
+            right_outer_slope: normal_crown,
+            description: "Level Crown (LC)",
+        },
+        SuperelevationStation {
+            station: right_nc,
+            left_outer_slope: normal_crown,
+            right_outer_slope: normal_crown,
+            description: "Normal Crown (NC)",
+        },
     ];
 
-    raw_stations.sort_by(|a, b| a.station.partial_cmp(&b.station).unwrap_or(std::cmp::Ordering::Equal));
+    raw_stations.sort_by(|a, b| {
+        a.station
+            .partial_cmp(&b.station)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
 
-    SuperelevationCurve { alignment_id: alignment.id.clone(), design_speed, e_max, normal_crown, transition_stations: raw_stations }
+    SuperelevationCurve {
+        alignment_id: alignment.id.clone(),
+        design_speed,
+        e_max,
+        normal_crown,
+        transition_stations: raw_stations,
+    }
 }
 
 /// Interpolates outer lane slopes at a given station, clamping to the first/
@@ -87,15 +150,24 @@ pub fn get_superelevation_slope(curve: &SuperelevationCurve, station: f64) -> La
     let nc = curve.normal_crown;
     let stations = &curve.transition_stations;
     if stations.is_empty() {
-        return LaneSlopes { left_slope: nc, right_slope: nc };
+        return LaneSlopes {
+            left_slope: nc,
+            right_slope: nc,
+        };
     }
 
     if station <= stations[0].station {
-        return LaneSlopes { left_slope: stations[0].left_outer_slope, right_slope: stations[0].right_outer_slope };
+        return LaneSlopes {
+            left_slope: stations[0].left_outer_slope,
+            right_slope: stations[0].right_outer_slope,
+        };
     }
     if station >= stations[stations.len() - 1].station {
         let last = &stations[stations.len() - 1];
-        return LaneSlopes { left_slope: last.left_outer_slope, right_slope: last.right_outer_slope };
+        return LaneSlopes {
+            left_slope: last.left_outer_slope,
+            right_slope: last.right_outer_slope,
+        };
     }
 
     for w in stations.windows(2) {
@@ -104,18 +176,24 @@ pub fn get_superelevation_slope(curve: &SuperelevationCurve, station: f64) -> La
             let t = (station - s0.station) / (s1.station - s0.station);
             return LaneSlopes {
                 left_slope: s0.left_outer_slope + t * (s1.left_outer_slope - s0.left_outer_slope),
-                right_slope: s0.right_outer_slope + t * (s1.right_outer_slope - s0.right_outer_slope),
+                right_slope: s0.right_outer_slope
+                    + t * (s1.right_outer_slope - s0.right_outer_slope),
             };
         }
     }
 
-    LaneSlopes { left_slope: nc, right_slope: nc }
+    LaneSlopes {
+        left_slope: nc,
+        right_slope: nc,
+    }
 }
 
 /// Detects and resolves overlap between transition runoffs of adjacent
 /// curves, pro-rating each curve's boundary transition to meet at the
 /// midpoint of the overlap.
-pub fn detect_and_resolve_superelevation_overlap(curves: &[SuperelevationCurve]) -> (bool, Vec<SuperelevationCurve>) {
+pub fn detect_and_resolve_superelevation_overlap(
+    curves: &[SuperelevationCurve],
+) -> (bool, Vec<SuperelevationCurve>) {
     if curves.len() <= 1 {
         return (false, curves.to_vec());
     }
@@ -129,8 +207,14 @@ pub fn detect_and_resolve_superelevation_overlap(curves: &[SuperelevationCurve])
     });
 
     for i in 0..resolved.len() - 1 {
-        let end1 = resolved[i].transition_stations.last().map_or(0.0, |s| s.station);
-        let start2 = resolved[i + 1].transition_stations.first().map_or(0.0, |s| s.station);
+        let end1 = resolved[i]
+            .transition_stations
+            .last()
+            .map_or(0.0, |s| s.station);
+        let start2 = resolved[i + 1]
+            .transition_stations
+            .first()
+            .map_or(0.0, |s| s.station);
 
         if end1 > start2 {
             has_overlap = true;
@@ -148,7 +232,11 @@ pub fn detect_and_resolve_superelevation_overlap(curves: &[SuperelevationCurve])
 }
 
 /// Validates shoulder rollover limit against lane cross slope.
-pub fn check_shoulder_rollover(lane_slope: f64, shoulder_slope: f64, max_rollover: f64) -> (bool, f64) {
+pub fn check_shoulder_rollover(
+    lane_slope: f64,
+    shoulder_slope: f64,
+    max_rollover: f64,
+) -> (bool, f64) {
     let rollover = (lane_slope - shoulder_slope).abs();
     (rollover > max_rollover, rollover)
 }
@@ -179,17 +267,52 @@ mod tests {
 
     #[test]
     fn generates_correct_aashto_transition_stations() {
-        let align = HorizontalAlignment::new("a1", "Super Road", vec![AlignmentPi::simple(Point::new(0.0, 0.0)), AlignmentPi::simple(Point::new(500.0, 0.0)), AlignmentPi::simple(Point::new(1000.0, 0.0))], 0.0);
-        let curve = calculate_superelevation_runoff(&align, 45.0, DEFAULT_EMAX, DEFAULT_NORMAL_CROWN, DEFAULT_SPEED_MULTIPLIER);
+        let align = HorizontalAlignment::new(
+            "a1",
+            "Super Road",
+            vec![
+                AlignmentPi::simple(Point::new(0.0, 0.0)),
+                AlignmentPi::simple(Point::new(500.0, 0.0)),
+                AlignmentPi::simple(Point::new(1000.0, 0.0)),
+            ],
+            0.0,
+        );
+        let curve = calculate_superelevation_runoff(
+            &align,
+            45.0,
+            DEFAULT_EMAX,
+            DEFAULT_NORMAL_CROWN,
+            DEFAULT_SPEED_MULTIPLIER,
+        );
         assert_eq!(curve.transition_stations.len(), 8);
-        assert_eq!(curve.transition_stations[0].description, "Normal Crown (NC)");
-        assert_eq!(curve.transition_stations[3].description, "Full Superelevation Start (FS)");
+        assert_eq!(
+            curve.transition_stations[0].description,
+            "Normal Crown (NC)"
+        );
+        assert_eq!(
+            curve.transition_stations[3].description,
+            "Full Superelevation Start (FS)"
+        );
     }
 
     #[test]
     fn interpolates_lane_slope_within_transition_ranges() {
-        let align = HorizontalAlignment::new("a1", "Super Road", vec![AlignmentPi::simple(Point::new(0.0, 0.0)), AlignmentPi::simple(Point::new(1000.0, 0.0))], 0.0);
-        let curve = calculate_superelevation_runoff(&align, 45.0, DEFAULT_EMAX, DEFAULT_NORMAL_CROWN, DEFAULT_SPEED_MULTIPLIER);
+        let align = HorizontalAlignment::new(
+            "a1",
+            "Super Road",
+            vec![
+                AlignmentPi::simple(Point::new(0.0, 0.0)),
+                AlignmentPi::simple(Point::new(1000.0, 0.0)),
+            ],
+            0.0,
+        );
+        let curve = calculate_superelevation_runoff(
+            &align,
+            45.0,
+            DEFAULT_EMAX,
+            DEFAULT_NORMAL_CROWN,
+            DEFAULT_SPEED_MULTIPLIER,
+        );
         let rc_station = curve.transition_stations[2].station;
         let fs_station = curve.transition_stations[3].station;
         let mid_station = (rc_station + fs_station) / 2.0;
@@ -214,18 +337,52 @@ mod tests {
             design_speed: 45.0,
             e_max: 0.06,
             normal_crown: -0.02,
-            transition_stations: vec![SuperelevationStation { station: 0.0, left_outer_slope: 0.0, right_outer_slope: 0.0, description: "NC" }, SuperelevationStation { station: 200.0, left_outer_slope: 0.0, right_outer_slope: 0.0, description: "FS" }],
+            transition_stations: vec![
+                SuperelevationStation {
+                    station: 0.0,
+                    left_outer_slope: 0.0,
+                    right_outer_slope: 0.0,
+                    description: "NC",
+                },
+                SuperelevationStation {
+                    station: 200.0,
+                    left_outer_slope: 0.0,
+                    right_outer_slope: 0.0,
+                    description: "FS",
+                },
+            ],
         };
         let b = SuperelevationCurve {
             alignment_id: "a".into(),
             design_speed: 45.0,
             e_max: 0.06,
             normal_crown: -0.02,
-            transition_stations: vec![SuperelevationStation { station: 100.0, left_outer_slope: 0.0, right_outer_slope: 0.0, description: "NC" }, SuperelevationStation { station: 300.0, left_outer_slope: 0.0, right_outer_slope: 0.0, description: "FS" }],
+            transition_stations: vec![
+                SuperelevationStation {
+                    station: 100.0,
+                    left_outer_slope: 0.0,
+                    right_outer_slope: 0.0,
+                    description: "NC",
+                },
+                SuperelevationStation {
+                    station: 300.0,
+                    left_outer_slope: 0.0,
+                    right_outer_slope: 0.0,
+                    description: "FS",
+                },
+            ],
         };
         let (has_overlap, resolved) = detect_and_resolve_superelevation_overlap(&[a, b]);
         assert!(has_overlap);
-        assert_relative_eq!(resolved[0].transition_stations.last().unwrap().station, 150.0, epsilon = 1e-9);
-        assert_relative_eq!(resolved[1].transition_stations.first().unwrap().station, 150.0, epsilon = 1e-9);
+        assert_relative_eq!(
+            resolved[0].transition_stations.last().unwrap().station,
+            150.0,
+            epsilon = 1e-9
+        );
+        assert_relative_eq!(
+            resolved[1].transition_stations.first().unwrap().station,
+            150.0,
+            epsilon = 1e-9
+        );
     }
 }

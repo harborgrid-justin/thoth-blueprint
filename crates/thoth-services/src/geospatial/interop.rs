@@ -27,9 +27,10 @@ use super::GeospatialError;
 /// `packages/domain/src/planning/types/landuse.ts`'s `LandUseCategory`
 /// union — see that module's docs for why this crate doesn't yet depend on
 /// `thoth-planning` directly.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum LandUseCategory {
+    #[default]
     Residential,
     Commercial,
     MixedUse,
@@ -40,12 +41,6 @@ pub enum LandUseCategory {
     Agricultural,
     Infrastructure,
     Unassigned,
-}
-
-impl Default for LandUseCategory {
-    fn default() -> Self {
-        Self::Residential
-    }
 }
 
 /// A legally/conceptually distinct piece of land.
@@ -244,11 +239,17 @@ pub struct GeoJsonFeatureCollection {
 }
 
 fn prop_str(properties: &serde_json::Map<String, Value>, key: &str) -> Option<String> {
-    properties.get(key).and_then(Value::as_str).map(str::to_string)
+    properties
+        .get(key)
+        .and_then(Value::as_str)
+        .map(str::to_string)
 }
 
 fn prop_f64(properties: &serde_json::Map<String, Value>, key: &str, default: f64) -> f64 {
-    properties.get(key).and_then(Value::as_f64).unwrap_or(default)
+    properties
+        .get(key)
+        .and_then(Value::as_f64)
+        .unwrap_or(default)
 }
 
 fn kind_from_geometry(geometry: &GeoJsonGeometry) -> &'static str {
@@ -290,7 +291,10 @@ fn parse_polygon_ring(coords: &[Vec<[f64; 2]>]) -> Vec<Point> {
     } else {
         ring.len()
     };
-    ring[..limit].iter().map(|&[x, y]| Point::new(x, y)).collect()
+    ring[..limit]
+        .iter()
+        .map(|&[x, y]| Point::new(x, y))
+        .collect()
 }
 
 fn parse_line_string(coords: &[[f64; 2]]) -> Vec<Point> {
@@ -445,7 +449,12 @@ pub fn geojson_to_elements(
                 if path.len() < 2 {
                     continue;
                 }
-                elements.push(build_line_element(&kind, layer_id, path, &feature.properties));
+                elements.push(build_line_element(
+                    &kind,
+                    layer_id,
+                    path,
+                    &feature.properties,
+                ));
             }
             GeoJsonGeometry::Point { coordinates } => {
                 let position = match reproject_point(
@@ -456,7 +465,12 @@ pub fn geojson_to_elements(
                     Ok(p) => p,
                     Err(_) => continue,
                 };
-                elements.push(build_point_element(&kind, layer_id, position, &feature.properties));
+                elements.push(build_point_element(
+                    &kind,
+                    layer_id,
+                    position,
+                    &feature.properties,
+                ));
             }
         }
     }
@@ -506,7 +520,10 @@ pub fn elements_to_geojson(
             "kind".to_string(),
             Value::String(element_kind_str(element.kind()).to_string()),
         );
-        properties.insert("layerId".to_string(), Value::String(element.layer_id().to_string()));
+        properties.insert(
+            "layerId".to_string(),
+            Value::String(element.layer_id().to_string()),
+        );
 
         let geometry = match element {
             PlanElement::Parcel(e) => {
@@ -518,11 +535,11 @@ pub fn elements_to_geojson(
             }
             PlanElement::Zone(e) => {
                 properties.insert("name".to_string(), Value::String(e.name.clone()));
-                properties.insert("designation".to_string(), Value::String(e.designation.clone()));
                 properties.insert(
-                    "maxCoverage".to_string(),
-                    serde_json::json!(e.max_coverage),
+                    "designation".to_string(),
+                    Value::String(e.designation.clone()),
                 );
+                properties.insert("maxCoverage".to_string(), serde_json::json!(e.max_coverage));
                 properties.insert("maxFar".to_string(), serde_json::json!(e.max_far));
                 Some(polygon_geometry(&e.boundary, project_crs, target_crs)?)
             }
@@ -589,7 +606,9 @@ fn polygon_geometry(
     if let Some(&first) = ring.first() {
         ring.push(first);
     }
-    Ok(GeoJsonGeometry::Polygon { coordinates: vec![ring] })
+    Ok(GeoJsonGeometry::Polygon {
+        coordinates: vec![ring],
+    })
 }
 
 #[cfg(test)]

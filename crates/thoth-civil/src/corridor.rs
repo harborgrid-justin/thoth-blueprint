@@ -116,13 +116,24 @@ pub struct MeshTriangle {
 /// terrain surface (a simplified daylight intersection, matching the TS
 /// source's own documented simplification — a full triangle-mesh ray
 /// intersection is out of scope for both).
-pub fn build_corridor_sections(corridor: &Corridor, alignment: &HorizontalAlignment, profile: &VerticalProfile, assembly: &Assembly, superelevation: Option<&SuperelevationCurve>, target_terrain: Option<&ElevationGrid>) -> Vec<CorridorSection> {
+pub fn build_corridor_sections(
+    corridor: &Corridor,
+    alignment: &HorizontalAlignment,
+    profile: &VerticalProfile,
+    assembly: &Assembly,
+    superelevation: Option<&SuperelevationCurve>,
+    target_terrain: Option<&ElevationGrid>,
+) -> Vec<CorridorSection> {
     let Ok(resolved) = resolve_alignment(alignment) else {
         return Vec::new();
     };
 
     let mut sections = Vec::new();
-    let freq = if corridor.frequency > 0.0 { corridor.frequency } else { DEFAULT_SAMPLING_FREQUENCY };
+    let freq = if corridor.frequency > 0.0 {
+        corridor.frequency
+    } else {
+        DEFAULT_SAMPLING_FREQUENCY
+    };
     let stations_count = (resolved.length / freq).floor() as i64;
 
     for i in 0..=stations_count {
@@ -162,7 +173,15 @@ pub fn build_corridor_sections(corridor: &Corridor, alignment: &HorizontalAlignm
                 }
             }
 
-            sections.push(CorridorSection { code, point: CorridorSectionPoint { station, x: pos.x, y: pos.y, z } });
+            sections.push(CorridorSection {
+                code,
+                point: CorridorSectionPoint {
+                    station,
+                    x: pos.x,
+                    y: pos.y,
+                    z,
+                },
+            });
         }
     }
 
@@ -174,17 +193,27 @@ pub fn build_corridor_sections(corridor: &Corridor, alignment: &HorizontalAlignm
 /// one polyline in station order.
 pub fn extract_corridor_feature_lines(sections: &[CorridorSection]) -> Vec<CorridorFeatureLine> {
     let mut order: Vec<&str> = Vec::new();
-    let mut groups: std::collections::HashMap<&str, Vec<Point3D>> = std::collections::HashMap::new();
+    let mut groups: std::collections::HashMap<&str, Vec<Point3D>> =
+        std::collections::HashMap::new();
 
     for s in sections {
         groups.entry(s.code.as_str()).or_insert_with(|| {
             order.push(s.code.as_str());
             Vec::new()
         });
-        groups.get_mut(s.code.as_str()).unwrap().push(Point3D::new(s.point.x, s.point.y, s.point.z));
+        groups
+            .get_mut(s.code.as_str())
+            .unwrap()
+            .push(Point3D::new(s.point.x, s.point.y, s.point.z));
     }
 
-    order.into_iter().map(|code| CorridorFeatureLine { code: code.to_string(), points: groups.remove(code).unwrap_or_default() }).collect()
+    order
+        .into_iter()
+        .map(|code| CorridorFeatureLine {
+            code: code.to_string(),
+            points: groups.remove(code).unwrap_or_default(),
+        })
+        .collect()
 }
 
 /// Builds 3D Top TIN surface mesh triangles from corridor section point
@@ -192,7 +221,8 @@ pub fn extract_corridor_feature_lines(sections: &[CorridorSection]) -> Vec<Corri
 /// strip.
 pub fn build_corridor_surfaces(sections: &[CorridorSection]) -> Vec<MeshTriangle> {
     let mut station_order: Vec<i64> = Vec::new();
-    let mut station_groups: std::collections::HashMap<i64, Vec<&CorridorSection>> = std::collections::HashMap::new();
+    let mut station_groups: std::collections::HashMap<i64, Vec<&CorridorSection>> =
+        std::collections::HashMap::new();
 
     // Station keys as integer-scaled to give stable HashMap keys for f64 stations.
     let key = |s: f64| -> i64 { (s * 1e6).round() as i64 };
@@ -215,12 +245,28 @@ pub fn build_corridor_surfaces(sections: &[CorridorSection]) -> Vec<MeshTriangle
 
         for j in 0..min_len.saturating_sub(1) {
             let a = Point3D::new(pts1[j].point.x, pts1[j].point.y, pts1[j].point.z);
-            let b = Point3D::new(pts1[j + 1].point.x, pts1[j + 1].point.y, pts1[j + 1].point.z);
+            let b = Point3D::new(
+                pts1[j + 1].point.x,
+                pts1[j + 1].point.y,
+                pts1[j + 1].point.z,
+            );
             let c = Point3D::new(pts2[j].point.x, pts2[j].point.y, pts2[j].point.z);
-            let d = Point3D::new(pts2[j + 1].point.x, pts2[j + 1].point.y, pts2[j + 1].point.z);
+            let d = Point3D::new(
+                pts2[j + 1].point.x,
+                pts2[j + 1].point.y,
+                pts2[j + 1].point.z,
+            );
 
-            triangles.push(MeshTriangle { p1: a, p2: b, p3: c });
-            triangles.push(MeshTriangle { p1: b, p2: d, p3: c });
+            triangles.push(MeshTriangle {
+                p1: a,
+                p2: b,
+                p3: c,
+            });
+            triangles.push(MeshTriangle {
+                p1: b,
+                p2: d,
+                p3: c,
+            });
         }
     }
 
@@ -230,13 +276,35 @@ pub fn build_corridor_surfaces(sections: &[CorridorSection]) -> Vec<MeshTriangle
 /// Automatically builds median/splitter island bottom-of-curb and
 /// top-of-curb feature lines at a constant elevation near the surrounding
 /// corridor's average.
-pub fn build_intersection_islands(island_outline: &[Point], corridor_sections: &[CorridorSection]) -> Vec<CorridorFeatureLine> {
-    let avg_z = if corridor_sections.is_empty() { 0.0 } else { corridor_sections.iter().map(|s| s.point.z).sum::<f64>() / corridor_sections.len() as f64 };
+pub fn build_intersection_islands(
+    island_outline: &[Point],
+    corridor_sections: &[CorridorSection],
+) -> Vec<CorridorFeatureLine> {
+    let avg_z = if corridor_sections.is_empty() {
+        0.0
+    } else {
+        corridor_sections.iter().map(|s| s.point.z).sum::<f64>() / corridor_sections.len() as f64
+    };
 
-    let bottom_of_curb: Vec<Point3D> = island_outline.iter().map(|p| Point3D::new(p.x, p.y, avg_z)).collect();
-    let top_of_curb: Vec<Point3D> = island_outline.iter().map(|p| Point3D::new(p.x, p.y, avg_z + 0.5)).collect();
+    let bottom_of_curb: Vec<Point3D> = island_outline
+        .iter()
+        .map(|p| Point3D::new(p.x, p.y, avg_z))
+        .collect();
+    let top_of_curb: Vec<Point3D> = island_outline
+        .iter()
+        .map(|p| Point3D::new(p.x, p.y, avg_z + 0.5))
+        .collect();
 
-    vec![CorridorFeatureLine { code: "Island_BOC".to_string(), points: bottom_of_curb }, CorridorFeatureLine { code: "Island_TOC".to_string(), points: top_of_curb }]
+    vec![
+        CorridorFeatureLine {
+            code: "Island_BOC".to_string(),
+            points: bottom_of_curb,
+        },
+        CorridorFeatureLine {
+            code: "Island_TOC".to_string(),
+            points: top_of_curb,
+        },
+    ]
 }
 
 #[cfg(test)]
@@ -249,29 +317,115 @@ mod tests {
 
     #[test]
     fn builds_3d_coordinate_points_along_baseline_stations() {
-        let align = HorizontalAlignment::new("a1", "Road Corridor", vec![AlignmentPi::simple(Point::new(0.0, 0.0)), AlignmentPi::simple(Point::new(500.0, 0.0))], 0.0);
-        let profile = VerticalProfile { id: "p1".into(), name: "Profile".into(), alignment_id: "a1".into(), pvis: vec![VerticalPvi { station: 0.0, elevation: 100.0, curve_length: None }, VerticalPvi { station: 500.0, elevation: 110.0, curve_length: None }] };
+        let align = HorizontalAlignment::new(
+            "a1",
+            "Road Corridor",
+            vec![
+                AlignmentPi::simple(Point::new(0.0, 0.0)),
+                AlignmentPi::simple(Point::new(500.0, 0.0)),
+            ],
+            0.0,
+        );
+        let profile = VerticalProfile {
+            id: "p1".into(),
+            name: "Profile".into(),
+            alignment_id: "a1".into(),
+            pvis: vec![
+                VerticalPvi {
+                    station: 0.0,
+                    elevation: 100.0,
+                    curve_length: None,
+                },
+                VerticalPvi {
+                    station: 500.0,
+                    elevation: 110.0,
+                    curve_length: None,
+                },
+            ],
+        };
         let assembly = Assembly {
             id: "as-1".into(),
             name: "Assembly A".into(),
-            left_subassemblies: vec![Subassembly { id: "l1".into(), name: "Left Lane".into(), side: Side::Left, subassembly_type: SubassemblyType::Lane, parameters: vec![SubassemblyParam { name: "Width", value: 10.0 }] }],
-            right_subassemblies: vec![Subassembly { id: "r1".into(), name: "Right Lane".into(), side: Side::Right, subassembly_type: SubassemblyType::Lane, parameters: vec![SubassemblyParam { name: "Width", value: 10.0 }] }],
+            left_subassemblies: vec![Subassembly {
+                id: "l1".into(),
+                name: "Left Lane".into(),
+                side: Side::Left,
+                subassembly_type: SubassemblyType::Lane,
+                parameters: vec![SubassemblyParam {
+                    name: "Width",
+                    value: 10.0,
+                }],
+            }],
+            right_subassemblies: vec![Subassembly {
+                id: "r1".into(),
+                name: "Right Lane".into(),
+                side: Side::Right,
+                subassembly_type: SubassemblyType::Lane,
+                parameters: vec![SubassemblyParam {
+                    name: "Width",
+                    value: 10.0,
+                }],
+            }],
         };
-        let corridor = Corridor { id: "c1".into(), name: "Corridor".into(), alignment_id: "a1".into(), profile_id: "p1".into(), assembly_id: "as-1".into(), frequency: 100.0, regions: vec![], overrides: vec![] };
+        let corridor = Corridor {
+            id: "c1".into(),
+            name: "Corridor".into(),
+            alignment_id: "a1".into(),
+            profile_id: "p1".into(),
+            assembly_id: "as-1".into(),
+            frequency: 100.0,
+            regions: vec![],
+            overrides: vec![],
+        };
 
         let sections = build_corridor_sections(&corridor, &align, &profile, &assembly, None, None);
         assert!(!sections.is_empty());
-        let cl = sections.iter().find(|s| s.point.station == 100.0 && s.code == "Centerline").unwrap();
+        let cl = sections
+            .iter()
+            .find(|s| s.point.station == 100.0 && s.code == "Centerline")
+            .unwrap();
         assert_relative_eq!(cl.point.z, 102.0, epsilon = 0.1);
     }
 
     #[test]
     fn extract_and_build_surfaces_from_sections() {
         let sections = vec![
-            CorridorSection { code: "Centerline".into(), point: CorridorSectionPoint { station: 0.0, x: 0.0, y: 0.0, z: 100.0 } },
-            CorridorSection { code: "Centerline".into(), point: CorridorSectionPoint { station: 100.0, x: 100.0, y: 0.0, z: 101.0 } },
-            CorridorSection { code: "EdgeOfPavement_left".into(), point: CorridorSectionPoint { station: 0.0, x: -10.0, y: 0.0, z: 100.2 } },
-            CorridorSection { code: "EdgeOfPavement_left".into(), point: CorridorSectionPoint { station: 100.0, x: 90.0, y: 0.0, z: 101.2 } },
+            CorridorSection {
+                code: "Centerline".into(),
+                point: CorridorSectionPoint {
+                    station: 0.0,
+                    x: 0.0,
+                    y: 0.0,
+                    z: 100.0,
+                },
+            },
+            CorridorSection {
+                code: "Centerline".into(),
+                point: CorridorSectionPoint {
+                    station: 100.0,
+                    x: 100.0,
+                    y: 0.0,
+                    z: 101.0,
+                },
+            },
+            CorridorSection {
+                code: "EdgeOfPavement_left".into(),
+                point: CorridorSectionPoint {
+                    station: 0.0,
+                    x: -10.0,
+                    y: 0.0,
+                    z: 100.2,
+                },
+            },
+            CorridorSection {
+                code: "EdgeOfPavement_left".into(),
+                point: CorridorSectionPoint {
+                    station: 100.0,
+                    x: 90.0,
+                    y: 0.0,
+                    z: 101.2,
+                },
+            },
         ];
         let lines = extract_corridor_feature_lines(&sections);
         assert_eq!(lines.len(), 2);
@@ -283,10 +437,36 @@ mod tests {
 
     #[test]
     fn build_corridor_sections_returns_empty_for_degenerate_alignment() {
-        let align = HorizontalAlignment::new("a1", "Degenerate", vec![AlignmentPi::simple(Point::ZERO)], 0.0);
-        let profile = VerticalProfile { id: "p1".into(), name: "P".into(), alignment_id: "a1".into(), pvis: vec![] };
-        let assembly = Assembly { id: "as-1".into(), name: "A".into(), left_subassemblies: vec![], right_subassemblies: vec![] };
-        let corridor = Corridor { id: "c1".into(), name: "C".into(), alignment_id: "a1".into(), profile_id: "p1".into(), assembly_id: "as-1".into(), frequency: 100.0, regions: vec![], overrides: vec![] };
-        assert!(build_corridor_sections(&corridor, &align, &profile, &assembly, None, None).is_empty());
+        let align = HorizontalAlignment::new(
+            "a1",
+            "Degenerate",
+            vec![AlignmentPi::simple(Point::ZERO)],
+            0.0,
+        );
+        let profile = VerticalProfile {
+            id: "p1".into(),
+            name: "P".into(),
+            alignment_id: "a1".into(),
+            pvis: vec![],
+        };
+        let assembly = Assembly {
+            id: "as-1".into(),
+            name: "A".into(),
+            left_subassemblies: vec![],
+            right_subassemblies: vec![],
+        };
+        let corridor = Corridor {
+            id: "c1".into(),
+            name: "C".into(),
+            alignment_id: "a1".into(),
+            profile_id: "p1".into(),
+            assembly_id: "as-1".into(),
+            frequency: 100.0,
+            regions: vec![],
+            overrides: vec![],
+        };
+        assert!(
+            build_corridor_sections(&corridor, &align, &profile, &assembly, None, None).is_empty()
+        );
     }
 }

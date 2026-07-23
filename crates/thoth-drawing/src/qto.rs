@@ -226,7 +226,7 @@ pub fn evaluate_pay_item_cost(item: &PayItem, variables: PayItemVariables, formu
 /// TS `safeEvalMath`'s strict token-reconstruction check, which rejects any
 /// input that doesn't tokenize back to exactly the (whitespace-stripped)
 /// original string.
-fn evaluate_arithmetic(expr: &str) -> Option<f64> {
+pub(crate) fn evaluate_arithmetic(expr: &str) -> Option<f64> {
     let stripped: String = expr.chars().filter(|c| !c.is_whitespace()).collect();
     // `tokenize_arithmetic` returns `None` the instant it meets a character
     // that isn't a digit/`.`/operator, so a `Some` result always reconstructs

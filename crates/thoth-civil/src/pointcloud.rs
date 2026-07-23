@@ -32,7 +32,15 @@ pub struct CloudPoint {
 
 impl CloudPoint {
     pub const fn bare(x: f64, y: f64, z: f64) -> Self {
-        CloudPoint { x, y, z, r: None, g: None, b: None, intensity: None }
+        CloudPoint {
+            x,
+            y,
+            z,
+            r: None,
+            g: None,
+            b: None,
+            intensity: None,
+        }
     }
 
     fn has_color(&self) -> bool {
@@ -103,7 +111,10 @@ pub fn is_binary_point_cloud_format(format: PointCloudFormat) -> bool {
 /// # Errors
 /// [`CivilError::MalformedData`] if the PLY header or LAS signature is
 /// invalid; the other formats are lenient and simply skip unparsable lines.
-pub fn parse_point_cloud(data: &PointCloudData, format: PointCloudFormat) -> CivilResult<PointCloud> {
+pub fn parse_point_cloud(
+    data: &PointCloudData,
+    format: PointCloudFormat,
+) -> CivilResult<PointCloud> {
     match format {
         PointCloudFormat::Xyz => Ok(parse_xyz(&data.as_text())),
         PointCloudFormat::Pts => Ok(parse_pts(&data.as_text())),
@@ -157,7 +168,11 @@ pub fn parse_xyz(text: &str) -> PointCloud {
         if line.is_empty() || line.starts_with('#') || line.starts_with("//") {
             continue;
         }
-        let t: Vec<Option<f64>> = line.split([' ', '\t', ',']).filter(|s| !s.is_empty()).map(|s| s.parse::<f64>().ok()).collect();
+        let t: Vec<Option<f64>> = line
+            .split([' ', '\t', ','])
+            .filter(|s| !s.is_empty())
+            .map(|s| s.parse::<f64>().ok())
+            .collect();
         if t.len() < 3 || t[..3].iter().any(|v| v.is_none()) {
             continue;
         }
@@ -183,7 +198,15 @@ pub fn write_xyz(cloud: &PointCloud) -> String {
         .iter()
         .map(|p| {
             if p.has_color() {
-                format!("{} {} {} {} {} {}", num(p.x), num(p.y), num(p.z), p.r.unwrap(), p.g.unwrap(), p.b.unwrap())
+                format!(
+                    "{} {} {} {} {} {}",
+                    num(p.x),
+                    num(p.y),
+                    num(p.z),
+                    p.r.unwrap(),
+                    p.g.unwrap(),
+                    p.b.unwrap()
+                )
             } else {
                 format!("{} {} {}", num(p.x), num(p.y), num(p.z))
             }
@@ -217,7 +240,11 @@ pub fn parse_pts(text: &str) -> PointCloud {
         if l.is_empty() {
             continue;
         }
-        let t: Vec<Option<f64>> = l.split([' ', '\t', ',']).filter(|s| !s.is_empty()).map(|s| s.parse::<f64>().ok()).collect();
+        let t: Vec<Option<f64>> = l
+            .split([' ', '\t', ','])
+            .filter(|s| !s.is_empty())
+            .map(|s| s.parse::<f64>().ok())
+            .collect();
         if t.len() < 3 || t[..3].iter().any(|v| v.is_none()) {
             continue;
         }
@@ -249,10 +276,22 @@ pub fn write_pts(cloud: &PointCloud) -> String {
             let r = p.r.unwrap_or(255);
             let g = p.g.unwrap_or(255);
             let b = p.b.unwrap_or(255);
-            format!("{} {} {} {} {} {} {}", num(p.x), num(p.y), num(p.z), num(intensity), r, g, b)
+            format!(
+                "{} {} {} {} {} {} {}",
+                num(p.x),
+                num(p.y),
+                num(p.z),
+                num(intensity),
+                r,
+                g,
+                b
+            )
         })
         .collect();
-    std::iter::once(header).chain(body).collect::<Vec<_>>().join("\n")
+    std::iter::once(header)
+        .chain(body)
+        .collect::<Vec<_>>()
+        .join("\n")
 }
 
 // ---------------------------------------------------------------------------
@@ -266,37 +305,89 @@ struct PlyProperty {
 
 fn read_ply_scalar(bytes: &[u8], off: usize, ty: &str, little: bool) -> CivilResult<(f64, usize)> {
     let get = |n: usize| -> CivilResult<&[u8]> {
-        bytes.get(off..off + n).ok_or_else(|| CivilError::MalformedData { format: "PLY", reason: "truncated binary body".to_string() })
+        bytes
+            .get(off..off + n)
+            .ok_or_else(|| CivilError::MalformedData {
+                format: "PLY",
+                reason: "truncated binary body".to_string(),
+            })
     };
     Ok(match ty {
         "char" | "int8" => (get(1)?[0] as i8 as f64, 1),
         "uchar" | "uint8" => (get(1)?[0] as f64, 1),
         "short" | "int16" => {
             let b = get(2)?;
-            (if little { i16::from_le_bytes([b[0], b[1]]) } else { i16::from_be_bytes([b[0], b[1]]) } as f64, 2)
+            (
+                if little {
+                    i16::from_le_bytes([b[0], b[1]])
+                } else {
+                    i16::from_be_bytes([b[0], b[1]])
+                } as f64,
+                2,
+            )
         }
         "ushort" | "uint16" => {
             let b = get(2)?;
-            (if little { u16::from_le_bytes([b[0], b[1]]) } else { u16::from_be_bytes([b[0], b[1]]) } as f64, 2)
+            (
+                if little {
+                    u16::from_le_bytes([b[0], b[1]])
+                } else {
+                    u16::from_be_bytes([b[0], b[1]])
+                } as f64,
+                2,
+            )
         }
         "int" | "int32" => {
             let b = get(4)?;
-            (if little { i32::from_le_bytes([b[0], b[1], b[2], b[3]]) } else { i32::from_be_bytes([b[0], b[1], b[2], b[3]]) } as f64, 4)
+            (
+                if little {
+                    i32::from_le_bytes([b[0], b[1], b[2], b[3]])
+                } else {
+                    i32::from_be_bytes([b[0], b[1], b[2], b[3]])
+                } as f64,
+                4,
+            )
         }
         "uint" | "uint32" => {
             let b = get(4)?;
-            (if little { u32::from_le_bytes([b[0], b[1], b[2], b[3]]) } else { u32::from_be_bytes([b[0], b[1], b[2], b[3]]) } as f64, 4)
+            (
+                if little {
+                    u32::from_le_bytes([b[0], b[1], b[2], b[3]])
+                } else {
+                    u32::from_be_bytes([b[0], b[1], b[2], b[3]])
+                } as f64,
+                4,
+            )
         }
         "float" | "float32" => {
             let b = get(4)?;
-            (if little { f32::from_le_bytes([b[0], b[1], b[2], b[3]]) } else { f32::from_be_bytes([b[0], b[1], b[2], b[3]]) } as f64, 4)
+            (
+                if little {
+                    f32::from_le_bytes([b[0], b[1], b[2], b[3]])
+                } else {
+                    f32::from_be_bytes([b[0], b[1], b[2], b[3]])
+                } as f64,
+                4,
+            )
         }
         "double" | "float64" => {
             let b = get(8)?;
             let arr: [u8; 8] = b.try_into().unwrap();
-            (if little { f64::from_le_bytes(arr) } else { f64::from_be_bytes(arr) }, 8)
+            (
+                if little {
+                    f64::from_le_bytes(arr)
+                } else {
+                    f64::from_be_bytes(arr)
+                },
+                8,
+            )
         }
-        other => return Err(CivilError::MalformedData { format: "PLY", reason: format!("unsupported property type {other}") }),
+        other => {
+            return Err(CivilError::MalformedData {
+                format: "PLY",
+                reason: format!("unsupported property type {other}"),
+            })
+        }
     })
 }
 
@@ -328,7 +419,11 @@ fn find_subarray(haystack: &[u8], needle: &[u8]) -> Option<usize> {
 /// is truncated, or a property declares an unsupported scalar type.
 pub fn parse_ply(data: &PointCloudData) -> CivilResult<PointCloud> {
     let bytes = data.as_bytes();
-    let header_end = find_subarray(&bytes, b"end_header").ok_or_else(|| CivilError::MalformedData { format: "PLY", reason: "missing end_header".to_string() })?;
+    let header_end =
+        find_subarray(&bytes, b"end_header").ok_or_else(|| CivilError::MalformedData {
+            format: "PLY",
+            reason: "missing end_header".to_string(),
+        })?;
     let mut cursor = header_end + "end_header".len();
     while cursor < bytes.len() && bytes[cursor] != b'\n' {
         cursor += 1;
@@ -341,7 +436,7 @@ pub fn parse_ply(data: &PointCloudData) -> CivilResult<PointCloud> {
     let mut props: Vec<PlyProperty> = Vec::new();
     let mut in_vertex = false;
     for line in header_text.split(['\n', '\r']) {
-        let t: Vec<&str> = line.trim().split_whitespace().collect();
+        let t: Vec<&str> = line.split_whitespace().collect();
         if t.is_empty() {
             continue;
         }
@@ -354,7 +449,10 @@ pub fn parse_ply(data: &PointCloudData) -> CivilResult<PointCloud> {
                 }
             }
             "property" if in_vertex => {
-                props.push(PlyProperty { ty: t[1].to_string(), name: t[t.len() - 1].to_string() });
+                props.push(PlyProperty {
+                    ty: t[1].to_string(),
+                    name: t[t.len() - 1].to_string(),
+                });
             }
             _ => {}
         }
@@ -363,9 +461,15 @@ pub fn parse_ply(data: &PointCloudData) -> CivilResult<PointCloud> {
     let mut points = Vec::new();
     if format == "ascii" {
         let body_text = String::from_utf8_lossy(&bytes[cursor..]).into_owned();
-        let body_lines: Vec<&str> = body_text.split(['\n', '\r']).filter(|l| !l.trim().is_empty()).collect();
+        let body_lines: Vec<&str> = body_text
+            .split(['\n', '\r'])
+            .filter(|l| !l.trim().is_empty())
+            .collect();
         for line in body_lines.iter().take(vertex_count) {
-            let values: Vec<f64> = line.trim().split_whitespace().filter_map(|s| s.parse().ok()).collect();
+            let values: Vec<f64> = line
+                .split_whitespace()
+                .filter_map(|s| s.parse().ok())
+                .collect();
             points.push(ply_point_from_values(&props, &values));
         }
     } else {
@@ -401,7 +505,15 @@ pub fn write_ply(cloud: &PointCloud) -> String {
         "end_header".to_string(),
     ];
     for p in &cloud.points {
-        lines.push(format!("{} {} {} {} {} {}", num(p.x), num(p.y), num(p.z), p.r.unwrap_or(255), p.g.unwrap_or(255), p.b.unwrap_or(255)));
+        lines.push(format!(
+            "{} {} {} {} {} {}",
+            num(p.x),
+            num(p.y),
+            num(p.z),
+            p.r.unwrap_or(255),
+            p.g.unwrap_or(255),
+            p.b.unwrap_or(255)
+        ));
     }
     lines.join("\n")
 }
@@ -419,7 +531,10 @@ const LAS_HEADER_SIZE: usize = 227; // LAS 1.2 public header block
 /// [`CivilError::MalformedData`] if the `LASF` signature is missing.
 pub fn parse_las(buffer: &[u8]) -> CivilResult<PointCloud> {
     if buffer.len() < 4 || &buffer[0..4] != b"LASF" {
-        return Err(CivilError::MalformedData { format: "LAS", reason: "bad signature".to_string() });
+        return Err(CivilError::MalformedData {
+            format: "LAS",
+            reason: "bad signature".to_string(),
+        });
     }
 
     let u32_at = |o: usize| u32::from_le_bytes(buffer[o..o + 4].try_into().unwrap());
@@ -450,17 +565,31 @@ pub fn parse_las(buffer: &[u8]) -> CivilResult<PointCloud> {
         if base + record_length > buffer.len() {
             break;
         }
-        let x = i32::from_le_bytes(buffer[base..base + 4].try_into().unwrap()) as f64 * scale_x + off_x;
-        let y = i32::from_le_bytes(buffer[base + 4..base + 8].try_into().unwrap()) as f64 * scale_y + off_y;
-        let z = i32::from_le_bytes(buffer[base + 8..base + 12].try_into().unwrap()) as f64 * scale_z + off_z;
+        let x =
+            i32::from_le_bytes(buffer[base..base + 4].try_into().unwrap()) as f64 * scale_x + off_x;
+        let y = i32::from_le_bytes(buffer[base + 4..base + 8].try_into().unwrap()) as f64 * scale_y
+            + off_y;
+        let z = i32::from_le_bytes(buffer[base + 8..base + 12].try_into().unwrap()) as f64
+            * scale_z
+            + off_z;
         let intensity = u16::from_le_bytes(buffer[base + 12..base + 14].try_into().unwrap()) as f64;
-        let mut p = CloudPoint { x, y, z, r: None, g: None, b: None, intensity: Some(intensity) };
+        let mut p = CloudPoint {
+            x,
+            y,
+            z,
+            r: None,
+            g: None,
+            b: None,
+            intensity: Some(intensity),
+        };
         if let Some(co) = color_offset {
             let red = u16::from_le_bytes(buffer[base + co..base + co + 2].try_into().unwrap());
-            let green = u16::from_le_bytes(buffer[base + co + 2..base + co + 4].try_into().unwrap());
+            let green =
+                u16::from_le_bytes(buffer[base + co + 2..base + co + 4].try_into().unwrap());
             let blue = u16::from_le_bytes(buffer[base + co + 4..base + co + 6].try_into().unwrap());
             let scale16 = red > 255 || green > 255 || blue > 255;
-            let conv = |v: u16| -> u8 { clamp_byte(if scale16 { v as f64 / 257.0 } else { v as f64 }) };
+            let conv =
+                |v: u16| -> u8 { clamp_byte(if scale16 { v as f64 / 257.0 } else { v as f64 }) };
             p.r = Some(conv(red));
             p.g = Some(conv(green));
             p.b = Some(conv(blue));
@@ -486,7 +615,7 @@ pub fn write_las(cloud: &PointCloud) -> Vec<u8> {
 
     let b = point_cloud_bounds(cloud);
     let zr = point_cloud_elevation_range(cloud);
-    let scale = 0.001;
+    let scale: f64 = 0.001;
     let off_x = b.min_x;
     let off_y = b.min_y;
     let off_z = zr.0;
@@ -519,9 +648,12 @@ pub fn write_las(cloud: &PointCloud) -> Vec<u8> {
     let mut off = LAS_HEADER_SIZE;
     for p in pts {
         buf[off..off + 4].copy_from_slice(&(((p.x - off_x) / scale).round() as i32).to_le_bytes());
-        buf[off + 4..off + 8].copy_from_slice(&(((p.y - off_y) / scale).round() as i32).to_le_bytes());
-        buf[off + 8..off + 12].copy_from_slice(&(((p.z - off_z) / scale).round() as i32).to_le_bytes());
-        buf[off + 12..off + 14].copy_from_slice(&clamp_u16(p.intensity.unwrap_or(0.0)).to_le_bytes());
+        buf[off + 4..off + 8]
+            .copy_from_slice(&(((p.y - off_y) / scale).round() as i32).to_le_bytes());
+        buf[off + 8..off + 12]
+            .copy_from_slice(&(((p.z - off_z) / scale).round() as i32).to_le_bytes());
+        buf[off + 12..off + 14]
+            .copy_from_slice(&clamp_u16(p.intensity.unwrap_or(0.0)).to_le_bytes());
         buf[off + 14] = 0; // return bits
         buf[off + 15] = 0; // classification
         buf[off + 16] = 0; // scan angle
@@ -542,10 +674,14 @@ pub fn write_las(cloud: &PointCloud) -> Vec<u8> {
 /// Parse DXF `POINT` entities, including AutoCAD Color Index (group 62) and
 /// true-color (group 420) values.
 pub fn parse_dxf(text: &str) -> PointCloud {
-    let lines: Vec<&str> = text.split(['\n', '\r']).filter(|l| !l.is_empty()).map(|l| l.trim()).collect();
+    let lines: Vec<&str> = text
+        .split(['\n', '\r'])
+        .filter(|l| !l.is_empty())
+        .map(|l| l.trim())
+        .collect();
     let mut points = Vec::new();
     let mut current: Option<CloudPoint> = None;
-    let mut flush = |current: &mut Option<CloudPoint>, points: &mut Vec<CloudPoint>| {
+    let flush = |current: &mut Option<CloudPoint>, points: &mut Vec<CloudPoint>| {
         if let Some(p) = current.take() {
             points.push(p);
         }
@@ -592,14 +728,33 @@ pub fn parse_dxf(text: &str) -> PointCloud {
 pub fn write_dxf(cloud: &PointCloud) -> String {
     let mut out: Vec<String> = vec!["0".into(), "SECTION".into(), "2".into(), "ENTITIES".into()];
     for p in &cloud.points {
-        out.extend(["0".to_string(), "POINT".to_string(), "8".to_string(), "PointCloud".to_string()]);
-        out.extend(["10".to_string(), num(p.x), "20".to_string(), num(p.y), "30".to_string(), num(p.z)]);
+        out.extend([
+            "0".to_string(),
+            "POINT".to_string(),
+            "8".to_string(),
+            "PointCloud".to_string(),
+        ]);
+        out.extend([
+            "10".to_string(),
+            num(p.x),
+            "20".to_string(),
+            num(p.y),
+            "30".to_string(),
+            num(p.z),
+        ]);
         if p.has_color() {
-            let packed = ((p.r.unwrap() as u32) << 16) | ((p.g.unwrap() as u32) << 8) | (p.b.unwrap() as u32);
+            let packed = ((p.r.unwrap() as u32) << 16)
+                | ((p.g.unwrap() as u32) << 8)
+                | (p.b.unwrap() as u32);
             out.extend(["420".to_string(), packed.to_string()]);
         }
     }
-    out.extend(["0".to_string(), "ENDSEC".to_string(), "0".to_string(), "EOF".to_string()]);
+    out.extend([
+        "0".to_string(),
+        "ENDSEC".to_string(),
+        "0".to_string(),
+        "EOF".to_string(),
+    ]);
     out.join("\n")
 }
 
@@ -626,7 +781,12 @@ fn aci_to_rgb(index: i32) -> (u8, u8, u8) {
 /// Bounding box of a cloud's XY footprint.
 pub fn point_cloud_bounds(cloud: &PointCloud) -> Bounds {
     if cloud.points.is_empty() {
-        return Bounds { min_x: 0.0, min_y: 0.0, max_x: 0.0, max_y: 0.0 };
+        return Bounds {
+            min_x: 0.0,
+            min_y: 0.0,
+            max_x: 0.0,
+            max_y: 0.0,
+        };
     }
     let mut min_x = f64::INFINITY;
     let mut min_y = f64::INFINITY;
@@ -638,7 +798,12 @@ pub fn point_cloud_bounds(cloud: &PointCloud) -> Bounds {
         max_x = max_x.max(p.x);
         max_y = max_y.max(p.y);
     }
-    Bounds { min_x, min_y, max_x, max_y }
+    Bounds {
+        min_x,
+        min_y,
+        max_x,
+        max_y,
+    }
 }
 
 /// Elevation range (min, max) of a cloud. `(0.0, 0.0)` for an empty cloud.
@@ -649,7 +814,10 @@ pub fn point_cloud_elevation_range(cloud: &PointCloud) -> (f64, f64) {
         min = min.min(p.z);
         max = max.max(p.z);
     }
-    (if min.is_finite() { min } else { 0.0 }, if max.is_finite() { max } else { 0.0 })
+    (
+        if min.is_finite() { min } else { 0.0 },
+        if max.is_finite() { max } else { 0.0 },
+    )
 }
 
 /// Voxel-downsample a cloud to at most one point per `cell_size` XY grid
@@ -662,7 +830,10 @@ pub fn downsample_point_cloud(cloud: &PointCloud, cell_size: f64) -> PointCloud 
     let mut seen = std::collections::HashSet::new();
     let mut points = Vec::new();
     for &p in &cloud.points {
-        let key = ((p.x / cell_size).floor() as i64, (p.y / cell_size).floor() as i64);
+        let key = (
+            (p.x / cell_size).floor() as i64,
+            (p.y / cell_size).floor() as i64,
+        );
         if seen.insert(key) {
             points.push(p);
         }
@@ -688,13 +859,24 @@ pub fn point_cloud_to_spots(cloud: &PointCloud, layer_id: &str) -> Vec<PointClou
         .points
         .iter()
         .enumerate()
-        .map(|(i, p)| PointCloudSpot { id: thoth_spatial::create_id("spot"), layer_id: layer_id.to_string(), position: Point::new(p.x, p.y), z: p.z, label: format!("PC{}", i + 1) })
+        .map(|(i, p)| PointCloudSpot {
+            id: thoth_spatial::create_id("spot"),
+            layer_id: layer_id.to_string(),
+            position: Point::new(p.x, p.y),
+            z: p.z,
+            label: format!("PC{}", i + 1),
+        })
         .collect()
 }
 
 /// Build a cloud from spot-elevation samples (inverse of [`point_cloud_to_spots`]).
 pub fn spots_to_point_cloud(spots: &[PointCloudSpot]) -> PointCloud {
-    PointCloud { points: spots.iter().map(|s| CloudPoint::bare(s.position.x, s.position.y, s.z)).collect() }
+    PointCloud {
+        points: spots
+            .iter()
+            .map(|s| CloudPoint::bare(s.position.x, s.position.y, s.z))
+            .collect(),
+    }
 }
 
 #[cfg(test)]
@@ -704,9 +886,33 @@ mod tests {
     fn cloud() -> PointCloud {
         PointCloud {
             points: vec![
-                CloudPoint { x: 0.0, y: 0.0, z: 1.5, r: Some(255), g: Some(0), b: Some(0), intensity: Some(100.0) },
-                CloudPoint { x: 10.25, y: -3.5, z: 2.75, r: Some(0), g: Some(128), b: Some(64), intensity: Some(200.0) },
-                CloudPoint { x: 5.0, y: 5.0, z: 0.25, r: Some(10), g: Some(20), b: Some(30), intensity: Some(50.0) },
+                CloudPoint {
+                    x: 0.0,
+                    y: 0.0,
+                    z: 1.5,
+                    r: Some(255),
+                    g: Some(0),
+                    b: Some(0),
+                    intensity: Some(100.0),
+                },
+                CloudPoint {
+                    x: 10.25,
+                    y: -3.5,
+                    z: 2.75,
+                    r: Some(0),
+                    g: Some(128),
+                    b: Some(64),
+                    intensity: Some(200.0),
+                },
+                CloudPoint {
+                    x: 5.0,
+                    y: 5.0,
+                    z: 0.25,
+                    r: Some(10),
+                    g: Some(20),
+                    b: Some(30),
+                    intensity: Some(50.0),
+                },
             ],
         }
     }
@@ -727,8 +933,14 @@ mod tests {
 
     #[test]
     fn format_detection_maps_extensions() {
-        assert_eq!(point_cloud_format_from_name("scan.LAS"), Some(PointCloudFormat::Las));
-        assert_eq!(point_cloud_format_from_name("a/b/c.ply"), Some(PointCloudFormat::Ply));
+        assert_eq!(
+            point_cloud_format_from_name("scan.LAS"),
+            Some(PointCloudFormat::Las)
+        );
+        assert_eq!(
+            point_cloud_format_from_name("a/b/c.ply"),
+            Some(PointCloudFormat::Ply)
+        );
         assert_eq!(point_cloud_format_from_name("nope.txt"), None);
     }
 
@@ -782,7 +994,10 @@ mod tests {
 
     #[test]
     fn ply_missing_end_header_is_malformed() {
-        assert!(matches!(parse_ply(&PointCloudData::Text("ply\nformat ascii 1.0\n".to_string())), Err(CivilError::MalformedData { .. })));
+        assert!(matches!(
+            parse_ply(&PointCloudData::Text("ply\nformat ascii 1.0\n".to_string())),
+            Err(CivilError::MalformedData { .. })
+        ));
     }
 
     #[test]
@@ -801,7 +1016,10 @@ mod tests {
 
     #[test]
     fn las_bad_signature_is_malformed() {
-        assert!(matches!(parse_las(&[0u8; 300]), Err(CivilError::MalformedData { .. })));
+        assert!(matches!(
+            parse_las(&[0u8; 300]),
+            Err(CivilError::MalformedData { .. })
+        ));
     }
 
     #[test]
@@ -813,7 +1031,8 @@ mod tests {
 
     #[test]
     fn generic_dispatch_by_format() {
-        let PointCloudData::Text(text) = serialize_point_cloud(&cloud(), PointCloudFormat::Xyz) else {
+        let PointCloudData::Text(text) = serialize_point_cloud(&cloud(), PointCloudFormat::Xyz)
+        else {
             panic!("expected text data");
         };
         let parsed = parse_point_cloud(&PointCloudData::Text(text), PointCloudFormat::Xyz).unwrap();
@@ -822,7 +1041,13 @@ mod tests {
 
     #[test]
     fn downsamples_to_one_point_per_cell() {
-        let dense = PointCloud { points: vec![CloudPoint::bare(0.1, 0.1, 0.0), CloudPoint::bare(0.2, 0.2, 0.0), CloudPoint::bare(5.0, 5.0, 0.0)] };
+        let dense = PointCloud {
+            points: vec![
+                CloudPoint::bare(0.1, 0.1, 0.0),
+                CloudPoint::bare(0.2, 0.2, 0.0),
+                CloudPoint::bare(5.0, 5.0, 0.0),
+            ],
+        };
         assert_eq!(downsample_point_cloud(&dense, 1.0).points.len(), 2);
     }
 

@@ -96,7 +96,10 @@ pub fn create_line_from_grid_coordinates(
 pub fn convert_lat_lon_to_grid_feet(lat: f64, lon: f64) -> Point2D {
     const R: f64 = 20_925_604.0; // Radius of Earth in feet.
     let x = R * (lon * std::f64::consts::PI / 180.0);
-    let y = R * (std::f64::consts::PI / 4.0 + lat * std::f64::consts::PI / 360.0).tan().ln();
+    let y = R
+        * (std::f64::consts::PI / 4.0 + lat * std::f64::consts::PI / 360.0)
+            .tan()
+            .ln();
     Point2D::new(x, y)
 }
 
@@ -148,7 +151,10 @@ pub fn calculate_point_from_station_offset(
     let perp_x = uy;
     let perp_y = -ux;
 
-    Point2D::new(station_x + perp_x * offset_ft, station_y + perp_y * offset_ft)
+    Point2D::new(
+        station_x + perp_x * offset_ft,
+        station_y + perp_y * offset_ft,
+    )
 }
 
 /// REQ-113: Create a line tangent from an existing point on a curve.
@@ -168,7 +174,10 @@ pub fn create_line_tangent_from_point(
 
     LineSegment {
         start: curve_point,
-        end: Point2D::new(curve_point.x + tx * distance_ft, curve_point.y + ty * distance_ft),
+        end: Point2D::new(
+            curve_point.x + tx * distance_ft,
+            curve_point.y + ty * distance_ft,
+        ),
     }
 }
 
@@ -301,7 +310,10 @@ mod tests {
         let point_on_curve = Point2D::new(10.0, 0.0);
         let tangent = create_line_tangent_from_point(center, point_on_curve, 5.0);
         let radius_vec = (point_on_curve.x - center.x, point_on_curve.y - center.y);
-        let tangent_vec = (tangent.end.x - tangent.start.x, tangent.end.y - tangent.start.y);
+        let tangent_vec = (
+            tangent.end.x - tangent.start.x,
+            tangent.end.y - tangent.start.y,
+        );
         let dot = radius_vec.0 * tangent_vec.0 + radius_vec.1 * tangent_vec.1;
         assert_relative_eq!(dot, 0.0, epsilon = 1e-9);
     }

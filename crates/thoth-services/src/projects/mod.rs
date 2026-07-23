@@ -25,6 +25,6 @@ pub use error::ProjectsError;
 pub use service::{ProjectsService, ResetMode};
 pub use store::{current_user, default_members, summarize, ProjectStore};
 pub use types::{
-    compute_site_metrics, Checkpoint, Member, Project, ProjectSummary, ProjectUser,
-    ReviewComment, ReviewThread, Site, SiteMetrics, StoreSnapshot,
+    compute_site_metrics, Checkpoint, Member, Project, ProjectSummary, ProjectUser, ReviewComment,
+    ReviewThread, Site, SiteMetrics, StoreSnapshot,
 };

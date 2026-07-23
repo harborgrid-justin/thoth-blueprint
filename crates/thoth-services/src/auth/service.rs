@@ -21,7 +21,9 @@ fn color_for(email: &str) -> String {
     const PALETTE: [&str; 6] = [
         "#0ea5e9", "#f59e0b", "#ec4899", "#22c55e", "#8b5cf6", "#ef4444",
     ];
-    let hash: u32 = email.bytes().fold(0u32, |acc, b| acc.wrapping_mul(31).wrapping_add(b as u32));
+    let hash: u32 = email
+        .bytes()
+        .fold(0u32, |acc, b| acc.wrapping_mul(31).wrapping_add(b as u32));
     PALETTE[(hash as usize) % PALETTE.len()].to_string()
 }
 
@@ -52,10 +54,18 @@ impl<A: StorageAdapter> AuthService<A> {
     /// file (checked case-insensitively, since email addresses are
     /// conventionally case-insensitive for the local-part-independent
     /// domain match most providers use).
-    pub async fn register(&self, name: &str, email: &str, password: &str) -> Result<User, AuthError> {
+    pub async fn register(
+        &self,
+        name: &str,
+        email: &str,
+        password: &str,
+    ) -> Result<User, AuthError> {
         let existing: Vec<User> = self.storage.list(USERS).await?;
         let normalized = email.to_lowercase();
-        if existing.iter().any(|u| u.email.to_lowercase() == normalized) {
+        if existing
+            .iter()
+            .any(|u| u.email.to_lowercase() == normalized)
+        {
             return Err(AuthError::EmailAlreadyRegistered(email.to_string()));
         }
 
@@ -109,7 +119,9 @@ impl<A: StorageAdapter> AuthService<A> {
             name: name.to_string(),
             owner_id: owner_id.to_string(),
         };
-        self.storage.put(ORGANIZATIONS, organization.clone()).await?;
+        self.storage
+            .put(ORGANIZATIONS, organization.clone())
+            .await?;
 
         let membership = Membership {
             id: membership_id(&organization.id, owner_id),
@@ -228,7 +240,9 @@ mod tests {
     #[tokio::test]
     async fn rejects_duplicate_email_registration() {
         let auth = service();
-        auth.register("Amaya", "amaya@city.gov", "pw12345678").await.unwrap();
+        auth.register("Amaya", "amaya@city.gov", "pw12345678")
+            .await
+            .unwrap();
         let err = auth
             .register("Someone Else", "AMAYA@CITY.GOV", "different-pw")
             .await
@@ -239,9 +253,14 @@ mod tests {
     #[tokio::test]
     async fn rejects_wrong_password_and_unknown_email_identically() {
         let auth = service();
-        auth.register("Amaya", "amaya@city.gov", "pw12345678").await.unwrap();
+        auth.register("Amaya", "amaya@city.gov", "pw12345678")
+            .await
+            .unwrap();
 
-        let wrong_password = auth.authenticate("amaya@city.gov", "nope").await.unwrap_err();
+        let wrong_password = auth
+            .authenticate("amaya@city.gov", "nope")
+            .await
+            .unwrap_err();
         let unknown_email = auth
             .authenticate("nobody@nowhere.dev", "nope")
             .await
@@ -253,8 +272,14 @@ mod tests {
     #[tokio::test]
     async fn creating_an_organization_grants_the_owner_role() {
         let auth = service();
-        let owner = auth.register("Owner", "owner@thoth.dev", "pw12345678").await.unwrap();
-        let org = auth.create_organization("Riverside Studio", &owner.id).await.unwrap();
+        let owner = auth
+            .register("Owner", "owner@thoth.dev", "pw12345678")
+            .await
+            .unwrap();
+        let org = auth
+            .create_organization("Riverside Studio", &owner.id)
+            .await
+            .unwrap();
 
         let role = auth.role_of(&org.id, &owner.id).await.unwrap();
         assert_eq!(role, Some(Role::Owner));
@@ -276,54 +301,95 @@ mod tests {
     #[tokio::test]
     async fn non_members_are_unauthorized() {
         let auth = service();
-        let owner = auth.register("Owner", "owner@thoth.dev", "pw12345678").await.unwrap();
+        let owner = auth
+            .register("Owner", "owner@thoth.dev", "pw12345678")
+            .await
+            .unwrap();
         let stranger = auth
             .register("Stranger", "stranger@thoth.dev", "pw12345678")
             .await
             .unwrap();
-        let org = auth.create_organization("Riverside Studio", &owner.id).await.unwrap();
+        let org = auth
+            .create_organization("Riverside Studio", &owner.id)
+            .await
+            .unwrap();
 
-        let err = auth.authorize(&org.id, &stranger.id, Action::View).await.unwrap_err();
+        let err = auth
+            .authorize(&org.id, &stranger.id, Action::View)
+            .await
+            .unwrap_err();
         assert!(matches!(err, AuthError::NotAMember { .. }));
     }
 
     #[tokio::test]
     async fn viewers_cannot_edit() {
         let auth = service();
-        let owner = auth.register("Owner", "owner@thoth.dev", "pw12345678").await.unwrap();
+        let owner = auth
+            .register("Owner", "owner@thoth.dev", "pw12345678")
+            .await
+            .unwrap();
         let viewer = auth
             .register("Viewer", "viewer@thoth.dev", "pw12345678")
             .await
             .unwrap();
-        let org = auth.create_organization("Riverside Studio", &owner.id).await.unwrap();
-        auth.add_member(&org.id, &viewer.id, Role::Viewer).await.unwrap();
+        let org = auth
+            .create_organization("Riverside Studio", &owner.id)
+            .await
+            .unwrap();
+        auth.add_member(&org.id, &viewer.id, Role::Viewer)
+            .await
+            .unwrap();
 
-        auth.authorize(&org.id, &viewer.id, Action::View).await.unwrap();
-        let err = auth.authorize(&org.id, &viewer.id, Action::Edit).await.unwrap_err();
+        auth.authorize(&org.id, &viewer.id, Action::View)
+            .await
+            .unwrap();
+        let err = auth
+            .authorize(&org.id, &viewer.id, Action::Edit)
+            .await
+            .unwrap_err();
         assert!(matches!(err, AuthError::Unauthorized { .. }));
     }
 
     #[tokio::test]
     async fn add_member_replaces_an_existing_role_rather_than_duplicating() {
         let auth = service();
-        let owner = auth.register("Owner", "owner@thoth.dev", "pw12345678").await.unwrap();
+        let owner = auth
+            .register("Owner", "owner@thoth.dev", "pw12345678")
+            .await
+            .unwrap();
         let member = auth
             .register("Member", "member@thoth.dev", "pw12345678")
             .await
             .unwrap();
-        let org = auth.create_organization("Riverside Studio", &owner.id).await.unwrap();
+        let org = auth
+            .create_organization("Riverside Studio", &owner.id)
+            .await
+            .unwrap();
 
-        auth.add_member(&org.id, &member.id, Role::Viewer).await.unwrap();
-        auth.add_member(&org.id, &member.id, Role::Editor).await.unwrap();
+        auth.add_member(&org.id, &member.id, Role::Viewer)
+            .await
+            .unwrap();
+        auth.add_member(&org.id, &member.id, Role::Editor)
+            .await
+            .unwrap();
 
-        assert_eq!(auth.role_of(&org.id, &member.id).await.unwrap(), Some(Role::Editor));
+        assert_eq!(
+            auth.role_of(&org.id, &member.id).await.unwrap(),
+            Some(Role::Editor)
+        );
     }
 
     #[tokio::test]
     async fn creates_a_team_within_an_organization() {
         let auth = service();
-        let owner = auth.register("Owner", "owner@thoth.dev", "pw12345678").await.unwrap();
-        let org = auth.create_organization("Riverside Studio", &owner.id).await.unwrap();
+        let owner = auth
+            .register("Owner", "owner@thoth.dev", "pw12345678")
+            .await
+            .unwrap();
+        let org = auth
+            .create_organization("Riverside Studio", &owner.id)
+            .await
+            .unwrap();
         let team = auth.create_team(&org.id, "Civil").await.unwrap();
         assert_eq!(team.organization_id, org.id);
         assert_eq!(team.name, "Civil");
@@ -332,7 +398,10 @@ mod tests {
     #[tokio::test]
     async fn team_creation_requires_an_existing_organization() {
         let auth = service();
-        let err = auth.create_team("org_does_not_exist", "Civil").await.unwrap_err();
+        let err = auth
+            .create_team("org_does_not_exist", "Civil")
+            .await
+            .unwrap_err();
         assert!(matches!(err, AuthError::OrganizationNotFound(_)));
     }
 }

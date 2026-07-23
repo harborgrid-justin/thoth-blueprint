@@ -12,7 +12,9 @@
 
 use std::collections::HashMap;
 
-use thoth_spatial::{closest_point_on_segment, distance, polyline_length, Point, Polyline, SpatialContext, Unit};
+use thoth_spatial::{
+    closest_point_on_segment, distance, polyline_length, Point, Polyline, SpatialContext, Unit,
+};
 
 /// The kind of system a network carries.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -67,7 +69,13 @@ pub struct NetworkEdge {
 
 impl NetworkEdge {
     pub fn new(id: impl Into<String>, from: impl Into<String>, to: impl Into<String>) -> Self {
-        NetworkEdge { id: id.into(), from: from.into(), to: to.into(), width: None, road_class: None }
+        NetworkEdge {
+            id: id.into(),
+            from: from.into(),
+            to: to.into(),
+            width: None,
+            road_class: None,
+        }
     }
 }
 
@@ -100,7 +108,10 @@ fn node_map(network: &InfrastructureNetwork) -> HashMap<&str, &NetworkNode> {
 }
 
 /// Endpoints of an edge as points, or `None` if a node is missing.
-pub fn edge_points<'a>(edge: &NetworkEdge, nodes: &HashMap<&'a str, &'a NetworkNode>) -> Option<(Point, Point)> {
+pub fn edge_points<'a>(
+    edge: &NetworkEdge,
+    nodes: &HashMap<&'a str, &'a NetworkNode>,
+) -> Option<(Point, Point)> {
     let a = nodes.get(edge.from.as_str())?;
     let b = nodes.get(edge.to.as_str())?;
     Some((a.point, b.point))
@@ -115,8 +126,17 @@ pub fn edge_length(network: &InfrastructureNetwork, edge: &NetworkEdge) -> f64 {
 /// Total network length, in plan units and meters.
 pub fn network_length(network: &InfrastructureNetwork, spatial: &SpatialContext) -> (f64, f64) {
     let nodes = node_map(network);
-    let plan: f64 = network.edges.iter().map(|e| edge_points(e, &nodes).map_or(0.0, |(a, b)| distance(a, b))).sum();
-    let meters = plan * if spatial.units == Unit::Feet { 0.3048 } else { 1.0 };
+    let plan: f64 = network
+        .edges
+        .iter()
+        .map(|e| edge_points(e, &nodes).map_or(0.0, |(a, b)| distance(a, b)))
+        .sum();
+    let meters = plan
+        * if spatial.units == Unit::Feet {
+            0.3048
+        } else {
+            1.0
+        };
     (plan, meters)
 }
 
@@ -149,7 +169,11 @@ pub fn junctions(network: &InfrastructureNetwork) -> (Vec<&NetworkNode>, Vec<&Ne
 /// Number of connected components (a fully connected network has exactly 1;
 /// an empty network has 0).
 pub fn connected_components(network: &InfrastructureNetwork) -> usize {
-    let mut parent: HashMap<&str, &str> = network.nodes.iter().map(|n| (n.id.as_str(), n.id.as_str())).collect();
+    let mut parent: HashMap<&str, &str> = network
+        .nodes
+        .iter()
+        .map(|n| (n.id.as_str(), n.id.as_str()))
+        .collect();
 
     fn find<'a>(parent: &mut HashMap<&'a str, &'a str>, x: &'a str) -> &'a str {
         let mut root = x;
@@ -172,7 +196,11 @@ pub fn connected_components(network: &InfrastructureNetwork) -> usize {
             parent.insert(a, b);
         }
     }
-    let roots: std::collections::HashSet<&str> = network.nodes.iter().map(|n| find(&mut parent, &n.id)).collect();
+    let roots: std::collections::HashSet<&str> = network
+        .nodes
+        .iter()
+        .map(|n| find(&mut parent, &n.id))
+        .collect();
     if network.nodes.is_empty() {
         0
     } else {
@@ -196,7 +224,9 @@ pub fn corridor_area(network: &InfrastructureNetwork) -> f64 {
             let Some((a, b)) = edge_points(e, &nodes) else {
                 return 0.0;
             };
-            let w = e.width.unwrap_or_else(|| default_road_width(e.road_class.unwrap_or(RoadClass::Local)));
+            let w = e
+                .width
+                .unwrap_or_else(|| default_road_width(e.road_class.unwrap_or(RoadClass::Local)));
             distance(a, b) * w
         })
         .sum()
@@ -219,11 +249,18 @@ pub fn distance_to_network(network: &InfrastructureNetwork, p: Point) -> f64 {
 /// Service coverage: the fraction of the given points (e.g. lot/building
 /// centroids) within `service_distance` plan units of the network — a proxy
 /// for how well a utility or road serves the community.
-pub fn service_coverage(network: &InfrastructureNetwork, points: &[Point], service_distance: f64) -> f64 {
+pub fn service_coverage(
+    network: &InfrastructureNetwork,
+    points: &[Point],
+    service_distance: f64,
+) -> f64 {
     if points.is_empty() {
         return 0.0;
     }
-    let served = points.iter().filter(|&&p| distance_to_network(network, p) <= service_distance).count();
+    let served = points
+        .iter()
+        .filter(|&&p| distance_to_network(network, p) <= service_distance)
+        .count();
     served as f64 / points.len() as f64
 }
 
@@ -232,13 +269,39 @@ pub fn service_coverage(network: &InfrastructureNetwork, points: &[Point], servi
 /// first, then edges) — matching the TS `makeId()` call order exactly, which
 /// matters when the caller's generator is a deterministic counter (as the
 /// test suite's is).
-pub fn network_from_path(id: impl Into<String>, name: impl Into<String>, kind: NetworkKind, path: &Polyline, mut make_id: impl FnMut() -> String, edge_width: Option<f64>, edge_road_class: Option<RoadClass>) -> InfrastructureNetwork {
-    let nodes: Vec<NetworkNode> = path.iter().map(|&point| NetworkNode { id: make_id(), point }).collect();
+pub fn network_from_path(
+    id: impl Into<String>,
+    name: impl Into<String>,
+    kind: NetworkKind,
+    path: &Polyline,
+    mut make_id: impl FnMut() -> String,
+    edge_width: Option<f64>,
+    edge_road_class: Option<RoadClass>,
+) -> InfrastructureNetwork {
+    let nodes: Vec<NetworkNode> = path
+        .iter()
+        .map(|&point| NetworkNode {
+            id: make_id(),
+            point,
+        })
+        .collect();
     let mut edges = Vec::new();
     for i in 0..nodes.len().saturating_sub(1) {
-        edges.push(NetworkEdge { id: make_id(), from: nodes[i].id.clone(), to: nodes[i + 1].id.clone(), width: edge_width, road_class: edge_road_class });
+        edges.push(NetworkEdge {
+            id: make_id(),
+            from: nodes[i].id.clone(),
+            to: nodes[i + 1].id.clone(),
+            width: edge_width,
+            road_class: edge_road_class,
+        });
     }
-    InfrastructureNetwork { id: id.into(), name: name.into(), kind, nodes, edges }
+    InfrastructureNetwork {
+        id: id.into(),
+        name: name.into(),
+        kind,
+        nodes,
+        edges,
+    }
 }
 
 /// Summary statistics for a network.
@@ -269,7 +332,11 @@ mod tests {
     use thoth_spatial::SpatialContext;
 
     fn spatial() -> SpatialContext {
-        SpatialContext { crs: "EPSG:3857".into(), units: Unit::Meters, scale: 1.0 }
+        SpatialContext {
+            crs: "EPSG:3857".into(),
+            units: Unit::Meters,
+            scale: 1.0,
+        }
     }
 
     #[test]
@@ -279,7 +346,19 @@ mod tests {
             counter += 1;
             format!("n{}", counter - 1)
         };
-        let net = network_from_path("net1", "Main St", NetworkKind::Road, &vec![Point::new(0.0, 0.0), Point::new(100.0, 0.0), Point::new(100.0, 100.0)], make_id, Some(20.0), Some(RoadClass::Collector));
+        let net = network_from_path(
+            "net1",
+            "Main St",
+            NetworkKind::Road,
+            &vec![
+                Point::new(0.0, 0.0),
+                Point::new(100.0, 0.0),
+                Point::new(100.0, 100.0),
+            ],
+            make_id,
+            Some(20.0),
+            Some(RoadClass::Collector),
+        );
         assert_eq!(net.nodes.len(), 3);
         assert_eq!(net.edges.len(), 2);
         let (_, meters) = network_length(&net, &spatial());
@@ -296,16 +375,42 @@ mod tests {
             name: "Cross".into(),
             kind: NetworkKind::Road,
             nodes: vec![
-                NetworkNode { id: "c".into(), point: Point::new(0.0, 0.0) },
-                NetworkNode { id: "n".into(), point: Point::new(0.0, -10.0) },
-                NetworkNode { id: "s".into(), point: Point::new(0.0, 10.0) },
-                NetworkNode { id: "e".into(), point: Point::new(10.0, 0.0) },
-                NetworkNode { id: "w".into(), point: Point::new(-10.0, 0.0) },
+                NetworkNode {
+                    id: "c".into(),
+                    point: Point::new(0.0, 0.0),
+                },
+                NetworkNode {
+                    id: "n".into(),
+                    point: Point::new(0.0, -10.0),
+                },
+                NetworkNode {
+                    id: "s".into(),
+                    point: Point::new(0.0, 10.0),
+                },
+                NetworkNode {
+                    id: "e".into(),
+                    point: Point::new(10.0, 0.0),
+                },
+                NetworkNode {
+                    id: "w".into(),
+                    point: Point::new(-10.0, 0.0),
+                },
             ],
-            edges: vec![NetworkEdge::new("1", "c", "n"), NetworkEdge::new("2", "c", "s"), NetworkEdge::new("3", "c", "e"), NetworkEdge::new("4", "c", "w")],
+            edges: vec![
+                NetworkEdge::new("1", "c", "n"),
+                NetworkEdge::new("2", "c", "s"),
+                NetworkEdge::new("3", "c", "e"),
+                NetworkEdge::new("4", "c", "w"),
+            ],
         };
         let (intersections, dead_ends) = junctions(&net);
-        assert_eq!(intersections.iter().map(|n| n.id.as_str()).collect::<Vec<_>>(), vec!["c"]);
+        assert_eq!(
+            intersections
+                .iter()
+                .map(|n| n.id.as_str())
+                .collect::<Vec<_>>(),
+            vec!["c"]
+        );
         let mut dead_end_ids: Vec<&str> = dead_ends.iter().map(|n| n.id.as_str()).collect();
         dead_end_ids.sort_unstable();
         assert_eq!(dead_end_ids, vec!["e", "n", "s", "w"]);
@@ -319,12 +424,27 @@ mod tests {
             name: "Split".into(),
             kind: NetworkKind::Water,
             nodes: vec![
-                NetworkNode { id: "a".into(), point: Point::new(0.0, 0.0) },
-                NetworkNode { id: "b".into(), point: Point::new(1.0, 0.0) },
-                NetworkNode { id: "c".into(), point: Point::new(5.0, 5.0) },
-                NetworkNode { id: "d".into(), point: Point::new(6.0, 5.0) },
+                NetworkNode {
+                    id: "a".into(),
+                    point: Point::new(0.0, 0.0),
+                },
+                NetworkNode {
+                    id: "b".into(),
+                    point: Point::new(1.0, 0.0),
+                },
+                NetworkNode {
+                    id: "c".into(),
+                    point: Point::new(5.0, 5.0),
+                },
+                NetworkNode {
+                    id: "d".into(),
+                    point: Point::new(6.0, 5.0),
+                },
             ],
-            edges: vec![NetworkEdge::new("1", "a", "b"), NetworkEdge::new("2", "c", "d")],
+            edges: vec![
+                NetworkEdge::new("1", "a", "b"),
+                NetworkEdge::new("2", "c", "d"),
+            ],
         };
         assert_eq!(connected_components(&net), 2);
         assert!(!is_connected(&net));
@@ -337,7 +457,15 @@ mod tests {
             counter += 1;
             format!("n{}", counter - 1)
         };
-        let net = network_from_path("s", "Main", NetworkKind::Sewer, &vec![Point::new(0.0, 0.0), Point::new(100.0, 0.0)], make_id, None, None);
+        let net = network_from_path(
+            "s",
+            "Main",
+            NetworkKind::Sewer,
+            &vec![Point::new(0.0, 0.0), Point::new(100.0, 0.0)],
+            make_id,
+            None,
+            None,
+        );
         let points = vec![
             Point::new(50.0, 5.0),  // 5 away — served
             Point::new(50.0, 40.0), // 40 away — not served
@@ -348,7 +476,13 @@ mod tests {
 
     #[test]
     fn empty_network_has_zero_components_and_is_trivially_connected() {
-        let net = InfrastructureNetwork { id: "e".into(), name: "Empty".into(), kind: NetworkKind::Road, nodes: vec![], edges: vec![] };
+        let net = InfrastructureNetwork {
+            id: "e".into(),
+            name: "Empty".into(),
+            kind: NetworkKind::Road,
+            nodes: vec![],
+            edges: vec![],
+        };
         assert_eq!(connected_components(&net), 0);
         assert!(is_connected(&net));
     }

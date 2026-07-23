@@ -183,7 +183,8 @@ fn tmerc_forward(ellipsoid: Ellipsoid, lon0_deg: f64, lat_deg: f64, lon_deg: f64
 
     let x = K0
         * n
-        * (ax + (1.0 - t + c) * ax.powi(3) / 6.0
+        * (ax
+            + (1.0 - t + c) * ax.powi(3) / 6.0
             + (5.0 - 18.0 * t + t * t + 72.0 * c - 58.0 * ep2) * ax.powi(5) / 120.0)
         + 500_000.0;
     let y = K0
@@ -362,9 +363,7 @@ fn lcc_inverse(
         let sin_lat = lat.sin();
         let es_sin = e * sin_lat;
         lat = std::f64::consts::FRAC_PI_2
-            - 2.0
-                * (tp * ((1.0 - es_sin) / (1.0 + es_sin)).powf(e / 2.0))
-                    .atan();
+            - 2.0 * (tp * ((1.0 - es_sin) / (1.0 + es_sin)).powf(e / 2.0)).atan();
     }
     let lon = theta / n + lon0;
 
@@ -391,7 +390,9 @@ fn to_geographic(projection: Projection, x: f64, y: f64) -> (f64, f64) {
             x0,
             y0,
             to_meter,
-        } => lcc_inverse(GRS80, lat1_deg, lat2_deg, lat0_deg, lon0_deg, x0, y0, to_meter, x, y),
+        } => lcc_inverse(
+            GRS80, lat1_deg, lat2_deg, lat0_deg, lon0_deg, x0, y0, to_meter, x, y,
+        ),
     }
 }
 
@@ -402,8 +403,8 @@ fn from_geographic(projection: Projection, lon_deg: f64, lat_deg: f64) -> (f64, 
         Projection::LongLat => (lon_deg, lat_deg),
         Projection::Merc => {
             let x = WGS84.a * lon_deg.to_radians();
-            let y = WGS84.a
-                * ((std::f64::consts::FRAC_PI_4 + lat_deg.to_radians() / 2.0).tan()).ln();
+            let y =
+                WGS84.a * ((std::f64::consts::FRAC_PI_4 + lat_deg.to_radians() / 2.0).tan()).ln();
             (x, y)
         }
         Projection::Utm { zone } => {
@@ -435,7 +436,11 @@ fn assert_finite(point: Point) -> Result<(), GeospatialError> {
 }
 
 /// Reproject a single coordinate point from `from_crs` to `to_crs`.
-pub fn reproject_point(point: Point, from_crs: &str, to_crs: &str) -> Result<Point, GeospatialError> {
+pub fn reproject_point(
+    point: Point,
+    from_crs: &str,
+    to_crs: &str,
+) -> Result<Point, GeospatialError> {
     assert_finite(point)?;
     let from = resolve(from_crs);
     let to = resolve(to_crs);
@@ -470,7 +475,11 @@ pub fn reproject_points(
 /// Reproject an axis-aligned bounding box by transforming its four corners
 /// and re-deriving the envelope (correct even when the transform isn't
 /// axis-preserving, e.g. across a UTM zone boundary).
-pub fn reproject_bounds(bounds: Bounds, from_crs: &str, to_crs: &str) -> Result<Bounds, GeospatialError> {
+pub fn reproject_bounds(
+    bounds: Bounds,
+    from_crs: &str,
+    to_crs: &str,
+) -> Result<Bounds, GeospatialError> {
     let corners = [
         Point::new(bounds.min_x, bounds.min_y),
         Point::new(bounds.max_x, bounds.min_y),

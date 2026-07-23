@@ -227,7 +227,13 @@ fn square_meters_to(sqm: f64, unit: AreaUnit) -> f64 {
 }
 
 /// Build the tabulated curve record for an arc course.
-fn curve_record(course_index: u32, curve_no: u32, from: Point, to: Point, arc: &Arc) -> CurveRecord {
+fn curve_record(
+    course_index: u32,
+    curve_no: u32,
+    from: Point,
+    to: Point,
+    arc: &Arc,
+) -> CurveRecord {
     let chord_az = azimuth(from, to);
     let delta = arc.delta * DEG;
     let mid = Point::new((from.x + to.x) / 2.0, (from.y + to.y) / 2.0);
@@ -295,7 +301,12 @@ pub fn polygon_courses(
             bearing_text: format_bearing(&bearing),
             bearing,
             distance: dist,
-            distance_meters: dist * if spatial.units == Unit::Feet { 0.3048 } else { 1.0 },
+            distance_meters: dist
+                * if spatial.units == Unit::Feet {
+                    0.3048
+                } else {
+                    1.0
+                },
             latitude: rad.cos() * dist,
             departure: rad.sin() * dist,
             curve,
@@ -429,7 +440,11 @@ pub fn boundary_coordinates(polygon: &Polygon, basis: CoordinateBasis) -> Vec<Co
 
 /// Area of a boundary, honoring any curved edges, reported in the plan's
 /// square unit and in acres/hectares/square-meters.
-pub fn survey_area(polygon: &Polygon, spatial: &SpatialContext, arcs: Option<&EdgeArcs>) -> SurveyArea {
+pub fn survey_area(
+    polygon: &Polygon,
+    spatial: &SpatialContext,
+    arcs: Option<&EdgeArcs>,
+) -> SurveyArea {
     let sqm = area_to_square_meters(boundary_area(polygon, arcs), spatial);
     let factor = if spatial.units == Unit::Feet {
         0.092_903_04
@@ -446,7 +461,11 @@ pub fn survey_area(polygon: &Polygon, spatial: &SpatialContext, arcs: Option<&Ed
 }
 
 /// Compute the full survey report for a boundary, honoring any curved edges.
-pub fn survey_report(polygon: &Polygon, spatial: &SpatialContext, arcs: Option<&EdgeArcs>) -> SurveyReport {
+pub fn survey_report(
+    polygon: &Polygon,
+    spatial: &SpatialContext,
+    arcs: Option<&EdgeArcs>,
+) -> SurveyReport {
     let courses = polygon_courses(polygon, spatial, arcs);
     let perimeter = boundary_perimeter(polygon, arcs);
     let angle_degrees = interior_angles(polygon);
@@ -465,7 +484,12 @@ pub fn survey_report(polygon: &Polygon, spatial: &SpatialContext, arcs: Option<&
         curves,
         has_curves: courses.iter().any(|c| c.curve.is_some()),
         closure: traverse_closure(&courses),
-        record: record_closure(&courses, RecordClosureOptions { distance_precision: Some(2) }),
+        record: record_closure(
+            &courses,
+            RecordClosureOptions {
+                distance_precision: Some(2),
+            },
+        ),
         coordinates: boundary_coordinates(polygon, CoordinateBasis::default()),
         angles,
         angles_sum,
@@ -473,7 +497,12 @@ pub fn survey_report(polygon: &Polygon, spatial: &SpatialContext, arcs: Option<&
         area: survey_area(polygon, spatial, arcs),
         area_by_dmd: dmd_area(&courses),
         perimeter,
-        perimeter_meters: perimeter * if spatial.units == Unit::Feet { 0.3048 } else { 1.0 },
+        perimeter_meters: perimeter
+            * if spatial.units == Unit::Feet {
+                0.3048
+            } else {
+                1.0
+            },
         units: spatial.units,
         courses,
     }
@@ -916,7 +945,10 @@ mod tests {
         let courses = polygon_courses(&square(), &spatial, None);
         assert_eq!(courses.len(), 4);
         let texts: Vec<&str> = courses.iter().map(|c| c.bearing_text.as_str()).collect();
-        assert_eq!(texts, vec!["Due East", "Due South", "Due West", "Due North"]);
+        assert_eq!(
+            texts,
+            vec!["Due East", "Due South", "Due West", "Due North"]
+        );
         assert!(courses.iter().all(|c| (c.distance - 100.0).abs() < 1e-9));
     }
 
@@ -932,7 +964,10 @@ mod tests {
     #[test]
     fn closes_the_recorded_rounded_traverse() {
         let spatial = spatial_meters();
-        let record = record_closure(&polygon_courses(&square(), &spatial, None), RecordClosureOptions::default());
+        let record = record_closure(
+            &polygon_courses(&square(), &spatial, None),
+            RecordClosureOptions::default(),
+        );
         assert_eq!(record.precision_text(), "Exact (closed)");
 
         let tri: Polygon = vec![
@@ -940,7 +975,10 @@ mod tests {
             Point::new(100.0, 0.0),
             Point::new(40.0, 70.0),
         ];
-        let rec = record_closure(&polygon_courses(&tri, &spatial, None), RecordClosureOptions::default());
+        let rec = record_closure(
+            &polygon_courses(&tri, &spatial, None),
+            RecordClosureOptions::default(),
+        );
         assert!(rec.linear_misclosure < 0.05);
         assert!(rec.perimeter > 0.0);
     }
@@ -971,7 +1009,11 @@ mod tests {
     #[test]
     fn recovers_the_azimuth_from_a_quadrant_bearing() {
         for az in [15.5, 100.25, 210.9, 355.1, 44.999] {
-            assert_relative_eq!(bearing_to_azimuth(&azimuth_to_bearing(az)), az, epsilon = 1e-3);
+            assert_relative_eq!(
+                bearing_to_azimuth(&azimuth_to_bearing(az)),
+                az,
+                epsilon = 1e-3
+            );
         }
     }
 
@@ -1031,8 +1073,16 @@ mod tests {
         assert_relative_eq!(c.arc_length, std::f64::consts::PI * 50.0, epsilon = 1e-6);
 
         assert_relative_eq!(report.area.square_units, 10000.0 + semi, epsilon = 1e-3);
-        assert_relative_eq!(report.perimeter, 300.0 + std::f64::consts::PI * 50.0, epsilon = 1e-6);
-        assert_relative_eq!(report.area.square_units - report.area_by_dmd, semi, epsilon = 1e-3);
+        assert_relative_eq!(
+            report.perimeter,
+            300.0 + std::f64::consts::PI * 50.0,
+            epsilon = 1e-6
+        );
+        assert_relative_eq!(
+            report.area.square_units - report.area_by_dmd,
+            semi,
+            epsilon = 1e-3
+        );
     }
 
     #[test]
@@ -1156,6 +1206,7 @@ mod tests {
         ));
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn manual_course(
         from: Point,
         to: Point,
@@ -1220,10 +1271,46 @@ mod tests {
         };
 
         let courses = vec![
-            manual_course(Point::new(0.0, 0.0), Point::new(100.0, 0.0), due_east, "Due East", 100.0, 0.0, 100.0, 1),
-            manual_course(Point::new(100.0, 0.0), Point::new(100.0, 100.0), due_south, "Due South", 100.0, -100.0, 0.0, 2),
-            manual_course(Point::new(100.0, 100.0), Point::new(0.0, 100.0), due_west, "Due West", 100.0, 0.0, -100.0, 3),
-            manual_course(Point::new(0.0, 100.0), Point::new(2.0, 0.0), due_north, "Due North", 100.0, 100.0, 2.0, 4),
+            manual_course(
+                Point::new(0.0, 0.0),
+                Point::new(100.0, 0.0),
+                due_east,
+                "Due East",
+                100.0,
+                0.0,
+                100.0,
+                1,
+            ),
+            manual_course(
+                Point::new(100.0, 0.0),
+                Point::new(100.0, 100.0),
+                due_south,
+                "Due South",
+                100.0,
+                -100.0,
+                0.0,
+                2,
+            ),
+            manual_course(
+                Point::new(100.0, 100.0),
+                Point::new(0.0, 100.0),
+                due_west,
+                "Due West",
+                100.0,
+                0.0,
+                -100.0,
+                3,
+            ),
+            manual_course(
+                Point::new(0.0, 100.0),
+                Point::new(2.0, 0.0),
+                due_north,
+                "Due North",
+                100.0,
+                100.0,
+                2.0,
+                4,
+            ),
         ];
 
         let closure_before = traverse_closure(&courses);
@@ -1272,10 +1359,46 @@ mod tests {
         };
 
         let courses = vec![
-            manual_course(Point::new(0.0, 0.0), Point::new(100.0, 0.0), due_east, "Due East", 100.0, 0.0, 100.0, 1),
-            manual_course(Point::new(100.0, 0.0), Point::new(100.0, 100.0), due_south, "Due South", 100.0, -100.0, 0.0, 2),
-            manual_course(Point::new(100.0, 100.0), Point::new(0.0, 100.0), due_west, "Due West", 100.0, 0.0, -100.0, 3),
-            manual_course(Point::new(0.0, 100.0), Point::new(0.0, -2.0), due_north, "Due North", 102.0, 102.0, 0.0, 4),
+            manual_course(
+                Point::new(0.0, 0.0),
+                Point::new(100.0, 0.0),
+                due_east,
+                "Due East",
+                100.0,
+                0.0,
+                100.0,
+                1,
+            ),
+            manual_course(
+                Point::new(100.0, 0.0),
+                Point::new(100.0, 100.0),
+                due_south,
+                "Due South",
+                100.0,
+                -100.0,
+                0.0,
+                2,
+            ),
+            manual_course(
+                Point::new(100.0, 100.0),
+                Point::new(0.0, 100.0),
+                due_west,
+                "Due West",
+                100.0,
+                0.0,
+                -100.0,
+                3,
+            ),
+            manual_course(
+                Point::new(0.0, 100.0),
+                Point::new(0.0, -2.0),
+                due_north,
+                "Due North",
+                102.0,
+                102.0,
+                0.0,
+                4,
+            ),
         ];
 
         let adjusted = adjust_traverse(&courses, AdjustmentMethod::Transit);

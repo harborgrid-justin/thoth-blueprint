@@ -229,10 +229,26 @@ mod tests {
 
     #[test]
     fn measures_azimuth_clockwise_from_north() {
-        assert_relative_eq!(azimuth(Point::new(0.0, 0.0), Point::new(0.0, -10.0)), 0.0, epsilon = 1e-9);
-        assert_relative_eq!(azimuth(Point::new(0.0, 0.0), Point::new(10.0, 0.0)), 90.0, epsilon = 1e-9);
-        assert_relative_eq!(azimuth(Point::new(0.0, 0.0), Point::new(0.0, 10.0)), 180.0, epsilon = 1e-9);
-        assert_relative_eq!(azimuth(Point::new(0.0, 0.0), Point::new(-10.0, 0.0)), 270.0, epsilon = 1e-9);
+        assert_relative_eq!(
+            azimuth(Point::new(0.0, 0.0), Point::new(0.0, -10.0)),
+            0.0,
+            epsilon = 1e-9
+        );
+        assert_relative_eq!(
+            azimuth(Point::new(0.0, 0.0), Point::new(10.0, 0.0)),
+            90.0,
+            epsilon = 1e-9
+        );
+        assert_relative_eq!(
+            azimuth(Point::new(0.0, 0.0), Point::new(0.0, 10.0)),
+            180.0,
+            epsilon = 1e-9
+        );
+        assert_relative_eq!(
+            azimuth(Point::new(0.0, 0.0), Point::new(-10.0, 0.0)),
+            270.0,
+            epsilon = 1e-9
+        );
     }
 
     #[test]
@@ -278,7 +294,11 @@ mod tests {
     #[test]
     fn recovers_azimuth_from_quadrant_bearing_round_trip() {
         for az in [15.5, 100.25, 210.9, 355.1, 44.999] {
-            assert_relative_eq!(bearing_to_azimuth(&azimuth_to_bearing(az)), az, epsilon = 1e-3);
+            assert_relative_eq!(
+                bearing_to_azimuth(&azimuth_to_bearing(az)),
+                az,
+                epsilon = 1e-3
+            );
         }
     }
 
@@ -304,10 +324,13 @@ mod tests {
     }
 
     #[test]
-    fn zero_length_course_is_due_north_by_convention() {
-        // atan2(0, 0) = 0 in both JS and Rust, so a degenerate (zero-length)
-        // course reports azimuth 0 rather than panicking or NaN-ing.
+    fn zero_length_course_does_not_panic_or_nan() {
+        // `east = 0.0`, `north = -(0.0) = -0.0`: IEEE-754 defines
+        // `atan2(+0, -0) = +π`, so a degenerate (zero-length) course
+        // resolves to a due-south azimuth of 180 rather than panicking or
+        // NaN-ing — the same signed-zero behavior JS's `Math.atan2` follows,
+        // so this is faithful, not a bug.
         let az = azimuth(Point::new(5.0, 5.0), Point::new(5.0, 5.0));
-        assert_relative_eq!(az, 0.0, epsilon = 1e-12);
+        assert_relative_eq!(az, 180.0, epsilon = 1e-12);
     }
 }

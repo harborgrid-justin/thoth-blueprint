@@ -105,7 +105,11 @@ pub fn sample_along(pts: &[Point], spacing: f64) -> Vec<Sample> {
             seg_start += seg_len[seg];
             seg += 1;
         }
-        let l = if seg_len[seg] != 0.0 { seg_len[seg] } else { 1.0 };
+        let l = if seg_len[seg] != 0.0 {
+            seg_len[seg]
+        } else {
+            1.0
+        };
         let a = pts[seg];
         let b = pts[seg + 1];
         let t = ((d - seg_start) / l).clamp(0.0, 1.0);
@@ -233,8 +237,8 @@ pub fn densify_arc(a: Point, b: Point, bulge: f64, deg_per_step: f64) -> Vec<Poi
         Some(arc) => arc,
         None => return Vec::new(),
     };
-    let steps = (((arc.delta * (180.0 / std::f64::consts::PI)) / deg_per_step).ceil() as i64)
-        .max(2) as usize;
+    let steps = (((arc.delta * (180.0 / std::f64::consts::PI)) / deg_per_step).ceil() as i64).max(2)
+        as usize;
     let ang_a = (a.y - arc.center.y).atan2(a.x - arc.center.x);
     let mut points = Vec::with_capacity(steps.saturating_sub(1));
     for i in 1..steps {
@@ -286,7 +290,9 @@ pub fn boundary_edges(boundary: &[Point], arcs: Option<&EdgeArcs>) -> Vec<Bounda
 pub fn has_arcs(boundary: &[Point], arcs: Option<&EdgeArcs>) -> bool {
     match arcs {
         None => false,
-        Some(_) => boundary_edges(boundary, arcs).iter().any(|e| e.arc.is_some()),
+        Some(_) => boundary_edges(boundary, arcs)
+            .iter()
+            .any(|e| e.arc.is_some()),
     }
 }
 

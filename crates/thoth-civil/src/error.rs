@@ -40,11 +40,7 @@ pub enum CivilError {
     /// A queried world point falls outside the data envelope a grid or
     /// point-cloud actually covers (no extrapolation is performed).
     #[error("point ({x}, {y}) lies outside the surface's data envelope {envelope}")]
-    OutsideDataEnvelope {
-        x: f64,
-        y: f64,
-        envelope: String,
-    },
+    OutsideDataEnvelope { x: f64, y: f64, envelope: String },
 
     /// A ring needs at least 3 vertices to bound an area.
     #[error("polygon must have at least 3 vertices, got {count}")]
@@ -67,12 +63,18 @@ pub enum CivilError {
     /// A point-cloud or terrain source file/buffer is structurally invalid
     /// for the format being parsed.
     #[error("malformed {format} data: {reason}")]
-    MalformedData { format: &'static str, reason: String },
+    MalformedData {
+        format: &'static str,
+        reason: String,
+    },
 
     /// An iterative solver (e.g. balanced-elevation search) failed to
     /// converge within its iteration budget.
     #[error("{solver} did not converge within {iterations} iterations")]
-    ConvergenceFailure { solver: &'static str, iterations: u32 },
+    ConvergenceFailure {
+        solver: &'static str,
+        iterations: u32,
+    },
 
     /// A vertical or horizontal curve's parameters are geometrically
     /// impossible (e.g. a curve tangent longer than the tangent it sits on).

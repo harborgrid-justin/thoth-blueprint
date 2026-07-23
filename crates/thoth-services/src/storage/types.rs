@@ -74,9 +74,7 @@ pub struct StorageConfig {
 
 /// Collection names become SQL table identifiers (SQLite and Postgres both),
 /// so they're restricted to a safe, unambiguous character set.
-pub(crate) fn assert_valid_collection_name(
-    collection: &str,
-) -> Result<(), super::StorageError> {
+pub(crate) fn assert_valid_collection_name(collection: &str) -> Result<(), super::StorageError> {
     let mut chars = collection.chars();
     let first_ok = chars
         .next()

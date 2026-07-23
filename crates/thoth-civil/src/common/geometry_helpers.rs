@@ -106,7 +106,11 @@ mod tests {
     #[test]
     fn centroid_falls_back_to_vertex_mean_for_degenerate_ring() {
         // Three collinear points: signed area is exactly zero.
-        let collinear = vec![Point::new(0.0, 0.0), Point::new(1.0, 0.0), Point::new(2.0, 0.0)];
+        let collinear = vec![
+            Point::new(0.0, 0.0),
+            Point::new(1.0, 0.0),
+            Point::new(2.0, 0.0),
+        ];
         let c = calculate_polygon_centroid(&collinear);
         assert_relative_eq!(c.x, 1.0, epsilon = 1e-12);
         assert_relative_eq!(c.y, 0.0, epsilon = 1e-12);

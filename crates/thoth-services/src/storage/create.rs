@@ -200,18 +200,26 @@ mod tests {
         // avoid mutating shared process env from a test.
         assert!(matches!(driver, StorageDriver::Sqlite));
         assert_eq!(StorageDriver::parse("memory"), Some(StorageDriver::Memory));
-        assert_eq!(StorageDriver::parse("postgres"), Some(StorageDriver::Postgres));
+        assert_eq!(
+            StorageDriver::parse("postgres"),
+            Some(StorageDriver::Postgres)
+        );
         assert_eq!(StorageDriver::parse("bogus"), None);
     }
 
     #[tokio::test]
     async fn returns_a_clear_error_when_postgres_is_selected_without_configuration() {
+        // `.unwrap_err()` would require `Storage: Debug` for its panic
+        // message; `Storage` deliberately isn't `Debug` (its Postgres
+        // variant wraps a `tokio_postgres::Client`, which isn't either), so
+        // go through `Result::err` instead.
         let err = create_storage(StorageConfig {
             driver: Some(StorageDriver::Postgres),
             ..Default::default()
         })
         .await
-        .unwrap_err();
+        .err()
+        .unwrap();
         assert!(matches!(err, StorageError::PostgresNotConfigured));
     }
 }

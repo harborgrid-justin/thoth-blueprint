@@ -52,7 +52,10 @@ pub struct Subassembly {
 
 impl Subassembly {
     fn get(&self, name: &str, default: f64) -> f64 {
-        self.parameters.iter().find(|p| p.name == name).map_or(default, |p| p.value)
+        self.parameters
+            .iter()
+            .find(|p| p.name == name)
+            .map_or(default, |p| p.value)
     }
 }
 
@@ -79,11 +82,29 @@ pub struct AssemblyPoint {
 /// a given [`Assembly`]. `left_superelevation_slope`/
 /// `right_superelevation_slope` default to the federal normal crown (`-0.02`)
 /// when the caller has no superelevation curve to consult.
-pub fn resolve_assembly_offset(assembly: &Assembly, left_superelevation_slope: f64, right_superelevation_slope: f64) -> Vec<AssemblyPoint> {
-    let mut points = vec![AssemblyPoint { code: "Centerline".to_string(), x: 0.0, y: 0.0 }];
+pub fn resolve_assembly_offset(
+    assembly: &Assembly,
+    left_superelevation_slope: f64,
+    right_superelevation_slope: f64,
+) -> Vec<AssemblyPoint> {
+    let mut points = vec![AssemblyPoint {
+        code: "Centerline".to_string(),
+        x: 0.0,
+        y: 0.0,
+    }];
 
-    resolve_side(assembly.left_subassemblies.as_slice(), -1.0, left_superelevation_slope, &mut points);
-    resolve_side(assembly.right_subassemblies.as_slice(), 1.0, right_superelevation_slope, &mut points);
+    resolve_side(
+        assembly.left_subassemblies.as_slice(),
+        -1.0,
+        left_superelevation_slope,
+        &mut points,
+    );
+    resolve_side(
+        assembly.right_subassemblies.as_slice(),
+        1.0,
+        right_superelevation_slope,
+        &mut points,
+    );
 
     points
 }
@@ -94,53 +115,102 @@ pub const DEFAULT_NORMAL_CROWN: f64 = -0.02;
 /// Federal default lane width (ft), mirroring `standards.roads.defaultLaneWidthFt`.
 pub const DEFAULT_LANE_WIDTH_FT: f64 = 12.0;
 
-fn resolve_side(subassemblies: &[Subassembly], side_sign: f64, slope: f64, points: &mut Vec<AssemblyPoint>) {
+fn resolve_side(
+    subassemblies: &[Subassembly],
+    side_sign: f64,
+    slope: f64,
+    points: &mut Vec<AssemblyPoint>,
+) {
     let mut current_x = 0.0;
     let mut current_y = 0.0;
 
     for sub in subassemblies {
-        let side_label = if sub.side == Side::Left { "left" } else { "right" };
+        let side_label = if sub.side == Side::Left {
+            "left"
+        } else {
+            "right"
+        };
         match sub.subassembly_type {
             SubassemblyType::Lane => {
                 let width = sub.get("Width", DEFAULT_LANE_WIDTH_FT);
                 current_x += width * side_sign;
                 current_y += width * slope;
-                points.push(AssemblyPoint { code: format!("EdgeOfPavement_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("EdgeOfPavement_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
             }
             SubassemblyType::CurbAndGutter => {
                 let width = sub.get("CurbWidth", 1.5);
                 let height = sub.get("CurbHeight", 0.5);
-                points.push(AssemblyPoint { code: format!("CurbGutter_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("CurbGutter_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
                 current_x += width * side_sign;
                 current_y += height;
-                points.push(AssemblyPoint { code: format!("CurbTop_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("CurbTop_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
             }
             SubassemblyType::Sidewalk => {
                 let width = sub.get("SidewalkWidth", 5.0);
                 let slope_val = sub.get("SidewalkSlope", 0.01);
                 current_x += width * side_sign;
                 current_y += width * slope_val;
-                points.push(AssemblyPoint { code: format!("SidewalkOuter_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("SidewalkOuter_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
             }
             SubassemblyType::Median => {
                 let width = sub.get("Width", 10.0);
                 let depth = sub.get("DepressionDepth", 0.5);
-                points.push(AssemblyPoint { code: format!("MedianEdge_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("MedianEdge_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
                 current_x += (width / 2.0) * side_sign;
                 current_y -= depth;
-                points.push(AssemblyPoint { code: format!("MedianCenter_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("MedianCenter_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
                 current_x += (width / 2.0) * side_sign;
                 current_y += depth;
-                points.push(AssemblyPoint { code: format!("MedianOuter_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("MedianOuter_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
             }
             SubassemblyType::RetainingWall => {
                 let height = sub.get("WallHeight", 6.0);
                 let thickness = sub.get("WallThickness", 1.0);
-                points.push(AssemblyPoint { code: format!("RetainingWallBase_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("RetainingWallBase_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
                 current_y += height;
-                points.push(AssemblyPoint { code: format!("RetainingWallTop_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("RetainingWallTop_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
                 current_x += thickness * side_sign;
-                points.push(AssemblyPoint { code: format!("RetainingWallBack_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("RetainingWallBack_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
             }
             SubassemblyType::DaylightBench => {
                 let bench_width = sub.get("BenchWidth", 4.0);
@@ -148,27 +218,51 @@ fn resolve_side(subassemblies: &[Subassembly], side_sign: f64, slope: f64, point
                 let slope = sub.get("Slope", 2.0);
                 current_x += (bench_height * slope) * side_sign;
                 current_y -= bench_height;
-                points.push(AssemblyPoint { code: format!("BenchStep_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("BenchStep_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
                 current_x += bench_width * side_sign;
-                points.push(AssemblyPoint { code: format!("BenchFlat_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("BenchFlat_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
             }
             SubassemblyType::LinkWidthAndSlope => {
                 let width = sub.get("Width", 8.0);
                 let link_slope = sub.get("Slope", -0.04);
                 current_x += width * side_sign;
                 current_y += width * link_slope;
-                points.push(AssemblyPoint { code: format!("LinkWidthSlope_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("LinkWidthSlope_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
             }
             SubassemblyType::ConditionalCutOrFill => {
-                let mode = if sub.get("IsCut", 1.0) == 1.0 { "Cut" } else { "Fill" };
-                points.push(AssemblyPoint { code: format!("Conditional_{mode}_{side_label}"), x: current_x, y: current_y });
+                let mode = if sub.get("IsCut", 1.0) == 1.0 {
+                    "Cut"
+                } else {
+                    "Fill"
+                };
+                points.push(AssemblyPoint {
+                    code: format!("Conditional_{mode}_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
             }
             SubassemblyType::Daylight => {
                 let fill_slope = sub.get("FillSlope", 3.0);
                 let assumed_depth = 10.0;
                 current_x += (assumed_depth * fill_slope) * side_sign;
                 current_y -= assumed_depth;
-                points.push(AssemblyPoint { code: format!("DaylightTarget_{side_label}"), x: current_x, y: current_y });
+                points.push(AssemblyPoint {
+                    code: format!("DaylightTarget_{side_label}"),
+                    x: current_x,
+                    y: current_y,
+                });
             }
             SubassemblyType::LinkSlopeToSurface | SubassemblyType::SubassemblyTransition => {
                 // Not modeled by the TS `resolveAssemblyOffset` either — these
@@ -185,8 +279,35 @@ pub fn mirror_subassemblies(subassemblies: &[Subassembly], target_side: Side) ->
     subassemblies
         .iter()
         .map(|sub| Subassembly {
-            id: format!("{}-mirrored", sub.id.replacen(if sub.side == Side::Left { "left" } else { "right" }, if target_side == Side::Left { "left" } else { "right" }, 1)),
-            name: sub.name.replacen(if sub.side == Side::Left { "Left" } else { "Right" }, if target_side == Side::Left { "Left" } else { "Right" }, 1),
+            id: format!(
+                "{}-mirrored",
+                sub.id.replacen(
+                    if sub.side == Side::Left {
+                        "left"
+                    } else {
+                        "right"
+                    },
+                    if target_side == Side::Left {
+                        "left"
+                    } else {
+                        "right"
+                    },
+                    1
+                )
+            ),
+            name: sub.name.replacen(
+                if sub.side == Side::Left {
+                    "Left"
+                } else {
+                    "Right"
+                },
+                if target_side == Side::Left {
+                    "Left"
+                } else {
+                    "Right"
+                },
+                1,
+            ),
             side: target_side,
             subassembly_type: sub.subassembly_type,
             parameters: sub.parameters.clone(),
@@ -228,28 +349,64 @@ pub fn get_default_subassemblies(side: Side) -> Vec<Subassembly> {
             name: format!("{cap} Lane"),
             side,
             subassembly_type: SubassemblyType::Lane,
-            parameters: vec![SubassemblyParam { name: "Width", value: 12.0 }, SubassemblyParam { name: "Slope", value: -0.02 }],
+            parameters: vec![
+                SubassemblyParam {
+                    name: "Width",
+                    value: 12.0,
+                },
+                SubassemblyParam {
+                    name: "Slope",
+                    value: -0.02,
+                },
+            ],
         },
         Subassembly {
             id: format!("{label}-curb-1"),
             name: format!("{cap} Curb"),
             side,
             subassembly_type: SubassemblyType::CurbAndGutter,
-            parameters: vec![SubassemblyParam { name: "CurbWidth", value: 1.5 }, SubassemblyParam { name: "CurbHeight", value: 0.5 }],
+            parameters: vec![
+                SubassemblyParam {
+                    name: "CurbWidth",
+                    value: 1.5,
+                },
+                SubassemblyParam {
+                    name: "CurbHeight",
+                    value: 0.5,
+                },
+            ],
         },
         Subassembly {
             id: format!("{label}-sidewalk-1"),
             name: format!("{cap} Sidewalk"),
             side,
             subassembly_type: SubassemblyType::Sidewalk,
-            parameters: vec![SubassemblyParam { name: "SidewalkWidth", value: 5.0 }, SubassemblyParam { name: "SidewalkSlope", value: 0.015 }],
+            parameters: vec![
+                SubassemblyParam {
+                    name: "SidewalkWidth",
+                    value: 5.0,
+                },
+                SubassemblyParam {
+                    name: "SidewalkSlope",
+                    value: 0.015,
+                },
+            ],
         },
         Subassembly {
             id: format!("{label}-daylight-1"),
             name: format!("{cap} Daylight"),
             side,
             subassembly_type: SubassemblyType::Daylight,
-            parameters: vec![SubassemblyParam { name: "CutSlope", value: 2.0 }, SubassemblyParam { name: "FillSlope", value: 3.0 }],
+            parameters: vec![
+                SubassemblyParam {
+                    name: "CutSlope",
+                    value: 2.0,
+                },
+                SubassemblyParam {
+                    name: "FillSlope",
+                    value: 3.0,
+                },
+            ],
         },
     ]
 }
@@ -259,16 +416,44 @@ mod tests {
     use super::*;
 
     fn lane(id: &str, side: Side, width: f64) -> Subassembly {
-        Subassembly { id: id.to_string(), name: format!("{:?} Lane", side), side, subassembly_type: SubassemblyType::Lane, parameters: vec![SubassemblyParam { name: "Width", value: width }] }
+        Subassembly {
+            id: id.to_string(),
+            name: format!("{:?} Lane", side),
+            side,
+            subassembly_type: SubassemblyType::Lane,
+            parameters: vec![SubassemblyParam {
+                name: "Width",
+                value: width,
+            }],
+        }
     }
 
     #[test]
     fn resolves_coordinate_offsets_along_assembly_components() {
-        let assembly = Assembly { id: "as-1".into(), name: "Assembly A".into(), left_subassemblies: vec![lane("l1", Side::Left, 12.0)], right_subassemblies: vec![lane("r1", Side::Right, 12.0)] };
+        let assembly = Assembly {
+            id: "as-1".into(),
+            name: "Assembly A".into(),
+            left_subassemblies: vec![lane("l1", Side::Left, 12.0)],
+            right_subassemblies: vec![lane("r1", Side::Right, 12.0)],
+        };
         let points = resolve_assembly_offset(&assembly, -0.02, -0.02);
         assert_eq!(points.len(), 3);
-        assert_eq!(points.iter().find(|p| p.code == "EdgeOfPavement_left").unwrap().x, -12.0);
-        assert_eq!(points.iter().find(|p| p.code == "EdgeOfPavement_right").unwrap().x, 12.0);
+        assert_eq!(
+            points
+                .iter()
+                .find(|p| p.code == "EdgeOfPavement_left")
+                .unwrap()
+                .x,
+            -12.0
+        );
+        assert_eq!(
+            points
+                .iter()
+                .find(|p| p.code == "EdgeOfPavement_right")
+                .unwrap()
+                .x,
+            12.0
+        );
     }
 
     #[test]
@@ -288,7 +473,12 @@ mod tests {
 
     #[test]
     fn export_assembly_set_to_xml_contains_subassembly_ids() {
-        let assembly = Assembly { id: "as-1".into(), name: "A".into(), left_subassemblies: vec![lane("l1", Side::Left, 12.0)], right_subassemblies: vec![] };
+        let assembly = Assembly {
+            id: "as-1".into(),
+            name: "A".into(),
+            left_subassemblies: vec![lane("l1", Side::Left, 12.0)],
+            right_subassemblies: vec![],
+        };
         let xml = export_assembly_set_to_xml(&assembly);
         assert!(xml.contains("id=\"l1\""));
         assert!(xml.contains("AssemblySet name=\"A\""));

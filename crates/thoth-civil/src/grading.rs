@@ -9,7 +9,10 @@
 //! textbook cubic-feet-per-cubic-yard conversion) is mirrored here as
 //! [`CU_FT_PER_CU_YD`].
 
-use thoth_spatial::{add, closest_point_on_segment, distance, length, point_in_polygon, scale, subtract, Point, Polygon};
+use thoth_spatial::{
+    add, closest_point_on_segment, distance, length, point_in_polygon, scale, subtract, Point,
+    Polygon,
+};
 
 use crate::terrain::{elevation_at, ElevationGrid};
 
@@ -108,7 +111,12 @@ fn distance_to_polygon(p: Point, polygon: &[Point]) -> f64 {
 
 /// Computes grading volumes by sampling a grid inside the pad's horizontal
 /// footprint and surrounding daylight buffer.
-pub fn calculate_grading_volumes(pad: &GradingPad, pad_z: f64, surface: &ElevationGrid, grid_resolution: f64) -> VolumeReport {
+pub fn calculate_grading_volumes(
+    pad: &GradingPad,
+    pad_z: f64,
+    surface: &ElevationGrid,
+    grid_resolution: f64,
+) -> VolumeReport {
     // Determine bounding box around the pad with a daylight buffer offset.
     let buffer = 150.0; // max daylight run length
     let xs: Vec<f64> = pad.points.iter().map(|p| p.x).collect();
@@ -129,7 +137,11 @@ pub fn calculate_grading_volumes(pad: &GradingPad, pad_z: f64, surface: &Elevati
     while x <= max_x {
         let mut y = min_y;
         while y <= max_y {
-            if x < surface.origin().x || x > surface_max_x || y < surface.origin().y || y > surface_max_y {
+            if x < surface.origin().x
+                || x > surface_max_x
+                || y < surface.origin().y
+                || y > surface_max_y
+            {
                 y += grid_resolution;
                 continue;
             }
@@ -171,7 +183,11 @@ pub fn calculate_grading_volumes(pad: &GradingPad, pad_z: f64, surface: &Elevati
     let cut_volume = total_cut_volume / CU_FT_PER_CU_YD;
     let fill_volume = total_fill_volume / CU_FT_PER_CU_YD;
 
-    VolumeReport { cut_volume, fill_volume, net_volume: cut_volume - fill_volume }
+    VolumeReport {
+        cut_volume,
+        fill_volume,
+        net_volume: cut_volume - fill_volume,
+    }
 }
 
 /// Iteratively solves for the grading pad elevation that achieves a balanced
@@ -179,7 +195,12 @@ pub fn calculate_grading_volumes(pad: &GradingPad, pad_z: f64, surface: &Elevati
 /// bisection over `[-100, 500]`. Returns the best elevation found after 20
 /// iterations even if it hasn't converged within `tolerance` — mirrors the TS
 /// source, which never signals non-convergence either.
-pub fn solve_balanced_elevation(pad: &GradingPad, surface: &ElevationGrid, target_net_volume: f64, tolerance: f64) -> f64 {
+pub fn solve_balanced_elevation(
+    pad: &GradingPad,
+    surface: &ElevationGrid,
+    target_net_volume: f64,
+    tolerance: f64,
+) -> f64 {
     let mut low_z = -100.0;
     let mut high_z = 500.0;
     let mut balanced_z = (low_z + high_z) / 2.0;
@@ -209,13 +230,22 @@ pub fn solve_balanced_elevation(pad: &GradingPad, surface: &ElevationGrid, targe
 /// Drape a 2D polyline onto an `ElevationGrid` surface to create a 3D
 /// feature line.
 pub fn drape_polyline(points: &[Point], surface: &ElevationGrid) -> Vec<Point3D> {
-    points.iter().map(|&p| Point3D::new(p.x, p.y, elevation_at(surface, p))).collect()
+    points
+        .iter()
+        .map(|&p| Point3D::new(p.x, p.y, elevation_at(surface, p)))
+        .collect()
 }
 
 /// Calculate daylight points for a 3D feature line projecting to meet a
 /// terrain surface. `cut_slope`/`fill_slope` are H:V ratios (e.g. `2.0` for
 /// 2:1); `search_distance` bounds how far the ray marches outward.
-pub fn calculate_daylight_line(feature_line: &[Point3D], surface: &ElevationGrid, cut_slope: f64, fill_slope: f64, search_distance: f64) -> Vec<Point3D> {
+pub fn calculate_daylight_line(
+    feature_line: &[Point3D],
+    surface: &ElevationGrid,
+    cut_slope: f64,
+    fill_slope: f64,
+    search_distance: f64,
+) -> Vec<Point3D> {
     let mut daylight_line = Vec::new();
     let n = feature_line.len();
     if n < 2 {
@@ -229,14 +259,25 @@ pub fn calculate_daylight_line(feature_line: &[Point3D], surface: &ElevationGrid
         let (tx, ty) = if i == 0 {
             (feature_line[1].x - curr.x, feature_line[1].y - curr.y)
         } else if i == n - 1 {
-            (curr.x - feature_line[n - 2].x, curr.y - feature_line[n - 2].y)
+            (
+                curr.x - feature_line[n - 2].x,
+                curr.y - feature_line[n - 2].y,
+            )
         } else {
             let t1 = subtract(curr.xy(), feature_line[i - 1].xy());
             let t2 = subtract(feature_line[i + 1].xy(), curr.xy());
             let len1 = length(t1);
             let len2 = length(t2);
-            let n1 = if len1 > 0.0 { scale(t1, 1.0 / len1) } else { Point::ZERO };
-            let n2 = if len2 > 0.0 { scale(t2, 1.0 / len2) } else { Point::ZERO };
+            let n1 = if len1 > 0.0 {
+                scale(t1, 1.0 / len1)
+            } else {
+                Point::ZERO
+            };
+            let n2 = if len2 > 0.0 {
+                scale(t2, 1.0 / len2)
+            } else {
+                Point::ZERO
+            };
             let sum = add(n1, n2);
             (sum.x, sum.y)
         };
@@ -268,7 +309,11 @@ pub fn calculate_daylight_line(feature_line: &[Point3D], surface: &ElevationGrid
             let d = step as f64 * step_size;
             let pt2d = Point::new(curr.x + d * nx, curr.y + d * ny);
             let terr_z = elevation_at(surface, pt2d);
-            let prop_z = if is_cut { curr.z + d / slope } else { curr.z - d / slope };
+            let prop_z = if is_cut {
+                curr.z + d / slope
+            } else {
+                curr.z - d / slope
+            };
 
             let diff = prop_z - terr_z;
             if (is_cut && diff < 0.0) || (!is_cut && diff > 0.0) {
@@ -278,7 +323,11 @@ pub fn calculate_daylight_line(feature_line: &[Point3D], surface: &ElevationGrid
                 let fraction = prev_diff.abs() / (prev_diff.abs() + diff.abs());
                 let day_dist = prev_dist + fraction * (d - prev_dist);
                 let day_pt = Point::new(curr.x + day_dist * nx, curr.y + day_dist * ny);
-                daylight_line.push(Point3D::new(day_pt.x, day_pt.y, elevation_at(surface, day_pt)));
+                daylight_line.push(Point3D::new(
+                    day_pt.x,
+                    day_pt.y,
+                    elevation_at(surface, day_pt),
+                ));
                 found = true;
                 break;
             }
@@ -286,7 +335,11 @@ pub fn calculate_daylight_line(feature_line: &[Point3D], surface: &ElevationGrid
 
         if !found {
             let end_pt = Point::new(curr.x + search_distance * nx, curr.y + search_distance * ny);
-            daylight_line.push(Point3D::new(end_pt.x, end_pt.y, elevation_at(surface, end_pt)));
+            daylight_line.push(Point3D::new(
+                end_pt.x,
+                end_pt.y,
+                elevation_at(surface, end_pt),
+            ));
         }
     }
 
@@ -295,7 +348,12 @@ pub fn calculate_daylight_line(feature_line: &[Point3D], surface: &ElevationGrid
 
 /// Compute the pond storage capacity (volume, cubic yards) below a specified
 /// water surface elevation.
-pub fn calculate_pond_volume(surface: &ElevationGrid, water_elevation: f64, boundary: &Polygon, grid_resolution: f64) -> f64 {
+pub fn calculate_pond_volume(
+    surface: &ElevationGrid,
+    water_elevation: f64,
+    boundary: &Polygon,
+    grid_resolution: f64,
+) -> f64 {
     let xs: Vec<f64> = boundary.iter().map(|p| p.x).collect();
     let ys: Vec<f64> = boundary.iter().map(|p| p.y).collect();
     let min_x = xs.iter().cloned().fold(f64::INFINITY, f64::min);
@@ -350,7 +408,11 @@ pub fn calculate_drainage_flow(surface: &ElevationGrid, cell_stride: usize) -> V
             let grad = Point::new(grad_x, grad_y);
             let slope = length(grad);
             if slope > 1e-4 {
-                arrows.push(FlowArrow { point: Point::new(x, y), direction: Point::new(-grad.x / slope, -grad.y / slope), slope });
+                arrows.push(FlowArrow {
+                    point: Point::new(x, y),
+                    direction: Point::new(-grad.x / slope, -grad.y / slope),
+                    slope,
+                });
             }
             c += cell_stride;
         }
@@ -365,7 +427,14 @@ mod tests {
     use approx::assert_relative_eq;
 
     fn flat_surface(cols: usize, rows: usize, cell_size: f64, z: f64) -> ElevationGrid {
-        ElevationGrid::new(Point::new(0.0, 0.0), cell_size, cols, rows, vec![z; cols * rows]).unwrap()
+        ElevationGrid::new(
+            Point::new(0.0, 0.0),
+            cell_size,
+            cols,
+            rows,
+            vec![z; cols * rows],
+        )
+        .unwrap()
     }
 
     #[test]
@@ -382,14 +451,19 @@ mod tests {
     fn calculate_daylight_line_projects_cut_and_fill() {
         let flat_surface = flat_surface(11, 11, 10.0, 10.0);
 
-        let feature_line_fill = vec![Point3D::new(20.0, 50.0, 12.0), Point3D::new(80.0, 50.0, 12.0)];
-        let daylight_fill = calculate_daylight_line(&feature_line_fill, &flat_surface, 2.0, 3.0, 50.0);
+        let feature_line_fill = vec![
+            Point3D::new(20.0, 50.0, 12.0),
+            Point3D::new(80.0, 50.0, 12.0),
+        ];
+        let daylight_fill =
+            calculate_daylight_line(&feature_line_fill, &flat_surface, 2.0, 3.0, 50.0);
         assert_eq!(daylight_fill.len(), 2);
         assert_relative_eq!(daylight_fill[0].y, 56.0, epsilon = 1.0);
         assert_relative_eq!(daylight_fill[1].y, 56.0, epsilon = 1.0);
 
         let feature_line_cut = vec![Point3D::new(20.0, 50.0, 8.0), Point3D::new(80.0, 50.0, 8.0)];
-        let daylight_cut = calculate_daylight_line(&feature_line_cut, &flat_surface, 2.0, 3.0, 50.0);
+        let daylight_cut =
+            calculate_daylight_line(&feature_line_cut, &flat_surface, 2.0, 3.0, 50.0);
         assert_eq!(daylight_cut.len(), 2);
         assert_relative_eq!(daylight_cut[0].y, 54.0, epsilon = 1.0);
         assert_relative_eq!(daylight_cut[1].y, 54.0, epsilon = 1.0);
@@ -398,7 +472,12 @@ mod tests {
     #[test]
     fn calculate_pond_volume_measures_storage_below_water_level() {
         let flat_surface = flat_surface(11, 11, 10.0, 10.0);
-        let pond_boundary: Polygon = vec![Point::new(10.0, 10.0), Point::new(50.0, 10.0), Point::new(50.0, 50.0), Point::new(10.0, 50.0)];
+        let pond_boundary: Polygon = vec![
+            Point::new(10.0, 10.0),
+            Point::new(50.0, 10.0),
+            Point::new(50.0, 50.0),
+            Point::new(10.0, 50.0),
+        ];
         let volume = calculate_pond_volume(&flat_surface, 15.0, &pond_boundary, 2.0);
         assert_relative_eq!(volume, 296.3, epsilon = 0.1);
     }
@@ -424,7 +503,12 @@ mod tests {
         let pad = GradingPad {
             id: "g1".into(),
             name: "Pad 1".into(),
-            points: vec![Point::new(20.0, 20.0), Point::new(80.0, 20.0), Point::new(80.0, 80.0), Point::new(20.0, 80.0)],
+            points: vec![
+                Point::new(20.0, 20.0),
+                Point::new(80.0, 20.0),
+                Point::new(80.0, 80.0),
+                Point::new(20.0, 80.0),
+            ],
             target_elevation: 12.0,
             cut_slope: 2.0,
             fill_slope: 3.0,
@@ -447,7 +531,12 @@ mod tests {
         let pad = GradingPad {
             id: "edge".into(),
             name: "Edge Pad".into(),
-            points: vec![Point::new(0.0, 0.0), Point::new(20.0, 0.0), Point::new(20.0, 20.0), Point::new(0.0, 20.0)],
+            points: vec![
+                Point::new(0.0, 0.0),
+                Point::new(20.0, 0.0),
+                Point::new(20.0, 20.0),
+                Point::new(0.0, 20.0),
+            ],
             target_elevation: 6.0,
             cut_slope: 2.0,
             fill_slope: 2.0,

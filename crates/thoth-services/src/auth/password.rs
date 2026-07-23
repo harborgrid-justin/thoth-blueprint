@@ -20,12 +20,12 @@ pub fn hash_password(password: &str) -> Result<String, AuthError> {
 }
 
 /// Check `password` against a previously hashed `password_hash`. The
-/// underlying comparison ([`password_hash::PasswordVerifier`]) is
+/// underlying comparison (`argon2::password_hash::PasswordVerifier`) is
 /// constant-time, so this doesn't leak timing information about how much of
 /// the candidate matched.
 pub fn verify_password(password: &str, password_hash: &str) -> Result<bool, AuthError> {
-    let parsed = PasswordHash::new(password_hash)
-        .map_err(|err| AuthError::PasswordHash(err.to_string()))?;
+    let parsed =
+        PasswordHash::new(password_hash).map_err(|err| AuthError::PasswordHash(err.to_string()))?;
     Ok(Argon2::default()
         .verify_password(password.as_bytes(), &parsed)
         .is_ok())

@@ -12,7 +12,9 @@
 //! Port of `packages/domain/src/civil/terrain.ts` +
 //! `packages/domain/src/civil/types/terrain.ts`.
 
-use thoth_spatial::{distance, length, point_in_polygon, Bounds, Point, Polygon, Polyline, SpatialContext, Unit};
+use thoth_spatial::{
+    distance, length, point_in_polygon, Bounds, Point, Polygon, Polyline, SpatialContext, Unit,
+};
 
 use crate::error::{CivilError, CivilResult};
 
@@ -48,8 +50,14 @@ impl ElevationGrid {
     /// - [`CivilError::InvalidCellSize`] if `cell_size <= 0`.
     /// - [`CivilError::DegenerateGrid`] if `cols < 2` or `rows < 2`.
     /// - [`CivilError::MalformedData`] if `heights.len() != cols * rows`.
-    pub fn new(origin: Point, cell_size: f64, cols: usize, rows: usize, heights: Vec<f64>) -> CivilResult<Self> {
-        if !(cell_size > 0.0) {
+    pub fn new(
+        origin: Point,
+        cell_size: f64,
+        cols: usize,
+        rows: usize,
+        heights: Vec<f64>,
+    ) -> CivilResult<Self> {
+        if cell_size.is_nan() || cell_size <= 0.0 {
             return Err(CivilError::InvalidCellSize { cell_size });
         }
         if cols < 2 || rows < 2 {
@@ -58,10 +66,20 @@ impl ElevationGrid {
         if heights.len() != cols * rows {
             return Err(CivilError::MalformedData {
                 format: "ElevationGrid",
-                reason: format!("heights has {} entries, expected cols*rows = {}", heights.len(), cols * rows),
+                reason: format!(
+                    "heights has {} entries, expected cols*rows = {}",
+                    heights.len(),
+                    cols * rows
+                ),
             });
         }
-        Ok(ElevationGrid { origin, cell_size, cols, rows, heights })
+        Ok(ElevationGrid {
+            origin,
+            cell_size,
+            cols,
+            rows,
+            heights,
+        })
     }
 
     pub fn origin(&self) -> Point {
@@ -87,7 +105,10 @@ impl ElevationGrid {
     /// Replace the heights in place, keeping the same shape. Used by grading
     /// operations ([`grade_pad`]) that reshape a copy of a grid.
     fn with_heights(&self, heights: Vec<f64>) -> ElevationGrid {
-        ElevationGrid { heights, ..self.clone() }
+        ElevationGrid {
+            heights,
+            ..self.clone()
+        }
     }
 }
 
@@ -108,7 +129,12 @@ pub struct InterpolateOptions {
 
 impl InterpolateOptions {
     pub fn new(cell_size: f64) -> Self {
-        InterpolateOptions { cell_size, power: 2.0, base: 0.0, padding: 0.0 }
+        InterpolateOptions {
+            cell_size,
+            power: 2.0,
+            base: 0.0,
+            padding: 0.0,
+        }
     }
 }
 
@@ -285,9 +311,18 @@ fn idw(spots: &[SpotElevation], p: Point, power: f64) -> f64 {
 ///
 /// # Errors
 /// [`CivilError::InvalidCellSize`] if `options.cell_size <= 0`.
-pub fn interpolate_grid(spots: &[SpotElevation], extent: Bounds, options: InterpolateOptions) -> CivilResult<ElevationGrid> {
-    let InterpolateOptions { cell_size, power, base, padding } = options;
-    if !(cell_size > 0.0) {
+pub fn interpolate_grid(
+    spots: &[SpotElevation],
+    extent: Bounds,
+    options: InterpolateOptions,
+) -> CivilResult<ElevationGrid> {
+    let InterpolateOptions {
+        cell_size,
+        power,
+        base,
+        padding,
+    } = options;
+    if cell_size.is_nan() || cell_size <= 0.0 {
         return Err(CivilError::InvalidCellSize { cell_size });
     }
     let min_x = extent.min_x - padding;
@@ -301,7 +336,11 @@ pub fn interpolate_grid(spots: &[SpotElevation], extent: Bounds, options: Interp
     for r in 0..rows {
         for c in 0..cols {
             let p = Point::new(min_x + c as f64 * cell_size, min_y + r as f64 * cell_size);
-            heights[r * cols + c] = if spots.is_empty() { base } else { idw(spots, p, power) };
+            heights[r * cols + c] = if spots.is_empty() {
+                base
+            } else {
+                idw(spots, p, power)
+            };
         }
     }
     ElevationGrid::new(Point::new(min_x, min_y), cell_size, cols, rows, heights)
@@ -361,7 +400,10 @@ fn march_cell(grid: &ElevationGrid, c: i64, r: i64, level: f64, out: &mut Vec<(P
     let tr = node_height(grid, c + 1, r);
     let br = node_height(grid, c + 1, r + 1);
     let bl = node_height(grid, c, r + 1);
-    let idx = (if tl >= level { 8 } else { 0 }) | (if tr >= level { 4 } else { 0 }) | (if br >= level { 2 } else { 0 }) | (if bl >= level { 1 } else { 0 });
+    let idx = (if tl >= level { 8 } else { 0 })
+        | (if tr >= level { 4 } else { 0 })
+        | (if br >= level { 2 } else { 0 })
+        | (if bl >= level { 1 } else { 0 });
     let pairs = ms_table(idx);
     if pairs.is_empty() {
         return;
@@ -406,7 +448,10 @@ pub fn contour_levels(grid: &ElevationGrid, interval: f64) -> Vec<ContourLevel> 
             }
         }
         if !segments.is_empty() {
-            levels.push(ContourLevel { level: (level * 1e6).round() / 1e6, segments });
+            levels.push(ContourLevel {
+                level: (level * 1e6).round() / 1e6,
+                segments,
+            });
         }
         level += interval;
     }
@@ -433,10 +478,17 @@ pub fn stitch_contours(segments: &[(Point, Point)], eps: f64) -> Vec<Polyline> {
 
     let mut nodes: Vec<SegNode> = segments
         .iter()
-        .map(|&(a, b)| SegNode { a, b, key_a: key(a), key_b: key(b), used: false })
+        .map(|&(a, b)| SegNode {
+            a,
+            b,
+            key_a: key(a),
+            key_b: key(b),
+            used: false,
+        })
         .collect();
 
-    let mut adj: std::collections::HashMap<(i64, i64), Vec<usize>> = std::collections::HashMap::new();
+    let mut adj: std::collections::HashMap<(i64, i64), Vec<usize>> =
+        std::collections::HashMap::new();
     for (i, n) in nodes.iter().enumerate() {
         adj.entry(n.key_a).or_default().push(i);
         adj.entry(n.key_b).or_default().push(i);
@@ -455,7 +507,9 @@ pub fn stitch_contours(segments: &[(Point, Point)], eps: f64) -> Vec<Polyline> {
 
         // Extend tail.
         loop {
-            let candidate = adj.get(&tail_key).and_then(|cands| cands.iter().copied().find(|&i| !nodes[i].used));
+            let candidate = adj
+                .get(&tail_key)
+                .and_then(|cands| cands.iter().copied().find(|&i| !nodes[i].used));
             let Some(next_idx) = candidate else { break };
             nodes[next_idx].used = true;
             if nodes[next_idx].key_a == tail_key {
@@ -469,7 +523,9 @@ pub fn stitch_contours(segments: &[(Point, Point)], eps: f64) -> Vec<Polyline> {
 
         // Extend head.
         loop {
-            let candidate = adj.get(&head_key).and_then(|cands| cands.iter().copied().find(|&i| !nodes[i].used));
+            let candidate = adj
+                .get(&head_key)
+                .and_then(|cands| cands.iter().copied().find(|&i| !nodes[i].used));
             let Some(next_idx) = candidate else { break };
             nodes[next_idx].used = true;
             if nodes[next_idx].key_b == head_key {
@@ -497,13 +553,26 @@ pub fn slope_at_node(grid: &ElevationGrid, c: i64, r: i64) -> SlopeSample {
     let dzdy = (node_height(grid, c, r + 1) - node_height(grid, c, r - 1)) / (2.0 * grid.cell_size);
     let grad = Point::new(dzdx, dzdy);
     let slope = length(grad);
-    let aspect = if slope < 1e-9 { None } else { Some((grad.x.atan2(grad.y) * (180.0 / std::f64::consts::PI) + 360.0) % 360.0) };
-    SlopeSample { slope, percent: slope * 100.0, degrees: slope.atan() * (180.0 / std::f64::consts::PI), aspect }
+    let aspect = if slope < 1e-9 {
+        None
+    } else {
+        Some((grad.x.atan2(grad.y) * (180.0 / std::f64::consts::PI) + 360.0) % 360.0)
+    };
+    SlopeSample {
+        slope,
+        percent: slope * 100.0,
+        degrees: slope.atan() * (180.0 / std::f64::consts::PI),
+        aspect,
+    }
 }
 
 /// Summarize slope over a grid (optionally clipped to a polygon). `buildable`
 /// slopes are those at or below `buildable_max_percent` (TS default 15%).
-pub fn slope_stats(grid: &ElevationGrid, region: Option<&Polygon>, buildable_max_percent: f64) -> SlopeStats {
+pub fn slope_stats(
+    grid: &ElevationGrid,
+    region: Option<&Polygon>,
+    buildable_max_percent: f64,
+) -> SlopeStats {
     let mut min = f64::INFINITY;
     let mut max = f64::NEG_INFINITY;
     let mut sum = 0.0;
@@ -512,7 +581,10 @@ pub fn slope_stats(grid: &ElevationGrid, region: Option<&Polygon>, buildable_max
     for r in 0..grid.rows as i64 {
         for c in 0..grid.cols as i64 {
             if let Some(region) = region {
-                let p = Point::new(grid.origin.x + c as f64 * grid.cell_size, grid.origin.y + r as f64 * grid.cell_size);
+                let p = Point::new(
+                    grid.origin.x + c as f64 * grid.cell_size,
+                    grid.origin.y + r as f64 * grid.cell_size,
+                );
                 if !point_in_polygon(p, region) {
                     continue;
                 }
@@ -528,9 +600,21 @@ pub fn slope_stats(grid: &ElevationGrid, region: Option<&Polygon>, buildable_max
         }
     }
     if n == 0 {
-        return SlopeStats { min_percent: 0.0, max_percent: 0.0, mean_percent: 0.0, buildable_fraction: 0.0, samples: 0 };
+        return SlopeStats {
+            min_percent: 0.0,
+            max_percent: 0.0,
+            mean_percent: 0.0,
+            buildable_fraction: 0.0,
+            samples: 0,
+        };
     }
-    SlopeStats { min_percent: min, max_percent: max, mean_percent: sum / n as f64, buildable_fraction: buildable as f64 / n as f64, samples: n }
+    SlopeStats {
+        min_percent: min,
+        max_percent: max,
+        mean_percent: sum / n as f64,
+        buildable_fraction: buildable as f64 / n as f64,
+        samples: n,
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -543,7 +627,10 @@ pub fn grade_pad(grid: &ElevationGrid, polygon: &Polygon, target_z: f64) -> Elev
     let mut heights = grid.heights.clone();
     for r in 0..grid.rows {
         for c in 0..grid.cols {
-            let p = Point::new(grid.origin.x + c as f64 * grid.cell_size, grid.origin.y + r as f64 * grid.cell_size);
+            let p = Point::new(
+                grid.origin.x + c as f64 * grid.cell_size,
+                grid.origin.y + r as f64 * grid.cell_size,
+            );
             if point_in_polygon(p, polygon) {
                 heights[r * grid.cols + c] = target_z;
             }
@@ -559,7 +646,11 @@ fn diff(existing: &ElevationGrid, proposed: &ElevationGrid, c: i64, r: i64) -> f
 /// Compute cut and fill between two identically-shaped grids by integrating
 /// the signed elevation difference over each cell (optionally clipped to a
 /// region).
-pub fn cut_fill(existing: &ElevationGrid, proposed: &ElevationGrid, options: CutFillOptions<'_>) -> Earthwork {
+pub fn cut_fill(
+    existing: &ElevationGrid,
+    proposed: &ElevationGrid,
+    options: CutFillOptions<'_>,
+) -> Earthwork {
     let balance_tolerance = options.balance_tolerance.unwrap_or(0.1);
     let cell_area = existing.cell_size * existing.cell_size;
     let mut cut = 0.0;
@@ -568,13 +659,20 @@ pub fn cut_fill(existing: &ElevationGrid, proposed: &ElevationGrid, options: Cut
 
     for r in 0..existing.rows as i64 - 1 {
         for c in 0..existing.cols as i64 - 1 {
-            let center = Point::new(existing.origin.x + (c as f64 + 0.5) * existing.cell_size, existing.origin.y + (r as f64 + 0.5) * existing.cell_size);
+            let center = Point::new(
+                existing.origin.x + (c as f64 + 0.5) * existing.cell_size,
+                existing.origin.y + (r as f64 + 0.5) * existing.cell_size,
+            );
             if let Some(region) = options.region {
                 if !point_in_polygon(center, region) {
                     continue;
                 }
             }
-            let dz = (diff(existing, proposed, c, r) + diff(existing, proposed, c + 1, r) + diff(existing, proposed, c, r + 1) + diff(existing, proposed, c + 1, r + 1)) / 4.0;
+            let dz = (diff(existing, proposed, c, r)
+                + diff(existing, proposed, c + 1, r)
+                + diff(existing, proposed, c, r + 1)
+                + diff(existing, proposed, c + 1, r + 1))
+                / 4.0;
             let volume = dz * cell_area;
             if volume > 0.0 {
                 fill += volume;
@@ -585,7 +683,10 @@ pub fn cut_fill(existing: &ElevationGrid, proposed: &ElevationGrid, options: Cut
         }
     }
 
-    let unit_factor: f64 = options.spatial.map_or(1.0, |s| if s.units == Unit::Feet { 0.3048 } else { 1.0 });
+    let unit_factor: f64 =
+        options
+            .spatial
+            .map_or(1.0, |s| if s.units == Unit::Feet { 0.3048 } else { 1.0 });
     let volume_to_m3 = unit_factor.powi(3);
     let area_to_m2 = unit_factor.powi(2);
     let net = fill - cut;
@@ -603,8 +704,22 @@ pub fn cut_fill(existing: &ElevationGrid, proposed: &ElevationGrid, options: Cut
 
 /// Convenience: interpolate an existing surface directly from spots over a
 /// boundary.
-pub fn surface_from_spots(spots: &[SpotElevation], extent: Bounds, cell_size: f64, base: f64) -> CivilResult<ElevationGrid> {
-    interpolate_grid(spots, extent, InterpolateOptions { cell_size, power: 2.0, base, padding: cell_size })
+pub fn surface_from_spots(
+    spots: &[SpotElevation],
+    extent: Bounds,
+    cell_size: f64,
+    base: f64,
+) -> CivilResult<ElevationGrid> {
+    interpolate_grid(
+        spots,
+        extent,
+        InterpolateOptions {
+            cell_size,
+            power: 2.0,
+            base,
+            padding: cell_size,
+        },
+    )
 }
 
 /// Convenience wrapper: bounds of a set of spot elevations.
@@ -614,7 +729,12 @@ pub fn spots_bounds(spots: &[SpotElevation]) -> Bounds {
 
 /// Traces a downhill path from a starting coordinate on the terrain grid
 /// (Water Drop analysis).
-pub fn trace_water_drop_path(grid: &ElevationGrid, start: Point, step_size: f64, max_steps: u32) -> Vec<Point> {
+pub fn trace_water_drop_path(
+    grid: &ElevationGrid,
+    start: Point,
+    step_size: f64,
+    max_steps: u32,
+) -> Vec<Point> {
     let mut path = vec![start];
     let mut curr = start;
 
@@ -626,8 +746,10 @@ pub fn trace_water_drop_path(grid: &ElevationGrid, start: Point, step_size: f64,
             break;
         }
 
-        let dzdx = (node_height(grid, c + 1, r) - node_height(grid, c - 1, r)) / (2.0 * grid.cell_size);
-        let dzdy = (node_height(grid, c, r + 1) - node_height(grid, c, r - 1)) / (2.0 * grid.cell_size);
+        let dzdx =
+            (node_height(grid, c + 1, r) - node_height(grid, c - 1, r)) / (2.0 * grid.cell_size);
+        let dzdy =
+            (node_height(grid, c, r + 1) - node_height(grid, c, r - 1)) / (2.0 * grid.cell_size);
 
         let grad = Point::new(dzdx, dzdy);
         let len_val = length(grad);
@@ -635,7 +757,10 @@ pub fn trace_water_drop_path(grid: &ElevationGrid, start: Point, step_size: f64,
             break;
         }
 
-        let next = Point::new(curr.x - (grad.x / len_val) * step_size, curr.y - (grad.y / len_val) * step_size);
+        let next = Point::new(
+            curr.x - (grad.x / len_val) * step_size,
+            curr.y - (grad.y / len_val) * step_size,
+        );
 
         if distance(next, curr) < 1e-3 {
             break;
@@ -672,21 +797,52 @@ mod tests {
 
     #[test]
     fn elevation_grid_rejects_invalid_dimensions() {
-        assert!(matches!(ElevationGrid::new(Point::ZERO, 1.0, 1, 5, vec![0.0; 5]), Err(CivilError::DegenerateGrid { .. })));
-        assert!(matches!(ElevationGrid::new(Point::ZERO, 0.0, 5, 5, vec![0.0; 25]), Err(CivilError::InvalidCellSize { .. })));
-        assert!(matches!(ElevationGrid::new(Point::ZERO, 1.0, 5, 5, vec![0.0; 10]), Err(CivilError::MalformedData { .. })));
+        assert!(matches!(
+            ElevationGrid::new(Point::ZERO, 1.0, 1, 5, vec![0.0; 5]),
+            Err(CivilError::DegenerateGrid { .. })
+        ));
+        assert!(matches!(
+            ElevationGrid::new(Point::ZERO, 0.0, 5, 5, vec![0.0; 25]),
+            Err(CivilError::InvalidCellSize { .. })
+        ));
+        assert!(matches!(
+            ElevationGrid::new(Point::ZERO, 1.0, 5, 5, vec![0.0; 10]),
+            Err(CivilError::MalformedData { .. })
+        ));
     }
 
     #[test]
     fn interpolate_grid_reproduces_control_point_elevations() {
         let grid = interpolate_grid(
-            &[SpotElevation { point: Point::new(0.0, 0.0), z: 10.0 }, SpotElevation { point: Point::new(10.0, 0.0), z: 20.0 }],
-            Bounds { min_x: 0.0, min_y: 0.0, max_x: 10.0, max_y: 10.0 },
+            &[
+                SpotElevation {
+                    point: Point::new(0.0, 0.0),
+                    z: 10.0,
+                },
+                SpotElevation {
+                    point: Point::new(10.0, 0.0),
+                    z: 20.0,
+                },
+            ],
+            Bounds {
+                min_x: 0.0,
+                min_y: 0.0,
+                max_x: 10.0,
+                max_y: 10.0,
+            },
             InterpolateOptions::new(5.0),
         )
         .unwrap();
-        assert_relative_eq!(elevation_at(&grid, Point::new(0.0, 0.0)), 10.0, epsilon = 1e-5);
-        assert_relative_eq!(elevation_at(&grid, Point::new(10.0, 0.0)), 20.0, epsilon = 1e-5);
+        assert_relative_eq!(
+            elevation_at(&grid, Point::new(0.0, 0.0)),
+            10.0,
+            epsilon = 1e-5
+        );
+        assert_relative_eq!(
+            elevation_at(&grid, Point::new(10.0, 0.0)),
+            20.0,
+            epsilon = 1e-5
+        );
     }
 
     #[test]
@@ -728,7 +884,10 @@ mod tests {
     #[test]
     fn stitch_contours_joins_segments_into_one_polyline() {
         let g = ramp(20, 1.0);
-        let ten = contour_levels(&g, 5.0).into_iter().find(|l| l.level == 10.0).unwrap();
+        let ten = contour_levels(&g, 5.0)
+            .into_iter()
+            .find(|l| l.level == 10.0)
+            .unwrap();
         let lines = stitch_contours(&ten.segments, 1e-4);
         assert_eq!(lines.len(), 1);
         assert_eq!(lines[0].len(), g.rows);
@@ -737,9 +896,21 @@ mod tests {
     #[test]
     fn cut_fill_fills_volume_when_flat_pad_is_raised() {
         let existing = flat(10, 0.0);
-        let region: Polygon = vec![Point::new(0.0, 0.0), Point::new(10.0, 0.0), Point::new(10.0, 10.0), Point::new(0.0, 10.0)];
+        let region: Polygon = vec![
+            Point::new(0.0, 0.0),
+            Point::new(10.0, 0.0),
+            Point::new(10.0, 10.0),
+            Point::new(0.0, 10.0),
+        ];
         let proposed = grade_pad(&existing, &region, 2.0);
-        let work = cut_fill(&existing, &proposed, CutFillOptions { region: Some(&region), ..Default::default() });
+        let work = cut_fill(
+            &existing,
+            &proposed,
+            CutFillOptions {
+                region: Some(&region),
+                ..Default::default()
+            },
+        );
         assert_relative_eq!(work.fill, 200.0, epsilon = 1e-4);
         assert_relative_eq!(work.cut, 0.0, epsilon = 1e-6);
         assert_relative_eq!(work.fill_cubic_meters, 200.0, epsilon = 1e-4);
@@ -748,8 +919,18 @@ mod tests {
     #[test]
     fn cut_fill_reports_balanced_when_raising_and_lowering_equal_areas() {
         let existing = flat(10, 0.0);
-        let left: Polygon = vec![Point::new(0.0, 0.0), Point::new(4.0, 0.0), Point::new(4.0, 10.0), Point::new(0.0, 10.0)];
-        let right: Polygon = vec![Point::new(6.0, 0.0), Point::new(10.0, 0.0), Point::new(10.0, 10.0), Point::new(6.0, 10.0)];
+        let left: Polygon = vec![
+            Point::new(0.0, 0.0),
+            Point::new(4.0, 0.0),
+            Point::new(4.0, 10.0),
+            Point::new(0.0, 10.0),
+        ];
+        let right: Polygon = vec![
+            Point::new(6.0, 0.0),
+            Point::new(10.0, 0.0),
+            Point::new(10.0, 10.0),
+            Point::new(6.0, 10.0),
+        ];
         let proposed = grade_pad(&grade_pad(&existing, &left, 1.0), &right, -1.0);
         let work = cut_fill(&existing, &proposed, CutFillOptions::default());
         assert!(work.balanced);
@@ -777,6 +958,9 @@ mod tests {
     fn elevation_at_strict_rejects_out_of_envelope_points() {
         let g = flat(10, 5.0);
         assert!(elevation_at_strict(&g, Point::new(5.0, 5.0)).is_ok());
-        assert!(matches!(elevation_at_strict(&g, Point::new(50.0, 5.0)), Err(CivilError::OutsideDataEnvelope { .. })));
+        assert!(matches!(
+            elevation_at_strict(&g, Point::new(50.0, 5.0)),
+            Err(CivilError::OutsideDataEnvelope { .. })
+        ));
     }
 }

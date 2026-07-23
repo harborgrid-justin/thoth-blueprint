@@ -12,6 +12,9 @@ mod geometry_helpers;
 mod units;
 mod vector;
 
-pub use geometry_helpers::{calculate_distance_and_bearing, calculate_polygon_area, calculate_polygon_centroid, DistanceAndBearing};
+pub use geometry_helpers::{
+    calculate_distance_and_bearing, calculate_polygon_area, calculate_polygon_centroid,
+    DistanceAndBearing,
+};
 pub use units::{format_station, to_meters, LengthSystem, DEGREE_OF_CURVE_CONST, FEET_TO_METERS};
 pub use vector::{azimuth_of, left_normal, lerp, right_normal};

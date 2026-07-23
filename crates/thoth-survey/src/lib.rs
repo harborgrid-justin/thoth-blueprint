@@ -65,7 +65,11 @@ pub enum AngleFormat {
 /// `thoth-spatial` to depend on this higher-level crate. Downstream
 /// crates/bindings that need the display-layer formatting `units.ts`
 /// exposed can call this instead.
-pub fn format_direction(a: thoth_spatial::Point, b: thoth_spatial::Point, format: AngleFormat) -> String {
+pub fn format_direction(
+    a: thoth_spatial::Point,
+    b: thoth_spatial::Point,
+    format: AngleFormat,
+) -> String {
     let az = bearing::azimuth(a, b);
     match format {
         AngleFormat::Dd => format!("{az:.1}°"),

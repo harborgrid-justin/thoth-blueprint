@@ -520,7 +520,10 @@ mod tests {
 
     #[test]
     fn names_corner_monuments() {
-        assert_eq!(section_corner_name(8, SectionCorner::Nw), "NW corner of Sec 8");
+        assert_eq!(
+            section_corner_name(8, SectionCorner::Nw),
+            "NW corner of Sec 8"
+        );
         assert_eq!(
             section_corner_name(8, SectionCorner::North),
             "N1/4 corner of Sec 8"
@@ -529,9 +532,26 @@ mod tests {
 
     #[test]
     fn validated_township_range_rejects_non_positive_values() {
-        assert!(TownshipRange::try_new(0, TownshipDirection::South, 16, RangeDirection::East, None).is_err());
-        assert!(TownshipRange::try_new(3, TownshipDirection::South, 0, RangeDirection::East, None).is_err());
-        assert!(TownshipRange::try_new(3, TownshipDirection::South, 16, RangeDirection::East, None).is_ok());
+        assert!(TownshipRange::try_new(
+            0,
+            TownshipDirection::South,
+            16,
+            RangeDirection::East,
+            None
+        )
+        .is_err());
+        assert!(
+            TownshipRange::try_new(3, TownshipDirection::South, 0, RangeDirection::East, None)
+                .is_err()
+        );
+        assert!(TownshipRange::try_new(
+            3,
+            TownshipDirection::South,
+            16,
+            RangeDirection::East,
+            None
+        )
+        .is_ok());
         assert_eq!(validate_township(-4), Err(SurveyError::InvalidTownship(-4)));
     }
 }

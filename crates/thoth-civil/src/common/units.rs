@@ -21,7 +21,12 @@ pub enum LengthSystem {
 /// Convert a length in plan units to meters based on the unit system. Mirrors
 /// `toMeters` in the TS source, which defaults to `"feet"`.
 pub fn to_meters(value: f64, units: LengthSystem) -> f64 {
-    value * if units == LengthSystem::Feet { FEET_TO_METERS } else { 1.0 }
+    value
+        * if units == LengthSystem::Feet {
+            FEET_TO_METERS
+        } else {
+            1.0
+        }
 }
 
 /// Format a station value in engineer's notation, e.g. `176043.32` →

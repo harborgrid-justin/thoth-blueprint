@@ -149,7 +149,11 @@ pub struct ResolvedStructureComponents {
 /// relative to the rim elevation. `parameters` is a lookup of named overrides
 /// (`"FRH"` = frame height, `"CNH"` = cone height); missing entries use the
 /// TS defaults (`0.5`, `1.5`).
-pub fn resolve_cylindrical_manhole(rim_elevation: f64, sump_elevation: f64, parameters: &std::collections::HashMap<String, f64>) -> ResolvedStructureComponents {
+pub fn resolve_cylindrical_manhole(
+    rim_elevation: f64,
+    sump_elevation: f64,
+    parameters: &std::collections::HashMap<String, f64>,
+) -> ResolvedStructureComponents {
     let frame_height = parameters.get("FRH").copied().unwrap_or(0.5);
     let cone_height = parameters.get("CNH").copied().unwrap_or(1.5);
 
@@ -171,7 +175,17 @@ pub fn resolve_cylindrical_manhole(rim_elevation: f64, sump_elevation: f64, para
     let barrel_top = riser_bottom;
     let barrel_bottom = sump_elevation;
 
-    ResolvedStructureComponents { frame_top, frame_bottom, cone_top, cone_bottom, riser_top, riser_bottom, barrel_top, barrel_bottom, total_height }
+    ResolvedStructureComponents {
+        frame_top,
+        frame_bottom,
+        cone_top,
+        cone_bottom,
+        riser_top,
+        riser_bottom,
+        barrel_top,
+        barrel_bottom,
+        total_height,
+    }
 }
 
 /// Result of validating a vault (box-shape) wall's thickness.
@@ -184,7 +198,12 @@ pub struct VaultWallValidation {
 
 /// Validates vault (box shape) wall thickness constraints:
 /// `thickness >= min_thickness_ratio * max(width, length)`.
-pub fn validate_vault_box_wall(width: f64, length: f64, wall_thickness: f64, min_thickness_ratio: f64) -> VaultWallValidation {
+pub fn validate_vault_box_wall(
+    width: f64,
+    length: f64,
+    wall_thickness: f64,
+    min_thickness_ratio: f64,
+) -> VaultWallValidation {
     let max_span = width.max(length);
     let min_required = max_span * min_thickness_ratio;
 
@@ -195,7 +214,11 @@ pub fn validate_vault_box_wall(width: f64, length: f64, wall_thickness: f64, min
             error_msg: Some(format!("Wall thickness of {:.2} is too thin for a vault spanning {} units. Minimum required thickness is {:.2} units.", wall_thickness, max_span, min_required)),
         }
     } else {
-        VaultWallValidation { is_valid: true, minimum_required: min_required, error_msg: None }
+        VaultWallValidation {
+            is_valid: true,
+            minimum_required: min_required,
+            error_msg: None,
+        }
     }
 }
 
@@ -215,10 +238,41 @@ pub fn get_default_parts_catalog() -> PartsCatalog {
                     shape: FamilyShape::Cylinder,
                     description: "Standard precast concrete sewer or storm manhole".to_string(),
                     parameters: vec![
-                        PartSizeParameter { name: "FRH".into(), description: "Frame Height".into(), storage_type: SizeStorageType::Constant, value: 0.5, list_values: None, range_limit: None },
-                        PartSizeParameter { name: "CNH".into(), description: "Cone Height".into(), storage_type: SizeStorageType::Constant, value: 1.5, list_values: None, range_limit: None },
-                        PartSizeParameter { name: "BDM".into(), description: "Barrel Diameter".into(), storage_type: SizeStorageType::List, value: 4.0, list_values: Some(vec![3.0, 4.0, 5.0, 6.0]), range_limit: None },
-                        PartSizeParameter { name: "BDH".into(), description: "Barrel Height".into(), storage_type: SizeStorageType::Range, value: 4.0, list_values: None, range_limit: Some(RangeLimit { min: 2.0, max: 12.0 }) },
+                        PartSizeParameter {
+                            name: "FRH".into(),
+                            description: "Frame Height".into(),
+                            storage_type: SizeStorageType::Constant,
+                            value: 0.5,
+                            list_values: None,
+                            range_limit: None,
+                        },
+                        PartSizeParameter {
+                            name: "CNH".into(),
+                            description: "Cone Height".into(),
+                            storage_type: SizeStorageType::Constant,
+                            value: 1.5,
+                            list_values: None,
+                            range_limit: None,
+                        },
+                        PartSizeParameter {
+                            name: "BDM".into(),
+                            description: "Barrel Diameter".into(),
+                            storage_type: SizeStorageType::List,
+                            value: 4.0,
+                            list_values: Some(vec![3.0, 4.0, 5.0, 6.0]),
+                            range_limit: None,
+                        },
+                        PartSizeParameter {
+                            name: "BDH".into(),
+                            description: "Barrel Height".into(),
+                            storage_type: SizeStorageType::Range,
+                            value: 4.0,
+                            list_values: None,
+                            range_limit: Some(RangeLimit {
+                                min: 2.0,
+                                max: 12.0,
+                            }),
+                        },
                     ],
                 }],
             },
@@ -231,9 +285,30 @@ pub fn get_default_parts_catalog() -> PartsCatalog {
                     shape: FamilyShape::Box,
                     description: "Rectangular precast vault structure".to_string(),
                     parameters: vec![
-                        PartSizeParameter { name: "VWD".into(), description: "Vault Width".into(), storage_type: SizeStorageType::List, value: 4.0, list_values: Some(vec![2.0, 3.0, 4.0, 6.0]), range_limit: None },
-                        PartSizeParameter { name: "VLN".into(), description: "Vault Length".into(), storage_type: SizeStorageType::List, value: 6.0, list_values: Some(vec![4.0, 6.0, 8.0, 10.0]), range_limit: None },
-                        PartSizeParameter { name: "WTH".into(), description: "Wall Thickness".into(), storage_type: SizeStorageType::Constant, value: 0.5, list_values: None, range_limit: None },
+                        PartSizeParameter {
+                            name: "VWD".into(),
+                            description: "Vault Width".into(),
+                            storage_type: SizeStorageType::List,
+                            value: 4.0,
+                            list_values: Some(vec![2.0, 3.0, 4.0, 6.0]),
+                            range_limit: None,
+                        },
+                        PartSizeParameter {
+                            name: "VLN".into(),
+                            description: "Vault Length".into(),
+                            storage_type: SizeStorageType::List,
+                            value: 6.0,
+                            list_values: Some(vec![4.0, 6.0, 8.0, 10.0]),
+                            range_limit: None,
+                        },
+                        PartSizeParameter {
+                            name: "WTH".into(),
+                            description: "Wall Thickness".into(),
+                            storage_type: SizeStorageType::Constant,
+                            value: 0.5,
+                            list_values: None,
+                            range_limit: None,
+                        },
                     ],
                 }],
             },
@@ -248,7 +323,8 @@ mod tests {
 
     #[test]
     fn resolve_cylindrical_manhole_stacks_components_from_rim_down() {
-        let params = std::collections::HashMap::from([("FRH".to_string(), 0.5), ("CNH".to_string(), 1.5)]);
+        let params =
+            std::collections::HashMap::from([("FRH".to_string(), 0.5), ("CNH".to_string(), 1.5)]);
         let comp = resolve_cylindrical_manhole(100.0, 90.0, &params);
         assert_relative_eq!(comp.frame_top, 100.0, epsilon = 1e-9);
         assert_relative_eq!(comp.frame_bottom, 99.5, epsilon = 1e-9);

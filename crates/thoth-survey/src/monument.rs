@@ -159,7 +159,10 @@ mod tests {
             monument_type_label(MonumentType::IronRod, Some(MonumentStatus::Found)),
             "Iron rod (found)"
         );
-        assert_eq!(monument_type_label(MonumentType::Prm, None), "Permanent Reference Monument");
+        assert_eq!(
+            monument_type_label(MonumentType::Prm, None),
+            "Permanent Reference Monument"
+        );
     }
 
     #[test]

@@ -12,8 +12,9 @@
 //!   [`CollaborationHub::move_cursor`]).
 //! - **A real-time co-editing event model** — [`CollabEvent`], broadcast
 //!   per-project, with an optimistic-concurrency conflict-resolution
-//!   strategy for element edits (see [`hub`]'s module docs for why this,
-//!   not a full CRDT/OT, is the appropriate first version).
+//!   strategy for element edits (see
+//!   [`CollaborationHub::publish_element_change`]'s docs for why this, not
+//!   a full CRDT/OT, is the appropriate first version).
 //! - **Review-thread notifications** — [`CollabEvent::CommentPosted`]/
 //!   [`CollabEvent::ThreadResolved`] so live viewers refresh; the threads
 //!   and comments themselves are persisted by `@thoth/service-projects`

@@ -48,7 +48,8 @@ mod tests {
         assert_relative_eq!(azimuth_of(Point::new(0.0, -1.0)), 0.0, epsilon = 1e-9); // north
         assert_relative_eq!(azimuth_of(Point::new(1.0, 0.0)), 90.0, epsilon = 1e-9); // east
         assert_relative_eq!(azimuth_of(Point::new(0.0, 1.0)), 180.0, epsilon = 1e-9); // south
-        assert_relative_eq!(azimuth_of(Point::new(-1.0, 0.0)), 270.0, epsilon = 1e-9); // west
+        assert_relative_eq!(azimuth_of(Point::new(-1.0, 0.0)), 270.0, epsilon = 1e-9);
+        // west
     }
 
     #[test]

@@ -122,25 +122,46 @@ pub struct FastestPathAnalysisResult {
 
 /// Solves intersection elevation and crown-grade matching between primary
 /// and secondary roads.
-pub fn solve_intersection_crown(primary_profile: &VerticalProfile, primary_station: f64, secondary_profile: &VerticalProfile, secondary_station: f64, intersection_type: IntersectionType) -> CrownSolution {
+pub fn solve_intersection_crown(
+    primary_profile: &VerticalProfile,
+    primary_station: f64,
+    secondary_profile: &VerticalProfile,
+    secondary_station: f64,
+    intersection_type: IntersectionType,
+) -> CrownSolution {
     let primary_elevation = profile_elevation_at(primary_profile, primary_station);
 
     match intersection_type {
         IntersectionType::PrimaryRoadCrown => {
             // Secondary road grade locks to the primary road's elevation at the intersection PVI.
-            CrownSolution { primary_elevation, secondary_pvi_elevation: primary_elevation, crown_grade_match: 0.0 }
+            CrownSolution {
+                primary_elevation,
+                secondary_pvi_elevation: primary_elevation,
+                crown_grade_match: 0.0,
+            }
         }
         IntersectionType::PeerRoadAllCrowns => {
             // Peer road / all crowns maintained: both roads keep their normal crowns.
             let secondary_elevation = profile_elevation_at(secondary_profile, secondary_station);
-            CrownSolution { primary_elevation, secondary_pvi_elevation: secondary_elevation, crown_grade_match: (primary_elevation - secondary_elevation).abs() }
+            CrownSolution {
+                primary_elevation,
+                secondary_pvi_elevation: secondary_elevation,
+                crown_grade_match: (primary_elevation - secondary_elevation).abs(),
+            }
         }
     }
 }
 
 /// Generates a curb-return arc polyline connecting two intersecting
 /// alignments' bearings for one quadrant.
-pub fn generate_curb_return_geometry(intersection_pt: Point, primary_bearing_deg: f64, secondary_bearing_deg: f64, radius: f64, quadrant: Quadrant, samples: u32) -> Vec<Point> {
+pub fn generate_curb_return_geometry(
+    intersection_pt: Point,
+    primary_bearing_deg: f64,
+    secondary_bearing_deg: f64,
+    radius: f64,
+    quadrant: Quadrant,
+    samples: u32,
+) -> Vec<Point> {
     let rad1 = primary_bearing_deg * std::f64::consts::PI / 180.0;
     let rad2 = secondary_bearing_deg * std::f64::consts::PI / 180.0;
 
@@ -149,8 +170,15 @@ pub fn generate_curb_return_geometry(intersection_pt: Point, primary_bearing_deg
 
     // Offset the corner center along the bisector.
     let bisector = normalize(add(dir1, dir2));
-    let quadrant_sign = if matches!(quadrant, Quadrant::Ne | Quadrant::Nw) { 1.0 } else { -1.0 };
-    let center = add(intersection_pt, scale(bisector, radius * 1.414 * quadrant_sign));
+    let quadrant_sign = if matches!(quadrant, Quadrant::Ne | Quadrant::Nw) {
+        1.0
+    } else {
+        -1.0
+    };
+    let center = add(
+        intersection_pt,
+        scale(bisector, radius * 1.414 * quadrant_sign),
+    );
 
     let mut points = Vec::new();
     let start_ang = (intersection_pt.y - center.y).atan2(intersection_pt.x - center.x);
@@ -158,7 +186,10 @@ pub fn generate_curb_return_geometry(intersection_pt: Point, primary_bearing_deg
 
     for i in 0..=samples {
         let ang = start_ang + (sweep * i as f64) / samples as f64;
-        points.push(Point::new(center.x + radius * ang.cos(), center.y + radius * ang.sin()));
+        points.push(Point::new(
+            center.x + radius * ang.cos(),
+            center.y + radius * ang.sin(),
+        ));
     }
 
     points
@@ -177,7 +208,10 @@ pub fn build_roundabout_geometry(roundabout: &Roundabout, samples: u32) -> Round
         (0..=samples)
             .map(|i| {
                 let ang = 2.0 * std::f64::consts::PI * i as f64 / samples as f64;
-                Point::new(center_point.x + r * ang.cos(), center_point.y + r * ang.sin())
+                Point::new(
+                    center_point.x + r * ang.cos(),
+                    center_point.y + r * ang.sin(),
+                )
             })
             .collect()
     };
@@ -187,24 +221,46 @@ pub fn build_roundabout_geometry(roundabout: &Roundabout, samples: u32) -> Round
     let circulatory_outer_ring = make_ring(r_outer);
 
     // Generate splitter islands for each approach.
-    let approach_angles = [0.0, std::f64::consts::FRAC_PI_2, std::f64::consts::PI, 3.0 * std::f64::consts::FRAC_PI_2];
+    let approach_angles = [
+        0.0,
+        std::f64::consts::FRAC_PI_2,
+        std::f64::consts::PI,
+        3.0 * std::f64::consts::FRAC_PI_2,
+    ];
     let mut splitter_islands = Vec::new();
 
     for &ang in &approach_angles {
-        let p1 = Point::new(center_point.x + r_outer * ang.cos(), center_point.y + r_outer * ang.sin());
+        let p1 = Point::new(
+            center_point.x + r_outer * ang.cos(),
+            center_point.y + r_outer * ang.sin(),
+        );
         let r2 = r_outer + preset.splitter_island.construction_triangle_length;
-        let p2 = Point::new(center_point.x + r2 * (ang + 0.1).cos(), center_point.y + r2 * (ang + 0.1).sin());
-        let p3 = Point::new(center_point.x + r2 * (ang - 0.1).cos(), center_point.y + r2 * (ang - 0.1).sin());
+        let p2 = Point::new(
+            center_point.x + r2 * (ang + 0.1).cos(),
+            center_point.y + r2 * (ang + 0.1).sin(),
+        );
+        let p3 = Point::new(
+            center_point.x + r2 * (ang - 0.1).cos(),
+            center_point.y + r2 * (ang - 0.1).sin(),
+        );
         splitter_islands.push(vec![p1, p2, p3, p1]);
     }
 
-    RoundaboutGeometry { center_island, apron_ring, circulatory_outer_ring, splitter_islands }
+    RoundaboutGeometry {
+        center_island,
+        apron_ring,
+        circulatory_outer_ring,
+        splitter_islands,
+    }
 }
 
 /// Calculates AASHTO fastest-path vehicle trajectory speeds inside a
 /// roundabout: `V = sqrt(15 * R * (e + f))` where `e = 0.02` and `f` is the
 /// side-friction factor.
-pub fn analyze_roundabout_fastest_path(outer_radius: f64, side_friction: f64) -> FastestPathAnalysisResult {
+pub fn analyze_roundabout_fastest_path(
+    outer_radius: f64,
+    side_friction: f64,
+) -> FastestPathAnalysisResult {
     let r1_entry_radius = outer_radius * 0.6;
     let r2_circulatory_radius = outer_radius * 0.85;
     let r3_exit_radius = outer_radius * 1.2;
@@ -218,7 +274,15 @@ pub fn analyze_roundabout_fastest_path(outer_radius: f64, side_friction: f64) ->
     // AASHTO rule: entry speed should not exceed 25 mph for single-lane roundabouts.
     let is_compliant = max_entry_speed_mph <= 25.5;
 
-    FastestPathAnalysisResult { r1_entry_radius, r2_circulatory_radius, r3_exit_radius, max_entry_speed_mph, max_circulatory_speed_mph, max_exit_speed_mph, is_compliant }
+    FastestPathAnalysisResult {
+        r1_entry_radius,
+        r2_circulatory_radius,
+        r3_exit_radius,
+        max_entry_speed_mph,
+        max_circulatory_speed_mph,
+        max_exit_speed_mph,
+        is_compliant,
+    }
 }
 
 /// Exports roundabout presets to an XML schema.
@@ -234,7 +298,10 @@ pub fn export_roundabout_presets_to_xml(presets: &[RoundaboutPreset]) -> String 
         .collect::<Vec<_>>()
         .join("\n");
 
-    format!("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<RoundaboutPresets>\n{}\n</RoundaboutPresets>", items)
+    format!(
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<RoundaboutPresets>\n{}\n</RoundaboutPresets>",
+        items
+    )
 }
 
 #[cfg(test)]
@@ -244,15 +311,37 @@ mod tests {
     use approx::assert_relative_eq;
 
     fn profile(elevs: &[(f64, f64)]) -> VerticalProfile {
-        VerticalProfile { id: "p".into(), name: "P".into(), alignment_id: "a".into(), pvis: elevs.iter().map(|&(station, elevation)| VerticalPvi { station, elevation, curve_length: None }).collect() }
+        VerticalProfile {
+            id: "p".into(),
+            name: "P".into(),
+            alignment_id: "a".into(),
+            pvis: elevs
+                .iter()
+                .map(|&(station, elevation)| VerticalPvi {
+                    station,
+                    elevation,
+                    curve_length: None,
+                })
+                .collect(),
+        }
     }
 
     #[test]
     fn primary_road_crown_locks_secondary_to_primary_elevation() {
         let primary = profile(&[(0.0, 100.0), (100.0, 110.0)]);
         let secondary = profile(&[(0.0, 95.0), (100.0, 105.0)]);
-        let solved = solve_intersection_crown(&primary, 50.0, &secondary, 50.0, IntersectionType::PrimaryRoadCrown);
-        assert_relative_eq!(solved.secondary_pvi_elevation, solved.primary_elevation, epsilon = 1e-9);
+        let solved = solve_intersection_crown(
+            &primary,
+            50.0,
+            &secondary,
+            50.0,
+            IntersectionType::PrimaryRoadCrown,
+        );
+        assert_relative_eq!(
+            solved.secondary_pvi_elevation,
+            solved.primary_elevation,
+            epsilon = 1e-9
+        );
         assert_eq!(solved.crown_grade_match, 0.0);
     }
 
@@ -260,7 +349,13 @@ mod tests {
     fn peer_road_reports_grade_mismatch() {
         let primary = profile(&[(0.0, 100.0), (100.0, 110.0)]);
         let secondary = profile(&[(0.0, 95.0), (100.0, 105.0)]);
-        let solved = solve_intersection_crown(&primary, 50.0, &secondary, 50.0, IntersectionType::PeerRoadAllCrowns);
+        let solved = solve_intersection_crown(
+            &primary,
+            50.0,
+            &secondary,
+            50.0,
+            IntersectionType::PeerRoadAllCrowns,
+        );
         assert!(solved.crown_grade_match > 0.0);
     }
 
@@ -297,9 +392,19 @@ mod tests {
             apron_width: 10.0,
             entry_width: 16.0,
             exit_width: 16.0,
-            splitter_island: SplitterIslandPreset { construction_triangle_length: 30.0, splitter_island_width: 6.0, crosswalk_offset: 10.0 },
+            splitter_island: SplitterIslandPreset {
+                construction_triangle_length: 30.0,
+                splitter_island_width: 6.0,
+                crosswalk_offset: 10.0,
+            },
         };
-        let roundabout = Roundabout { id: "r1".into(), name: "R1".into(), center_point: Point::new(0.0, 0.0), preset, approach_alignment_ids: vec![] };
+        let roundabout = Roundabout {
+            id: "r1".into(),
+            name: "R1".into(),
+            center_point: Point::new(0.0, 0.0),
+            preset,
+            approach_alignment_ids: vec![],
+        };
         let geo = build_roundabout_geometry(&roundabout, 64);
         assert_eq!(geo.splitter_islands.len(), 4);
         let r_center = thoth_spatial::distance(geo.center_island[0], Point::ZERO);

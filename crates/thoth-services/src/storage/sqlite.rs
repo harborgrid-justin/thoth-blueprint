@@ -63,7 +63,10 @@ impl SqliteStorageAdapter {
 
     fn ensure_table(&self, collection: &str) -> Result<(), StorageError> {
         assert_valid_collection_name(collection)?;
-        let mut known = self.known_tables.lock().expect("known_tables mutex poisoned");
+        let mut known = self
+            .known_tables
+            .lock()
+            .expect("known_tables mutex poisoned");
         if known.contains(collection) {
             return Ok(());
         }
@@ -219,8 +222,9 @@ mod tests {
         }
 
         {
-            let first = SqliteStorageAdapter::new(SqliteStorageAdapterOptions { file: file.clone() })
-                .unwrap();
+            let first =
+                SqliteStorageAdapter::new(SqliteStorageAdapterOptions { file: file.clone() })
+                    .unwrap();
             first
                 .put(
                     "widgets",
@@ -248,9 +252,10 @@ mod tests {
 
     #[tokio::test]
     async fn rejects_collection_names_that_arent_safe_sql_identifiers() {
-        let storage =
-            SqliteStorageAdapter::new(SqliteStorageAdapterOptions { file: ":memory:".into() })
-                .unwrap();
+        let storage = SqliteStorageAdapter::new(SqliteStorageAdapterOptions {
+            file: ":memory:".into(),
+        })
+        .unwrap();
         #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
         struct Widget {
             id: String,
@@ -270,9 +275,10 @@ mod tests {
 
     #[tokio::test]
     async fn reports_its_driver_as_sqlite() {
-        let storage =
-            SqliteStorageAdapter::new(SqliteStorageAdapterOptions { file: ":memory:".into() })
-                .unwrap();
+        let storage = SqliteStorageAdapter::new(SqliteStorageAdapterOptions {
+            file: ":memory:".into(),
+        })
+        .unwrap();
         assert_eq!(storage.driver(), StorageDriver::Sqlite);
         storage.close().await.unwrap();
     }

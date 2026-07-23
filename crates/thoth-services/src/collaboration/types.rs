@@ -62,7 +62,10 @@ pub enum CollabEvent {
     /// A review comment was posted (the comment itself is persisted by
     /// `@thoth/service-projects`; this event just notifies live viewers to
     /// refresh).
-    CommentPosted { thread_id: String, comment_id: String },
+    CommentPosted {
+        thread_id: String,
+        comment_id: String,
+    },
     /// A review thread was marked resolved.
     ThreadResolved { thread_id: String },
 }

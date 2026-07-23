@@ -28,8 +28,11 @@ pub const CW: f64 = W - MARGIN_LEFT - MARGIN_RIGHT;
 /// Drawable content height, px.
 pub const CH: f64 = H - MARGIN_TOP - MARGIN_BOTTOM;
 
-/// Round `value` up to a "nice" 1/2/5 × 10^n tick value (e.g. 37 → 50, 4 → 5).
-/// Non-positive input returns `1`.
+/// Snap `value` to the nearest 1/2/5 × 10^n scale-bar tick step (e.g. 37 →
+/// 20, 4 → 5, 1.5 → 2) — the classic "nice number" ticked-axis heuristic.
+/// This is a *nearest* step, not a ceiling: 37 snaps down to 20, not up to
+/// 50, since 3.7 (37's leading-digit ratio) is closer to the 2-step than
+/// the 5-step. Non-positive input returns `1`.
 pub fn nice_number(value: f64) -> f64 {
     if value <= 0.0 {
         return 1.0;
@@ -58,7 +61,10 @@ pub struct View {
 impl View {
     /// Project a plan-space point into sheet pixel space.
     pub fn project(&self, p: Point) -> Point {
-        Point::new(p.x * self.scale_px + self.offset_x, p.y * self.scale_px + self.offset_y)
+        Point::new(
+            p.x * self.scale_px + self.offset_x,
+            p.y * self.scale_px + self.offset_y,
+        )
     }
 }
 
@@ -134,10 +140,13 @@ mod tests {
     use approx::assert_relative_eq;
 
     #[test]
-    fn nice_number_rounds_up_to_1_2_5_steps() {
-        assert_relative_eq!(nice_number(37.0), 50.0, epsilon = 1e-9);
-        assert_relative_eq!(nice_number(4.0), 5.0, epsilon = 1e-9);
-        assert_relative_eq!(nice_number(1.5), 2.0, epsilon = 1e-9);
+    fn nice_number_snaps_to_the_nearest_1_2_5_step() {
+        assert_relative_eq!(nice_number(37.0), 20.0, epsilon = 1e-9);
+        assert_relative_eq!(nice_number(4.0), 2.0, epsilon = 1e-9);
+        assert_relative_eq!(nice_number(6.0), 5.0, epsilon = 1e-9);
+        assert_relative_eq!(nice_number(1.5), 1.0, epsilon = 1e-9);
+        assert_relative_eq!(nice_number(2.0), 2.0, epsilon = 1e-9);
+        assert_relative_eq!(nice_number(999.0), 500.0, epsilon = 1e-9);
         assert_relative_eq!(nice_number(0.0), 1.0, epsilon = 1e-9);
         assert_relative_eq!(nice_number(-5.0), 1.0, epsilon = 1e-9);
     }

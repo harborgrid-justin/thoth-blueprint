@@ -106,15 +106,25 @@ pub struct PipeNetworkValidation {
 /// default to `rim - 6`, mirroring the TS `nodeInverts[node.id] ?? rim - 6`).
 /// `node_rims` optionally overrides the terrain-derived rim elevation for
 /// specific nodes.
-pub fn validate_pipe_network(network: &InfrastructureNetwork, terrain: &ElevationGrid, rules: PipeDesignRules, node_inverts: &HashMap<String, f64>, node_rims: Option<&HashMap<String, f64>>) -> PipeNetworkValidation {
+pub fn validate_pipe_network(
+    network: &InfrastructureNetwork,
+    terrain: &ElevationGrid,
+    rules: PipeDesignRules,
+    node_inverts: &HashMap<String, f64>,
+    node_rims: Option<&HashMap<String, f64>>,
+) -> PipeNetworkValidation {
     let mut violations = Vec::new();
     let mut node_elevations = Vec::new();
     let mut edge_elevations = Vec::new();
 
-    let nodes_map: HashMap<&str, &NetworkNode> = network.nodes.iter().map(|n| (n.id.as_str(), n)).collect();
+    let nodes_map: HashMap<&str, &NetworkNode> =
+        network.nodes.iter().map(|n| (n.id.as_str(), n)).collect();
 
     for node in &network.nodes {
-        let rim = node_rims.and_then(|m| m.get(&node.id)).copied().unwrap_or_else(|| elevation_at(terrain, node.point));
+        let rim = node_rims
+            .and_then(|m| m.get(&node.id))
+            .copied()
+            .unwrap_or_else(|| elevation_at(terrain, node.point));
         let lowest_connected_invert = node_inverts.get(&node.id).copied().unwrap_or(rim - 6.0);
 
         let sump_depth = rules.default_sump_depth;
@@ -131,7 +141,10 @@ pub fn validate_pipe_network(network: &InfrastructureNetwork, terrain: &Elevatio
     }
 
     for edge in &network.edges {
-        let (Some(&from_node), Some(&to_node)) = (nodes_map.get(edge.from.as_str()), nodes_map.get(edge.to.as_str())) else {
+        let (Some(&from_node), Some(&to_node)) = (
+            nodes_map.get(edge.from.as_str()),
+            nodes_map.get(edge.to.as_str()),
+        ) else {
             continue;
         };
 
@@ -140,12 +153,25 @@ pub fn validate_pipe_network(network: &InfrastructureNetwork, terrain: &Elevatio
             continue;
         }
 
-        let start_invert = node_inverts.get(&edge.from).copied().unwrap_or_else(|| elevation_at(terrain, from_node.point) - 6.0);
-        let end_invert = node_inverts.get(&edge.to).copied().unwrap_or_else(|| elevation_at(terrain, to_node.point) - 6.0);
+        let start_invert = node_inverts
+            .get(&edge.from)
+            .copied()
+            .unwrap_or_else(|| elevation_at(terrain, from_node.point) - 6.0);
+        let end_invert = node_inverts
+            .get(&edge.to)
+            .copied()
+            .unwrap_or_else(|| elevation_at(terrain, to_node.point) - 6.0);
         let pipe_diameter = edge.width.unwrap_or(1.0); // default 1 plan unit
 
         let slope = (end_invert - start_invert).abs() / len;
-        edge_elevations.push(PipeElevationDetails { edge_id: edge.id.clone(), length: len, slope, invert_start: start_invert, invert_end: end_invert, diameter: pipe_diameter });
+        edge_elevations.push(PipeElevationDetails {
+            edge_id: edge.id.clone(),
+            length: len,
+            slope,
+            invert_start: start_invert,
+            invert_end: end_invert,
+            diameter: pipe_diameter,
+        });
 
         // Rule: diameter check.
         if pipe_diameter < rules.min_pipe_diameter {
@@ -164,7 +190,11 @@ pub fn validate_pipe_network(network: &InfrastructureNetwork, terrain: &Elevatio
                 element_id: edge.id.clone(),
                 violation_type: PipeViolationType::MinSlope,
                 severity: Severity::Warning,
-                message: format!("Gradient of {:.2}% is below minimum slope rule of {:.2}%.", slope * 100.0, rules.min_slope * 100.0),
+                message: format!(
+                    "Gradient of {:.2}% is below minimum slope rule of {:.2}%.",
+                    slope * 100.0,
+                    rules.min_slope * 100.0
+                ),
                 station_or_offset: None,
             });
         } else if slope > rules.max_slope {
@@ -172,7 +202,11 @@ pub fn validate_pipe_network(network: &InfrastructureNetwork, terrain: &Elevatio
                 element_id: edge.id.clone(),
                 violation_type: PipeViolationType::MaxSlope,
                 severity: Severity::Warning,
-                message: format!("Gradient of {:.2}% exceeds maximum slope rule of {:.2}%.", slope * 100.0, rules.max_slope * 100.0),
+                message: format!(
+                    "Gradient of {:.2}% exceeds maximum slope rule of {:.2}%.",
+                    slope * 100.0,
+                    rules.max_slope * 100.0
+                ),
                 station_or_offset: None,
             });
         }
@@ -202,7 +236,11 @@ pub fn validate_pipe_network(network: &InfrastructureNetwork, terrain: &Elevatio
         }
     }
 
-    PipeNetworkValidation { violations, node_elevations, edge_elevations }
+    PipeNetworkValidation {
+        violations,
+        node_elevations,
+        edge_elevations,
+    }
 }
 
 /// A pipe material.
@@ -311,20 +349,44 @@ mod tests {
             id: "n1".into(),
             name: "Sewer Network".into(),
             kind: NetworkKind::Sewer,
-            nodes: vec![NetworkNode { id: "node1".into(), point: Point::new(0.0, 0.0) }, NetworkNode { id: "node2".into(), point: Point::new(20.0, 0.0) }],
-            edges: vec![NetworkEdge { id: "edge1".into(), from: "node1".into(), to: "node2".into(), width: Some(1.5), road_class: None }],
+            nodes: vec![
+                NetworkNode {
+                    id: "node1".into(),
+                    point: Point::new(0.0, 0.0),
+                },
+                NetworkNode {
+                    id: "node2".into(),
+                    point: Point::new(20.0, 0.0),
+                },
+            ],
+            edges: vec![NetworkEdge {
+                id: "edge1".into(),
+                from: "node1".into(),
+                to: "node2".into(),
+                width: Some(1.5),
+                road_class: None,
+            }],
         }
     }
 
     fn rules() -> PipeDesignRules {
-        PipeDesignRules { min_cover: 4.0, min_slope: 0.005, max_slope: 0.08, min_pipe_diameter: 1.0, default_sump_depth: 1.5 }
+        PipeDesignRules {
+            min_cover: 4.0,
+            min_slope: 0.005,
+            max_slope: 0.08,
+            min_pipe_diameter: 1.0,
+            default_sump_depth: 1.5,
+        }
     }
 
     #[test]
     fn flags_cover_depth_violations_when_pipe_is_too_shallow() {
         let inverts = HashMap::from([("node1".to_string(), 8.0), ("node2".to_string(), 8.0)]);
         let res = validate_pipe_network(&net(), &grid(), rules(), &inverts, None);
-        assert!(res.violations.iter().any(|v| v.violation_type == PipeViolationType::LowCover));
+        assert!(res
+            .violations
+            .iter()
+            .any(|v| v.violation_type == PipeViolationType::LowCover));
     }
 
     #[test]

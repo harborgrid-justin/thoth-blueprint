@@ -68,7 +68,11 @@ pub fn extent_of_points(points: &[Point]) -> Option<Bounds> {
 /// computed cell size were ever non-positive, which cannot happen given
 /// [`MIN_CELL`] — kept as a `Result` so the interpolation invariant stays
 /// enforced at the type level rather than assumed.
-pub fn build_terrain_model(spots: &[SpotElevation], grades: &[GradeRegionInput], extent: Option<Bounds>) -> CivilResult<TerrainModel> {
+pub fn build_terrain_model(
+    spots: &[SpotElevation],
+    grades: &[GradeRegionInput],
+    extent: Option<Bounds>,
+) -> CivilResult<TerrainModel> {
     if spots.len() < 2 || extent.is_none() {
         return Ok(TerrainModel {
             has_terrain: false,
@@ -85,13 +89,29 @@ pub fn build_terrain_model(spots: &[SpotElevation], grades: &[GradeRegionInput],
     let height = (extent.max_y - extent.min_y).max(1.0);
     let cell_size = (width.max(height) / TARGET_CELLS_ACROSS).max(MIN_CELL);
 
-    let existing = crate::terrain::interpolate_grid(spots, extent, InterpolateOptions { cell_size, power: 2.0, base: 0.0, padding: cell_size })?;
+    let existing = crate::terrain::interpolate_grid(
+        spots,
+        extent,
+        InterpolateOptions {
+            cell_size,
+            power: 2.0,
+            base: 0.0,
+            padding: cell_size,
+        },
+    )?;
     let mut proposed = existing.clone();
     for g in grades {
         proposed = grade_pad(&proposed, &g.boundary, g.target_elevation);
     }
 
-    Ok(TerrainModel { has_terrain: true, spot_count: spots.len(), grade_count: grades.len(), extent: Some(extent), existing: Some(existing), proposed: Some(proposed) })
+    Ok(TerrainModel {
+        has_terrain: true,
+        spot_count: spots.len(),
+        grade_count: grades.len(),
+        extent: Some(extent),
+        existing: Some(existing),
+        proposed: Some(proposed),
+    })
 }
 
 #[cfg(test)]
@@ -100,27 +120,54 @@ mod tests {
     use thoth_spatial::Point;
 
     fn spot(x: f64, y: f64, z: f64) -> SpotElevation {
-        SpotElevation { point: Point::new(x, y), z }
+        SpotElevation {
+            point: Point::new(x, y),
+            z,
+        }
     }
 
     #[test]
     fn too_few_spots_yields_no_terrain() {
-        let model = build_terrain_model(&[spot(0.0, 0.0, 1.0)], &[], Some(Bounds { min_x: 0.0, min_y: 0.0, max_x: 10.0, max_y: 10.0 })).unwrap();
+        let model = build_terrain_model(
+            &[spot(0.0, 0.0, 1.0)],
+            &[],
+            Some(Bounds {
+                min_x: 0.0,
+                min_y: 0.0,
+                max_x: 10.0,
+                max_y: 10.0,
+            }),
+        )
+        .unwrap();
         assert!(!model.has_terrain);
         assert!(model.existing.is_none());
     }
 
     #[test]
     fn no_extent_yields_no_terrain() {
-        let model = build_terrain_model(&[spot(0.0, 0.0, 1.0), spot(10.0, 10.0, 2.0)], &[], None).unwrap();
+        let model =
+            build_terrain_model(&[spot(0.0, 0.0, 1.0), spot(10.0, 10.0, 2.0)], &[], None).unwrap();
         assert!(!model.has_terrain);
     }
 
     #[test]
     fn enough_spots_and_extent_builds_existing_and_proposed() {
-        let extent = Bounds { min_x: 0.0, min_y: 0.0, max_x: 100.0, max_y: 100.0 };
+        let extent = Bounds {
+            min_x: 0.0,
+            min_y: 0.0,
+            max_x: 100.0,
+            max_y: 100.0,
+        };
         let spots = vec![spot(0.0, 0.0, 10.0), spot(100.0, 100.0, 20.0)];
-        let grades = vec![GradeRegionInput { boundary: vec![Point::new(10.0, 10.0), Point::new(20.0, 10.0), Point::new(20.0, 20.0), Point::new(10.0, 20.0)], target_elevation: 15.0 }];
+        let grades = vec![GradeRegionInput {
+            boundary: vec![
+                Point::new(10.0, 10.0),
+                Point::new(20.0, 10.0),
+                Point::new(20.0, 20.0),
+                Point::new(10.0, 20.0),
+            ],
+            target_elevation: 15.0,
+        }];
         let model = build_terrain_model(&spots, &grades, Some(extent)).unwrap();
         assert!(model.has_terrain);
         assert_eq!(model.spot_count, 2);

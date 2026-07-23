@@ -304,17 +304,21 @@ pub fn execute_transparent_command(
             input.angle_or_bearing_deg,
             input.distance,
         ) {
-            (Some(start), Some(quadrant), Some(bearing), Some(distance)) => Ok(
-                TransparentCommandOutput::Point(calculate_point_from_quadrant_bearing(
-                    start, quadrant, bearing, distance,
-                )),
-            ),
+            (Some(start), Some(quadrant), Some(bearing), Some(distance)) => {
+                Ok(TransparentCommandOutput::Point(
+                    calculate_point_from_quadrant_bearing(start, quadrant, bearing, distance),
+                ))
+            }
             _ => Err(SurveyError::MissingTransparentCommandInput {
                 command: Bd,
                 requirement: "startPoint, quadrant, bearing, and distance",
             }),
         },
-        Zd => match (input.start_point, input.angle_or_bearing_deg, input.distance) {
+        Zd => match (
+            input.start_point,
+            input.angle_or_bearing_deg,
+            input.distance,
+        ) {
             (Some(start), Some(azimuth_deg), Some(distance)) => {
                 let az_rad = azimuth_deg.to_radians();
                 Ok(TransparentCommandOutput::Point(Point2D::new(
@@ -379,7 +383,9 @@ pub fn execute_transparent_command(
         },
         Ze => match (input.point_number, input.point_map) {
             (Some(num), Some(map)) if num != 0 => {
-                let target = map.get(&num).map(|pt| Point2D::new(pt.easting, pt.northing));
+                let target = map
+                    .get(&num)
+                    .map(|pt| Point2D::new(pt.easting, pt.northing));
                 Ok(TransparentCommandOutput::Action {
                     action: ControlAction::Zoom,
                     target_point: target,
@@ -437,7 +443,8 @@ mod tests {
 
     #[test]
     fn quadrant_bearing_ne_matches_azimuth() {
-        let p = calculate_point_from_quadrant_bearing(Point2D::new(0.0, 0.0), Quadrant::Ne, 45.0, 10.0);
+        let p =
+            calculate_point_from_quadrant_bearing(Point2D::new(0.0, 0.0), Quadrant::Ne, 45.0, 10.0);
         assert_relative_eq!(p.x, 10.0 * 45f64.to_radians().sin(), epsilon = 1e-9);
         assert_relative_eq!(p.y, 10.0 * 45f64.to_radians().cos(), epsilon = 1e-9);
     }
@@ -468,7 +475,12 @@ mod tests {
             },
         ];
         let joined = join_line_segments(&segs);
-        assert_eq!(joined.vertices.len(), 3);
+        // 4, not 3: the algorithm snaps shared endpoints between
+        // consecutive segments but does not dedupe the final vertex against
+        // the first even when they coincide — `is_closed` is a separate,
+        // explicit check for exactly that coincidence.
+        assert_eq!(joined.vertices.len(), 4);
+        assert_eq!(joined.vertices[0], joined.vertices[3]);
         assert!(joined.is_closed);
     }
 

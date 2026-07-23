@@ -14,7 +14,11 @@ pub fn format_station(station_ft: f64) -> String {
     let major = (rounded / 100.0).floor();
     let minor_value = rounded % 100.0;
     let minor = format!("{:.2}", minor_value);
-    let minor_padded = if minor.len() < 5 { format!("{}{}", "0".repeat(5 - minor.len()), minor) } else { minor };
+    let minor_padded = if minor.len() < 5 {
+        format!("{}{}", "0".repeat(5 - minor.len()), minor)
+    } else {
+        minor
+    };
     format!("{}+{}", major as i64, minor_padded)
 }
 
@@ -28,7 +32,12 @@ pub fn format_bearing_dms(bearing_deg: f64) -> String {
 }
 
 /// Converts polygon vertices to an SVG path `d` attribute string.
-pub fn vertices_to_svg_path(vertices: &[Point], scale: f64, offset_x: f64, offset_y: f64) -> String {
+pub fn vertices_to_svg_path(
+    vertices: &[Point],
+    scale: f64,
+    offset_x: f64,
+    offset_y: f64,
+) -> String {
     if vertices.is_empty() {
         return String::new();
     }
@@ -62,7 +71,11 @@ mod tests {
 
     #[test]
     fn vertices_to_svg_path_builds_moveto_lineto_close() {
-        let verts = vec![Point::new(0.0, 0.0), Point::new(10.0, 0.0), Point::new(10.0, 10.0)];
+        let verts = vec![
+            Point::new(0.0, 0.0),
+            Point::new(10.0, 0.0),
+            Point::new(10.0, 10.0),
+        ];
         let path = vertices_to_svg_path(&verts, 1.0, 0.0, 0.0);
         assert_eq!(path, "M 0.0 0.0 L 10.0 0.0 L 10.0 10.0 Z");
     }
