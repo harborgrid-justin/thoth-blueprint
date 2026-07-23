@@ -9,6 +9,12 @@
 > `thoth-drawing`) gained new modules. See "Gap-closing pass" below for the
 > full rollup — the original migration-pass content further down is left
 > as-is (superseded numbers are noted inline rather than silently rewritten).
+>
+> **Update (interoperability / mock-removal pass):** a third round closed
+> the cross-crate integration debt the first two passes had documented as
+> "blocked on a sibling crate that wasn't done yet" — those sibling crates
+> were all complete by this point. See "Interoperability & mock-removal
+> pass" below.
 
 
 Thoth Blueprint's business logic — currently TypeScript in `packages/domain`
@@ -75,6 +81,54 @@ by the time this pass started — unlike the first pass, cross-crate
 boundaries (e.g. `thoth-drawing`'s staking sheet using a local
 `StakingPoint` type pending eventual integration with `thoth-interop`'s
 `staking.rs`), not merely "the other crate wasn't done yet."
+
+## Interoperability & mock-removal pass (six parallel agents)
+
+By this point every domain crate from the first two passes was complete
+and stable, so this round tackled the "not-yet-ported: blocked on a
+sibling crate" debt that was genuinely closeable now, plus two orthogonal
+tasks: eliminating the platform's last literal mock/scaffold code, and
+auditing the enterprise requirements-traceability suite against reality.
+
+**The key architectural constraint**: the TS originals for
+`thoth-civil`/`thoth-survey`/`thoth-planning`/`thoth-drawing` import from
+each other in ways that would form a circular crate dependency if ported
+naively — Rust can't do that. A single finding broke the tightest cycle:
+`thoth-survey`'s `Point2D` turned out to already be
+`pub type Point2D = thoth_spatial::Point` (a type alias, not a distinct
+type), so `thoth-civil` never actually needed to depend on `thoth-survey`
+at all. That enabled a strict, acyclic dependency order for this round:
+**`thoth-spatial → thoth-civil → thoth-survey → thoth-planning →
+thoth-drawing`** (each arrow = "may depend on"). Every agent got an
+explicit allow/forbid list of which sibling crates it could add as a
+dependency, so six concurrent agents could extend four different crates
+without any of them accidentally introducing a cycle.
+
+| Crate | What closed | Tests |
+| --- | --- | --- |
+| `thoth-civil` | All 10 previously-blocked files (9 fully, 1 partial — arbitrary JS-string script execution has no Rust equivalent) | 198 (+96) |
+| `thoth-survey` | 7 of 10 blocked helpers (added `thoth-civil` dependency); 3 stay blocked needing `thoth-planning`/`thoth-drawing`, which would cycle | 135 (+38) |
+| `thoth-drawing` | `defaultSet`, `collada`'s `siteToMeshes`, `platset`'s `collectSiteCurves`, several `builders` composers (added `thoth-planning`+`thoth-survey` deps) | 241 (+34) |
+| `thoth-planning` | Element geometry algorithms (stairs/curtainwall/doorwindow/roof, each citing IBC/IRC/ADA sections), full GEOID/PLSS compliance port, `Site`'s monuments/plss fields, element factory/meta/search/vertex, 3 of 9 `smart/` modules (added `thoth-civil`+`thoth-survey` deps) | 236 (+117) |
+| `thoth-napi` (mock removal) | Real `auth`/`collaboration`/Postgres-`storage` bindings replacing `services/auth`'s and `services/collaboration`'s literal `__SCAFFOLD__ = true` stubs and `packages/storage`'s throwing Postgres adapter | 24 (+19), plus 19 new TS tests |
+| `docs/requirements/` (audit) | 45 of 100 `REQ-UNIMP-*` rows got a precise status flip with a code citation (caught a prior overclaim: all 10 Roof requirements were marked "Fully Implemented," only 1 actually is); fixed every broken `file:///f:/AutoCAD%20Competitor/...` absolute-path link in the two files it touched; RTM regenerated, R1–R5 validation still passes | n/a (docs-only) |
+
+**Workspace total after this pass: 1,317 Rust tests, all passing.**
+`cargo fmt --all -- --check`, `cargo clippy --workspace --all-targets --
+-D warnings`, and `cargo check --workspace` are all clean across all 16
+crates. The TS suites (383 domain + 47 storage, up from 41 after the mock-
+removal pass added Postgres-adapter tests) and `apps/web`'s Vitest suite
+remain green.
+
+One real cross-crate fix needed after all six agents finished: `thoth-planning`
+adding `monuments`/`plss` fields to `Site` broke two `Site` struct literals
+in `thoth-governance` (a crate from the *previous* round that no agent in
+this round owned) — fixed by hand (the production `merge_sites` now
+carries both fields through from `base` like every other passthrough
+field; a test fixture defaults them to `None`). `thoth-drawing`'s own
+`Site` literals had already been updated by that agent mid-task after it
+noticed the concurrent `thoth-planning` change — a nice bit of emergent
+coordination between two agents that never communicated directly.
 
 ## What the integration layer actually wired
 
