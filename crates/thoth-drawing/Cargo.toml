@@ -9,6 +9,12 @@ rust-version.workspace = true
 
 [dependencies]
 thoth-spatial = { workspace = true }
+# Added for `viewshed` (gap-analysis Theme 5 item 58): thoth-civil's
+# `ElevationGrid` is complete/stable and already the shape every other
+# terrain-consuming crate in the workspace uses, so this depends on it
+# directly rather than duplicating a local elevation-grid type. See
+# `src/viewshed.rs`'s module rustdoc and `GAP_ANALYSIS_STATUS.md`.
+thoth-civil = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }

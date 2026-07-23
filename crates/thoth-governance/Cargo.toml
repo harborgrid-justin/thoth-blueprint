@@ -14,6 +14,15 @@ thoth-services = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }
+# Timestamps on audit-log entries, redline threads, will-serve requests, and
+# share tokens — same crate/feature set `thoth-services` already uses.
+chrono = { version = "0.4", features = ["serde"] }
+# `RedlineService`/`SharingService` compose with
+# `thoth_services::collaboration::CollaborationHub` (item 63/66), whose
+# public API returns `tokio::sync::broadcast::Receiver<CollabEvent>`; needed
+# here only to name that return type, plus `#[tokio::test]` in this crate's
+# own async tests.
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time"] }
 
 [dev-dependencies]
 approx = { workspace = true }

@@ -11,9 +11,20 @@ rust-version.workspace = true
 thoth-spatial = { workspace = true }
 thoth-survey = { workspace = true }
 thoth-planning = { workspace = true }
+# `thoth-civil` is already a stable, frozen-by-completion sibling crate (see
+# workspace.dependencies in the root Cargo.toml) that owns alignments, pipe
+# networks, terrain, and point clouds. Depending on it here lets LandXML
+# (item 26) and point-cloud classification (item 33) reuse those domain
+# types/schema conventions instead of re-deriving them — see CLAUDE.md's
+# "reuse its schema conventions for consistency" note.
+thoth-civil = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }
+# XML parsing/writing for LandXML and KML — a real streaming parser gives
+# byte-offset error locations for free, which a hand-rolled parser would have
+# to reinvent for every one of this crate's defensive-parsing requirements.
+quick-xml = "0.36"
 
 [dev-dependencies]
 approx = { workspace = true }
