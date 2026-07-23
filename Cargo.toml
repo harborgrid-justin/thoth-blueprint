@@ -14,6 +14,12 @@ members = [
     # crate wearing both hats; depends only on the frozen thoth-spatial, so
     # it doesn't collide with the five domain crates' in-flight work.
     "crates/thoth-napi",
+    # Competitive gap-analysis implementation pass (5-7 parallel agents),
+    # each owning one exclusive crate directory:
+    "crates/thoth-hydrology",
+    "crates/thoth-transportation",
+    "crates/thoth-interop",
+    "crates/thoth-governance",
 ]
 
 [workspace.package]
@@ -30,9 +36,14 @@ thoth-survey = { path = "crates/thoth-survey" }
 thoth-civil = { path = "crates/thoth-civil" }
 thoth-drawing = { path = "crates/thoth-drawing" }
 thoth-services = { path = "crates/thoth-services" }
+thoth-hydrology = { path = "crates/thoth-hydrology" }
+thoth-transportation = { path = "crates/thoth-transportation" }
+thoth-interop = { path = "crates/thoth-interop" }
+thoth-governance = { path = "crates/thoth-governance" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 thiserror = "1"
+approx = "0.5"
 
 [profile.release]
 opt-level = 3

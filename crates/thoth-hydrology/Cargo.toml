@@ -1,0 +1,18 @@
+[package]
+name = "thoth-hydrology"
+description = "Stormwater hydrology and hydraulics for Thoth Blueprint: rational method, SCS/NRCS TR-55/TR-20 runoff and hydrographs, pond routing, culvert/pipe hydraulics, watershed delineation, and LID/BMP sizing."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+thoth-spatial = { workspace = true }
+thoth-civil = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+approx = { workspace = true }

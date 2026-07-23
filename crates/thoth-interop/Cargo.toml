@@ -1,0 +1,19 @@
+[package]
+name = "thoth-interop"
+description = "Field-data and format interoperability for Thoth Blueprint: LandXML, Shapefile, DXF, KML/KMZ, GNSS/total-station raw data, point-cloud classification, cadastral parcel-fabric matching, and datum transforms."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+thoth-spatial = { workspace = true }
+thoth-survey = { workspace = true }
+thoth-planning = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+approx = { workspace = true }
