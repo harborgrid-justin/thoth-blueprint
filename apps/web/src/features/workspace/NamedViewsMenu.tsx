@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNamedViewsState } from "./hooks/useNamedViewsState";
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
 
 export function NamedViewsMenu() {
   const { namedViews, setViewport, handleSave, handleDelete } =
@@ -17,31 +18,31 @@ export function NamedViewsMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="gap-1.5">
-          <Camera className="h-4 w-4" />
+        <Button variant="ghost" size="sm" className="gap-1.5 text-slate-300 hover:text-white">
+          <Camera className="h-4 w-4 text-cyan-400" />
           <span className="hidden md:inline">Views</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>Named Viewports</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent align="end" className={WORKSPACE_STYLES.dropdownContent + " w-56"}>
+        <DropdownMenuLabel className={WORKSPACE_STYLES.dropdownLabel}>Named Viewports</DropdownMenuLabel>
+        <DropdownMenuSeparator className={WORKSPACE_STYLES.dropdownSeparator} />
 
         {namedViews.length === 0 ? (
-          <div className="px-2 py-1.5 text-xs text-muted-foreground">
+          <div className={WORKSPACE_STYLES.textMuted + " px-2 py-1.5 text-xs"}>
             No saved views
           </div>
         ) : (
           namedViews.map((view) => (
             <DropdownMenuItem
               key={view.name}
-              className="flex items-center justify-between group"
+              className={WORKSPACE_STYLES.dropdownItem + " justify-between group"}
               onClick={() => setViewport(view.viewport)}
             >
               <span className="truncate">{view.name}</span>
               <button
                 type="button"
                 onClick={(e) => handleDelete(e, view.name)}
-                className="opacity-0 group-hover:opacity-100 hover:text-destructive p-1 rounded transition-opacity"
+                className="opacity-0 group-hover:opacity-100 hover:text-rose-400 p-1 rounded transition-opacity"
                 aria-label={`Delete ${view.name}`}
               >
                 <Trash2 className="h-3 w-3" />
@@ -50,8 +51,8 @@ export function NamedViewsMenu() {
           ))
         )}
 
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleSave} className="gap-1.5 text-primary">
+        <DropdownMenuSeparator className={WORKSPACE_STYLES.dropdownSeparator} />
+        <DropdownMenuItem onClick={handleSave} className={WORKSPACE_STYLES.dropdownItem + " text-cyan-400 font-medium"}>
           <Plus className="h-3.5 w-3.5" />
           <span>Save Current View</span>
         </DropdownMenuItem>

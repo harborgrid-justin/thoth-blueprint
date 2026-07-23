@@ -4,6 +4,7 @@ import { useUiStore } from "@/store/uiStore";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { buildCommands, type Command, type CommandActions } from "./commands";
+import { COMMAND_STYLES } from "./styles/commandDesignSystem";
 
 /**
  * The command palette (`FE-CMD-002`): a searchable list of every workspace
@@ -76,9 +77,9 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="top-[12%] max-w-xl translate-y-0 gap-0 overflow-hidden p-0">
+      <DialogContent className={COMMAND_STYLES.paletteDialog}>
         <DialogTitle className="sr-only">Command palette</DialogTitle>
-        <div className="flex items-center gap-2 border-b border-border px-3">
+        <div className={COMMAND_STYLES.paletteInputWrapper}>
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
           <input
             autoFocus
@@ -86,15 +87,15 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onKeyDown}
             placeholder="Search commands…"
-            className="h-11 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+            className={COMMAND_STYLES.paletteInput}
           />
         </div>
         <div
           ref={listRef}
-          className="max-h-[min(60vh,24rem)] overflow-y-auto p-1.5"
+          className={COMMAND_STYLES.paletteList}
         >
           {results.length === 0 ? (
-            <p className="px-3 py-6 text-center text-sm text-muted-foreground">
+            <p className={COMMAND_STYLES.paletteEmpty}>
               No matching commands.
             </p>
           ) : (
@@ -106,7 +107,7 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
               .filter((g) => g.items.length > 0)
               .map(({ group, items }) => (
                 <div key={group} className="mb-1">
-                  <div className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  <div className={COMMAND_STYLES.paletteGroupTitle}>
                     {group}
                   </div>
                   {items.map((cmd) => {
@@ -121,16 +122,16 @@ export function CommandPalette({ actions }: { actions: CommandActions }) {
                         onMouseMove={() => setIndex(i)}
                         onClick={() => run(cmd)}
                         className={cn(
-                          "flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left text-sm transition-colors",
+                          COMMAND_STYLES.paletteItem,
                           i === index
-                            ? "bg-accent text-accent-foreground"
-                            : "text-foreground",
+                            ? COMMAND_STYLES.paletteItemActive
+                            : COMMAND_STYLES.paletteItemInactive,
                         )}
                       >
                         <Icon className="h-4 w-4 shrink-0 text-muted-foreground" />
                         <span className="flex-1 truncate">{cmd.title}</span>
                         {cmd.shortcut && (
-                          <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground">
+                          <kbd className={COMMAND_STYLES.paletteShortcut}>
                             {cmd.shortcut}
                           </kbd>
                         )}

@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { PREFERENCES_STYLES } from "./styles/preferencesDesignSystem";
 
 const AREA_UNITS: AreaUnit[] = [
   "sqm",
@@ -54,7 +55,7 @@ export function PreferencesDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-md">
+      <DialogContent className={PREFERENCES_STYLES.dialog}>
         <DialogHeader>
           <DialogTitle>Display preferences</DialogTitle>
           <DialogDescription>
@@ -63,7 +64,7 @@ export function PreferencesDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-col gap-4">
+        <div className={PREFERENCES_STYLES.formContainer}>
           <Row label="Jurisdiction (region plug-in)">
             <PrefSelect
               value={jurisdictionId || "none"}
@@ -111,12 +112,12 @@ export function PreferencesDialog() {
             />
           </Row>
 
-          <div className="flex items-center justify-between rounded-md border border-border px-3 py-2.5">
+          <div className={PREFERENCES_STYLES.toggleRow}>
             <div>
-              <Label className="text-sm text-foreground">
+              <Label className={PREFERENCES_STYLES.toggleTitle}>
                 High-contrast mode
               </Label>
-              <p className="text-xs text-muted-foreground">
+              <p className={PREFERENCES_STYLES.toggleSubtitle}>
                 Stronger borders and text for readability.
               </p>
             </div>
@@ -133,9 +134,9 @@ export function PreferencesDialog() {
 
 function Row({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="flex items-center justify-between gap-4">
-      <Label className="text-sm text-foreground">{label}</Label>
-      <div className="w-56">{children}</div>
+    <div className={PREFERENCES_STYLES.row}>
+      <Label className={PREFERENCES_STYLES.rowLabel}>{label}</Label>
+      <div className={PREFERENCES_STYLES.rowControl}>{children}</div>
     </div>
   );
 }
@@ -151,7 +152,7 @@ function PrefSelect({
 }) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="h-8">
+      <SelectTrigger className={PREFERENCES_STYLES.selectTrigger}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

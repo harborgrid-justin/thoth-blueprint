@@ -19,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLayerPanelState } from "./hooks/useLayerPanelState";
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
 
 const ACI_COLORS = [
   "#ff0000", "#ffff00", "#00ff00", "#00ffff", "#0000ff", "#ff00ff", "#ffffff", "#808080", "#c0c0c0",
@@ -51,7 +52,7 @@ export function LayerPanel() {
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-3 pb-2 pt-1">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <h3 className={WORKSPACE_STYLES.textSectionTitle}>
           Layers
         </h3>
         <Button
@@ -71,8 +72,8 @@ export function LayerPanel() {
               key={layer.id}
               onClick={() => setActiveLayer(layer.id)}
               className={cn(
-                "group flex items-center gap-1.5 rounded px-1.5 py-0.5 text-xs font-cad transition-colors",
-                active ? "bg-accent" : "hover:bg-accent/60",
+                "group flex items-center gap-1.5 rounded px-1.5 py-0.5 text-xs font-mono transition-colors cursor-pointer",
+                active ? "bg-primary/10 text-primary font-semibold" : "hover:bg-accent/60 text-muted-foreground",
               )}
             >
               <DropdownMenu>
@@ -197,7 +198,7 @@ export function LayerPanel() {
       <div className="my-2 border-t border-border" />
 
       <div className="flex items-center justify-between px-3 pb-2 pt-1">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <h3 className={WORKSPACE_STYLES.textSectionTitle}>
           COGO Point Groups
         </h3>
       </div>
@@ -205,7 +206,7 @@ export function LayerPanel() {
         {evaluatedGroups.map((group) => (
           <div
             key={group.id}
-            className="flex items-center justify-between rounded-md px-2 py-1 text-sm hover:bg-accent/40"
+            className="flex items-center justify-between rounded-md px-2 py-1 text-sm hover:bg-accent transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-1.5">
               <span className="text-muted-foreground text-xs font-mono">

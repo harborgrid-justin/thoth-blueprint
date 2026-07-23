@@ -17,6 +17,7 @@ import {
   ZONING_PRESETS,
   type ZoningPreset,
 } from "./hooks/useSubdivisionStudioState";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 interface SubdivisionStudioDialogProps {
   isOpen: boolean;
@@ -57,39 +58,39 @@ export const SubdivisionStudioDialog: React.FC<
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4">
-      <div className="flex flex-col w-full max-w-5xl h-[88vh] bg-slate-950 border border-cyan-500/30 rounded-2xl shadow-2xl overflow-hidden text-slate-100">
+    <div className={SURVEY_STYLES.dialogOverlay + " animate-overlay-in"}>
+      <div className={SURVEY_STYLES.dialogContainer}>
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/90">
+        <div className={SURVEY_STYLES.dialogHeader}>
           <div className="flex items-center space-x-3">
-            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
+            <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
               <Grid2x2 className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+              <h2 className={SURVEY_STYLES.dialogTitle}>
                 Subdivision Studio & Layout Solvers
               </h2>
-              <p className="text-xs text-slate-400 font-mono">
+              <p className={SURVEY_STYLES.textSubtitle}>
                 Automated Slide/Swing Partitioning • GEOID Zoning Rules • Cul-de-Sac Bulbs
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-200 transition-colors text-lg font-bold px-2.5 py-1 rounded-lg hover:bg-slate-800"
+            className={SURVEY_STYLES.btnClose}
           >
             ✕
           </button>
         </div>
 
         {/* Parcel Selector Banner */}
-        <div className="flex items-center justify-between px-6 py-2.5 bg-slate-900 border-b border-slate-800 text-xs">
+        <div className={SURVEY_STYLES.banner}>
           <div className="flex items-center gap-3">
-            <span className="font-semibold text-slate-400 uppercase tracking-wider">Target Boundary:</span>
+            <span className={SURVEY_STYLES.label}>Target Boundary:</span>
             <select
               value={selectedParcelId || (targetParcel?.id ?? "")}
               onChange={(e) => setSelectedParcelId(e.target.value)}
-              className="bg-slate-950 border border-slate-700 rounded-lg px-3 py-1 text-xs text-cyan-300 outline-none focus:border-cyan-500"
+              className={SURVEY_STYLES.select}
             >
               {candidateParcels.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -99,9 +100,9 @@ export const SubdivisionStudioDialog: React.FC<
             </select>
           </div>
           {targetParcel && (
-            <div className="flex items-center gap-4 text-slate-300 font-mono">
+            <div className="flex items-center gap-4 text-muted-foreground font-mono">
               <span>
-                Layer: <strong className="text-cyan-400">{targetParcel.layerId}</strong>
+                Layer: <strong className="text-amber-400">{targetParcel.layerId}</strong>
               </span>
               <span>
                 Generated Lots: <strong className="text-emerald-400">{subdivisionResult.lots.length}</strong>
@@ -111,7 +112,7 @@ export const SubdivisionStudioDialog: React.FC<
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-slate-800 bg-slate-950 px-6 space-x-2">
+        <div className={SURVEY_STYLES.tabBar}>
           {[
             { id: "partition", label: "1. Partition Solvers", icon: Sliders },
             { id: "zoning", label: "2. Zoning & Setbacks", icon: Building },
@@ -123,11 +124,7 @@ export const SubdivisionStudioDialog: React.FC<
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`px-4 py-3 text-xs font-semibold border-b-2 transition-all flex items-center gap-2 ${
-                  activeTab === tab.id
-                    ? "border-cyan-400 text-cyan-400 bg-cyan-500/10"
-                    : "border-transparent text-slate-400 hover:text-slate-200"
-                }`}
+                className={activeTab === tab.id ? SURVEY_STYLES.btnTabActive : SURVEY_STYLES.btnTab}
               >
                 <Icon className="w-4 h-4" />
                 {tab.label}
@@ -137,11 +134,11 @@ export const SubdivisionStudioDialog: React.FC<
         </div>
 
         {/* Main Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className={SURVEY_STYLES.dialogBody}>
           {activeTab === "partition" && (
-            <div className="grid grid-cols-2 gap-6">
+            <div className={SURVEY_STYLES.grid2Col}>
               {/* Controls */}
-              <div className="space-y-4 bg-slate-900/60 p-5 rounded-xl border border-slate-800">
+              <div className={SURVEY_STYLES.card + " space-y-4"}>
                 <h3 className="text-sm font-semibold text-cyan-300 flex items-center gap-2">
                   <Sliders className="w-4 h-4" /> Partitioning Mode & Parameters
                 </h3>
@@ -152,7 +149,7 @@ export const SubdivisionStudioDialog: React.FC<
                     className={`flex-1 py-2 rounded-lg text-xs font-semibold border transition ${
                       method === "slide"
                         ? "bg-cyan-600 text-white border-cyan-400 shadow-md shadow-cyan-600/20"
-                        : "bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-900"
+                        : "bg-background text-muted-foreground border-border hover:bg-card"
                     }`}
                   >
                     Slide Line (Parallel)
@@ -162,7 +159,7 @@ export const SubdivisionStudioDialog: React.FC<
                     className={`flex-1 py-2 rounded-lg text-xs font-semibold border transition ${
                       method === "swing"
                         ? "bg-cyan-600 text-white border-cyan-400 shadow-md shadow-cyan-600/20"
-                        : "bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-900"
+                        : "bg-background text-muted-foreground border-border hover:bg-card"
                     }`}
                   >
                     Swing Line (Radial Pivot)
@@ -171,56 +168,56 @@ export const SubdivisionStudioDialog: React.FC<
 
                 <div className="space-y-3 pt-2">
                   <div>
-                    <Label className="text-xs text-slate-400">Target Lot Area (sq ft)</Label>
+                    <Label className="text-xs text-muted-foreground">Target Lot Area (sq ft)</Label>
                     <Input
                       type="number"
                       value={zoning.minLotAreaSqFt}
                       onChange={(e) =>
                         setZoning({ ...zoning, minLotAreaSqFt: Number(e.target.value) })
                       }
-                      className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-cyan-300"
+                      className="mt-1 bg-background border-border text-xs font-mono text-cyan-300"
                     />
                   </div>
 
                   <div>
-                    <Label className="text-xs text-slate-400">Cut Angle (deg relative to frontage)</Label>
+                    <Label className="text-xs text-muted-foreground">Cut Angle (deg relative to frontage)</Label>
                     <Input
                       type="number"
                       value={cutAngle}
                       onChange={(e) => setCutAngle(Number(e.target.value))}
-                      className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-cyan-300"
+                      className="mt-1 bg-background border-border text-xs font-mono text-cyan-300"
                     />
                   </div>
 
                   <div>
-                    <Label className="text-xs text-slate-400">Minimum Frontage Width (ft)</Label>
+                    <Label className="text-xs text-muted-foreground">Minimum Frontage Width (ft)</Label>
                     <Input
                       type="number"
                       value={zoning.minFrontageFt}
                       onChange={(e) =>
                         setZoning({ ...zoning, minFrontageFt: Number(e.target.value) })
                       }
-                      className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-cyan-300"
+                      className="mt-1 bg-background border-border text-xs font-mono text-cyan-300"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Real-time Preview Grid */}
-              <div className="bg-slate-900/60 p-5 rounded-xl border border-slate-800 flex flex-col justify-between">
+              <div className="bg-card/60 p-5 rounded-xl border border-border flex flex-col justify-between">
                 <div>
                   <h3 className="text-sm font-semibold text-emerald-400 flex items-center gap-2 mb-3">
                     <Sparkles className="w-4 h-4" /> Live Auto-Subdivision Preview
                   </h3>
                   <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                      <span className="text-[11px] text-slate-400">Lots Generated</span>
+                    <div className="bg-background p-3 rounded-lg border border-border">
+                      <span className="text-[11px] text-muted-foreground">Lots Generated</span>
                       <div className="text-2xl font-bold text-cyan-400 font-mono">
                         {subdivisionResult.lots.length}
                       </div>
                     </div>
-                    <div className="bg-slate-950 p-3 rounded-lg border border-slate-800">
-                      <span className="text-[11px] text-slate-400">Target Lot Size</span>
+                    <div className="bg-background p-3 rounded-lg border border-border">
+                      <span className="text-[11px] text-muted-foreground">Target Lot Size</span>
                       <div className="text-lg font-semibold text-emerald-400 font-mono">
                         {zoning.minLotAreaSqFt.toLocaleString()} sq ft
                       </div>
@@ -231,9 +228,9 @@ export const SubdivisionStudioDialog: React.FC<
                     {subdivisionResult.lots.map((lot) => (
                       <div
                         key={lot.id}
-                        className="flex justify-between items-center p-2 rounded bg-slate-950/80 border border-slate-800/80 text-xs font-mono"
+                        className="flex justify-between items-center p-2 rounded bg-background/80 border border-border/80 text-xs font-mono"
                       >
-                        <span className="text-slate-300 font-semibold">{lot.name}</span>
+                        <span className="text-muted-foreground font-semibold">{lot.name}</span>
                         <span className="text-cyan-400">{lot.boundary.length} vertices</span>
                       </div>
                     ))}
@@ -261,7 +258,7 @@ export const SubdivisionStudioDialog: React.FC<
                     className={`p-3 rounded-xl border text-left transition ${
                       preset === key
                         ? "bg-cyan-950/60 border-cyan-400 text-cyan-300"
-                        : "bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-800"
+                        : "bg-card border-border text-muted-foreground hover:bg-muted"
                     }`}
                   >
                     <div className="text-xs font-bold">{key}</div>
@@ -271,60 +268,60 @@ export const SubdivisionStudioDialog: React.FC<
               </div>
 
               {/* Detailed Zoning Specs */}
-              <div className="grid grid-cols-3 gap-4 bg-slate-900/60 p-5 rounded-xl border border-slate-800">
+              <div className="grid grid-cols-3 gap-4 bg-card/60 p-5 rounded-xl border border-border">
                 <div>
-                  <Label className="text-xs text-slate-400">Front Setback (ft)</Label>
+                  <Label className="text-xs text-muted-foreground">Front Setback (ft)</Label>
                   <Input
                     type="number"
                     value={zoning.frontSetbackFt}
                     onChange={(e) =>
                       setZoning({ ...zoning, frontSetbackFt: Number(e.target.value) })
                     }
-                    className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-cyan-300"
+                    className="mt-1 bg-background border-border text-xs font-mono text-cyan-300"
                   />
                 </div>
                 <div>
-                  <Label className="text-xs text-slate-400">Rear Setback (ft)</Label>
+                  <Label className="text-xs text-muted-foreground">Rear Setback (ft)</Label>
                   <Input
                     type="number"
                     value={zoning.rearSetbackFt}
                     onChange={(e) =>
                       setZoning({ ...zoning, rearSetbackFt: Number(e.target.value) })
                     }
-                    className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-cyan-300"
+                    className="mt-1 bg-background border-border text-xs font-mono text-cyan-300"
                   />
                 </div>
                 <div>
-                  <Label className="text-xs text-slate-400">Side Setbacks (ft)</Label>
+                  <Label className="text-xs text-muted-foreground">Side Setbacks (ft)</Label>
                   <Input
                     type="number"
                     value={zoning.sideSetbackFt}
                     onChange={(e) =>
                       setZoning({ ...zoning, sideSetbackFt: Number(e.target.value) })
                     }
-                    className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-cyan-300"
+                    className="mt-1 bg-background border-border text-xs font-mono text-cyan-300"
                   />
                 </div>
                 <div>
-                  <Label className="text-xs text-slate-400">Max Depth-to-Width Ratio</Label>
+                  <Label className="text-xs text-muted-foreground">Max Depth-to-Width Ratio</Label>
                   <Input
                     type="number"
                     value={zoning.maxAspectDepthToWidth}
                     onChange={(e) =>
                       setZoning({ ...zoning, maxAspectDepthToWidth: Number(e.target.value) })
                     }
-                    className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-cyan-300"
+                    className="mt-1 bg-background border-border text-xs font-mono text-cyan-300"
                   />
                 </div>
                 <div>
-                  <Label className="text-xs text-slate-400">Public Utility Easement (ft)</Label>
+                  <Label className="text-xs text-muted-foreground">Public Utility Easement (ft)</Label>
                   <Input
                     type="number"
                     value={zoning.pueWidthFt}
                     onChange={(e) =>
                       setZoning({ ...zoning, pueWidthFt: Number(e.target.value) })
                     }
-                    className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-cyan-300"
+                    className="mt-1 bg-background border-border text-xs font-mono text-cyan-300"
                   />
                 </div>
               </div>
@@ -333,7 +330,7 @@ export const SubdivisionStudioDialog: React.FC<
 
           {activeTab === "turnaround" && (
             <div className="space-y-4">
-              <div className="bg-slate-900/60 p-5 rounded-xl border border-slate-800">
+              <div className="bg-card/60 p-5 rounded-xl border border-border">
                 <h3 className="text-sm font-semibold text-cyan-300 mb-4">
                   Cul-de-Sac Bulb & Emergency Turnaround Solvers
                 </h3>
@@ -361,7 +358,7 @@ export const SubdivisionStudioDialog: React.FC<
                       className={`p-4 rounded-xl border text-left transition ${
                         turnaroundType === t.type
                           ? "bg-cyan-950/60 border-cyan-400 text-cyan-300"
-                          : "bg-slate-950 border-slate-800 text-slate-400 hover:bg-slate-900"
+                          : "bg-background border-border text-muted-foreground hover:bg-card"
                       }`}
                     >
                       <div className="font-bold text-xs mb-1">{t.title}</div>
@@ -375,7 +372,7 @@ export const SubdivisionStudioDialog: React.FC<
 
           {activeTab === "yield" && (
             <div className="space-y-4">
-              <div className="bg-slate-900/60 p-5 rounded-xl border border-slate-800">
+              <div className="bg-card/60 p-5 rounded-xl border border-border">
                 <h3 className="text-sm font-semibold text-emerald-400 mb-3 flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4" /> Subdivision Rule Checks & Experience Results
                 </h3>
@@ -383,11 +380,11 @@ export const SubdivisionStudioDialog: React.FC<
                   {subdivisionResult.experiences.map((exp, i) => (
                     <div
                       key={i}
-                      className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between items-center text-xs font-mono"
+                      className="p-3 rounded-lg bg-background border border-border flex justify-between items-center text-xs font-mono"
                     >
                       <div>
                         <span className="text-cyan-400 font-bold mr-2">[{exp.code}]</span>
-                        <span className="text-slate-200">{exp.message}</span>
+                        <span className="text-foreground">{exp.message}</span>
                       </div>
                       <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">
                         {exp.status.toUpperCase()}
@@ -401,10 +398,10 @@ export const SubdivisionStudioDialog: React.FC<
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-slate-800 bg-slate-900 text-xs text-slate-400">
+        <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-card text-xs text-muted-foreground">
           <span>Subdivision Studio Engine: ISO/IEC 29148 Compliant</span>
           <div className="flex gap-3">
-            <Button variant="outline" onClick={onClose} className="border-slate-700 text-slate-300">
+            <Button variant="outline" onClick={onClose} className="border-input text-muted-foreground">
               Close Studio
             </Button>
             <Button

@@ -12,10 +12,12 @@ import { initials } from "./helpers/presenceHelpers";
  * (services/collaboration); this surfaces the project's members with the same
  * visual language the live cursors will use.
  */
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
+
 export function PresenceBar({ members }: { members: Member[] }) {
   const { shown, extra } = usePresenceState(members);
   return (
-    <div className="flex items-center -space-x-1.5">
+    <div className={WORKSPACE_STYLES.presenceBar}>
       {shown.map((m) => (
         <Tooltip key={m.user.id} delayDuration={200}>
           <TooltipTrigger asChild>

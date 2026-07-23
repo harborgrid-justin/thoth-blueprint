@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CIVIL_STYLES } from "./styles/civilDesignSystem";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -35,10 +36,10 @@ export const ModelBuilderGISDialog: React.FC<{ isOpen: boolean; onClose: () => v
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-xl bg-slate-900 border-slate-700 text-slate-100 p-6">
-        <DialogHeader className="border-b border-slate-800 pb-3">
+      <DialogContent className="max-w-xl bg-card border-input text-foreground p-6 animate-dialog-in">
+        <DialogHeader className={CIVIL_STYLES.sectionHeaderContainer}>
           <DialogTitle className="flex items-center gap-2 text-purple-400">
-            <div className="w-3 h-3 rounded-full bg-purple-400 animate-pulse" />
+            <div className={`${CIVIL_STYLES.titlePulseDot} bg-purple-400`} />
             Model Builder Cloud Generator & GIS (REQ-161 to REQ-169)
           </DialogTitle>
         </DialogHeader>
@@ -46,22 +47,22 @@ export const ModelBuilderGISDialog: React.FC<{ isOpen: boolean; onClose: () => v
         {/* Form Inputs */}
         <div className="flex flex-col gap-3 text-xs">
           <div>
-            <label className="block text-slate-400 mb-1">Model Area Name</label>
+            <label className="block text-muted-foreground mb-1">Model Area Name</label>
             <Input
               type="text"
               value={modelName}
               onChange={(e) => setModelName(e.target.value)}
-              className="w-full bg-slate-800 border-slate-700 text-slate-200 h-8 text-xs"
+              className="w-full bg-muted border-input text-foreground h-8 text-xs"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-slate-400 mb-1">Raster Imagery Tile Level (REQ-163)</label>
+              <label className="block text-muted-foreground mb-1">Raster Imagery Tile Level (REQ-163)</label>
               <select
                 value={tileLevel}
                 onChange={(e) => setTileLevel(Number(e.target.value))}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 text-xs"
+                className="w-full bg-muted border border-input rounded px-2.5 py-1.5 text-foreground text-xs"
               >
                 <option value={19}>Level 19 (High-Res Aerial - REQ-099)</option>
                 <option value={18}>Level 18</option>
@@ -70,12 +71,12 @@ export const ModelBuilderGISDialog: React.FC<{ isOpen: boolean; onClose: () => v
             </div>
 
             <div className="flex items-center pt-5">
-              <label className="flex items-center gap-2 text-slate-300 cursor-pointer">
+              <label className="flex items-center gap-2 text-muted-foreground cursor-pointer">
                 <input
                   type="checkbox"
                   checked={convertToGrid}
                   onChange={(e) => setConvertToGrid(e.target.checked)}
-                  className="rounded bg-slate-800 border-slate-700 text-purple-500"
+                  className="rounded bg-muted border-input text-purple-500"
                 />
                 Convert to Grid (REQ-167)
               </label>
@@ -83,12 +84,12 @@ export const ModelBuilderGISDialog: React.FC<{ isOpen: boolean; onClose: () => v
           </div>
 
           <div>
-            <label className="block text-slate-400 mb-1">Multi-Point Polygon Boundary Coordinates (X, Y per line - REQ-162)</label>
+            <label className="block text-muted-foreground mb-1">Multi-Point Polygon Boundary Coordinates (X, Y per line - REQ-162)</label>
             <textarea
               value={polygonCoords}
               onChange={(e) => setPolygonCoords(e.target.value)}
               rows={4}
-              className="w-full bg-slate-950 border border-slate-800 rounded p-2.5 font-mono text-purple-300 text-xs focus:outline-none"
+              className="w-full bg-background border border-border rounded p-2.5 font-mono text-purple-300 text-xs focus:outline-none"
             />
           </div>
         </div>
@@ -108,12 +109,12 @@ export const ModelBuilderGISDialog: React.FC<{ isOpen: boolean; onClose: () => v
         )}
 
         {/* Footer */}
-        <div className="flex justify-end gap-2 border-t border-slate-800 pt-3">
+        <div className="flex justify-end gap-2 border-t border-border pt-3">
           <Button
             onClick={onClose}
             variant="outline"
             size="sm"
-            className="border-slate-700 text-slate-300 bg-slate-800 hover:bg-slate-700"
+            className="border-input text-muted-foreground bg-muted hover:bg-accent"
           >
             Cancel
           </Button>

@@ -11,6 +11,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { usePlanProductionWizardState } from "./hooks/usePlanProductionWizardState";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 export function PlanProductionWizard() {
   const {
@@ -38,28 +39,28 @@ export function PlanProductionWizard() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-4xl">
+      <DialogContent className={SURVEY_STYLES.dialogContainer + " max-w-4xl"}>
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Layout className="h-5 w-5 text-primary" /> Plan Production Sheet
+          <DialogTitle className={SURVEY_STYLES.dialogTitle}>
+            <Layout className="h-5 w-5 text-amber-400" /> Plan Production Sheet
             Set Wizard
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className={SURVEY_STYLES.textSubtitle}>
             Segment horizontal baselines into print-ready page layouts using
             View Frames and boundary Match Lines.
           </DialogDescription>
         </DialogHeader>
 
         {alignments.length === 0 ? (
-          <div className="py-12 text-center text-sm text-muted-foreground">
+          <div className={SURVEY_STYLES.cardSubtle + " py-12 text-center text-sm text-muted-foreground"}>
             No alignments found. Please create an alignment baseline first.
           </div>
         ) : (
-          <div className="grid grid-cols-[280px_1fr] gap-6">
+          <div className={SURVEY_STYLES.layoutSidebar}>
             {/* Left Options panel */}
-            <div className="flex flex-col gap-4 border-r border-border pr-4 text-xs">
+            <div className={SURVEY_STYLES.sidebar + " text-xs"}>
               <div>
-                <label className="font-bold uppercase tracking-wider text-muted-foreground block mb-1">
+                <label className={SURVEY_STYLES.label}>
                   Select Alignment
                 </label>
                 <div className="flex flex-col gap-1">
@@ -73,8 +74,8 @@ export function PlanProductionWizard() {
                       className={cn(
                         "rounded-md px-2 py-1.5 text-left text-xs transition-colors",
                         a.id === selectedAlignId
-                          ? "bg-primary/15 text-primary font-medium"
-                          : "hover:bg-accent text-muted-foreground",
+                          ? "bg-amber-500/20 text-amber-300 font-medium border border-amber-500/30"
+                          : "hover:bg-muted text-muted-foreground hover:text-foreground",
                       )}
                     >
                       {a.name}
@@ -84,11 +85,11 @@ export function PlanProductionWizard() {
               </div>
 
               <div>
-                <label className="font-bold uppercase tracking-wider text-muted-foreground block mb-1">
+                <label className={SURVEY_STYLES.label}>
                   Sheet Size Template (DWT)
                 </label>
                 <select
-                  className="w-full rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                  className={SURVEY_STYLES.select}
                   value={pageSize}
                   onChange={(e) => setPageSize(e.target.value)}
                 >
@@ -100,11 +101,11 @@ export function PlanProductionWizard() {
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="font-bold uppercase tracking-wider text-muted-foreground block mb-1">
+                  <label className={SURVEY_STYLES.label}>
                     Plot Scale
                   </label>
                   <select
-                    className="w-full rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                    className={SURVEY_STYLES.select}
                     value={scale}
                     onChange={(e) => setScale(e.target.value)}
                   >
@@ -114,11 +115,11 @@ export function PlanProductionWizard() {
                   </select>
                 </div>
                 <div>
-                  <label className="font-bold uppercase tracking-wider text-muted-foreground block mb-1">
+                  <label className={SURVEY_STYLES.label}>
                     Frame Overlap
                   </label>
                   <select
-                    className="w-full rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                    className={SURVEY_STYLES.select}
                     value={overlap}
                     onChange={(e) => setOverlap(parseInt(e.target.value))}
                   >
@@ -129,14 +130,14 @@ export function PlanProductionWizard() {
                 </div>
               </div>
 
-              <Button className="mt-2 w-full text-xs" onClick={handleSplit}>
+              <Button className={SURVEY_STYLES.btnSecondary + " mt-2 w-full"} onClick={handleSplit}>
                 Calculate View Frames
               </Button>
             </div>
 
             {/* Right Results list */}
             <div className="flex flex-col gap-4 min-w-0">
-              <ScrollArea className="max-h-[220px] rounded-md border border-border bg-card p-2 text-xs">
+              <ScrollArea className={SURVEY_STYLES.card + " max-h-[220px] p-2 text-xs"}>
                 {generatedFrames.length === 0 ? (
                   <div className="flex h-[150px] items-center justify-center text-muted-foreground text-center">
                     No layout frames calculated. Select options and click
@@ -144,7 +145,7 @@ export function PlanProductionWizard() {
                   </div>
                 ) : (
                   <div>
-                    <h4 className="font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+                    <h4 className={SURVEY_STYLES.label + " mb-2"}>
                       Generated Layout Pages List ({generatedFrames.length}{" "}
                       Sheets)
                     </h4>
@@ -152,13 +153,13 @@ export function PlanProductionWizard() {
                       {_.map(generatedFrames, (f) => (
                         <div
                           key={f.id}
-                          className="flex items-center justify-between border-b border-border/40 pb-1.5"
+                          className="flex items-center justify-between border-b border-border pb-1.5"
                         >
                           <span className="flex items-center gap-1.5 text-foreground font-medium">
-                            <FileText className="h-4 w-4 text-primary" />{" "}
+                            <FileText className="h-4 w-4 text-amber-400" />{" "}
                             {f.name}
                           </span>
-                          <span className="text-[10px] text-muted-foreground">
+                          <span className="text-[10px] text-muted-foreground font-mono">
                             Center: ({f.center.x.toFixed(0)},{" "}
                             {f.center.y.toFixed(0)}) | Scale: {scale}
                           </span>
@@ -170,7 +171,7 @@ export function PlanProductionWizard() {
               </ScrollArea>
 
               {generatedFrames.length > 0 && (
-                <div className="flex flex-col gap-3 rounded-md border border-border bg-slate-950/20 p-3">
+                <div className={SURVEY_STYLES.cardSubtle + " flex flex-col gap-3 p-3"}>
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-muted-foreground">
                       Calculated {generatedMatches.length} Match Lines
@@ -179,13 +180,13 @@ export function PlanProductionWizard() {
                     <Button
                       size="sm"
                       onClick={handleCreateSheets}
-                      className="gap-1 text-xs"
+                      className={SURVEY_STYLES.btnPrimary + " gap-1"}
                     >
                       Create Sheets Set <ChevronRight className="h-3.5 w-3.5" />
                     </Button>
                   </div>
-                  <div className="text-[11px] text-muted-foreground leading-relaxed flex gap-2">
-                    <HelpCircle className="h-4 w-4 shrink-0 text-primary" />
+                  <div className={SURVEY_STYLES.textMuted + " text-[11px] leading-relaxed flex gap-2"}>
+                    <HelpCircle className="h-4 w-4 shrink-0 text-amber-400" />
                     <span>
                       Creating the Sheet Set will generate a collection of
                       layouts matching the US National CAD Standard sequence.

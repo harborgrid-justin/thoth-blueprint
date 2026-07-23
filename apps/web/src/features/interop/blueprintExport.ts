@@ -1,20 +1,16 @@
 import {
   bounds,
-  centroid,
-  elevationAt,
   isSpatialElement,
+  siteToMeshes,
   unionBounds,
   writeCollada,
   type Point,
-  type Polygon,
-  type SimpleMesh,
   type Site,
 } from "@thoth/domain";
 import { elementColor } from "@/lib/elementMeta";
-import { buildTerrainModel } from "@/features/terrain/terrainModel";
 import { downloadBlob, downloadText, slugify } from "./fileIo";
 
-const VERTICAL_EXAGGERATION = 1.6;
+export { siteToMeshes };
 
 // ---------------------------------------------------------------------------
 // PNG — a raster snapshot of the 2D plan
@@ -128,98 +124,6 @@ export function exportSiteDae(site: Site): void {
   }
   const dae = writeCollada(meshes);
   downloadText(`${slugify(site.name)}.dae`, dae, "model/vnd.collada+xml");
-}
-
-/** Convert a site into triangle meshes: the terrain surface and building solids. */
-export function siteToMeshes(site: Site): SimpleMesh[] {
-  const meshes: SimpleMesh[] = [];
-  const terrain = buildTerrainModel(site);
-  const exag = VERTICAL_EXAGGERATION;
-  const elevAt = (p: Point) =>
-    terrain.existing ? elevationAt(terrain.existing, p) : 0;
-
-  // Terrain surface as a triangulated grid (y-up).
-  const grid = terrain.existing;
-  if (grid) {
-    const positions: number[] = [];
-    const indices: number[] = [];
-    for (let r = 0; r < grid.rows; r++) {
-      for (let c = 0; c < grid.cols; c++) {
-        const i = r * grid.cols + c;
-        positions.push(
-          grid.origin.x + c * grid.cellSize,
-          grid.heights[i] * exag,
-          grid.origin.y + r * grid.cellSize,
-        );
-      }
-    }
-    for (let r = 0; r < grid.rows - 1; r++) {
-      for (let c = 0; c < grid.cols - 1; c++) {
-        const a = r * grid.cols + c;
-        const b = a + 1;
-        const d = a + grid.cols;
-        const e = d + 1;
-        indices.push(a, d, b, b, d, e);
-      }
-    }
-    meshes.push({
-      name: "Terrain",
-      positions,
-      indices,
-      color: [0.42, 0.48, 0.32],
-    });
-  }
-
-  // Buildings as extruded prisms.
-  for (const el of site.elements) {
-    if (el.kind !== "building") {
-      continue;
-    }
-    const base = elevAt(centroid(el.boundary)) * exag;
-    const height = (el.height ?? el.storeys * 3.2) * exag;
-    meshes.push(
-      prism(el.name, el.boundary, base, base + height, [0.85, 0.58, 0.35]),
-    );
-  }
-
-  return meshes;
-}
-
-/** A closed extruded prism from a boundary between two heights (y-up). */
-function prism(
-  name: string,
-  boundary: Polygon,
-  bottom: number,
-  top: number,
-  color: [number, number, number],
-): SimpleMesh {
-  const n = boundary.length;
-  const positions: number[] = [];
-  const indices: number[] = [];
-
-  // Bottom ring (0..n-1), top ring (n..2n-1).
-  for (const p of boundary) {
-    positions.push(p.x, bottom, p.y);
-  }
-  for (const p of boundary) {
-    positions.push(p.x, top, p.y);
-  }
-
-  // Side walls.
-  for (let i = 0; i < n; i++) {
-    const j = (i + 1) % n;
-    indices.push(i, j, n + i, j, n + j, n + i);
-  }
-  // Top cap (fan triangulation — fine for convex-ish footprints).
-  for (let i = 1; i < n - 1; i++) {
-    indices.push(n, n + i, n + i + 1);
-  }
-  // Bottom cap (reverse winding).
-  for (let i = 1; i < n - 1; i++) {
-    indices.push(0, i + 1, i);
-  }
-
-  return { name, positions, indices, color };
 }
 
 /**

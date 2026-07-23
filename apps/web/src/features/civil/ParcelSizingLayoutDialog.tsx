@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CIVIL_STYLES } from './styles/civilDesignSystem';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -76,10 +77,10 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-3xl bg-slate-900 border-slate-700 text-slate-100 p-6">
-        <DialogHeader className="border-b border-slate-800 pb-3">
+      <DialogContent className="max-w-3xl bg-background border-border text-foreground p-6 animate-dialog-in">
+        <DialogHeader className={CIVIL_STYLES.sectionHeaderContainer}>
           <DialogTitle className="flex items-center gap-2 text-cyan-400">
-            <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
+            <div className={`${CIVIL_STYLES.titlePulseDot} bg-cyan-400`} />
             Parcel Sizing & Layout Controls (REQ-118 to REQ-129)
           </DialogTitle>
         </DialogHeader>
@@ -87,48 +88,48 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
         {/* Form grid */}
         <div className="grid grid-cols-2 gap-4 text-xs">
           {/* Column 1: Layout Controls */}
-          <div className="flex flex-col gap-3 bg-slate-950 p-3 rounded-lg border border-slate-800">
-            <span className="font-semibold text-cyan-300 border-b border-slate-800 pb-1">
+          <div className="flex flex-col gap-3 bg-background p-3 rounded-lg border border-border">
+            <span className="font-semibold text-cyan-300 border-b border-border pb-1">
               Automated Layout Sizing (REQ-118 to REQ-122)
             </span>
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-slate-400">Min Area (sq ft):</label>
+                <label className="block text-muted-foreground">Min Area (sq ft):</label>
                 <Input
                   type="number"
                   value={layoutParams.minimumAreaSqFt}
                   onChange={(e) => setLayoutParams({ ...layoutParams, minimumAreaSqFt: Number(e.target.value) })}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
               <div>
-                <label className="block text-slate-400">Min Frontage (ft):</label>
+                <label className="block text-muted-foreground">Min Frontage (ft):</label>
                 <Input
                   type="number"
                   value={layoutParams.minimumFrontageFt}
                   onChange={(e) => setLayoutParams({ ...layoutParams, minimumFrontageFt: Number(e.target.value) })}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-slate-400">Max Depth (ft):</label>
+                <label className="block text-muted-foreground">Max Depth (ft):</label>
                 <Input
                   type="number"
                   value={layoutParams.maximumDepthFt}
                   onChange={(e) => setLayoutParams({ ...layoutParams, maximumDepthFt: Number(e.target.value) })}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
               <div>
-                <label className="block text-slate-400">Layout Preference:</label>
+                <label className="block text-muted-foreground">Layout Preference:</label>
                 <select
                   value={layoutParams.layoutPreference}
                   onChange={(e) => setLayoutParams({ ...layoutParams, layoutPreference: e.target.value as any })}
-                  className="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200 h-8 text-xs"
+                  className="w-full bg-card border border-input rounded px-2 py-1 text-foreground h-8 text-xs"
                 >
                   <option value="shortest_frontage">Shortest Frontage (REQ-121)</option>
                   <option value="equal_area">Equal Area</option>
@@ -146,37 +147,37 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
           </div>
 
           {/* Column 2: Renumbering & Elevations */}
-          <div className="flex flex-col gap-3 bg-slate-950 p-3 rounded-lg border border-slate-800">
-            <span className="font-semibold text-cyan-300 border-b border-slate-800 pb-1">
+          <div className="flex flex-col gap-3 bg-background p-3 rounded-lg border border-border">
+            <span className="font-semibold text-cyan-300 border-b border-border pb-1">
               Renumbering & Properties (REQ-123 to REQ-128)
             </span>
 
             <div className="grid grid-cols-3 gap-2">
               <div>
-                <label className="block text-slate-400">Start Num:</label>
+                <label className="block text-muted-foreground">Start Num:</label>
                 <Input
                   type="number"
                   value={startNum}
                   onChange={(e) => setStartNum(Number(e.target.value))}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
               <div>
-                <label className="block text-slate-400">Increment:</label>
+                <label className="block text-muted-foreground">Increment:</label>
                 <Input
                   type="number"
                   value={increment}
                   onChange={(e) => setIncrement(Number(e.target.value))}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
               <div>
-                <label className="block text-slate-400">Template:</label>
+                <label className="block text-muted-foreground">Template:</label>
                 <Input
                   type="text"
                   value={nameTemplate}
                   onChange={(e) => setNameTemplate(e.target.value)}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
             </div>
@@ -185,7 +186,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
               onClick={handleRenumberFence}
               variant="outline"
               size="sm"
-              className="bg-slate-800 hover:bg-slate-700 text-cyan-300 border-slate-700 font-medium"
+              className="bg-muted hover:bg-accent text-cyan-300 border-input font-medium"
             >
               Renumber Parcels Along Fence
             </Button>
@@ -196,19 +197,19 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
               </div>
             )}
 
-            <div className="border-t border-slate-800 pt-2 flex items-center gap-2">
-              <label className="text-slate-400">Global Elevation (ft):</label>
+            <div className="border-t border-border pt-2 flex items-center gap-2">
+              <label className="text-muted-foreground">Global Elevation (ft):</label>
               <Input
                 type="number"
                 value={globalElev}
                 onChange={(e) => setGlobalElev(Number(e.target.value))}
-                className="w-20 bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                className="w-20 bg-card border-input text-foreground h-8 text-xs"
               />
               <Button
                 onClick={handleApplyElevations}
                 variant="outline"
                 size="sm"
-                className="h-8 text-[11px] px-2 bg-slate-800 border-slate-700"
+                className="h-8 text-[11px] px-2 bg-muted border-input"
               >
                 Apply (REQ-125)
               </Button>
@@ -219,35 +220,35 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
         </div>
 
         {/* User Defined Classification */}
-        <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col gap-2 text-xs">
+        <div className="bg-background p-3 rounded-lg border border-border flex flex-col gap-2 text-xs">
           <span className="font-semibold text-cyan-300">User Defined Classification Properties (REQ-128)</span>
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="block text-slate-400">Zoning District:</label>
+              <label className="block text-muted-foreground">Zoning District:</label>
               <Input
                 type="text"
                 value={classification.zoningDistrict}
                 onChange={(e) => setClassification({ ...classification, zoningDistrict: e.target.value })}
-                className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                className="bg-card border-input text-foreground h-8 text-xs"
               />
             </div>
             <div>
-              <label className="block text-slate-400">Max Impervious Ratio:</label>
+              <label className="block text-muted-foreground">Max Impervious Ratio:</label>
               <Input
                 type="number"
                 step="0.05"
                 value={classification.maxImperviousRatio}
                 onChange={(e) => setClassification({ ...classification, maxImperviousRatio: Number(e.target.value) })}
-                className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                className="bg-card border-input text-foreground h-8 text-xs"
               />
             </div>
             <div>
-              <label className="block text-slate-400">Owner Name:</label>
+              <label className="block text-muted-foreground">Owner Name:</label>
               <Input
                 type="text"
                 value={classification.ownerName}
                 onChange={(e) => setClassification({ ...classification, ownerName: e.target.value })}
-                className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                className="bg-card border-input text-foreground h-8 text-xs"
               />
             </div>
           </div>
@@ -261,8 +262,8 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end border-t border-slate-800 pt-3">
-          <Button onClick={onClose} variant="outline" size="sm" className="border-slate-700 text-slate-200 bg-slate-800 hover:bg-slate-700">
+        <div className="flex justify-end border-t border-border pt-3">
+          <Button onClick={onClose} variant="outline" size="sm" className="border-input text-foreground bg-muted hover:bg-accent">
             Close
           </Button>
         </div>

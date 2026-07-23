@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useErosionSimulatorState } from "./hooks/useErosionSimulatorState";
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
 
 export function ErosionSimulatorPanel() {
   const {
@@ -33,7 +34,7 @@ export function ErosionSimulatorPanel() {
 
   if (!site || frames.length === 0 || !frame || !compliance) {
     return (
-      <div className="p-3 text-xs text-muted-foreground text-center">
+      <div className={WORKSPACE_STYLES.textMuted + " p-3 text-xs text-center"}>
         Initialize a site layout to begin erosion simulation.
       </div>
     );
@@ -44,8 +45,8 @@ export function ErosionSimulatorPanel() {
   return (
     <div className="flex flex-col gap-4 p-3 text-xs">
       {/* 1. Main Playback Controls */}
-      <div className="rounded-md border border-border bg-card p-3 flex flex-col gap-3">
-        <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px]">
+      <div className={WORKSPACE_STYLES.cardSubtle + " flex flex-col gap-3"}>
+        <h4 className={WORKSPACE_STYLES.cardHeader}>
           Simulation Timeline Playback
         </h4>
 
@@ -115,7 +116,7 @@ export function ErosionSimulatorPanel() {
             <select
               value={soilType}
               onChange={(e) => setSoilType(e.target.value as any)}
-              className="rounded border border-border bg-background px-2 py-0.5 text-[10px] text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              className={WORKSPACE_STYLES.select + " text-[10px] py-0.5 px-2"}
             >
               <option value="loam">Loam Soil</option>
               <option value="sand">Sandy Soil</option>
@@ -125,7 +126,7 @@ export function ErosionSimulatorPanel() {
             <select
               value={speed}
               onChange={(e) => setSpeed(Number(e.target.value))}
-              className="rounded border border-border bg-background px-2 py-0.5 text-[10px] text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              className={WORKSPACE_STYLES.select + " text-[10px] py-0.5 px-2"}
             >
               <option value={200}>0.5x</option>
               <option value={100}>1.0x</option>
@@ -136,24 +137,24 @@ export function ErosionSimulatorPanel() {
       </div>
 
       {/* 2. Real-time Simulation Statistics */}
-      <div className="rounded-md border border-border bg-card p-3 flex flex-col gap-3">
-        <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px]">
+      <div className={WORKSPACE_STYLES.cardSubtle + " flex flex-col gap-3"}>
+        <h4 className={WORKSPACE_STYLES.cardHeader}>
           Soil Runoff &amp; Hydrology metrics
         </h4>
-        <div className="grid grid-cols-2 gap-3">
-          <div className="border border-border/40 rounded p-2 bg-background/50">
-            <span className="text-[10px] text-muted-foreground block">
+        <div className={WORKSPACE_STYLES.grid2Col}>
+          <div className={WORKSPACE_STYLES.cardSubtle}>
+            <span className={WORKSPACE_STYLES.statLabel + " block"}>
               Cum. Soil Runoff Loss
             </span>
-            <span className="text-sm font-bold font-mono text-rose-500">
+            <span className="text-sm font-bold font-mono text-rose-400">
               {frame.totalSoilLostKg.toFixed(1)} kg
             </span>
           </div>
-          <div className="border border-border/40 rounded p-2 bg-background/50">
-            <span className="text-[10px] text-muted-foreground block">
+          <div className={WORKSPACE_STYLES.cardSubtle}>
+            <span className={WORKSPACE_STYLES.statLabel + " block"}>
               Total Water Volume
             </span>
-            <span className="text-sm font-bold font-mono text-blue-500">
+            <span className="text-sm font-bold font-mono text-cyan-400">
               {frame.totalWaterRunoffLiters.toFixed(0)} L
             </span>
           </div>
@@ -161,8 +162,8 @@ export function ErosionSimulatorPanel() {
       </div>
 
       {/* 3. Erosion Control Barriers Capacity (Silt Fences & Straw Bales) */}
-      <div className="rounded-md border border-border bg-card p-3 flex flex-col gap-2">
-        <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px]">
+      <div className={WORKSPACE_STYLES.cardSubtle + " flex flex-col gap-2"}>
+        <h4 className={WORKSPACE_STYLES.cardHeader}>
           Mitigation Barriers Load
         </h4>
         {frame.barrierStats.length === 0 ? (
@@ -203,8 +204,8 @@ export function ErosionSimulatorPanel() {
       </div>
 
       {/* 4. EPA BMP Environmental Compliance Check */}
-      <div className="rounded-md border border-border bg-card p-3">
-        <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-2">
+      <div className={WORKSPACE_STYLES.cardSubtle}>
+        <h4 className={WORKSPACE_STYLES.cardHeader + " mb-2"}>
           EPA Stormwater Compliance Audit
         </h4>
         {complies ? (

@@ -29,6 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { pickFile, downloadText, slugify } from "./fileIo";
+import { INTEROP_STYLES } from "./styles/interopDesignSystem";
 import {
   importPointCloudFile,
   exportPointCloud,
@@ -209,7 +210,7 @@ export function ImportExportMenu() {
           <span className="hidden md:inline">File</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-60">
+      <DropdownMenuContent align="end" className={`w-64 ${INTEROP_STYLES.card}`}>
         <DropdownMenuLabel>Import</DropdownMenuLabel>
         <DropdownMenuItem onClick={importMesh}>
           <Boxes /> Mesh{" "}

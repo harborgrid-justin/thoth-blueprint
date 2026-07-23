@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useSuperelevationWizardState } from "./hooks/useSuperelevationWizardState";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 export function SuperelevationWizardDialog() {
   const {
@@ -35,31 +36,31 @@ export function SuperelevationWizardDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-4xl">
+      <DialogContent className={SURVEY_STYLES.dialogContainer + " max-w-4xl"}>
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <SlidersHorizontal className="h-5 w-5 text-primary" />{" "}
+          <DialogTitle className={SURVEY_STYLES.dialogTitle}>
+            <SlidersHorizontal className="h-5 w-5 text-amber-400" />{" "}
             Superelevation Attainment Wizard
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className={SURVEY_STYLES.textSubtitle}>
             Calculate AASHTO standard crown runoff transitions, lane tilt
             adjustments, and critical transition stations.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid grid-cols-3 gap-6 my-2">
+        <div className={SURVEY_STYLES.grid3Col + " my-2"}>
           {/* Settings Column */}
-          <div className="flex flex-col gap-4 border-r border-border/40 pr-6">
-            <h3 className="font-semibold text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1">
+          <div className={SURVEY_STYLES.sidebar}>
+            <h3 className={SURVEY_STYLES.label + " flex items-center gap-1"}>
               <Settings2 className="h-4 w-4" /> Parameters
             </h3>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-[11px] text-muted-foreground font-medium">
+              <label className={SURVEY_STYLES.label}>
                 Reference Alignment
               </label>
               <select
-                className="rounded border border-border bg-background px-2.5 py-1.5 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                className={SURVEY_STYLES.select}
                 value={selectedAlignId ?? ""}
                 onChange={(e) => setSelectedAlignId(e.target.value)}
               >
@@ -72,12 +73,12 @@ export function SuperelevationWizardDialog() {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-[11px] text-muted-foreground font-medium">
+              <label className={SURVEY_STYLES.label}>
                 Design Speed (MPH)
               </label>
               <Input
                 type="number"
-                className="h-8 text-xs bg-background"
+                className={SURVEY_STYLES.input}
                 value={designSpeed}
                 onChange={(e) => setDesignSpeed(Number(e.target.value))}
               />

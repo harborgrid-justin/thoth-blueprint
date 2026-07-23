@@ -17,13 +17,15 @@ import { useToolbarState } from "./hooks/useToolbarState";
 import { isGroupStart } from "./helpers/toolbarHelpers";
 import { useUiStore } from "@/store/uiStore";
 
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
+
 /** The vertical drawing toolbar down the left edge of the workspace. */
 export function Toolbar() {
   const { tools, activeTool, setTool, undo, redo, canUndo, canRedo } =
     useToolbarState();
 
   return (
-    <div className="flex w-12 flex-col items-center gap-1.5 overflow-y-auto py-3 no-scrollbar">
+    <div className={WORKSPACE_STYLES.toolbar}>
       {tools.map((tool, i) => {
         const Icon = tool.icon;
         const active = tool.id === activeTool;
@@ -62,9 +64,13 @@ export function Toolbar() {
                 </DropdownMenuTrigger>
                 <TooltipContent side="right" className="p-0 border-none bg-transparent">
                   <div className="flex flex-col bg-popover text-popover-foreground border border-border rounded-md shadow-md overflow-hidden max-w-xs">
-                    <div className="px-3 py-2 flex items-center justify-between border-b border-border/50">
+                    <div className="px-3 py-2 flex items-center justify-between border-b border-border/50 gap-3">
                       <span className="font-semibold">{tool.label}</span>
-                      <span className="opacity-60 text-xs font-mono">{tool.shortcut}</span>
+                      {tool.shortcut && (
+                        <kbd className="rounded border border-border bg-muted/60 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground shadow-xs">
+                          {tool.shortcut}
+                        </kbd>
+                      )}
                     </div>
                     {/* Rich Diagram for complex engineering tools */}
                     {['road', 'alignment', 'grade'].includes(tool.id as string) && (
@@ -102,7 +108,7 @@ export function Toolbar() {
                 </TooltipContent>
               </Tooltip>
               {['parcel', 'region', 'road', 'alignment', 'grade', 'spot'].includes(tool.id as string) && (
-                <DropdownMenuContent side="right" align="start" className="w-52 ml-2">
+                <DropdownMenuContent side="right" align="start" className={WORKSPACE_STYLES.dropdownContent + " w-52 ml-2"}>
                   {tool.id === 'parcel' && (
                     <>
                       <DropdownMenuItem onClick={() => setTool('parcel')}>Parcel Boundary</DropdownMenuItem>

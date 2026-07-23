@@ -13,6 +13,7 @@ import { formatNumber } from "@/lib/format";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
+import { TERRAIN_STYLES } from "./styles/terrainDesignSystem";
 
 /**
  * Terrain panel: control the contour interval and slope shading, read the
@@ -79,8 +80,8 @@ export function TerrainPanel() {
     : null;
 
   return (
-    <div className="flex flex-col gap-4 p-3">
-      <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+    <div className={TERRAIN_STYLES.panel}>
+      <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
         Terrain
       </h3>
 

@@ -27,7 +27,7 @@ export const ModalDialogHeader: React.FC<ModalDialogHeaderProps> = ({
       </div>
       <button
         onClick={onClose}
-        className="text-slate-400 hover:text-white font-bold text-lg transition"
+        className="text-muted-foreground hover:text-white font-bold text-lg transition"
         title="Close Dialog"
       >
         ✕

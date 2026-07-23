@@ -7,6 +7,7 @@ import {
   type CogoPoint,
   type ImportPreviewResult,
 } from '@thoth/domain';
+import { SURVEY_STYLES } from './styles/surveyDesignSystem';
 
 export const PointCreationToolbar: React.FC = () => {
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
@@ -37,37 +38,37 @@ export const PointCreationToolbar: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2 p-3 bg-slate-900 text-slate-100 border-b border-slate-800 rounded-lg shadow-lg">
+    <div className={SURVEY_STYLES.toolbar}>
       {/* REQ-001: Point Creation Tools Toolbar accessible from Home tab */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-3">
-          <div className="text-xs font-bold uppercase tracking-wider text-cyan-400">Point Creation Tools</div>
+          <div className="text-xs font-bold uppercase tracking-wider text-amber-400">Point Creation Tools</div>
           <button
             onClick={() => setIsImportModalOpen(true)}
-            className="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white font-medium text-xs rounded transition flex items-center gap-1.5 shadow"
+            className={SURVEY_STYLES.btnPrimary}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 mr-1.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             Import ASCII Points (PNEZD / PENZD)
           </button>
         </div>
-        <div className="text-xs text-slate-400">
-          Imported Points: <span className="font-semibold text-slate-200">{importedPoints.length}</span>
+        <div className="text-xs text-muted-foreground">
+          Imported Points: <span className="font-semibold text-foreground">{importedPoints.length}</span>
         </div>
       </div>
 
       {/* REQ-004: Preview Window & File Import Modal */}
       {isImportModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-2xl w-full p-6 text-slate-100 shadow-2xl flex flex-col gap-4">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
-              <h3 className="text-base font-semibold text-cyan-400 flex items-center gap-2">
+        <div className={SURVEY_STYLES.dialogOverlay}>
+          <div className={`${SURVEY_STYLES.dialogContainer} max-w-2xl`}>
+            <div className={SURVEY_STYLES.dialogHeader}>
+              <h3 className={SURVEY_STYLES.dialogTitle}>
                 Import ASCII Point File (REQ-002, REQ-003, REQ-005)
               </h3>
               <button
                 onClick={() => setIsImportModalOpen(false)}
-                className="text-slate-400 hover:text-white text-lg font-bold"
+                className="text-muted-foreground hover:text-white text-lg font-bold"
               >
                 ✕
               </button>
@@ -76,7 +77,7 @@ export const PointCreationToolbar: React.FC = () => {
             {/* Controls */}
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Format (REQ-003)</label>
+                <label className={SURVEY_STYLES.label}>Format (REQ-003)</label>
                 <select
                   value={format}
                   onChange={(e) => {
@@ -84,7 +85,7 @@ export const PointCreationToolbar: React.FC = () => {
                     setFormat(fmt);
                     handleTextChange(rawText, fmt, delimiter);
                   }}
-                  className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-slate-200"
+                  className={SURVEY_STYLES.select}
                 >
                   <option value="PNEZD">PNEZD (Point, N, E, Z, Desc)</option>
                   <option value="PENZD">PENZD (Point, E, N, Z, Desc)</option>
@@ -92,7 +93,7 @@ export const PointCreationToolbar: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Delimiter (REQ-005)</label>
+                <label className={SURVEY_STYLES.label}>Delimiter (REQ-005)</label>
                 <select
                   value={delimiter}
                   onChange={(e) => {
@@ -100,7 +101,7 @@ export const PointCreationToolbar: React.FC = () => {
                     setDelimiter(delim);
                     handleTextChange(rawText, format, delim);
                   }}
-                  className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-slate-200"
+                  className={SURVEY_STYLES.select}
                 >
                   <option value=",">Comma Delimited</option>
                   <option value=" ">Space Delimited</option>
@@ -108,11 +109,11 @@ export const PointCreationToolbar: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Target Point Group (REQ-006)</label>
+                <label className={SURVEY_STYLES.label}>Target Point Group (REQ-006)</label>
                 <select
                   value={targetGroup}
                   onChange={(e) => setTargetGroup(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-slate-200"
+                  className={SURVEY_STYLES.select}
                 >
                   <option value="_All Points">_All Points (Default)</option>
                   <option value="ALL OFF">ALL OFF</option>
@@ -124,32 +125,32 @@ export const PointCreationToolbar: React.FC = () => {
 
             {/* Input payload */}
             <div>
-              <label className="block text-xs text-slate-400 mb-1">ASCII Raw Data Input</label>
+              <label className={SURVEY_STYLES.label}>ASCII Raw Data Input</label>
               <textarea
                 value={rawText}
                 onChange={(e) => handleTextChange(e.target.value)}
                 rows={4}
-                className="w-full bg-slate-950 border border-slate-800 rounded p-2.5 text-xs font-mono text-cyan-300 focus:outline-none focus:border-cyan-500"
+                className={`${SURVEY_STYLES.input} font-mono text-amber-300`}
               />
             </div>
 
             {/* REQ-004: Preview Window */}
             <div className="flex flex-col gap-1.5">
-              <span className="text-xs font-medium text-slate-300">File Import Live Preview</span>
-              <div className="max-h-40 overflow-auto border border-slate-800 rounded bg-slate-950">
+              <span className="text-xs font-medium text-muted-foreground">File Import Live Preview</span>
+              <div className="max-h-40 overflow-auto border border-border rounded bg-background">
                 <table className="w-full text-left border-collapse text-xs">
-                  <thead className="bg-slate-800 text-cyan-400 sticky top-0">
+                  <thead>
                     <tr>
                       {preview.headers.map((h: string, i: number) => (
-                        <th key={i} className="px-3 py-1.5 border-b border-slate-700">{h}</th>
+                        <th key={i} className={SURVEY_STYLES.tableTh}>{h}</th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/50 text-slate-300 font-mono">
+                  <tbody className="divide-y divide-slate-800/50 text-muted-foreground font-mono">
                     {preview.sampleRows.map((row: string[], rIdx: number) => (
-                      <tr key={rIdx} className="hover:bg-slate-800/40">
+                      <tr key={rIdx} className={SURVEY_STYLES.tableRow}>
                         {row.map((cell: string, cIdx: number) => (
-                          <td key={cIdx} className="px-3 py-1.5 whitespace-nowrap">{cell}</td>
+                          <td key={cIdx} className={SURVEY_STYLES.tableTd}>{cell}</td>
                         ))}
                       </tr>
                     ))}
@@ -159,16 +160,16 @@ export const PointCreationToolbar: React.FC = () => {
             </div>
 
             {/* Footer */}
-            <div className="flex justify-end gap-2 border-t border-slate-800 pt-3">
+            <div className="flex justify-end gap-2 border-t border-border pt-3">
               <button
                 onClick={() => setIsImportModalOpen(false)}
-                className="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded"
+                className={SURVEY_STYLES.btnSecondary}
               >
                 Cancel
               </button>
               <button
                 onClick={handleExecuteImport}
-                className="px-4 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-medium rounded shadow"
+                className={SURVEY_STYLES.btnPrimary}
               >
                 Import Points
               </button>
@@ -179,3 +180,4 @@ export const PointCreationToolbar: React.FC = () => {
     </div>
   );
 };
+

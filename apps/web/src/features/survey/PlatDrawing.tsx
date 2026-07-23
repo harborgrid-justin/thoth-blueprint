@@ -13,6 +13,7 @@ import {
   type SurveyReport,
 } from "@thoth/domain";
 import { Button } from "@/components/ui/button";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 import {
   INK,
   INK_MUTED,
@@ -58,7 +59,7 @@ export function PlatDrawing({
   );
   if (!view) {
     return (
-      <div className="rounded-md border border-border bg-background/60 p-6 text-center text-sm text-muted-foreground">
+      <div className={SURVEY_STYLES.cardSubtle + " p-6 text-center text-sm"}>
         This element needs at least three corners to draw a plat.
       </div>
     );

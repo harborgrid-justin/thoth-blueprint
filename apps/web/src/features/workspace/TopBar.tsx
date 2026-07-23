@@ -31,6 +31,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import type { Project } from "@/api";
+import { usePrefsStore } from "@/store/prefsStore";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -46,6 +47,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { PresenceBar } from "./PresenceBar";
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
 import { ImportExportMenu } from "@/features/interop/ImportExportMenu";
 import { NamedViewsMenu } from "./NamedViewsMenu";
 import { JurisdictionSelector } from "./JurisdictionSelector";
@@ -118,7 +120,7 @@ export function TopBar({
   } = useTopBarState();
 
   return (
-    <header className="flex h-12 shrink-0 items-center gap-2 bg-transparent px-3">
+    <header className={`${WORKSPACE_STYLES.topbar} flex h-12 shrink-0 items-center gap-2 border-b-0 px-3`}>
       <Link
         to="/"
         className="flex items-center gap-2 rounded-md px-1.5 py-1 text-sm font-semibold hover:bg-accent"
@@ -143,13 +145,13 @@ export function TopBar({
 
       <div className="ml-auto flex items-center gap-1">
         {/* Renovation Mode Controls */}
-        <div className="mr-2 flex items-center gap-1 rounded-lg border border-border bg-transparent px-2 py-0.5">
-          <label className="flex items-center gap-1.5 text-xs font-semibold cursor-pointer text-foreground select-none">
+        <div className="mr-2 flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900 px-2 py-0.5">
+          <label className="flex items-center gap-1.5 text-xs font-semibold cursor-pointer text-slate-200 select-none">
             <input
               type="checkbox"
               checked={renovationMode}
               onChange={toggleRenovationMode}
-              className="h-3.5 w-3.5 rounded border-border text-primary focus:ring-primary"
+              className="h-3.5 w-3.5 rounded border-slate-700 text-cyan-500 focus:ring-cyan-500"
             />
             Renovation
           </label>
@@ -161,7 +163,7 @@ export function TopBar({
                   e.target.value as "existing" | "new" | "demolished",
                 )
               }
-              className="ml-1 h-6 rounded border border-border bg-background px-1.5 text-[11px] text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              className={WORKSPACE_STYLES.select + " ml-1 h-6 py-0 px-1.5 text-[11px]"}
             >
               <option value="existing">Existing</option>
               <option value="new">New</option>
@@ -171,16 +173,16 @@ export function TopBar({
         </div>
 
         {/* 2D / 3D view switch */}
-        <div className="mr-1 flex items-center rounded-md border border-border p-0.5">
+        <div className={WORKSPACE_STYLES.pillBar}>
           <button
             type="button"
             onClick={() => setViewMode("2d")}
             aria-pressed={viewMode === "2d"}
             className={cn(
-              "flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium transition-all duration-200 hover:scale-105 active:scale-95",
+              "flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium transition-all duration-200",
               viewMode === "2d"
-                ? "bg-gradient-to-br from-primary to-blue-600 text-white shadow-md"
-                : "text-muted-foreground hover:bg-white/10 hover:text-foreground",
+                ? WORKSPACE_STYLES.btnPillActive
+                : WORKSPACE_STYLES.btnPill,
             )}
           >
             <Square className="h-3.5 w-3.5" /> 2D
@@ -190,10 +192,10 @@ export function TopBar({
             onClick={() => setViewMode("3d")}
             aria-pressed={viewMode === "3d"}
             className={cn(
-              "flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium transition-all duration-200 hover:scale-105 active:scale-95",
+              "flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium transition-all duration-200",
               viewMode === "3d"
-                ? "bg-gradient-to-br from-primary to-blue-600 text-white shadow-md"
-                : "text-muted-foreground hover:bg-white/10 hover:text-foreground",
+                ? WORKSPACE_STYLES.btnPillActive
+                : WORKSPACE_STYLES.btnPill,
             )}
           >
             <Box className="h-3.5 w-3.5" /> 3D
@@ -240,6 +242,22 @@ export function TopBar({
           onClick={toggleHandDrawnMode}
         >
           <Edit3 className="h-4 w-4 text-amber-500" />
+        </Toggle>
+        <Toggle
+          label="High Contrast / Theme Toggle"
+          active={usePrefsStore((s) => s.highContrast)}
+          onClick={() => {
+            usePrefsStore.getState().toggleHighContrast();
+            if (typeof document !== "undefined") {
+              document.documentElement.classList.toggle("contrast");
+            }
+          }}
+        >
+          {usePrefsStore((s) => s.highContrast) ? (
+            <Sun className="h-4 w-4 text-amber-400" />
+          ) : (
+            <Moon className="h-4 w-4 text-blue-400" />
+          )}
         </Toggle>
 
         <Separator orientation="vertical" className="mx-1 h-6" />

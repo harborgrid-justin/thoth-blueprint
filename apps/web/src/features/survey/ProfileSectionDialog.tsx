@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useProfileSectionState } from "./hooks/useProfileSectionState";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 export function ProfileSectionDialog() {
   const {
@@ -39,29 +40,29 @@ export function ProfileSectionDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-6xl">
+      <DialogContent className={SURVEY_STYLES.dialogContainer + " max-w-6xl"}>
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <AreaChart className="h-5 w-5 text-primary" /> Vertical Design
+          <DialogTitle className={SURVEY_STYLES.dialogTitle}>
+            <AreaChart className="h-5 w-5 text-amber-400" /> Vertical Design
             Profile &amp; Cross Sections
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className={SURVEY_STYLES.textSubtitle}>
             Configure finished grade vertical curves (PVIs) and slice real-time
             cross-sections along the baseline.
           </DialogDescription>
         </DialogHeader>
 
         {alignments.length === 0 ? (
-          <div className="py-12 text-center text-sm text-muted-foreground">
+          <div className={SURVEY_STYLES.cardSubtle + " py-12 text-center text-sm text-muted-foreground"}>
             No alignments found. Please draw a horizontal alignment baseline
             first.
           </div>
         ) : (
-          <div className="grid grid-cols-[300px_1fr] gap-6">
+          <div className={SURVEY_STYLES.layoutSidebarLg}>
             {/* Sidebar Controls */}
-            <div className="flex flex-col gap-4">
+            <div className={SURVEY_STYLES.sidebar}>
               <div>
-                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <label className={SURVEY_STYLES.label}>
                   Select Alignment
                 </label>
                 <div className="mt-1 flex flex-col gap-1">
@@ -82,8 +83,8 @@ export function ProfileSectionDialog() {
                       className={cn(
                         "rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                         a.id === selectedAlignId
-                          ? "bg-primary/15 text-primary font-medium"
-                          : "hover:bg-accent text-muted-foreground",
+                          ? "bg-amber-500/20 text-amber-300 font-medium border border-amber-500/30"
+                          : "hover:bg-muted text-muted-foreground hover:text-foreground",
                       )}
                     >
                       {a.name}
@@ -94,35 +95,35 @@ export function ProfileSectionDialog() {
 
               <div>
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <label className={SURVEY_STYLES.label}>
                     Vertical PVIs
                   </label>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 px-1.5 text-xs text-primary"
+                    className="h-6 px-1.5 text-xs text-amber-400 hover:text-amber-300"
                     onClick={addPvi}
                   >
                     <Plus className="mr-0.5 h-3.5 w-3.5" /> Add
                   </Button>
                 </div>
-                <div className="mt-2 max-h-[220px] overflow-y-auto rounded-md border border-border bg-card p-2 text-xs">
+                <div className={SURVEY_STYLES.card + " mt-2 max-h-[220px] overflow-y-auto p-2 text-xs"}>
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-border text-muted-foreground">
-                        <th className="py-1 text-left">Station</th>
-                        <th className="py-1 text-left">Elev</th>
-                        <th className="py-1 text-left">L (Curve)</th>
-                        <th className="py-1 text-right">Action</th>
+                      <tr>
+                        <th className={SURVEY_STYLES.tableTh}>Station</th>
+                        <th className={SURVEY_STYLES.tableTh}>Elev</th>
+                        <th className={SURVEY_STYLES.tableTh}>L (Curve)</th>
+                        <th className={SURVEY_STYLES.tableTh + " text-right"}>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       {_.map(profile.pvis, (pvi, idx) => (
-                        <tr key={idx} className="border-b border-border/50">
-                          <td className="py-1">
+                        <tr key={idx} className={SURVEY_STYLES.tableRow}>
+                          <td className={SURVEY_STYLES.tableTd}>
                             <input
                               type="number"
-                              className="w-16 bg-transparent outline-none focus:text-foreground"
+                              className={SURVEY_STYLES.input + " w-16"}
                               value={pvi.station}
                               onChange={(e) =>
                                 updatePvi(
@@ -133,10 +134,10 @@ export function ProfileSectionDialog() {
                               }
                             />
                           </td>
-                          <td className="py-1">
+                          <td className={SURVEY_STYLES.tableTd}>
                             <input
                               type="number"
-                              className="w-12 bg-transparent outline-none"
+                              className={SURVEY_STYLES.input + " w-12"}
                               value={pvi.elevation}
                               onChange={(e) =>
                                 updatePvi(
@@ -214,7 +215,7 @@ export function ProfileSectionDialog() {
                 <h4 className="mb-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                   Vertical Profile View (TIN ground vs Proposed Grade)
                 </h4>
-                <div className="relative h-[200px] w-full bg-slate-950/60 rounded-md overflow-hidden border border-border/80">
+                <div className="relative h-[200px] w-full bg-background/60 rounded-md overflow-hidden border border-border/80">
                   <svg
                     className="h-full w-full"
                     viewBox="0 0 600 200"
@@ -323,7 +324,7 @@ export function ProfileSectionDialog() {
                 <h4 className="mb-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                   Cross Section View at STA {selectedStation.toFixed(0)}
                 </h4>
-                <div className="relative h-[200px] w-full bg-slate-950/60 rounded-md overflow-hidden border border-border/80">
+                <div className="relative h-[200px] w-full bg-background/60 rounded-md overflow-hidden border border-border/80">
                   {crossSection ? (
                     <svg
                       className="h-full w-full"

@@ -1,0 +1,196 @@
+/* Centralized Civil 3D Feature Stylesheet */
+
+@layer components {
+  /* Dialog & Modal Layouts */
+  .civil-dialog-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-overlay-in;
+  }
+
+  .civil-dialog-container {
+    @apply flex flex-col w-full max-w-5xl h-[88vh] bg-background border border-border rounded-2xl shadow-2xl overflow-hidden text-foreground animate-dialog-in;
+  }
+
+  .civil-dialog-container-emerald {
+    @apply flex flex-col w-full max-w-5xl h-[88vh] bg-background border border-emerald-500/30 rounded-2xl shadow-2xl overflow-hidden text-foreground animate-dialog-in;
+  }
+
+  .civil-dialog-container-cyan {
+    @apply flex flex-col w-full max-w-5xl h-[88vh] bg-background border border-cyan-500/30 rounded-2xl shadow-2xl overflow-hidden text-foreground animate-dialog-in;
+  }
+
+  .civil-dialog-container-purple {
+    @apply flex flex-col w-full max-w-5xl h-[88vh] bg-background border border-purple-500/30 rounded-2xl shadow-2xl overflow-hidden text-foreground animate-dialog-in;
+  }
+
+  .civil-dialog-container-amber {
+    @apply flex flex-col w-full max-w-5xl h-[88vh] bg-background border border-amber-500/30 rounded-2xl shadow-2xl overflow-hidden text-foreground animate-dialog-in;
+  }
+
+  .civil-dialog-container-orange {
+    @apply flex flex-col w-full max-w-5xl h-[88vh] bg-background border border-orange-500/30 rounded-2xl shadow-2xl overflow-hidden text-foreground animate-dialog-in;
+  }
+
+  .civil-dialog-header {
+    @apply flex items-center justify-between px-6 py-4 border-b border-border bg-card/90 shrink-0;
+  }
+
+  .civil-dialog-title-group {
+    @apply flex items-center space-x-3;
+  }
+
+  .civil-dialog-icon-wrapper {
+    @apply p-2 rounded-xl border shrink-0;
+  }
+
+  .civil-dialog-body {
+    @apply flex-1 overflow-y-auto p-6 space-y-6;
+  }
+
+  .civil-dialog-footer {
+    @apply flex items-center justify-between px-6 py-4 border-t border-border bg-card/80 shrink-0;
+  }
+
+  /* Panels & Cards */
+  .civil-panel-dark {
+    @apply bg-card/60 border border-border rounded-xl p-5;
+  }
+
+  .civil-panel-inner {
+    @apply bg-background border border-border rounded-lg p-4;
+  }
+
+  .civil-stat-card {
+    @apply bg-background border border-border rounded-lg p-3 flex flex-col justify-between;
+  }
+
+  /* Ribbon & Workspace */
+  .civil-ribbon-bar {
+    @apply flex items-center gap-1 bg-card/90 border-b border-border px-4 py-1.5 overflow-x-auto text-xs;
+  }
+
+  .civil-ribbon-group {
+    @apply flex items-center gap-1 px-2 border-r border-border/80 last:border-r-0;
+  }
+
+  .civil-ribbon-btn {
+    @apply flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-accent/80 transition-all duration-150 active:scale-95;
+  }
+
+  .civil-ribbon-btn-active {
+    @apply bg-accent text-primary font-semibold shadow-sm;
+  }
+
+  /* Prospector & Tree Views */
+  .civil-prospector-container {
+    @apply w-72 bg-background/95 border-r border-border flex flex-col h-full text-foreground select-none;
+  }
+
+  .civil-prospector-header {
+    @apply px-4 py-3 border-b border-border flex items-center justify-between font-semibold text-xs tracking-wider uppercase text-muted-foreground;
+  }
+
+  .civil-prospector-tree-node {
+    @apply flex items-center justify-between py-1.5 pr-3 text-xs font-mono transition-colors cursor-pointer hover:bg-accent/80 rounded-md my-0.5;
+  }
+
+  .civil-prospector-tree-node-active {
+    @apply bg-primary/10 text-primary font-semibold border-l-2 border-primary;
+  }
+
+  /* Tables & Data Grids */
+  .civil-table-container {
+    @apply max-h-72 overflow-auto border border-border rounded-lg bg-background;
+  }
+
+  .civil-table {
+    @apply w-full text-left border-collapse text-xs;
+  }
+
+  .civil-table-th {
+    @apply bg-card text-muted-foreground font-mono text-[11px] uppercase tracking-wider px-3 py-2 border-b border-border sticky top-0 z-10;
+  }
+
+  .civil-table-td {
+    @apply px-3 py-2 border-b border-border/60 font-mono text-foreground;
+  }
+
+  .civil-table-row {
+    @apply hover:bg-muted/50 transition-colors;
+  }
+
+  .civil-table-row-selected {
+    @apply bg-primary/10 text-primary;
+  }
+
+  /* Forms & Field Controls */
+  .civil-field-label {
+    @apply block text-xs text-muted-foreground font-medium mb-1;
+  }
+
+  .civil-input {
+    @apply w-full bg-background border border-input text-xs font-mono text-foreground rounded-lg px-3 py-2 focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring transition-colors;
+  }
+
+  .civil-select {
+    @apply w-full bg-background border border-input text-xs font-mono text-foreground rounded-lg px-2.5 py-2 focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring transition-colors;
+  }
+
+  /* Badges & Tags */
+  .civil-badge {
+    @apply px-2 py-0.5 font-mono text-[10px] uppercase rounded border font-semibold inline-flex items-center gap-1;
+  }
+
+  .civil-badge-default {
+    @apply bg-accent text-accent-foreground border-border;
+  }
+
+  .civil-badge-cyan {
+    @apply bg-primary/10 text-primary border-primary/20;
+  }
+
+  .civil-badge-emerald {
+    @apply bg-emerald-500/10 text-emerald-500 border-emerald-500/20;
+  }
+
+  .civil-badge-purple {
+    @apply bg-purple-500/10 text-purple-500 border-purple-500/20;
+  }
+
+  .civil-badge-amber {
+    @apply bg-amber-500/10 text-amber-500 border-amber-500/20;
+  }
+
+  .civil-badge-red {
+    @apply bg-red-500/10 text-red-500 border-red-500/20;
+  }
+
+  /* Buttons */
+  .civil-btn {
+    @apply inline-flex items-center justify-center font-semibold text-xs rounded-xl px-4 py-2 transition-all duration-150 active:scale-95 shadow-md;
+  }
+
+  .civil-btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground;
+  }
+
+  .civil-btn-emerald {
+    @apply bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white;
+  }
+
+  .civil-btn-purple {
+    @apply bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white;
+  }
+
+  .civil-btn-amber {
+    @apply bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white;
+  }
+
+  .civil-btn-outline {
+    @apply bg-card border border-border text-foreground hover:bg-accent hover:text-accent-foreground;
+  }
+
+  /* Status Dots */
+  .civil-pulse-dot {
+    @apply w-2 h-2 rounded-full animate-pulse;
+  }
+}

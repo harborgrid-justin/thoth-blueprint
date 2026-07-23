@@ -21,6 +21,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAlignmentReportState } from "./hooks/useAlignmentReportState";
 import { curveLabel } from "./helpers/alignmentReportHelpers";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 /**
  * The alignment / stationing report: for each horizontal baseline, the tangent
@@ -44,25 +45,25 @@ export function AlignmentReportDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-4xl">
+      <DialogContent className={SURVEY_STYLES.dialogContainer + " max-w-4xl"}>
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Spline className="h-5 w-5 text-primary" /> Alignment &amp;
+          <DialogTitle className={SURVEY_STYLES.dialogTitle}>
+            <Spline className="h-5 w-5 text-amber-400" /> Alignment &amp;
             Stationing
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className={SURVEY_STYLES.textSubtitle}>
             Horizontal baselines with continuous stationing and curve data for{" "}
             {site.name}.
           </DialogDescription>
         </DialogHeader>
 
         {alignments.length === 0 ? (
-          <div className="py-16 text-center text-sm text-muted-foreground">
+          <div className={SURVEY_STYLES.cardSubtle + " py-16 text-center text-sm text-muted-foreground"}>
             No alignments yet. Draw one with the Alignment tool (I) — click each
             PI, then Enter — to generate stationing and curve data.
           </div>
         ) : (
-          <div className="grid grid-cols-[180px_1fr] gap-4">
+          <div className={SURVEY_STYLES.layoutSidebarSm}>
             <div className="flex flex-col gap-0.5">
               {_.map(alignments, (a) => (
                 <button
@@ -74,8 +75,8 @@ export function AlignmentReportDialog() {
                   className={cn(
                     "truncate rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                     a.id === (selected?.id ?? "")
-                      ? "bg-primary/15 text-primary font-medium"
-                      : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                      ? "bg-amber-500/20 text-amber-300 font-medium border border-amber-500/30"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
                   )}
                 >
                   {a.name}
@@ -108,7 +109,7 @@ function AlignmentReport({
   const u = unitLabel(spatial.units);
   if (!r) {
     return (
-      <p className="text-sm text-muted-foreground">
+      <p className={SURVEY_STYLES.textMuted}>
         This baseline needs at least two PIs.
       </p>
     );
@@ -116,7 +117,7 @@ function AlignmentReport({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <div className={SURVEY_STYLES.grid4Col}>
         <Stat label="Begin station" value={formatStation(r.startStation)} />
         <Stat label="End station" value={formatStation(r.endStation)} />
         <Stat label={`Length (${u})`} value={r.length.toFixed(2)} />
@@ -126,7 +127,7 @@ function AlignmentReport({
       <Section title="Alignment (station to station)">
         <table className="w-full text-xs">
           <thead>
-            <tr className="border-b border-border text-left text-muted-foreground">
+            <tr>
               <Th>Element</Th>
               <Th>Begin</Th>
               <Th>End</Th>
@@ -137,7 +138,7 @@ function AlignmentReport({
           <tbody className="font-mono">
             {_.map(r.elements, (el, i) =>
               el.kind === "tangent" ? (
-                <tr key={i} className="border-b border-border/50">
+                <tr key={i} className={SURVEY_STYLES.tableRow}>
                   <Td>Tangent</Td>
                   <Td>{formatStation(el.beginStation)}</Td>
                   <Td>{formatStation(el.endStation)}</Td>
@@ -147,7 +148,7 @@ function AlignmentReport({
                   <Td>{bearingText(el.from, el.to)}</Td>
                 </tr>
               ) : el.kind === "curve" ? (
-                <tr key={i} className="border-b border-border/50">
+                <tr key={i} className={SURVEY_STYLES.tableRow}>
                   <Td>Curve {curveLabel(r, el.curve.piIndex)}</Td>
                   <Td>{formatStation(el.beginStation)}</Td>
                   <Td>{formatStation(el.endStation)}</Td>
@@ -170,7 +171,7 @@ function AlignmentReport({
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-xs">
               <thead>
-                <tr className="border-b border-border text-left text-muted-foreground">
+                <tr>
                   <Th>Curve</Th>
                   <Th>PC sta</Th>
                   <Th>PI sta</Th>
@@ -187,7 +188,7 @@ function AlignmentReport({
               </thead>
               <tbody className="font-mono">
                 {_.map(r.curves, (c, i) => (
-                  <tr key={i} className="border-b border-border/50">
+                  <tr key={i} className={SURVEY_STYLES.tableRow}>
                     <Td>{curveLabel(r, c.piIndex)}</Td>
                     <Td>{formatStation(c.pcStation)}</Td>
                     <Td>{formatStation(c.piStation)}</Td>
@@ -219,7 +220,7 @@ function AlignmentReport({
               </tbody>
             </table>
           </div>
-          <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">
+          <p className={SURVEY_STYLES.textMuted + " mt-1.5 text-[11px] leading-relaxed"}>
             R = radius, L = arc length, T = tangent, Δ = central angle, Dc =
             degree of curve (arc definition), E = external, M = middle ordinate.
             Stations are continuous through each curve (PT − PC = L).
@@ -239,7 +240,7 @@ function Section({
 }) {
   return (
     <div>
-      <h4 className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+      <h4 className={SURVEY_STYLES.label + " mb-1.5"}>
         {title}
       </h4>
       {children}
@@ -249,11 +250,11 @@ function Section({
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-border bg-background/50 px-2.5 py-1.5">
-      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+    <div className={SURVEY_STYLES.cardSubtle + " px-2.5 py-1.5"}>
+      <div className={SURVEY_STYLES.statLabel}>
         {label}
       </div>
-      <div className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">
+      <div className={SURVEY_STYLES.statValue + " text-base font-mono"}>
         {value}
       </div>
     </div>
@@ -268,7 +269,7 @@ function Th({
   className?: string;
 }) {
   return (
-    <th className={cn("py-1.5 pr-2 font-medium", className)}>{children}</th>
+    <th className={cn(SURVEY_STYLES.tableTh, className)}>{children}</th>
   );
 }
 
@@ -279,5 +280,5 @@ function Td({
   children?: React.ReactNode;
   className?: string;
 }) {
-  return <td className={cn("py-1 pr-2", className)}>{children}</td>;
+  return <td className={cn(SURVEY_STYLES.tableTd, className)}>{children}</td>;
 }

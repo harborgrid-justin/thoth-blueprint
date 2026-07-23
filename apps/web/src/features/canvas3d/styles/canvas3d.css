@@ -1,0 +1,11 @@
+/* Centralized 3D Canvas Feature Stylesheet */
+
+@layer components {
+  .canvas3d-container {
+    @apply relative h-full w-full bg-background overflow-hidden;
+  }
+
+  .canvas3d-viewport-overlay {
+    @apply absolute top-4 left-4 z-10 flex flex-col gap-2 p-3 bg-card/80 border border-border rounded-xl backdrop-blur-md text-xs text-card-foreground;
+  }
+}

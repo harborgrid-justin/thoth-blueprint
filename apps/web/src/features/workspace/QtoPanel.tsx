@@ -22,6 +22,7 @@ import {
   getDoorWindowCodeWarnings,
   getRoofWarnings,
 } from "./helpers/qtoHelpers";
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
 
 
 export function QtoPanel() {
@@ -44,86 +45,79 @@ export function QtoPanel() {
 
   return (
     <div className="flex flex-col gap-4 p-3 text-xs">
-      <div className="flex items-center justify-between border-b border-border pb-2">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
-          <HardHat className="h-4 w-4 text-primary" /> QTO &amp; Earthwork
+      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+        <h3 className={WORKSPACE_STYLES.title}>
+          <HardHat className="h-4 w-4 text-cyan-400" /> QTO &amp; Earthwork
           Takeoffs
         </h3>
-        <div className="flex rounded border border-border p-0.5 bg-background">
+        <div className={WORKSPACE_STYLES.pillBar}>
           <button
             onClick={() => setActiveTab("earthwork")}
-            className={cn(
-              "px-1.5 py-0.5 rounded text-[10px]",
+            className={
               activeTab === "earthwork"
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground",
-            )}
+                ? WORKSPACE_STYLES.btnPillActive
+                : WORKSPACE_STYLES.btnPill
+            }
           >
             Earthwork
           </button>
           <button
             onClick={() => setActiveTab("payitems")}
-            className={cn(
-              "px-1.5 py-0.5 rounded text-[10px]",
+            className={
               activeTab === "payitems"
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground",
-            )}
+                ? WORKSPACE_STYLES.btnPillActive
+                : WORKSPACE_STYLES.btnPill
+            }
           >
             Cost Sheets
           </button>
           <button
             onClick={() => setActiveTab("renovation")}
-            className={cn(
-              "px-1.5 py-0.5 rounded text-[10px]",
+            className={
               activeTab === "renovation"
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground",
-            )}
+                ? WORKSPACE_STYLES.btnPillActive
+                : WORKSPACE_STYLES.btnPill
+            }
           >
             Renovation
           </button>
           <button
             onClick={() => setActiveTab("stairs")}
-            className={cn(
-              "px-1.5 py-0.5 rounded text-[10px]",
+            className={
               activeTab === "stairs"
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground",
-            )}
+                ? WORKSPACE_STYLES.btnPillActive
+                : WORKSPACE_STYLES.btnPill
+            }
           >
             Stairs
           </button>
           <button
             onClick={() => setActiveTab("curtainwalls")}
-            className={cn(
-              "px-1.5 py-0.5 rounded text-[10px]",
+            className={
               activeTab === "curtainwalls"
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground",
-            )}
+                ? WORKSPACE_STYLES.btnPillActive
+                : WORKSPACE_STYLES.btnPill
+            }
           >
             Curtains
           </button>
           <button
             onClick={() => setActiveTab("assemblies")}
-            className={cn(
-              "px-1.5 py-0.5 rounded text-[10px]",
+            className={
               activeTab === "assemblies"
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground",
-            )}
+                ? WORKSPACE_STYLES.btnPillActive
+                : WORKSPACE_STYLES.btnPill
+            }
           >
             Doors/Wins
           </button>
           <button
             onClick={() => setActiveTab("roofs")}
-            className={cn(
-              "px-1.5 py-0.5 rounded text-[10px]",
+            className={
               activeTab === "roofs"
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground",
-            )}
+                ? WORKSPACE_STYLES.btnPillActive
+                : WORKSPACE_STYLES.btnPill
+            }
           >
             Roofs
           </button>
@@ -133,8 +127,8 @@ export function QtoPanel() {
       {activeTab === "earthwork" && (
         <div className="flex flex-col gap-3">
           {/* Average End Area Volumes List */}
-          <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+          <div className={WORKSPACE_STYLES.cardSubtle}>
+            <h4 className={WORKSPACE_STYLES.cardHeader + " flex items-center justify-between"}>
               <span>Average End Area Volumes</span>
               <Badge className="bg-emerald-500/15 text-emerald-500 hover:bg-emerald-500/20 text-[9px] h-4">
                 TIN Ground
@@ -163,8 +157,8 @@ export function QtoPanel() {
           </div>
 
           {/* Mass Haul Diagram */}
-          <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5">
+          <div className={WORKSPACE_STYLES.cardSubtle}>
+            <h4 className={WORKSPACE_STYLES.cardHeader}>
               Mass Haul Diagram Chart (Net Volume)
             </h4>
             <div className="h-[90px] w-full bg-slate-950/60 rounded-md overflow-hidden relative">
@@ -198,17 +192,17 @@ export function QtoPanel() {
       {activeTab === "payitems" && (
         <div className="flex flex-col gap-3">
           {/* Assigned cost items list */}
-          <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5">
+          <div className={WORKSPACE_STYLES.cardSubtle}>
+            <h4 className={WORKSPACE_STYLES.cardHeader}>
               Pay Item Cost Estimates
             </h4>
             <div className="flex flex-col gap-2">
               {assignedReports.map((r, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-col gap-1 border-b border-border/40 pb-1.5 last:border-b-0"
+                  className="flex flex-col gap-1 border-b border-slate-800/60 pb-1.5 last:border-b-0"
                 >
-                  <div className="flex justify-between items-center font-medium text-foreground">
+                  <div className={WORKSPACE_STYLES.listItem}>
                     <span>{r.elementName}</span>
                     <span>
                       $
@@ -217,7 +211,7 @@ export function QtoPanel() {
                       })}
                     </span>
                   </div>
-                  <div className="flex justify-between text-muted-foreground text-[10px]">
+                  <div className={WORKSPACE_STYLES.listItemSub}>
                     <span>{r.itemName}</span>
                     <span>
                       {r.qty.toFixed(1)} {r.unit}
@@ -226,7 +220,7 @@ export function QtoPanel() {
                 </div>
               ))}
 
-              <div className="flex justify-between items-center font-bold text-sm text-foreground border-t border-border pt-2 mt-1">
+              <div className={WORKSPACE_STYLES.summaryRow}>
                 <span>Total Construction Est.</span>
                 <span>
                   $
@@ -239,25 +233,25 @@ export function QtoPanel() {
           </div>
 
           {/* Quick assign selector */}
-          <div className="rounded-md border border-border bg-slate-950/10 p-2 flex flex-col gap-2">
-            <span className="font-semibold text-[10px] uppercase text-muted-foreground">
+          <div className={WORKSPACE_STYLES.cardSubtle + " flex flex-col gap-2"}>
+            <span className={WORKSPACE_STYLES.cardHeader}>
               Assign Item to Selection
             </span>
             {selection.length > 0 ? (
               <div className="flex gap-1.5 items-center">
-                <select className="flex-1 rounded border border-border bg-background px-2.5 py-1 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
+                <select className={WORKSPACE_STYLES.select}>
                   {payItems.map((item) => (
                     <option key={item.id} value={item.id}>
                       {item.id} - {item.name}
                     </option>
                   ))}
                 </select>
-                <Button size="sm" className="h-7 text-[10px] px-2">
+                <Button size="sm" className={WORKSPACE_STYLES.btnPrimary + " h-7 text-[10px] px-2"}>
                   Bind
                 </Button>
               </div>
             ) : (
-              <div className="text-[10px] text-muted-foreground/80 text-center py-2">
+              <div className={WORKSPACE_STYLES.textMuted + " text-[10px] text-center py-2"}>
                 Select an element on canvas to bind pay items.
               </div>
             )}
@@ -268,58 +262,58 @@ export function QtoPanel() {
       {activeTab === "renovation" && (
         <div className="flex flex-col gap-3">
           {/* Renovation Quantities (Takeoffs) */}
-          <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+          <div className={WORKSPACE_STYLES.cardSubtle}>
+            <h4 className={WORKSPACE_STYLES.cardHeader + " flex items-center justify-between"}>
               <span>Renovation Quantity Takeoffs</span>
-              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] h-4">
+              <Badge className={WORKSPACE_STYLES.badge}>
                 REQ-UNIMP-006
               </Badge>
             </h4>
             {(() => {
               const takeoffs = computeRenovationTakeoffs(site);
               return (
-                <table className="w-full text-left">
+                <table className={WORKSPACE_STYLES.subtable}>
                   <thead>
-                    <tr className="border-b border-border/60 text-muted-foreground text-[10px]">
+                    <tr className="border-b border-slate-800 text-slate-400 text-[10px]">
                       <th className="py-1">Status</th>
                       <th className="py-1 text-center">Count</th>
                       <th className="py-1 text-right">Plan Area</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border-b border-border/40">
-                      <td className="py-1 font-medium text-foreground flex items-center gap-1.5">
+                    <tr className={WORKSPACE_STYLES.subtableRow}>
+                      <td className="py-1 font-medium text-slate-200 flex items-center gap-1.5">
                         <span className="h-2 w-2 rounded-full bg-slate-400"></span>{" "}
                         Existing
                       </td>
-                      <td className="py-1 text-center font-semibold">
+                      <td className="py-1 text-center font-mono font-semibold text-slate-200">
                         {takeoffs.existing.count}
                       </td>
-                      <td className="py-1 text-right font-semibold">
+                      <td className="py-1 text-right font-mono font-semibold text-slate-200">
                         {takeoffs.existing.totalArea.toFixed(1)} sqm
                       </td>
                     </tr>
-                    <tr className="border-b border-border/40">
-                      <td className="py-1 font-medium text-foreground flex items-center gap-1.5">
+                    <tr className={WORKSPACE_STYLES.subtableRow}>
+                      <td className="py-1 font-medium text-emerald-400 flex items-center gap-1.5">
                         <span className="h-2 w-2 rounded-full bg-emerald-500"></span>{" "}
                         New Construction
                       </td>
-                      <td className="py-1 text-center font-semibold text-emerald-500">
+                      <td className="py-1 text-center font-mono font-semibold text-emerald-400">
                         {takeoffs.new.count}
                       </td>
-                      <td className="py-1 text-right font-semibold text-emerald-500">
+                      <td className="py-1 text-right font-mono font-semibold text-emerald-400">
                         {takeoffs.new.totalArea.toFixed(1)} sqm
                       </td>
                     </tr>
-                    <tr className="border-b border-border/40">
-                      <td className="py-1 font-medium text-foreground flex items-center gap-1.5">
+                    <tr className={WORKSPACE_STYLES.subtableRow}>
+                      <td className="py-1 font-medium text-rose-400 flex items-center gap-1.5">
                         <span className="h-2 w-2 rounded-full bg-rose-500"></span>{" "}
                         Demolition
                       </td>
-                      <td className="py-1 text-center font-semibold text-rose-500">
+                      <td className="py-1 text-center font-mono font-semibold text-rose-400">
                         {takeoffs.demolished.count}
                       </td>
-                      <td className="py-1 text-right font-semibold text-rose-500">
+                      <td className="py-1 text-right font-mono font-semibold text-rose-400">
                         {takeoffs.demolished.totalArea.toFixed(1)} sqm
                       </td>
                     </tr>
@@ -406,40 +400,40 @@ export function QtoPanel() {
                         onMouseLeave={() => hoverElement(null)}
                         onClick={() => select(stair.id)}
                       >
-                        <div className="font-semibold text-foreground mb-1">
+                        <div className="font-semibold text-slate-100 mb-1">
                           {stair.name} ({stair.stairType})
                         </div>
-                        <table className="w-full text-left text-[10px]">
+                        <table className={WORKSPACE_STYLES.subtable}>
                           <tbody>
-                            <tr className="border-b border-border/30">
-                              <td className="py-0.5 text-muted-foreground">
+                            <tr className={WORKSPACE_STYLES.subtableRow}>
+                              <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                 Risers / Treads
                               </td>
-                              <td className="py-0.5 text-right font-medium">
+                              <td className={WORKSPACE_STYLES.subtableTdVal}>
                                 {geom.riserCount} R / {geom.treadCount} T
                               </td>
                             </tr>
-                            <tr className="border-b border-border/30">
-                              <td className="py-0.5 text-muted-foreground">
+                            <tr className={WORKSPACE_STYLES.subtableRow}>
+                              <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                 Actual Riser Height
                               </td>
-                              <td className="py-0.5 text-right font-medium">
+                              <td className={WORKSPACE_STYLES.subtableTdVal}>
                                 {(geom.actualRiserHeight * 100).toFixed(1)} cm
                               </td>
                             </tr>
-                            <tr className="border-b border-border/30">
-                              <td className="py-0.5 text-muted-foreground">
+                            <tr className={WORKSPACE_STYLES.subtableRow}>
+                              <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                 Concrete Volume
                               </td>
-                              <td className="py-0.5 text-right font-medium text-emerald-500">
+                              <td className={WORKSPACE_STYLES.subtableTdVal + " text-emerald-400"}>
                                 {geom.concreteVolumeCuM.toFixed(2)} m³
                               </td>
                             </tr>
                             <tr>
-                              <td className="py-0.5 text-muted-foreground">
+                              <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                 Timber Board Feet
                               </td>
-                              <td className="py-0.5 text-right font-medium text-amber-500">
+                              <td className={WORKSPACE_STYLES.subtableTdVal + " text-amber-400"}>
                                 {geom.timberBoardFeet.toFixed(0)} BF
                               </td>
                             </tr>
@@ -454,10 +448,10 @@ export function QtoPanel() {
           </div>
 
           {/* Stairs Safety & Clearance Audit (REQ-UNIMP-017) */}
-          <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+          <div className={WORKSPACE_STYLES.cardSubtle}>
+            <h4 className={WORKSPACE_STYLES.cardHeader + " flex items-center justify-between"}>
               <span>Stairs Safety &amp; Clearance Audit</span>
-              <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[9px] h-4">
+              <Badge className={WORKSPACE_STYLES.badgeAmber}>
                 REQ-UNIMP-017
               </Badge>
             </h4>
@@ -492,10 +486,10 @@ export function QtoPanel() {
       {activeTab === "curtainwalls" && (
         <div className="flex flex-col gap-3">
           {/* Curtain Wall Panel Inventory (REQ-UNIMP-040) */}
-          <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+          <div className={WORKSPACE_STYLES.cardSubtle}>
+            <h4 className={WORKSPACE_STYLES.cardHeader + " flex items-center justify-between"}>
               <span>Panel Schedule &amp; Count</span>
-              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] h-4">
+              <Badge className={WORKSPACE_STYLES.badge}>
                 REQ-UNIMP-040
               </Badge>
             </h4>
@@ -505,7 +499,7 @@ export function QtoPanel() {
               ) as CurtainWall[];
               if (walls.length === 0) {
                 return (
-                  <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
+                  <div className={WORKSPACE_STYLES.textMuted + " text-[10px] py-2 text-center"}>
                     No curtain walls drafted in the current site plan.
                   </div>
                 );
@@ -520,26 +514,26 @@ export function QtoPanel() {
                       <div
                         key={wall.id}
                         className={cn(
-                          "border-b border-border/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
+                          "border-b border-slate-800/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
                           isHovered
                             ? "bg-amber-500/10 border-amber-500/30"
                             : isSelected
-                              ? "bg-primary/10 border-primary/30"
+                              ? "bg-cyan-500/10 border-cyan-500/30"
                               : "border-transparent",
                         )}
                         onMouseEnter={() => hoverElement(wall.id)}
                         onMouseLeave={() => hoverElement(null)}
                         onClick={() => select(wall.id)}
                       >
-                        <div className="font-semibold text-foreground mb-1 flex justify-between">
+                        <div className="font-semibold text-slate-100 mb-1 flex justify-between">
                           <span>{wall.name}</span>
-                          <span className="text-muted-foreground text-[9px]">
+                          <span className="text-slate-400 text-[9px] font-mono">
                             U-Factor: {geom.overallUFactor.toFixed(3)} W/m²K
                           </span>
                         </div>
-                        <table className="w-full text-left text-[10px] mb-2">
+                        <table className={WORKSPACE_STYLES.subtable + " mb-2"}>
                           <thead>
-                            <tr className="border-b border-border/60 text-muted-foreground text-[9px]">
+                            <tr className="border-b border-slate-800 text-slate-400 text-[9px]">
                               <th className="py-0.5">Material</th>
                               <th className="py-0.5">Dimensions</th>
                               <th className="py-0.5 text-right">Count</th>
@@ -549,16 +543,16 @@ export function QtoPanel() {
                             {geom.inventory.map((item, idx) => (
                               <tr
                                 key={idx}
-                                className="border-b border-border/30 last:border-0"
+                                className={WORKSPACE_STYLES.subtableRow}
                               >
-                                <td className="py-0.5 capitalize text-foreground">
+                                <td className="py-0.5 capitalize text-slate-200">
                                   {item.material}
                                 </td>
-                                <td className="py-0.5 text-muted-foreground">
+                                <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                   {item.width.toFixed(2)}m x{" "}
                                   {item.height.toFixed(2)}m
                                 </td>
-                                <td className="py-0.5 text-right font-medium">
+                                <td className={WORKSPACE_STYLES.subtableTdVal}>
                                   {item.count}
                                 </td>
                               </tr>
@@ -740,10 +734,10 @@ export function QtoPanel() {
       {activeTab === "roofs" && (
         <div className="flex flex-col gap-3">
           {/* Roof Materials List */}
-          <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+          <div className={WORKSPACE_STYLES.cardSubtle}>
+            <h4 className={WORKSPACE_STYLES.cardHeader + " flex items-center justify-between"}>
               <span>Roof Construction Takeoffs</span>
-              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] h-4">
+              <Badge className={WORKSPACE_STYLES.badge}>
                 Material Volume
               </Badge>
             </h4>
@@ -753,7 +747,7 @@ export function QtoPanel() {
               ) as RoofElement[];
               if (roofs.length === 0) {
                 return (
-                  <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
+                  <div className={WORKSPACE_STYLES.textMuted + " text-[10px] py-2 text-center"}>
                     No roof elements drafted in the current site plan.
                   </div>
                 );
@@ -768,73 +762,73 @@ export function QtoPanel() {
                       <div
                         key={roof.id}
                         className={cn(
-                          "border-b border-border/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
+                          "border-b border-slate-800/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
                           isHovered
                             ? "bg-amber-500/10 border-amber-500/30"
                             : isSelected
-                              ? "bg-primary/10 border-primary/30"
+                              ? "bg-cyan-500/10 border-cyan-500/30"
                               : "border-transparent",
                         )}
                         onMouseEnter={() => hoverElement(roof.id)}
                         onMouseLeave={() => hoverElement(null)}
                         onClick={() => select(roof.id)}
                       >
-                        <div className="font-semibold text-foreground mb-1 flex justify-between">
+                        <div className="font-semibold text-slate-100 mb-1 flex justify-between">
                           <span>{roof.name}</span>
-                          <span className="text-muted-foreground text-[9px] capitalize">
+                          <span className="text-slate-400 text-[9px] capitalize font-mono">
                             {roof.roofType} Roof
                           </span>
                         </div>
-                        <table className="w-full text-left text-[10px]">
+                        <table className={WORKSPACE_STYLES.subtable}>
                           <tbody>
-                            <tr className="border-b border-border/30">
-                              <td className="py-0.5 text-muted-foreground">
+                            <tr className={WORKSPACE_STYLES.subtableRow}>
+                              <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                 Pitch Angle / Slope Factor
                               </td>
-                              <td className="py-0.5 text-right font-medium">
+                              <td className={WORKSPACE_STYLES.subtableTdVal}>
                                 {roof.pitch || 6}:12 (
                                 {res.slopeFactor.toFixed(3)})
                               </td>
                             </tr>
-                            <tr className="border-b border-border/30">
-                              <td className="py-0.5 text-muted-foreground">
+                            <tr className={WORKSPACE_STYLES.subtableRow}>
+                              <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                 Plan Area / True Slope Area
                               </td>
-                              <td className="py-0.5 text-right font-medium">
+                              <td className={WORKSPACE_STYLES.subtableTdVal}>
                                 {res.planAreaSqm.toFixed(1)} m² /{" "}
                                 {res.trueAreaSqm.toFixed(1)} m²
                               </td>
                             </tr>
-                            <tr className="border-b border-border/30">
-                              <td className="py-0.5 text-muted-foreground">
+                            <tr className={WORKSPACE_STYLES.subtableRow}>
+                              <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                 Plywood Sheathing Vol
                               </td>
-                              <td className="py-0.5 text-right font-medium text-amber-500">
+                              <td className={WORKSPACE_STYLES.subtableTdVal + " text-amber-400"}>
                                 {res.sheathingVolCuM.toFixed(2)} m³
                               </td>
                             </tr>
-                            <tr className="border-b border-border/30">
-                              <td className="py-0.5 text-muted-foreground">
+                            <tr className={WORKSPACE_STYLES.subtableRow}>
+                              <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                 Fiberglass Insulation Vol
                               </td>
-                              <td className="py-0.5 text-right font-medium text-emerald-500">
+                              <td className={WORKSPACE_STYLES.subtableTdVal + " text-emerald-400"}>
                                 {res.insulationVolCuM.toFixed(2)} m³
                               </td>
                             </tr>
-                            <tr className="border-b border-border/30">
-                              <td className="py-0.5 text-muted-foreground">
+                            <tr className={WORKSPACE_STYLES.subtableRow}>
+                              <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                 Asphalt Shingles Weight
                               </td>
-                              <td className="py-0.5 text-right font-medium text-blue-500">
+                              <td className={WORKSPACE_STYLES.subtableTdVal + " text-cyan-400"}>
                                 {res.shingleWeightKg.toFixed(0)} kg
                               </td>
                             </tr>
                             <tr>
-                              <td className="py-0.5 text-muted-foreground">
+                              <td className={WORKSPACE_STYLES.subtableTdLabel}>
                                 Timber Board Measure
                               </td>
-                              <td className="py-0.5 text-right font-medium text-indigo-500">
-                                {res.timberBoardFeet.toFixed(0)} FBM
+                              <td className={WORKSPACE_STYLES.subtableTdVal + " text-purple-400"}>
+                                {res.timberBoardFeet.toFixed(0)} BF
                               </td>
                             </tr>
                           </tbody>

@@ -9,6 +9,8 @@ import {
   SheetSet,
 } from '@thoth/domain';
 
+import { CIVIL_STYLES } from '@/features/civil';
+
 export const ViewFrameWizardDialog: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<1 | 2>(1); // 1 = View Frames, 2 = Create Sheets
@@ -53,17 +55,17 @@ export const ViewFrameWizardDialog: React.FC = () => {
   };
 
   return (
-    <div className="p-3 bg-slate-900 border border-slate-800 rounded-lg text-slate-100 shadow-xl">
+    <div className={CIVIL_STYLES.panelDarkContainer}>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
+          <div className={`${CIVIL_STYLES.titlePulseDot} bg-blue-500`} />
           <span className="text-xs font-bold uppercase tracking-wider text-blue-400">
             Plan Production & Sheet Sets (REQ-056 to REQ-077)
           </span>
         </div>
         <button
           onClick={() => setIsOpen(true)}
-          className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded transition shadow"
+          className={CIVIL_STYLES.btnPrimary}
         >
           Create View Frames Wizard
         </button>
@@ -71,9 +73,9 @@ export const ViewFrameWizardDialog: React.FC = () => {
 
       {/* Modal Wizard */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-xl w-full p-6 text-slate-100 shadow-2xl flex flex-col gap-4">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+        <div className={CIVIL_STYLES.dialogOverlay}>
+          <div className={`${CIVIL_STYLES.dialogCard} max-w-xl animate-dialog-in`}>
+            <div className={CIVIL_STYLES.sectionHeaderContainer}>
               <h3 className="text-base font-semibold text-blue-400">
                 {step === 1 ? 'Step 1: Create View Frames Wizard (REQ-056)' : 'Step 2: Create Sheets Wizard (REQ-071)'}
               </h3>

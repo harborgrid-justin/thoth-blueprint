@@ -126,7 +126,7 @@ export function SheetSetDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-6xl">
+      <DialogContent className="max-w-6xl bg-slate-950 border-slate-800 text-slate-100 animate-dialog-in">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Files className="h-5 w-5 text-primary" /> CAD Drawing Set Composer

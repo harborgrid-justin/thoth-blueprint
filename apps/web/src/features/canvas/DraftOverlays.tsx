@@ -22,16 +22,27 @@ export function CrosshairOverlay({
         <rect x={cursorScreen.x - 3} y={cursorScreen.y - 3} width={6} height={6} fill="none" />
       </g>
       {snappedToVertex && (
-        <rect
-          x={cursorScreen.x - 5}
-          y={cursorScreen.y - 5}
-          width={10}
-          height={10}
-          fill="none"
-          stroke="rgb(34, 197, 94)"
-          strokeWidth={2}
-          className="animate-pulse"
-        />
+        <g className="animate-pulse">
+          <rect
+            x={cursorScreen.x - 6}
+            y={cursorScreen.y - 6}
+            width={12}
+            height={12}
+            fill="none"
+            stroke="rgb(34, 197, 94)"
+            strokeWidth={2}
+          />
+          <rect
+            x={cursorScreen.x - 3}
+            y={cursorScreen.y - 3}
+            width={6}
+            height={6}
+            fill="rgba(34, 197, 94, 0.4)"
+            stroke="rgb(34, 197, 94)"
+            strokeWidth={1}
+            transform={`rotate(45 ${cursorScreen.x} ${cursorScreen.y})`}
+          />
+        </g>
       )}
     </g>
   );

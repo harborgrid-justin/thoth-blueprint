@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import { useInteropStore } from "@/store/interopStore";
 import { usePropertiesState } from "./hooks/usePropertiesState";
 import { countCurvedEdges, updateUnderlayDimension } from "./helpers/propertiesHelpers";
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
 
 
 /** Inspector for the current selection: element attributes and measurements. */
@@ -45,11 +46,11 @@ export function PropertiesPanel() {
   if (selection.length === 0) {
     return (
       <div className="flex flex-col gap-3 p-3">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <h3 className={WORKSPACE_STYLES.textSectionTitle}>
           Site
         </h3>
         <Field label="Name" value={site.name} readOnly />
-        <div className="grid grid-cols-3 gap-2">
+        <div className={WORKSPACE_STYLES.grid3Col}>
           <Field label="CRS" value={site.spatial.crs} readOnly />
           <Field label="Units" value={site.spatial.units} readOnly />
           <Field label="Scale" value={`1:${site.spatial.scale}`} readOnly />
@@ -58,7 +59,7 @@ export function PropertiesPanel() {
         {/* Alignment Design Criteria & AASHTO Checks */}
         {validatedAlignments.length > 0 && (
           <div className="mt-2 border-t border-border/40 pt-3">
-            <h4 className="font-semibold text-muted-foreground text-[10px] uppercase tracking-wide mb-1.5">
+            <h4 className={WORKSPACE_STYLES.cardHeader}>
               Alignment Design Speeds &amp; Checks
             </h4>
             <div className="flex flex-col gap-2">
@@ -107,7 +108,7 @@ export function PropertiesPanel() {
         {underlay && (
           <div className="mt-2 border-t border-border/40 pt-3">
             <div className="flex justify-between items-center mb-1.5">
-               <h4 className="font-semibold text-muted-foreground text-[10px] uppercase tracking-wide">
+               <h4 className={WORKSPACE_STYLES.cardHeader}>
                  Blueprint Underlay
                </h4>
                <Button variant="ghost" size="sm" onClick={clearUnderlay} className="h-5 px-1.5 text-rose-500">
@@ -134,7 +135,7 @@ export function PropertiesPanel() {
           </div>
         )}
 
-        <p className="text-xs leading-relaxed text-muted-foreground/70 mt-1">
+        <p className={WORKSPACE_STYLES.textBody}>
           Select an element to edit its planning attributes, or pick a drawing
           tool to add parcels, zones, lots, land uses, and buildings.
         </p>
@@ -145,7 +146,7 @@ export function PropertiesPanel() {
   if (selection.length > 1) {
     return (
       <div className="flex flex-col gap-3 p-3">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <h3 className={WORKSPACE_STYLES.textSectionTitle}>
           Selection
         </h3>
         <p className="text-sm text-foreground">
@@ -381,9 +382,9 @@ function LayerSelect({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <Label>Layer</Label>
+      <Label className={WORKSPACE_STYLES.label}>Layer</Label>
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="h-8">
+        <SelectTrigger className={WORKSPACE_STYLES.select}>
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -411,9 +412,9 @@ function SelectField({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <Label>{label}</Label>
+      <Label className={WORKSPACE_STYLES.label}>{label}</Label>
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="h-8 capitalize">
+        <SelectTrigger className={`${WORKSPACE_STYLES.select} capitalize`}>
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -441,8 +442,8 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-1" title={title}>
-      <Label>{label}</Label>
-      <Input value={value} readOnly={readOnly} className={`h-7 text-xs font-cad ${readOnly ? "bg-muted/50 text-muted-foreground border-transparent" : "bg-background"}`} />
+      <Label className={WORKSPACE_STYLES.label}>{label}</Label>
+      <Input value={value} readOnly={readOnly} className={WORKSPACE_STYLES.input} style={readOnly ? { opacity: 0.7 } : {}} />
     </div>
   );
 }
@@ -460,10 +461,10 @@ function TextField({
   React.useEffect(() => setDraft(value), [value]);
   return (
     <div className="flex flex-col gap-1">
-      <Label>{label}</Label>
+      <Label className={WORKSPACE_STYLES.label}>{label}</Label>
       <Input
         value={draft}
-        className="h-7 text-xs font-cad"
+        className={WORKSPACE_STYLES.input}
         onChange={(e) => setDraft(e.target.value)}
         onBlur={() => draft !== value && onCommit(draft)}
         onKeyDown={(e) => {
@@ -491,12 +492,12 @@ function NumberField({
   React.useEffect(() => setDraft(String(value)), [value]);
   return (
     <div className="flex flex-col gap-1">
-      <Label>{label}</Label>
+      <Label className={WORKSPACE_STYLES.label}>{label}</Label>
       <Input
         type="number"
         step={step}
         value={draft}
-        className="h-7 text-xs font-cad"
+        className={WORKSPACE_STYLES.input}
         onChange={(e) => setDraft(e.target.value)}
         onBlur={() => {
           const parsed = Number(draft);

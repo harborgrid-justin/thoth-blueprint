@@ -204,6 +204,7 @@ export function ElementShape({
         strokeDasharray={strokeDash}
         vectorEffect="non-scaling-stroke"
         strokeLinejoin="round"
+        className="transition-colors duration-200"
       />
       {patternId && (
         <path

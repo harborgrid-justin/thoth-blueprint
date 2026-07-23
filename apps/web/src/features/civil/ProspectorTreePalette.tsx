@@ -70,11 +70,11 @@ export const ProspectorTreePalette: React.FC = () => {
         <div
           onClick={() => isFolder && toggleNode(node.id)}
           style={getTreeIndentStyle(depth)}
-          className="flex items-center justify-between py-1.5 px-2 hover:bg-slate-800/60 rounded cursor-pointer transition text-xs select-none"
+          className="flex items-center justify-between py-1.5 px-2 hover:bg-muted/60 rounded cursor-pointer transition text-xs select-none"
         >
-          <div className="flex items-center gap-1.5 text-slate-200">
+          <div className="flex items-center gap-1.5 text-foreground">
             {isFolder ? (
-              <span className="text-slate-400 font-mono text-[10px] w-3 text-center">
+              <span className="text-muted-foreground font-mono text-[10px] w-3 text-center">
                 {isExp ? '▼' : '►'}
               </span>
             ) : (
@@ -85,7 +85,7 @@ export const ProspectorTreePalette: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 002 2z" />
             </svg>
 
-            <span className="font-medium text-slate-200">{node.label}</span>
+            <span className="font-medium text-foreground">{node.label}</span>
           </div>
 
           {node.badge && (
@@ -105,13 +105,13 @@ export const ProspectorTreePalette: React.FC = () => {
   };
 
   return (
-    <div className="w-72 bg-slate-900 border-r border-slate-800 text-slate-100 flex flex-col h-full shadow-2xl">
-      <div className="p-3 bg-slate-950 border-b border-slate-800 flex justify-between items-center">
+    <div className="w-72 bg-card border-r border-border text-foreground flex flex-col h-full shadow-2xl">
+      <div className="p-3 bg-background border-b border-border flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
           <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">Prospector Tree</span>
         </div>
-        <span className="text-[10px] font-mono text-slate-400">Civil 3D Suite</span>
+        <span className="text-[10px] font-mono text-muted-foreground">Civil 3D Suite</span>
       </div>
 
       <div className="flex-1 overflow-y-auto p-1.5 flex flex-col gap-0.5">

@@ -6,28 +6,10 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { readFileAsArrayBuffer, readFileAsText } from "./fileIo";
 
+import { meshFormatFromName, type MeshFormat } from "@thoth/domain";
+
 export const MESH_ACCEPT = ".obj,.dae,.fbx,.stl,.gltf,.glb";
-
-export type MeshFormat = "obj" | "dae" | "fbx" | "stl" | "gltf";
-
-export function meshFormatFromName(name: string): MeshFormat | null {
-  const ext = name.toLowerCase().split(".").pop();
-  switch (ext) {
-    case "obj":
-      return "obj";
-    case "dae":
-      return "dae";
-    case "fbx":
-      return "fbx";
-    case "stl":
-      return "stl";
-    case "gltf":
-    case "glb":
-      return "gltf";
-    default:
-      return null;
-  }
-}
+export { meshFormatFromName, type MeshFormat };
 
 const DEFAULT_MATERIAL = () =>
   new THREE.MeshStandardMaterial({

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { DataGrid } from "@/components/ui/data-grid";
 import { usePrefsStore } from "@/store/prefsStore";
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
 
 export function AliasMappingDialog({
   open,
@@ -28,9 +29,9 @@ export function AliasMappingDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className={WORKSPACE_STYLES.dialogContainerSm}>
         <DialogHeader>
-          <DialogTitle className="font-cad text-lg uppercase tracking-wide">
+          <DialogTitle className={WORKSPACE_STYLES.title}>
             Keyboard Alias Mapping
           </DialogTitle>
         </DialogHeader>
@@ -41,7 +42,7 @@ export function AliasMappingDialog({
               placeholder="Search commands or aliases..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 font-cad text-xs h-9"
+              className={WORKSPACE_STYLES.input + " pl-9 font-cad text-xs h-9"}
             />
           </div>
           <div className="h-[250px] overflow-hidden rounded-md border border-border">
@@ -52,7 +53,7 @@ export function AliasMappingDialog({
                   <Input 
                     value={row.alias} 
                     onChange={(e) => setAlias(row.command, e.target.value.toUpperCase())}
-                    className="h-6 w-16 text-xs font-cad bg-muted/30 px-2"
+                    className={WORKSPACE_STYLES.input + " h-6 w-16 text-xs font-cad px-2"}
                   />
                 ) }
               ]}

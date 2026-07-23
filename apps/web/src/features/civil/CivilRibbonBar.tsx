@@ -14,15 +14,15 @@ export const CivilRibbonBar: React.FC<CivilRibbonBarProps> = ({
   const [activeSubPanel, setActiveSubPanel] = useState<string | null>(null);
 
   return (
-    <div className="flex flex-col bg-slate-950 border-b border-slate-800 text-slate-100 shadow-xl">
+    <div className="flex flex-col bg-background border-b border-border text-foreground shadow-xl">
       {/* Tab Header Bar */}
-      <div className="flex items-center gap-1 px-4 pt-2 bg-slate-900/90 border-b border-slate-800 text-xs font-medium">
+      <div className="flex items-center gap-1 px-4 pt-2 bg-card/90 border-b border-border text-xs font-medium">
         <button
           onClick={() => setActiveTab('home')}
           className={`px-4 py-1.5 rounded-t-lg transition flex items-center gap-1.5 ${
             activeTab === 'home'
-              ? 'bg-slate-800 text-cyan-400 font-semibold border-t-2 border-cyan-400'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+              ? 'bg-muted text-cyan-400 font-semibold border-t-2 border-cyan-400'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
           }`}
         >
           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,8 +35,8 @@ export const CivilRibbonBar: React.FC<CivilRibbonBarProps> = ({
           onClick={() => setActiveTab('drafting')}
           className={`px-4 py-1.5 rounded-t-lg transition flex items-center gap-1.5 ${
             activeTab === 'drafting'
-              ? 'bg-slate-800 text-amber-400 font-semibold border-t-2 border-amber-400'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+              ? 'bg-muted text-amber-400 font-semibold border-t-2 border-amber-400'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
           }`}
         >
           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,8 +49,8 @@ export const CivilRibbonBar: React.FC<CivilRibbonBarProps> = ({
           onClick={() => setActiveTab('modify')}
           className={`px-4 py-1.5 rounded-t-lg transition flex items-center gap-1.5 ${
             activeTab === 'modify'
-              ? 'bg-slate-800 text-emerald-400 font-semibold border-t-2 border-emerald-400'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+              ? 'bg-muted text-emerald-400 font-semibold border-t-2 border-emerald-400'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
           }`}
         >
           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,8 +63,8 @@ export const CivilRibbonBar: React.FC<CivilRibbonBarProps> = ({
           onClick={() => setActiveTab('output')}
           className={`px-4 py-1.5 rounded-t-lg transition flex items-center gap-1.5 ${
             activeTab === 'output'
-              ? 'bg-slate-800 text-blue-400 font-semibold border-t-2 border-blue-400'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+              ? 'bg-muted text-blue-400 font-semibold border-t-2 border-blue-400'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
           }`}
         >
           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,8 +77,8 @@ export const CivilRibbonBar: React.FC<CivilRibbonBarProps> = ({
           onClick={() => setActiveTab('gis')}
           className={`px-4 py-1.5 rounded-t-lg transition flex items-center gap-1.5 ${
             activeTab === 'gis'
-              ? 'bg-slate-800 text-purple-400 font-semibold border-t-2 border-purple-400'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+              ? 'bg-muted text-purple-400 font-semibold border-t-2 border-purple-400'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
           }`}
         >
           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,12 +89,12 @@ export const CivilRibbonBar: React.FC<CivilRibbonBarProps> = ({
       </div>
 
       {/* Ribbon Content Panel */}
-      <div className="p-3 bg-slate-900 border-b border-slate-800">
+      <div className="p-3 bg-card border-b border-border">
         {activeTab === 'home' && (
           <div className="flex flex-col gap-3">
             <PointCreationToolbar />
 
-            <div className="flex items-center gap-3 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+            <div className="flex items-center gap-3 bg-background p-2.5 rounded-lg border border-border">
               <span className="text-xs font-semibold text-cyan-300">Site & Parcel Sizing (REQ-023 to REQ-035, REQ-118 to REQ-129)</span>
               <button
                 onClick={onOpenParcelTools}
@@ -104,7 +104,7 @@ export const CivilRibbonBar: React.FC<CivilRibbonBarProps> = ({
               </button>
               <button
                 onClick={() => setActiveSubPanel(activeSubPanel === 'row' ? null : 'row')}
-                className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-300 text-xs font-medium rounded border border-slate-700"
+                className="px-3 py-1 bg-muted hover:bg-accent text-cyan-300 text-xs font-medium rounded border border-input"
               >
                 Create Right of Way (REQ-117)
               </button>
@@ -119,7 +119,7 @@ export const CivilRibbonBar: React.FC<CivilRibbonBarProps> = ({
         )}
 
         {activeTab === 'modify' && (
-          <div className="flex flex-wrap items-center gap-3 bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs">
+          <div className="flex flex-wrap items-center gap-3 bg-background p-3 rounded-lg border border-border text-xs">
             <div className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
@@ -143,7 +143,7 @@ export const CivilRibbonBar: React.FC<CivilRibbonBarProps> = ({
         )}
 
         {activeTab === 'gis' && (
-          <div className="flex flex-wrap items-center gap-3 bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs">
+          <div className="flex flex-wrap items-center gap-3 bg-background p-3 rounded-lg border border-border text-xs">
             <div className="text-xs font-bold uppercase tracking-wider text-purple-400 flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V14M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" />

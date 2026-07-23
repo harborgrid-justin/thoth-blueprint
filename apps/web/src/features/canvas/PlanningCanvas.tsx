@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Sparkles } from "lucide-react";
 import { densifyArc, elevationAt, unitLabel } from "@thoth/domain";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { elementMatches } from "@/lib/search";
@@ -109,7 +110,9 @@ export function PlanningCanvas() {
 
   const cursorClass =
     tool.mode === "pan"
-      ? "cursor-grab"
+      ? (interaction.type === "panning" || interaction.type === "moving" ? "cursor-grabbing" : "cursor-grab")
+      : interaction.type === "moving"
+      ? "cursor-move"
       : "cursor-none";
 
   return (
@@ -430,8 +433,8 @@ export function PlanningCanvas() {
             fill={boxSelection.currentScreen.x < boxSelection.startScreen.x ? "rgba(34, 197, 94, 0.15)" : "rgba(59, 130, 246, 0.15)"}
             stroke={boxSelection.currentScreen.x < boxSelection.startScreen.x ? "rgb(34, 197, 94)" : "rgb(59, 130, 246)"}
             strokeWidth={1.5}
-            strokeDasharray={boxSelection.currentScreen.x < boxSelection.startScreen.x ? "4 4" : undefined}
-            className="pointer-events-none"
+            strokeDasharray={boxSelection.currentScreen.x < boxSelection.startScreen.x ? "5 5" : "3 3"}
+            className="pointer-events-none transition-all duration-75"
           />
         )}
 
@@ -458,6 +461,20 @@ export function PlanningCanvas() {
       <ScaleBar />
       <Legend />
       <SurveyLegend site={site} />
+
+      {(!site || site.elements.length === 0) && (
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center p-6 text-center select-none animate-overlay-in">
+          <div className="rounded-2xl border border-border/40 bg-background/85 p-6 shadow-2xl backdrop-blur-md max-w-sm flex flex-col items-center gap-3">
+            <div className="p-3 rounded-full bg-primary/10 text-primary">
+              <Sparkles className="h-6 w-6 animate-pulse" />
+            </div>
+            <h3 className="font-semibold text-sm text-foreground">Interactive Canvas Ready</h3>
+            <p className="text-xs text-muted-foreground">
+              Select a drawing tool from the toolbar (Line, Parcel, Road, Building) or launch a Civil 3D Studio to begin drafting.
+            </p>
+          </div>
+        </div>
+      )}
       </div>
     </ElementContextMenu>
   );
@@ -485,41 +502,41 @@ function Grid({
   const screenStep = viewport.zoom * step;
   const minorOpacity = Math.max(0, Math.min(1, (screenStep - 5) / 15));
   
-  if (minorOpacity > 0 || true) {
-    for (let x = startWorldX; x <= endWorldX; x += step) {
-      const sx = x * viewport.zoom + viewport.offsetX;
-      const major = Math.round(x / step) % 5 === 0;
-      if (!major && minorOpacity === 0) continue;
-      lines.push(
-        <line
-          key={`vx${idx++}`}
-          x1={sx}
-          y1={0}
-          x2={sx}
-          y2={size.height}
-          stroke={`hsl(var(${major ? "--canvas-grid-major" : "--canvas-grid"}))`}
-          strokeWidth={major ? 1 : 0.5}
-          opacity={major ? 1 : minorOpacity}
-        />,
-      );
-    }
-    for (let y = startWorldY; y <= endWorldY; y += step) {
-      const sy = y * viewport.zoom + viewport.offsetY;
-      const major = Math.round(y / step) % 5 === 0;
-      if (!major && minorOpacity === 0) continue;
-      lines.push(
-        <line
-          key={`hz${idx++}`}
-          x1={0}
-          y1={sy}
-          x2={size.width}
-          y2={sy}
-          stroke={`hsl(var(${major ? "--canvas-grid-major" : "--canvas-grid"}))`}
-          strokeWidth={major ? 1 : 0.5}
-          opacity={major ? 1 : minorOpacity}
-        />,
-      );
-    }
+  for (let x = startWorldX; x <= endWorldX; x += step) {
+    const sx = x * viewport.zoom + viewport.offsetX;
+    const major = Math.round(x / step) % 5 === 0;
+    if (!major && minorOpacity === 0) continue;
+    lines.push(
+      <line
+        key={`vx${idx++}`}
+        x1={sx}
+        y1={0}
+        x2={sx}
+        y2={size.height}
+        stroke={`hsl(var(${major ? "--canvas-grid-major" : "--canvas-grid"}))`}
+        strokeWidth={major ? 1 : 0.5}
+        strokeDasharray={major ? undefined : "4 6"}
+        opacity={major ? 1 : minorOpacity}
+      />,
+    );
+  }
+  for (let y = startWorldY; y <= endWorldY; y += step) {
+    const sy = y * viewport.zoom + viewport.offsetY;
+    const major = Math.round(y / step) % 5 === 0;
+    if (!major && minorOpacity === 0) continue;
+    lines.push(
+      <line
+        key={`hz${idx++}`}
+        x1={0}
+        y1={sy}
+        x2={size.width}
+        y2={sy}
+        stroke={`hsl(var(${major ? "--canvas-grid-major" : "--canvas-grid"}))`}
+        strokeWidth={major ? 1 : 0.5}
+        strokeDasharray={major ? undefined : "4 6"}
+        opacity={major ? 1 : minorOpacity}
+      />,
+    );
   }
   return <g>{lines}</g>;
 }

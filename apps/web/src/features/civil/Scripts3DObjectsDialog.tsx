@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CIVIL_STYLES } from './styles/civilDesignSystem';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -46,10 +47,10 @@ export const Scripts3DObjectsDialog: React.FC<{ isOpen: boolean; onClose: () => 
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-2xl bg-slate-900 border-slate-700 text-slate-100 p-6">
-        <DialogHeader className="border-b border-slate-800 pb-3">
+      <DialogContent className="max-w-2xl bg-background border-border text-foreground p-6 animate-dialog-in">
+        <DialogHeader className={CIVIL_STYLES.sectionHeaderContainer}>
           <DialogTitle className="flex items-center gap-2 text-emerald-400">
-            <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
+            <div className={`${CIVIL_STYLES.titlePulseDot} bg-emerald-400`} />
             Scripts, Rules & 3D Objects (REQ-170 to REQ-180)
           </DialogTitle>
         </DialogHeader>
@@ -57,34 +58,34 @@ export const Scripts3DObjectsDialog: React.FC<{ isOpen: boolean; onClose: () => 
         {/* Form controls */}
         <div className="flex flex-col gap-4 text-xs">
           {/* JS Import Script & Dynamic 3D Scaling (REQ-170, REQ-171) */}
-          <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col gap-2">
+          <div className="bg-background p-3 rounded-lg border border-border flex flex-col gap-2">
             <span className="font-semibold text-emerald-300">JavaScript Import Script & Dynamic 3D Scaling (REQ-170, REQ-171)</span>
             <div className="grid grid-cols-3 gap-2">
               <div>
-                <label className="block text-slate-400">External ID:</label>
+                <label className="block text-muted-foreground">External ID:</label>
                 <Input
                   type="text"
                   value={externalId}
                   onChange={(e) => setExternalId(e.target.value)}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
               <div>
-                <label className="block text-slate-400">Raw Description:</label>
+                <label className="block text-muted-foreground">Raw Description:</label>
                 <Input
                   type="text"
                   value={rawDesc}
                   onChange={(e) => setRawDesc(e.target.value)}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
               <div>
-                <label className="block text-slate-400">Trunk Diameter (in):</label>
+                <label className="block text-muted-foreground">Trunk Diameter (in):</label>
                 <Input
                   type="number"
                   value={trunkDiameter}
                   onChange={(e) => setTrunkDiameter(Number(e.target.value))}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
             </div>
@@ -93,54 +94,54 @@ export const Scripts3DObjectsDialog: React.FC<{ isOpen: boolean; onClose: () => 
             </Button>
 
             {scriptResult && (
-              <div className="bg-slate-900 p-2 rounded font-mono text-emerald-300">
+              <div className="bg-card p-2 rounded font-mono text-emerald-300">
                 Mapped ID: {scriptResult.mappedId} | Mapped Desc: {scriptResult.mappedDescription} | Dynamic 3D Scale: {scriptResult.dynamic3DScaleFactor}x
               </div>
             )}
           </div>
 
           {/* Block Extraction CSV Wizard (REQ-178) */}
-          <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col gap-2">
+          <div className="bg-background p-3 rounded-lg border border-border flex flex-col gap-2">
             <span className="font-semibold text-emerald-300">Data Extraction Wizard to CSV (REQ-178)</span>
-            <Button onClick={handleExtractCSV} variant="outline" size="sm" className="self-start bg-slate-800 hover:bg-slate-700 text-emerald-300 border-slate-700 font-medium">
+            <Button onClick={handleExtractCSV} variant="outline" size="sm" className="self-start bg-muted hover:bg-accent text-emerald-300 border-input font-medium">
               Export Block Placement & Attributes to CSV
             </Button>
             {csvResult && (
-              <pre className="bg-slate-900 p-2 rounded font-mono text-[11px] text-cyan-300 overflow-x-auto">
+              <pre className="bg-card p-2 rounded font-mono text-[11px] text-cyan-300 overflow-x-auto">
                 {csvResult}
               </pre>
             )}
           </div>
 
           {/* 3D Model Placement ("Center 2D" & Interactive Placing) (REQ-179, REQ-180) */}
-          <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col gap-2">
+          <div className="bg-background p-3 rounded-lg border border-border flex flex-col gap-2">
             <span className="font-semibold text-emerald-300">3D Model Interactive Terrain Placement (REQ-179, REQ-180)</span>
             <div className="grid grid-cols-3 gap-2">
               <div>
-                <label className="block text-slate-400">Model File Name:</label>
+                <label className="block text-muted-foreground">Model File Name:</label>
                 <Input
                   type="text"
                   value={modelFileName}
                   onChange={(e) => setModelFileName(e.target.value)}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
               <div>
-                <label className="block text-slate-400">Click Terrain X:</label>
+                <label className="block text-muted-foreground">Click Terrain X:</label>
                 <Input
                   type="number"
                   value={clickX}
                   onChange={(e) => setClickX(Number(e.target.value))}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
               <div>
-                <label className="block text-slate-400">Click Terrain Y:</label>
+                <label className="block text-muted-foreground">Click Terrain Y:</label>
                 <Input
                   type="number"
                   value={clickY}
                   onChange={(e) => setClickY(Number(e.target.value))}
-                  className="bg-slate-900 border-slate-700 text-slate-200 h-8 text-xs"
+                  className="bg-card border-input text-foreground h-8 text-xs"
                 />
               </div>
             </div>
@@ -149,7 +150,7 @@ export const Scripts3DObjectsDialog: React.FC<{ isOpen: boolean; onClose: () => 
             </Button>
 
             {placedModel && (
-              <div className="bg-slate-900 p-2 rounded font-mono text-emerald-300">
+              <div className="bg-card p-2 rounded font-mono text-emerald-300">
                 Placed Model: {placedModel.modelFileName} | Insertion Mode: {placedModel.insertionMode} (REQ-179) | Interactive Placed: {String(placedModel.isInteractivePlaced)} (REQ-180)
               </div>
             )}
@@ -157,8 +158,8 @@ export const Scripts3DObjectsDialog: React.FC<{ isOpen: boolean; onClose: () => 
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end border-t border-slate-800 pt-3">
-          <Button onClick={onClose} variant="outline" size="sm" className="border-slate-700 text-slate-200 bg-slate-800 hover:bg-slate-700">
+        <div className="flex justify-end border-t border-border pt-3">
+          <Button onClick={onClose} variant="outline" size="sm" className="border-input text-foreground bg-muted hover:bg-accent">
             Close
           </Button>
         </div>

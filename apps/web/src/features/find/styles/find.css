@@ -1,0 +1,37 @@
+/* Centralized Find & Filter Feature Stylesheet */
+
+@layer components {
+  .find-panel {
+    @apply absolute right-4 top-3 z-30 flex w-72 flex-col rounded-lg border border-border bg-card/95 shadow-xl backdrop-blur;
+  }
+  .find-header {
+    @apply flex items-center gap-2 border-b border-border px-2.5 py-2;
+  }
+  .find-input {
+    @apply h-7 border-0 bg-transparent px-0 text-sm focus-visible:ring-0;
+  }
+  .find-toolbar {
+    @apply flex items-center gap-2 px-2.5 py-2;
+  }
+  .find-select-trigger {
+    @apply h-7 flex-1 text-xs;
+  }
+  .find-list {
+    @apply max-h-64 overflow-y-auto px-1.5 pb-1.5;
+  }
+  .find-empty-text {
+    @apply px-2 py-4 text-center text-xs text-muted-foreground;
+  }
+  .find-list-item {
+    @apply flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm transition-colors hover:bg-accent;
+  }
+  .find-list-item-active {
+    @apply bg-accent border border-primary/30;
+  }
+  .find-footer {
+    @apply flex items-center justify-between gap-2 border-t border-border px-2.5 py-2;
+  }
+  .find-btn-select-all {
+    @apply rounded-md px-2 py-1 text-xs font-medium text-primary hover:bg-primary/10 disabled:opacity-40;
+  }
+}

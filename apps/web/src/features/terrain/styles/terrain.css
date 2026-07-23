@@ -1,0 +1,7 @@
+/* Centralized Terrain Feature Stylesheet */
+
+@layer components {
+  .terrain-panel {
+    @apply bg-background border border-border rounded-xl p-5 text-foreground;
+  }
+}

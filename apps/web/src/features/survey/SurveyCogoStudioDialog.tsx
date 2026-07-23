@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSurveyCogoStudioState } from "./hooks/useSurveyCogoStudioState";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 interface SurveyCogoStudioDialogProps {
   isOpen: boolean;
@@ -45,33 +46,33 @@ export const SurveyCogoStudioDialog: React.FC<
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4">
-      <div className="flex flex-col w-full max-w-5xl h-[88vh] bg-slate-950 border border-amber-500/30 rounded-2xl shadow-2xl overflow-hidden text-slate-100">
+    <div className={SURVEY_STYLES.dialogOverlay + " animate-overlay-in"}>
+      <div className={SURVEY_STYLES.dialogContainer}>
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/90">
+        <div className={SURVEY_STYLES.dialogHeader}>
           <div className="flex items-center space-x-3">
             <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
               <Compass className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+              <h2 className={SURVEY_STYLES.dialogTitle}>
                 Survey & COGO Plat Studio
               </h2>
-              <p className="text-xs text-slate-400 font-mono">
+              <p className={SURVEY_STYLES.textSubtitle}>
                 Metes & Bounds Traverse • Compass Rule Closure • Legal Description Output
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-200 transition-colors text-lg font-bold px-2.5 py-1 rounded-lg hover:bg-slate-800"
+            className={SURVEY_STYLES.btnClose}
           >
             ✕
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-slate-800 bg-slate-950 px-6 space-x-2">
+        <div className={SURVEY_STYLES.tabBar}>
           {[
             { id: "traverse", label: "1. Metes & Bounds Traverse Entry", icon: Sliders },
             { id: "closure", label: "2. Closure Audit & Compass Adjustment", icon: ShieldCheck },
@@ -82,11 +83,7 @@ export const SurveyCogoStudioDialog: React.FC<
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`px-4 py-3 text-xs font-semibold border-b-2 transition-all flex items-center gap-2 ${
-                  activeTab === tab.id
-                    ? "border-amber-400 text-amber-400 bg-amber-500/10"
-                    : "border-transparent text-slate-400 hover:text-slate-200"
-                }`}
+                className={activeTab === tab.id ? SURVEY_STYLES.btnTabActive : SURVEY_STYLES.btnTab}
               >
                 <Icon className="w-4 h-4" />
                 {tab.label}
@@ -96,29 +93,29 @@ export const SurveyCogoStudioDialog: React.FC<
         </div>
 
         {/* Main Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className={SURVEY_STYLES.dialogBody}>
           {activeTab === "traverse" && (
-            <div className="grid grid-cols-3 gap-6">
+            <div className={SURVEY_STYLES.grid3Col}>
               {/* Add Leg Form */}
-              <div className="space-y-4 bg-slate-900/60 p-5 rounded-xl border border-slate-800">
-                <h3 className="text-sm font-semibold text-amber-300">Add Traverse Leg</h3>
+              <div className={SURVEY_STYLES.card + " space-y-4"}>
+                <h3 className={SURVEY_STYLES.textSectionTitle}>Add Traverse Leg</h3>
                 <div>
-                  <Label className="text-xs text-slate-400">Bearing (Quad/Deg/Min/Sec)</Label>
+                  <Label className="text-xs text-muted-foreground">Bearing (Quad/Deg/Min/Sec)</Label>
                   <Input
                     type="text"
                     value={newBearing}
                     onChange={(e) => setNewBearing(e.target.value)}
-                    className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-amber-300"
+                    className="mt-1 bg-background border-border text-xs font-mono text-amber-300"
                   />
                 </div>
                 <div>
-                  <Label className="text-xs text-slate-400">Distance (ft)</Label>
+                  <Label className="text-xs text-muted-foreground">Distance (ft)</Label>
                   <Input
                     type="number"
                     step="0.01"
                     value={newDistance}
                     onChange={(e) => setNewDistance(Number(e.target.value))}
-                    className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-amber-300"
+                    className="mt-1 bg-background border-border text-xs font-mono text-amber-300"
                   />
                 </div>
                 <Button onClick={addLeg} className="w-full bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs py-2">
@@ -127,18 +124,18 @@ export const SurveyCogoStudioDialog: React.FC<
               </div>
 
               {/* Legs Table */}
-              <div className="col-span-2 bg-slate-900/60 p-5 rounded-xl border border-slate-800 flex flex-col justify-between">
+              <div className="col-span-2 bg-card/60 p-5 rounded-xl border border-border flex flex-col justify-between">
                 <div>
                   <h3 className="text-sm font-semibold text-amber-400 mb-3">Traverse Call Table ({legs.length} Legs)</h3>
                   <div className="max-h-56 overflow-y-auto space-y-2 custom-scrollbar">
                     {legs.map((leg, idx) => (
                       <div
                         key={leg.id}
-                        className="flex justify-between items-center p-2.5 rounded bg-slate-950 border border-slate-800 text-xs font-mono"
+                        className="flex justify-between items-center p-2.5 rounded bg-background border border-border text-xs font-mono"
                       >
                         <div>
                           <span className="text-amber-400 font-bold mr-3">Call {idx + 1}:</span>
-                          <span className="text-slate-200 mr-4">{leg.bearing}</span>
+                          <span className="text-foreground mr-4">{leg.bearing}</span>
                           <span className="text-emerald-400">{leg.distanceFt} ft</span>
                         </div>
                         <button
@@ -163,19 +160,19 @@ export const SurveyCogoStudioDialog: React.FC<
           )}
 
           {activeTab === "closure" && (
-            <div className="bg-slate-900/60 p-5 rounded-xl border border-slate-800 space-y-4">
+            <div className="bg-card/60 p-5 rounded-xl border border-border space-y-4">
               <h3 className="text-sm font-semibold text-amber-300">Compass Rule Closure Analysis</h3>
               <div className="grid grid-cols-3 gap-4 font-mono text-xs">
-                <div className="p-3 bg-slate-950 rounded border border-slate-800">
-                  <span className="text-slate-400">Total Perimeter:</span>
-                  <div className="text-lg font-bold text-slate-100">{traverseResult.totalDist} ft</div>
+                <div className="p-3 bg-background rounded border border-border">
+                  <span className="text-muted-foreground">Total Perimeter:</span>
+                  <div className="text-lg font-bold text-foreground">{traverseResult.totalDist} ft</div>
                 </div>
-                <div className="p-3 bg-slate-950 rounded border border-slate-800">
-                  <span className="text-slate-400">Linear Error:</span>
+                <div className="p-3 bg-background rounded border border-border">
+                  <span className="text-muted-foreground">Linear Error:</span>
                   <div className="text-lg font-bold text-amber-400">{traverseResult.closureErrorFt} ft</div>
                 </div>
-                <div className="p-3 bg-slate-950 rounded border border-slate-800">
-                  <span className="text-slate-400">Closure Precision Ratio:</span>
+                <div className="p-3 bg-background rounded border border-border">
+                  <span className="text-muted-foreground">Closure Precision Ratio:</span>
                   <div className="text-lg font-bold text-emerald-400">1 : {traverseResult.closureRatio.toLocaleString()}</div>
                 </div>
               </div>
@@ -183,9 +180,9 @@ export const SurveyCogoStudioDialog: React.FC<
           )}
 
           {activeTab === "report" && (
-            <div className="bg-slate-900/60 p-5 rounded-xl border border-slate-800 space-y-3 font-mono text-xs">
+            <div className="bg-card/60 p-5 rounded-xl border border-border space-y-3 font-mono text-xs">
               <h3 className="text-sm font-semibold text-amber-300">Generated Legal Description</h3>
-              <div className="p-4 bg-slate-950 rounded border border-slate-800 text-slate-300 leading-relaxed max-h-48 overflow-y-auto">
+              <div className="p-4 bg-background rounded border border-border text-muted-foreground leading-relaxed max-h-48 overflow-y-auto">
                 BEGINNING at a point; thence {legs.map((l) => `${l.bearing} a distance of ${l.distanceFt} feet`).join("; thence ")}; to the POINT OF BEGINNING.
               </div>
             </div>
@@ -193,10 +190,10 @@ export const SurveyCogoStudioDialog: React.FC<
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-slate-800 bg-slate-900 text-xs text-slate-400">
+        <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-card text-xs text-muted-foreground">
           <span>Survey Studio: ALTA / NSPS Boundary Standard</span>
           <div className="flex gap-3">
-            <Button variant="outline" onClick={onClose} className="border-slate-700 text-slate-300">
+            <Button variant="outline" onClick={onClose} className="border-input text-muted-foreground">
               Close Studio
             </Button>
             <Button

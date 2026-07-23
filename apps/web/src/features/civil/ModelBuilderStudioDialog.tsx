@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useModelBuilderStudioState } from "./hooks/useModelBuilderStudioState";
 
+import { CIVIL_STYLES } from "./styles/civilDesignSystem";
+
 interface ModelBuilderStudioDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -52,33 +54,33 @@ export const ModelBuilderStudioDialog: React.FC<
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4">
-      <div className="flex flex-col w-full max-w-5xl h-[88vh] bg-slate-950 border border-purple-500/30 rounded-2xl shadow-2xl overflow-hidden text-slate-100">
+    <div className={CIVIL_STYLES.dialogOverlay}>
+      <div className={CIVIL_STYLES.dialogContainerOrange}>
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/90">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-card/90">
           <div className="flex items-center space-x-3">
             <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400">
               <Cloud className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+              <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
                 GIS & Model Builder Studio
               </h2>
-              <p className="text-xs text-slate-400 font-mono">
+              <p className="text-xs text-muted-foreground font-mono">
                 OpenStreetMap Vector Roads • DEM Terrain TIN • 3D City Generator
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-200 transition-colors text-lg font-bold px-2.5 py-1 rounded-lg hover:bg-slate-800"
+            className="text-muted-foreground hover:text-foreground transition-colors text-lg font-bold px-2.5 py-1 rounded-lg hover:bg-muted"
           >
             ✕
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-slate-800 bg-slate-950 px-6 space-x-2">
+        <div className="flex border-b border-border bg-background px-6 space-x-2">
           {[
             { id: "bbox", label: "1. Geographic Bounding Box & CRS", icon: Globe },
             { id: "layers", label: "2. Vector & Terrain Layers", icon: Layers },
@@ -92,7 +94,7 @@ export const ModelBuilderStudioDialog: React.FC<
                 className={`px-4 py-3 text-xs font-semibold border-b-2 transition-all flex items-center gap-2 ${
                   activeTab === tab.id
                     ? "border-purple-400 text-purple-400 bg-purple-500/10"
-                    : "border-transparent text-slate-400 hover:text-slate-200"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -106,14 +108,14 @@ export const ModelBuilderStudioDialog: React.FC<
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {activeTab === "bbox" && (
             <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-4 bg-slate-900/60 p-5 rounded-xl border border-slate-800">
+              <div className="space-y-4 bg-card/60 p-5 rounded-xl border border-border">
                 <h3 className="text-sm font-semibold text-purple-300">Coordinate Reference System & BBox</h3>
                 <div>
-                  <Label className="text-xs text-slate-400">Target CRS Projection</Label>
+                  <Label className="text-xs text-muted-foreground">Target CRS Projection</Label>
                   <select
                     value={crs}
                     onChange={(e) => setCrs(e.target.value)}
-                    className="mt-1 w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-purple-300"
+                    className="mt-1 w-full bg-background border border-border rounded-lg p-2 text-xs text-purple-300"
                   >
                     <option value="EPSG:4326 (WGS 84)">EPSG:4326 (WGS 84 Geographic)</option>
                     <option value="EPSG:3857 (Web Mercator)">EPSG:3857 (Web Mercator Projection)</option>
@@ -123,52 +125,52 @@ export const ModelBuilderStudioDialog: React.FC<
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <Label className="text-xs text-slate-400">Min Latitude</Label>
+                    <Label className="text-xs text-muted-foreground">Min Latitude</Label>
                     <Input
                       type="number"
                       step="0.0001"
                       value={minLat}
                       onChange={(e) => setMinLat(Number(e.target.value))}
-                      className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-purple-300"
+                      className="mt-1 bg-background border-border text-xs font-mono text-purple-300"
                     />
                   </div>
                   <div>
-                    <Label className="text-xs text-slate-400">Max Latitude</Label>
+                    <Label className="text-xs text-muted-foreground">Max Latitude</Label>
                     <Input
                       type="number"
                       step="0.0001"
                       value={maxLat}
                       onChange={(e) => setMaxLat(Number(e.target.value))}
-                      className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-purple-300"
+                      className="mt-1 bg-background border-border text-xs font-mono text-purple-300"
                     />
                   </div>
                   <div>
-                    <Label className="text-xs text-slate-400">Min Longitude</Label>
+                    <Label className="text-xs text-muted-foreground">Min Longitude</Label>
                     <Input
                       type="number"
                       step="0.0001"
                       value={minLon}
                       onChange={(e) => setMinLon(Number(e.target.value))}
-                      className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-purple-300"
+                      className="mt-1 bg-background border-border text-xs font-mono text-purple-300"
                     />
                   </div>
                   <div>
-                    <Label className="text-xs text-slate-400">Max Longitude</Label>
+                    <Label className="text-xs text-muted-foreground">Max Longitude</Label>
                     <Input
                       type="number"
                       step="0.0001"
                       value={maxLon}
                       onChange={(e) => setMaxLon(Number(e.target.value))}
-                      className="mt-1 bg-slate-950 border-slate-800 text-xs font-mono text-purple-300"
+                      className="mt-1 bg-background border-border text-xs font-mono text-purple-300"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-900/60 p-5 rounded-xl border border-slate-800 flex flex-col justify-between">
+              <div className="bg-card/60 p-5 rounded-xl border border-border flex flex-col justify-between">
                 <div>
                   <h3 className="text-sm font-semibold text-purple-400 mb-3">Model Footprint Metrics</h3>
-                  <div className="bg-slate-950 p-4 rounded-lg border border-slate-800 font-mono space-y-2 text-xs">
+                  <div className="bg-background p-4 rounded-lg border border-border font-mono space-y-2 text-xs">
                     <div>Extent Length: <strong className="text-purple-300">{boundsInfo.lonDistFt} ft</strong></div>
                     <div>Extent Width: <strong className="text-purple-300">{boundsInfo.latDistFt} ft</strong></div>
                     <div>Total Coverage: <strong className="text-emerald-400">{boundsInfo.acres} Acres</strong></div>
@@ -186,7 +188,7 @@ export const ModelBuilderStudioDialog: React.FC<
           )}
 
           {activeTab === "layers" && (
-            <div className="bg-slate-900/60 p-5 rounded-xl border border-slate-800 space-y-4">
+            <div className="bg-card/60 p-5 rounded-xl border border-border space-y-4">
               <h3 className="text-sm font-semibold text-purple-300">Data Layers to Extract</h3>
               <div className="space-y-3 text-xs">
                 <label className="flex items-center space-x-2">
@@ -194,7 +196,7 @@ export const ModelBuilderStudioDialog: React.FC<
                     type="checkbox"
                     checked={importRoads}
                     onChange={(e) => setImportRoads(e.target.checked)}
-                    className="rounded border-slate-700 bg-slate-950 text-purple-500 focus:ring-purple-500"
+                    className="rounded border-input bg-background text-purple-500 focus:ring-purple-500"
                   />
                   <span>OpenStreetMap Vector Road Network (Highways, Arterials, Local Roads)</span>
                 </label>
@@ -203,7 +205,7 @@ export const ModelBuilderStudioDialog: React.FC<
                     type="checkbox"
                     checked={importBuildings}
                     onChange={(e) => setImportBuildings(e.target.checked)}
-                    className="rounded border-slate-700 bg-slate-950 text-purple-500 focus:ring-purple-500"
+                    className="rounded border-input bg-background text-purple-500 focus:ring-purple-500"
                   />
                   <span>3D Building Footprints & Extrusions</span>
                 </label>
@@ -212,7 +214,7 @@ export const ModelBuilderStudioDialog: React.FC<
                     type="checkbox"
                     checked={importTerrain}
                     onChange={(e) => setImportTerrain(e.target.checked)}
-                    className="rounded border-slate-700 bg-slate-950 text-purple-500 focus:ring-purple-500"
+                    className="rounded border-input bg-background text-purple-500 focus:ring-purple-500"
                   />
                   <span>DEM Digital Elevation Model Terrain Mesh</span>
                 </label>
@@ -221,9 +223,9 @@ export const ModelBuilderStudioDialog: React.FC<
           )}
 
           {activeTab === "generate" && (
-            <div className="bg-slate-900/60 p-5 rounded-xl border border-slate-800 space-y-3 font-mono text-xs">
+            <div className="bg-card/60 p-5 rounded-xl border border-border space-y-3 font-mono text-xs">
               <h3 className="text-sm font-semibold text-purple-300">Ready to Build GIS Site Model</h3>
-              <p className="text-slate-300">
+              <p className="text-muted-foreground">
                 Extracted layers will be converted to native project elements and 3D TIN surfaces on the workspace canvas.
               </p>
             </div>
@@ -231,10 +233,10 @@ export const ModelBuilderStudioDialog: React.FC<
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-slate-800 bg-slate-900 text-xs text-slate-400">
+        <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-card text-xs text-muted-foreground">
           <span>GIS Studio: OpenStreetMap & USGS DEM Engine</span>
           <div className="flex gap-3">
-            <Button variant="outline" onClick={onClose} className="border-slate-700 text-slate-300">
+            <Button variant="outline" onClick={onClose} className="border-input text-muted-foreground">
               Close Studio
             </Button>
             <Button

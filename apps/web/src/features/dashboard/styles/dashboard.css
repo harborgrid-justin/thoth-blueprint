@@ -1,0 +1,68 @@
+/* Centralized Dashboard Feature Stylesheet */
+
+@layer components {
+  .dashboard-container {
+    @apply flex flex-col h-full w-full bg-background text-foreground overflow-y-auto;
+  }
+
+  .dashboard-header {
+    @apply sticky top-0 z-10 flex h-14 items-center gap-3 border-b border-border bg-card/90 px-5 backdrop-blur shrink-0;
+  }
+
+  .dashboard-main {
+    @apply mx-auto w-full max-w-6xl px-5 py-8 flex-1;
+  }
+
+  .dashboard-hero-title {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+
+  .dashboard-hero-subtitle {
+    @apply mt-1 text-sm text-muted-foreground;
+  }
+
+  .dashboard-grid {
+    @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .dashboard-card-hero {
+    @apply flex h-28 items-center justify-center border-b border-border bg-[hsl(var(--canvas))];
+  }
+
+  .dashboard-card-body {
+    @apply p-4;
+  }
+
+  .dashboard-card-title {
+    @apply truncate font-semibold text-foreground;
+  }
+
+  .dashboard-card-description {
+    @apply mt-1 line-clamp-2 h-9 text-xs text-muted-foreground;
+  }
+
+  .dashboard-card-meta {
+    @apply mt-3 flex items-center gap-3 text-xs text-muted-foreground;
+  }
+
+  .dashboard-empty-state {
+    @apply flex flex-col items-center justify-center rounded-lg border border-dashed border-border py-24 text-center;
+  }
+
+  .dashboard-loading {
+    @apply flex items-center justify-center py-24 text-muted-foreground;
+  }
+
+  /* Create Project Dialog */
+  .dashboard-form-group {
+    @apply flex flex-col gap-1.5;
+  }
+
+  .dashboard-template-grid {
+    @apply grid grid-cols-2 gap-2;
+  }
+
+  .dashboard-template-btn {
+    @apply flex flex-col items-start gap-1.5 rounded-lg border p-3 text-left transition-colors;
+  }
+}

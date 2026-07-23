@@ -33,6 +33,7 @@ import {
   downloadText,
   generateCoursesCsv,
 } from "./helpers/platReportHelpers";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 /**
  * The plat / survey report: the full metes-and-bounds record a surveyor needs
@@ -56,18 +57,18 @@ export function PlatReportDialog() {
 
   return (
     <Dialog open={platOpen} onOpenChange={(o) => !o && closePlat()}>
-      <DialogContent className="max-w-5xl">
+      <DialogContent className={SURVEY_STYLES.dialogContainer + " max-w-5xl"}>
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Ruler className="h-5 w-5 text-primary" /> Plat &amp; Survey Report
+          <DialogTitle className={SURVEY_STYLES.dialogTitle}>
+            <Ruler className="h-5 w-5 text-amber-400" /> Plat &amp; Survey Report
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className={SURVEY_STYLES.textSubtitle}>
             Metes-and-bounds courses, corner coordinates, closure, and the legal
             description for each tract in {site.name}.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid grid-cols-[180px_1fr] gap-4">
+        <div className={SURVEY_STYLES.layoutSidebarSm}>
           <TractList
             elements={surveyable}
             selectedId={selectedId}

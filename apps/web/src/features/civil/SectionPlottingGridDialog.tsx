@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CIVIL_STYLES } from './styles/civilDesignSystem';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -46,23 +47,23 @@ export const SectionPlottingGridDialog: React.FC<{ isOpen: boolean; onClose: () 
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-2xl bg-slate-900 border-slate-700 text-slate-100 p-6">
-        <DialogHeader className="border-b border-slate-800 pb-3">
+      <DialogContent className="max-w-2xl bg-background border-border text-foreground p-6 animate-dialog-in">
+        <DialogHeader className={CIVIL_STYLES.sectionHeaderContainer}>
           <DialogTitle className="flex items-center gap-2 text-blue-400">
-            <div className="w-3 h-3 rounded-full bg-blue-400 animate-pulse" />
+            <div className={`${CIVIL_STYLES.titlePulseDot} bg-blue-400`} />
             Cross-Section Plotting & Draft Mode Grid (REQ-154 to REQ-160)
           </DialogTitle>
         </DialogHeader>
 
         {/* Form Controls */}
         <div className="flex flex-col gap-3 text-xs">
-          <div className="flex items-center justify-between bg-slate-950 p-2.5 rounded border border-slate-800">
-            <label className="flex items-center gap-2 text-slate-200 cursor-pointer font-semibold">
+          <div className="flex items-center justify-between bg-background p-2.5 rounded border border-border">
+            <label className="flex items-center gap-2 text-foreground cursor-pointer font-semibold">
               <input
                 type="checkbox"
                 checked={isDraftMode}
                 onChange={(e) => setIsDraftMode(e.target.checked)}
-                className="rounded bg-slate-900 border-slate-700 text-blue-500"
+                className="rounded bg-card border-input text-blue-500"
               />
               Draft Mode Output (Place sections in Model Space Grid - REQ-154)
             </label>
@@ -70,11 +71,11 @@ export const SectionPlottingGridDialog: React.FC<{ isOpen: boolean; onClose: () 
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-slate-400 mb-1">Array Order (REQ-155, REQ-156)</label>
+              <label className="block text-muted-foreground mb-1">Array Order (REQ-155, REQ-156)</label>
               <select
                 value={plotLayout}
                 onChange={(e) => setPlotLayout(e.target.value as SectionPlotArrayOrder)}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 text-xs"
+                className="w-full bg-muted border border-input rounded px-2.5 py-1.5 text-foreground text-xs"
               >
                 <option value="by_rows">Sequential by Rows (REQ-155)</option>
                 <option value="by_columns">Sequential by Columns (REQ-156)</option>
@@ -82,11 +83,11 @@ export const SectionPlottingGridDialog: React.FC<{ isOpen: boolean; onClose: () 
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">Starting Corner (REQ-158)</label>
+              <label className="block text-muted-foreground mb-1">Starting Corner (REQ-158)</label>
               <select
                 value={startingCorner}
                 onChange={(e) => setStartingCorner(e.target.value as SectionPlotStartingCorner)}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 text-xs"
+                className="w-full bg-muted border border-input rounded px-2.5 py-1.5 text-foreground text-xs"
               >
                 <option value="upper_left">Upper Left</option>
                 <option value="upper_right">Upper Right</option>
@@ -98,39 +99,39 @@ export const SectionPlottingGridDialog: React.FC<{ isOpen: boolean; onClose: () 
 
           <div className="grid grid-cols-4 gap-3">
             <div>
-              <label className="block text-slate-400 mb-1">Max Columns</label>
+              <label className="block text-muted-foreground mb-1">Max Columns</label>
               <Input
                 type="number"
                 value={maxColumns}
                 onChange={(e) => setMaxColumns(Number(e.target.value))}
-                className="bg-slate-800 border-slate-700 text-slate-200 h-8 text-xs"
+                className="bg-muted border-input text-foreground h-8 text-xs"
               />
             </div>
             <div>
-              <label className="block text-slate-400 mb-1">Column Spacing (ft - REQ-159)</label>
+              <label className="block text-muted-foreground mb-1">Column Spacing (ft - REQ-159)</label>
               <Input
                 type="number"
                 value={columnSpacingFt}
                 onChange={(e) => setColumnSpacingFt(Number(e.target.value))}
-                className="bg-slate-800 border-slate-700 text-slate-200 h-8 text-xs"
+                className="bg-muted border-input text-foreground h-8 text-xs"
               />
             </div>
             <div>
-              <label className="block text-slate-400 mb-1">Row Spacing (ft - REQ-159)</label>
+              <label className="block text-muted-foreground mb-1">Row Spacing (ft - REQ-159)</label>
               <Input
                 type="number"
                 value={rowSpacingFt}
                 onChange={(e) => setRowSpacingFt(Number(e.target.value))}
-                className="bg-slate-800 border-slate-700 text-slate-200 h-8 text-xs"
+                className="bg-muted border-input text-foreground h-8 text-xs"
               />
             </div>
             <div>
-              <label className="block text-slate-400 mb-1">Drafting Buffer (ft - REQ-160)</label>
+              <label className="block text-muted-foreground mb-1">Drafting Buffer (ft - REQ-160)</label>
               <Input
                 type="number"
                 value={bufferSpaceFt}
                 onChange={(e) => setBufferSpaceFt(Number(e.target.value))}
-                className="bg-slate-800 border-slate-700 text-slate-200 h-8 text-xs"
+                className="bg-muted border-input text-foreground h-8 text-xs"
               />
             </div>
           </div>
@@ -146,18 +147,18 @@ export const SectionPlottingGridDialog: React.FC<{ isOpen: boolean; onClose: () 
 
         {/* Results grid */}
         {generatedViews.length > 0 && (
-          <div className="flex flex-col gap-2 bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs">
+          <div className="flex flex-col gap-2 bg-background p-3 rounded-lg border border-border text-xs">
             <span className="font-semibold text-cyan-300">Generated Section Views: {generatedViews.length}</span>
-            <div className="max-h-40 overflow-y-auto border border-slate-800 rounded font-mono">
+            <div className="max-h-40 overflow-y-auto border border-border rounded font-mono">
               <table className="w-full text-left border-collapse">
-                <thead className="bg-slate-800 text-cyan-400 sticky top-0">
+                <thead className="bg-muted text-cyan-400 sticky top-0">
                   <tr>
                     <th className="px-3 py-1.5">Station</th>
                     <th className="px-3 py-1.5">Row, Col</th>
                     <th className="px-3 py-1.5">Model Space X, Y</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800 text-slate-300">
+                <tbody className="divide-y divide-slate-800 text-muted-foreground">
                   {generatedViews.map((v, i) => (
                     <tr key={i}>
                       <td className="px-3 py-1.5">Sta {v.station.toFixed(0)}</td>
@@ -172,8 +173,8 @@ export const SectionPlottingGridDialog: React.FC<{ isOpen: boolean; onClose: () 
         )}
 
         {/* Footer */}
-        <div className="flex justify-end border-t border-slate-800 pt-3">
-          <Button onClick={onClose} variant="outline" size="sm" className="border-slate-700 text-slate-200 bg-slate-800 hover:bg-slate-700">
+        <div className="flex justify-end border-t border-border pt-3">
+          <Button onClick={onClose} variant="outline" size="sm" className="border-input text-foreground bg-muted hover:bg-accent">
             Close
           </Button>
         </div>

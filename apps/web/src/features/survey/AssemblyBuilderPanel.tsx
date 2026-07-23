@@ -1,6 +1,7 @@
 import { X, Plus, Layers, Settings2 } from "lucide-react";
 import type { Subassembly, Assembly } from "@thoth/domain";
 import { Button } from "@/components/ui/button";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 interface AssemblyBuilderPanelProps {
   open: boolean;
@@ -16,25 +17,18 @@ export function AssemblyBuilderPanel({
   if (!open) return null;
 
   return (
-    <div
-      className="absolute top-24 left-8 z-50 flex flex-col w-96 rounded-xl border border-white/10 shadow-2xl overflow-hidden glass-panel"
-      style={{
-        backgroundColor: "rgba(10, 10, 10, 0.75)",
-        backdropFilter: "blur(24px)",
-        WebkitBackdropFilter: "blur(24px)",
-      }}
-    >
+    <div className="absolute top-24 left-8 z-50 flex flex-col w-96 rounded-xl border border-border shadow-2xl overflow-hidden bg-card/90 backdrop-blur-md text-foreground">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-black/20">
+      <div className={SURVEY_STYLES.dialogHeader + " px-4 py-3 bg-background/60"}>
         <div className="flex items-center gap-2">
-          <Layers className="w-4 h-4 text-blue-400" />
-          <h2 className="text-sm font-semibold tracking-wide text-white/90">
+          <Layers className="w-4 h-4 text-amber-400" />
+          <h2 className={SURVEY_STYLES.dialogTitle}>
             Assembly Builder
           </h2>
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 rounded-md hover:bg-white/10 text-white/50 hover:text-white transition-colors"
+          className={SURVEY_STYLES.btnIcon}
         >
           <X className="w-4 h-4" />
         </button>
@@ -44,12 +38,12 @@ export function AssemblyBuilderPanel({
       <div className="p-4 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
         {/* Assembly Name */}
         <div>
-          <label className="block text-xs font-medium text-white/50 uppercase tracking-wider mb-1.5">
+          <label className={SURVEY_STYLES.label}>
             Assembly Name
           </label>
           <input
             type="text"
-            className="w-full bg-black/40 border border-white/10 rounded-md px-3 py-1.5 text-sm text-white focus:outline-none focus:border-blue-500/50 transition-colors"
+            className={SURVEY_STYLES.input}
             defaultValue={assembly.name}
           />
         </div>
@@ -57,10 +51,10 @@ export function AssemblyBuilderPanel({
         {/* Left Subassemblies */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-white/50 uppercase tracking-wider">
+            <span className={SURVEY_STYLES.label}>
               Left Side
             </span>
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-white/50 hover:text-white hover:bg-white/10">
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-white hover:bg-muted">
               <Plus className="h-3.5 w-3.5" />
             </Button>
           </div>
@@ -73,20 +67,20 @@ export function AssemblyBuilderPanel({
 
         {/* Baseline (Center) */}
         <div className="flex items-center justify-center py-2">
-          <div className="h-[1px] w-full bg-white/10"></div>
-          <span className="px-3 text-[10px] uppercase font-bold tracking-widest text-blue-400 bg-black/40 rounded-full border border-white/10">
+          <div className="h-[1px] w-full bg-muted"></div>
+          <span className={`${SURVEY_STYLES.badge} mx-2`}>
             Baseline
           </span>
-          <div className="h-[1px] w-full bg-white/10"></div>
+          <div className="h-[1px] w-full bg-muted"></div>
         </div>
 
         {/* Right Subassemblies */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-white/50 uppercase tracking-wider">
+            <span className={SURVEY_STYLES.label}>
               Right Side
             </span>
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-white/50 hover:text-white hover:bg-white/10">
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-white hover:bg-muted">
               <Plus className="h-3.5 w-3.5" />
             </Button>
           </div>
@@ -103,17 +97,18 @@ export function AssemblyBuilderPanel({
 
 function SubassemblyRow({ sub, index }: { sub: Subassembly; index: number }) {
   return (
-    <div className="flex items-center justify-between px-3 py-2 bg-white/5 hover:bg-white/10 rounded-md border border-white/5 group transition-colors cursor-pointer">
+    <div className={SURVEY_STYLES.cardSubtle + " flex items-center justify-between group cursor-pointer"}>
       <div className="flex items-center gap-3">
-        <span className="text-[10px] font-mono text-white/30">{index}</span>
+        <span className="text-[10px] font-mono text-muted-foreground">{index}</span>
         <div>
-          <p className="text-sm font-medium text-white/90">{sub.name}</p>
-          <p className="text-[10px] text-white/40 uppercase tracking-wider">{sub.type}</p>
+          <p className="text-xs font-medium text-foreground">{sub.name}</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{sub.type}</p>
         </div>
       </div>
-      <button className="text-white/20 hover:text-blue-400 transition-colors opacity-0 group-hover:opacity-100">
+      <button className="text-slate-500 hover:text-amber-400 transition-colors opacity-0 group-hover:opacity-100">
         <Settings2 className="w-4 h-4" />
       </button>
     </div>
   );
 }
+

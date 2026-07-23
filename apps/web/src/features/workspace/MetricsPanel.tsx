@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { useMetricsState } from "./hooks/useMetricsState";
 import { AREA_UNITS } from "./helpers/metricsHelpers";
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
 
 /** The live metrics panel: headline figures, land-use allocation, compliance. */
 export function MetricsPanel() {
@@ -42,7 +43,7 @@ export function MetricsPanel() {
   return (
     <div className="flex flex-col gap-4 p-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <h3 className={WORKSPACE_STYLES.textSectionTitle}>
           Metrics
         </h3>
         <Select
@@ -62,7 +63,7 @@ export function MetricsPanel() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className={WORKSPACE_STYLES.grid2Col}>
         <Stat
           label="Site area"
           value={formatArea(metrics.siteArea, areaUnit)}
@@ -90,7 +91,7 @@ export function MetricsPanel() {
 
       {selectionMetrics && (
         <div>
-          <h4 className="mb-2 text-xs font-medium text-muted-foreground">
+          <h4 className={WORKSPACE_STYLES.textSectionTitle}>
             Selection ({selection.length})
           </h4>
           <div className="grid grid-cols-2 gap-2">
@@ -123,7 +124,7 @@ export function MetricsPanel() {
       )}
 
       <div>
-        <h4 className="mb-2 text-xs font-medium text-muted-foreground">
+        <h4 className={WORKSPACE_STYLES.textSectionTitle}>
           Land-use allocation
         </h4>
         {metrics.allocation.length === 0 ? (
@@ -169,7 +170,7 @@ export function MetricsPanel() {
       </div>
 
       <div>
-        <h4 className="mb-2 text-xs font-medium text-muted-foreground">
+        <h4 className={WORKSPACE_STYLES.textSectionTitle}>
           Community
         </h4>
         <div className="grid grid-cols-2 gap-2">
@@ -194,7 +195,7 @@ export function MetricsPanel() {
 
       {networks.length > 0 && (
         <div>
-          <h4 className="mb-2 text-xs font-medium text-muted-foreground">
+          <h4 className={WORKSPACE_STYLES.textSectionTitle}>
             Infrastructure
           </h4>
           <div className="grid grid-cols-2 gap-2">
@@ -220,7 +221,7 @@ export function MetricsPanel() {
       )}
 
       <div>
-        <h4 className="mb-2 text-xs font-medium text-muted-foreground">
+        <h4 className={WORKSPACE_STYLES.textSectionTitle}>
           Compliance
         </h4>
         <ul className="flex flex-col gap-1.5">
@@ -292,11 +293,11 @@ export function MetricsPanel() {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded border border-border bg-background/50 px-2 py-1">
-      <div className="text-[9px] uppercase tracking-wide text-muted-foreground">
+    <div className={WORKSPACE_STYLES.cardSubtle}>
+      <div className={WORKSPACE_STYLES.statLabel}>
         {label}
       </div>
-      <div className="mt-0.5 text-xs font-semibold tabular-nums text-foreground font-cad">
+      <div className={`${WORKSPACE_STYLES.statValue} mt-0.5 text-xs`}>
         {value}
       </div>
     </div>

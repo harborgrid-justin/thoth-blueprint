@@ -41,6 +41,7 @@ import {
   planExtent,
   computeGraphicScaleBar,
 } from "./helpers/platSheetHelpers";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 function formatSegmentBearing(p1: Point, p2: Point): string {
   const dx = p2.x - p1.x;
@@ -48,9 +49,9 @@ function formatSegmentBearing(p1: Point, p2: Point): string {
   let angle = Math.atan2(dx, dy) * (180 / Math.PI);
   if (angle < 0) angle += 360;
 
-  let ns = "N";
-  let ew = "E";
-  let deg = 0;
+  let ns: string;
+  let ew: string;
+  let deg: number;
 
   if (angle >= 0 && angle <= 90) {
     ns = "N"; ew = "E"; deg = angle;
@@ -82,19 +83,19 @@ export function PlatSheetDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-6xl">
+      <DialogContent className="max-w-6xl bg-background border-border text-foreground animate-dialog-in">
         <DialogHeader>
-          <DialogTitle className="flex items-center justify-between">
+          <DialogTitle className={SURVEY_STYLES.dialogTitle + " justify-between"}>
             <div className="flex items-center gap-2">
-              <LayoutTemplate className="h-5 w-5 text-primary" /> Plat Sheet Composer
+              <LayoutTemplate className="h-5 w-5 text-amber-400" /> Plat Sheet Composer
             </div>
-            <div className="flex items-center rounded-md border border-border bg-muted p-0.5 text-xs mr-6">
+            <div className="flex items-center rounded-md border border-border bg-card p-0.5 text-xs mr-6">
               <button
                 type="button"
                 onClick={() => setSheetView("handdrawn")}
                 className={`flex items-center gap-1.5 rounded px-2.5 py-1 font-semibold transition-colors ${
                   sheetView === "handdrawn"
-                    ? "bg-primary text-primary-foreground shadow-sm"
+                    ? "bg-amber-600 text-white shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >

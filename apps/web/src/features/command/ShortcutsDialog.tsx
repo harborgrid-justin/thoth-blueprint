@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { COMMAND_STYLES } from "./styles/commandDesignSystem";
 
 interface Shortcut {
   keys: string;
@@ -54,7 +55,7 @@ export function ShortcutsDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className={COMMAND_STYLES.shortcutsDialog}>
         <DialogHeader>
           <DialogTitle>Keyboard shortcuts</DialogTitle>
           <DialogDescription>
@@ -76,17 +77,17 @@ export function ShortcutsDialog() {
 function Section({ title, items }: { title: string; items: Shortcut[] }) {
   return (
     <div>
-      <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+      <h4 className={COMMAND_STYLES.shortcutsSectionTitle}>
         {title}
       </h4>
       <ul className="flex flex-col gap-1">
         {items.map((s) => (
           <li
             key={s.label}
-            className="flex items-center justify-between gap-3 text-sm"
+            className={COMMAND_STYLES.shortcutsRow}
           >
             <span className="text-foreground">{s.label}</span>
-            <kbd className="shrink-0 rounded border border-border bg-muted px-1.5 py-0.5 text-[11px] font-medium tabular-nums text-muted-foreground">
+            <kbd className={COMMAND_STYLES.shortcutsKey}>
               {s.keys}
             </kbd>
           </li>

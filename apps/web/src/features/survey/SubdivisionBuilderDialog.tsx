@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { useSubdivisionBuilderState } from "./hooks/useSubdivisionBuilderState";
 import { useUiStore } from "@/store/uiStore";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 export function SubdivisionBuilderDialog() {
   const {
@@ -31,10 +32,10 @@ export function SubdivisionBuilderDialog() {
 
   return (
     <Dialog open={!!targetId} onOpenChange={(open) => !open && setTargetId(null)}>
-      <DialogContent className="max-w-md bg-background/80 backdrop-blur-3xl border-white/10 shadow-2xl rounded-2xl">
+      <DialogContent className={SURVEY_STYLES.dialogContainerSm}>
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Grid2x2 className="h-5 w-5 text-primary" /> Auto Subdivide Parcel
+          <DialogTitle className={SURVEY_STYLES.dialogTitle}>
+            <Grid2x2 className="h-5 w-5 text-amber-400" /> Auto Subdivide Parcel
           </DialogTitle>
           <DialogDescription>
             Automatically split <strong>{parcel.name}</strong> into multiple lots using the slide-line method along its longest edge.
@@ -43,19 +44,21 @@ export function SubdivisionBuilderDialog() {
 
         <div className="space-y-4 py-4">
           <div className="flex flex-col gap-1.5">
-            <Label>Target Lot Area (sq units)</Label>
+            <Label className={SURVEY_STYLES.label}>Target Lot Area (sq units)</Label>
             <Input 
               type="number" 
               value={targetArea} 
               onChange={(e) => setTargetArea(Number(e.target.value))}
+              className={SURVEY_STYLES.input}
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label>Cut Angle (deg relative to frontage)</Label>
+            <Label className={SURVEY_STYLES.label}>Cut Angle (deg relative to frontage)</Label>
             <Input 
               type="number" 
               value={angle} 
               onChange={(e) => setAngle(Number(e.target.value))}
+              className={SURVEY_STYLES.input}
             />
           </div>
         </div>
@@ -68,13 +71,13 @@ export function SubdivisionBuilderDialog() {
               setTargetId(null);
               useUiStore.getState().setSubdivisionStudioOpen(true);
             }}
-            className="text-cyan-400 hover:text-cyan-300 text-xs"
+            className="text-amber-400 hover:text-amber-300 text-xs"
           >
             <Sparkles className="h-3.5 w-3.5 mr-1" /> Subdivision Studio
           </Button>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => setTargetId(null)}>Cancel</Button>
-            <Button onClick={commitSubdivision}>
+            <Button variant="outline" onClick={() => setTargetId(null)} className={SURVEY_STYLES.btnSecondary}>Cancel</Button>
+            <Button onClick={commitSubdivision} className={SURVEY_STYLES.btnPrimary}>
               <CheckCircle2 className="h-4 w-4 mr-2" /> Subdivide
             </Button>
           </div>
@@ -83,3 +86,4 @@ export function SubdivisionBuilderDialog() {
     </Dialog>
   );
 }
+

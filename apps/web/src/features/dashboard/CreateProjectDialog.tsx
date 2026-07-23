@@ -15,6 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { DASHBOARD_STYLES } from "./styles/dashboardDesignSystem";
 
 type Template = NonNullable<CreateProjectInput["template"]>;
 
@@ -110,7 +111,7 @@ export function CreateProjectDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-col gap-1.5">
+        <div className={DASHBOARD_STYLES.formGroup}>
           <Label>Project name</Label>
           <Input
             autoFocus
@@ -121,7 +122,7 @@ export function CreateProjectDialog({
           />
         </div>
 
-        <div className="flex flex-col gap-1.5">
+        <div className={DASHBOARD_STYLES.formGroup}>
           <Label>Description</Label>
           <Textarea
             value={description}
@@ -131,9 +132,9 @@ export function CreateProjectDialog({
           />
         </div>
 
-        <div className="flex flex-col gap-1.5">
+        <div className={DASHBOARD_STYLES.formGroup}>
           <Label>Starter template</Label>
-          <div className="grid grid-cols-2 gap-2">
+          <div className={DASHBOARD_STYLES.templateGrid}>
             {TEMPLATES.map((t) => {
               const Icon = t.icon;
               const active = t.id === template;
@@ -143,7 +144,7 @@ export function CreateProjectDialog({
                   type="button"
                   onClick={() => setTemplate(t.id)}
                   className={cn(
-                    "flex flex-col items-start gap-1.5 rounded-lg border p-3 text-left transition-colors",
+                    DASHBOARD_STYLES.templateBtn,
                     active
                       ? "border-primary bg-primary/5"
                       : "border-border hover:border-primary/40",

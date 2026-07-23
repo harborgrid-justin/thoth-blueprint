@@ -12,6 +12,7 @@ import {
 import { useCanvasStore } from "@/store/canvasStore";
 import { PlanningCanvas } from "@/features/canvas/PlanningCanvas";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { WORKSPACE_STYLES } from "./styles/workspaceDesignSystem";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AliasMappingDialog } from "./AliasMappingDialog";
@@ -287,7 +288,7 @@ export function Workspace() {
 
   return (
     <TooltipProvider>
-      <div className="relative h-screen w-screen overflow-hidden bg-background">
+      <div className={WORKSPACE_STYLES.container}>
         {/* Edge-to-edge canvas */}
         <main className="absolute inset-0 z-0">
           <CanvasArea />

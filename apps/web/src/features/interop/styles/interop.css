@@ -1,0 +1,7 @@
+/* Centralized Interop Feature Stylesheet */
+
+@layer components {
+  .interop-card {
+    @apply bg-card border border-border rounded-xl p-4 text-xs text-card-foreground;
+  }
+}

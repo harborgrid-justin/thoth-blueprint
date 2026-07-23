@@ -12,6 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { usePipeDesignState } from "./hooks/usePipeDesignState";
+import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
 
 export function PipeDesignDialog() {
   const {
@@ -38,10 +39,10 @@ export function PipeDesignDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-5xl">
+      <DialogContent className="max-w-5xl bg-background border-border text-foreground animate-dialog-in">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Activity className="h-5 w-5 text-primary" /> Pipe Network Design
+          <DialogTitle className={SURVEY_STYLES.dialogTitle}>
+            <Activity className="h-5 w-5 text-amber-400" /> Pipe Network Design
             Checks
           </DialogTitle>
           <DialogDescription>
@@ -205,7 +206,7 @@ export function PipeDesignDialog() {
               </ScrollArea>
 
               {/* Warnings and violations logs */}
-              <div className="rounded-md border border-border bg-slate-950/20 p-3 flex-1 min-h-[160px]">
+              <div className="rounded-md border border-border bg-background/20 p-3 flex-1 min-h-[160px]">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                     Design Rules Violations Audit Report

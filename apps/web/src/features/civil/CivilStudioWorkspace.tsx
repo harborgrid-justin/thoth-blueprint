@@ -21,7 +21,7 @@ export const CivilStudioWorkspace: React.FC = () => {
   } = useCivilStudioState();
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
+    <div className="flex flex-col h-screen w-screen bg-background text-foreground overflow-hidden font-sans">
       {/* Top Civil 3D Ribbon Bar */}
       <CivilRibbonBar
         onOpenParcelTools={() => setIsParcelLayoutOpen(true)}
@@ -35,9 +35,9 @@ export const CivilStudioWorkspace: React.FC = () => {
         <ProspectorTreePalette />
 
         {/* Central Canvas / Viewport Area */}
-        <div className="flex-1 flex flex-col bg-slate-950 relative overflow-hidden">
+        <div className="flex-1 flex flex-col bg-background relative overflow-hidden">
           {/* Overlay Floating Action Palette for Expansion Tools */}
-          <div className="absolute top-4 right-4 z-10 flex flex-wrap gap-2 bg-slate-900/90 backdrop-blur border border-slate-800 p-2 rounded-xl shadow-2xl">
+          <div className="absolute top-4 right-4 z-10 flex flex-wrap gap-2 bg-card/90 backdrop-blur border border-border p-2 rounded-xl shadow-2xl">
             <button
               onClick={() => setIsLineworkOpen(true)}
               className="px-3 py-1.5 bg-amber-600 hover:bg-amber-500 text-white font-medium text-xs rounded transition flex items-center gap-1.5 shadow"
@@ -72,17 +72,17 @@ export const CivilStudioWorkspace: React.FC = () => {
 
           {/* Canvas Viewport Backdrop Mock rendering CAD grid */}
           <div className="flex-1 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] flex items-center justify-center relative">
-            <div className="text-center p-8 bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl max-w-lg shadow-2xl">
+            <div className="text-center p-8 bg-card/60 backdrop-blur-md border border-border rounded-2xl max-w-lg shadow-2xl">
               <div className="w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center justify-center mx-auto mb-3 text-lg font-bold">
                 C3D
               </div>
-              <h2 className="text-lg font-bold text-slate-100 mb-1">Civil 3D Competitor & Expansion Studio</h2>
-              <p className="text-xs text-slate-400 mb-4">
+              <h2 className="text-lg font-bold text-foreground mb-1">Civil 3D Competitor & Expansion Studio</h2>
+              <p className="text-xs text-muted-foreground mb-4">
                 Interactive Model Space Canvas. All 200 system requirements (`REQ-001` through `REQ-200`) active with Zero Mocking.
               </p>
               <div className="flex justify-center gap-2 text-xs">
-                <span className="px-2.5 py-1 bg-slate-800 text-cyan-300 rounded border border-slate-700">477 Tests Passed</span>
-                <span className="px-2.5 py-1 bg-slate-800 text-emerald-300 rounded border border-slate-700">ISO 29148 Compliant</span>
+                <span className="px-2.5 py-1 bg-muted text-cyan-300 rounded border border-input">477 Tests Passed</span>
+                <span className="px-2.5 py-1 bg-muted text-emerald-300 rounded border border-input">ISO 29148 Compliant</span>
               </div>
             </div>
           </div>

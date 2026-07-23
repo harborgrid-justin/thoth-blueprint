@@ -52,12 +52,4 @@ export function pickFile(accept: string): Promise<File | null> {
   });
 }
 
-/** A safe filename slug from a plan/element name. */
-export function slugify(name: string): string {
-  return (
-    name
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "") || "export"
-  );
-}
+export { slugify } from "@thoth/domain";

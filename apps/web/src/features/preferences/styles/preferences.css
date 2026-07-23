@@ -1,0 +1,31 @@
+/* Centralized Preferences Feature Stylesheet */
+
+@layer components {
+  .preferences-dialog {
+    @apply max-w-md;
+  }
+  .preferences-form-container {
+    @apply flex flex-col gap-4;
+  }
+  .preferences-toggle-row {
+    @apply flex items-center justify-between rounded-md border border-border px-3 py-2.5;
+  }
+  .preferences-toggle-title {
+    @apply text-sm text-foreground;
+  }
+  .preferences-toggle-subtitle {
+    @apply text-xs text-muted-foreground;
+  }
+  .preferences-row {
+    @apply flex items-center justify-between gap-4;
+  }
+  .preferences-row-label {
+    @apply text-sm text-foreground;
+  }
+  .preferences-row-control {
+    @apply w-56;
+  }
+  .preferences-select-trigger {
+    @apply h-8;
+  }
+}

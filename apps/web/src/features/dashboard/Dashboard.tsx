@@ -28,6 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { PresenceBar } from "@/features/workspace/PresenceBar";
+import { DASHBOARD_STYLES } from "./styles/dashboardDesignSystem";
 
 const CreateProjectDialog = React.lazy(() =>
   import("./CreateProjectDialog").then((m) => ({
@@ -67,14 +68,15 @@ export function Dashboard() {
     if (!window.confirm(message)) {
       return;
     }
+
     await api.resetWorkspace(mode);
     void refresh();
   }
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-background">
-        <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b border-border bg-card/90 px-5 backdrop-blur">
+      <div className={DASHBOARD_STYLES.container}>
+        <header className={DASHBOARD_STYLES.header}>
           <div className="flex items-center gap-2">
             <img src="/thoth.svg" alt="" className="h-7 w-7" />
             <span className="text-base font-semibold">Thoth Blueprint</span>
@@ -125,24 +127,24 @@ export function Dashboard() {
           </div>
         </header>
 
-        <main className="mx-auto max-w-6xl px-5 py-8">
+        <main className={DASHBOARD_STYLES.main}>
           <div className="mb-6">
-            <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <h1 className={DASHBOARD_STYLES.heroTitle}>Projects</h1>
+            <p className={DASHBOARD_STYLES.heroSubtitle}>
               Collaborative site &amp; community plans. Open one to draw
               parcels, zones, and land uses, and watch metrics update live.
             </p>
           </div>
 
           {loading ? (
-            <div className="flex items-center justify-center py-24 text-muted-foreground">
+            <div className={DASHBOARD_STYLES.loading}>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading
               projects…
             </div>
           ) : projects.length === 0 ? (
             <EmptyState onCreate={() => setCreateOpen(true)} />
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className={DASHBOARD_STYLES.grid}>
               {projects.map((project) => (
                 <ProjectCard
                   key={project.id}
@@ -178,17 +180,17 @@ function ProjectCard({
   return (
     <Card className="group relative overflow-hidden transition-colors hover:border-primary/40">
       <Link to={`/project/${project.id}`} className="block">
-        <div className="flex h-28 items-center justify-center border-b border-border bg-[hsl(var(--canvas))]">
+        <div className={DASHBOARD_STYLES.cardHero}>
           <MapPinned className="h-9 w-9 text-muted-foreground/40" />
         </div>
-        <div className="p-4">
-          <h3 className="truncate font-semibold text-foreground">
+        <div className={DASHBOARD_STYLES.cardBody}>
+          <h3 className={DASHBOARD_STYLES.cardTitle}>
             {project.name}
           </h3>
-          <p className="mt-1 line-clamp-2 h-9 text-xs text-muted-foreground">
+          <p className={DASHBOARD_STYLES.cardDescription}>
             {project.description}
           </p>
-          <div className="mt-3 flex items-center gap-3 text-xs text-muted-foreground">
+          <div className={DASHBOARD_STYLES.cardMeta}>
             <span className="tabular-nums">
               {formatNumber(project.siteAreaAcres, 1)} ac
             </span>
@@ -234,7 +236,7 @@ function ProjectCard({
 
 function EmptyState({ onCreate }: { onCreate: () => void }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border py-24 text-center">
+    <div className={DASHBOARD_STYLES.emptyState}>
       <MapPinned className="h-10 w-10 text-muted-foreground/40" />
       <h3 className="mt-4 text-lg font-medium">No projects yet</h3>
       <p className="mt-1 max-w-sm text-sm text-muted-foreground">

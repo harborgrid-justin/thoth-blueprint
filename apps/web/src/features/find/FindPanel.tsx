@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { FIND_STYLES } from "./styles/findDesignSystem";
 
 const RESULT_CAP = 200;
 
@@ -102,8 +103,8 @@ export function FindPanel() {
   }
 
   return (
-    <div className="absolute right-4 top-3 z-30 flex w-72 flex-col rounded-lg border border-border bg-card/95 shadow-xl backdrop-blur">
-      <div className="flex items-center gap-2 border-b border-border px-2.5 py-2">
+    <div className={FIND_STYLES.panel}>
+      <div className={FIND_STYLES.header}>
         <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
         <Input
           ref={inputRef}
@@ -111,7 +112,7 @@ export function FindPanel() {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === "Escape" && close()}
           placeholder="Find by name, type, use…"
-          className="h-7 border-0 bg-transparent px-0 text-sm focus-visible:ring-0"
+          className={FIND_STYLES.input}
         />
         <button
           type="button"
@@ -123,12 +124,12 @@ export function FindPanel() {
         </button>
       </div>
 
-      <div className="flex items-center gap-2 px-2.5 py-2">
+      <div className={FIND_STYLES.toolbar}>
         <Select
           value={kind}
           onValueChange={(v) => setKind(v as ElementKind | "all")}
         >
-          <SelectTrigger className="h-7 flex-1 text-xs">
+          <SelectTrigger className={FIND_STYLES.selectTrigger}>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -145,9 +146,9 @@ export function FindPanel() {
         </span>
       </div>
 
-      <div className="max-h-64 overflow-y-auto px-1.5 pb-1.5">
+      <div className={FIND_STYLES.list}>
         {matches.length === 0 ? (
-          <p className="px-2 py-4 text-center text-xs text-muted-foreground">
+          <p className={FIND_STYLES.emptyText}>
             No matching elements.
           </p>
         ) : (
@@ -165,9 +166,9 @@ export function FindPanel() {
                 }
               }}
               className={cn(
-                "flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm transition-colors hover:bg-accent",
+                FIND_STYLES.listItem,
                 (selectedSet.has(el.id) || hoveredElementId === el.id) &&
-                  "bg-accent border border-amber-500/30",
+                  FIND_STYLES.listItemActive,
               )}
             >
               <span
@@ -190,7 +191,7 @@ export function FindPanel() {
         )}
       </div>
 
-      <div className="flex items-center justify-between gap-2 border-t border-border px-2.5 py-2">
+      <div className={FIND_STYLES.footer}>
         <div className="flex items-center gap-2">
           <Switch
             id="filter-canvas"
@@ -208,7 +209,7 @@ export function FindPanel() {
           type="button"
           onClick={selectAllMatches}
           disabled={matches.length === 0}
-          className="rounded-md px-2 py-1 text-xs font-medium text-primary hover:bg-primary/10 disabled:opacity-40"
+          className={FIND_STYLES.btnSelectAll}
         >
           Select all
         </button>
