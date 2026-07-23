@@ -152,12 +152,19 @@ pub fn viewport_transform(
         let ry = dx * sin_r + dy * cos_r;
         Point::new(cx + rx, cy + ry)
     };
-    Ok(ViewportTransform { project: Box::new(project), scale_px: s })
+    Ok(ViewportTransform {
+        project: Box::new(project),
+        scale_px: s,
+    })
 }
 
 /// A projection that fits `model_bounds` into the viewport rect (ignoring the
 /// named scale) — for key maps, index thumbnails, and "as-shown" windows.
-pub fn fit_viewport_transform(rect: PaperRect, model_bounds: Bounds, pad: f64) -> ViewportTransform {
+pub fn fit_viewport_transform(
+    rect: PaperRect,
+    model_bounds: Bounds,
+    pad: f64,
+) -> ViewportTransform {
     let bw = (model_bounds.max_x - model_bounds.min_x).max(1e-6);
     let bh = (model_bounds.max_y - model_bounds.min_y).max(1e-6);
     let iw = rect.w * (1.0 - pad * 2.0);
@@ -167,7 +174,10 @@ pub fn fit_viewport_transform(rect: PaperRect, model_bounds: Bounds, pad: f64) -
     let cx = rect.x + rect.w / 2.0;
     let cy = rect.y + rect.h / 2.0;
     let project = move |p: Point| Point::new(cx + (p.x - c.x) * s, cy + (p.y - c.y) * s);
-    ViewportTransform { project: Box::new(project), scale_px: s }
+    ViewportTransform {
+        project: Box::new(project),
+        scale_px: s,
+    }
 }
 
 /// Pick the largest named scale from `candidates` at which `model_bounds`
@@ -175,7 +185,13 @@ pub fn fit_viewport_transform(rect: PaperRect, model_bounds: Bounds, pad: f64) -
 /// else the last (smallest-scale) candidate. Scale ids that fail to resolve
 /// to a valid ratio (see [`paper_per_model`]) are skipped rather than
 /// aborting the whole search.
-pub fn fit_scale(candidates: &[String], model_bounds: Bounds, rect: PaperRect, model_unit: Unit, paper_unit: PaperUnit) -> Option<String> {
+pub fn fit_scale(
+    candidates: &[String],
+    model_bounds: Bounds,
+    rect: PaperRect,
+    model_unit: Unit,
+    paper_unit: PaperUnit,
+) -> Option<String> {
     if candidates.is_empty() {
         return None;
     }
@@ -184,7 +200,11 @@ pub fn fit_scale(candidates: &[String], model_bounds: Bounds, rect: PaperRect, m
 
     let mut resolved: Vec<(String, f64)> = candidates
         .iter()
-        .filter_map(|id| paper_per_model(id, model_unit, paper_unit).ok().map(|s| (id.clone(), s)))
+        .filter_map(|id| {
+            paper_per_model(id, model_unit, paper_unit)
+                .ok()
+                .map(|s| (id.clone(), s))
+        })
         .collect();
     // Descending by paper-per-model ratio (largest drawing first), matching
     // the TS `orderBy(..., ["s"], ["desc"])`.
@@ -195,7 +215,10 @@ pub fn fit_scale(candidates: &[String], model_bounds: Bounds, rect: PaperRect, m
             return Some(id.clone());
         }
     }
-    resolved.last().map(|(id, _)| id.clone()).or_else(|| candidates.first().cloned())
+    resolved
+        .last()
+        .map(|(id, _)| id.clone())
+        .or_else(|| candidates.first().cloned())
 }
 
 /// Unit perpendicular (left normal) of a directed segment, in the -Y-north
@@ -217,7 +240,12 @@ mod tests {
     use super::*;
     use approx::assert_relative_eq;
 
-    fn vp(scale_id: &str, rect: PaperRect, model_center: Point, rotation_deg: Option<f64>) -> SheetViewport {
+    fn vp(
+        scale_id: &str,
+        rect: PaperRect,
+        model_center: Point,
+        rotation_deg: Option<f64>,
+    ) -> SheetViewport {
         SheetViewport {
             id: "vp1".to_string(),
             kind: ViewKind::Plan,
@@ -232,7 +260,12 @@ mod tests {
 
     #[test]
     fn viewport_transform_centers_the_model_center_in_the_rect() {
-        let rect = PaperRect { x: 10.0, y: 10.0, w: 20.0, h: 20.0 };
+        let rect = PaperRect {
+            x: 10.0,
+            y: 10.0,
+            w: 20.0,
+            h: 20.0,
+        };
         let v = vp("1:1", rect, Point::new(5.0, 5.0), None);
         let t = viewport_transform(&v, Unit::Meters, PaperUnit::Mm).unwrap();
         let p = t.project(Point::new(5.0, 5.0));
@@ -242,7 +275,12 @@ mod tests {
 
     #[test]
     fn viewport_transform_rotates_about_the_model_center() {
-        let rect = PaperRect { x: 0.0, y: 0.0, w: 1000.0, h: 1000.0 };
+        let rect = PaperRect {
+            x: 0.0,
+            y: 0.0,
+            w: 1000.0,
+            h: 1000.0,
+        };
         let v = vp("1:1", rect, Point::new(0.0, 0.0), Some(90.0));
         let t = viewport_transform(&v, Unit::Meters, PaperUnit::Mm).unwrap();
         let s = t.scale_px;
@@ -256,8 +294,18 @@ mod tests {
 
     #[test]
     fn fit_viewport_transform_fits_bounds_into_rect_with_padding() {
-        let rect = PaperRect { x: 0.0, y: 0.0, w: 100.0, h: 100.0 };
-        let bounds = Bounds { min_x: 0.0, min_y: 0.0, max_x: 10.0, max_y: 10.0 };
+        let rect = PaperRect {
+            x: 0.0,
+            y: 0.0,
+            w: 100.0,
+            h: 100.0,
+        };
+        let bounds = Bounds {
+            min_x: 0.0,
+            min_y: 0.0,
+            max_x: 10.0,
+            max_y: 10.0,
+        };
         let t = fit_viewport_transform(rect, bounds, 0.0);
         let p0 = t.project(Point::new(0.0, 0.0));
         let p1 = t.project(Point::new(10.0, 10.0));
@@ -270,17 +318,41 @@ mod tests {
         // eng-10 => paper/model = 0.3048/(120*0.0254) = 0.1, which just fits
         // a 100x50-foot extent into a 10x10-inch rect (100*0.1=10, 50*0.1=5),
         // and is the largest (most-detailed) of the three candidates.
-        let rect = PaperRect { x: 0.0, y: 0.0, w: 10.0, h: 10.0 };
-        let bounds = Bounds { min_x: 0.0, min_y: 0.0, max_x: 100.0, max_y: 50.0 };
-        let candidates = vec!["eng-10".to_string(), "eng-50".to_string(), "eng-100".to_string()];
+        let rect = PaperRect {
+            x: 0.0,
+            y: 0.0,
+            w: 10.0,
+            h: 10.0,
+        };
+        let bounds = Bounds {
+            min_x: 0.0,
+            min_y: 0.0,
+            max_x: 100.0,
+            max_y: 50.0,
+        };
+        let candidates = vec![
+            "eng-10".to_string(),
+            "eng-50".to_string(),
+            "eng-100".to_string(),
+        ];
         let picked = fit_scale(&candidates, bounds, rect, Unit::Feet, PaperUnit::In).unwrap();
         assert_eq!(picked, "eng-10");
     }
 
     #[test]
     fn fit_scale_falls_back_to_the_smallest_scale_when_nothing_fits() {
-        let rect = PaperRect { x: 0.0, y: 0.0, w: 1.0, h: 1.0 };
-        let bounds = Bounds { min_x: 0.0, min_y: 0.0, max_x: 100_000.0, max_y: 100_000.0 };
+        let rect = PaperRect {
+            x: 0.0,
+            y: 0.0,
+            w: 1.0,
+            h: 1.0,
+        };
+        let bounds = Bounds {
+            min_x: 0.0,
+            min_y: 0.0,
+            max_x: 100_000.0,
+            max_y: 100_000.0,
+        };
         let candidates = vec!["eng-10".to_string(), "eng-100".to_string()];
         let picked = fit_scale(&candidates, bounds, rect, Unit::Feet, PaperUnit::In).unwrap();
         assert_eq!(picked, "eng-100");
@@ -288,8 +360,18 @@ mod tests {
 
     #[test]
     fn fit_scale_of_empty_candidates_is_none() {
-        let rect = PaperRect { x: 0.0, y: 0.0, w: 10.0, h: 10.0 };
-        let bounds = Bounds { min_x: 0.0, min_y: 0.0, max_x: 1.0, max_y: 1.0 };
+        let rect = PaperRect {
+            x: 0.0,
+            y: 0.0,
+            w: 10.0,
+            h: 10.0,
+        };
+        let bounds = Bounds {
+            min_x: 0.0,
+            min_y: 0.0,
+            max_x: 1.0,
+            max_y: 1.0,
+        };
         assert!(fit_scale(&[], bounds, rect, Unit::Feet, PaperUnit::In).is_none());
     }
 

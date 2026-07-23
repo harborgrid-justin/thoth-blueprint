@@ -21,9 +21,19 @@ pub fn xml_escape(s: &str) -> String {
 pub fn safe_id(name: &str, index: usize) -> String {
     let mapped: String = name
         .chars()
-        .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { '_' })
+        .map(|c| {
+            if c.is_ascii_alphanumeric() || c == '_' {
+                c
+            } else {
+                '_'
+            }
+        })
         .collect();
-    let base = if mapped.is_empty() { "mesh".to_string() } else { mapped };
+    let base = if mapped.is_empty() {
+        "mesh".to_string()
+    } else {
+        mapped
+    };
     format!("{base}_{index}")
 }
 

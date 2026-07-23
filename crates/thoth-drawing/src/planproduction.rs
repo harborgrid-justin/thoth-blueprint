@@ -62,7 +62,11 @@ pub struct ViewFrameGroup {
 /// takes `date` as an explicit parameter instead: the caller supplies an
 /// already-formatted date string, keeping this function pure and its output
 /// deterministic and testable.
-pub fn create_sheet_set_from_frames(group: &ViewFrameGroup, drawing_set_name: &str, date: &str) -> DrawingSet {
+pub fn create_sheet_set_from_frames(
+    group: &ViewFrameGroup,
+    drawing_set_name: &str,
+    date: &str,
+) -> DrawingSet {
     use crate::drafting::DisciplineCode;
 
     let sheets: Vec<Sheet> = group
@@ -73,7 +77,11 @@ pub fn create_sheet_set_from_frames(group: &ViewFrameGroup, drawing_set_name: &s
             let seq = (i + 1) as u32;
             Sheet {
                 id: format!("sheet-{}", frame.id),
-                number: SheetNumber { discipline: DisciplineCode::C, r#type: 1, sequence: seq },
+                number: SheetNumber {
+                    discipline: DisciplineCode::C,
+                    r#type: 1,
+                    sequence: seq,
+                },
                 title: format!("ROAD PLAN SHEET - PART {seq}"),
                 size: "arch-d".to_string(),
                 orientation: Orientation::Landscape,
@@ -143,7 +151,10 @@ mod tests {
     fn create_sheet_set_from_frames_builds_one_sheet_per_frame() {
         let set = create_sheet_set_from_frames(&sample_group(), "Corridor Plan", "2024-01-01");
         assert_eq!(set.sheets.len(), 2);
-        assert_eq!(set.sheets[0].viewport_ids, vec!["frame-align1-1".to_string()]);
+        assert_eq!(
+            set.sheets[0].viewport_ids,
+            vec!["frame-align1-1".to_string()]
+        );
         assert_eq!(set.sheets[1].number.sequence, 2);
         assert_eq!(set.name, "Corridor Plan");
     }

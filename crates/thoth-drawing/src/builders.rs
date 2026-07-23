@@ -29,7 +29,10 @@
 
 use crate::annotation::{grid_bubble_geometry, revision_cloud_bumps, GridLine, RevisionCloud};
 use crate::dimension::{dimension_style, measure_dimension, DimArrow, Dimension};
-use crate::scene::{arrow_head, dim_tick, paper_to_points_for_sheet, Pt, SheetPrimitive, TextAnchor, INK, LIGHT, MUTED};
+use crate::scene::{
+    arrow_head, dim_tick, paper_to_points_for_sheet, Pt, SheetPrimitive, TextAnchor, INK, LIGHT,
+    MUTED,
+};
 use crate::schedule::ScheduleTable;
 use crate::sheet::{resolve_title_block, DrawingSet, Sheet};
 use crate::sheetsize::{printable_area, sheet_dimensions, PaperUnit};
@@ -70,9 +73,24 @@ pub fn sheet_layout(sheet: &Sheet, unit: PaperUnit) -> SheetLayout {
     SheetLayout {
         w_pt,
         h_pt,
-        border: RectPt { x: bx, y: by, w: bw, h: bh },
-        draw_area: RectPt { x: bx, y: by, w: bw - strip_w - 6.0, h: bh },
-        title_rect: RectPt { x: bx + bw - strip_w, y: by, w: strip_w, h: bh },
+        border: RectPt {
+            x: bx,
+            y: by,
+            w: bw,
+            h: bh,
+        },
+        draw_area: RectPt {
+            x: bx,
+            y: by,
+            w: bw - strip_w - 6.0,
+            h: bh,
+        },
+        title_rect: RectPt {
+            x: bx + bw - strip_w,
+            y: by,
+            w: strip_w,
+            h: bh,
+        },
     }
 }
 
@@ -90,7 +108,7 @@ impl Projector {
 
 /// Build a [`Projector`] that fits a model-space bounding box into a sheet
 /// rectangle with the given padding fraction on each side.
-pub fn fit_projector(rect: RectPt, b: thoth_spatial::Bounds, pad: f64) -> Projector {
+pub fn fit_projector(rect: RectPt, b: Bounds, pad: f64) -> Projector {
     let bw = (b.max_x - b.min_x).max(1e-6);
     let bh = (b.max_y - b.min_y).max(1e-6);
     let iw = rect.w * (1.0 - pad * 2.0);
@@ -101,7 +119,10 @@ pub fn fit_projector(rect: RectPt, b: thoth_spatial::Bounds, pad: f64) -> Projec
     let ox = rect.x + rect.w / 2.0;
     let oy = rect.y + rect.h / 2.0;
     let project = move |p: Point| Pt::new(ox + (p.x - cx) * s, oy + (p.y - cy) * s);
-    Projector { project: Box::new(project), scale_pt: s }
+    Projector {
+        project: Box::new(project),
+        scale_pt: s,
+    }
 }
 
 // --- the frame + title block -----------------------------------------------
@@ -160,12 +181,18 @@ pub fn build_title_block(
         dash: None,
     }];
     let pad = 8.0;
-    let empty: Vec<String> = vec![];
     let firm: &[String] = firm_lines_override.unwrap_or(&set.title_block_defaults.firm_lines);
-    let firm = if firm.is_empty() { empty.as_slice() } else { firm };
     let mut y = r.y + 18.0;
 
-    out.push(text(r.x + pad, y, &set.title_block_defaults.project_name.to_uppercase(), 9.0, INK, None, Some(700.0)));
+    out.push(text(
+        r.x + pad,
+        y,
+        &set.title_block_defaults.project_name.to_uppercase(),
+        9.0,
+        INK,
+        None,
+        Some(700.0),
+    ));
     y += 12.0;
     for line in firm {
         out.push(text(r.x + pad, y, line, 6.5, MUTED, None, None));
@@ -178,7 +205,15 @@ pub fn build_title_block(
     let num_cell_h = 54.0;
     let num_top = r.y + r.h - num_cell_h;
     out.push(line_prim(r.x, num_top, r.x + r.w, num_top, 1.0, INK));
-    out.push(text_anchored(r.x + r.w / 2.0, num_top + 22.0, "SHEET", 6.5, MUTED, TextAnchor::Middle, None));
+    out.push(text_anchored(
+        r.x + r.w / 2.0,
+        num_top + 22.0,
+        "SHEET",
+        6.5,
+        MUTED,
+        TextAnchor::Middle,
+        None,
+    ));
     out.push(text_anchored(
         r.x + r.w / 2.0,
         num_top + 42.0,
@@ -193,15 +228,38 @@ pub fn build_title_block(
         ("SHEET TITLE", sheet.title.clone()),
         ("SCALE", scale_label.to_string()),
         ("DATE", tb.date.clone()),
-        ("DRAWN", tb.drawn_by.clone().unwrap_or_else(|| "\u{2014}".to_string())),
-        ("CHECKED", tb.checked_by.clone().unwrap_or_else(|| "\u{2014}".to_string())),
-        ("PROJECT NO.", tb.project_number.clone().unwrap_or_else(|| "\u{2014}".to_string())),
+        (
+            "DRAWN",
+            tb.drawn_by
+                .clone()
+                .unwrap_or_else(|| "\u{2014}".to_string()),
+        ),
+        (
+            "CHECKED",
+            tb.checked_by
+                .clone()
+                .unwrap_or_else(|| "\u{2014}".to_string()),
+        ),
+        (
+            "PROJECT NO.",
+            tb.project_number
+                .clone()
+                .unwrap_or_else(|| "\u{2014}".to_string()),
+        ),
         ("SHEET", tb.sheet_of.clone()),
     ];
     let row_h = (22.0f64).min((num_top - y - 4.0) / rows.len() as f64);
     for (label, value) in rows {
         out.push(text(r.x + pad, y + 8.0, label, 5.5, MUTED, None, None));
-        out.push(text(r.x + pad, y + 17.0, &value, 8.0, INK, None, Some(600.0)));
+        out.push(text(
+            r.x + pad,
+            y + 17.0,
+            &value,
+            8.0,
+            INK,
+            None,
+            Some(600.0),
+        ));
         y += row_h;
         out.push(line_prim(r.x, y, r.x + r.w, y, 0.4, LIGHT));
     }
@@ -217,8 +275,26 @@ pub fn build_revision_block(sheet: &Sheet, layout: &SheetLayout) -> Vec<SheetPri
     let h = 12.0 + sheet.revisions.len() as f64 * 10.0;
     let top = r.y + r.h - 54.0 - h - 6.0;
     let mut out = vec![
-        SheetPrimitive::Rect { x: r.x, y: top, w: r.w, h, sw: Some(0.6), stroke: Some(INK.to_string()), fill: None, fill_opacity: None, dash: None },
-        text(r.x + 4.0, top + 9.0, "REVISIONS", 6.0, MUTED, None, Some(700.0)),
+        SheetPrimitive::Rect {
+            x: r.x,
+            y: top,
+            w: r.w,
+            h,
+            sw: Some(0.6),
+            stroke: Some(INK.to_string()),
+            fill: None,
+            fill_opacity: None,
+            dash: None,
+        },
+        text(
+            r.x + 4.0,
+            top + 9.0,
+            "REVISIONS",
+            6.0,
+            MUTED,
+            None,
+            Some(700.0),
+        ),
     ];
     let mut y = top + 20.0;
     for rev in &sheet.revisions {
@@ -230,7 +306,15 @@ pub fn build_revision_block(sheet: &Sheet, layout: &SheetLayout) -> Vec<SheetPri
             fill: None,
             fill_opacity: None,
         });
-        out.push(text_anchored(r.x + 10.0, y - 1.0, &rev.delta.to_string(), 6.0, INK, TextAnchor::Middle, Some(700.0)));
+        out.push(text_anchored(
+            r.x + 10.0,
+            y - 1.0,
+            &rev.delta.to_string(),
+            6.0,
+            INK,
+            TextAnchor::Middle,
+            Some(700.0),
+        ));
         let mut label = format!("{}  {}", rev.date, rev.description);
         label = label.chars().take(34).collect();
         out.push(text(r.x + 20.0, y, &label, 6.0, INK, None, None));
@@ -243,13 +327,23 @@ pub fn build_revision_block(sheet: &Sheet, layout: &SheetLayout) -> Vec<SheetPri
 
 /// Draw every dimension in `dimensions`, projected through `project`.
 /// Adapted from `drawDimensions(site, project)` — see the module rustdoc.
-pub fn draw_dimensions(dimensions: &[Dimension], spatial: &SpatialContext, project: impl Fn(Point) -> Pt) -> Vec<SheetPrimitive> {
+pub fn draw_dimensions(
+    dimensions: &[Dimension],
+    spatial: &SpatialContext,
+    project: impl Fn(Point) -> Pt,
+) -> Vec<SheetPrimitive> {
     let mut out = Vec::new();
     for dim in dimensions {
         let m = measure_dimension(dim, spatial);
-        let style = dimension_style(dim_style_id(dim));
+        let style = dimension_style(dim.style_id());
         for [a, b] in &m.geometry.lines {
-            out.push(SheetPrimitive::Line { a: project(*a), b: project(*b), w: Some(0.4), color: Some(INK.to_string()), dash: None });
+            out.push(SheetPrimitive::Line {
+                a: project(*a),
+                b: project(*b),
+                w: Some(0.4),
+                color: Some(INK.to_string()),
+                dash: None,
+            });
         }
         for tk in &m.geometry.ticks {
             let at = project(tk.at);
@@ -275,20 +369,12 @@ pub fn draw_dimensions(dimensions: &[Dimension], spatial: &SpatialContext, proje
     out
 }
 
-fn dim_style_id(dim: &Dimension) -> &str {
-    match dim {
-        Dimension::Linear(d) => &d.style_id,
-        Dimension::Aligned(d) => &d.style_id,
-        Dimension::Angular(d) => &d.style_id,
-        Dimension::Radial(d) => &d.style_id,
-        Dimension::Ordinate(d) => &d.style_id,
-        Dimension::ArcLength(d) => &d.style_id,
-    }
-}
-
 /// Draw every structural gridline's bubbles, projected through `project`.
 /// Adapted from `drawGridBubbles(site, project)` — see the module rustdoc.
-pub fn draw_grid_bubbles(grid_lines: &[GridLine], project: impl Fn(Point) -> Pt) -> Vec<SheetPrimitive> {
+pub fn draw_grid_bubbles(
+    grid_lines: &[GridLine],
+    project: impl Fn(Point) -> Pt,
+) -> Vec<SheetPrimitive> {
     let mut out = Vec::new();
     for g in grid_lines {
         out.push(SheetPrimitive::Line {
@@ -300,8 +386,23 @@ pub fn draw_grid_bubbles(grid_lines: &[GridLine], project: impl Fn(Point) -> Pt)
         });
         for bub in grid_bubble_geometry(g, 6.0) {
             let c = project(bub.center);
-            out.push(SheetPrimitive::Circle { c, r: 8.0, sw: Some(0.7), stroke: Some(INK.to_string()), fill: Some("#ffffff".to_string()), fill_opacity: None });
-            out.push(text_anchored(c.x, c.y + 3.0, &bub.label, 7.0, INK, TextAnchor::Middle, Some(700.0)));
+            out.push(SheetPrimitive::Circle {
+                c,
+                r: 8.0,
+                sw: Some(0.7),
+                stroke: Some(INK.to_string()),
+                fill: Some("#ffffff".to_string()),
+                fill_opacity: None,
+            });
+            out.push(text_anchored(
+                c.x,
+                c.y + 3.0,
+                &bub.label,
+                7.0,
+                INK,
+                TextAnchor::Middle,
+                Some(700.0),
+            ));
         }
     }
     out
@@ -326,19 +427,52 @@ pub fn draw_marks(marks: &SheetMarks<'_>, project: impl Fn(Point) -> Pt) -> Vec<
     for sm in marks.section_marks {
         let a = project(sm.at_line[0]);
         let b = project(sm.at_line[1]);
-        out.push(SheetPrimitive::Line { a, b, w: Some(1.4), color: Some(INK.to_string()), dash: Some(vec![12.0, 3.0, 3.0, 3.0]) });
+        out.push(SheetPrimitive::Line {
+            a,
+            b,
+            w: Some(1.4),
+            color: Some(INK.to_string()),
+            dash: Some(vec![12.0, 3.0, 3.0, 3.0]),
+        });
         let gaze = section_gaze(sm);
         for end in [a, b] {
-            out.push(SheetPrimitive::Circle { c: end, r: 9.0, sw: Some(0.9), stroke: Some(INK.to_string()), fill: Some("#ffffff".to_string()), fill_opacity: None });
-            out.push(text_anchored(end.x, end.y + 3.0, &sm.tag, 8.0, INK, TextAnchor::Middle, Some(700.0)));
-            out.push(arrow_head(Pt::new(end.x + gaze.x * 14.0, end.y + gaze.y * 14.0), Pt::new(gaze.x, gaze.y), 5.0, None));
+            out.push(SheetPrimitive::Circle {
+                c: end,
+                r: 9.0,
+                sw: Some(0.9),
+                stroke: Some(INK.to_string()),
+                fill: Some("#ffffff".to_string()),
+                fill_opacity: None,
+            });
+            out.push(text_anchored(
+                end.x,
+                end.y + 3.0,
+                &sm.tag,
+                8.0,
+                INK,
+                TextAnchor::Middle,
+                Some(700.0),
+            ));
+            out.push(arrow_head(
+                Pt::new(end.x + gaze.x * 14.0, end.y + gaze.y * 14.0),
+                Pt::new(gaze.x, gaze.y),
+                5.0,
+                None,
+            ));
         }
     }
     for dm in marks.detail_marks {
         let c = project(dm.center);
         let edge = project(Point::new(dm.center.x + dm.radius, dm.center.y));
         let rr = distance(Point::new(edge.x, edge.y), Point::new(c.x, c.y));
-        out.push(SheetPrimitive::Circle { c, r: rr, sw: Some(0.8), stroke: Some(INK.to_string()), fill: Some("transparent".to_string()), fill_opacity: Some(0.0) });
+        out.push(SheetPrimitive::Circle {
+            c,
+            r: rr,
+            sw: Some(0.8),
+            stroke: Some(INK.to_string()),
+            fill: Some("transparent".to_string()),
+            fill_opacity: Some(0.0),
+        });
         out.push(SheetPrimitive::Circle {
             c: Pt::new(c.x + rr + 12.0, c.y - rr),
             r: 9.0,
@@ -347,12 +481,26 @@ pub fn draw_marks(marks: &SheetMarks<'_>, project: impl Fn(Point) -> Pt) -> Vec<
             fill: Some("#ffffff".to_string()),
             fill_opacity: None,
         });
-        out.push(text_anchored(c.x + rr + 12.0, c.y - rr + 3.0, &dm.tag, 8.0, INK, TextAnchor::Middle, Some(700.0)));
+        out.push(text_anchored(
+            c.x + rr + 12.0,
+            c.y - rr + 3.0,
+            &dm.tag,
+            8.0,
+            INK,
+            TextAnchor::Middle,
+            Some(700.0),
+        ));
     }
     for ml in marks.match_lines {
         let a = project(ml.at_line[0]);
         let b = project(ml.at_line[1]);
-        out.push(SheetPrimitive::Line { a, b, w: Some(1.6), color: Some("#b91c1c".to_string()), dash: Some(vec![16.0, 3.0, 3.0, 3.0]) });
+        out.push(SheetPrimitive::Line {
+            a,
+            b,
+            w: Some(1.6),
+            color: Some("#b91c1c".to_string()),
+            dash: Some(vec![16.0, 3.0, 3.0, 3.0]),
+        });
         out.push(text_anchored(
             (a.x + b.x) / 2.0,
             (a.y + b.y) / 2.0 - 4.0,
@@ -364,19 +512,40 @@ pub fn draw_marks(marks: &SheetMarks<'_>, project: impl Fn(Point) -> Pt) -> Vec<
         ));
     }
     for rc in marks.revision_clouds {
-        let apexes: Vec<Pt> = revision_cloud_bumps(rc, 6.0).into_iter().map(&project).collect();
-        out.push(SheetPrimitive::Polyline { pts: apexes, w: Some(0.8), color: Some("#b91c1c".to_string()), dash: None, close: Some(true) });
+        let apexes: Vec<Pt> = revision_cloud_bumps(rc, 6.0)
+            .into_iter()
+            .map(&project)
+            .collect();
+        out.push(SheetPrimitive::Polyline {
+            pts: apexes,
+            w: Some(0.8),
+            color: Some("#b91c1c".to_string()),
+            dash: None,
+            close: Some(true),
+        });
         if let Some(first_model) = rc.boundary.first() {
             let first = project(*first_model);
             out.push(SheetPrimitive::Polygon {
-                pts: vec![Pt::new(first.x, first.y - 6.0), Pt::new(first.x + 6.0, first.y + 4.0), Pt::new(first.x - 6.0, first.y + 4.0)],
+                pts: vec![
+                    Pt::new(first.x, first.y - 6.0),
+                    Pt::new(first.x + 6.0, first.y + 4.0),
+                    Pt::new(first.x - 6.0, first.y + 4.0),
+                ],
                 w: Some(0.3),
                 stroke: Some("#b91c1c".to_string()),
                 fill: Some("#b91c1c".to_string()),
                 fill_opacity: None,
                 dash: None,
             });
-            out.push(text_anchored(first.x, first.y + 3.0, &rc.delta.to_string(), 6.0, "#ffffff", TextAnchor::Middle, Some(700.0)));
+            out.push(text_anchored(
+                first.x,
+                first.y + 3.0,
+                &rc.delta.to_string(),
+                6.0,
+                "#ffffff",
+                TextAnchor::Middle,
+                Some(700.0),
+            ));
         }
     }
     out
@@ -386,16 +555,59 @@ pub fn draw_marks(marks: &SheetMarks<'_>, project: impl Fn(Point) -> Pt) -> Vec<
 
 /// The label/scale caption drawn under a viewport's rectangle, with an
 /// optional numbered bubble.
-pub fn viewport_title(rect: RectPt, num: Option<u32>, title: &str, scale: &str) -> Vec<SheetPrimitive> {
+pub fn viewport_title(
+    rect: RectPt,
+    num: Option<u32>,
+    title: &str,
+    scale: &str,
+) -> Vec<SheetPrimitive> {
     let mut out = Vec::new();
     let y = rect.y + rect.h + 4.0;
     if let Some(n) = num {
-        out.push(SheetPrimitive::Circle { c: Pt::new(rect.x + 10.0, y + 8.0), r: 9.0, sw: Some(1.0), stroke: Some(INK.to_string()), fill: Some("#ffffff".to_string()), fill_opacity: None });
-        out.push(text_anchored(rect.x + 10.0, y + 11.0, &n.to_string(), 9.0, INK, TextAnchor::Middle, Some(700.0)));
+        out.push(SheetPrimitive::Circle {
+            c: Pt::new(rect.x + 10.0, y + 8.0),
+            r: 9.0,
+            sw: Some(1.0),
+            stroke: Some(INK.to_string()),
+            fill: Some("#ffffff".to_string()),
+            fill_opacity: None,
+        });
+        out.push(text_anchored(
+            rect.x + 10.0,
+            y + 11.0,
+            &n.to_string(),
+            9.0,
+            INK,
+            TextAnchor::Middle,
+            Some(700.0),
+        ));
     }
-    out.push(text(rect.x + 24.0, y + 8.0, &title.to_uppercase(), 8.0, INK, None, Some(700.0)));
-    out.push(text(rect.x + 24.0, y + 17.0, &format!("SCALE: {scale}"), 6.0, MUTED, None, None));
-    out.push(line_prim(rect.x, y + 20.0, rect.x + rect.w.min(160.0), y + 20.0, 1.0, INK));
+    out.push(text(
+        rect.x + 24.0,
+        y + 8.0,
+        &title.to_uppercase(),
+        8.0,
+        INK,
+        None,
+        Some(700.0),
+    ));
+    out.push(text(
+        rect.x + 24.0,
+        y + 17.0,
+        &format!("SCALE: {scale}"),
+        6.0,
+        MUTED,
+        None,
+        None,
+    ));
+    out.push(line_prim(
+        rect.x,
+        y + 20.0,
+        rect.x + rect.w.min(160.0),
+        y + 20.0,
+        1.0,
+        INK,
+    ));
     out
 }
 
@@ -404,14 +616,27 @@ pub fn viewport_title(rect: RectPt, num: Option<u32>, title: &str, scale: &str) 
 /// Render a schedule table as a bordered grid of text primitives, starting
 /// at `(x, y)` with width `w`. Returns the primitives plus the total height
 /// consumed, so a caller can stack multiple tables vertically.
-pub fn draw_schedule_table(table: &ScheduleTable, x: f64, y: f64, w: f64) -> (Vec<SheetPrimitive>, f64) {
+pub fn draw_schedule_table(
+    table: &ScheduleTable,
+    x: f64,
+    y: f64,
+    w: f64,
+) -> (Vec<SheetPrimitive>, f64) {
     let mut out = Vec::new();
     let row_h = 14.0;
     let head_h = 16.0;
     let cols = &table.columns;
     let col_w = w / cols.len().max(1) as f64;
 
-    out.push(text(x, y - 4.0, &table.title.to_uppercase(), 8.0, INK, None, Some(700.0)));
+    out.push(text(
+        x,
+        y - 4.0,
+        &table.title.to_uppercase(),
+        8.0,
+        INK,
+        None,
+        Some(700.0),
+    ));
     out.push(SheetPrimitive::Rect {
         x,
         y,
@@ -424,14 +649,39 @@ pub fn draw_schedule_table(table: &ScheduleTable, x: f64, y: f64, w: f64) -> (Ve
         dash: None,
     });
     for (i, c) in cols.iter().enumerate() {
-        out.push(text(x + i as f64 * col_w + 4.0, y + 11.0, &c.label, 6.0, INK, None, Some(700.0)));
+        out.push(text(
+            x + i as f64 * col_w + 4.0,
+            y + 11.0,
+            &c.label,
+            6.0,
+            INK,
+            None,
+            Some(700.0),
+        ));
         if i > 0 {
-            out.push(line_prim(x + i as f64 * col_w, y, x + i as f64 * col_w, y + head_h + table.rows.len() as f64 * row_h, 0.4, LIGHT));
+            out.push(line_prim(
+                x + i as f64 * col_w,
+                y,
+                x + i as f64 * col_w,
+                y + head_h + table.rows.len() as f64 * row_h,
+                0.4,
+                LIGHT,
+            ));
         }
     }
     for (ri, row) in table.rows.iter().enumerate() {
         let ry = y + head_h + ri as f64 * row_h;
-        out.push(SheetPrimitive::Rect { x, y: ry, w, h: row_h, sw: Some(0.3), stroke: Some(LIGHT.to_string()), fill: None, fill_opacity: None, dash: None });
+        out.push(SheetPrimitive::Rect {
+            x,
+            y: ry,
+            w,
+            h: row_h,
+            sw: Some(0.3),
+            stroke: Some(LIGHT.to_string()),
+            fill: None,
+            fill_opacity: None,
+            dash: None,
+        });
         for (i, c) in cols.iter().enumerate() {
             let v = ScheduleTable::cell_text(row, &c.key);
             let anchor = match c.align {
@@ -452,16 +702,47 @@ pub fn draw_schedule_table(table: &ScheduleTable, x: f64, y: f64, w: f64) -> (Ve
 
 // --- small text/line primitive constructors ---------------------------------
 
-fn text(x: f64, y: f64, s: &str, size: f64, color: &str, anchor: Option<TextAnchor>, weight: Option<f64>) -> SheetPrimitive {
-    SheetPrimitive::Text { at: Pt::new(x, y), text: s.to_string(), size, color: Some(color.to_string()), anchor, weight, angle: None, monospace: None }
+fn text(
+    x: f64,
+    y: f64,
+    s: &str,
+    size: f64,
+    color: &str,
+    anchor: Option<TextAnchor>,
+    weight: Option<f64>,
+) -> SheetPrimitive {
+    SheetPrimitive::Text {
+        at: Pt::new(x, y),
+        text: s.to_string(),
+        size,
+        color: Some(color.to_string()),
+        anchor,
+        weight,
+        angle: None,
+        monospace: None,
+    }
 }
 
-fn text_anchored(x: f64, y: f64, s: &str, size: f64, color: &str, anchor: TextAnchor, weight: Option<f64>) -> SheetPrimitive {
+fn text_anchored(
+    x: f64,
+    y: f64,
+    s: &str,
+    size: f64,
+    color: &str,
+    anchor: TextAnchor,
+    weight: Option<f64>,
+) -> SheetPrimitive {
     text(x, y, s, size, color, Some(anchor), weight)
 }
 
 fn line_prim(x1: f64, y1: f64, x2: f64, y2: f64, w: f64, color: &str) -> SheetPrimitive {
-    SheetPrimitive::Line { a: Pt::new(x1, y1), b: Pt::new(x2, y2), w: Some(w), color: Some(color.to_string()), dash: None }
+    SheetPrimitive::Line {
+        a: Pt::new(x1, y1),
+        b: Pt::new(x2, y2),
+        w: Some(w),
+        color: Some(color.to_string()),
+        dash: None,
+    }
 }
 
 #[cfg(test)]
@@ -469,12 +750,16 @@ mod tests {
     use super::*;
     use crate::drafting::DisciplineCode;
     use crate::sheet::{Revision, SheetNumber, TitleBlockDefaults};
-    use thoth_spatial::Bounds;
+    use crate::sheetsize::Orientation;
 
     fn sample_sheet() -> Sheet {
         Sheet {
             id: "s1".to_string(),
-            number: SheetNumber { discipline: DisciplineCode::A, r#type: 1, sequence: 1 },
+            number: SheetNumber {
+                discipline: DisciplineCode::A,
+                r#type: 1,
+                sequence: 1,
+            },
             title: "Floor Plan".to_string(),
             size: "arch-d".to_string(),
             orientation: Orientation::Landscape,
@@ -515,8 +800,18 @@ mod tests {
 
     #[test]
     fn fit_projector_centers_the_bounds_in_the_rect() {
-        let rect = RectPt { x: 0.0, y: 0.0, w: 100.0, h: 100.0 };
-        let bounds = Bounds { min_x: 0.0, min_y: 0.0, max_x: 10.0, max_y: 10.0 };
+        let rect = RectPt {
+            x: 0.0,
+            y: 0.0,
+            w: 100.0,
+            h: 100.0,
+        };
+        let bounds = Bounds {
+            min_x: 0.0,
+            min_y: 0.0,
+            max_x: 10.0,
+            max_y: 10.0,
+        };
         let projector = fit_projector(rect, bounds, 0.0);
         let p = projector.project(Point::new(5.0, 5.0));
         assert!((p.x - 50.0).abs() < 1e-6);
@@ -536,7 +831,9 @@ mod tests {
         let set = sample_set(sheet.clone());
         let layout = sheet_layout(&sheet, PaperUnit::In);
         let prims = build_title_block(&set, &sheet, None, &layout, "1/4\"=1'-0\"");
-        let has_firm_line = prims.iter().any(|p| matches!(p, SheetPrimitive::Text { text, .. } if text == "Firm LLC"));
+        let has_firm_line = prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Text { text, .. } if text == "Firm LLC"));
         assert!(has_firm_line);
     }
 
@@ -547,8 +844,12 @@ mod tests {
         let layout = sheet_layout(&sheet, PaperUnit::In);
         let override_lines = vec!["Plugin Firm".to_string()];
         let prims = build_title_block(&set, &sheet, Some(&override_lines), &layout, "1/4\"=1'-0\"");
-        let has_override = prims.iter().any(|p| matches!(p, SheetPrimitive::Text { text, .. } if text == "Plugin Firm"));
-        let has_default = prims.iter().any(|p| matches!(p, SheetPrimitive::Text { text, .. } if text == "Firm LLC"));
+        let has_override = prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Text { text, .. } if text == "Plugin Firm"));
+        let has_default = prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Text { text, .. } if text == "Firm LLC"));
         assert!(has_override);
         assert!(!has_default);
     }
@@ -564,12 +865,27 @@ mod tests {
     fn build_revision_block_draws_one_bubble_per_revision() {
         let mut sheet = sample_sheet();
         sheet.revisions = vec![
-            Revision { id: "r1".to_string(), delta: 1, date: "2024-01-01".to_string(), description: "Issued for permit".to_string(), by: None },
-            Revision { id: "r2".to_string(), delta: 2, date: "2024-02-01".to_string(), description: "Revised per owner".to_string(), by: None },
+            Revision {
+                id: "r1".to_string(),
+                delta: 1,
+                date: "2024-01-01".to_string(),
+                description: "Issued for permit".to_string(),
+                by: None,
+            },
+            Revision {
+                id: "r2".to_string(),
+                delta: 2,
+                date: "2024-02-01".to_string(),
+                description: "Revised per owner".to_string(),
+                by: None,
+            },
         ];
         let layout = sheet_layout(&sheet, PaperUnit::In);
         let prims = build_revision_block(&sheet, &layout);
-        let bubble_count = prims.iter().filter(|p| matches!(p, SheetPrimitive::Circle { .. })).count();
+        let bubble_count = prims
+            .iter()
+            .filter(|p| matches!(p, SheetPrimitive::Circle { .. }))
+            .count();
         assert_eq!(bubble_count, 2);
     }
 
@@ -583,10 +899,18 @@ mod tests {
             b: Point::new(10.0, 0.0),
             offset: 2.0,
         })];
-        let spatial = SpatialContext { crs: "EPSG:3857".to_string(), units: thoth_spatial::Unit::Feet, scale: 1.0 };
+        let spatial = SpatialContext {
+            crs: "EPSG:3857".to_string(),
+            units: thoth_spatial::Unit::Feet,
+            scale: 1.0,
+        };
         let prims = draw_dimensions(&dims, &spatial, |p| Pt::new(p.x, p.y));
-        assert!(prims.iter().any(|p| matches!(p, SheetPrimitive::Text { .. })));
-        assert!(prims.iter().any(|p| matches!(p, SheetPrimitive::Line { .. })));
+        assert!(prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Text { .. })));
+        assert!(prims
+            .iter()
+            .any(|p| matches!(p, SheetPrimitive::Line { .. })));
     }
 
     #[test]
@@ -600,7 +924,10 @@ mod tests {
             bubbles: None,
         }];
         let prims = draw_grid_bubbles(&lines, |p| Pt::new(p.x, p.y));
-        let circles = prims.iter().filter(|p| matches!(p, SheetPrimitive::Circle { .. })).count();
+        let circles = prims
+            .iter()
+            .filter(|p| matches!(p, SheetPrimitive::Circle { .. }))
+            .count();
         assert_eq!(circles, 2);
     }
 
@@ -612,7 +939,12 @@ mod tests {
 
     #[test]
     fn viewport_title_includes_a_numbered_bubble_when_requested() {
-        let rect = RectPt { x: 0.0, y: 0.0, w: 200.0, h: 100.0 };
+        let rect = RectPt {
+            x: 0.0,
+            y: 0.0,
+            w: 200.0,
+            h: 100.0,
+        };
         let with_num = viewport_title(rect, Some(3), "Floor Plan", "1/4\"=1'-0\"");
         let without_num = viewport_title(rect, None, "Floor Plan", "1/4\"=1'-0\"");
         assert!(with_num.len() > without_num.len());

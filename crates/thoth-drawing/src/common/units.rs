@@ -26,7 +26,11 @@ const IN_PER_MM: f64 = 1.0 / 25.4;
 /// non-finite or non-positive (a malformed/degenerate scale) rather than
 /// silently returning `NaN`/`Infinity` for a caller to trip over downstream —
 /// the TS original has no such guard.
-pub fn paper_per_model(scale_id: &str, model_unit: Unit, paper_unit: PaperUnit) -> Result<f64, DrawingError> {
+pub fn paper_per_model(
+    scale_id: &str,
+    model_unit: Unit,
+    paper_unit: PaperUnit,
+) -> Result<f64, DrawingError> {
     let ratio = scale_ratio(scale_id);
     let result = model_unit.meters_per_unit() / (ratio * meters_per_paper_unit(paper_unit));
     validate_ratio(scale_id, result)
@@ -38,7 +42,10 @@ pub fn paper_per_model(scale_id: &str, model_unit: Unit, paper_unit: PaperUnit) 
 /// otherwise unreachable through the public API.
 fn validate_ratio(scale_id: &str, result: f64) -> Result<f64, DrawingError> {
     if !result.is_finite() || result <= 0.0 {
-        return Err(DrawingError::InvalidScale { scale_id: scale_id.to_string(), ratio: result });
+        return Err(DrawingError::InvalidScale {
+            scale_id: scale_id.to_string(),
+            ratio: result,
+        });
     }
     Ok(result)
 }
@@ -81,10 +88,28 @@ mod tests {
 
     #[test]
     fn validate_ratio_rejects_non_finite_and_non_positive_values() {
-        assert!(matches!(validate_ratio("bad", f64::NAN), Err(DrawingError::InvalidScale { .. })));
-        assert!(matches!(validate_ratio("bad", f64::INFINITY), Err(DrawingError::InvalidScale { .. })));
-        assert_eq!(validate_ratio("bad", 0.0), Err(DrawingError::InvalidScale { scale_id: "bad".to_string(), ratio: 0.0 }));
-        assert_eq!(validate_ratio("bad", -1.0), Err(DrawingError::InvalidScale { scale_id: "bad".to_string(), ratio: -1.0 }));
+        assert!(matches!(
+            validate_ratio("bad", f64::NAN),
+            Err(DrawingError::InvalidScale { .. })
+        ));
+        assert!(matches!(
+            validate_ratio("bad", f64::INFINITY),
+            Err(DrawingError::InvalidScale { .. })
+        ));
+        assert_eq!(
+            validate_ratio("bad", 0.0),
+            Err(DrawingError::InvalidScale {
+                scale_id: "bad".to_string(),
+                ratio: 0.0
+            })
+        );
+        assert_eq!(
+            validate_ratio("bad", -1.0),
+            Err(DrawingError::InvalidScale {
+                scale_id: "bad".to_string(),
+                ratio: -1.0
+            })
+        );
         assert!(validate_ratio("ok", 1.0).is_ok());
     }
 }

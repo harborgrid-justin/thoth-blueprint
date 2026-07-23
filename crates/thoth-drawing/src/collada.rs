@@ -80,7 +80,14 @@ pub fn prism(name: &str, boundary: &[Point], bottom: f64, top: f64, color: [f64;
     // Side walls.
     for i in 0..n {
         let j = (i + 1) % n;
-        indices.extend_from_slice(&[i as u32, j as u32, (n + i) as u32, j as u32, (n + j) as u32, (n + i) as u32]);
+        indices.extend_from_slice(&[
+            i as u32,
+            j as u32,
+            (n + i) as u32,
+            j as u32,
+            (n + j) as u32,
+            (n + i) as u32,
+        ]);
     }
     // Top cap (fan triangulation — fine for convex-ish footprints).
     for i in 1..n.saturating_sub(1) {
@@ -91,7 +98,12 @@ pub fn prism(name: &str, boundary: &[Point], bottom: f64, top: f64, color: [f64;
         indices.extend_from_slice(&[0, (i + 1) as u32, i as u32]);
     }
 
-    SimpleMesh { name: name.to_string(), positions, indices, color }
+    SimpleMesh {
+        name: name.to_string(),
+        positions,
+        indices,
+        color,
+    }
 }
 
 fn fmt(v: f64) -> String {
@@ -129,8 +141,18 @@ pub fn write_collada(meshes: &[SimpleMesh], author: Option<&str>) -> String {
 
         let vcount = mesh.positions.len() / 3;
         let tri_count = mesh.indices.len() / 3;
-        let positions_str = mesh.positions.iter().map(|v| fmt(*v)).collect::<Vec<_>>().join(" ");
-        let indices_str = mesh.indices.iter().map(|v| v.to_string()).collect::<Vec<_>>().join(" ");
+        let positions_str = mesh
+            .positions
+            .iter()
+            .map(|v| fmt(*v))
+            .collect::<Vec<_>>()
+            .join(" ");
+        let indices_str = mesh
+            .indices
+            .iter()
+            .map(|v| v.to_string())
+            .collect::<Vec<_>>()
+            .join(" ");
         geometries.push_str(&format!(
             "<geometry id=\"{id_esc}-geom\" name=\"{}\"><mesh>\
             <source id=\"{id_esc}-pos\"><float_array id=\"{id_esc}-pos-array\" count=\"{}\">{positions_str}</float_array>\
@@ -230,8 +252,12 @@ mod tests {
 
     #[test]
     fn prism_builds_side_walls_and_caps_for_a_square_footprint() {
-        let boundary =
-            vec![Point::new(0.0, 0.0), Point::new(1.0, 0.0), Point::new(1.0, 1.0), Point::new(0.0, 1.0)];
+        let boundary = vec![
+            Point::new(0.0, 0.0),
+            Point::new(1.0, 0.0),
+            Point::new(1.0, 1.0),
+            Point::new(0.0, 1.0),
+        ];
         let mesh = prism("Box", &boundary, 0.0, 3.0, [1.0, 1.0, 1.0]);
         // 4 bottom + 4 top vertices, 3 floats each.
         assert_eq!(mesh.positions.len(), 8 * 3);

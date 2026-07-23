@@ -60,7 +60,11 @@ mod tests {
     fn every_part_has_a_non_empty_id_and_category() {
         for part in initial_parts_catalog() {
             assert!(!part.id.is_empty(), "part with empty id");
-            assert!(!part.category.is_empty(), "part {} has empty category", part.id);
+            assert!(
+                !part.category.is_empty(),
+                "part {} has empty category",
+                part.id
+            );
         }
     }
 
@@ -69,7 +73,11 @@ mod tests {
         let catalog = initial_parts_catalog();
         let mut seen = std::collections::HashSet::new();
         for part in &catalog {
-            assert!(seen.insert(part.id.as_str()), "duplicate part id: {}", part.id);
+            assert!(
+                seen.insert(part.id.as_str()),
+                "duplicate part id: {}",
+                part.id
+            );
         }
     }
 }

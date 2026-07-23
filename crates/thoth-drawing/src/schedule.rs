@@ -126,12 +126,30 @@ pub fn curve_schedule(curves: &[SiteCurve]) -> ScheduleTable {
         .map(|c| {
             let mut row = ScheduleRow::new();
             row.insert("label".to_string(), CellValue::from(c.label.clone()));
-            row.insert("radius".to_string(), CellValue::from(format!("{:.2}", c.radius)));
-            row.insert("arcLength".to_string(), CellValue::from(format!("{:.2}", c.arc_length)));
-            row.insert("delta".to_string(), CellValue::from(format!("{:.2}\u{b0}", c.delta_deg)));
-            row.insert("chord".to_string(), CellValue::from(format!("{:.2}", c.chord)));
-            row.insert("chordBearing".to_string(), CellValue::from(c.chord_bearing.clone()));
-            row.insert("tangent".to_string(), CellValue::from(format!("{:.2}", c.tangent)));
+            row.insert(
+                "radius".to_string(),
+                CellValue::from(format!("{:.2}", c.radius)),
+            );
+            row.insert(
+                "arcLength".to_string(),
+                CellValue::from(format!("{:.2}", c.arc_length)),
+            );
+            row.insert(
+                "delta".to_string(),
+                CellValue::from(format!("{:.2}\u{b0}", c.delta_deg)),
+            );
+            row.insert(
+                "chord".to_string(),
+                CellValue::from(format!("{:.2}", c.chord)),
+            );
+            row.insert(
+                "chordBearing".to_string(),
+                CellValue::from(c.chord_bearing.clone()),
+            );
+            row.insert(
+                "tangent".to_string(),
+                CellValue::from(format!("{:.2}", c.tangent)),
+            );
             row
         })
         .collect();
@@ -140,13 +158,41 @@ pub fn curve_schedule(curves: &[SiteCurve]) -> ScheduleTable {
         id: "curve-schedule".to_string(),
         title: "Curve Table".to_string(),
         columns: vec![
-            ScheduleColumn { key: "label".to_string(), label: "Curve".to_string(), align: None },
-            ScheduleColumn { key: "radius".to_string(), label: "Radius".to_string(), align: Some(ColumnAlign::Right) },
-            ScheduleColumn { key: "arcLength".to_string(), label: "Length".to_string(), align: Some(ColumnAlign::Right) },
-            ScheduleColumn { key: "delta".to_string(), label: "Delta".to_string(), align: Some(ColumnAlign::Right) },
-            ScheduleColumn { key: "chord".to_string(), label: "Chord".to_string(), align: Some(ColumnAlign::Right) },
-            ScheduleColumn { key: "chordBearing".to_string(), label: "Chord Brg.".to_string(), align: None },
-            ScheduleColumn { key: "tangent".to_string(), label: "Tangent".to_string(), align: Some(ColumnAlign::Right) },
+            ScheduleColumn {
+                key: "label".to_string(),
+                label: "Curve".to_string(),
+                align: None,
+            },
+            ScheduleColumn {
+                key: "radius".to_string(),
+                label: "Radius".to_string(),
+                align: Some(ColumnAlign::Right),
+            },
+            ScheduleColumn {
+                key: "arcLength".to_string(),
+                label: "Length".to_string(),
+                align: Some(ColumnAlign::Right),
+            },
+            ScheduleColumn {
+                key: "delta".to_string(),
+                label: "Delta".to_string(),
+                align: Some(ColumnAlign::Right),
+            },
+            ScheduleColumn {
+                key: "chord".to_string(),
+                label: "Chord".to_string(),
+                align: Some(ColumnAlign::Right),
+            },
+            ScheduleColumn {
+                key: "chordBearing".to_string(),
+                label: "Chord Brg.".to_string(),
+                align: None,
+            },
+            ScheduleColumn {
+                key: "tangent".to_string(),
+                label: "Tangent".to_string(),
+                align: Some(ColumnAlign::Right),
+            },
         ],
         rows,
     }
@@ -199,7 +245,11 @@ mod tests {
         let err = table.validate().unwrap_err();
         assert_eq!(
             err,
-            DrawingError::MissingScheduleColumn { table_id: "curve-schedule".to_string(), row_index: 0, column: "tangent".to_string() }
+            DrawingError::MissingScheduleColumn {
+                table_id: "curve-schedule".to_string(),
+                row_index: 0,
+                column: "tangent".to_string()
+            }
         );
     }
 

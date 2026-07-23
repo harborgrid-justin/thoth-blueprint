@@ -100,7 +100,10 @@ const DEFAULT_LEADER_GAP_MM: f64 = 2.0;
 
 /// Merge a child style override with its resolved parent style, following
 /// the `parent_id` chain (root ancestor first, requested style last).
-pub fn resolve_label_style(style_id: &str, styles_list: &HashMap<String, LabelStyle>) -> ResolvedLabelStyle {
+pub fn resolve_label_style(
+    style_id: &str,
+    styles_list: &HashMap<String, LabelStyle>,
+) -> ResolvedLabelStyle {
     let mut general = ResolvedGeneral {
         layer: DEFAULT_ANNOTATION_LAYER.to_string(),
         visible: true,
@@ -112,7 +115,11 @@ pub fn resolve_label_style(style_id: &str, styles_list: &HashMap<String, LabelSt
         font_color: "#000000".to_string(),
         anchor_point: "center".to_string(),
     };
-    let mut dragged_state = ResolvedDraggedState { leader_visible: true, stacked_text: true, gap: DEFAULT_LEADER_GAP_MM };
+    let mut dragged_state = ResolvedDraggedState {
+        leader_visible: true,
+        stacked_text: true,
+        gap: DEFAULT_LEADER_GAP_MM,
+    };
 
     // Walk the parent chain, then fold parent-first, child-last so a child's
     // explicit overrides win.
@@ -120,7 +127,10 @@ pub fn resolve_label_style(style_id: &str, styles_list: &HashMap<String, LabelSt
     let mut current = styles_list.get(style_id);
     while let Some(style) = current {
         chain.push(style);
-        current = style.parent_id.as_ref().and_then(|pid| styles_list.get(pid));
+        current = style
+            .parent_id
+            .as_ref()
+            .and_then(|pid| styles_list.get(pid));
     }
     chain.reverse();
 
@@ -165,7 +175,10 @@ pub fn resolve_label_style(style_id: &str, styles_list: &HashMap<String, LabelSt
 
     ResolvedLabelStyle {
         id: style_id.to_string(),
-        name: styles_list.get(style_id).map(|s| s.name.clone()).unwrap_or_else(|| "Resolved Style".to_string()),
+        name: styles_list
+            .get(style_id)
+            .map(|s| s.name.clone())
+            .unwrap_or_else(|| "Resolved Style".to_string()),
         general,
         layout,
         dragged_state,
@@ -205,7 +218,12 @@ pub fn format_quadrant_bearing(azimuth: f64) -> String {
     let min = min_float.floor();
     let sec = ((min_float - min) * 60.0).round();
 
-    format!("{quadrant} {deg}\u{b0}{min:0>2}'{sec:0>2}\" {exit_dir}", deg = deg as i64, min = min as i64, sec = sec as i64)
+    format!(
+        "{quadrant} {deg}\u{b0}{min:0>2}'{sec:0>2}\" {exit_dir}",
+        deg = deg as i64,
+        min = min as i64,
+        sec = sec as i64
+    )
 }
 
 /// Compile a text template with variables and evaluate basic math
@@ -217,7 +235,11 @@ pub fn format_quadrant_bearing(azimuth: f64) -> String {
 /// [`crate::qto`]'s hand-rolled recursive-descent parser (restricted to
 /// `+-*/()` and numbers), matching the TS original's `Function(...)` path
 /// only in the (equally restricted) inputs it accepts.
-pub fn compile_label_template(template: &str, variables: &HashMap<String, LabelValue>, declination: f64) -> String {
+pub fn compile_label_template(
+    template: &str,
+    variables: &HashMap<String, LabelValue>,
+    declination: f64,
+) -> String {
     let mut result = template.to_string();
 
     // Pass 1: replace standard label variables via exact `{key}` substitution.
@@ -261,8 +283,12 @@ fn format_number(n: f64) -> String {
     format!("{n}")
 }
 
-const TAG_EXPR_CHARS: fn(char) -> bool =
-    |c: char| c.is_ascii_alphanumeric() || c == '_' || c.is_whitespace() || matches!(c, '+' | '-' | '*' | '/' | '.');
+const TAG_EXPR_CHARS: fn(char) -> bool = |c: char| {
+    c.is_ascii_alphanumeric()
+        || c == '_'
+        || c.is_whitespace()
+        || matches!(c, '+' | '-' | '*' | '/' | '.')
+};
 
 fn is_ident_char(c: char) -> bool {
     c.is_ascii_alphanumeric() || c == '_'
@@ -318,8 +344,12 @@ fn substitute_arithmetic_tags(text: &str, variables: &HashMap<String, LabelValue
                             expr = replace_whole_word(&expr, key, &format_number(*n));
                         }
                     }
-                    let is_pure_arithmetic =
-                        !expr.is_empty() && expr.chars().all(|c| c.is_ascii_digit() || c.is_whitespace() || matches!(c, '+' | '-' | '*' | '/' | '(' | ')' | '.'));
+                    let is_pure_arithmetic = !expr.is_empty()
+                        && expr.chars().all(|c| {
+                            c.is_ascii_digit()
+                                || c.is_whitespace()
+                                || matches!(c, '+' | '-' | '*' | '/' | '(' | ')' | '.')
+                        });
                     if is_pure_arithmetic {
                         if let Some(value) = crate::qto::evaluate_arithmetic(&expr) {
                             out.push_str(&format!("{value:.2}"));
@@ -356,7 +386,11 @@ mod tests {
                 id: "parent".to_string(),
                 name: "Parent".to_string(),
                 parent_id: None,
-                general: Some(LabelStyleGeneral { layer: Some("C-ANNO".to_string()), visible: None, plan_readable: None }),
+                general: Some(LabelStyleGeneral {
+                    layer: Some("C-ANNO".to_string()),
+                    visible: None,
+                    plan_readable: None,
+                }),
                 layout: None,
                 dragged_state: None,
             },
@@ -368,7 +402,12 @@ mod tests {
                 name: "Child".to_string(),
                 parent_id: Some("parent".to_string()),
                 general: None,
-                layout: Some(LabelStyleLayout { text_template: Some("{Name}".to_string()), font_size: Some(10.0), font_color: None, anchor_point: None }),
+                layout: Some(LabelStyleLayout {
+                    text_template: Some("{Name}".to_string()),
+                    font_size: Some(10.0),
+                    font_color: None,
+                    anchor_point: None,
+                }),
                 dragged_state: None,
             },
         );

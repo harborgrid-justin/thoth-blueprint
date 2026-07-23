@@ -50,7 +50,9 @@ impl Default for GlobalPartsDatabase {
 impl GlobalPartsDatabase {
     /// Build a database pre-seeded with `initial_catalog`.
     pub fn new(initial_catalog: Vec<PartSpecification>) -> Self {
-        let mut db = GlobalPartsDatabase { parts_map: BTreeMap::new() };
+        let mut db = GlobalPartsDatabase {
+            parts_map: BTreeMap::new(),
+        };
         db.import_catalog(initial_catalog);
         db
     }
@@ -79,14 +81,20 @@ impl GlobalPartsDatabase {
 
     /// Retrieve all parts belonging to a specific subcategory.
     pub fn get_parts_by_subcategory(&self, subcategory: &str) -> Vec<&PartSpecification> {
-        self.get_all_parts().into_iter().filter(|p| p.subcategory == subcategory).collect()
+        self.get_all_parts()
+            .into_iter()
+            .filter(|p| p.subcategory == subcategory)
+            .collect()
     }
 
     /// Dynamically register a new part, or replace an existing one with the
     /// same id. Errors if `spec.id` is empty (the TS throws `Error` on a
     /// falsy id; this crate never panics on caller data, so it returns
     /// [`DrawingError::MissingPartId`] instead).
-    pub fn register_part(&mut self, spec: PartSpecification) -> Result<&PartSpecification, DrawingError> {
+    pub fn register_part(
+        &mut self,
+        spec: PartSpecification,
+    ) -> Result<&PartSpecification, DrawingError> {
         if spec.id.is_empty() {
             return Err(DrawingError::MissingPartId);
         }
@@ -110,9 +118,16 @@ impl GlobalPartsDatabase {
     /// Update/patch properties of an existing part. Errors with
     /// [`DrawingError::UnknownPart`] if `id` isn't registered (the TS throws
     /// `Error` in this case).
-    pub fn update_part(&mut self, id: &str, patch: PartPatch) -> Result<&PartSpecification, DrawingError> {
-        let mut updated =
-            self.parts_map.get(id).ok_or_else(|| DrawingError::UnknownPart(id.to_string()))?.clone();
+    pub fn update_part(
+        &mut self,
+        id: &str,
+        patch: PartPatch,
+    ) -> Result<&PartSpecification, DrawingError> {
+        let mut updated = self
+            .parts_map
+            .get(id)
+            .ok_or_else(|| DrawingError::UnknownPart(id.to_string()))?
+            .clone();
         if let Some(sku) = patch.sku {
             updated.sku = sku;
         }
@@ -180,7 +195,11 @@ impl GlobalPartsDatabase {
     /// filter by category/subcategory/manufacturer/tags. An empty `query`
     /// matches everything that passes the other filters, matching the TS
     /// `q ? ... : true` short-circuit.
-    pub fn search_parts(&self, query: &str, options: &PartFilterOptions) -> Vec<&PartSpecification> {
+    pub fn search_parts(
+        &self,
+        query: &str,
+        options: &PartFilterOptions,
+    ) -> Vec<&PartSpecification> {
         let q = query.trim().to_lowercase();
         self.get_all_parts()
             .into_iter()
@@ -207,8 +226,12 @@ impl GlobalPartsDatabase {
                 }
                 if let Some(tags) = &options.tags {
                     if !tags.is_empty() {
-                        let part_tags: Vec<String> =
-                            part.tags.iter().flatten().map(|t| t.to_lowercase()).collect();
+                        let part_tags: Vec<String> = part
+                            .tags
+                            .iter()
+                            .flatten()
+                            .map(|t| t.to_lowercase())
+                            .collect();
                         let matches_all =
                             tags.iter().all(|t| part_tags.contains(&t.to_lowercase()));
                         if !matches_all {
@@ -220,10 +243,22 @@ impl GlobalPartsDatabase {
                     return true;
                 }
                 let in_name = part.name.to_lowercase().contains(&q);
-                let in_sku = part.sku.as_deref().map(|s| s.to_lowercase().contains(&q)).unwrap_or(false);
+                let in_sku = part
+                    .sku
+                    .as_deref()
+                    .map(|s| s.to_lowercase().contains(&q))
+                    .unwrap_or(false);
                 let in_desc = part.description.to_lowercase().contains(&q);
-                let in_mfr = part.manufacturer.as_deref().map(|m| m.to_lowercase().contains(&q)).unwrap_or(false);
-                let in_tags = part.tags.iter().flatten().any(|t| t.to_lowercase().contains(&q));
+                let in_mfr = part
+                    .manufacturer
+                    .as_deref()
+                    .map(|m| m.to_lowercase().contains(&q))
+                    .unwrap_or(false);
+                let in_tags = part
+                    .tags
+                    .iter()
+                    .flatten()
+                    .any(|t| t.to_lowercase().contains(&q));
                 in_name || in_sku || in_desc || in_mfr || in_tags
             })
             .collect()
@@ -238,8 +273,15 @@ impl GlobalPartsDatabase {
             .map(|p| WallType {
                 id: p.id.clone(),
                 label: p.name.clone(),
-                thickness: p.dimensions.as_ref().and_then(|d| d.thickness).unwrap_or(0.5),
-                material: p.property("material").and_then(|v| v.as_str()).map(str::to_string),
+                thickness: p
+                    .dimensions
+                    .as_ref()
+                    .and_then(|d| d.thickness)
+                    .unwrap_or(0.5),
+                material: p
+                    .property("material")
+                    .and_then(|v| v.as_str())
+                    .map(str::to_string),
             })
             .collect()
     }
@@ -315,7 +357,8 @@ impl GlobalPartsDatabase {
             // The initial catalog is trusted, compile-time-embedded data —
             // every entry has a non-empty id — so this cannot fail; if it
             // somehow did, silently skipping would hide a real embedding bug.
-            self.register_part(part).expect("embedded catalog part must have a non-empty id");
+            self.register_part(part)
+                .expect("embedded catalog part must have a non-empty id");
         }
     }
 
@@ -395,7 +438,9 @@ mod tests {
     #[test]
     fn register_part_rejects_empty_id() {
         let mut db = GlobalPartsDatabase::new(vec![]);
-        let err = db.register_part(sample_part("", "custom", "misc")).unwrap_err();
+        let err = db
+            .register_part(sample_part("", "custom", "misc"))
+            .unwrap_err();
         assert_eq!(err, DrawingError::MissingPartId);
     }
 
@@ -405,7 +450,10 @@ mod tests {
         let mut p = sample_part("p1", "custom", "misc");
         p.tags = Some(vec!["a".to_string(), "a".to_string(), "b".to_string()]);
         db.register_part(p).unwrap();
-        assert_eq!(db.get_part("p1").unwrap().tags.as_ref().unwrap(), &vec!["a".to_string(), "b".to_string()]);
+        assert_eq!(
+            db.get_part("p1").unwrap().tags.as_ref().unwrap(),
+            &vec!["a".to_string(), "b".to_string()]
+        );
     }
 
     #[test]
@@ -419,11 +467,17 @@ mod tests {
     fn update_part_merges_dimensions_and_properties() {
         let mut db = GlobalPartsDatabase::new(vec![]);
         let mut p = sample_part("p1", "custom", "misc");
-        p.dimensions = Some(PartDimensions { width: Some(1.0), ..Default::default() });
+        p.dimensions = Some(PartDimensions {
+            width: Some(1.0),
+            ..Default::default()
+        });
         db.register_part(p).unwrap();
 
         let patch = PartPatch {
-            dimensions: Some(PartDimensions { height: Some(2.0), ..Default::default() }),
+            dimensions: Some(PartDimensions {
+                height: Some(2.0),
+                ..Default::default()
+            }),
             ..Default::default()
         };
         let updated = db.update_part("p1", patch).unwrap();
@@ -434,7 +488,8 @@ mod tests {
     #[test]
     fn search_parts_matches_name_sku_manufacturer_tags_and_description() {
         let mut db = GlobalPartsDatabase::new(vec![]);
-        db.register_part(sample_part("p1", "custom", "misc")).unwrap();
+        db.register_part(sample_part("p1", "custom", "misc"))
+            .unwrap();
         let results = db.search_parts("acme", &PartFilterOptions::default());
         assert_eq!(results.len(), 1);
         assert_eq!(results[0].id, "p1");
@@ -443,9 +498,14 @@ mod tests {
     #[test]
     fn search_parts_empty_query_returns_everything_matching_filters() {
         let mut db = GlobalPartsDatabase::new(vec![]);
-        db.register_part(sample_part("p1", "custom", "misc")).unwrap();
-        db.register_part(sample_part("p2", "civil", "structures")).unwrap();
-        let opts = PartFilterOptions { category: Some(PartCategory::Civil), ..Default::default() };
+        db.register_part(sample_part("p1", "custom", "misc"))
+            .unwrap();
+        db.register_part(sample_part("p2", "civil", "structures"))
+            .unwrap();
+        let opts = PartFilterOptions {
+            category: Some(PartCategory::Civil),
+            ..Default::default()
+        };
         let results = db.search_parts("", &opts);
         assert_eq!(results.len(), 1);
         assert_eq!(results[0].id, "p2");
@@ -461,7 +521,10 @@ mod tests {
         p2.tags = Some(vec!["a".to_string()]);
         db.register_part(p2).unwrap();
 
-        let opts = PartFilterOptions { tags: Some(vec!["a".to_string(), "b".to_string()]), ..Default::default() };
+        let opts = PartFilterOptions {
+            tags: Some(vec!["a".to_string(), "b".to_string()]),
+            ..Default::default()
+        };
         let results = db.search_parts("", &opts);
         assert_eq!(results.len(), 1);
         assert_eq!(results[0].id, "p1");
@@ -482,7 +545,10 @@ mod tests {
         let db = GlobalPartsDatabase::default();
         let hatches = db.get_hatch_patterns();
         assert_eq!(hatches.len(), 1);
-        assert_eq!(hatches[0].property("patternName").and_then(|v| v.as_str()), Some("ANSI31"));
+        assert_eq!(
+            hatches[0].property("patternName").and_then(|v| v.as_str()),
+            Some("ANSI31")
+        );
     }
 
     #[test]

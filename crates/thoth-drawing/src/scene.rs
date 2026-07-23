@@ -37,9 +37,21 @@ pub enum TextAnchor {
 #[serde(tag = "t")]
 pub enum SheetPrimitive {
     #[serde(rename = "line")]
-    Line { a: Pt, b: Pt, w: Option<f64>, color: Option<String>, dash: Option<Vec<f64>> },
+    Line {
+        a: Pt,
+        b: Pt,
+        w: Option<f64>,
+        color: Option<String>,
+        dash: Option<Vec<f64>>,
+    },
     #[serde(rename = "polyline")]
-    Polyline { pts: Vec<Pt>, w: Option<f64>, color: Option<String>, dash: Option<Vec<f64>>, close: Option<bool> },
+    Polyline {
+        pts: Vec<Pt>,
+        w: Option<f64>,
+        color: Option<String>,
+        dash: Option<Vec<f64>>,
+        close: Option<bool>,
+    },
     #[serde(rename = "polygon")]
     Polygon {
         pts: Vec<Pt>,
@@ -62,7 +74,14 @@ pub enum SheetPrimitive {
         dash: Option<Vec<f64>>,
     },
     #[serde(rename = "circle")]
-    Circle { c: Pt, r: f64, sw: Option<f64>, stroke: Option<String>, fill: Option<String>, fill_opacity: Option<f64> },
+    Circle {
+        c: Pt,
+        r: f64,
+        sw: Option<f64>,
+        stroke: Option<String>,
+        fill: Option<String>,
+        fill_opacity: Option<f64>,
+    },
     #[serde(rename = "text")]
     Text {
         at: Pt,
@@ -142,19 +161,27 @@ fn point_in_poly(p: Pt, poly: &[Pt]) -> bool {
 /// would loop forever (hang) for non-positive spacing, stepping
 /// `x += spacing` without ever crossing `maxX`; this port makes both cases an
 /// explicit, typed error instead.
-pub fn hatch_lines(poly: &[Pt], pattern: &HatchPattern) -> Result<Vec<SheetPrimitive>, DrawingError> {
+pub fn hatch_lines(
+    poly: &[Pt],
+    pattern: &HatchPattern,
+) -> Result<Vec<SheetPrimitive>, DrawingError> {
     if poly.len() < 3 {
         return Err(DrawingError::DegeneratePolygon(poly.len()));
     }
     let spacing = mm_to_pt(pattern.spacing);
     if !spacing.is_finite() || spacing <= 0.0 {
-        return Err(DrawingError::MalformedHatchPattern { pattern_id: pattern.id.clone(), spacing });
+        return Err(DrawingError::MalformedHatchPattern {
+            pattern_id: pattern.id.clone(),
+            spacing,
+        });
     }
     let color = pattern.color.clone().unwrap_or_else(|| MUTED.to_string());
     let w = 0.4;
     let angle = pattern.angle_deg.to_radians();
-    let dirs: Vec<f64> = if matches!(pattern.kind, crate::hatch::HatchKind::Crosshatch | crate::hatch::HatchKind::Grid)
-    {
+    let dirs: Vec<f64> = if matches!(
+        pattern.kind,
+        crate::hatch::HatchKind::Crosshatch | crate::hatch::HatchKind::Grid
+    ) {
         vec![angle, angle + std::f64::consts::FRAC_PI_2]
     } else {
         vec![angle]
@@ -175,7 +202,14 @@ pub fn hatch_lines(poly: &[Pt], pattern: &HatchPattern) -> Result<Vec<SheetPrimi
             while x <= max_x {
                 let p = Pt::new(x, y);
                 if point_in_poly(p, poly) {
-                    out.push(SheetPrimitive::Circle { c: p, r: 0.5, sw: None, stroke: None, fill: Some(color.clone()), fill_opacity: None });
+                    out.push(SheetPrimitive::Circle {
+                        c: p,
+                        r: 0.5,
+                        sw: None,
+                        stroke: None,
+                        fill: Some(color.clone()),
+                        fill_opacity: None,
+                    });
                 }
                 x += spacing;
             }
@@ -312,14 +346,25 @@ mod tests {
     use crate::hatch::hatch_pattern;
 
     fn square(side: f64) -> Vec<Pt> {
-        vec![Pt::new(0.0, 0.0), Pt::new(side, 0.0), Pt::new(side, side), Pt::new(0.0, side)]
+        vec![
+            Pt::new(0.0, 0.0),
+            Pt::new(side, 0.0),
+            Pt::new(side, side),
+            Pt::new(0.0, side),
+        ]
     }
 
     #[test]
     fn flatten_bands_concatenates_in_order() {
         let bands = vec![
-            SheetBand { name: "a".to_string(), prims: vec![north_arrow(Pt::new(0.0, 0.0), 1.0)[0].clone()] },
-            SheetBand { name: "b".to_string(), prims: vec![north_arrow(Pt::new(1.0, 1.0), 1.0)[0].clone()] },
+            SheetBand {
+                name: "a".to_string(),
+                prims: vec![north_arrow(Pt::new(0.0, 0.0), 1.0)[0].clone()],
+            },
+            SheetBand {
+                name: "b".to_string(),
+                prims: vec![north_arrow(Pt::new(1.0, 1.0), 1.0)[0].clone()],
+            },
         ];
         assert_eq!(flatten_bands(bands).len(), 2);
     }
@@ -344,7 +389,9 @@ mod tests {
         let pattern = hatch_pattern("earth").unwrap();
         let lines = hatch_lines(&square(20.0), &pattern).unwrap();
         assert!(!lines.is_empty());
-        assert!(lines.iter().all(|p| matches!(p, SheetPrimitive::Line { .. })));
+        assert!(lines
+            .iter()
+            .all(|p| matches!(p, SheetPrimitive::Line { .. })));
     }
 
     #[test]
@@ -352,7 +399,9 @@ mod tests {
         let pattern = hatch_pattern("concrete").unwrap();
         let dots = hatch_lines(&square(10.0), &pattern).unwrap();
         assert!(!dots.is_empty());
-        assert!(dots.iter().all(|p| matches!(p, SheetPrimitive::Circle { .. })));
+        assert!(dots
+            .iter()
+            .all(|p| matches!(p, SheetPrimitive::Circle { .. })));
     }
 
     #[test]
@@ -373,8 +422,14 @@ mod tests {
 
     #[test]
     fn arrow_head_and_dim_tick_and_north_arrow_produce_primitives() {
-        assert!(matches!(arrow_head(Pt::new(0.0, 0.0), Pt::new(1.0, 0.0), 4.0, None), SheetPrimitive::Polygon { .. }));
-        assert!(matches!(dim_tick(Pt::new(0.0, 0.0), Pt::new(1.0, 0.0), 3.0, None), SheetPrimitive::Line { .. }));
+        assert!(matches!(
+            arrow_head(Pt::new(0.0, 0.0), Pt::new(1.0, 0.0), 4.0, None),
+            SheetPrimitive::Polygon { .. }
+        ));
+        assert!(matches!(
+            dim_tick(Pt::new(0.0, 0.0), Pt::new(1.0, 0.0), 3.0, None),
+            SheetPrimitive::Line { .. }
+        ));
         assert_eq!(north_arrow(Pt::new(0.0, 0.0), 30.0).len(), 3);
     }
 }

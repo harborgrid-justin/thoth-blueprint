@@ -195,7 +195,11 @@ pub fn grid_bubble_geometry(line: &GridLine, gap: f64) -> Vec<GridBubble> {
         });
     }
     if matches!(which, BubbleEnds::End | BubbleEnds::Both) {
-        out.push(GridBubble { center: add(line.to, scale(dir, gap)), dir, label: line.label.clone() });
+        out.push(GridBubble {
+            center: add(line.to, scale(dir, gap)),
+            dir,
+            label: line.label.clone(),
+        });
     }
     out
 }
@@ -273,7 +277,12 @@ mod tests {
         let cloud = RevisionCloud {
             id: "rc1".to_string(),
             delta: 1,
-            boundary: vec![Point::new(0.0, 0.0), Point::new(10.0, 0.0), Point::new(10.0, 10.0), Point::new(0.0, 10.0)],
+            boundary: vec![
+                Point::new(0.0, 0.0),
+                Point::new(10.0, 0.0),
+                Point::new(10.0, 10.0),
+                Point::new(0.0, 10.0),
+            ],
         };
         let bumps = revision_cloud_bumps(&cloud, 6.0);
         // 4 edges of length 10, bump size 6 -> round(10/6)=2 bumps per edge
@@ -282,7 +291,11 @@ mod tests {
 
     #[test]
     fn revision_cloud_bumps_of_empty_boundary_is_empty() {
-        let cloud = RevisionCloud { id: "rc2".to_string(), delta: 1, boundary: vec![] };
+        let cloud = RevisionCloud {
+            id: "rc2".to_string(),
+            delta: 1,
+            boundary: vec![],
+        };
         assert!(revision_cloud_bumps(&cloud, 6.0).is_empty());
     }
 }

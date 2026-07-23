@@ -57,7 +57,11 @@ pub struct MassHaulPoint {
 
 fn sorted_by_offset(points: &[CrossSectionPoint]) -> Vec<CrossSectionPoint> {
     let mut sorted = points.to_vec();
-    sorted.sort_by(|a, b| a.offset.partial_cmp(&b.offset).unwrap_or(std::cmp::Ordering::Equal));
+    sorted.sort_by(|a, b| {
+        a.offset
+            .partial_cmp(&b.offset)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
     sorted
 }
 
@@ -67,9 +71,16 @@ pub fn calculate_section_area(section: &CrossSection) -> SectionArea {
     let mut cut_area = 0.0;
     let mut fill_area = 0.0;
 
-    let n = section.existing_points.len().min(section.proposed_points.len());
+    let n = section
+        .existing_points
+        .len()
+        .min(section.proposed_points.len());
     if n < 2 {
-        return SectionArea { station: section.station, cut_area, fill_area };
+        return SectionArea {
+            station: section.station,
+            cut_area,
+            fill_area,
+        };
     }
 
     let existing = sorted_by_offset(&section.existing_points);
@@ -101,7 +112,11 @@ pub fn calculate_section_area(section: &CrossSection) -> SectionArea {
         }
     }
 
-    SectionArea { station: section.station, cut_area, fill_area }
+    SectionArea {
+        station: section.station,
+        cut_area,
+        fill_area,
+    }
 }
 
 /// Calculate cut and fill volumes between two cross-sections using the
@@ -130,15 +145,25 @@ pub fn calculate_mass_haul(sections: &[CrossSection]) -> Vec<MassHaulPoint> {
         return vec![];
     }
     let mut sorted = sections.to_vec();
-    sorted.sort_by(|a, b| a.station.partial_cmp(&b.station).unwrap_or(std::cmp::Ordering::Equal));
+    sorted.sort_by(|a, b| {
+        a.station
+            .partial_cmp(&b.station)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
 
-    let mut points = vec![MassHaulPoint { station: sorted[0].station, cumulative_volume: 0.0 }];
+    let mut points = vec![MassHaulPoint {
+        station: sorted[0].station,
+        cumulative_volume: 0.0,
+    }];
     let mut running_sum = 0.0;
 
     for i in 0..(sorted.len() - 1) {
         let vol = average_end_area_volume(&sorted[i], &sorted[i + 1]);
         running_sum += vol.net_volume;
-        points.push(MassHaulPoint { station: sorted[i + 1].station, cumulative_volume: running_sum });
+        points.push(MassHaulPoint {
+            station: sorted[i + 1].station,
+            cumulative_volume: running_sum,
+        });
     }
 
     points
@@ -187,7 +212,11 @@ pub struct PayItemResult {
 /// the TS `try { ... } catch { /* fallback */ }` exactly, but without ever
 /// invoking a dynamic `eval`-equivalent: [`evaluate_arithmetic`] is a
 /// hand-rolled recursive-descent parser restricted to `+-*/()` and numbers.
-pub fn evaluate_pay_item_cost(item: &PayItem, variables: PayItemVariables, formula: Option<&str>) -> PayItemResult {
+pub fn evaluate_pay_item_cost(
+    item: &PayItem,
+    variables: PayItemVariables,
+    formula: Option<&str>,
+) -> PayItemResult {
     let formula = formula.unwrap_or("quantity * unitCost");
     let len = variables.length.unwrap_or(0.0);
     let area = variables.area.unwrap_or(0.0);
@@ -212,12 +241,21 @@ pub fn evaluate_pay_item_cost(item: &PayItem, variables: PayItemVariables, formu
     // `evaluate_arithmetic` already guarantees a finite result on `Some`.
     if let Some(res) = evaluate_arithmetic(&clean_formula) {
         if formula.contains("unitCost") {
-            return PayItemResult { quantity: qty, cost: res };
+            return PayItemResult {
+                quantity: qty,
+                cost: res,
+            };
         }
-        return PayItemResult { quantity: res, cost: res * item.unit_cost };
+        return PayItemResult {
+            quantity: res,
+            cost: res * item.unit_cost,
+        };
     }
 
-    PayItemResult { quantity: qty, cost: qty * item.unit_cost }
+    PayItemResult {
+        quantity: qty,
+        cost: qty * item.unit_cost,
+    }
 }
 
 /// Evaluate a restricted arithmetic expression: digits (with optional
@@ -238,7 +276,10 @@ pub(crate) fn evaluate_arithmetic(expr: &str) -> Option<f64> {
     if tokens.is_empty() {
         return None;
     }
-    let mut parser = ArithmeticParser { tokens: &tokens, pos: 0 };
+    let mut parser = ArithmeticParser {
+        tokens: &tokens,
+        pos: 0,
+    };
     let result = parser.parse_expr();
     if result.is_finite() {
         Some(result)
@@ -283,22 +324,36 @@ struct ArithmeticParser<'a> {
 impl ArithmeticParser<'_> {
     fn parse_expr(&mut self) -> f64 {
         let mut left = self.parse_term();
-        while self.pos < self.tokens.len() && (self.tokens[self.pos] == "+" || self.tokens[self.pos] == "-") {
+        while self.pos < self.tokens.len()
+            && (self.tokens[self.pos] == "+" || self.tokens[self.pos] == "-")
+        {
             let op = self.tokens[self.pos].clone();
             self.pos += 1;
             let right = self.parse_term();
-            left = if op == "+" { left + right } else { left - right };
+            left = if op == "+" {
+                left + right
+            } else {
+                left - right
+            };
         }
         left
     }
 
     fn parse_term(&mut self) -> f64 {
         let mut left = self.parse_factor();
-        while self.pos < self.tokens.len() && (self.tokens[self.pos] == "*" || self.tokens[self.pos] == "/") {
+        while self.pos < self.tokens.len()
+            && (self.tokens[self.pos] == "*" || self.tokens[self.pos] == "/")
+        {
             let op = self.tokens[self.pos].clone();
             self.pos += 1;
             let right = self.parse_factor();
-            left = if op == "*" { left * right } else if right != 0.0 { left / right } else { 0.0 };
+            left = if op == "*" {
+                left * right
+            } else if right != 0.0 {
+                left / right
+            } else {
+                0.0
+            };
         }
         left
     }
@@ -357,7 +412,11 @@ pub fn parse_pay_item_list_csv(csv_content: &str) -> Vec<PayItem> {
                 name: parts[1].clone(),
                 unit: parts[2].clone(),
                 unit_cost: parts[3].parse().unwrap_or(0.0),
-                category: if parts.len() > 4 && !parts[4].is_empty() { Some(parts[4].clone()) } else { None },
+                category: if parts.len() > 4 && !parts[4].is_empty() {
+                    Some(parts[4].clone())
+                } else {
+                    None
+                },
             });
         }
     }
@@ -373,15 +432,25 @@ mod tests {
         CrossSection {
             station,
             centerpoint: Point::new(0.0, station),
-            existing_points: existing.into_iter().map(|(offset, elevation)| CrossSectionPoint { offset, elevation }).collect(),
-            proposed_points: proposed.into_iter().map(|(offset, elevation)| CrossSectionPoint { offset, elevation }).collect(),
+            existing_points: existing
+                .into_iter()
+                .map(|(offset, elevation)| CrossSectionPoint { offset, elevation })
+                .collect(),
+            proposed_points: proposed
+                .into_iter()
+                .map(|(offset, elevation)| CrossSectionPoint { offset, elevation })
+                .collect(),
         }
     }
 
     #[test]
     fn calculate_section_area_of_pure_fill_slice() {
         // proposed is 1 unit higher than existing across a 10-wide slice.
-        let s = section(0.0, vec![(-5.0, 0.0), (5.0, 0.0)], vec![(-5.0, 1.0), (5.0, 1.0)]);
+        let s = section(
+            0.0,
+            vec![(-5.0, 0.0), (5.0, 0.0)],
+            vec![(-5.0, 1.0), (5.0, 1.0)],
+        );
         let area = calculate_section_area(&s);
         assert_relative_eq!(area.fill_area, 10.0, epsilon = 1e-9);
         assert_relative_eq!(area.cut_area, 0.0, epsilon = 1e-9);
@@ -389,7 +458,11 @@ mod tests {
 
     #[test]
     fn calculate_section_area_of_pure_cut_slice() {
-        let s = section(0.0, vec![(-5.0, 0.0), (5.0, 0.0)], vec![(-5.0, -1.0), (5.0, -1.0)]);
+        let s = section(
+            0.0,
+            vec![(-5.0, 0.0), (5.0, 0.0)],
+            vec![(-5.0, -1.0), (5.0, -1.0)],
+        );
         let area = calculate_section_area(&s);
         assert_relative_eq!(area.cut_area, 10.0, epsilon = 1e-9);
         assert_relative_eq!(area.fill_area, 0.0, epsilon = 1e-9);
@@ -397,7 +470,11 @@ mod tests {
 
     #[test]
     fn calculate_section_area_handles_a_zero_crossing_slice() {
-        let s = section(0.0, vec![(0.0, 0.0), (10.0, 0.0)], vec![(0.0, -1.0), (10.0, 1.0)]);
+        let s = section(
+            0.0,
+            vec![(0.0, 0.0), (10.0, 0.0)],
+            vec![(0.0, -1.0), (10.0, 1.0)],
+        );
         let area = calculate_section_area(&s);
         assert!(area.cut_area > 0.0);
         assert!(area.fill_area > 0.0);
@@ -413,8 +490,16 @@ mod tests {
 
     #[test]
     fn average_end_area_volume_multiplies_by_station_length() {
-        let a = section(0.0, vec![(-5.0, 0.0), (5.0, 0.0)], vec![(-5.0, 1.0), (5.0, 1.0)]);
-        let b = section(10.0, vec![(-5.0, 0.0), (5.0, 0.0)], vec![(-5.0, 1.0), (5.0, 1.0)]);
+        let a = section(
+            0.0,
+            vec![(-5.0, 0.0), (5.0, 0.0)],
+            vec![(-5.0, 1.0), (5.0, 1.0)],
+        );
+        let b = section(
+            10.0,
+            vec![(-5.0, 0.0), (5.0, 0.0)],
+            vec![(-5.0, 1.0), (5.0, 1.0)],
+        );
         let vol = average_end_area_volume(&a, &b);
         assert_relative_eq!(vol.fill_volume, 100.0, epsilon = 1e-9);
         assert_relative_eq!(vol.net_volume, -100.0, epsilon = 1e-9);
@@ -427,8 +512,16 @@ mod tests {
 
     #[test]
     fn calculate_mass_haul_accumulates_net_volume_along_stations() {
-        let a = section(0.0, vec![(-5.0, 0.0), (5.0, 0.0)], vec![(-5.0, 1.0), (5.0, 1.0)]);
-        let b = section(10.0, vec![(-5.0, 0.0), (5.0, 0.0)], vec![(-5.0, 1.0), (5.0, 1.0)]);
+        let a = section(
+            0.0,
+            vec![(-5.0, 0.0), (5.0, 0.0)],
+            vec![(-5.0, 1.0), (5.0, 1.0)],
+        );
+        let b = section(
+            10.0,
+            vec![(-5.0, 0.0), (5.0, 0.0)],
+            vec![(-5.0, 1.0), (5.0, 1.0)],
+        );
         let points = calculate_mass_haul(&[b.clone(), a.clone()]);
         assert_eq!(points.len(), 2);
         assert_eq!(points[0].station, 0.0);
@@ -438,24 +531,62 @@ mod tests {
 
     #[test]
     fn evaluate_pay_item_cost_uses_length_for_linear_units() {
-        let item = PayItem { id: "p1".to_string(), name: "Silt fence".to_string(), unit: "LF".to_string(), unit_cost: 2.0, category: None };
-        let result = evaluate_pay_item_cost(&item, PayItemVariables { length: Some(50.0), ..Default::default() }, None);
+        let item = PayItem {
+            id: "p1".to_string(),
+            name: "Silt fence".to_string(),
+            unit: "LF".to_string(),
+            unit_cost: 2.0,
+            category: None,
+        };
+        let result = evaluate_pay_item_cost(
+            &item,
+            PayItemVariables {
+                length: Some(50.0),
+                ..Default::default()
+            },
+            None,
+        );
         assert_relative_eq!(result.quantity, 50.0, epsilon = 1e-9);
         assert_relative_eq!(result.cost, 100.0, epsilon = 1e-9);
     }
 
     #[test]
     fn evaluate_pay_item_cost_uses_area_for_area_units() {
-        let item = PayItem { id: "p1".to_string(), name: "Sod".to_string(), unit: "SF".to_string(), unit_cost: 0.5, category: None };
-        let result = evaluate_pay_item_cost(&item, PayItemVariables { area: Some(200.0), ..Default::default() }, None);
+        let item = PayItem {
+            id: "p1".to_string(),
+            name: "Sod".to_string(),
+            unit: "SF".to_string(),
+            unit_cost: 0.5,
+            category: None,
+        };
+        let result = evaluate_pay_item_cost(
+            &item,
+            PayItemVariables {
+                area: Some(200.0),
+                ..Default::default()
+            },
+            None,
+        );
         assert_relative_eq!(result.cost, 100.0, epsilon = 1e-9);
     }
 
     #[test]
     fn evaluate_pay_item_cost_evaluates_a_custom_formula() {
-        let item = PayItem { id: "p1".to_string(), name: "Item".to_string(), unit: "EA".to_string(), unit_cost: 10.0, category: None };
-        let result =
-            evaluate_pay_item_cost(&item, PayItemVariables { count: Some(3.0), ..Default::default() }, Some("quantity * unitCost + 5"));
+        let item = PayItem {
+            id: "p1".to_string(),
+            name: "Item".to_string(),
+            unit: "EA".to_string(),
+            unit_cost: 10.0,
+            category: None,
+        };
+        let result = evaluate_pay_item_cost(
+            &item,
+            PayItemVariables {
+                count: Some(3.0),
+                ..Default::default()
+            },
+            Some("quantity * unitCost + 5"),
+        );
         assert_relative_eq!(result.cost, 35.0, epsilon = 1e-9);
     }
 
@@ -467,8 +598,16 @@ mod tests {
 
     #[test]
     fn evaluate_arithmetic_handles_precedence_and_parens() {
-        assert_relative_eq!(evaluate_arithmetic("2 + 3 * 4").unwrap(), 14.0, epsilon = 1e-9);
-        assert_relative_eq!(evaluate_arithmetic("(2 + 3) * 4").unwrap(), 20.0, epsilon = 1e-9);
+        assert_relative_eq!(
+            evaluate_arithmetic("2 + 3 * 4").unwrap(),
+            14.0,
+            epsilon = 1e-9
+        );
+        assert_relative_eq!(
+            evaluate_arithmetic("(2 + 3) * 4").unwrap(),
+            20.0,
+            epsilon = 1e-9
+        );
     }
 
     #[test]

@@ -8,7 +8,7 @@
 //! catalog (`packages/domain/src/parts/registry.ts`'s `globalPartsDb`) and
 //! only falls back to a hardcoded three-entry list when that catalog is
 //! empty. The parts catalog is a different domain package, not a dependency
-//! of this crate (see `../GAPS.md`), so [`DEFAULT_DESCRIPTION_KEYS`] here
+//! of this crate (see `../GAPS.md`), so [`default_description_keys`] here
 //! always returns that hardcoded fallback list — the behavior the TS module
 //! exhibits whenever no catalog has been loaded.
 

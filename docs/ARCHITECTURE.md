@@ -91,6 +91,53 @@ modular monolith to start) is an implementation decision captured in the roadmap
 The Phase-6 CAD-sheet capability adds new logical areas inside the existing
 `projects` and `geospatial` services â€” no new top-level service is introduced.
 
+### `crates/` — the Rust core _(migration in progress)_
+
+The business logic in `packages/domain` and `services/*` is being ported to
+a Cargo workspace under [`crates/`](../crates/README.md); see
+[`docs/RUST_MIGRATION.md`](RUST_MIGRATION.md) for the current per-crate
+status. The workspace mirrors the TS module split:
+
+```
+crates/thoth-spatial    -- frozen shared contract: geometry, units, ids
+crates/thoth-planning   -- Site/Parcel/Lot/Zone/LandUse, rules, metrics, subdivision
+crates/thoth-survey     -- metes-and-bounds, PLSS, monuments, points
+crates/thoth-civil      -- alignments, corridors, grading, terrain, pipe/network design
+crates/thoth-drawing    -- sheets, dimensions, hatching, schedules, plat sets
+crates/thoth-services   -- auth, projects, geospatial, collaboration, storage logic
+crates/thoth-bindings   -- wasm-bindgen boundary to apps/web
+crates/thoth-napi       -- napi-rs boundary to services/* (Node)
+```
+
+`thoth-spatial` is the one crate every other crate depends on and treats as
+append-only (see `crates/README.md`'s "frozen-contract convention") — this
+is what let the five domain crates be ported concurrently by different
+agents against the same TS source tree without diverging onto incompatible
+geometry/unit primitives.
+
+`thoth-bindings` and `thoth-napi` are the integration layer connecting the
+Rust core to the rest of the diagram at the top of this document:
+
+- **`apps/web`** consumes `thoth-bindings` via a generated `wasm-bindgen`
+  package (`yarn build:wasm`), imported as an ordinary ES module and typed
+  against a hand-written TS wrapper (`apps/web/src/lib/geometryWasm.ts`).
+  As of this writing this is a **single vertical slice** (the pure geometry
+  ops — area/perimeter/centroid/point-in-polygon/offset-polygon) with one
+  real call site cut over (`PlatDrawing.tsx`'s centroid computation,
+  falling back to the TS implementation if wasm hasn't loaded) — not a
+  claim that `apps/web` runs on Rust broadly yet.
+- **`services/*`** will eventually consume `thoth-services` via
+  `thoth-napi`, a native Node addon built with `napi-rs`. As of this
+  writing `thoth-services` is still mid-port, so `thoth-napi` exposes only
+  the same stable geometry slice as `thoth-bindings`, as a proof that the
+  native-addon build pipeline works — not yet wired into any `services/*`
+  package.
+
+Both binding crates follow the same shape: thin, panic-safe wrappers around
+already-tested domain functions, with the (de)serialization boundary itself
+covered by dedicated tests (see `crates/README.md` for exactly how, since
+the two binding technologies need different test strategies).
+
 ### `packages/storage` â€” the default internal storage layer
 
 Every service persists through a single `StorageAdapter` interface

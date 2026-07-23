@@ -169,12 +169,36 @@ fn default_sheet_sizes() -> Vec<SheetSize> {
 pub fn list_sheet_sizes() -> Vec<SheetSize> {
     let mut sizes = default_sheet_sizes();
     for part in global_parts_db().get_sheet_sizes() {
-        let series = part.property("series").and_then(|v| v.as_str()).unwrap_or(series::ANSI).to_string();
-        let w_in = part.property("wIn").and_then(|v| v.as_f64()).unwrap_or(24.0);
-        let h_in = part.property("hIn").and_then(|v| v.as_f64()).unwrap_or(36.0);
-        let w_mm = part.property("wMm").and_then(|v| v.as_f64()).unwrap_or(609.6);
-        let h_mm = part.property("hMm").and_then(|v| v.as_f64()).unwrap_or(914.4);
-        sizes.push(SheetSize { id: part.id.clone(), label: part.name.clone(), series, w_in, h_in, w_mm, h_mm });
+        let series = part
+            .property("series")
+            .and_then(|v| v.as_str())
+            .unwrap_or(series::ANSI)
+            .to_string();
+        let w_in = part
+            .property("wIn")
+            .and_then(|v| v.as_f64())
+            .unwrap_or(24.0);
+        let h_in = part
+            .property("hIn")
+            .and_then(|v| v.as_f64())
+            .unwrap_or(36.0);
+        let w_mm = part
+            .property("wMm")
+            .and_then(|v| v.as_f64())
+            .unwrap_or(609.6);
+        let h_mm = part
+            .property("hMm")
+            .and_then(|v| v.as_f64())
+            .unwrap_or(914.4);
+        sizes.push(SheetSize {
+            id: part.id.clone(),
+            label: part.name.clone(),
+            series,
+            w_in,
+            h_in,
+            w_mm,
+            h_mm,
+        });
     }
     sizes
 }
@@ -203,19 +227,39 @@ pub fn sheet_dimensions(id: &str, orientation: Orientation, unit: PaperUnit) -> 
     let short = w.min(h);
     let long = w.max(h);
     match orientation {
-        Orientation::Landscape => PaperDimensions { w: long, h: short, unit },
-        Orientation::Portrait => PaperDimensions { w: short, h: long, unit },
+        Orientation::Landscape => PaperDimensions {
+            w: long,
+            h: short,
+            unit,
+        },
+        Orientation::Portrait => PaperDimensions {
+            w: short,
+            h: long,
+            unit,
+        },
     }
 }
 
 /// Default NCS-style margins (inches): 1.5" binding edge, 0.5" elsewhere.
 pub fn default_margins_in() -> SheetMargins {
-    SheetMargins { left: 1.5, right: 0.5, top: 0.5, bottom: 0.5, unit: PaperUnit::In }
+    SheetMargins {
+        left: 1.5,
+        right: 0.5,
+        top: 0.5,
+        bottom: 0.5,
+        unit: PaperUnit::In,
+    }
 }
 
 /// Default ISO margins (mm): 20mm binding edge, 10mm elsewhere.
 pub fn default_margins_mm() -> SheetMargins {
-    SheetMargins { left: 20.0, right: 10.0, top: 10.0, bottom: 10.0, unit: PaperUnit::Mm }
+    SheetMargins {
+        left: 20.0,
+        right: 10.0,
+        top: 10.0,
+        bottom: 10.0,
+        unit: PaperUnit::Mm,
+    }
 }
 
 /// Default margins for a paper unit.
@@ -236,7 +280,12 @@ pub fn printable_area(
 ) -> PaperRect {
     let margins = margins.unwrap_or_else(|| default_margins(unit));
     let dim = sheet_dimensions(id, orientation, unit);
-    PaperRect { x: margins.left, y: margins.top, w: dim.w - margins.left - margins.right, h: dim.h - margins.top - margins.bottom }
+    PaperRect {
+        x: margins.left,
+        y: margins.top,
+        w: dim.w - margins.left - margins.right,
+        h: dim.h - margins.top - margins.bottom,
+    }
 }
 
 #[cfg(test)]

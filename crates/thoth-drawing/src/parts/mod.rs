@@ -10,4 +10,6 @@ mod types;
 
 pub use data::initial_parts_catalog;
 pub use registry::{global_parts_db, GlobalPartsDatabase, PartPatch, WallType};
-pub use types::{PartCategory, PartDimensions, PartFilterOptions, PartSpecification, PropertyValue};
+pub use types::{
+    PartCategory, PartDimensions, PartFilterOptions, PartSpecification, PropertyValue,
+};

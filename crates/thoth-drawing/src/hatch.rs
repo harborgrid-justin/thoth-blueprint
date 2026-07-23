@@ -52,8 +52,13 @@ pub fn hatch_patterns() -> Vec<HatchPattern> {
         .and_then(|v| v.as_str())
         .map(|s| s.to_lowercase())
         .unwrap_or_else(|| "ansi31".to_string());
-    let ansi31_label = first.map(|p| p.name.clone()).unwrap_or_else(|| "ANSI31 (diagonal)".to_string());
-    let ansi31_angle = first.and_then(|p| p.property("angleDegrees")).and_then(|v| v.as_f64()).unwrap_or(45.0);
+    let ansi31_label = first
+        .map(|p| p.name.clone())
+        .unwrap_or_else(|| "ANSI31 (diagonal)".to_string());
+    let ansi31_angle = first
+        .and_then(|p| p.property("angleDegrees"))
+        .and_then(|v| v.as_f64())
+        .unwrap_or(45.0);
 
     vec![
         HatchPattern {

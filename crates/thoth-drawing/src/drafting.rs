@@ -20,7 +20,7 @@ use std::collections::BTreeMap;
 use serde::{Deserialize, Serialize};
 
 /// Named tiers of the ISO line-weight pen set.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum LineWeightName {
     Fine,
@@ -242,7 +242,11 @@ pub fn line_type_def(name: LineTypeName) -> LineTypeDef {
         Break => ("Break", vec![6.0, 2.0, 1.0, 2.0]),
         Matchline => ("Match line", vec![16.0, 3.0, 3.0, 3.0]),
     };
-    LineTypeDef { name, label, pattern }
+    LineTypeDef {
+        name,
+        label,
+        pattern,
+    }
 }
 
 // --- drawing scales ------------------------------------------------------------
@@ -431,39 +435,135 @@ pub fn standard_cad_layers() -> Vec<CadLayer> {
         cad_layer(
             G,
             "ANNO",
-            CadLayerAttrs { minor: Some("TTLB"), color: "#0f172a", line_weight: LW::Thin, line_type: None, plot: None },
+            CadLayerAttrs {
+                minor: Some("TTLB"),
+                color: "#0f172a",
+                line_weight: LW::Thin,
+                line_type: None,
+                plot: None,
+            },
         ),
         cad_layer(
             C,
             "PROP",
-            CadLayerAttrs { minor: None, color: "#0f172a", line_weight: LW::Wide, line_type: Some(LT::Property), plot: None },
+            CadLayerAttrs {
+                minor: None,
+                color: "#0f172a",
+                line_weight: LW::Wide,
+                line_type: Some(LT::Property),
+                plot: None,
+            },
         ),
-        cad_layer(C, "TOPO", CadLayerAttrs { minor: None, color: "#92400e", line_weight: LW::Thin, line_type: None, plot: None }),
-        cad_layer(C, "ROAD", CadLayerAttrs { minor: None, color: "#334155", line_weight: LW::Medium, line_type: None, plot: None }),
+        cad_layer(
+            C,
+            "TOPO",
+            CadLayerAttrs {
+                minor: None,
+                color: "#92400e",
+                line_weight: LW::Thin,
+                line_type: None,
+                plot: None,
+            },
+        ),
+        cad_layer(
+            C,
+            "ROAD",
+            CadLayerAttrs {
+                minor: None,
+                color: "#334155",
+                line_weight: LW::Medium,
+                line_type: None,
+                plot: None,
+            },
+        ),
         cad_layer(
             C,
             "ESMT",
-            CadLayerAttrs { minor: None, color: "#7c3aed", line_weight: LW::Thin, line_type: Some(LT::Dashdot), plot: None },
+            CadLayerAttrs {
+                minor: None,
+                color: "#7c3aed",
+                line_weight: LW::Thin,
+                line_type: Some(LT::Dashdot),
+                plot: None,
+            },
         ),
-        cad_layer(L, "PLNT", CadLayerAttrs { minor: None, color: "#15803d", line_weight: LW::Thin, line_type: None, plot: None }),
+        cad_layer(
+            L,
+            "PLNT",
+            CadLayerAttrs {
+                minor: None,
+                color: "#15803d",
+                line_weight: LW::Thin,
+                line_type: None,
+                plot: None,
+            },
+        ),
         cad_layer(
             S,
             "GRID",
-            CadLayerAttrs { minor: None, color: "#64748b", line_weight: LW::Thin, line_type: Some(LT::Center), plot: None },
+            CadLayerAttrs {
+                minor: None,
+                color: "#64748b",
+                line_weight: LW::Thin,
+                line_type: Some(LT::Center),
+                plot: None,
+            },
         ),
         cad_layer(
             A,
             "WALL",
-            CadLayerAttrs { minor: Some("FULL"), color: "#0f172a", line_weight: LW::Wide, line_type: None, plot: None },
+            CadLayerAttrs {
+                minor: Some("FULL"),
+                color: "#0f172a",
+                line_weight: LW::Wide,
+                line_type: None,
+                plot: None,
+            },
         ),
-        cad_layer(A, "GLAZ", CadLayerAttrs { minor: None, color: "#0284c7", line_weight: LW::Thin, line_type: None, plot: None }),
-        cad_layer(A, "DOOR", CadLayerAttrs { minor: None, color: "#0f172a", line_weight: LW::Light, line_type: None, plot: None }),
+        cad_layer(
+            A,
+            "GLAZ",
+            CadLayerAttrs {
+                minor: None,
+                color: "#0284c7",
+                line_weight: LW::Thin,
+                line_type: None,
+                plot: None,
+            },
+        ),
+        cad_layer(
+            A,
+            "DOOR",
+            CadLayerAttrs {
+                minor: None,
+                color: "#0f172a",
+                line_weight: LW::Light,
+                line_type: None,
+                plot: None,
+            },
+        ),
         cad_layer(
             A,
             "ANNO",
-            CadLayerAttrs { minor: Some("DIMS"), color: "#0f172a", line_weight: LW::Fine, line_type: None, plot: None },
+            CadLayerAttrs {
+                minor: Some("DIMS"),
+                color: "#0f172a",
+                line_weight: LW::Fine,
+                line_type: None,
+                plot: None,
+            },
         ),
-        cad_layer(A, "ROOM", CadLayerAttrs { minor: None, color: "#475569", line_weight: LW::Fine, line_type: None, plot: None }),
+        cad_layer(
+            A,
+            "ROOM",
+            CadLayerAttrs {
+                minor: None,
+                color: "#475569",
+                line_weight: LW::Fine,
+                line_type: None,
+                plot: None,
+            },
+        ),
     ]
 }
 
@@ -472,9 +572,21 @@ pub fn standard_cad_layers() -> Vec<CadLayer> {
 /// Common plot styles (monochrome and grayscale).
 pub fn plot_styles() -> Vec<PlotStyle> {
     vec![
-        PlotStyle { name: "Monochrome", screening: 100.0, line_weight_override: None },
-        PlotStyle { name: "Grayscale 50%", screening: 50.0, line_weight_override: None },
-        PlotStyle { name: "Screened 25%", screening: 25.0, line_weight_override: None },
+        PlotStyle {
+            name: "Monochrome",
+            screening: 100.0,
+            line_weight_override: None,
+        },
+        PlotStyle {
+            name: "Grayscale 50%",
+            screening: 50.0,
+            line_weight_override: None,
+        },
+        PlotStyle {
+            name: "Screened 25%",
+            screening: 25.0,
+            line_weight_override: None,
+        },
     ]
 }
 
@@ -535,7 +647,10 @@ mod tests {
 
     #[test]
     fn format_layer_name_uppercases_and_joins_parts() {
-        assert_eq!(format_layer_name(DisciplineCode::A, "wall", Some("full")), "A-WALL-FULL");
+        assert_eq!(
+            format_layer_name(DisciplineCode::A, "wall", Some("full")),
+            "A-WALL-FULL"
+        );
         assert_eq!(format_layer_name(DisciplineCode::C, "topo", None), "C-TOPO");
     }
 

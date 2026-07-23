@@ -187,7 +187,9 @@ pub enum Dimension {
 }
 
 impl Dimension {
-    fn style_id(&self) -> &str {
+    /// The `styleId` of whichever variant this dimension is — used to look
+    /// up its [`DimensionStyle`] regardless of kind.
+    pub fn style_id(&self) -> &str {
         match self {
             Dimension::Linear(d) => &d.style_id,
             Dimension::Aligned(d) => &d.style_id,
@@ -341,7 +343,10 @@ pub fn default_dim_styles() -> Vec<DimensionStyle> {
 /// Look up a dimension style (falls back to architectural ticks, matching
 /// the TS `dimensionStyle` fallback).
 pub fn dimension_style(id: &str) -> DimensionStyle {
-    default_dim_styles().into_iter().find(|s| s.id == id).unwrap_or_else(|| default_dim_styles().remove(0))
+    default_dim_styles()
+        .into_iter()
+        .find(|s| s.id == id)
+        .unwrap_or_else(|| default_dim_styles().remove(0))
 }
 
 /// Real-world length (in style unit) of a model-space distance.
@@ -411,12 +416,17 @@ fn format_single_value(v: f64, unit: DimUnit, precision: u32, suppress_zero: boo
 }
 
 /// Format a length value per a dimension style.
-pub fn format_dim_text(model_dist: f64, style: &DimensionStyle, spatial: &SpatialContext) -> String {
+pub fn format_dim_text(
+    model_dist: f64,
+    style: &DimensionStyle,
+    spatial: &SpatialContext,
+) -> String {
     let v1 = to_display_length(model_dist, spatial, style.unit);
     let primary = format_single_value(v1, style.unit, style.precision, style.suppress_zero);
     if let Some(secondary_unit) = style.secondary_unit {
         let v2 = to_display_length(model_dist, spatial, secondary_unit);
-        let secondary = format_single_value(v2, secondary_unit, style.precision, style.suppress_zero);
+        let secondary =
+            format_single_value(v2, secondary_unit, style.precision, style.suppress_zero);
         return format!("{primary} [{secondary}]");
     }
     primary
@@ -436,14 +446,22 @@ pub fn measure_dimension(dim: &Dimension, spatial: &SpatialContext) -> MeasuredD
     }
 }
 
-fn measure_aligned(dim: &AlignedDimension, style: &DimensionStyle, spatial: &SpatialContext) -> MeasuredDimension {
+fn measure_aligned(
+    dim: &AlignedDimension,
+    style: &DimensionStyle,
+    spatial: &SpatialContext,
+) -> MeasuredDimension {
     let dir = normalize(subtract(dim.b, dim.a));
     let n = left_normal(dir);
     let off = scale(n, dim.offset);
     let a2 = add(dim.a, off);
     let b2 = add(dim.b, off);
     let value = distance(dim.a, dim.b);
-    let sign = if dim.offset == 0.0 { 1.0 } else { dim.offset.signum() };
+    let sign = if dim.offset == 0.0 {
+        1.0
+    } else {
+        dim.offset.signum()
+    };
     let gap = scale(n, sign * style.extension_gap);
     let beyond = scale(n, dim.offset + sign * style.extension_beyond);
 
@@ -465,17 +483,30 @@ fn measure_aligned(dim: &AlignedDimension, style: &DimensionStyle, spatial: &Spa
 
     MeasuredDimension {
         value,
-        label: dim.text_override.clone().unwrap_or_else(|| format_dim_text(value, style, spatial)),
+        label: dim
+            .text_override
+            .clone()
+            .unwrap_or_else(|| format_dim_text(value, style, spatial)),
         geometry: DimensionGeometry {
             lines,
-            ticks: vec![DimTick { at: a2, dir }, DimTick { at: b2, dir: scale(dir, -1.0) }],
+            ticks: vec![
+                DimTick { at: a2, dir },
+                DimTick {
+                    at: b2,
+                    dir: scale(dir, -1.0),
+                },
+            ],
             text_at: add(scale(add(a2, b2), 0.5), scale(n, 0.6)),
             text_angle_deg,
         },
     }
 }
 
-fn measure_linear(dim: &LinearDimension, style: &DimensionStyle, spatial: &SpatialContext) -> MeasuredDimension {
+fn measure_linear(
+    dim: &LinearDimension,
+    style: &DimensionStyle,
+    spatial: &SpatialContext,
+) -> MeasuredDimension {
     let dir = match dim.axis {
         Axis::Horizontal => Point::new(1.0, 0.0),
         Axis::Vertical => Point::new(0.0, 1.0),
@@ -524,10 +555,22 @@ fn measure_linear(dim: &LinearDimension, style: &DimensionStyle, spatial: &Spati
 
     MeasuredDimension {
         value,
-        label: dim.text_override.clone().unwrap_or_else(|| format_dim_text(value, style, spatial)),
+        label: dim
+            .text_override
+            .clone()
+            .unwrap_or_else(|| format_dim_text(value, style, spatial)),
         geometry: DimensionGeometry {
             lines,
-            ticks: vec![DimTick { at: a2, dir: seg_dir }, DimTick { at: b2, dir: scale(seg_dir, -1.0) }],
+            ticks: vec![
+                DimTick {
+                    at: a2,
+                    dir: seg_dir,
+                },
+                DimTick {
+                    at: b2,
+                    dir: scale(seg_dir, -1.0),
+                },
+            ],
             text_at: add(scale(add(a2, b2), 0.5), scale(n, 0.6)),
             text_angle_deg,
         },
@@ -553,46 +596,85 @@ fn measure_angular(dim: &AngularDimension, style: &DimensionStyle) -> MeasuredDi
     let mut arc_pts: Vec<Point> = Vec::with_capacity(steps as usize + 1);
     for i in 0..=steps {
         let t = ang_a + (sweep * i as f64) / steps as f64;
-        arc_pts.push(Point::new(dim.vertex.x + r * t.cos(), dim.vertex.y + r * t.sin()));
+        arc_pts.push(Point::new(
+            dim.vertex.x + r * t.cos(),
+            dim.vertex.y + r * t.sin(),
+        ));
     }
     let mut lines: Vec<[Point; 2]> = Vec::new();
     for i in 1..arc_pts.len() {
         lines.push([arc_pts[i - 1], arc_pts[i]]);
     }
-    lines.push([dim.vertex, Point::new(dim.vertex.x + r * ang_a.cos(), dim.vertex.y + r * ang_a.sin())]);
-    lines.push([dim.vertex, Point::new(dim.vertex.x + r * ang_b.cos(), dim.vertex.y + r * ang_b.sin())]);
+    lines.push([
+        dim.vertex,
+        Point::new(
+            dim.vertex.x + r * ang_a.cos(),
+            dim.vertex.y + r * ang_a.sin(),
+        ),
+    ]);
+    lines.push([
+        dim.vertex,
+        Point::new(
+            dim.vertex.x + r * ang_b.cos(),
+            dim.vertex.y + r * ang_b.sin(),
+        ),
+    ]);
     let decimals = style.precision.saturating_sub(1);
     MeasuredDimension {
         value: deg,
-        label: dim.text_override.clone().unwrap_or_else(|| format!("{:.*}\u{b0}", decimals as usize, deg)),
+        label: dim
+            .text_override
+            .clone()
+            .unwrap_or_else(|| format!("{:.*}\u{b0}", decimals as usize, deg)),
         geometry: DimensionGeometry {
             lines,
             ticks: vec![],
-            text_at: Point::new(dim.vertex.x + (r + 1.0) * mid.cos(), dim.vertex.y + (r + 1.0) * mid.sin()),
+            text_at: Point::new(
+                dim.vertex.x + (r + 1.0) * mid.cos(),
+                dim.vertex.y + (r + 1.0) * mid.sin(),
+            ),
             text_angle_deg: 0.0,
         },
     }
 }
 
-fn measure_radial(dim: &RadialDimension, style: &DimensionStyle, spatial: &SpatialContext) -> MeasuredDimension {
+fn measure_radial(
+    dim: &RadialDimension,
+    style: &DimensionStyle,
+    spatial: &SpatialContext,
+) -> MeasuredDimension {
     let r = distance(dim.center, dim.edge);
     let value = if dim.diameter { r * 2.0 } else { r };
     let prefix = if dim.diameter { "\u{2300}" } else { "R" };
     let dir = normalize(subtract(dim.edge, dim.center));
-    let start = if dim.diameter { add(dim.center, scale(dir, -r)) } else { dim.center };
+    let start = if dim.diameter {
+        add(dim.center, scale(dir, -r))
+    } else {
+        dim.center
+    };
     MeasuredDimension {
         value,
-        label: dim.text_override.clone().unwrap_or_else(|| format!("{prefix}{}", format_dim_text(value, style, spatial))),
+        label: dim
+            .text_override
+            .clone()
+            .unwrap_or_else(|| format!("{prefix}{}", format_dim_text(value, style, spatial))),
         geometry: DimensionGeometry {
             lines: vec![[start, dim.edge]],
-            ticks: vec![DimTick { at: dim.edge, dir: scale(dir, -1.0) }],
+            ticks: vec![DimTick {
+                at: dim.edge,
+                dir: scale(dir, -1.0),
+            }],
             text_at: add(dim.center, scale(dir, r * 0.55)),
             text_angle_deg: 0.0,
         },
     }
 }
 
-fn measure_ordinate(dim: &OrdinateDimension, style: &DimensionStyle, spatial: &SpatialContext) -> MeasuredDimension {
+fn measure_ordinate(
+    dim: &OrdinateDimension,
+    style: &DimensionStyle,
+    spatial: &SpatialContext,
+) -> MeasuredDimension {
     let value = match dim.axis {
         OrdinateAxis::X => dim.point.x - dim.datum.x,
         OrdinateAxis::Y => dim.point.y - dim.datum.y,
@@ -603,17 +685,27 @@ fn measure_ordinate(dim: &OrdinateDimension, style: &DimensionStyle, spatial: &S
     };
     MeasuredDimension {
         value: value.abs(),
-        label: dim.text_override.clone().unwrap_or_else(|| format_dim_text(value.abs(), style, spatial)),
+        label: dim
+            .text_override
+            .clone()
+            .unwrap_or_else(|| format_dim_text(value.abs(), style, spatial)),
         geometry: DimensionGeometry {
             lines: vec![[dim.point, leader_end]],
-            ticks: vec![DimTick { at: dim.point, dir: Point::new(0.0, 1.0) }],
+            ticks: vec![DimTick {
+                at: dim.point,
+                dir: Point::new(0.0, 1.0),
+            }],
             text_at: leader_end,
             text_angle_deg: 0.0,
         },
     }
 }
 
-fn measure_arc_length(dim: &ArcLengthDimension, style: &DimensionStyle, spatial: &SpatialContext) -> MeasuredDimension {
+fn measure_arc_length(
+    dim: &ArcLengthDimension,
+    style: &DimensionStyle,
+    spatial: &SpatialContext,
+) -> MeasuredDimension {
     let a = subtract(dim.start, dim.center);
     let b = subtract(dim.end, dim.center);
     let mut sweep = b.y.atan2(b.x) - a.y.atan2(a.x);
@@ -630,7 +722,10 @@ fn measure_arc_length(dim: &ArcLengthDimension, style: &DimensionStyle, spatial:
     let mut pts: Vec<Point> = Vec::with_capacity(steps as usize + 1);
     for i in 0..=steps {
         let t = start_ang + (sweep * i as f64) / steps as f64;
-        pts.push(Point::new(dim.center.x + rr * t.cos(), dim.center.y + rr * t.sin()));
+        pts.push(Point::new(
+            dim.center.x + rr * t.cos(),
+            dim.center.y + rr * t.sin(),
+        ));
     }
     let mut lines: Vec<[Point; 2]> = Vec::new();
     for i in 1..pts.len() {
@@ -639,17 +734,26 @@ fn measure_arc_length(dim: &ArcLengthDimension, style: &DimensionStyle, spatial:
     let mid = start_ang + sweep / 2.0;
     MeasuredDimension {
         value: arc_len,
-        label: dim.text_override.clone().unwrap_or_else(|| format!("\u{2312} {}", format_dim_text(arc_len, style, spatial))),
+        label: dim
+            .text_override
+            .clone()
+            .unwrap_or_else(|| format!("\u{2312} {}", format_dim_text(arc_len, style, spatial))),
         geometry: DimensionGeometry {
             lines,
             ticks: vec![
-                DimTick { at: pts[0], dir: normalize(subtract(pts[1], pts[0])) },
+                DimTick {
+                    at: pts[0],
+                    dir: normalize(subtract(pts[1], pts[0])),
+                },
                 DimTick {
                     at: pts[pts.len() - 1],
                     dir: normalize(subtract(pts[pts.len() - 2], pts[pts.len() - 1])),
                 },
             ],
-            text_at: Point::new(dim.center.x + (rr + 1.0) * mid.cos(), dim.center.y + (rr + 1.0) * mid.sin()),
+            text_at: Point::new(
+                dim.center.x + (rr + 1.0) * mid.cos(),
+                dim.center.y + (rr + 1.0) * mid.sin(),
+            ),
             text_angle_deg: 0.0,
         },
     }
@@ -679,14 +783,26 @@ pub struct SpotCoordinate {
 
 /// Format a point's coordinates as a Spot Coordinate label detailing Northing
 /// and Easting.
-pub fn format_spot_coordinate(p: Point, spatial: &SpatialContext, basis: Option<CoordinateBasis>) -> SpotCoordinate {
+pub fn format_spot_coordinate(
+    p: Point,
+    spatial: &SpatialContext,
+    basis: Option<CoordinateBasis>,
+) -> SpotCoordinate {
     let basis = basis.unwrap_or_default();
     let easting = p.x + basis.false_easting.unwrap_or(5000.0);
     let northing = -p.y + basis.false_northing.unwrap_or(5000.0);
-    let u = if spatial.units == Unit::Feet { "ft" } else { "m" };
+    let u = if spatial.units == Unit::Feet {
+        "ft"
+    } else {
+        "m"
+    };
     let easting_str = format!("E: {} {u}", format_thousands_fixed(easting, 3));
     let northing_str = format!("N: {} {u}", format_thousands_fixed(northing, 3));
-    SpotCoordinate { northing, easting, text: format!("{northing_str}\n{easting_str}") }
+    SpotCoordinate {
+        northing,
+        easting,
+        text: format!("{northing_str}\n{easting_str}"),
+    }
 }
 
 /// A 2D point that may carry an elevation, for slope annotations.
@@ -699,7 +815,11 @@ pub struct ElevatedPoint {
 
 impl From<Point> for ElevatedPoint {
     fn from(p: Point) -> Self {
-        ElevatedPoint { x: p.x, y: p.y, z: None }
+        ElevatedPoint {
+            x: p.x,
+            y: p.y,
+            z: None,
+        }
     }
 }
 
@@ -732,7 +852,10 @@ pub fn format_slope(a: ElevatedPoint, b: ElevatedPoint, format: SlopeFormat) -> 
 
 /// Stack overlapping colinear/parallel aligned dimensions to avoid line
 /// overlap, by pushing later dimensions' offsets apart by `base_gap`.
-pub fn stack_dimension_chains(dimensions: &[AlignedDimension], base_gap: f64) -> Vec<AlignedDimension> {
+pub fn stack_dimension_chains(
+    dimensions: &[AlignedDimension],
+    base_gap: f64,
+) -> Vec<AlignedDimension> {
     let mut stacked: Vec<AlignedDimension> = dimensions.to_vec();
     let n = stacked.len();
     let mut changed = true;
@@ -759,7 +882,11 @@ pub fn stack_dimension_chains(dimensions: &[AlignedDimension], base_gap: f64) ->
                 let max2 = p2a.max(p2b);
                 let overlap = min1 < max2 - 1e-3 && min2 < max1 - 1e-3;
                 if overlap && (d1.offset - d2.offset).abs() < base_gap - 1e-3 {
-                    let sign = if d1.offset == 0.0 { 1.0 } else { d1.offset.signum() };
+                    let sign = if d1.offset == 0.0 {
+                        1.0
+                    } else {
+                        d1.offset.signum()
+                    };
                     stacked[j].offset = d1.offset + sign * base_gap;
                     changed = true;
                 }
@@ -775,7 +902,11 @@ mod tests {
     use approx::assert_relative_eq;
 
     fn default_spatial_context() -> SpatialContext {
-        SpatialContext { crs: "EPSG:3857".to_string(), units: Unit::Meters, scale: 1.0 }
+        SpatialContext {
+            crs: "EPSG:3857".to_string(),
+            units: Unit::Meters,
+            scale: 1.0,
+        }
     }
 
     // --- ported 1:1 from drawing/tests/dimension.test.ts -----------------------
@@ -805,8 +936,16 @@ mod tests {
 
     #[test]
     fn calculates_slope_annotations_ratios_and_percents() {
-        let a = ElevatedPoint { x: 0.0, y: 0.0, z: Some(0.0) };
-        let b = ElevatedPoint { x: 100.0, y: 0.0, z: Some(2.5) };
+        let a = ElevatedPoint {
+            x: 0.0,
+            y: 0.0,
+            z: Some(0.0),
+        };
+        let b = ElevatedPoint {
+            x: 100.0,
+            y: 0.0,
+            z: Some(2.5),
+        };
         assert_eq!(format_slope(a, b, SlopeFormat::Percent), "2.50%");
         assert_eq!(format_slope(a, b, SlopeFormat::Ratio), "40.0:1");
     }
@@ -835,7 +974,10 @@ mod tests {
         });
         let measured = measure_dimension(&dim, &spatial);
         assert_eq!(measured.geometry.lines.len(), 1);
-        assert_eq!(measured.geometry.lines[0], [Point::new(0.0, 10.0), Point::new(100.0, 10.0)]);
+        assert_eq!(
+            measured.geometry.lines[0],
+            [Point::new(0.0, 10.0), Point::new(100.0, 10.0)]
+        );
     }
 
     #[test]
@@ -946,12 +1088,18 @@ mod tests {
     #[test]
     fn ft_in_format_rolls_inches_into_feet_at_twelve() {
         // 0.999999... feet rounding to 12 inches must carry into the next foot.
-        assert_eq!(format_single_value(0.99999, DimUnit::FtIn, 0, false), "1'-0\"");
+        assert_eq!(
+            format_single_value(0.99999, DimUnit::FtIn, 0, false),
+            "1'-0\""
+        );
     }
 
     #[test]
     fn ft_in_format_reduces_fractions_to_lowest_terms() {
         // 0.5 inches at precision=1 (1/2 denominator) reduces to 1/2, not 1/2 unreduced weirdness.
-        assert_eq!(format_single_value(4.0 / 12.0 + 0.5 / 12.0, DimUnit::FtIn, 1, false), "0'-4 1/2\"");
+        assert_eq!(
+            format_single_value(4.0 / 12.0 + 0.5 / 12.0, DimUnit::FtIn, 1, false),
+            "0'-4 1/2\""
+        );
     }
 }

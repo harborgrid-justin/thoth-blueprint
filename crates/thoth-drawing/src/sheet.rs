@@ -159,11 +159,18 @@ pub fn parse_sheet_number(text: &str) -> Result<SheetNumber, DrawingError> {
     if digits.len() != 3 || !digits.chars().all(|c| c.is_ascii_digit()) {
         return Err(malformed(text));
     }
-    let discipline = DisciplineCode::from_letter(letter)
-        .ok_or(DrawingError::MalformedSheetNumber(text.to_string(), "letter is not a recognized NCS discipline code"))?;
+    let discipline =
+        DisciplineCode::from_letter(letter).ok_or(DrawingError::MalformedSheetNumber(
+            text.to_string(),
+            "letter is not a recognized NCS discipline code",
+        ))?;
     let type_digit: u8 = digits[0..1].parse().expect("single ASCII digit");
     let sequence: u32 = digits[1..3].parse().expect("two ASCII digits");
-    Ok(SheetNumber { discipline, r#type: type_digit, sequence })
+    Ok(SheetNumber {
+        discipline,
+        r#type: type_digit,
+        sequence,
+    })
 }
 
 fn malformed(text: &str) -> DrawingError {
@@ -172,11 +179,17 @@ fn malformed(text: &str) -> DrawingError {
 
 /// Compare two sheets by discipline order, then type, then sequence.
 pub fn compare_sheets(a: &Sheet, b: &Sheet) -> std::cmp::Ordering {
-    let idx_a = DISCIPLINE_ORDER.iter().position(|d| *d == a.number.discipline);
-    let idx_b = DISCIPLINE_ORDER.iter().position(|d| *d == b.number.discipline);
+    let idx_a = DISCIPLINE_ORDER
+        .iter()
+        .position(|d| *d == a.number.discipline);
+    let idx_b = DISCIPLINE_ORDER
+        .iter()
+        .position(|d| *d == b.number.discipline);
     let da = idx_a.unwrap_or(usize::MAX);
     let db = idx_b.unwrap_or(usize::MAX);
-    da.cmp(&db).then(a.number.r#type.cmp(&b.number.r#type)).then(a.number.sequence.cmp(&b.number.sequence))
+    da.cmp(&db)
+        .then(a.number.r#type.cmp(&b.number.r#type))
+        .then(a.number.sequence.cmp(&b.number.sequence))
 }
 
 /// A copy of the set's sheets in canonical NCS order.
@@ -187,7 +200,11 @@ pub fn sort_sheets(set: &DrawingSet) -> Vec<Sheet> {
 }
 
 /// The next free sequence number for a (discipline, type) pair in a set.
-pub fn next_sheet_number(set: &DrawingSet, discipline: DisciplineCode, r#type: SheetTypeDigit) -> SheetNumber {
+pub fn next_sheet_number(
+    set: &DrawingSet,
+    discipline: DisciplineCode,
+    r#type: SheetTypeDigit,
+) -> SheetNumber {
     let max = set
         .sheets
         .iter()
@@ -195,7 +212,11 @@ pub fn next_sheet_number(set: &DrawingSet, discipline: DisciplineCode, r#type: S
         .map(|s| s.number.sequence)
         .max()
         .unwrap_or(0);
-    SheetNumber { discipline, r#type, sequence: max + 1 }
+    SheetNumber {
+        discipline,
+        r#type,
+        sequence: max + 1,
+    }
 }
 
 /// One row of the drawing index (cover-sheet sheet list).
@@ -254,7 +275,11 @@ mod tests {
     fn sheet(discipline: DisciplineCode, r#type: u8, sequence: u32, id: &str) -> Sheet {
         Sheet {
             id: id.to_string(),
-            number: SheetNumber { discipline, r#type, sequence },
+            number: SheetNumber {
+                discipline,
+                r#type,
+                sequence,
+            },
             title: format!("Sheet {id}"),
             size: "arch-d".to_string(),
             orientation: Orientation::Landscape,
@@ -269,21 +294,39 @@ mod tests {
 
     #[test]
     fn format_sheet_number_pads_sequence_to_two_digits() {
-        let n = SheetNumber { discipline: DisciplineCode::A, r#type: 1, sequence: 1 };
+        let n = SheetNumber {
+            discipline: DisciplineCode::A,
+            r#type: 1,
+            sequence: 1,
+        };
         assert_eq!(format_sheet_number(n), "A-101");
     }
 
     #[test]
     fn parse_sheet_number_round_trips_with_format() {
         let n = parse_sheet_number("A-101").unwrap();
-        assert_eq!(n, SheetNumber { discipline: DisciplineCode::A, r#type: 1, sequence: 1 });
+        assert_eq!(
+            n,
+            SheetNumber {
+                discipline: DisciplineCode::A,
+                r#type: 1,
+                sequence: 1
+            }
+        );
         assert_eq!(format_sheet_number(n), "A-101");
     }
 
     #[test]
     fn parse_sheet_number_accepts_missing_hyphen_and_lowercase() {
         let n = parse_sheet_number("c501").unwrap();
-        assert_eq!(n, SheetNumber { discipline: DisciplineCode::C, r#type: 5, sequence: 1 });
+        assert_eq!(
+            n,
+            SheetNumber {
+                discipline: DisciplineCode::C,
+                r#type: 5,
+                sequence: 1
+            }
+        );
     }
 
     #[test]
@@ -314,7 +357,10 @@ mod tests {
         let set = DrawingSet {
             id: "s".to_string(),
             name: "Set".to_string(),
-            sheets: vec![sheet(DisciplineCode::A, 1, 1, "a1"), sheet(DisciplineCode::G, 0, 1, "g1")],
+            sheets: vec![
+                sheet(DisciplineCode::A, 1, 1, "a1"),
+                sheet(DisciplineCode::G, 0, 1, "g1"),
+            ],
             title_block_defaults: TitleBlockDefaults {
                 project_name: "P".to_string(),
                 client: None,
@@ -336,7 +382,10 @@ mod tests {
         let set = DrawingSet {
             id: "s".to_string(),
             name: "Set".to_string(),
-            sheets: vec![sheet(DisciplineCode::A, 1, 1, "a1"), sheet(DisciplineCode::A, 1, 3, "a3")],
+            sheets: vec![
+                sheet(DisciplineCode::A, 1, 1, "a1"),
+                sheet(DisciplineCode::A, 1, 3, "a3"),
+            ],
             title_block_defaults: TitleBlockDefaults {
                 project_name: "P".to_string(),
                 client: None,
@@ -357,7 +406,10 @@ mod tests {
         let set = DrawingSet {
             id: "s".to_string(),
             name: "Set".to_string(),
-            sheets: vec![sheet(DisciplineCode::A, 1, 1, "a1"), sheet(DisciplineCode::G, 0, 1, "g1")],
+            sheets: vec![
+                sheet(DisciplineCode::A, 1, 1, "a1"),
+                sheet(DisciplineCode::G, 0, 1, "g1"),
+            ],
             title_block_defaults: TitleBlockDefaults {
                 project_name: "P".to_string(),
                 client: None,
@@ -381,7 +433,10 @@ mod tests {
         let set = DrawingSet {
             id: "s".to_string(),
             name: "Set".to_string(),
-            sheets: vec![sheet(DisciplineCode::G, 0, 1, "g1"), sheet(DisciplineCode::A, 1, 1, "a1")],
+            sheets: vec![
+                sheet(DisciplineCode::G, 0, 1, "g1"),
+                sheet(DisciplineCode::A, 1, 1, "a1"),
+            ],
             title_block_defaults: TitleBlockDefaults {
                 project_name: "Project".to_string(),
                 client: None,
