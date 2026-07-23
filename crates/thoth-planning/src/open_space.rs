@@ -181,7 +181,13 @@ mod tests {
             apn: None,
         };
         let open_space = OpenSpace {
-            base: new_base("os1", ElementKind::Openspace, "Greenway", "l", square(120.0)),
+            base: new_base(
+                "os1",
+                ElementKind::Openspace,
+                "Greenway",
+                "l",
+                square(120.0),
+            ),
             dedicated: Some(true),
         };
         let site = Site {

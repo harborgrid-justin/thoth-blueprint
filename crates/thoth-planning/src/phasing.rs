@@ -79,7 +79,10 @@ fn lots_adjacent(a: &Lot, b: &Lot, tolerance: f64) -> bool {
 
 /// `true` if any vertex of `lot`'s boundary lies within `tolerance` of `point`.
 fn lot_near_point(lot: &Lot, point: Point, tolerance: f64) -> bool {
-    lot.base.boundary.iter().any(|p| distance(*p, point) <= tolerance)
+    lot.base
+        .boundary
+        .iter()
+        .any(|p| distance(*p, point) <= tolerance)
 }
 
 /// Plan an ordered build-out sequence for `lots` into `phase_count` phases,

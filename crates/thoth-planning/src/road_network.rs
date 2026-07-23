@@ -81,7 +81,9 @@ pub fn generate_road_network(
         return Err(RoadNetworkError::InvalidBoundary);
     }
     if target_block_length <= 0.0 {
-        return Err(RoadNetworkError::InvalidTargetBlockLength(target_block_length));
+        return Err(RoadNetworkError::InvalidTargetBlockLength(
+            target_block_length,
+        ));
     }
     if row_width <= 0.0 {
         return Err(RoadNetworkError::InvalidRowWidth(row_width));
@@ -150,13 +152,31 @@ fn street(
     let id = make_id();
     let bounds_of_centerline = bounds(&centerline);
     let boundary = vec![
-        Point::new(bounds_of_centerline.min_x - row_width / 2.0, bounds_of_centerline.min_y),
-        Point::new(bounds_of_centerline.max_x + row_width / 2.0, bounds_of_centerline.min_y),
-        Point::new(bounds_of_centerline.max_x + row_width / 2.0, bounds_of_centerline.max_y),
-        Point::new(bounds_of_centerline.min_x - row_width / 2.0, bounds_of_centerline.max_y),
+        Point::new(
+            bounds_of_centerline.min_x - row_width / 2.0,
+            bounds_of_centerline.min_y,
+        ),
+        Point::new(
+            bounds_of_centerline.max_x + row_width / 2.0,
+            bounds_of_centerline.min_y,
+        ),
+        Point::new(
+            bounds_of_centerline.max_x + row_width / 2.0,
+            bounds_of_centerline.max_y,
+        ),
+        Point::new(
+            bounds_of_centerline.min_x - row_width / 2.0,
+            bounds_of_centerline.max_y,
+        ),
     ];
     RightOfWay {
-        base: new_base(id, ElementKind::Row, "Generated Street".to_string(), layer_id.to_string(), boundary),
+        base: new_base(
+            id,
+            ElementKind::Row,
+            "Generated Street".to_string(),
+            layer_id.to_string(),
+            boundary,
+        ),
         centerline: Some(centerline),
         width: Some(row_width),
     }
@@ -225,10 +245,9 @@ mod tests {
     #[test]
     fn small_parcel_collapses_to_a_single_block_with_no_interior_streets() {
         let boundary = rect(150.0, 150.0);
-        let plan = generate_road_network(&boundary, 500.0, None, 50.0, "streets", || {
-            "st".to_string()
-        })
-        .unwrap();
+        let plan =
+            generate_road_network(&boundary, 500.0, None, 50.0, "streets", || "st".to_string())
+                .unwrap();
         assert!(plan.streets.is_empty());
     }
 
@@ -246,11 +265,13 @@ mod tests {
             Err(RoadNetworkError::InvalidBoundary)
         );
         assert_eq!(
-            generate_road_network(&rect(100.0, 100.0), 0.0, None, 50.0, "l", || "x".to_string()),
+            generate_road_network(&rect(100.0, 100.0), 0.0, None, 50.0, "l", || "x"
+                .to_string()),
             Err(RoadNetworkError::InvalidTargetBlockLength(0.0))
         );
         assert_eq!(
-            generate_road_network(&rect(100.0, 100.0), 200.0, None, 0.0, "l", || "x".to_string()),
+            generate_road_network(&rect(100.0, 100.0), 200.0, None, 0.0, "l", || "x"
+                .to_string()),
             Err(RoadNetworkError::InvalidRowWidth(0.0))
         );
     }

@@ -226,7 +226,9 @@ mod tests {
         // b1's FAR finding remains (its variance is only `Requested`, not
         // `Approved`); b2's coverage finding remains (different element).
         assert_eq!(remaining.len(), 2);
-        assert!(remaining.iter().any(|f| f.element_id.as_deref() == Some("b2")));
+        assert!(remaining
+            .iter()
+            .any(|f| f.element_id.as_deref() == Some("b2")));
         assert!(remaining
             .iter()
             .any(|f| f.code == "far.exceeded" && f.element_id.as_deref() == Some("b1")));

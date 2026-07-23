@@ -101,7 +101,7 @@ pub fn infinite_slope_factor_of_safety(
     if !(slope_angle_deg > 0.0 && slope_angle_deg < 90.0) {
         return Err(GeotechError::InvalidSlopeAngle(slope_angle_deg));
     }
-    if !(friction_angle_deg >= 0.0 && friction_angle_deg < 90.0) {
+    if !(0.0..90.0).contains(&friction_angle_deg) {
         return Err(GeotechError::InvalidFrictionAngle(friction_angle_deg));
     }
     if soil_unit_weight <= 0.0 {
@@ -135,7 +135,10 @@ mod tests {
     fn dry_slope_matches_hand_calculation() {
         let fs = infinite_slope_factor_of_safety(30.0, 19.0, 3.0, 5.0, 30.0, 0.0).unwrap();
         assert_relative_eq!(fs, 1.2028, epsilon = 1e-3);
-        assert_eq!(slope_stability_class(fs), SlopeStabilityClass::MarginallyStable);
+        assert_eq!(
+            slope_stability_class(fs),
+            SlopeStabilityClass::MarginallyStable
+        );
     }
 
     /// The same slope saturated to u=20 kPa: pore pressure erodes the

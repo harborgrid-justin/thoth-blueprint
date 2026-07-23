@@ -194,7 +194,10 @@ mod tests {
             name: "Site".to_string(),
             spatial: ctx,
             layers: vec![],
-            elements: vec![PlanElement::Building(residential), PlanElement::Building(retail)],
+            elements: vec![
+                PlanElement::Building(residential),
+                PlanElement::Building(retail),
+            ],
             jurisdiction_id: None,
             geoid: None,
             control_lines: None,

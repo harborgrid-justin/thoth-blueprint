@@ -106,7 +106,8 @@ fn region_earthwork(site: &Site, region: &GradeRegion) -> RegionEarthwork {
     let centroid = thoth_spatial::centroid(&region.base.boundary);
     // No spot elevations on site: assume existing == target (zero net
     // earthwork) rather than fabricating a number — see the module doc.
-    let existing_elevation = estimate_existing_elevation(site, centroid).unwrap_or(region.target_elevation);
+    let existing_elevation =
+        estimate_existing_elevation(site, centroid).unwrap_or(region.target_elevation);
     let volume = area * (existing_elevation - region.target_elevation);
     RegionEarthwork {
         area,
@@ -363,7 +364,8 @@ mod tests {
             ..site
         };
         assert!(optimize_grading_balance(&with_region, 5.0, -5.0, 0.1).is_none()); // max < min
-        assert!(optimize_grading_balance(&with_region, -5.0, 5.0, 0.0).is_none()); // step <= 0
+        assert!(optimize_grading_balance(&with_region, -5.0, 5.0, 0.0).is_none());
+        // step <= 0
     }
 
     #[test]

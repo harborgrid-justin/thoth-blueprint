@@ -19,7 +19,9 @@
 //! newly planted (mitigation) canopy.
 
 use serde::{Deserialize, Serialize};
-use thoth_spatial::{area as polygon_area, ComplianceFinding, ComplianceSeverity, RenovationStatus};
+use thoth_spatial::{
+    area as polygon_area, ComplianceFinding, ComplianceSeverity, RenovationStatus,
+};
 
 use crate::elements::{PlantingArea, Site, Tree};
 

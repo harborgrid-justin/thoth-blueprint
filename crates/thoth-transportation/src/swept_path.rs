@@ -296,7 +296,7 @@ mod tests {
     fn finer_step_size_converges_more_tightly_than_coarse_step_size() {
         let vehicle = DesignVehicle::su30();
         let center = Point::new(0.0, 0.0);
-        let radius = 60.0;
+        let radius: f64 = 60.0;
         let sweep = 1.5 * PI;
         let expected = (radius * radius - 20.0 * 20.0).sqrt();
 

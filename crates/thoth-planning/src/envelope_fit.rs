@@ -223,7 +223,9 @@ pub fn check_building_envelope_fit(inputs: &EnvelopeFitInputs) -> EnvelopeFitRep
         }
     }
 
-    let fits = !findings.iter().any(|f| f.severity == ComplianceSeverity::Error);
+    let fits = !findings
+        .iter()
+        .any(|f| f.severity == ComplianceSeverity::Error);
 
     EnvelopeFitReport {
         buildable_envelope: envelope,
@@ -272,12 +274,22 @@ mod tests {
     fn full_containment_returns_the_subject_area() {
         let subject = rect(10.0, 10.0, 0.0, 0.0);
         let clip = rect(100.0, 100.0, -50.0, -50.0);
-        assert_relative_eq!(polygon_intersection_area(&subject, &clip), 100.0, epsilon = 1e-6);
+        assert_relative_eq!(
+            polygon_intersection_area(&subject, &clip),
+            100.0,
+            epsilon = 1e-6
+        );
     }
 
     fn lot_100x80_setback_10() -> Lot {
         Lot {
-            base: new_base("l1", ElementKind::Lot, "Lot 1", "layer", rect(100.0, 80.0, 0.0, 0.0)),
+            base: new_base(
+                "l1",
+                ElementKind::Lot,
+                "Lot 1",
+                "layer",
+                rect(100.0, 80.0, 0.0, 0.0),
+            ),
             parcel_id: None,
             block_id: None,
             setback: Some(10.0),
@@ -286,7 +298,13 @@ mod tests {
 
     fn zone_r1() -> Zone {
         Zone {
-            base: new_base("z1", ElementKind::Zone, "R-1", "layer", rect(1000.0, 1000.0, -500.0, -500.0)),
+            base: new_base(
+                "z1",
+                ElementKind::Zone,
+                "R-1",
+                "layer",
+                rect(1000.0, 1000.0, -500.0, -500.0),
+            ),
             designation: "R-1".to_string(),
             allowed_uses: vec![],
             max_coverage: Some(0.40),
@@ -312,8 +330,16 @@ mod tests {
         let report = check_building_envelope_fit(&inputs);
         assert_relative_eq!(report.gross_buildable_area, 4_800.0, epsilon = 1e-6);
         assert_eq!(report.easement_encroachment_area, 0.0);
-        assert_relative_eq!(report.max_footprint_by_far.unwrap(), 4_000.0, epsilon = 1e-6);
-        assert_relative_eq!(report.max_footprint_by_coverage.unwrap(), 3_200.0, epsilon = 1e-6);
+        assert_relative_eq!(
+            report.max_footprint_by_far.unwrap(),
+            4_000.0,
+            epsilon = 1e-6
+        );
+        assert_relative_eq!(
+            report.max_footprint_by_coverage.unwrap(),
+            3_200.0,
+            epsilon = 1e-6
+        );
         assert!(report.fits);
         assert!(report.findings.is_empty());
     }
@@ -350,7 +376,10 @@ mod tests {
             .findings
             .iter()
             .any(|f| f.code == "envelope.easementEncroachment"));
-        assert!(report.findings.iter().any(|f| f.code == "envelope.exceedsFar"));
+        assert!(report
+            .findings
+            .iter()
+            .any(|f| f.code == "envelope.exceedsFar"));
         assert!(report
             .findings
             .iter()

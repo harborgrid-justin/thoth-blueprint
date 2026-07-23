@@ -218,12 +218,19 @@ mod tests {
         assert_eq!(plat.monuments.len(), 1);
         assert_eq!(plat.certificates.len(), 1);
         assert_eq!(plat.curve_table.len(), 1);
-        assert_relative_eq!(plat.area, boundary_area(&boundary, Some(&arcs)), epsilon = 1e-9);
+        assert_relative_eq!(
+            plat.area,
+            boundary_area(&boundary, Some(&arcs)),
+            epsilon = 1e-9
+        );
         assert_relative_eq!(
             plat.perimeter,
             boundary_perimeter(&boundary, Some(&arcs)),
             epsilon = 1e-9
         );
-        assert_eq!(plat.surveyor_of_record.as_deref(), Some("Jane Surveyor, PLS #1234"));
+        assert_eq!(
+            plat.surveyor_of_record.as_deref(),
+            Some("Jane Surveyor, PLS #1234")
+        );
     }
 }

@@ -252,7 +252,15 @@ fn midpoint(a: Point, b: Point) -> Point {
 mod tests {
     use super::*;
 
-    fn pipe(id: &str, x0: f64, y0: f64, x1: f64, y1: f64, depth: f64, diameter: f64) -> UtilitySegment {
+    fn pipe(
+        id: &str,
+        x0: f64,
+        y0: f64,
+        x1: f64,
+        y1: f64,
+        depth: f64,
+        diameter: f64,
+    ) -> UtilitySegment {
         UtilitySegment {
             id: id.to_string(),
             network_kind: "storm".to_string(),

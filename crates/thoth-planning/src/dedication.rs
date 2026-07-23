@@ -89,16 +89,32 @@ pub fn buffer_centerline(centerline: &[Point], width: f64) -> Result<Polygon, De
 
     let mut left_side = Vec::with_capacity(n);
     for i in 0..n {
-        let prev_normal = if i > 0 { Some(edge_normals[i - 1]) } else { None };
-        let next_normal = if i < n - 1 { Some(edge_normals[i]) } else { None };
+        let prev_normal = if i > 0 {
+            Some(edge_normals[i - 1])
+        } else {
+            None
+        };
+        let next_normal = if i < n - 1 {
+            Some(edge_normals[i])
+        } else {
+            None
+        };
         let offset = vertex_offset(prev_normal, next_normal, half_width);
         left_side.push(add(centerline[i], offset));
     }
 
     let mut right_side = Vec::with_capacity(n);
     for i in 0..n {
-        let prev_normal = if i > 0 { Some(edge_normals[i - 1]) } else { None };
-        let next_normal = if i < n - 1 { Some(edge_normals[i]) } else { None };
+        let prev_normal = if i > 0 {
+            Some(edge_normals[i - 1])
+        } else {
+            None
+        };
+        let next_normal = if i < n - 1 {
+            Some(edge_normals[i])
+        } else {
+            None
+        };
         let offset = vertex_offset(prev_normal, next_normal, half_width);
         right_side.push(subtract(centerline[i], offset));
     }
@@ -125,7 +141,13 @@ pub fn generate_row_dedication(
 ) -> Result<RightOfWay, DedicationError> {
     let boundary = buffer_centerline(&centerline, width)?;
     Ok(RightOfWay {
-        base: new_base(id, thoth_spatial::ElementKind::Row, name, layer_id, boundary),
+        base: new_base(
+            id,
+            thoth_spatial::ElementKind::Row,
+            name,
+            layer_id,
+            boundary,
+        ),
         centerline: Some(centerline),
         width: Some(width),
     })
@@ -143,7 +165,13 @@ pub fn generate_easement_polygon(
 ) -> Result<Easement, DedicationError> {
     let boundary = buffer_centerline(corridor_centerline, width)?;
     Ok(Easement {
-        base: new_base(id, thoth_spatial::ElementKind::Easement, name, layer_id, boundary),
+        base: new_base(
+            id,
+            thoth_spatial::ElementKind::Easement,
+            name,
+            layer_id,
+            boundary,
+        ),
         purpose: Some(purpose),
     })
 }
@@ -197,11 +225,16 @@ mod tests {
     #[test]
     fn generates_a_row_dedication_with_centerline_and_width_stamped() {
         let centerline = vec![Point::new(0.0, 0.0), Point::new(300.0, 0.0)];
-        let row = generate_row_dedication("row-1", "Main St ROW", "streets", centerline.clone(), 60.0)
-            .unwrap();
+        let row =
+            generate_row_dedication("row-1", "Main St ROW", "streets", centerline.clone(), 60.0)
+                .unwrap();
         assert_eq!(row.centerline.as_ref().unwrap(), &centerline);
         assert_eq!(row.width, Some(60.0));
-        assert_relative_eq!(thoth_spatial::area(&row.base.boundary), 300.0 * 60.0, epsilon = 1e-6);
+        assert_relative_eq!(
+            thoth_spatial::area(&row.base.boundary),
+            300.0 * 60.0,
+            epsilon = 1e-6
+        );
     }
 
     #[test]
@@ -217,6 +250,10 @@ mod tests {
         )
         .unwrap();
         assert_eq!(easement.purpose, Some(EasementPurpose::Utility));
-        assert_relative_eq!(thoth_spatial::area(&easement.base.boundary), 500.0 * 20.0, epsilon = 1e-6);
+        assert_relative_eq!(
+            thoth_spatial::area(&easement.base.boundary),
+            500.0 * 20.0,
+            epsilon = 1e-6
+        );
     }
 }
