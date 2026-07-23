@@ -65,7 +65,11 @@ pub fn to_plan_element(
 }
 
 /// Convert a `thoth_planning` parcel element into a LandXML parcel record.
-pub fn from_plan_parcel(parcel: &PlanningParcel, area: Option<f64>, state: Option<&str>) -> LandXmlParcel {
+pub fn from_plan_parcel(
+    parcel: &PlanningParcel,
+    area: Option<f64>,
+    state: Option<&str>,
+) -> LandXmlParcel {
     LandXmlParcel {
         name: parcel.base.name.clone(),
         area,
@@ -89,7 +93,10 @@ pub fn parcels_xml(parcels: &[LandXmlParcel]) -> String {
         open.push('>');
         out.push(open);
         if let Some(apn) = &p.apn {
-            out.push(format!("      <Pin>{}</Pin>", crate::xml_tree::escape_text(apn)));
+            out.push(format!(
+                "      <Pin>{}</Pin>",
+                crate::xml_tree::escape_text(apn)
+            ));
         }
         out.push("      <CoordGeom>".to_string());
         let n = p.boundary.len();

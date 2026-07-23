@@ -184,9 +184,7 @@ impl ChannelCrossSection {
         match *self {
             ChannelCrossSection::CircularPipeFull { diameter_ft } => {
                 if diameter_ft <= 0.0 {
-                    return Err(HydrologyError::NonPositiveDimension {
-                        value: diameter_ft,
-                    });
+                    return Err(HydrologyError::NonPositiveDimension { value: diameter_ft });
                 }
                 Ok(diameter_ft / 4.0)
             }
@@ -220,8 +218,8 @@ impl ChannelCrossSection {
                     });
                 }
                 let area = (bottom_width_ft + side_slope_h_per_v * depth_ft) * depth_ft;
-                let wetted_perimeter = bottom_width_ft
-                    + 2.0 * depth_ft * (1.0 + side_slope_h_per_v.powi(2)).sqrt();
+                let wetted_perimeter =
+                    bottom_width_ft + 2.0 * depth_ft * (1.0 + side_slope_h_per_v.powi(2)).sqrt();
                 Ok(area / wetted_perimeter)
             }
         }
@@ -236,7 +234,11 @@ impl ChannelCrossSection {
 /// - [`HydrologyError::NonPositiveManningN`] if `n <= 0`.
 /// - [`HydrologyError::NonPositiveSlope`] if `slope <= 0`.
 /// - Propagates [`ChannelCrossSection::hydraulic_radius`]'s errors.
-pub fn manning_velocity(n: f64, cross_section: ChannelCrossSection, slope: f64) -> HydroResult<f64> {
+pub fn manning_velocity(
+    n: f64,
+    cross_section: ChannelCrossSection,
+    slope: f64,
+) -> HydroResult<f64> {
     if n <= 0.0 {
         return Err(HydrologyError::NonPositiveManningN { n });
     }
@@ -412,10 +414,10 @@ mod tests {
 
     #[test]
     fn shallow_concentrated_paved_is_faster_than_unpaved() {
-        let unpaved = shallow_concentrated_flow_time(ShallowFlowSurface::Unpaved, 500.0, 0.015)
-            .unwrap();
-        let paved = shallow_concentrated_flow_time(ShallowFlowSurface::Paved, 500.0, 0.015)
-            .unwrap();
+        let unpaved =
+            shallow_concentrated_flow_time(ShallowFlowSurface::Unpaved, 500.0, 0.015).unwrap();
+        let paved =
+            shallow_concentrated_flow_time(ShallowFlowSurface::Paved, 500.0, 0.015).unwrap();
         assert!(paved < unpaved);
         assert_relative_eq!(unpaved, 0.07028560098337638, epsilon = 1e-9);
         assert_relative_eq!(paved, 0.05578570798527593, epsilon = 1e-9);

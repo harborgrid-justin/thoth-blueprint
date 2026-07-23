@@ -176,7 +176,7 @@ pub fn parse_xml_tree(format: &'static str, xml: &str) -> InteropResult<XmlNode>
     })
 }
 
-fn place(stack: &mut Vec<XmlNode>, root: &mut Option<XmlNode>, node: XmlNode) {
+fn place(stack: &mut [XmlNode], root: &mut Option<XmlNode>, node: XmlNode) {
     if let Some(parent) = stack.last_mut() {
         parent.children.push(node);
     } else {

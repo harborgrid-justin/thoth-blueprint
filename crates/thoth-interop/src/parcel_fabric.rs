@@ -88,7 +88,8 @@ fn clip_polygon(subject: &[Point], clip: &[Point]) -> Vec<Point> {
         let clip_b = clip[(i + 1) % n];
         let edge = thoth_spatial::subtract(clip_b, clip_a);
         // Inside test assumes `clip` is wound counter-clockwise (see caller).
-        let inside = |p: Point| thoth_spatial::cross(edge, thoth_spatial::subtract(p, clip_a)) >= 0.0;
+        let inside =
+            |p: Point| thoth_spatial::cross(edge, thoth_spatial::subtract(p, clip_a)) >= 0.0;
 
         let input = output;
         let mut new_output = Vec::with_capacity(input.len() + 1);
@@ -153,7 +154,11 @@ pub fn polygon_iou(a: &Polygon, b: &Polygon) -> f64 {
 /// [`polygon_iou`]) — callers should validate parcels with
 /// `thoth_spatial::is_valid_polygon` beforehand, matching the rest of this
 /// crate's "don't build a second geometry-validation layer" stance.
-pub fn match_parcels(plan_parcels: &[PlanningParcel], fabric: &[FabricParcel], options: &MatchOptions) -> Vec<ParcelMatch> {
+pub fn match_parcels(
+    plan_parcels: &[PlanningParcel],
+    fabric: &[FabricParcel],
+    options: &MatchOptions,
+) -> Vec<ParcelMatch> {
     plan_parcels
         .iter()
         .map(|plan| {
@@ -235,7 +240,11 @@ mod tests {
 
     #[test]
     fn matches_by_apn_before_considering_geometry() {
-        let plan = vec![plan_parcel("p1", Some("045-12-007"), square(0.0, 0.0, 10.0))];
+        let plan = vec![plan_parcel(
+            "p1",
+            Some("045-12-007"),
+            square(0.0, 0.0, 10.0),
+        )];
         // Deliberately far away geometrically — APN should still win.
         let fabric = vec![FabricParcel {
             id: "f1".to_string(),
@@ -251,12 +260,23 @@ mod tests {
     fn falls_back_to_spatial_overlap_without_a_matching_apn() {
         let plan = vec![plan_parcel("p1", None, square(0.0, 0.0, 10.0))];
         let fabric = vec![
-            FabricParcel { id: "far".to_string(), apn: None, boundary: square(500.0, 500.0, 10.0) },
-            FabricParcel { id: "close".to_string(), apn: None, boundary: square(0.5, 0.5, 9.0) },
+            FabricParcel {
+                id: "far".to_string(),
+                apn: None,
+                boundary: square(500.0, 500.0, 10.0),
+            },
+            FabricParcel {
+                id: "close".to_string(),
+                apn: None,
+                boundary: square(0.5, 0.5, 9.0),
+            },
         ];
         let matches = match_parcels(&plan, &fabric, &MatchOptions::default());
         assert_eq!(matches[0].fabric_parcel_id.as_deref(), Some("close"));
-        assert!(matches!(matches[0].basis, Some(MatchBasis::SpatialOverlap { .. })));
+        assert!(matches!(
+            matches[0].basis,
+            Some(MatchBasis::SpatialOverlap { .. })
+        ));
     }
 
     #[test]

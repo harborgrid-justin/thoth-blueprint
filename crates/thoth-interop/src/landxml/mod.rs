@@ -223,15 +223,37 @@ mod tests {
 
     #[test]
     fn full_document_round_trips_every_present_section() {
-        let cogo_points = vec![sample_point(1, 1000.0, 2000.0), sample_point(2, 1010.0, 2005.0)];
+        let cogo_points = vec![
+            sample_point(1, 1000.0, 2000.0),
+            sample_point(2, 1010.0, 2005.0),
+        ];
         let surface = TinSurface {
             name: "EG".to_string(),
             points: vec![
-                TinPoint { id: "1".into(), x: 0.0, y: 0.0, z: 10.0 },
-                TinPoint { id: "2".into(), x: 10.0, y: 0.0, z: 12.0 },
-                TinPoint { id: "3".into(), x: 5.0, y: 10.0, z: 11.0 },
+                TinPoint {
+                    id: "1".into(),
+                    x: 0.0,
+                    y: 0.0,
+                    z: 10.0,
+                },
+                TinPoint {
+                    id: "2".into(),
+                    x: 10.0,
+                    y: 0.0,
+                    z: 12.0,
+                },
+                TinPoint {
+                    id: "3".into(),
+                    x: 5.0,
+                    y: 10.0,
+                    z: 11.0,
+                },
             ],
-            faces: vec![TinFace { a: "1".into(), b: "2".into(), c: "3".into() }],
+            faces: vec![TinFace {
+                a: "1".into(),
+                b: "2".into(),
+                c: "3".into(),
+            }],
         };
         let parcel = LandXmlParcel {
             name: "Lot 1".to_string(),

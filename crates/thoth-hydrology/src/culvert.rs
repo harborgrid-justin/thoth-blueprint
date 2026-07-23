@@ -175,9 +175,7 @@ fn circular_section_properties(diameter_ft: f64, depth_ft: f64) -> (f64, f64) {
 /// ```
 pub fn critical_depth_circular(diameter_ft: f64, discharge_cfs: f64) -> HydroResult<f64> {
     if diameter_ft <= 0.0 {
-        return Err(HydrologyError::NonPositiveDimension {
-            value: diameter_ft,
-        });
+        return Err(HydrologyError::NonPositiveDimension { value: diameter_ft });
     }
     if discharge_cfs <= 0.0 {
         return Err(HydrologyError::NonPositiveDischarge { q: discharge_cfs });
@@ -274,8 +272,7 @@ pub fn inlet_control_headwater(
         let hc = specific_head_at_critical_depth(d, r * culvert.full_area() * d.sqrt())?;
         Ok(hc / d + coeffs.k * r.powf(coeffs.m) - 0.5 * s)
     };
-    let submerged_hw_over_d =
-        |r: f64| -> f64 { coeffs.c * r.powi(2) + coeffs.y - 0.5 * s };
+    let submerged_hw_over_d = |r: f64| -> f64 { coeffs.c * r.powi(2) + coeffs.y - 0.5 * s };
 
     let hw_over_d = if ratio <= 3.5 {
         unsubmerged_hw_over_d(ratio)?
@@ -349,10 +346,10 @@ pub fn outlet_control_headwater(
     }
     .hydraulic_radius()?;
     let ke = culvert.entrance.entrance_loss_coefficient();
-    let head_loss = (1.0 + ke + 29.0 * culvert.manning_n.powi(2) * culvert.length_ft
-        / r.powf(4.0 / 3.0))
-        * velocity.powi(2)
-        / (2.0 * GRAVITY_FT_S2);
+    let head_loss =
+        (1.0 + ke + 29.0 * culvert.manning_n.powi(2) * culvert.length_ft / r.powf(4.0 / 3.0))
+            * velocity.powi(2)
+            / (2.0 * GRAVITY_FT_S2);
 
     let dc = critical_depth_circular(culvert.diameter_ft, discharge_cfs)?;
     let ho = tailwater_depth_ft.max((dc + culvert.diameter_ft) / 2.0);

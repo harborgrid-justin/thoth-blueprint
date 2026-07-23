@@ -11,9 +11,9 @@
 //!   `>12`-satellite continuation lines), and each satellite's raw
 //!   observation values (pseudorange `C1`/`P1`/`P2`, carrier phase `L1`/
 //!   `L2`, whatever the header declares) — parsed at the spec's true
-//!   fixed 16-column-per-slot width (14-char value + loss-of-lock-indicator
-//!   + signal-strength digit) so a blank (missing) observation is
-//!   distinguished from an adjacent value.
+//!   fixed 16-column-per-slot width (a 14-char value plus a
+//!   loss-of-lock-indicator digit plus a signal-strength digit) so a blank
+//!   (missing) observation is distinguished from an adjacent value.
 //!
 //! **What this module does *not* do**: it does not compute a single-point
 //! position from the pseudoranges. Doing so requires broadcast or precise
@@ -119,7 +119,11 @@ pub fn parse_rinex_obs(text: &str) -> InteropResult<RinexObsFile> {
         let data = header_data(line);
         match label {
             "RINEX VERSION / TYPE" => {
-                header.version = data.split_whitespace().next().and_then(|s| s.parse().ok()).unwrap_or(0.0);
+                header.version = data
+                    .split_whitespace()
+                    .next()
+                    .and_then(|s| s.parse().ok())
+                    .unwrap_or(0.0);
             }
             "MARKER NAME" => {
                 header.marker_name = Some(data.trim().to_string());
@@ -138,7 +142,10 @@ pub fn parse_rinex_obs(text: &str) -> InteropResult<RinexObsFile> {
                     return Err(InteropError::MalformedLine {
                         format: FORMAT,
                         line: i + 1,
-                        reason: format!("APPROX POSITION XYZ must have 3 values, got {}", nums.len()),
+                        reason: format!(
+                            "APPROX POSITION XYZ must have 3 values, got {}",
+                            nums.len()
+                        ),
                     });
                 }
                 header.approx_position_ecef = Some((nums[0], nums[1], nums[2]));
@@ -163,7 +170,9 @@ pub fn parse_rinex_obs(text: &str) -> InteropResult<RinexObsFile> {
                 while header.obs_types.len() < count && i + 1 < lines.len() {
                     i += 1;
                     let cont = header_data(lines[i]);
-                    header.obs_types.extend(cont.split_whitespace().map(|s| s.to_string()));
+                    header
+                        .obs_types
+                        .extend(cont.split_whitespace().map(|s| s.to_string()));
                 }
             }
             "END OF HEADER" => {
@@ -210,7 +219,10 @@ pub fn parse_rinex_obs(text: &str) -> InteropResult<RinexObsFile> {
                 i += 1;
             }
             values.truncate(header.obs_types.len());
-            satellites.push(SatelliteObservation { satellite: sat, values });
+            satellites.push(SatelliteObservation {
+                satellite: sat,
+                values,
+            });
         }
 
         epochs.push(RinexEpoch {
@@ -238,18 +250,50 @@ fn parse_epoch_header(lines: &[&str], i: usize) -> InteropResult<(EpochMeta, Vec
     // RINEX 2 epoch line: 5 date/time fields as I3 (year, month, day, hour,
     // minute), then seconds as F11.7, then epoch flag and satellite count as
     // I3 each — columns 0..32 total, satellites packed from column 32.
-    let year_2digit: i32 = padded[0..3].trim().parse().map_err(|e| line_err(i, format!("bad year: {e}")))?;
-    let year = if year_2digit < 80 { 2000 + year_2digit } else { 1900 + year_2digit };
-    let month: u32 = padded[3..6].trim().parse().map_err(|e| line_err(i, format!("bad month: {e}")))?;
-    let day: u32 = padded[6..9].trim().parse().map_err(|e| line_err(i, format!("bad day: {e}")))?;
-    let hour: u32 = padded[9..12].trim().parse().map_err(|e| line_err(i, format!("bad hour: {e}")))?;
-    let minute: u32 = padded[12..15].trim().parse().map_err(|e| line_err(i, format!("bad minute: {e}")))?;
-    let second: f64 = padded[15..26].trim().parse().map_err(|e| line_err(i, format!("bad second: {e}")))?;
-    let flag: i32 = padded[26..29].trim().parse().map_err(|e| line_err(i, format!("bad epoch flag: {e}")))?;
-    let numsat: usize = padded[29..32].trim().parse().map_err(|e| line_err(i, format!("bad satellite count: {e}")))?;
+    let year_2digit: i32 = padded[0..3]
+        .trim()
+        .parse()
+        .map_err(|e| line_err(i, format!("bad year: {e}")))?;
+    let year = if year_2digit < 80 {
+        2000 + year_2digit
+    } else {
+        1900 + year_2digit
+    };
+    let month: u32 = padded[3..6]
+        .trim()
+        .parse()
+        .map_err(|e| line_err(i, format!("bad month: {e}")))?;
+    let day: u32 = padded[6..9]
+        .trim()
+        .parse()
+        .map_err(|e| line_err(i, format!("bad day: {e}")))?;
+    let hour: u32 = padded[9..12]
+        .trim()
+        .parse()
+        .map_err(|e| line_err(i, format!("bad hour: {e}")))?;
+    let minute: u32 = padded[12..15]
+        .trim()
+        .parse()
+        .map_err(|e| line_err(i, format!("bad minute: {e}")))?;
+    let second: f64 = padded[15..26]
+        .trim()
+        .parse()
+        .map_err(|e| line_err(i, format!("bad second: {e}")))?;
+    let flag: i32 = padded[26..29]
+        .trim()
+        .parse()
+        .map_err(|e| line_err(i, format!("bad epoch flag: {e}")))?;
+    let numsat: usize = padded[29..32]
+        .trim()
+        .parse()
+        .map_err(|e| line_err(i, format!("bad satellite count: {e}")))?;
 
     let mut sat_ids = Vec::with_capacity(numsat);
-    let mut remainder: String = if line.len() > 32 { line[32..].to_string() } else { String::new() };
+    let mut remainder: String = if line.len() > 32 {
+        line[32..].to_string()
+    } else {
+        String::new()
+    };
     let mut cursor = i;
     loop {
         let mut chars: Vec<char> = remainder.chars().collect();
@@ -279,7 +323,11 @@ fn parse_epoch_header(lines: &[&str], i: usize) -> InteropResult<(EpochMeta, Vec
         });
     }
 
-    Ok(((year, month, day, hour, minute, second, flag), sat_ids, cursor + 1))
+    Ok((
+        (year, month, day, hour, minute, second, flag),
+        sat_ids,
+        cursor + 1,
+    ))
 }
 
 fn line_err(i: usize, reason: String) -> InteropError {
@@ -390,7 +438,8 @@ mod tests {
     #[test]
     fn ecef_round_trips_a_known_point() {
         // Approx position from the sample header, a real-world ECEF fix.
-        let (lat, lon, _height) = ecef_to_geodetic_wgs84(-2694892.6083, -4276245.5798, 3856454.4676);
+        let (lat, lon, _height) =
+            ecef_to_geodetic_wgs84(-2694892.6083, -4276245.5798, 3856454.4676);
         // This ECEF point is roughly in the vicinity of the western US
         // (Nevada/California), around lat 36N, lon -122W.
         assert!(lat > 30.0 && lat < 42.0, "lat = {lat}");
@@ -407,8 +456,12 @@ mod tests {
 
     #[test]
     fn missing_end_of_header_is_unsupported() {
-        let text = "     2.11           OBSERVATION DATA                        RINEX VERSION / TYPE\n";
-        assert!(matches!(parse_rinex_obs(text), Err(InteropError::Unsupported { .. })));
+        let text =
+            "     2.11           OBSERVATION DATA                        RINEX VERSION / TYPE\n";
+        assert!(matches!(
+            parse_rinex_obs(text),
+            Err(InteropError::Unsupported { .. })
+        ));
     }
 
     #[test]

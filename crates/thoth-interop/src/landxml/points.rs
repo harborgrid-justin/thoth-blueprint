@@ -41,11 +41,13 @@ pub fn points_xml(points: &[CogoPoint]) -> String {
 pub fn parse_points(points_node: &XmlNode) -> InteropResult<Vec<CogoPoint>> {
     let mut out = Vec::new();
     for (i, node) in points_node.children_named("CgPoint").enumerate() {
-        let name = node.attr("name").ok_or_else(|| InteropError::MissingField {
-            format: FORMAT,
-            what: format!("CgPoint[{i}]/@name"),
-            offset: node.offset,
-        })?;
+        let name = node
+            .attr("name")
+            .ok_or_else(|| InteropError::MissingField {
+                format: FORMAT,
+                what: format!("CgPoint[{i}]/@name"),
+                offset: node.offset,
+            })?;
         let point_number: i64 = name.parse().unwrap_or(i as i64 + 1);
 
         let values: Vec<f64> = node

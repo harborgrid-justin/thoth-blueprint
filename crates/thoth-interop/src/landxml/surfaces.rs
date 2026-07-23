@@ -86,7 +86,11 @@ pub fn elevation_grid_to_tin(name: impl Into<String>, grid: &ElevationGrid) -> T
                 b: br.clone(),
                 c: tl.clone(),
             });
-            faces.push(TinFace { a: br, b: tr, c: tl });
+            faces.push(TinFace {
+                a: br,
+                b: tr,
+                c: tl,
+            });
         }
     }
 
@@ -105,7 +109,8 @@ pub fn surfaces_xml(surfaces: &[TinSurface]) -> String {
         out.push("      <Definition surfType=\"TIN\">".to_string());
         out.push("        <Pnts>".to_string());
         for p in &s.points {
-            let (northing, easting) = point_to_northing_easting(thoth_spatial::Point::new(p.x, p.y));
+            let (northing, easting) =
+                point_to_northing_easting(thoth_spatial::Point::new(p.x, p.y));
             out.push(format!(
                 "          <P id=\"{}\">{:.4} {:.4} {:.4}</P>",
                 escape_attr(&p.id),
@@ -182,7 +187,10 @@ pub fn parse_surfaces(surfaces_node: &XmlNode) -> InteropResult<Vec<TinSurface>>
                     return Err(InteropError::Malformed {
                         format: FORMAT,
                         offset: p.offset,
-                        reason: format!("point '{id}' must have 3 values (N E Z), got {}", values.len()),
+                        reason: format!(
+                            "point '{id}' must have 3 values (N E Z), got {}",
+                            values.len()
+                        ),
                     });
                 }
                 let plan = northing_easting_to_point(values[0], values[1]);
@@ -224,7 +232,11 @@ pub fn parse_surfaces(surfaces_node: &XmlNode) -> InteropResult<Vec<TinSurface>>
             }
         }
 
-        out.push(TinSurface { name, points, faces });
+        out.push(TinSurface {
+            name,
+            points,
+            faces,
+        });
     }
     Ok(out)
 }
@@ -238,11 +250,30 @@ mod tests {
         TinSurface {
             name: "Existing Ground".to_string(),
             points: vec![
-                TinPoint { id: "A".into(), x: 0.0, y: 0.0, z: 100.0 },
-                TinPoint { id: "B".into(), x: 20.0, y: 0.0, z: 102.5 },
-                TinPoint { id: "C".into(), x: 10.0, y: 20.0, z: 101.25 },
+                TinPoint {
+                    id: "A".into(),
+                    x: 0.0,
+                    y: 0.0,
+                    z: 100.0,
+                },
+                TinPoint {
+                    id: "B".into(),
+                    x: 20.0,
+                    y: 0.0,
+                    z: 102.5,
+                },
+                TinPoint {
+                    id: "C".into(),
+                    x: 10.0,
+                    y: 20.0,
+                    z: 101.25,
+                },
             ],
-            faces: vec![TinFace { a: "A".into(), b: "B".into(), c: "C".into() }],
+            faces: vec![TinFace {
+                a: "A".into(),
+                b: "B".into(),
+                c: "C".into(),
+            }],
         }
     }
 

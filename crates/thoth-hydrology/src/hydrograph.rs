@@ -88,10 +88,7 @@ pub fn incremental_excess_rainfall(
     for &f in &cumulative_fraction {
         cumulative_runoff.push(runoff_depth(cn, f * total_depth_in)?);
     }
-    let pulses = cumulative_runoff
-        .windows(2)
-        .map(|w| w[1] - w[0])
-        .collect();
+    let pulses = cumulative_runoff.windows(2).map(|w| w[1] - w[0]).collect();
     Ok((actual_dt, pulses))
 }
 

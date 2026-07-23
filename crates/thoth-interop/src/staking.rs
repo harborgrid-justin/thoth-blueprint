@@ -135,8 +135,14 @@ pub fn format_stake_sheet(records: &[StakeRecord]) -> String {
     let mut lines = vec!["Label\tNorthing\tEasting\tStation\tOffset\tSide\tCut/Fill".to_string()];
     for r in records {
         let (northing, easting) = (-r.position.y, r.position.x);
-        let station = r.station.map(|s| format!("{s:.2}")).unwrap_or_else(|| "-".to_string());
-        let offset = r.offset.map(|o| format!("{o:.2}")).unwrap_or_else(|| "-".to_string());
+        let station = r
+            .station
+            .map(|s| format!("{s:.2}"))
+            .unwrap_or_else(|| "-".to_string());
+        let offset = r
+            .offset
+            .map(|o| format!("{o:.2}"))
+            .unwrap_or_else(|| "-".to_string());
         let side = match r.side {
             Some(StakeSide::Left) => "L",
             Some(StakeSide::Right) => "R",
@@ -165,22 +171,38 @@ mod tests {
         let a = HorizontalAlignment::new(
             "a1",
             "Main St",
-            vec![AlignmentPi::simple(Point::new(0.0, 0.0)), AlignmentPi::simple(Point::new(0.0, -1000.0))],
+            vec![
+                AlignmentPi::simple(Point::new(0.0, 0.0)),
+                AlignmentPi::simple(Point::new(0.0, -1000.0)),
+            ],
             0.0,
         );
         resolve_alignment(&a).unwrap()
     }
 
     fn flat_grid(elevation: f64) -> ElevationGrid {
-        ElevationGrid::new(Point::new(-100.0, -1100.0), 10.0, 40, 120, vec![elevation; 40 * 120]).unwrap()
+        ElevationGrid::new(
+            Point::new(-100.0, -1100.0),
+            10.0,
+            40,
+            120,
+            vec![elevation; 40 * 120],
+        )
+        .unwrap()
     }
 
     #[test]
     fn stakes_along_a_straight_alignment_report_station_and_offset() {
         let resolved = straight_alignment();
         let points = vec![
-            StakePoint { label_prefix: "CL", position: Point::new(0.0, -100.0) },
-            StakePoint { label_prefix: "CL", position: Point::new(10.0, -200.0) },
+            StakePoint {
+                label_prefix: "CL",
+                position: Point::new(0.0, -100.0),
+            },
+            StakePoint {
+                label_prefix: "CL",
+                position: Point::new(10.0, -200.0),
+            },
         ];
         let records = compute_staking(&points, Some(&resolved), None, None).unwrap();
         assert_eq!(records[0].label, "CL1");
@@ -195,7 +217,10 @@ mod tests {
     fn cut_fill_reflects_design_minus_existing() {
         let design = flat_grid(105.0);
         let existing = flat_grid(100.0);
-        let points = vec![StakePoint { label_prefix: "P", position: Point::new(0.0, -100.0) }];
+        let points = vec![StakePoint {
+            label_prefix: "P",
+            position: Point::new(0.0, -100.0),
+        }];
         let records = compute_staking(&points, None, Some(&design), Some(&existing)).unwrap();
         assert!((records[0].cut_fill.unwrap() - 5.0).abs() < 1e-6); // fill 5'
     }
@@ -204,7 +229,10 @@ mod tests {
     fn cut_is_reported_as_negative_cut_fill() {
         let design = flat_grid(95.0);
         let existing = flat_grid(100.0);
-        let points = vec![StakePoint { label_prefix: "P", position: Point::new(0.0, -100.0) }];
+        let points = vec![StakePoint {
+            label_prefix: "P",
+            position: Point::new(0.0, -100.0),
+        }];
         let records = compute_staking(&points, None, Some(&design), Some(&existing)).unwrap();
         assert!((records[0].cut_fill.unwrap() + 5.0).abs() < 1e-6);
         let sheet = format_stake_sheet(&records);
@@ -213,7 +241,10 @@ mod tests {
 
     #[test]
     fn neither_alignment_nor_surface_is_rejected() {
-        let points = vec![StakePoint { label_prefix: "P", position: Point::ZERO }];
+        let points = vec![StakePoint {
+            label_prefix: "P",
+            position: Point::ZERO,
+        }];
         assert!(matches!(
             compute_staking(&points, None, None, None),
             Err(InteropError::Unsupported { .. })
@@ -223,7 +254,10 @@ mod tests {
     #[test]
     fn point_outside_surface_envelope_yields_no_cut_fill_not_an_error() {
         let design = flat_grid(100.0);
-        let points = vec![StakePoint { label_prefix: "P", position: Point::new(10_000.0, 10_000.0) }];
+        let points = vec![StakePoint {
+            label_prefix: "P",
+            position: Point::new(10_000.0, 10_000.0),
+        }];
         let records = compute_staking(&points, None, Some(&design), Some(&design)).unwrap();
         assert!(records[0].cut_fill.is_none());
     }

@@ -95,8 +95,13 @@ pub enum InteropError {
 
     /// A least-squares network is under-determined: fewer independent
     /// observations than unknowns, so no unique adjustment exists.
-    #[error("network is under-determined: {unknowns} unknowns but only {observations} observations")]
-    UnderDetermined { unknowns: usize, observations: usize },
+    #[error(
+        "network is under-determined: {unknowns} unknowns but only {observations} observations"
+    )]
+    UnderDetermined {
+        unknowns: usize,
+        observations: usize,
+    },
 }
 
 /// Convenience alias used throughout this crate.

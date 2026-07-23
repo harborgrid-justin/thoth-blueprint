@@ -132,8 +132,13 @@ impl StageStorageDischarge {
             i += 1;
         }
         let (s0, s1) = (self.stage_ft[i], self.stage_ft[i + 1]);
-        let frac = if s1 > s0 { (stage_ft - s0) / (s1 - s0) } else { 0.0 };
-        let storage = self.storage_acft[i] + (self.storage_acft[i + 1] - self.storage_acft[i]) * frac;
+        let frac = if s1 > s0 {
+            (stage_ft - s0) / (s1 - s0)
+        } else {
+            0.0
+        };
+        let storage =
+            self.storage_acft[i] + (self.storage_acft[i + 1] - self.storage_acft[i]) * frac;
         let discharge =
             self.discharge_cfs[i] + (self.discharge_cfs[i + 1] - self.discharge_cfs[i]) * frac;
         Ok((storage, discharge))
@@ -157,27 +162,32 @@ impl StageStorageDischarge {
     /// # Errors
     /// - [`HydrologyError::RoutingExceedsCurveRange`] if `target` exceeds
     ///   the maximum indication value the curve covers.
-    fn invert_indication(
-        &self,
-        indication: &[f64],
-        target: f64,
-    ) -> HydroResult<(f64, f64, f64)> {
+    fn invert_indication(&self, indication: &[f64], target: f64) -> HydroResult<(f64, f64, f64)> {
         let n = indication.len();
         let max = indication[n - 1];
         if target > max {
             return Err(HydrologyError::RoutingExceedsCurveRange { value: target, max });
         }
         if target <= indication[0] {
-            return Ok((self.stage_ft[0], self.storage_acft[0], self.discharge_cfs[0]));
+            return Ok((
+                self.stage_ft[0],
+                self.storage_acft[0],
+                self.discharge_cfs[0],
+            ));
         }
         let mut i = 0;
         while i + 1 < n - 1 && indication[i + 1] < target {
             i += 1;
         }
         let (v0, v1) = (indication[i], indication[i + 1]);
-        let frac = if v1 > v0 { (target - v0) / (v1 - v0) } else { 0.0 };
+        let frac = if v1 > v0 {
+            (target - v0) / (v1 - v0)
+        } else {
+            0.0
+        };
         let stage = self.stage_ft[i] + (self.stage_ft[i + 1] - self.stage_ft[i]) * frac;
-        let storage = self.storage_acft[i] + (self.storage_acft[i + 1] - self.storage_acft[i]) * frac;
+        let storage =
+            self.storage_acft[i] + (self.storage_acft[i + 1] - self.storage_acft[i]) * frac;
         let discharge =
             self.discharge_cfs[i] + (self.discharge_cfs[i + 1] - self.discharge_cfs[i]) * frac;
         Ok((stage, storage, discharge))
@@ -212,7 +222,10 @@ impl PulsRoutingResult {
 
     /// The peak stage (ft) reached during routing.
     pub fn peak_stage(&self) -> f64 {
-        self.stage_ft.iter().cloned().fold(f64::NEG_INFINITY, f64::max)
+        self.stage_ft
+            .iter()
+            .cloned()
+            .fold(f64::NEG_INFINITY, f64::max)
     }
 }
 
@@ -302,7 +315,8 @@ pub fn route_reservoir(
         let rhs = inflow_cfs[i - 1]
             + inflow_cfs[i]
             + (2.0 * storage_acft * CF_PER_ACRE_FOOT / dt_seconds - discharge_cfs);
-        let (next_stage, next_storage, next_discharge) = curve.invert_indication(&indication, rhs)?;
+        let (next_stage, next_storage, next_discharge) =
+            curve.invert_indication(&indication, rhs)?;
         stage_ft = next_stage;
         storage_acft = next_storage;
         discharge_cfs = next_discharge;

@@ -7,9 +7,10 @@
 //! `<Placemark>` elements: closed-boundary `PlanElement`s become
 //! `<Polygon>` (with interior holes supported via [`KmlGeometry::Polygon`]'s
 //! `holes`), point elements (`Note`/`Tree`/`Spot`) become `<Point>`.
-//! `write_kmz` wraps the same KML document in a ZIP container via
-//! [`crate::zip_store`] (KMZ is literally "KML in a ZIP with the entry named
-//! `doc.kml`" — no additional compression or resource files are added).
+//! `write_kmz` wraps the same KML document in a ZIP container via this
+//! crate's internal `zip_store` module (KMZ is literally "KML in a ZIP with
+//! the entry named `doc.kml`" — no additional compression or resource files
+//! are added).
 //!
 //! **Coordinates are written verbatim** as `x` = longitude, `y` = latitude:
 //! this module does *not* reproject. KML requires WGS84 lon/lat; a plan's
@@ -35,7 +36,10 @@ pub enum KmlGeometry {
     /// An outer boundary ring plus zero or more interior hole rings, all in
     /// `(lon, lat)` order (see the module scope doc on the lack of
     /// reprojection).
-    Polygon { outer: Vec<Point>, holes: Vec<Vec<Point>> },
+    Polygon {
+        outer: Vec<Point>,
+        holes: Vec<Vec<Point>>,
+    },
 }
 
 /// One feature to render in the exported KML/KMZ document.
@@ -65,7 +69,10 @@ pub fn plan_elements_to_placemarks(elements: &[&PlanElement]) -> Vec<KmlPlacemar
                 geometry: KmlGeometry::Point(t.position),
             }),
             PlanElement::Spot(s) => Some(KmlPlacemark {
-                name: s.label.clone().unwrap_or_else(|| "Spot elevation".to_string()),
+                name: s
+                    .label
+                    .clone()
+                    .unwrap_or_else(|| "Spot elevation".to_string()),
                 description: Some(format!("Elevation: {}", s.z)),
                 geometry: KmlGeometry::Point(s.position),
             }),
@@ -98,27 +105,42 @@ fn placemark_xml(p: &KmlPlacemark) -> String {
     let mut out = vec!["  <Placemark>".to_string()];
     out.push(format!("    <name>{}</name>", escape_text(&p.name)));
     if let Some(desc) = &p.description {
-        out.push(format!("    <description>{}</description>", escape_text(desc)));
+        out.push(format!(
+            "    <description>{}</description>",
+            escape_text(desc)
+        ));
     }
     match &p.geometry {
         KmlGeometry::Point(pt) => {
             out.push("    <Point>".to_string());
-            out.push(format!("      <coordinates>{}</coordinates>", coordinates_text(&[*pt], false)));
+            out.push(format!(
+                "      <coordinates>{}</coordinates>",
+                coordinates_text(&[*pt], false)
+            ));
             out.push("    </Point>".to_string());
         }
         KmlGeometry::LineString(pts) => {
             out.push("    <LineString>".to_string());
-            out.push(format!("      <coordinates>{}</coordinates>", coordinates_text(pts, false)));
+            out.push(format!(
+                "      <coordinates>{}</coordinates>",
+                coordinates_text(pts, false)
+            ));
             out.push("    </LineString>".to_string());
         }
         KmlGeometry::Polygon { outer, holes } => {
             out.push("    <Polygon>".to_string());
             out.push("      <outerBoundaryIs><LinearRing>".to_string());
-            out.push(format!("        <coordinates>{}</coordinates>", coordinates_text(outer, true)));
+            out.push(format!(
+                "        <coordinates>{}</coordinates>",
+                coordinates_text(outer, true)
+            ));
             out.push("      </LinearRing></outerBoundaryIs>".to_string());
             for hole in holes {
                 out.push("      <innerBoundaryIs><LinearRing>".to_string());
-                out.push(format!("        <coordinates>{}</coordinates>", coordinates_text(hole, true)));
+                out.push(format!(
+                    "        <coordinates>{}</coordinates>",
+                    coordinates_text(hole, true)
+                ));
                 out.push("      </LinearRing></innerBoundaryIs>".to_string());
             }
             out.push("    </Polygon>".to_string());
@@ -280,11 +302,17 @@ mod tests {
         // Every spatial PlanElement variant has a base; this just documents
         // that point-kind conversion happens before the generic fallback.
         let el = PlanElement::Region(Region {
-            base: new_base("r1", ElementKind::Region, "Region A", "layer", vec![
-                Point::new(0.0, 0.0),
-                Point::new(1.0, 0.0),
-                Point::new(1.0, 1.0),
-            ]),
+            base: new_base(
+                "r1",
+                ElementKind::Region,
+                "Region A",
+                "layer",
+                vec![
+                    Point::new(0.0, 0.0),
+                    Point::new(1.0, 0.0),
+                    Point::new(1.0, 1.0),
+                ],
+            ),
             region_type: None,
         });
         let placemarks = plan_elements_to_placemarks(&[&el]);

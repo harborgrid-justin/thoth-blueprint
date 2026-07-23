@@ -177,15 +177,11 @@ pub fn broad_crested_weir_discharge(cw: f64, length_ft: f64, head_ft: f64) -> Hy
 /// assert!((q - 0.4388283390018369).abs() < 1e-9);
 /// assert!((q - 2.4823879542802234 * 0.5f64.powf(2.5)).abs() < 1e-9);
 /// ```
-pub fn v_notch_weir_discharge(
-    cd: f64,
-    notch_angle_radians: f64,
-    head_ft: f64,
-) -> HydroResult<f64> {
+pub fn v_notch_weir_discharge(cd: f64, notch_angle_radians: f64, head_ft: f64) -> HydroResult<f64> {
     if cd <= 0.0 {
         return Err(HydrologyError::NonPositiveCoefficient { value: cd });
     }
-    if !(0.0..std::f64::consts::PI).contains(&notch_angle_radians) {
+    if !(notch_angle_radians > 0.0 && notch_angle_radians < std::f64::consts::PI) {
         return Err(HydrologyError::AngleOutOfRange {
             radians: notch_angle_radians,
         });
@@ -255,9 +251,9 @@ impl OutletComponent {
             return Ok(0.0);
         }
         match *self {
-            OutletComponent::Orifice {
-                cd, area_sqft, ..
-            } => orifice_discharge(cd, area_sqft, head),
+            OutletComponent::Orifice { cd, area_sqft, .. } => {
+                orifice_discharge(cd, area_sqft, head)
+            }
             OutletComponent::RectangularWeir { cw, length_ft, .. } => {
                 rectangular_weir_discharge(cw, length_ft, head)
             }

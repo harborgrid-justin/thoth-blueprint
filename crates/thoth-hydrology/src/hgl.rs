@@ -32,7 +32,7 @@
 //!   capacity at or above design flow), not a partial-flow/free-surface
 //!   HGL trace.
 //! - **Single-outfall, tree-shaped (dendritic) network**: the profile walks
-//!   upstream from exactly one node of [`PipeCheckSeverity`]... — i.e. one
+//!   upstream from exactly one
 //!   [`thoth_civil::pipedesign::PipeNodeKind::Outfall`] node, following
 //!   every pipe whose downstream end reaches an already-solved node. A
 //!   network with more than one outfall, or with a loop (two paths
@@ -180,14 +180,15 @@ pub fn compute_hgl_profile(
                 // first-computed value in place rather than reconciling.
                 continue;
             }
-            let upstream_node = nodes_by_id.get(upstream_id.as_str()).ok_or_else(|| {
-                HydrologyError::Network {
-                    reason: format!(
-                        "pipe '{}' references unknown upstream node '{}'",
-                        pipe.id, upstream_id
-                    ),
-                }
-            })?;
+            let upstream_node =
+                nodes_by_id
+                    .get(upstream_id.as_str())
+                    .ok_or_else(|| HydrologyError::Network {
+                        reason: format!(
+                            "pipe '{}' references unknown upstream node '{}'",
+                            pipe.id, upstream_id
+                        ),
+                    })?;
 
             if pipe.diameter <= 0.0 {
                 return Err(HydrologyError::NonPositiveDimension {
@@ -202,11 +203,14 @@ pub fn compute_hgl_profile(
             let area = std::f64::consts::PI * (diameter_ft / 2.0).powi(2);
             let velocity = q / area;
             let r = diameter_ft / 4.0;
-            let downstream_node = nodes_by_id.get(current_id.as_str()).ok_or_else(|| {
-                HydrologyError::Network {
-                    reason: format!("unknown node '{current_id}' while tracing HGL/EGL profile"),
-                }
-            })?;
+            let downstream_node =
+                nodes_by_id
+                    .get(current_id.as_str())
+                    .ok_or_else(|| HydrologyError::Network {
+                        reason: format!(
+                            "unknown node '{current_id}' while tracing HGL/EGL profile"
+                        ),
+                    })?;
             let length = distance(upstream_node.position, downstream_node.position);
 
             let hf = friction_loss(velocity, pipe.n_manning, r, length);
@@ -236,7 +240,9 @@ pub fn compute_hgl_profile(
 mod tests {
     use super::*;
     use approx::assert_relative_eq;
-    use thoth_civil::pipedesign::{PipeMaterial, PipeNetworkKind, PipeNode, PipeNodeKind, PipeSegment};
+    use thoth_civil::pipedesign::{
+        PipeMaterial, PipeNetworkKind, PipeNode, PipeNodeKind, PipeSegment,
+    };
     use thoth_spatial::Point;
 
     /// Outfall (O) <- Manhole (M1) <- Catch basin (CB2), a simple dendritic

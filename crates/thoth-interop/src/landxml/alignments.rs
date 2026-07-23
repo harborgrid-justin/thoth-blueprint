@@ -19,8 +19,8 @@
 //! consistent with `thoth_civil::alignment` itself not constructing them) or
 //! super-elevation/profile sub-elements.
 
-use thoth_civil::alignment::{CurveDirection, ResolvedAlignment};
 use thoth_civil::alignment::AlignmentElement;
+use thoth_civil::alignment::{CurveDirection, ResolvedAlignment};
 use thoth_spatial::Point;
 
 use crate::error::{InteropError, InteropResult};
@@ -182,7 +182,10 @@ pub fn parse_alignments(node: &XmlNode) -> InteropResult<Vec<ImportedAlignment>>
             .attr("staStart")
             .and_then(|v| v.parse().ok())
             .unwrap_or(0.0);
-        let length = align.attr("length").and_then(|v| v.parse().ok()).unwrap_or(0.0);
+        let length = align
+            .attr("length")
+            .and_then(|v| v.parse().ok())
+            .unwrap_or(0.0);
 
         let mut geometry = Vec::new();
         if let Some(geom) = align.child("CoordGeom") {
@@ -288,6 +291,9 @@ mod tests {
         let root = crate::xml_tree::parse_xml_tree("Test", &xml).unwrap();
         let parsed = parse_alignments(root.child("Alignments").unwrap()).unwrap();
         assert_eq!(parsed[0].geometry.len(), 1);
-        assert!(matches!(parsed[0].geometry[0], AlignmentGeometry::Line { .. }));
+        assert!(matches!(
+            parsed[0].geometry[0],
+            AlignmentGeometry::Line { .. }
+        ));
     }
 }

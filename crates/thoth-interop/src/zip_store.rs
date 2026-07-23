@@ -180,8 +180,14 @@ mod tests {
     #[test]
     fn round_trips_multiple_entries() {
         let entries = vec![
-            ZipEntry { name: "doc.kml", data: b"<kml/>" },
-            ZipEntry { name: "images/icon.png", data: b"\x89PNG\r\n" },
+            ZipEntry {
+                name: "doc.kml",
+                data: b"<kml/>",
+            },
+            ZipEntry {
+                name: "images/icon.png",
+                data: b"\x89PNG\r\n",
+            },
         ];
         let zip = write_zip(&entries);
         let extracted = read_zip(&zip).unwrap();
@@ -199,7 +205,10 @@ mod tests {
 
     #[test]
     fn truncated_archive_is_malformed() {
-        let zip = write_zip(&[ZipEntry { name: "a", data: b"hello world" }]);
+        let zip = write_zip(&[ZipEntry {
+            name: "a",
+            data: b"hello world",
+        }]);
         // Local file header + name + data is 30 + 1 + 11 = 42 bytes; cut off
         // partway through the data payload itself (well before the central
         // directory that follows it).

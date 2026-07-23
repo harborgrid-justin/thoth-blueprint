@@ -86,7 +86,10 @@ pub struct ClassifiedCloud {
 
 impl ClassifiedCloud {
     pub fn ground_count(&self) -> usize {
-        self.classifications.iter().filter(|c| **c == PointClass::Ground).count()
+        self.classifications
+            .iter()
+            .filter(|c| **c == PointClass::Ground)
+            .count()
     }
 
     pub fn non_ground_count(&self) -> usize {
@@ -145,9 +148,14 @@ impl Grid {
 /// the resulting grid would exceed this module's safety cap (4,000,000
 /// cells) — a guard against an accidentally microscopic `cell_size` on a
 /// large cloud allocating an unbounded grid.
-pub fn classify_ground(cloud: &PointCloud, params: &GroundClassifierParams) -> InteropResult<ClassifiedCloud> {
+pub fn classify_ground(
+    cloud: &PointCloud,
+    params: &GroundClassifierParams,
+) -> InteropResult<ClassifiedCloud> {
     if cloud.points.is_empty() {
-        return Ok(ClassifiedCloud { classifications: Vec::new() });
+        return Ok(ClassifiedCloud {
+            classifications: Vec::new(),
+        });
     }
     if !(params.cell_size.is_finite() && params.cell_size > 0.0) {
         return Err(InteropError::Unsupported {
@@ -170,12 +178,20 @@ pub fn classify_ground(cloud: &PointCloud, params: &GroundClassifierParams) -> I
     }
 
     let cell_of = |x: f64, y: f64| -> (usize, usize) {
-        let c = ((x - bounds.min_x) / params.cell_size).floor().clamp(0.0, (cols - 1) as f64) as usize;
-        let r = ((y - bounds.min_y) / params.cell_size).floor().clamp(0.0, (rows - 1) as f64) as usize;
+        let c = ((x - bounds.min_x) / params.cell_size)
+            .floor()
+            .clamp(0.0, (cols - 1) as f64) as usize;
+        let r = ((y - bounds.min_y) / params.cell_size)
+            .floor()
+            .clamp(0.0, (rows - 1) as f64) as usize;
         (c, r)
     };
 
-    let global_min_z = cloud.points.iter().map(|p| p.z).fold(f64::INFINITY, f64::min);
+    let global_min_z = cloud
+        .points
+        .iter()
+        .map(|p| p.z)
+        .fold(f64::INFINITY, f64::min);
 
     let mut min_z = vec![f64::INFINITY; cols * rows];
     let mut point_cells = Vec::with_capacity(cloud.points.len());
@@ -193,7 +209,11 @@ pub fn classify_ground(cloud: &PointCloud, params: &GroundClassifierParams) -> I
         }
     }
 
-    let mut surface = Grid { cols, rows, values: min_z };
+    let mut surface = Grid {
+        cols,
+        rows,
+        values: min_z,
+    };
     let mut removed = vec![false; cols * rows];
 
     let mut window = params.base_window;
@@ -201,11 +221,16 @@ pub fn classify_ground(cloud: &PointCloud, params: &GroundClassifierParams) -> I
         let radius_cells = ((window / (2.0 * params.cell_size)).round() as usize).max(1);
         let eroded = surface.min_filter(radius_cells);
         let opened = eroded.max_filter(radius_cells);
-        let threshold = (params.initial_threshold + params.slope * window).min(params.max_threshold);
+        let threshold =
+            (params.initial_threshold + params.slope * window).min(params.max_threshold);
 
-        for i in 0..surface.values.len() {
-            if !removed[i] && (surface.values[i] - opened.values[i]) > threshold {
-                removed[i] = true;
+        for ((removed_cell, &before), &after) in removed
+            .iter_mut()
+            .zip(surface.values.iter())
+            .zip(opened.values.iter())
+        {
+            if !*removed_cell && (before - after) > threshold {
+                *removed_cell = true;
             }
         }
         surface = opened;
@@ -243,7 +268,11 @@ mod tests {
         let mut points = Vec::new();
         for r in 0..n {
             for c in 0..n {
-                points.push(CloudPoint::bare(c as f64 * spacing, r as f64 * spacing, 0.0));
+                points.push(CloudPoint::bare(
+                    c as f64 * spacing,
+                    r as f64 * spacing,
+                    0.0,
+                ));
             }
         }
         PointCloud { points }
@@ -270,9 +299,13 @@ mod tests {
         let result = classify_ground(&cloud, &GroundClassifierParams::default()).unwrap();
         assert_eq!(result.classifications.len(), cloud.points.len());
         // The original flat points should still be ground...
-        assert!(result.classifications[..ground_count].iter().all(|c| *c == PointClass::Ground));
+        assert!(result.classifications[..ground_count]
+            .iter()
+            .all(|c| *c == PointClass::Ground));
         // ...and every blob point should be non-ground.
-        assert!(result.classifications[ground_count..].iter().all(|c| *c == PointClass::NonGround));
+        assert!(result.classifications[ground_count..]
+            .iter()
+            .all(|c| *c == PointClass::NonGround));
     }
 
     #[test]
@@ -285,7 +318,10 @@ mod tests {
     #[test]
     fn non_positive_cell_size_is_rejected() {
         let cloud = flat_ground(2, 1.0);
-        let params = GroundClassifierParams { cell_size: 0.0, ..Default::default() };
+        let params = GroundClassifierParams {
+            cell_size: 0.0,
+            ..Default::default()
+        };
         assert!(matches!(
             classify_ground(&cloud, &params),
             Err(InteropError::Unsupported { .. })
@@ -295,9 +331,15 @@ mod tests {
     #[test]
     fn microscopic_cell_size_on_a_large_extent_is_rejected() {
         let cloud = PointCloud {
-            points: vec![CloudPoint::bare(0.0, 0.0, 0.0), CloudPoint::bare(10_000.0, 10_000.0, 0.0)],
+            points: vec![
+                CloudPoint::bare(0.0, 0.0, 0.0),
+                CloudPoint::bare(10_000.0, 10_000.0, 0.0),
+            ],
         };
-        let params = GroundClassifierParams { cell_size: 0.001, ..Default::default() };
+        let params = GroundClassifierParams {
+            cell_size: 0.001,
+            ..Default::default()
+        };
         assert!(matches!(
             classify_ground(&cloud, &params),
             Err(InteropError::Unsupported { .. })

@@ -293,7 +293,10 @@ pub fn parse_shp(data: &[u8]) -> InteropResult<Vec<ShapeGeometry>> {
         return Err(InteropError::Malformed {
             format: FORMAT,
             offset: 0,
-            reason: format!("file is only {} bytes, shorter than the 100-byte header", data.len()),
+            reason: format!(
+                "file is only {} bytes, shorter than the 100-byte header",
+                data.len()
+            ),
         });
     }
     let file_code = read_i32_be(data, 0, FORMAT)?;
@@ -382,7 +385,9 @@ pub fn parse_shp(data: &[u8]) -> InteropResult<Vec<ShapeGeometry>> {
             other => {
                 return Err(InteropError::Unsupported {
                     format: FORMAT,
-                    reason: format!("shape type {other} is not supported (only Point/PolyLine/Polygon)"),
+                    reason: format!(
+                        "shape type {other} is not supported (only Point/PolyLine/Polygon)"
+                    ),
                 })
             }
         }
@@ -419,11 +424,9 @@ pub fn write_dbf(features: &[ShapeFeature]) -> Vec<u8> {
     let record_length: usize = 1 + schema.iter().map(|f| f.width as usize).sum::<usize>();
     let header_length = 32 + schema.len() * 32 + 1;
 
-    let mut buf = Vec::new();
-    buf.push(0x03); // dBase III, no memo
-    buf.push(0); // year (since 1900) — unset
-    buf.push(0);
-    buf.push(0);
+    // 0x03 = dBase III, no memo; then a 3-byte last-update date (year since
+    // 1900/month/day), left unset (0/0/0).
+    let mut buf = vec![0x03u8, 0, 0, 0];
     buf.extend((features.len() as u32).to_le_bytes());
     buf.extend((header_length as u16).to_le_bytes());
     buf.extend((record_length as u16).to_le_bytes());
@@ -572,7 +575,10 @@ pub fn zip_shapefile(
     Ok(geometries
         .into_iter()
         .zip(attribute_rows)
-        .map(|(geometry, attributes)| ShapeFeature { geometry, attributes })
+        .map(|(geometry, attributes)| ShapeFeature {
+            geometry,
+            attributes,
+        })
         .collect())
 }
 
@@ -590,7 +596,10 @@ mod tests {
                     Point::new(0.0, 100.0),
                 ]]),
                 attributes: vec![
-                    ("APN".to_string(), AttributeValue::Text("045-12-007".to_string())),
+                    (
+                        "APN".to_string(),
+                        AttributeValue::Text("045-12-007".to_string()),
+                    ),
                     ("AREA".to_string(), AttributeValue::Number(10000.0)),
                 ],
             },
@@ -601,7 +610,10 @@ mod tests {
                     Point::new(300.0, 100.0),
                 ]]),
                 attributes: vec![
-                    ("APN".to_string(), AttributeValue::Text("045-12-008".to_string())),
+                    (
+                        "APN".to_string(),
+                        AttributeValue::Text("045-12-008".to_string()),
+                    ),
                     ("AREA".to_string(), AttributeValue::Number(5000.5)),
                 ],
             },
@@ -636,7 +648,10 @@ mod tests {
         }
         assert_eq!(
             parsed[0].attributes[0],
-            ("APN".to_string(), AttributeValue::Text("045-12-007".to_string()))
+            (
+                "APN".to_string(),
+                AttributeValue::Text("045-12-007".to_string())
+            )
         );
         let AttributeValue::Number(area) = parsed[0].attributes[1].1 else {
             panic!("expected numeric area");
@@ -656,7 +671,11 @@ mod tests {
     fn polyline_shapefile_round_trips_multiple_parts() {
         let geoms = vec![ShapeGeometry::PolyLine(vec![
             vec![Point::new(0.0, 0.0), Point::new(10.0, 0.0)],
-            vec![Point::new(20.0, 20.0), Point::new(30.0, 20.0), Point::new(30.0, 30.0)],
+            vec![
+                Point::new(20.0, 20.0),
+                Point::new(30.0, 20.0),
+                Point::new(30.0, 30.0),
+            ],
         ])];
         let shp = write_shp(&geoms).unwrap();
         let parsed = parse_shp(&shp).unwrap();
@@ -709,7 +728,10 @@ mod tests {
         let feats = vec![ShapeFeature {
             geometry: ShapeGeometry::Point(Point::new(0.0, 0.0)),
             attributes: vec![
-                ("NAME".to_string(), AttributeValue::Text("Lot 1".to_string())),
+                (
+                    "NAME".to_string(),
+                    AttributeValue::Text("Lot 1".to_string()),
+                ),
                 ("AREA".to_string(), AttributeValue::Number(1234.5)),
                 ("FLAG".to_string(), AttributeValue::Boolean(true)),
             ],
@@ -717,8 +739,17 @@ mod tests {
         let dbf = write_dbf(&feats);
         let rows = parse_dbf(&dbf).unwrap();
         assert_eq!(rows.len(), 1);
-        assert_eq!(rows[0][0], ("NAME".to_string(), AttributeValue::Text("Lot 1".to_string())));
-        assert_eq!(rows[0][2], ("FLAG".to_string(), AttributeValue::Boolean(true)));
+        assert_eq!(
+            rows[0][0],
+            (
+                "NAME".to_string(),
+                AttributeValue::Text("Lot 1".to_string())
+            )
+        );
+        assert_eq!(
+            rows[0][2],
+            ("FLAG".to_string(), AttributeValue::Boolean(true))
+        );
     }
 
     // Test-only helper to reach into a `ShapeGeometry::Polygon`'s first ring.

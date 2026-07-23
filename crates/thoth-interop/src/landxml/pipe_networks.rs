@@ -99,8 +99,12 @@ pub fn pipe_networks_xml(networks: &[PipeNetworkXml]) -> String {
             out.push(open);
             let start_struct = net.structures.iter().find(|s| s.id == p.start_structure);
             let end_struct = net.structures.iter().find(|s| s.id == p.end_structure);
-            let (sx, sy) = start_struct.map(|s| (s.position.x, s.position.y)).unwrap_or((0.0, 0.0));
-            let (ex, ey) = end_struct.map(|s| (s.position.x, s.position.y)).unwrap_or((0.0, 0.0));
+            let (sx, sy) = start_struct
+                .map(|s| (s.position.x, s.position.y))
+                .unwrap_or((0.0, 0.0));
+            let (ex, ey) = end_struct
+                .map(|s| (s.position.x, s.position.y))
+                .unwrap_or((0.0, 0.0));
             out.push(format!(
                 "          <Start>{} {} {}</Start>",
                 super::fmt_coord(sx),
@@ -163,11 +167,13 @@ pub fn parse_pipe_networks(node: &XmlNode) -> InteropResult<Vec<PipeNetworkXml>>
                         offset: s.offset,
                     })?
                     .to_string();
-                let center = s.child("Center").ok_or_else(|| InteropError::MissingField {
-                    format: FORMAT,
-                    what: format!("Struct '{id}'/Center"),
-                    offset: s.offset,
-                })?;
+                let center = s
+                    .child("Center")
+                    .ok_or_else(|| InteropError::MissingField {
+                        format: FORMAT,
+                        what: format!("Struct '{id}'/Center"),
+                        offset: s.offset,
+                    })?;
                 let (x, y, z) = parse_xyz(center.text_trim(), center.offset)?;
                 structures.push(PipeStructure {
                     id,
@@ -208,8 +214,16 @@ pub fn parse_pipe_networks(node: &XmlNode) -> InteropResult<Vec<PipeNetworkXml>>
                         });
                     }
                 }
-                let start_invert = p.child("Start").map(|n| parse_xyz(n.text_trim(), n.offset)).transpose()?.map(|(_, _, z)| z);
-                let end_invert = p.child("End").map(|n| parse_xyz(n.text_trim(), n.offset)).transpose()?.map(|(_, _, z)| z);
+                let start_invert = p
+                    .child("Start")
+                    .map(|n| parse_xyz(n.text_trim(), n.offset))
+                    .transpose()?
+                    .map(|(_, _, z)| z);
+                let end_invert = p
+                    .child("End")
+                    .map(|n| parse_xyz(n.text_trim(), n.offset))
+                    .transpose()?
+                    .map(|(_, _, z)| z);
                 pipes.push(PipeSegment {
                     id: p.attr("id").unwrap_or("").to_string(),
                     name: p.attr("name").unwrap_or("").to_string(),

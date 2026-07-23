@@ -134,10 +134,11 @@ fn solve_linear_system(mut a: Vec<Vec<f64>>, mut b: Vec<f64>) -> Option<Vec<f64>
         a.swap(col, pivot);
         b.swap(col, pivot);
         let diag = a[col][col];
-        for k in col..n {
-            a[col][k] /= diag;
+        for v in a[col].iter_mut().skip(col) {
+            *v /= diag;
         }
         b[col] /= diag;
+        let pivot_row = a[col].clone();
         for row in 0..n {
             if row == col {
                 continue;
@@ -146,8 +147,8 @@ fn solve_linear_system(mut a: Vec<Vec<f64>>, mut b: Vec<f64>) -> Option<Vec<f64>
             if factor == 0.0 {
                 continue;
             }
-            for k in col..n {
-                a[row][k] -= factor * a[col][k];
+            for (v, p) in a[row].iter_mut().zip(pivot_row.iter()).skip(col) {
+                *v -= factor * p;
             }
             b[row] -= factor * b[col];
         }
@@ -176,7 +177,11 @@ pub fn adjust_network(
         .map(|(id, _)| id.clone())
         .collect();
     free_ids.sort(); // deterministic unknown ordering
-    let index_of: HashMap<&str, usize> = free_ids.iter().enumerate().map(|(i, id)| (id.as_str(), i)).collect();
+    let index_of: HashMap<&str, usize> = free_ids
+        .iter()
+        .enumerate()
+        .map(|(i, id)| (id.as_str(), i))
+        .collect();
     let unknowns = free_ids.len() * 2;
 
     let total_observations = distances.len() + azimuths.len();
@@ -190,7 +195,11 @@ pub fn adjust_network(
     for obs_id in distances
         .iter()
         .flat_map(|d| [d.from.as_str(), d.to.as_str()])
-        .chain(azimuths.iter().flat_map(|a| [a.from.as_str(), a.to.as_str()]))
+        .chain(
+            azimuths
+                .iter()
+                .flat_map(|a| [a.from.as_str(), a.to.as_str()]),
+        )
     {
         if !stations.contains_key(obs_id) {
             return Err(InteropError::UnknownReference {
@@ -201,7 +210,10 @@ pub fn adjust_network(
         }
     }
 
-    let mut current: HashMap<String, Point> = stations.iter().map(|(id, s)| (id.clone(), s.approx)).collect();
+    let mut current: HashMap<String, Point> = stations
+        .iter()
+        .map(|(id, s)| (id.clone(), s.approx))
+        .collect();
 
     let mut iterations = 0u32;
     let mut last_max_correction;
@@ -358,10 +370,28 @@ mod tests {
         // Two fixed stations, one free station tied by distance+azimuth from
         // each fixed station (redundant: 4 observations, 2 unknowns).
         let mut stations = HashMap::new();
-        stations.insert("A".to_string(), Station { approx: Point::new(0.0, 0.0), fixed: true });
-        stations.insert("B".to_string(), Station { approx: Point::new(100.0, 0.0), fixed: true });
+        stations.insert(
+            "A".to_string(),
+            Station {
+                approx: Point::new(0.0, 0.0),
+                fixed: true,
+            },
+        );
+        stations.insert(
+            "B".to_string(),
+            Station {
+                approx: Point::new(100.0, 0.0),
+                fixed: true,
+            },
+        );
         // Deliberately poor initial guess for the free station.
-        stations.insert("C".to_string(), Station { approx: Point::new(40.0, -40.0), fixed: false });
+        stations.insert(
+            "C".to_string(),
+            Station {
+                approx: Point::new(40.0, -40.0),
+                fixed: false,
+            },
+        );
 
         // True position of C is (50, -50) relative to A=(0,0), B=(100,0).
         let true_c = Point::new(50.0, -50.0);
@@ -371,15 +401,41 @@ mod tests {
         let az_b = azimuth_rad(Point::new(100.0, 0.0), true_c).to_degrees();
 
         let distances = vec![
-            DistanceObservation { from: "A".into(), to: "C".into(), observed: dist_a, std_dev: 0.01 },
-            DistanceObservation { from: "B".into(), to: "C".into(), observed: dist_b, std_dev: 0.01 },
+            DistanceObservation {
+                from: "A".into(),
+                to: "C".into(),
+                observed: dist_a,
+                std_dev: 0.01,
+            },
+            DistanceObservation {
+                from: "B".into(),
+                to: "C".into(),
+                observed: dist_b,
+                std_dev: 0.01,
+            },
         ];
         let azimuths = vec![
-            AzimuthObservation { from: "A".into(), to: "C".into(), observed_deg: az_a, std_dev_deg: 0.01 },
-            AzimuthObservation { from: "B".into(), to: "C".into(), observed_deg: az_b, std_dev_deg: 0.01 },
+            AzimuthObservation {
+                from: "A".into(),
+                to: "C".into(),
+                observed_deg: az_a,
+                std_dev_deg: 0.01,
+            },
+            AzimuthObservation {
+                from: "B".into(),
+                to: "C".into(),
+                observed_deg: az_b,
+                std_dev_deg: 0.01,
+            },
         ];
 
-        let result = adjust_network(&stations, &distances, &azimuths, &AdjustmentOptions::default()).unwrap();
+        let result = adjust_network(
+            &stations,
+            &distances,
+            &azimuths,
+            &AdjustmentOptions::default(),
+        )
+        .unwrap();
         let c = result.adjusted["C"];
         assert!((c.x - true_c.x).abs() < 1e-4, "x = {}", c.x);
         assert!((c.y - true_c.y).abs() < 1e-4, "y = {}", c.y);
@@ -389,22 +445,41 @@ mod tests {
     #[test]
     fn unknown_station_reference_is_an_error() {
         let mut stations = HashMap::new();
-        stations.insert("A".to_string(), Station { approx: Point::ZERO, fixed: true });
+        stations.insert(
+            "A".to_string(),
+            Station {
+                approx: Point::ZERO,
+                fixed: true,
+            },
+        );
         let distances = vec![DistanceObservation {
             from: "A".into(),
             to: "GHOST".into(),
             observed: 10.0,
             std_dev: 0.01,
         }];
-        let err = adjust_network(&stations, &distances, &[], &AdjustmentOptions::default()).unwrap_err();
+        let err =
+            adjust_network(&stations, &distances, &[], &AdjustmentOptions::default()).unwrap_err();
         assert!(matches!(err, InteropError::UnknownReference { .. }));
     }
 
     #[test]
     fn under_determined_network_is_rejected() {
         let mut stations = HashMap::new();
-        stations.insert("A".to_string(), Station { approx: Point::ZERO, fixed: true });
-        stations.insert("B".to_string(), Station { approx: Point::new(10.0, 0.0), fixed: false });
+        stations.insert(
+            "A".to_string(),
+            Station {
+                approx: Point::ZERO,
+                fixed: true,
+            },
+        );
+        stations.insert(
+            "B".to_string(),
+            Station {
+                approx: Point::new(10.0, 0.0),
+                fixed: false,
+            },
+        );
         // Only 1 observation for 2 unknowns (B's x and y).
         let distances = vec![DistanceObservation {
             from: "A".into(),
@@ -412,16 +487,35 @@ mod tests {
             observed: 10.0,
             std_dev: 0.01,
         }];
-        let err = adjust_network(&stations, &distances, &[], &AdjustmentOptions::default()).unwrap_err();
+        let err =
+            adjust_network(&stations, &distances, &[], &AdjustmentOptions::default()).unwrap_err();
         assert!(matches!(err, InteropError::UnderDetermined { .. }));
     }
 
     #[test]
     fn fixed_stations_never_move() {
         let mut stations = HashMap::new();
-        stations.insert("A".to_string(), Station { approx: Point::new(0.0, 0.0), fixed: true });
-        stations.insert("B".to_string(), Station { approx: Point::new(100.0, 0.0), fixed: true });
-        stations.insert("C".to_string(), Station { approx: Point::new(50.0, -49.0), fixed: false });
+        stations.insert(
+            "A".to_string(),
+            Station {
+                approx: Point::new(0.0, 0.0),
+                fixed: true,
+            },
+        );
+        stations.insert(
+            "B".to_string(),
+            Station {
+                approx: Point::new(100.0, 0.0),
+                fixed: true,
+            },
+        );
+        stations.insert(
+            "C".to_string(),
+            Station {
+                approx: Point::new(50.0, -49.0),
+                fixed: false,
+            },
+        );
         let true_c = Point::new(50.0, -50.0);
         let distances = vec![
             DistanceObservation {
@@ -443,7 +537,13 @@ mod tests {
             observed_deg: azimuth_rad(Point::new(0.0, 0.0), true_c).to_degrees(),
             std_dev_deg: 0.01,
         }];
-        let result = adjust_network(&stations, &distances, &azimuths, &AdjustmentOptions::default()).unwrap();
+        let result = adjust_network(
+            &stations,
+            &distances,
+            &azimuths,
+            &AdjustmentOptions::default(),
+        )
+        .unwrap();
         assert_eq!(result.adjusted["A"], Point::new(0.0, 0.0));
         assert_eq!(result.adjusted["B"], Point::new(100.0, 0.0));
     }

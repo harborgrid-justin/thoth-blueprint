@@ -344,9 +344,7 @@ pub struct UnitHydrograph {
 /// ```
 pub fn unit_hydrograph(area_sq_mi: f64, tc_hours: f64) -> HydroResult<UnitHydrograph> {
     if area_sq_mi <= 0.0 {
-        return Err(HydrologyError::NonPositiveArea {
-            area: area_sq_mi,
-        });
+        return Err(HydrologyError::NonPositiveArea { area: area_sq_mi });
     }
     if tc_hours <= 0.0 {
         return Err(HydrologyError::NonPositiveTimeOfConcentration { tc: tc_hours });

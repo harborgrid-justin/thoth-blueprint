@@ -50,11 +50,33 @@ const FORMAT: &str = "DXF";
 /// to a `PlanElement`.
 #[derive(Debug, Clone, PartialEq)]
 enum DxfEntity {
-    Line { layer: String, start: Point, end: Point },
-    Polyline { layer: String, vertices: Vec<Point>, closed: bool },
-    Circle { layer: String, center: Point, radius: f64 },
-    Arc { layer: String, center: Point, radius: f64, start_angle_deg: f64, end_angle_deg: f64 },
-    Text { layer: String, position: Point, text: String },
+    Line {
+        layer: String,
+        start: Point,
+        end: Point,
+    },
+    Polyline {
+        layer: String,
+        vertices: Vec<Point>,
+        closed: bool,
+    },
+    Circle {
+        layer: String,
+        center: Point,
+        radius: f64,
+    },
+    Arc {
+        layer: String,
+        center: Point,
+        radius: f64,
+        start_angle_deg: f64,
+        end_angle_deg: f64,
+    },
+    Text {
+        layer: String,
+        position: Point,
+        text: String,
+    },
 }
 
 /// The outcome of importing one DXF entity: either a plan element, or a
@@ -63,8 +85,15 @@ enum DxfEntity {
 /// saying why.
 #[derive(Debug, Clone, PartialEq)]
 pub enum ImportOutcome {
-    Imported(PlanElement),
-    Skipped { entity: &'static str, reason: String },
+    /// Boxed because `PlanElement` is much larger than the `Skipped` variant
+    /// (it embeds a full `ElementBase` with a boundary polygon); boxing
+    /// keeps `ImportOutcome` itself small regardless of which variant is
+    /// most common in a given import.
+    Imported(Box<PlanElement>),
+    Skipped {
+        entity: &'static str,
+        reason: String,
+    },
 }
 
 /// The result of importing a DXF document: every entity's outcome, so a
@@ -81,7 +110,7 @@ impl DxfImportResult {
         self.outcomes
             .iter()
             .filter_map(|o| match o {
-                ImportOutcome::Imported(e) => Some(e),
+                ImportOutcome::Imported(e) => Some(e.as_ref()),
                 ImportOutcome::Skipped { .. } => None,
             })
             .collect()
@@ -101,7 +130,13 @@ fn circle_points(center: Point, radius: f64, segments: u32) -> Vec<Point> {
         .collect()
 }
 
-fn arc_points(center: Point, radius: f64, start_deg: f64, end_deg: f64, segments: u32) -> Vec<Point> {
+fn arc_points(
+    center: Point,
+    radius: f64,
+    start_deg: f64,
+    end_deg: f64,
+    segments: u32,
+) -> Vec<Point> {
     let mut sweep = end_deg - start_deg;
     while sweep < 0.0 {
         sweep += 360.0;
@@ -128,16 +163,30 @@ fn thin_buffer(centerline: &[Point], half_width: f64) -> Option<Polygon> {
     let mut left = Vec::with_capacity(centerline.len());
     let mut right = Vec::with_capacity(centerline.len());
     for i in 0..centerline.len() {
-        let prev = if i == 0 { centerline[0] } else { centerline[i - 1] };
-        let next = if i + 1 < centerline.len() { centerline[i + 1] } else { centerline[i] };
+        let prev = if i == 0 {
+            centerline[0]
+        } else {
+            centerline[i - 1]
+        };
+        let next = if i + 1 < centerline.len() {
+            centerline[i + 1]
+        } else {
+            centerline[i]
+        };
         let dir = thoth_spatial::normalize(thoth_spatial::subtract(next, prev));
         if thoth_spatial::length(dir) < 1e-12 {
             return None;
         }
         let normal = Point::new(-dir.y, dir.x);
         let p = centerline[i];
-        left.push(Point::new(p.x + normal.x * half_width, p.y + normal.y * half_width));
-        right.push(Point::new(p.x - normal.x * half_width, p.y - normal.y * half_width));
+        left.push(Point::new(
+            p.x + normal.x * half_width,
+            p.y + normal.y * half_width,
+        ));
+        right.push(Point::new(
+            p.x - normal.x * half_width,
+            p.y - normal.y * half_width,
+        ));
     }
     right.reverse();
     left.extend(right);
@@ -150,7 +199,11 @@ fn thin_buffer(centerline: &[Point], half_width: f64) -> Option<Polygon> {
 fn convert_entity(entity: DxfEntity, index: usize) -> ImportOutcome {
     let id = |kind: &str| format!("dxf-{kind}-{index}");
     match entity {
-        DxfEntity::Circle { layer, center, radius } => {
+        DxfEntity::Circle {
+            layer,
+            center,
+            radius,
+        } => {
             if radius <= 0.0 {
                 return ImportOutcome::Skipped {
                     entity: "CIRCLE",
@@ -158,14 +211,26 @@ fn convert_entity(entity: DxfEntity, index: usize) -> ImportOutcome {
                 };
             }
             let boundary = circle_points(center, radius, CIRCLE_SEGMENTS);
-            let mut base = new_base(id("region"), ElementKind::Region, "Imported circle", "dxf-import", boundary);
+            let mut base = new_base(
+                id("region"),
+                ElementKind::Region,
+                "Imported circle",
+                "dxf-import",
+                boundary,
+            );
             base.cad_layer_id = Some(layer);
-            ImportOutcome::Imported(PlanElement::Region(thoth_planning::elements::Region {
-                base,
-                region_type: None,
-            }))
+            ImportOutcome::Imported(Box::new(PlanElement::Region(
+                thoth_planning::elements::Region {
+                    base,
+                    region_type: None,
+                },
+            )))
         }
-        DxfEntity::Polyline { layer, vertices, closed } => {
+        DxfEntity::Polyline {
+            layer,
+            vertices,
+            closed,
+        } => {
             let repeats_first_vertex = vertices.len() >= 2
                 && thoth_spatial::distance(vertices[0], *vertices.last().unwrap()) < 1e-9;
             let is_closed = closed || repeats_first_vertex;
@@ -179,15 +244,24 @@ fn convert_entity(entity: DxfEntity, index: usize) -> ImportOutcome {
                 if ring.len() < 3 || thoth_spatial::area(&ring) < thoth_spatial::GEOMETRY_EPSILON {
                     return ImportOutcome::Skipped {
                         entity: "LWPOLYLINE/POLYLINE",
-                        reason: "closed polyline has a degenerate (near-zero-area) boundary".to_string(),
+                        reason: "closed polyline has a degenerate (near-zero-area) boundary"
+                            .to_string(),
                     };
                 }
-                let mut base = new_base(id("region"), ElementKind::Region, "Imported polyline", "dxf-import", ring);
+                let mut base = new_base(
+                    id("region"),
+                    ElementKind::Region,
+                    "Imported polyline",
+                    "dxf-import",
+                    ring,
+                );
                 base.cad_layer_id = Some(layer);
-                ImportOutcome::Imported(PlanElement::Region(thoth_planning::elements::Region {
-                    base,
-                    region_type: None,
-                }))
+                ImportOutcome::Imported(Box::new(PlanElement::Region(
+                    thoth_planning::elements::Region {
+                        base,
+                        region_type: None,
+                    },
+                )))
             } else {
                 let Some(buffer) = thin_buffer(&vertices, LINEAR_BOUNDARY_WIDTH) else {
                     return ImportOutcome::Skipped {
@@ -195,13 +269,21 @@ fn convert_entity(entity: DxfEntity, index: usize) -> ImportOutcome {
                         reason: "open polyline has fewer than 2 distinct vertices".to_string(),
                     };
                 };
-                let mut base = new_base(id("row"), ElementKind::Row, "Imported linework", "dxf-import", buffer);
+                let mut base = new_base(
+                    id("row"),
+                    ElementKind::Row,
+                    "Imported linework",
+                    "dxf-import",
+                    buffer,
+                );
                 base.cad_layer_id = Some(layer);
-                ImportOutcome::Imported(PlanElement::RightOfWay(thoth_planning::elements::RightOfWay {
-                    base,
-                    centerline: Some(vertices),
-                    width: None,
-                }))
+                ImportOutcome::Imported(Box::new(PlanElement::RightOfWay(
+                    thoth_planning::elements::RightOfWay {
+                        base,
+                        centerline: Some(vertices),
+                        width: None,
+                    },
+                )))
             }
         }
         DxfEntity::Line { layer, start, end } => {
@@ -211,46 +293,78 @@ fn convert_entity(entity: DxfEntity, index: usize) -> ImportOutcome {
                     reason: "zero-length line".to_string(),
                 };
             };
-            let mut base = new_base(id("row"), ElementKind::Row, "Imported line", "dxf-import", buffer);
+            let mut base = new_base(
+                id("row"),
+                ElementKind::Row,
+                "Imported line",
+                "dxf-import",
+                buffer,
+            );
             base.cad_layer_id = Some(layer);
-            ImportOutcome::Imported(PlanElement::RightOfWay(thoth_planning::elements::RightOfWay {
-                base,
-                centerline: Some(vec![start, end]),
-                width: None,
-            }))
+            ImportOutcome::Imported(Box::new(PlanElement::RightOfWay(
+                thoth_planning::elements::RightOfWay {
+                    base,
+                    centerline: Some(vec![start, end]),
+                    width: None,
+                },
+            )))
         }
-        DxfEntity::Arc { layer, center, radius, start_angle_deg, end_angle_deg } => {
+        DxfEntity::Arc {
+            layer,
+            center,
+            radius,
+            start_angle_deg,
+            end_angle_deg,
+        } => {
             if radius <= 0.0 {
                 return ImportOutcome::Skipped {
                     entity: "ARC",
                     reason: format!("non-positive radius {radius}"),
                 };
             }
-            let vertices = arc_points(center, radius, start_angle_deg, end_angle_deg, CIRCLE_SEGMENTS / 2);
+            let vertices = arc_points(
+                center,
+                radius,
+                start_angle_deg,
+                end_angle_deg,
+                CIRCLE_SEGMENTS / 2,
+            );
             let Some(buffer) = thin_buffer(&vertices, LINEAR_BOUNDARY_WIDTH) else {
                 return ImportOutcome::Skipped {
                     entity: "ARC",
                     reason: "degenerate arc".to_string(),
                 };
             };
-            let mut base = new_base(id("row"), ElementKind::Row, "Imported arc", "dxf-import", buffer);
+            let mut base = new_base(
+                id("row"),
+                ElementKind::Row,
+                "Imported arc",
+                "dxf-import",
+                buffer,
+            );
             base.cad_layer_id = Some(layer);
-            ImportOutcome::Imported(PlanElement::RightOfWay(thoth_planning::elements::RightOfWay {
-                base,
-                centerline: Some(vertices),
-                width: None,
-            }))
+            ImportOutcome::Imported(Box::new(PlanElement::RightOfWay(
+                thoth_planning::elements::RightOfWay {
+                    base,
+                    centerline: Some(vertices),
+                    width: None,
+                },
+            )))
         }
-        DxfEntity::Text { layer, position, text } => {
-            ImportOutcome::Imported(PlanElement::Note(thoth_planning::elements::PlanNote {
+        DxfEntity::Text {
+            layer,
+            position,
+            text,
+        } => ImportOutcome::Imported(Box::new(PlanElement::Note(
+            thoth_planning::elements::PlanNote {
                 id: id("note"),
                 kind: ElementKind::Note,
                 layer_id: layer,
                 text,
                 position,
                 renovation_status: Default::default(),
-            }))
-        }
+            },
+        ))),
     }
 }
 
@@ -297,7 +411,11 @@ pub fn import_dxf(text: &str) -> InteropResult<DxfImportResult> {
             // Flush any polyline being accumulated via VERTEX records.
             if value != "VERTEX" {
                 if let Some((layer, vertices, closed)) = pending_polyline.take() {
-                    entities.push(DxfEntity::Polyline { layer, vertices, closed });
+                    entities.push(DxfEntity::Polyline {
+                        layer,
+                        vertices,
+                        closed,
+                    });
                 }
             }
             match value {
@@ -348,7 +466,11 @@ pub fn import_dxf(text: &str) -> InteropResult<DxfImportResult> {
         }
     }
     if let Some((layer, vertices, closed)) = pending_polyline.take() {
-        entities.push(DxfEntity::Polyline { layer, vertices, closed });
+        entities.push(DxfEntity::Polyline {
+            layer,
+            vertices,
+            closed,
+        });
     }
 
     let outcomes = entities
@@ -379,7 +501,11 @@ struct EntityFields {
     text: Option<String>,
 }
 
-fn read_entity_fields(lines: &[&str], mut i: usize, format: &'static str) -> InteropResult<(EntityFields, usize)> {
+fn read_entity_fields(
+    lines: &[&str],
+    mut i: usize,
+    format: &'static str,
+) -> InteropResult<(EntityFields, usize)> {
     let mut fields = EntityFields {
         layer: "0".to_string(),
         values: std::collections::BTreeMap::new(),
@@ -409,45 +535,98 @@ fn read_entity_fields(lines: &[&str], mut i: usize, format: &'static str) -> Int
     Ok((fields, i))
 }
 
-fn get(fields: &EntityFields, code: i32, format: &'static str, entity: &str, i: usize) -> InteropResult<f64> {
-    fields.values.get(&code).copied().ok_or_else(|| InteropError::Malformed {
-        format,
-        offset: i,
-        reason: format!("{entity} is missing required group code {code}"),
-    })
+fn get(
+    fields: &EntityFields,
+    code: i32,
+    format: &'static str,
+    entity: &str,
+    i: usize,
+) -> InteropResult<f64> {
+    fields
+        .values
+        .get(&code)
+        .copied()
+        .ok_or_else(|| InteropError::Malformed {
+            format,
+            offset: i,
+            reason: format!("{entity} is missing required group code {code}"),
+        })
 }
 
 fn parse_line(lines: &[&str], i: usize, format: &'static str) -> InteropResult<(DxfEntity, usize)> {
     let (f, next) = read_entity_fields(lines, i, format)?;
-    let start = Point::new(get(&f, 10, format, "LINE", i)?, get(&f, 20, format, "LINE", i)?);
-    let end = Point::new(get(&f, 11, format, "LINE", i)?, get(&f, 21, format, "LINE", i)?);
-    Ok((DxfEntity::Line { layer: f.layer, start, end }, next))
+    let start = Point::new(
+        get(&f, 10, format, "LINE", i)?,
+        get(&f, 20, format, "LINE", i)?,
+    );
+    let end = Point::new(
+        get(&f, 11, format, "LINE", i)?,
+        get(&f, 21, format, "LINE", i)?,
+    );
+    Ok((
+        DxfEntity::Line {
+            layer: f.layer,
+            start,
+            end,
+        },
+        next,
+    ))
 }
 
-fn parse_circle(lines: &[&str], i: usize, format: &'static str) -> InteropResult<(DxfEntity, usize)> {
+fn parse_circle(
+    lines: &[&str],
+    i: usize,
+    format: &'static str,
+) -> InteropResult<(DxfEntity, usize)> {
     let (f, next) = read_entity_fields(lines, i, format)?;
-    let center = Point::new(get(&f, 10, format, "CIRCLE", i)?, get(&f, 20, format, "CIRCLE", i)?);
+    let center = Point::new(
+        get(&f, 10, format, "CIRCLE", i)?,
+        get(&f, 20, format, "CIRCLE", i)?,
+    );
     let radius = get(&f, 40, format, "CIRCLE", i)?;
-    Ok((DxfEntity::Circle { layer: f.layer, center, radius }, next))
+    Ok((
+        DxfEntity::Circle {
+            layer: f.layer,
+            center,
+            radius,
+        },
+        next,
+    ))
 }
 
 fn parse_arc(lines: &[&str], i: usize, format: &'static str) -> InteropResult<(DxfEntity, usize)> {
     let (f, next) = read_entity_fields(lines, i, format)?;
-    let center = Point::new(get(&f, 10, format, "ARC", i)?, get(&f, 20, format, "ARC", i)?);
+    let center = Point::new(
+        get(&f, 10, format, "ARC", i)?,
+        get(&f, 20, format, "ARC", i)?,
+    );
     let radius = get(&f, 40, format, "ARC", i)?;
     let start_angle_deg = get(&f, 50, format, "ARC", i)?;
     let end_angle_deg = get(&f, 51, format, "ARC", i)?;
     Ok((
-        DxfEntity::Arc { layer: f.layer, center, radius, start_angle_deg, end_angle_deg },
+        DxfEntity::Arc {
+            layer: f.layer,
+            center,
+            radius,
+            start_angle_deg,
+            end_angle_deg,
+        },
         next,
     ))
 }
 
 fn parse_text(lines: &[&str], i: usize, format: &'static str) -> InteropResult<(DxfEntity, usize)> {
     let (f, next) = read_entity_fields(lines, i, format)?;
-    let position = Point::new(get(&f, 10, format, "TEXT", i)?, get(&f, 20, format, "TEXT", i)?);
+    let position = Point::new(
+        get(&f, 10, format, "TEXT", i)?,
+        get(&f, 20, format, "TEXT", i)?,
+    );
     Ok((
-        DxfEntity::Text { layer: f.layer, position, text: f.text.unwrap_or_default() },
+        DxfEntity::Text {
+            layer: f.layer,
+            position,
+            text: f.text.unwrap_or_default(),
+        },
         next,
     ))
 }
@@ -459,13 +638,25 @@ fn parse_vertex(lines: &[&str], i: usize, format: &'static str) -> InteropResult
     Ok((Point::new(x, y), next))
 }
 
-fn parse_polyline_header(lines: &[&str], i: usize, format: &'static str) -> InteropResult<(String, bool, usize)> {
+fn parse_polyline_header(
+    lines: &[&str],
+    i: usize,
+    format: &'static str,
+) -> InteropResult<(String, bool, usize)> {
     let (f, next) = read_entity_fields(lines, i, format)?;
-    let closed = f.values.get(&70).map(|v| (*v as i64) & 1 != 0).unwrap_or(false);
+    let closed = f
+        .values
+        .get(&70)
+        .map(|v| (*v as i64) & 1 != 0)
+        .unwrap_or(false);
     Ok((f.layer, closed, next))
 }
 
-fn parse_lwpolyline(lines: &[&str], i: usize, format: &'static str) -> InteropResult<(DxfEntity, usize)> {
+fn parse_lwpolyline(
+    lines: &[&str],
+    i: usize,
+    format: &'static str,
+) -> InteropResult<(DxfEntity, usize)> {
     // LWPOLYLINE repeats group codes 10/20 once per vertex; walk manually
     // instead of using `read_entity_fields` (which keeps only the last value
     // per code).
@@ -497,7 +688,14 @@ fn parse_lwpolyline(lines: &[&str], i: usize, format: &'static str) -> InteropRe
             _ => {}
         }
     }
-    Ok((DxfEntity::Polyline { layer, vertices, closed }, cursor))
+    Ok((
+        DxfEntity::Polyline {
+            layer,
+            vertices,
+            closed,
+        },
+        cursor,
+    ))
 }
 
 #[cfg(test)]
@@ -574,7 +772,13 @@ mod tests {
         let text = dxf("0\nCIRCLE\n8\n0\n10\n0\n20\n0\n40\n0\n");
         let result = import_dxf(&text).unwrap();
         assert_eq!(result.elements().len(), 0);
-        assert!(matches!(&result.outcomes[0], ImportOutcome::Skipped { entity: "CIRCLE", .. }));
+        assert!(matches!(
+            &result.outcomes[0],
+            ImportOutcome::Skipped {
+                entity: "CIRCLE",
+                ..
+            }
+        ));
     }
 
     #[test]
@@ -589,6 +793,9 @@ mod tests {
     #[test]
     fn bad_group_code_is_malformed() {
         let text = "0\nSECTION\n2\nENTITIES\nNOTANUMBER\nLINE\n0\nENDSEC\n0\nEOF\n";
-        assert!(matches!(import_dxf(text), Err(InteropError::Malformed { .. })));
+        assert!(matches!(
+            import_dxf(text),
+            Err(InteropError::Malformed { .. })
+        ));
     }
 }
