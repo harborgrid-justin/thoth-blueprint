@@ -183,7 +183,7 @@ pub fn plan_phasing(
 mod tests {
     use super::*;
     use crate::elements::new_base;
-    use thoth_spatial::{ElementKind, Polygon};
+    use thoth_spatial::ElementKind;
 
     fn square_lot(id: &str, ox: f64, oy: f64, size: f64) -> Lot {
         Lot {
@@ -197,7 +197,7 @@ mod tests {
                     Point::new(ox + size, oy),
                     Point::new(ox + size, oy + size),
                     Point::new(ox, oy + size),
-                ] as Polygon,
+                ],
             ),
             parcel_id: None,
             block_id: None,

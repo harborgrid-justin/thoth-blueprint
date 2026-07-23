@@ -133,7 +133,10 @@ pub fn compute_viewshed(
     let mut visible = vec![false; cols * rows];
     for r in 0..rows {
         for c in 0..cols {
-            let target_xy = Point::new(origin.x + c as f64 * cell_size, origin.y + r as f64 * cell_size);
+            let target_xy = Point::new(
+                origin.x + c as f64 * cell_size,
+                origin.y + r as f64 * cell_size,
+            );
             let target_z = node_height(terrain, c as i64, r as i64) + target_height;
 
             let dist = distance(observer.position, target_xy);
@@ -208,7 +211,8 @@ mod tests {
         for r in 0..rows {
             heights[r * cols + 2] = 100.0; // a tall ridge down the middle column
         }
-        let grid = ElevationGrid::new(Point::new(0.0, 0.0), cell_size, cols, rows, heights).unwrap();
+        let grid =
+            ElevationGrid::new(Point::new(0.0, 0.0), cell_size, cols, rows, heights).unwrap();
         let observer = Observer {
             position: Point::new(0.0, 0.0),
             eye_height: 2.0,

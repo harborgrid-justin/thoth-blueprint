@@ -138,7 +138,11 @@ impl IlluminanceGrid {
     /// report characterizes a lit area, e.g. for a uniformity ratio).
     pub fn stats(&self) -> (f64, f64, f64) {
         let min = self.values.iter().cloned().fold(f64::INFINITY, f64::min);
-        let max = self.values.iter().cloned().fold(f64::NEG_INFINITY, f64::max);
+        let max = self
+            .values
+            .iter()
+            .cloned()
+            .fold(f64::NEG_INFINITY, f64::max);
         let avg = if self.values.is_empty() {
             0.0
         } else {
@@ -271,15 +275,16 @@ mod tests {
 
     #[test]
     fn compute_illuminance_grid_rejects_degenerate_dimensions() {
-        let err =
-            compute_illuminance_grid(&[], Point::new(0.0, 0.0), 5.0, 0, 5).unwrap_err();
-        assert_eq!(err, DrawingError::InvalidGridDimensions { cols: 0, rows: 5 });
+        let err = compute_illuminance_grid(&[], Point::new(0.0, 0.0), 5.0, 0, 5).unwrap_err();
+        assert_eq!(
+            err,
+            DrawingError::InvalidGridDimensions { cols: 0, rows: 5 }
+        );
     }
 
     #[test]
     fn compute_illuminance_grid_rejects_non_positive_cell_size() {
-        let err =
-            compute_illuminance_grid(&[], Point::new(0.0, 0.0), 0.0, 5, 5).unwrap_err();
+        let err = compute_illuminance_grid(&[], Point::new(0.0, 0.0), 0.0, 5, 5).unwrap_err();
         assert_eq!(err, DrawingError::NonPositiveCellSize(0.0));
     }
 

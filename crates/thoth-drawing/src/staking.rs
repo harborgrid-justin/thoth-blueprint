@@ -18,8 +18,8 @@
 //! local mirror — see `GAP_ANALYSIS_STATUS.md`.
 
 use crate::error::DrawingError;
-use crate::schedule::{CellValue, ColumnAlign, ScheduleColumn, ScheduleRow, ScheduleTable};
 use crate::scene::{Pt, SheetPrimitive, TextAnchor, INK, MUTED};
+use crate::schedule::{CellValue, ColumnAlign, ScheduleColumn, ScheduleRow, ScheduleTable};
 
 /// A single construction stake-out point: a station/offset pair along a
 /// design alignment, the cut (positive) or fill (negative) to grade at that

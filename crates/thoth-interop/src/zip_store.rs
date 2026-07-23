@@ -199,8 +199,11 @@ mod tests {
 
     #[test]
     fn truncated_archive_is_malformed() {
-        let zip = write_zip(&[ZipEntry { name: "a", data: b"hello" }]);
-        let err = read_zip(&zip[..zip.len() - 20]).unwrap_err();
+        let zip = write_zip(&[ZipEntry { name: "a", data: b"hello world" }]);
+        // Local file header + name + data is 30 + 1 + 11 = 42 bytes; cut off
+        // partway through the data payload itself (well before the central
+        // directory that follows it).
+        let err = read_zip(&zip[..35]).unwrap_err();
         assert!(matches!(err, InteropError::Malformed { .. }));
     }
 }

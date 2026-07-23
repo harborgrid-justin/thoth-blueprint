@@ -328,8 +328,8 @@ pub fn signage_plan_primitives(
         };
         let pts: Vec<Pt> = (0..sides)
             .map(|i| {
-                let a = std::f64::consts::FRAC_PI_2
-                    + std::f64::consts::TAU * i as f64 / sides as f64;
+                let a =
+                    std::f64::consts::FRAC_PI_2 + std::f64::consts::TAU * i as f64 / sides as f64;
                 Pt::new(at.x + r * a.cos(), at.y - r * a.sin())
             })
             .collect();
@@ -406,7 +406,10 @@ mod tests {
         let err = place_broken_line_marking(&line, 0.0, 30.0).unwrap_err();
         assert!(matches!(
             err,
-            DrawingError::InvalidSignagePlanParameter { name: "dash_length", .. }
+            DrawingError::InvalidSignagePlanParameter {
+                name: "dash_length",
+                ..
+            }
         ));
     }
 
@@ -428,10 +431,7 @@ mod tests {
             stop_at_end: true,
         };
         let signs = generate_signage_plan(&line, &options).unwrap();
-        let stops = signs
-            .iter()
-            .filter(|s| s.kind == SignKind::Stop)
-            .count();
+        let stops = signs.iter().filter(|s| s.kind == SignKind::Stop).count();
         let speed_signs = signs
             .iter()
             .filter(|s| s.kind == SignKind::SpeedLimit)
@@ -471,7 +471,10 @@ mod tests {
         let err = generate_signage_plan(&line, &options).unwrap_err();
         assert!(matches!(
             err,
-            DrawingError::InvalidSignagePlanParameter { name: "speed_sign_spacing", .. }
+            DrawingError::InvalidSignagePlanParameter {
+                name: "speed_sign_spacing",
+                ..
+            }
         ));
     }
 

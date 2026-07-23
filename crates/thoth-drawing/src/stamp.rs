@@ -194,7 +194,10 @@ mod tests {
 
     #[test]
     fn sheets_missing_any_stamp_finds_unassigned_sheets() {
-        let s = set(vec![sheet(DisciplineCode::C, "c1"), sheet(DisciplineCode::A, "a1")]);
+        let s = set(vec![
+            sheet(DisciplineCode::C, "c1"),
+            sheet(DisciplineCode::A, "a1"),
+        ]);
         let assignments = vec![StampAssignment {
             sheet_id: "c1".to_string(),
             stamp: stamp(DisciplineCode::C),

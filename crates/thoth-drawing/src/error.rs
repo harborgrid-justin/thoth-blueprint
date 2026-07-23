@@ -140,7 +140,9 @@ pub enum DrawingError {
 
     /// A pavement-marking/signage placement parameter (dash length, gap
     /// length, sign spacing) was non-positive or non-finite.
-    #[error("invalid signage/marking parameter {name:?}: must be positive and finite, got {value}")]
+    #[error(
+        "invalid signage/marking parameter {name:?}: must be positive and finite, got {value}"
+    )]
     InvalidSignagePlanParameter { name: &'static str, value: f64 },
 
     /// A viewshed observer's eye height above the terrain was negative or

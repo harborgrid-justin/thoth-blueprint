@@ -36,7 +36,11 @@ pub enum ElementChange {
     /// Present in `before` but not `after`.
     Removed { id: String },
     /// The same vertex count, shifted by a single uniform translation.
-    Moved { id: String, translation: Point, distance: f64 },
+    Moved {
+        id: String,
+        translation: Point,
+        distance: f64,
+    },
     /// The polygon's area changed beyond tolerance without being a pure
     /// translation (a resize/reshape that changed enclosed area).
     Resized {
@@ -73,7 +77,8 @@ fn geometry_translation(before: &[Point], after: &[Point]) -> Option<Point> {
     }
     let first_delta = Point::new(after[0].x - before[0].x, after[0].y - before[0].y);
     let is_uniform = before.iter().zip(after.iter()).all(|(b, a)| {
-        ((a.x - b.x) - first_delta.x).abs() < EPSILON && ((a.y - b.y) - first_delta.y).abs() < EPSILON
+        ((a.x - b.x) - first_delta.x).abs() < EPSILON
+            && ((a.y - b.y) - first_delta.y).abs() < EPSILON
     });
     is_uniform.then_some(first_delta)
 }
@@ -203,7 +208,8 @@ pub fn diff_elements(before: &[DiffableElement], after: &[DiffableElement]) -> R
             continue;
         };
         let mut element_changes = Vec::new();
-        if let Some(geo_change) = diff_geometry(&e_after.id, &e_before.geometry, &e_after.geometry) {
+        if let Some(geo_change) = diff_geometry(&e_after.id, &e_before.geometry, &e_after.geometry)
+        {
             element_changes.push(geo_change);
         }
         element_changes.extend(diff_attributes(
@@ -271,7 +277,11 @@ mod tests {
         let diff = diff_elements(&before, &after);
         assert_eq!(diff.changes.len(), 1);
         match &diff.changes[0] {
-            ElementChange::Moved { id, translation, distance } => {
+            ElementChange::Moved {
+                id,
+                translation,
+                distance,
+            } => {
                 assert_eq!(id, "a");
                 assert!((translation.x - 5.0).abs() < 1e-9);
                 assert!((translation.y - 3.0).abs() < 1e-9);
@@ -320,7 +330,12 @@ mod tests {
         let before = vec![element("a", square(0.0, 0.0, 10.0), &[("zone", "R1")])];
         let after = vec![element("a", square(0.0, 0.0, 10.0), &[("zone", "R1")])];
         let diff = diff_elements(&before, &after);
-        assert_eq!(diff.changes, vec![ElementChange::Unchanged { id: "a".to_string() }]);
+        assert_eq!(
+            diff.changes,
+            vec![ElementChange::Unchanged {
+                id: "a".to_string()
+            }]
+        );
     }
 
     #[test]
@@ -329,7 +344,10 @@ mod tests {
         let after = vec![element("a", square(5.0, 0.0, 10.0), &[("zone", "R2")])];
         let diff = diff_elements(&before, &after);
         assert_eq!(diff.changes.len(), 2);
-        assert!(diff.changes.iter().any(|c| matches!(c, ElementChange::Moved { .. })));
+        assert!(diff
+            .changes
+            .iter()
+            .any(|c| matches!(c, ElementChange::Moved { .. })));
         assert!(diff
             .changes
             .iter()

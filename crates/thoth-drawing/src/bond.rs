@@ -113,7 +113,9 @@ pub fn generate_bond_estimate(
             .find(|i| i.id == pay_item_id)
             .ok_or_else(|| DrawingError::UnknownPayItem(pay_item_id.clone()))?;
 
-        let formula = formula_column.and_then(|col| row.get(col)).map(CellValue::display);
+        let formula = formula_column
+            .and_then(|col| row.get(col))
+            .map(CellValue::display);
 
         // `evaluate_pay_item_cost` itself selects `length`/`area`/`count`
         // by the item's unit; setting all three to the same known quantity
@@ -207,8 +209,7 @@ mod tests {
     #[test]
     fn generate_bond_estimate_sums_extended_costs_and_applies_contingency() {
         let t = table(vec![("p1", "100"), ("p2", "200")]);
-        let estimate =
-            generate_bond_estimate(&t, "item", "qty", None, &pay_items(), 10.0).unwrap();
+        let estimate = generate_bond_estimate(&t, "item", "qty", None, &pay_items(), 10.0).unwrap();
         assert_eq!(estimate.line_items.len(), 2);
         assert_relative_eq!(estimate.line_items[0].extended_cost, 200.0, epsilon = 1e-9);
         assert_relative_eq!(estimate.line_items[1].extended_cost, 100.0, epsilon = 1e-9);
@@ -259,8 +260,8 @@ mod tests {
     #[test]
     fn generate_bond_estimate_reports_a_missing_quantity_column() {
         let t = table(vec![("p1", "100")]);
-        let err =
-            generate_bond_estimate(&t, "item", "missing-column", None, &pay_items(), 0.0).unwrap_err();
+        let err = generate_bond_estimate(&t, "item", "missing-column", None, &pay_items(), 0.0)
+            .unwrap_err();
         assert_eq!(
             err,
             DrawingError::MissingScheduleColumn {

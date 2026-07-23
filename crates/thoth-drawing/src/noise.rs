@@ -119,12 +119,16 @@ fn energy_sum_db(levels_db: &[f64]) -> f64 {
 /// # Errors
 /// - [`DrawingError::NoTrafficStreams`] if `streams` is empty.
 /// - [`DrawingError::InvalidTrafficNoiseInput`] if any stream is malformed.
-pub fn combined_level_at_reference_distance(streams: &[VehicleStream]) -> Result<f64, DrawingError> {
+pub fn combined_level_at_reference_distance(
+    streams: &[VehicleStream],
+) -> Result<f64, DrawingError> {
     if streams.is_empty() {
         return Err(DrawingError::NoTrafficStreams);
     }
-    let levels: Result<Vec<f64>, DrawingError> =
-        streams.iter().map(VehicleStream::level_at_reference_distance).collect();
+    let levels: Result<Vec<f64>, DrawingError> = streams
+        .iter()
+        .map(VehicleStream::level_at_reference_distance)
+        .collect();
     Ok(energy_sum_db(&levels?))
 }
 
@@ -244,7 +248,10 @@ mod tests {
         let err = traffic_noise_leq(&streams, 0.0).unwrap_err();
         assert!(matches!(
             err,
-            DrawingError::InvalidTrafficNoiseInput { reason: "distance_m must be positive and finite", .. }
+            DrawingError::InvalidTrafficNoiseInput {
+                reason: "distance_m must be positive and finite",
+                ..
+            }
         ));
     }
 

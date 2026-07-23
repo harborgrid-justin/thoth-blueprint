@@ -183,8 +183,9 @@ pub fn solar_position(
     let obliquity = mean_obliquity + 0.00256 * omega.to_radians().cos();
 
     // Declination (deg).
-    let declination =
-        (obliquity.to_radians().sin() * apparent_long.to_radians().sin()).asin().to_degrees();
+    let declination = (obliquity.to_radians().sin() * apparent_long.to_radians().sin())
+        .asin()
+        .to_degrees();
 
     // Equation of time (minutes).
     let y = (obliquity.to_radians() / 2.0).tan().powi(2);
@@ -196,12 +197,9 @@ pub fn solar_position(
     let equation_of_time_minutes = 4.0 * eot_deg.to_degrees();
 
     // True solar time (minutes into the day), folding in longitude and EoT.
-    let time_of_day_minutes =
-        at.hour as f64 * 60.0 + at.minute as f64 + at.second / 60.0;
-    let true_solar_time = (time_of_day_minutes
-        + equation_of_time_minutes
-        + 4.0 * longitude_deg)
-        .rem_euclid(1440.0);
+    let time_of_day_minutes = at.hour as f64 * 60.0 + at.minute as f64 + at.second / 60.0;
+    let true_solar_time =
+        (time_of_day_minutes + equation_of_time_minutes + 4.0 * longitude_deg).rem_euclid(1440.0);
 
     // Hour angle (deg): negative before solar noon, positive after. The
     // commonly published NOAA formulation branches on the sign of the raw
@@ -213,8 +211,8 @@ pub fn solar_position(
 
     let lat_rad = latitude_deg.to_radians();
     let decl_rad = declination.to_radians();
-    let cos_zenith = lat_rad.sin() * decl_rad.sin()
-        + lat_rad.cos() * decl_rad.cos() * hour_angle_rad.cos();
+    let cos_zenith =
+        lat_rad.sin() * decl_rad.sin() + lat_rad.cos() * decl_rad.cos() * hour_angle_rad.cos();
     let zenith_deg = cos_zenith.clamp(-1.0, 1.0).acos().to_degrees();
     let elevation_deg = 90.0 - zenith_deg;
 
@@ -411,7 +409,11 @@ mod tests {
             declination_deg: 0.0,
             equation_of_time_minutes: 0.0,
         };
-        let footprint = vec![Point::new(0.0, 0.0), Point::new(1.0, 0.0), Point::new(1.0, 1.0)];
+        let footprint = vec![
+            Point::new(0.0, 0.0),
+            Point::new(1.0, 0.0),
+            Point::new(1.0, 1.0),
+        ];
         let err = project_shadow(&footprint, 10.0, sun).unwrap_err();
         assert_eq!(err, SolarError::SunBelowHorizon(-5.0));
     }
@@ -436,7 +438,11 @@ mod tests {
             declination_deg: 0.0,
             equation_of_time_minutes: 0.0,
         };
-        let footprint = vec![Point::new(0.0, 0.0), Point::new(1.0, 0.0), Point::new(1.0, 1.0)];
+        let footprint = vec![
+            Point::new(0.0, 0.0),
+            Point::new(1.0, 0.0),
+            Point::new(1.0, 1.0),
+        ];
         let err = project_shadow(&footprint, 0.0, sun).unwrap_err();
         assert_eq!(err, SolarError::InvalidHeight(0.0));
     }

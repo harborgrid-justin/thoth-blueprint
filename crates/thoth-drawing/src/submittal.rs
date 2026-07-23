@@ -44,7 +44,10 @@ pub struct SubmittalIndexRow {
 /// validate stamp field well-formedness or discipline agreement — for the
 /// full submittal-readiness check, see
 /// [`crate::stamp::validate_submittal_stamps`]).
-pub fn submittal_index(set: &DrawingSet, stamps: Option<&[StampAssignment]>) -> Vec<SubmittalIndexRow> {
+pub fn submittal_index(
+    set: &DrawingSet,
+    stamps: Option<&[StampAssignment]>,
+) -> Vec<SubmittalIndexRow> {
     let ordered = sort_sheets(set);
     let count = ordered.len();
     ordered
@@ -69,7 +72,10 @@ pub fn submittal_index(set: &DrawingSet, stamps: Option<&[StampAssignment]>) -> 
 
 /// Render the submittal index as a printable [`ScheduleTable`] ("Sheet
 /// Index" / table of contents), one row per sheet.
-pub fn submittal_index_table(set: &DrawingSet, stamps: Option<&[StampAssignment]>) -> ScheduleTable {
+pub fn submittal_index_table(
+    set: &DrawingSet,
+    stamps: Option<&[StampAssignment]>,
+) -> ScheduleTable {
     let index_rows = submittal_index(set, stamps);
     let rows: Vec<ScheduleRow> = index_rows
         .iter()
@@ -248,7 +254,10 @@ mod tests {
         let table = submittal_index_table(&s, None);
         assert_eq!(table.columns.len(), 6);
         assert_eq!(table.rows.len(), 1);
-        assert_eq!(ScheduleTable::cell_text(&table.rows[0], "revision"), "\u{2014}");
+        assert_eq!(
+            ScheduleTable::cell_text(&table.rows[0], "revision"),
+            "\u{2014}"
+        );
         assert!(table.validate().is_ok());
     }
 }
