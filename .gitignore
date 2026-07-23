@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Rust workspace (crates/*) build artifacts
+target/
+**/*.rs.bk
+*.pdb
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

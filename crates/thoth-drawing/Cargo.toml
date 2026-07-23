@@ -1,0 +1,14 @@
+[package]
+name = "thoth-drawing"
+description = "CAD sheet/drawing production and parts catalog for Thoth Blueprint. Rust port of packages/domain/src/drawing and src/parts."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+thoth-spatial = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
