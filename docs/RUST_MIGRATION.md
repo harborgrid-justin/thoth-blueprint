@@ -1,5 +1,16 @@
 # Rust migration status
 
+> **Update (gap-closing pass):** a second round closed 66 competitive gaps
+> identified in [`docs/COMPETITIVE_GAP_ANALYSIS.md`](COMPETITIVE_GAP_ANALYSIS.md)
+> against Civil 3D, Bentley OpenSite/OpenRoads Designer, Trimble Business
+> Center, Carlson, Esri ArcGIS Pro, GeoSTORM/HydroCAD, and AutoTURN. Four new
+> crates landed (`thoth-hydrology`, `thoth-transportation`, `thoth-interop`,
+> `thoth-governance`) and two existing crates (`thoth-planning`,
+> `thoth-drawing`) gained new modules. See "Gap-closing pass" below for the
+> full rollup — the original migration-pass content further down is left
+> as-is (superseded numbers are noted inline rather than silently rewritten).
+
+
 Thoth Blueprint's business logic — currently TypeScript in `packages/domain`
 and `services/*` — is being ported to a Rust workspace under
 [`crates/`](../crates/README.md). This document is a **living status
@@ -35,6 +46,35 @@ own file, not just this summary.
 `thoth-civil`, `thoth-survey`):** ported+tested / ported+partial-tests /
 not-yet-ported. See those crates' own `STATUS.md`/`GAPS.md` for the precise
 per-file breakdown — it is not repeated here.
+
+## Gap-closing pass (six parallel agents, one per crate)
+
+| Crate | Theme (gap items) | Tests | Status doc |
+| --- | --- | --- | --- |
+| `thoth-hydrology` (new) | Stormwater hydrology/hydraulics (1-13) | 109 + 26 doctests | [`STATUS.md`](../crates/thoth-hydrology/STATUS.md) — 12/13 `implemented+tested`, 1 `implemented+partial-tests` (floodplain, item 13) |
+| `thoth-transportation` (new) | Transportation/traffic engineering (14-25) | 87 | [`STATUS.md`](../crates/thoth-transportation/STATUS.md) — 9/12 `implemented+tested`, 3 `implemented+partial-tests` (trip generation, roundabout, signal warrant) |
+| `thoth-interop` (new) | Field-data/format interoperability (26-37) | 90 | [`STATUS.md`](../crates/thoth-interop/STATUS.md) — 11/12 `implemented+tested`, 1 `implemented+partial-tests` (RINEX, item 30) |
+| `thoth-planning` (extended) | Subdivision design automation (38-50) | 119 (58 pre-existing + 61 new) | [`GAP_ANALYSIS_STATUS.md`](../crates/thoth-planning/GAP_ANALYSIS_STATUS.md) — all 13 `implemented+tested`, several with documented heuristic/scope limitations |
+| `thoth-drawing` (extended) | Drawing production/specialty analysis (51-60) | 207 (140 pre-existing + 67 new) | [`GAP_ANALYSIS_STATUS.md`](../crates/thoth-drawing/GAP_ANALYSIS_STATUS.md) — all 10 `implemented+tested` |
+| `thoth-governance` (new) | Compliance/collaboration governance (61-66) | 49 | [`STATUS.md`](../crates/thoth-governance/STATUS.md) — all 6 `implemented+tested`, with an explicitly conservative three-way-merge scope (item 62) |
+
+**Workspace total after this pass: 1,013 Rust tests, all passing.**
+`cargo fmt --all -- --check` and `cargo clippy --workspace --all-targets --
+-D warnings` are both clean across all 12 crates (the two `thoth-spatial`
+line-wrap diffs noted below under "Known, currently-open items" were fixed
+during this pass). The full TypeScript suite (`packages/domain` +
+`packages/storage`, 383 + 41 tests) and `apps/web`'s Vitest suite remain
+green and untouched.
+
+Every new/extended crate depends only on already-stable sibling crates from
+the first migration pass (`thoth-spatial`, `thoth-civil`, `thoth-survey`,
+`thoth-planning`, `thoth-services`) rather than working around
+in-flight APIs, since those crates were complete and frozen-by-completion
+by the time this pass started — unlike the first pass, cross-crate
+`GAPS.md` entries in this round are rarer and reflect genuine architectural
+boundaries (e.g. `thoth-drawing`'s staking sheet using a local
+`StakingPoint` type pending eventual integration with `thoth-interop`'s
+`staking.rs`), not merely "the other crate wasn't done yet."
 
 ## What the integration layer actually wired
 

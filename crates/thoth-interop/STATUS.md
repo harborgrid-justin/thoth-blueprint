@@ -1,0 +1,46 @@
+# `thoth-interop` — status
+
+Field-data and format interoperability for Thoth Blueprint. This maps each
+gap-analysis item (Theme 3, `docs/COMPETITIVE_GAP_ANALYSIS.md`) to its Rust
+module/function, status, and exact sub-dialect/scope covered. All statuses
+below are `implemented+tested` unless noted otherwise — every module has unit
+tests, and every export format has a round-trip (export → re-import) test
+asserting geometric equivalence within a documented numeric tolerance.
+
+Overall: **90/90 tests passing**, `cargo fmt -p thoth-interop -- --check`
+clean, `cargo clippy -p thoth-interop --all-targets -- -D warnings` clean,
+`cargo doc -p thoth-interop --no-deps` clean under `RUSTDOCFLAGS="-D warnings"`.
+
+| # | Item | Module(s) | Status | Scope note |
+|---|------|-----------|--------|------------|
+| 26 | Full LandXML import/export | `landxml::{points,surfaces,parcels,pipe_networks,alignments}` | **implemented+tested** | LandXML 1.2. Points: `<Points><CgPoint>` (N E \[Z\]). Surfaces: `<Surfaces><Surface><Definition surfType="TIN"><Pnts>/<Faces>` only (no `GRID`, `<Breaklines>`, `<Boundaries>`). Parcels: `<Parcels><Parcel><CoordGeom>` straight-line boundaries + `<Pin>` for APN; a `<Curve>` on *import* is reduced to its chord (documented lossy approximation), never emitted on export. Pipe networks: `<PipeNetworks><PipeNetwork><Structs>/<Pipes>`, no cross-section profiles beyond a diameter number. Alignments: reuses `thoth_civil::alignment`'s existing `<CoordGeom>` `<Line>`/`<Curve>` dialect verbatim (same attributes/precision) via `landxml::alignments::alignment_coord_geom_xml`; import yields resolved centerline geometry (`ImportedAlignment`), not a reconstructed PI/radius chain — see module doc for why. `<CoordGeom>` families use plan `x y`; point-list families use `N E [Z]` — both documented in `landxml/mod.rs`. |
+| 27 | Shapefile import/export | `shapefile` | **implemented+tested** | `.shp` (Point/PolyLine/Polygon, shape types 1/3/5) and `.dbf` (field types `C`/`N`/`F`/`L`) read/write from `&[u8]`/`Vec<u8>`. No `.shx` (offsets recomputed by scanning `.shp`), no Z/M variants, no `MultiPoint`/`MultiPatch`, no `.prj` (CRS is caller context). |
+| 28 | DXF basemap import | `dxf` | **implemented+tested** | Import only (as specified). Entities: `LINE`, `LWPOLYLINE`, `POLYLINE`(+`VERTEX`/`SEQEND`), `CIRCLE`, `ARC`, `TEXT`/`MTEXT`. Closed polylines/circles → `PlanElement::Region`; open lines/polylines/arcs → `PlanElement::RightOfWay` (real `centerline` + a nominal 0.01-unit synthetic boundary, not a real ROW width); `TEXT` → `PlanElement::Note`. No blocks/`INSERT`, hatches, dimensions, or binary DXF. Every unconverted entity is reported with a reason (`ImportOutcome::Skipped`), never silently dropped. |
+| 29 | KML/KMZ export | `kml`, `zip_store` | **implemented+tested** | Export only (as specified). `<Placemark>` `Polygon`/`Point`/`LineString`; KMZ via a self-contained minimal ZIP "stored" (uncompressed) writer/reader in `zip_store` (own CRC-32). Coordinates are written verbatim (`x`→lon, `y`→lat) — **no reprojection**; callers must pre-project to WGS84 (that's `thoth-services`' job, not this crate's). |
+| 30 | GNSS raw-observation (RINEX) import + network adjustment | `rinex`, `network_adjustment` | **implemented+partial-tests** (RINEX header/epoch parsing tested; RINEX↔network-adjustment integration untested — see below) | RINEX 2.10/2.11 **observation** files only: header (version, marker name, `APPROX POSITION XYZ`, `# / TYPES OF OBSERV`) and epoch records (timestamp, satellite list incl. `>12`-sat continuation lines, fixed-16-column-per-slot observation values). Does **not** compute a single-point position from pseudoranges — that needs broadcast/precise ephemerides (a RINEX *nav* file) plus iono/tropo correction, out of scope. The "point" surfaced is the header's `APPROX POSITION XYZ`, converted ECEF→WGS84 geodetic via `ecef_to_geodetic_wgs84` (a standard ellipsoidal conversion, not a datum transform). `network_adjustment` is a generic 2D least-squares engine (see item 36) that a GNSS baseline could feed as a distance+azimuth observation pair — no code currently wires RINEX output into it automatically. |
+| 31 | Total-station field-book import | `fieldbook` | **implemented+tested** | Format chosen: **Carlson RW5** (see module doc for the JobXML/GSI/RW5 tradeoff reasoning). Records: `OC` (occupy), `BK` (backsight, direct `BS` or computed from a known `BP`), `LS` (instrument/target height), `FS`/`SS` (foresight/sideshot reduction via angle-right/zenith/slope-distance). No automatic occupied-station advancement on `FS` (multi-setup chaining) — every shot reduces relative to the most recent `OC`/`BK`. No GPS/`JB`/`MO` record semantics beyond ignoring them. Produces `thoth_survey::points::CogoPoint`. |
+| 32 | Point-cloud ground/non-ground classification | `pointcloud_classify` | **implemented+tested** | Builds on `thoth_civil::pointcloud::PointCloud` (no reparsing). A progressive-morphological-filter-*style* classifier (Zhang et al. 2003 inspired, not a bit-exact port): grid-bin min elevation, iterative grayscale morphological opening at increasing window sizes, slope-scaled elevation threshold flags non-ground cells, plus a per-point tolerance check against the final surface. Cell/threshold-schedule formulas are documented simplifications of the published algorithm. |
+| 33 | Cadastral parcel-fabric import/matching | `parcel_fabric` | **implemented+tested** | Works against an in-memory `FabricParcel` list (caller parses county/assessor data via `shapefile`/`landxml::parcels`, not reparsed here). Matching: exact APN match first, then best-IoU spatial overlap (Sutherland–Hodgman polygon clip) gated by a configurable minimum IoU. Polygon intersection is exact for a convex fabric parcel and a documented approximation otherwise (no full generic polygon-boolean engine — out of scope). |
+| 34 | IFC import | `ifc` | **implemented+tested** | Minimal STEP/IFC reader: `IFCCARTESIANPOINT` + closed `IFCPOLYLINE` → candidate building/site footprints (`PlanElement::Building`, `storeys: 1.0` fixed default); `IFCSITE`/`IFCBUILDING`/`IFCBUILDINGSTOREY` `Name` attributes listed separately. Does **not** walk the placement/representation graph (no `IfcLocalPlacement`, no footprint↔spatial-structure association, no `IfcExtrudedAreaSolid`/B-rep/other geometry types). Does not handle a `;` inside a quoted IFC string (STEP records are split on `;`). |
+| 35 | Datum transformation pipeline | `datum` | **implemented+tested** | NADCON/NTv2-*style* grid-shift bilinear interpolation engine (`DatumGrid::interpolate`, `apply_datum_shift`, `invert_datum_shift` via fixed-point iteration) plus geodetic point types. Does **not** ship real NADCON/NTv2 binary grid data or a `.gsb`/`.las`/`.los` file parser (a caller with an actual grid file parses it into a `DatumGrid`). Entirely separate code path from `thoth-services`' Mercator/UTM/LCC projection math — not touched. |
+| 36/37 | Survey control-network least-squares adjustment | `network_adjustment` | **implemented+tested** | Linearized (Gauss–Newton) least-squares adjustment via observation-equations/normal-equations (Gaussian elimination with partial pivoting), for a 2D network of distance + azimuth observations among fixed/free stations — the generalization `thoth_survey::survey::adjust_traverse`'s Compass/Transit rules can't provide for redundant/looped networks. Reports adjusted coordinates, residuals, redundancy, and a posteriori reference variance. 2D horizontal only (no leveling-network adjustment). |
+| 37/38 | Construction-staking point-list export | `staking` | **implemented+tested** | Reuses `thoth_civil::alignment::{ResolvedAlignment, station_offset_of_point}` and `thoth_civil::terrain::ElevationGrid` directly (no alignment/terrain math of its own). Computes station/offset/side (when an alignment is supplied) and cut/fill = design − existing elevation (when design/existing surfaces are supplied), via the terrain crate's own strict (envelope-checked) sampling. `format_stake_sheet` renders a plain-text field sheet. |
+
+## Cross-cutting notes
+
+- **Error handling**: one crate-wide `thiserror` enum, `error::InteropError`
+  (mirrors `thoth_civil::CivilError`'s one-enum-per-crate convention), with
+  byte-offset variants for binary/XML formats and line-number variants for
+  line-oriented text formats. No parser panics on malformed input — every
+  fallible entry point returns `InteropResult<T>`.
+- **Shared XML tree** (`xml_tree`, crate-private): both `landxml` and `kml`
+  parse through one generic namespace-stripping XML-to-tree parser built on
+  `quick-xml`, rather than each hand-rolling a streaming state machine.
+- **Dependencies added** (`Cargo.toml`, this crate only): `quick-xml` (XML
+  parsing for LandXML/KML) and `thoth-civil` (already a workspace-level
+  dependency path; added here to reuse its alignment/terrain/network/
+  point-cloud types per the "reuse conventions for consistency" mandate).
+  Shapefile/DBF, DXF, KML/KMZ's ZIP container, RINEX, RW5, and IFC are all
+  hand-rolled parsers/writers (no additional third-party format crates).
+- **Test count**: 90 unit tests across 14 modules (`cargo test -p
+  thoth-interop`), all passing.
