@@ -12,7 +12,7 @@ export function usePlanProductionWizardState() {
   const setOpen = useUiStore((s) => s.setProductionOpen);
   const site = useWorkspaceStore((s) => s.site);
 
-  const alignments = site?.alignments ?? [];
+  const alignments = React.useMemo(() => site?.alignments ?? [], [site?.alignments]);
   const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(
     null,
   );

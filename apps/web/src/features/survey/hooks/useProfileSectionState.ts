@@ -23,7 +23,7 @@ export function useProfileSectionState() {
   const setOpen = useUiStore((s) => s.setProfileOpen);
   const site = useWorkspaceStore((s) => s.site);
 
-  const alignments = site?.alignments ?? [];
+  const alignments = React.useMemo(() => site?.alignments ?? [], [site?.alignments]);
   const [selectedAlignId, setSelectedAlignId] = React.useState<string | null>(
     null,
   );

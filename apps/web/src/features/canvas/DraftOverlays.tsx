@@ -14,33 +14,57 @@ export function CrosshairOverlay({
   snappedToVertex?: boolean;
 }) {
   if (!cursorScreen) {return null;}
+  const { x, y } = cursorScreen;
+
   return (
-    <g className="pointer-events-none">
-      <g className="opacity-50 mix-blend-difference" stroke="white" strokeWidth={0.5}>
-        <line x1={-10000} y1={cursorScreen.y} x2={10000} y2={cursorScreen.y} />
-        <line x1={cursorScreen.x} y1={-10000} x2={cursorScreen.x} y2={10000} />
-        <rect x={cursorScreen.x - 3} y={cursorScreen.y - 3} width={6} height={6} fill="none" />
+    <g className="pointer-events-none select-none">
+      {/* White Halo Background Outline for 100% Visibility on Dark or Light Terrain */}
+      <g stroke="#ffffff" strokeWidth={3} strokeOpacity={0.7}>
+        <line x1={-10000} y1={y} x2={10000} y2={y} />
+        <line x1={x} y1={-10000} x2={x} y2={10000} />
       </g>
+
+      {/* High-Contrast CAD Crosshair Lines */}
+      <g stroke="#0f172a" strokeWidth={1.25}>
+        <line x1={-10000} y1={y} x2={10000} y2={y} />
+        <line x1={x} y1={-10000} x2={x} y2={10000} />
+      </g>
+
+      {/* AutoCAD Central Aperture Pickbox */}
+      <rect
+        x={x - 4}
+        y={y - 4}
+        width={8}
+        height={8}
+        fill="rgba(37, 99, 235, 0.15)"
+        stroke="#2563eb"
+        strokeWidth={1.5}
+      />
+
+      {/* Center Target Dot */}
+      <circle cx={x} cy={y} r={1} fill="#2563eb" />
+
+      {/* OSNAP Snap Indicator */}
       {snappedToVertex && (
         <g className="animate-pulse">
           <rect
-            x={cursorScreen.x - 6}
-            y={cursorScreen.y - 6}
-            width={12}
-            height={12}
+            x={x - 7}
+            y={y - 7}
+            width={14}
+            height={14}
             fill="none"
-            stroke="rgb(34, 197, 94)"
+            stroke="rgb(16, 185, 129)"
             strokeWidth={2}
           />
           <rect
-            x={cursorScreen.x - 3}
-            y={cursorScreen.y - 3}
-            width={6}
-            height={6}
-            fill="rgba(34, 197, 94, 0.4)"
-            stroke="rgb(34, 197, 94)"
-            strokeWidth={1}
-            transform={`rotate(45 ${cursorScreen.x} ${cursorScreen.y})`}
+            x={x - 4}
+            y={y - 4}
+            width={8}
+            height={8}
+            fill="rgba(16, 185, 129, 0.35)"
+            stroke="rgb(16, 185, 129)"
+            strokeWidth={1.5}
+            transform={`rotate(45 ${x} ${y})`}
           />
         </g>
       )}

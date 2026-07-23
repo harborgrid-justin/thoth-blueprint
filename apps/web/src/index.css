@@ -47,9 +47,9 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
 
-  --font-sans: "Inter", "Plus Jakarta Sans", "ui-sans-serif", "system-ui", "sans-serif";
+  --font-sans: "Outfit", "Plus Jakarta Sans", "Inter", "ui-sans-serif", "system-ui", "sans-serif";
   --font-mono: "JetBrains Mono", "Roboto Mono", "IBM Plex Mono", "ui-monospace", "monospace";
-  --font-cad: "JetBrains Mono", "ISOCPEUR", "Simplex", "monospace";
+  --font-cad: "JetBrains Mono", "IBM Plex Mono", "ISOCPEUR", "monospace";
 
   --animate-fade-in: fade-in 0.15s ease-out;
   --animate-overlay-in: overlayIn 0.2s ease-out;
@@ -89,54 +89,54 @@
 
 @layer base {
   :root {
-    --background: 240 5% 98%;
-    --foreground: 240 10% 10%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 10%;
+    --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 10%;
+    --popover-foreground: 222 47% 11%;
     --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 240 5% 96%;
-    --secondary-foreground: 240 10% 20%;
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 10% 45%;
-    --accent: 240 5% 94%;
-    --accent-foreground: 240 10% 20%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 92%;
+    --accent-foreground: 222 47% 11%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 240 5% 85%;
-    --input: 240 5% 85%;
+    --border: 214 32% 87%;
+    --input: 214 32% 87%;
     --ring: 221 83% 53%;
-    --radius: 0.125rem;
-    --canvas: 240 10% 95%;
-    --canvas-grid: 214 20% 88%;
-    --canvas-grid-major: 214 18% 80%;
+    --radius: 0.25rem;
+    --canvas: 220 25% 97%;
+    --canvas-grid: 220 25% 88%;
+    --canvas-grid-major: 220 20% 80%;
   }
 
   .dark {
-    --background: 0 0% 8%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 199 92% 60%;
-    --primary-foreground: 0 0% 8%;
-    --secondary: 0 0% 16%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 16%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 0 0% 20%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 25%;
-    --input: 0 0% 25%;
-    --ring: 199 92% 60%;
-    --canvas: 0 0% 4%;
-    --canvas-grid: 0 0% 15%;
-    --canvas-grid-major: 0 0% 22%;
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+    --card: 224 71% 7%;
+    --card-foreground: 213 31% 91%;
+    --popover: 224 71% 7%;
+    --popover-foreground: 213 31% 91%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 224 71% 4%;
+    --secondary: 215 28% 17%;
+    --secondary-foreground: 213 31% 91%;
+    --muted: 215 28% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 215 28% 17%;
+    --accent-foreground: 213 31% 91%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 213 31% 91%;
+    --border: 215 28% 17%;
+    --input: 215 28% 17%;
+    --ring: 217 91% 60%;
+    --canvas: 224 71% 4%;
+    --canvas-grid: 215 28% 14%;
+    --canvas-grid-major: 215 28% 22%;
   }
 
   /* High-contrast display mode (FE-PREFS-005 / NFR-A11Y-001): stronger borders

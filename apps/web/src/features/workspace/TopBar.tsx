@@ -120,16 +120,16 @@ export function TopBar({
   } = useTopBarState();
 
   return (
-    <header className={`${WORKSPACE_STYLES.topbar} flex h-12 shrink-0 items-center gap-2 border-b-0 px-3`}>
+    <header className="flex h-12 shrink-0 items-center gap-2 border border-slate-800 bg-[#0f172a] px-3.5 text-xs text-slate-100 backdrop-blur-2xl rounded-xl shadow-xl font-sans select-none">
       <Link
         to="/"
-        className="flex items-center gap-2 rounded-md px-1.5 py-1 text-sm font-semibold hover:bg-accent"
+        className="flex items-center gap-2 rounded-lg px-2 py-1 text-sm font-bold text-white transition-all hover:bg-slate-800 hover:text-cyan-300"
       >
-        <img src="/thoth.svg" alt="" className="h-6 w-6" />
-        <span className="hidden sm:inline">Thoth Blueprint</span>
+        <img src="/thoth.svg" alt="" className="h-6 w-6 filter drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
+        <span className="hidden font-mono tracking-wider font-extrabold sm:inline text-cyan-400">ARTIFACT C3D</span>
       </Link>
 
-      <Separator orientation="vertical" className="mx-1 h-6" />
+      <Separator orientation="vertical" className="mx-1.5 h-6 bg-slate-700/80" />
 
       <div className="flex min-w-0 items-center gap-2">
         <span className="truncate text-sm font-medium text-foreground">

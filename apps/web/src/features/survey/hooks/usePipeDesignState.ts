@@ -18,7 +18,7 @@ export function usePipeDesignState() {
   const hoverElement = useWorkspaceStore((s) => s.hoverElement);
   const select = useWorkspaceStore((s) => s.select);
 
-  const networks = site?.networks ?? [];
+  const networks = React.useMemo(() => site?.networks ?? [], [site?.networks]);
   const [selectedNetId, setSelectedNetId] = React.useState<string | null>(null);
 
   const terrain = React.useMemo(

@@ -24,6 +24,9 @@ import { FindPanel } from "@/features/find/FindPanel";
 import { CommandLine } from "@/features/command/CommandLine";
 import { StatusBar } from "./StatusBar";
 import { ViewportControls } from "./ViewportControls";
+import { ArtifactRibbonBar } from "./ArtifactRibbonBar";
+import { ViewCube } from "./ViewCube";
+import { ModelLayoutTabs } from "./ModelLayoutTabs";
 import { useWorkspaceLayoutState } from "./hooks/useWorkspaceLayoutState";
 import { useUiStore } from "@/store/uiStore";
 
@@ -288,38 +291,51 @@ export function Workspace() {
 
   return (
     <TooltipProvider>
-      <div className={WORKSPACE_STYLES.container}>
-        {/* Edge-to-edge canvas */}
-        <main className="absolute inset-0 z-0">
-          <CanvasArea />
-          <FindPanel />
-        </main>
-
-        {/* Floating TopBar */}
-        <div className="pointer-events-none absolute top-4 right-4 left-4 z-10">
-          <div className="pointer-events-auto overflow-hidden rounded-xl glass-panel shadow-sm">
-            <TopBar
-              project={project}
-              saving={saving}
-              onSave={() => void save()}
-              onOpenCheckpoints={() => setCheckpointsOpen(true)}
-            />
+      <div className={WORKSPACE_STYLES.container + " bg-slate-100 dark:bg-[#121318]"}>
+        {/* Top Header / Ribbon Bar */}
+        {workspaceLayout === "standard" ? (
+          <div className="pointer-events-none absolute top-4 right-4 left-4 z-20">
+            <div className="pointer-events-auto overflow-hidden rounded-xl glass-panel shadow-sm">
+              <TopBar
+                project={project}
+                saving={saving}
+                onSave={() => void save()}
+                onOpenCheckpoints={() => setCheckpointsOpen(true)}
+              />
+            </div>
           </div>
-        </div>
-
-        {/* Floating Toolbar */}
-        <div className="pointer-events-none absolute top-20 bottom-4 left-4 z-10 flex">
-          <div className="pointer-events-auto flex overflow-hidden rounded glass-panel p-1 shadow-lg">
-            <Toolbar />
+        ) : (
+          <div className="z-20 w-full shrink-0">
+            <ArtifactRibbonBar />
           </div>
-        </div>
+        )}
 
-        <ViewportControls />
-        <CommandLine />
-        <StatusBar />
+        {/* Central Viewport & Canvas Area */}
+        <div className="relative flex flex-1 overflow-hidden">
+          {/* Main CAD Viewport Canvas */}
+          <main className="absolute inset-0 z-0">
+            <CanvasArea />
+            <FindPanel />
+          </main>
 
-        {/* Floating Sidebar (Properties / Layers / etc.) */}
-        <div className="pointer-events-none absolute top-20 right-4 bottom-4 z-10 flex">
+          {/* Viewport Top Left Controls & ViewCube */}
+          <ViewportControls />
+          <ViewCube />
+
+          {/* Left Floating Toolbar (when using classic tools) */}
+          <div className="pointer-events-none absolute top-12 bottom-12 left-4 z-10 flex">
+            <div className="pointer-events-auto flex overflow-hidden rounded-xl border border-slate-300 dark:border-slate-700/80 bg-white/95 dark:bg-[#1a1b22]/90 p-1 shadow-xl backdrop-blur-md">
+              <Toolbar />
+            </div>
+          </div>
+
+          {/* Bottom Left Model / Layout Space Switcher Tabs */}
+          <div className="absolute bottom-16 left-4 z-20">
+            <ModelLayoutTabs />
+          </div>
+
+          {/* Floating Sidebar (Properties / Layers / Prospector) */}
+          <div className="pointer-events-none absolute top-4 right-4 bottom-12 z-10 flex">
           {/* Resize handle */}
           <div
             className="group pointer-events-auto flex w-3 shrink-0 cursor-col-resize items-center justify-center"
@@ -412,6 +428,11 @@ export function Workspace() {
             </Tabs>
           </aside>
         </div>
+      </div>
+
+        {/* Docked AutoCAD Command Prompt & Engineering Status Bar */}
+        <CommandLine />
+        <StatusBar />
         {checkpointsOpen && (
           <React.Suspense fallback={null}>
             <CheckpointsDialog

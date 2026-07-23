@@ -51,8 +51,8 @@ export function Toolbar() {
                       className={cn(
                         "group relative flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-200",
                         active
-                          ? "scale-105 bg-gradient-to-br from-primary to-blue-600 text-white shadow-md shadow-primary/20"
-                          : "text-muted-foreground hover:scale-110 hover:bg-black/10 hover:text-foreground active:scale-95 dark:hover:bg-white/10",
+                          ? "scale-105 bg-gradient-to-br from-cyan-400 to-blue-600 text-black shadow-[0_0_15px_rgba(6,182,212,0.5)] font-bold"
+                          : "text-slate-400 hover:scale-110 hover:bg-slate-800 hover:text-white active:scale-95",
                       )}
                     >
                       <Icon className="h-[18px] w-[18px]" />
