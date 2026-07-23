@@ -250,7 +250,10 @@ mod tests {
         (0..=samples)
             .map(|i| {
                 let angle = sweep_rad * (i as f64) / (samples as f64);
-                Point::new(center.x + radius * angle.cos(), center.y + radius * angle.sin())
+                Point::new(
+                    center.x + radius * angle.cos(),
+                    center.y + radius * angle.sin(),
+                )
             })
             .collect()
     }
@@ -341,7 +344,10 @@ mod tests {
         let vehicle = DesignVehicle::passenger_car();
         let path = circular_arc(Point::new(0.0, 0.0), 80.0, PI, 200);
         let result = simulate_swept_path(&vehicle, &path).unwrap();
-        assert_eq!(result.envelope.len(), result.outer_boundary.len() + result.inner_boundary.len());
+        assert_eq!(
+            result.envelope.len(),
+            result.outer_boundary.len() + result.inner_boundary.len()
+        );
         assert!(thoth_spatial::is_valid_polygon(&result.envelope));
     }
 }

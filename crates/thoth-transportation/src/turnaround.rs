@@ -72,14 +72,12 @@ pub fn generate_turnaround(
                     value: circular_segments as f64,
                 });
             }
-            let center = Point::new(
-                terminus.x + dir.x * radius,
-                terminus.y + dir.y * radius,
-            );
+            let center = Point::new(terminus.x + dir.x * radius, terminus.y + dir.y * radius);
             let start_angle = bearing_to_math_angle(inbound_bearing_deg) + std::f64::consts::PI;
             let boundary = (0..circular_segments)
                 .map(|i| {
-                    let a = start_angle + 2.0 * std::f64::consts::PI * (i as f64) / (circular_segments as f64);
+                    let a = start_angle
+                        + 2.0 * std::f64::consts::PI * (i as f64) / (circular_segments as f64);
                     Point::new(center.x + radius * a.cos(), center.y + radius * a.sin())
                 })
                 .collect();
@@ -152,8 +150,9 @@ mod tests {
     #[test]
     fn circular_turnaround_is_a_valid_polygon_of_the_requested_radius() {
         let terminus = Point::new(0.0, 0.0);
-        let boundary = generate_turnaround(terminus, 0.0, TurnaroundKind::Circular { radius: 45.0 }, 32)
-            .unwrap();
+        let boundary =
+            generate_turnaround(terminus, 0.0, TurnaroundKind::Circular { radius: 45.0 }, 32)
+                .unwrap();
         assert_eq!(boundary.len(), 32);
         assert!(thoth_spatial::is_valid_polygon(&boundary));
         // Every boundary point should be exactly `radius` from its center.
@@ -193,7 +192,12 @@ mod tests {
     #[test]
     fn rejects_non_positive_radius() {
         assert!(matches!(
-            generate_turnaround(Point::ZERO, 0.0, TurnaroundKind::Circular { radius: 0.0 }, 16),
+            generate_turnaround(
+                Point::ZERO,
+                0.0,
+                TurnaroundKind::Circular { radius: 0.0 },
+                16
+            ),
             Err(TransportationError::NonPositiveValue { .. })
         ));
     }
@@ -201,7 +205,12 @@ mod tests {
     #[test]
     fn rejects_too_few_circular_segments() {
         assert!(matches!(
-            generate_turnaround(Point::ZERO, 0.0, TurnaroundKind::Circular { radius: 40.0 }, 2),
+            generate_turnaround(
+                Point::ZERO,
+                0.0,
+                TurnaroundKind::Circular { radius: 40.0 },
+                2
+            ),
             Err(TransportationError::NonPositiveValue { .. })
         ));
     }

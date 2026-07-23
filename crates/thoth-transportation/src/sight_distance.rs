@@ -343,17 +343,23 @@ mod tests {
         let half_full = l / (2.0 * radius);
         let expected = radius * (1.0 - half_full.cos()) + (s - l) / 2.0 * half_full.sin();
         assert_relative_eq!(m, expected, epsilon = 1e-9);
-        // And it must exceed the (incorrect) S<=L formula's value, since a
-        // sight line extending onto the tangents needs more clearance.
+        // And it must be less than the (incorrect) S<=L formula's value:
+        // misapplying that formula assumes the entire sight distance curves
+        // through the obstruction, whereas here part of it runs along the
+        // straight tangents (which need no curvature-driven offset at all),
+        // so the true required offset is smaller.
         let wrong_branch = radius * (1.0 - (s / (2.0 * radius)).cos());
-        assert!(m > wrong_branch);
+        assert!(m < wrong_branch);
     }
 
     #[test]
     fn horizontal_offset_rejects_non_positive_inputs() {
         assert!(matches!(
             horizontal_sight_line_offset(0.0, 100.0, 100.0),
-            Err(TransportationError::NonPositiveValue { field: "radius", .. })
+            Err(TransportationError::NonPositiveValue {
+                field: "radius",
+                ..
+            })
         ));
         assert!(matches!(
             horizontal_sight_line_offset(100.0, -1.0, 100.0),

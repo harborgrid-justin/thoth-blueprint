@@ -116,7 +116,9 @@ pub fn warrant1_condition_a(
 
     let hours_satisfied = hours
         .iter()
-        .filter(|h| h.major_street_total_vph >= major_min && h.minor_street_high_approach_vph >= minor_min)
+        .filter(|h| {
+            h.major_street_total_vph >= major_min && h.minor_street_high_approach_vph >= minor_min
+        })
         .count();
     let is_satisfied = hours_satisfied >= 8;
     Ok(WarrantCheck {
@@ -154,7 +156,9 @@ pub fn warrant1_condition_b(
 
     let hours_satisfied = hours
         .iter()
-        .filter(|h| h.major_street_total_vph >= major_min && h.minor_street_high_approach_vph >= minor_min)
+        .filter(|h| {
+            h.major_street_total_vph >= major_min && h.minor_street_high_approach_vph >= minor_min
+        })
         .count();
     let is_satisfied = hours_satisfied >= 8;
     Ok(WarrantCheck {
@@ -231,7 +235,8 @@ mod tests {
         // These volumes clear the 1x1 thresholds but not the 2+x2+ thresholds.
         let one_lane = warrant1_condition_a(&hours, LaneConfig::One, LaneConfig::One, 1.0).unwrap();
         let two_lane =
-            warrant1_condition_a(&hours, LaneConfig::TwoOrMore, LaneConfig::TwoOrMore, 1.0).unwrap();
+            warrant1_condition_a(&hours, LaneConfig::TwoOrMore, LaneConfig::TwoOrMore, 1.0)
+                .unwrap();
         assert!(one_lane.is_satisfied);
         assert!(!two_lane.is_satisfied);
     }

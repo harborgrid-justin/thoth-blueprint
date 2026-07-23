@@ -162,6 +162,11 @@ pub enum HydrologyError {
          curve's maximum of {max}; the pond would overtop the surface this curve describes"
     )]
     RoutingExceedsCurveRange { value: f64, max: f64 },
+
+    /// A pipe/culvert discharge must be positive to compute a hydraulic
+    /// property (velocity, critical depth, headwater) from it.
+    #[error("discharge must be positive, got {q} cfs")]
+    NonPositiveDischarge { q: f64 },
 }
 
 /// Convenience alias used throughout this crate.

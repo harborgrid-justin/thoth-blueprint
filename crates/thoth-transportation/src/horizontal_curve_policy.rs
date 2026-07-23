@@ -105,8 +105,8 @@ mod tests {
                 "Test Rd",
                 vec![
                     AlignmentPi::simple(Point::new(0.0, 0.0)),
-                    AlignmentPi::curved(Point::new(500.0, 200.0), radius),
-                    AlignmentPi::simple(Point::new(1000.0, 0.0)),
+                    AlignmentPi::curved(Point::new(5000.0, 2000.0), radius),
+                    AlignmentPi::simple(Point::new(10000.0, 0.0)),
                 ],
                 0.0,
             )
@@ -135,10 +135,11 @@ mod tests {
     fn honors_station_keyed_design_speed_zones() {
         let mut a = alignment_with_curve(300.0, 55.0);
         // Drop the design speed to 25 mph before the curve's station.
-        a.design_speeds.push(thoth_civil::alignment::DesignSpeedZone {
-            station: 0.0,
-            speed: 25.0,
-        });
+        a.design_speeds
+            .push(thoth_civil::alignment::DesignSpeedZone {
+                station: 0.0,
+                speed: 25.0,
+            });
         let r = resolve_alignment(&a).unwrap();
         let checks = check_minimum_curve_radius(&a, &r, 0.06).unwrap();
         assert_eq!(checks[0].design_speed_mph, 25.0);

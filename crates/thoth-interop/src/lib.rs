@@ -5,6 +5,7 @@ pub mod landxml;
 pub mod network_adjustment;
 pub mod parcel_fabric;
 pub mod pointcloud_classify;
+pub mod rinex;
 pub mod shapefile;
 pub mod staking;
 mod xml_tree;

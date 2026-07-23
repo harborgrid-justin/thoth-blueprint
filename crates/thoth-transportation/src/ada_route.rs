@@ -65,9 +65,13 @@ pub struct RunningSlopeCheck {
 ///
 /// # Errors
 /// [`TransportationError::DegeneratePath`] if `samples.len() < 2`.
-pub fn check_running_slope(samples: &[RouteSample]) -> TransportationResult<Vec<RunningSlopeCheck>> {
+pub fn check_running_slope(
+    samples: &[RouteSample],
+) -> TransportationResult<Vec<RunningSlopeCheck>> {
     if samples.len() < 2 {
-        return Err(TransportationError::DegeneratePath { count: samples.len() });
+        return Err(TransportationError::DegeneratePath {
+            count: samples.len(),
+        });
     }
     Ok(samples
         .windows(2)
@@ -163,9 +167,13 @@ pub struct LandingSpacingCheck {
 ///
 /// # Errors
 /// [`TransportationError::DegeneratePath`] if `samples.len() < 2`.
-pub fn check_landing_spacing(samples: &[RouteSample]) -> TransportationResult<Vec<LandingSpacingCheck>> {
+pub fn check_landing_spacing(
+    samples: &[RouteSample],
+) -> TransportationResult<Vec<LandingSpacingCheck>> {
     if samples.len() < 2 {
-        return Err(TransportationError::DegeneratePath { count: samples.len() });
+        return Err(TransportationError::DegeneratePath {
+            count: samples.len(),
+        });
     }
     let mut results = Vec::new();
     let mut run_start_idx = 0usize;
@@ -216,7 +224,11 @@ mod tests {
 
     #[test]
     fn flat_walk_is_compliant() {
-        let samples = vec![sample(0.0, 100.0), sample(50.0, 100.0), sample(100.0, 100.0)];
+        let samples = vec![
+            sample(0.0, 100.0),
+            sample(50.0, 100.0),
+            sample(100.0, 100.0),
+        ];
         let checks = check_running_slope(&samples).unwrap();
         assert!(checks.iter().all(|c| !c.is_violation && !c.is_ramp));
     }
@@ -247,9 +259,24 @@ mod tests {
     #[test]
     fn cross_slope_flags_excess_and_skips_unmeasured_stations() {
         let samples = vec![
-            RouteSample { station: 0.0, elevation: 0.0, cross_slope: Some(0.01), is_landing: false },
-            RouteSample { station: 10.0, elevation: 0.0, cross_slope: Some(0.03), is_landing: false },
-            RouteSample { station: 20.0, elevation: 0.0, cross_slope: None, is_landing: false },
+            RouteSample {
+                station: 0.0,
+                elevation: 0.0,
+                cross_slope: Some(0.01),
+                is_landing: false,
+            },
+            RouteSample {
+                station: 10.0,
+                elevation: 0.0,
+                cross_slope: Some(0.03),
+                is_landing: false,
+            },
+            RouteSample {
+                station: 20.0,
+                elevation: 0.0,
+                cross_slope: None,
+                is_landing: false,
+            },
         ];
         let checks = check_cross_slope(&samples);
         assert_eq!(checks.len(), 2);
@@ -270,7 +297,12 @@ mod tests {
     fn landing_spacing_passes_when_a_landing_resets_the_rise() {
         let samples = vec![
             sample(0.0, 100.0),
-            RouteSample { station: 20.0, elevation: 101.6, cross_slope: None, is_landing: true }, // 1.6ft = 19.2in
+            RouteSample {
+                station: 20.0,
+                elevation: 101.6,
+                cross_slope: None,
+                is_landing: true,
+            }, // 1.6ft = 19.2in
             sample(40.0, 103.2), // another 1.6 ft
         ];
         let checks = check_landing_spacing(&samples).unwrap();

@@ -18,6 +18,7 @@ use crate::error::{TransportationError, TransportationResult};
 /// variant is not used here; instead a well-known Beasley-Springer-Moro-
 /// style rational approximation accurate to ~1e-4 is used, adequate for
 /// pavement design's coarse reliability inputs of 50–99.99%).
+#[allow(clippy::excessive_precision)]
 fn inverse_normal_cdf(p: f64) -> f64 {
     // Peter Acklam's algorithm.
     const A: [f64; 6] = [
@@ -152,7 +153,10 @@ pub fn flexible_pavement_structural_number(
         ("w18", w18),
         ("s0", s0),
         ("delta_psi", delta_psi),
-        ("subgrade_resilient_modulus_psi", subgrade_resilient_modulus_psi),
+        (
+            "subgrade_resilient_modulus_psi",
+            subgrade_resilient_modulus_psi,
+        ),
     ] {
         if value <= 0.0 {
             return Err(TransportationError::NonPositiveValue { field, value });
@@ -183,6 +187,7 @@ pub fn flexible_pavement_structural_number(
 /// [`TransportationError::NonPositiveValue`] if `a2` or `m2` is not
 /// positive (division by zero/negative would follow), or if the resulting
 /// `D2` would be negative (the chosen `d1`/`d3` already exceed `sn`).
+#[allow(clippy::too_many_arguments)]
 pub fn solve_base_course_thickness(
     sn: f64,
     a1: f64,
@@ -194,10 +199,16 @@ pub fn solve_base_course_thickness(
     m3: f64,
 ) -> TransportationResult<f64> {
     if a2 <= 0.0 {
-        return Err(TransportationError::NonPositiveValue { field: "a2", value: a2 });
+        return Err(TransportationError::NonPositiveValue {
+            field: "a2",
+            value: a2,
+        });
     }
     if m2 <= 0.0 {
-        return Err(TransportationError::NonPositiveValue { field: "m2", value: m2 });
+        return Err(TransportationError::NonPositiveValue {
+            field: "m2",
+            value: m2,
+        });
     }
     let remaining = sn - a1 * d1 - a3 * d3 * m3;
     if remaining < 0.0 {
@@ -256,7 +267,10 @@ pub fn rigid_pavement_slab_thickness(
         ("load_transfer_coefficient", load_transfer_coefficient),
         ("drainage_coefficient", drainage_coefficient),
         ("elastic_modulus_psi", elastic_modulus_psi),
-        ("modulus_of_subgrade_reaction_pci", modulus_of_subgrade_reaction_pci),
+        (
+            "modulus_of_subgrade_reaction_pci",
+            modulus_of_subgrade_reaction_pci,
+        ),
     ] {
         if value <= 0.0 {
             return Err(TransportationError::NonPositiveValue { field, value });
@@ -275,7 +289,12 @@ pub fn rigid_pavement_slab_thickness(
             + (4.22 - 0.32 * pt) * strength_ratio.log10()
             - log_w18
     };
-    bisect_increasing(f, 3.0, 20.0, "AASHTO 1993 rigid pavement thickness bisection")
+    bisect_increasing(
+        f,
+        3.0,
+        20.0,
+        "AASHTO 1993 rigid pavement thickness bisection",
+    )
 }
 
 #[cfg(test)]
@@ -288,21 +307,25 @@ mod tests {
         // 5,000,000 ESALs, 90% reliability, S0=0.45, ΔPSI=1.9, Mr=5,000 psi
         // is a fairly typical arterial design case; published nomograph
         // results for similar inputs land around SN ~ 4.5-5.5.
-        let sn = flexible_pavement_structural_number(5_000_000.0, 0.90, 0.45, 1.9, 5_000.0).unwrap();
+        let sn =
+            flexible_pavement_structural_number(5_000_000.0, 0.90, 0.45, 1.9, 5_000.0).unwrap();
         assert!(sn > 3.5 && sn < 6.5, "SN={sn} out of expected range");
     }
 
     #[test]
     fn flexible_sn_increases_with_design_traffic() {
         let low = flexible_pavement_structural_number(100_000.0, 0.90, 0.45, 1.9, 5_000.0).unwrap();
-        let high = flexible_pavement_structural_number(10_000_000.0, 0.90, 0.45, 1.9, 5_000.0).unwrap();
+        let high =
+            flexible_pavement_structural_number(10_000_000.0, 0.90, 0.45, 1.9, 5_000.0).unwrap();
         assert!(high > low);
     }
 
     #[test]
     fn flexible_sn_increases_with_reliability() {
-        let low_r = flexible_pavement_structural_number(2_000_000.0, 0.50, 0.45, 1.9, 5_000.0).unwrap();
-        let high_r = flexible_pavement_structural_number(2_000_000.0, 0.99, 0.45, 1.9, 5_000.0).unwrap();
+        let low_r =
+            flexible_pavement_structural_number(2_000_000.0, 0.50, 0.45, 1.9, 5_000.0).unwrap();
+        let high_r =
+            flexible_pavement_structural_number(2_000_000.0, 0.99, 0.45, 1.9, 5_000.0).unwrap();
         assert!(high_r > low_r);
     }
 
@@ -356,11 +379,29 @@ mod tests {
     #[test]
     fn rigid_slab_thickness_increases_with_design_traffic() {
         let low = rigid_pavement_slab_thickness(
-            500_000.0, 0.90, 0.35, 1.9, 2.5, 650.0, 3.2, 1.0, 4_000_000.0, 200.0,
+            500_000.0,
+            0.90,
+            0.35,
+            1.9,
+            2.5,
+            650.0,
+            3.2,
+            1.0,
+            4_000_000.0,
+            200.0,
         )
         .unwrap();
         let high = rigid_pavement_slab_thickness(
-            20_000_000.0, 0.90, 0.35, 1.9, 2.5, 650.0, 3.2, 1.0, 4_000_000.0, 200.0,
+            20_000_000.0,
+            0.90,
+            0.35,
+            1.9,
+            2.5,
+            650.0,
+            3.2,
+            1.0,
+            4_000_000.0,
+            200.0,
         )
         .unwrap();
         assert!(high > low);

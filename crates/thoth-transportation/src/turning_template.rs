@@ -58,7 +58,9 @@ pub fn compute_turning_template(
         });
     }
     let link_radii = steady_state_offtracking_radii(&vehicle.link_lengths, path_radius)?;
-    let trailing_radius = *link_radii.last().expect("at least the lead radius is always present");
+    let trailing_radius = *link_radii
+        .last()
+        .expect("at least the lead radius is always present");
     let offtracking = path_radius - trailing_radius;
     Ok(TurningTemplate {
         vehicle_name: vehicle.name.to_string(),
@@ -127,7 +129,10 @@ pub fn generate_turning_template_geometry(
         (0..=samples)
             .map(|i| {
                 let angle = start_angle_rad + sweep_rad * (i as f64) / (samples as f64);
-                Point::new(center.x + radius * angle.cos(), center.y + radius * angle.sin())
+                Point::new(
+                    center.x + radius * angle.cos(),
+                    center.y + radius * angle.sin(),
+                )
             })
             .collect()
     };
@@ -149,7 +154,11 @@ mod tests {
         let v = DesignVehicle::su30();
         let t = compute_turning_template(&v, 60.0).unwrap();
         let expected_trailing = (60f64 * 60.0 - 20.0 * 20.0).sqrt();
-        assert_relative_eq!(*t.link_radii.last().unwrap(), expected_trailing, epsilon = 1e-9);
+        assert_relative_eq!(
+            *t.link_radii.last().unwrap(),
+            expected_trailing,
+            epsilon = 1e-9
+        );
         assert_relative_eq!(t.offtracking, 60.0 - expected_trailing, epsilon = 1e-9);
     }
 
