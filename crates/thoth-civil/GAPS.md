@@ -2,44 +2,49 @@
 
 `thoth-civil` depends only on `thoth-spatial` (per the migration brief — it
 must not depend on `thoth-planning`, `thoth-survey`, or `thoth-drawing`, all
-of which are other agents' crates). The TS source under
-`packages/domain/src/civil/**` does not respect that boundary: several
-modules import types and even runtime data from `packages/domain/src/survey`,
-`packages/domain/src/spatial/primitives` (the planning element hierarchy),
-`packages/domain/src/drawing`, and `packages/domain/src/parts/registry`. None
-of these are gaps in `thoth-spatial` itself — `thoth-spatial` was read in
-full and has everything this crate needs of it (`Point`, `Polygon`, `Bounds`,
-`SpatialContext`, `Unit`, the pure geometry ops). The gaps below are
-*cross-domain* dependencies in the TS source that don't fit the crate
-boundaries this migration was given, plus one genuine design decision on
-error-vs-`Option` semantics. Nothing here was worked around by editing
-`thoth-spatial`.
+of which are other agents' crates, in the dependency order `thoth-spatial ->
+thoth-civil -> thoth-survey -> thoth-planning -> thoth-drawing`). The TS
+source under `packages/domain/src/civil/**` does not respect that boundary:
+several modules import types and even runtime data from
+`packages/domain/src/survey`, `packages/domain/src/spatial/primitives` (the
+planning element hierarchy), `packages/domain/src/drawing`, and
+`packages/domain/src/parts/registry`. None of these are gaps in
+`thoth-spatial` itself — `thoth-spatial` was read in full and has everything
+this crate needs of it (`Point`, `Polygon`, `Bounds`, `SpatialContext`,
+`Unit`, the pure geometry ops). The gaps below are *cross-domain*
+dependencies in the TS source that don't fit the crate boundaries this
+migration was given, plus one genuine design decision on error-vs-`Option`
+semantics. Nothing here was worked around by editing `thoth-spatial`.
 
-## 1. `Point2D`/`LineSegment` from `packages/domain/src/survey/transparentCommands`
+## 1. `Point2D`/`LineSegment` from `packages/domain/src/survey/transparentCommands` — RESOLVED
 
-Structurally identical to `thoth_spatial::Point`/`Polyline` (a plain
-`{x, y}` pair and a 2-point segment), but imported from the **survey**
-domain, which is `thoth-survey`'s crate, not `thoth-civil`'s. TS files that
-import them:
+**Status as of this round: closed.** `thoth-survey`'s own `Point2D` turned
+out to be `pub type Point2D = thoth_spatial::Point` — a type alias, not a
+distinct type (see `crates/thoth-survey/src/transparent_commands.rs`) — and
+`LineSegment` is a trivial `{start, end}` two-point struct. Neither actually
+requires depending on `thoth-survey`: this crate now defines its own
+structurally identical `LineSegment` in `src/common/line_segment.rs` (see
+that file's doc comment) and uses `thoth_spatial::Point` directly wherever
+the TS source used `Point2D`. All ten files previously blocked on this (see
+below) are now ported.
 
-- `siteAndParcels.ts`
-- `viewFramesAndMatchLines.ts`
-- `sampleLinesAndSections.ts`
-- `featureLinesAndGrading.ts`
-- `gisAnd3DVisualization.ts`
-- `labelsAndUDP.ts`
-- `scriptsAnd3DObjects.ts`
-
-These seven files (plus the two that only depend on the survey-tainted ones —
-`parcelTables.ts` depends on `labelsAndUDP`/`siteAndParcels`,
-`layoutTemplates.ts` and `sheetsAndDataRefs.ts` depend on
-`viewFramesAndMatchLines`) are marked `not-yet-ported` in `STATUS.md` for
-this reason. Porting them faithfully would mean either (a) depending on
-`thoth-survey` (out of scope — a different agent owns that crate and it may
-not even exist yet in this pass), or (b) silently substituting
-`thoth_spatial::Point` for `Point2D`, which is a reasonable **future** move
-but is a call for whoever integrates this crate with `thoth-survey`, not one
-to make unilaterally mid-migration.
+Originally documented gap (kept for history): TS files that imported
+`Point2D`/`LineSegment` from the survey domain —
+`siteAndParcels.ts`, `viewFramesAndMatchLines.ts`,
+`sampleLinesAndSections.ts`, `featureLinesAndGrading.ts`,
+`gisAnd3DVisualization.ts`, `labelsAndUDP.ts`, `scriptsAnd3DObjects.ts` —
+plus the two that only depended on those —
+`parcelTables.ts` (depends on `labelsAndUDP`/`siteAndParcels`) and
+`layoutTemplates.ts`/`sheetsAndDataRefs.ts` (depend on
+`viewFramesAndMatchLines`) — were marked `not-yet-ported`. Re-reading each
+file's actual body (not just its import list) for this round confirmed that,
+once the `Point2D`/`LineSegment` blocker is lifted, **none of these ten
+files touch `thoth-planning` or `thoth-drawing` at all** — every other
+import is to a sibling module within `packages/domain/src/civil/**` itself,
+which is exactly this crate's territory. So all ten port fully, with one
+narrow exception noted in §6 below (an arbitrary-script-execution feature in
+`scriptsAnd3DObjects.ts` that has no Rust equivalent for reasons unrelated to
+crate boundaries).
 
 ## 2. Planning element hierarchy (`Site`, `GradeRegion`, `SpotElevationPoint`) from `packages/domain/src/spatial/primitives`/`types`
 
@@ -113,3 +118,22 @@ reasoning at each call site. This is a strict improvement in fidelity to
 *intent*, not a loss of behavioral parity: every TS test case's actual
 inputs/outputs are preserved, only the "why did I get nothing back" signal is
 sharpened.
+
+## 6. `scriptsAnd3DObjects.ts`'s `executeImportScript` — a runtime gap, not a crate-boundary one
+
+`executeImportScript` evaluates an arbitrary caller-supplied JavaScript
+string via `new Function(...)` to compute a data-mapping result, falling
+back to a fixed default mapping if the script throws. This is **not** a
+cross-crate dependency gap like the others in this document — no sibling
+Rust crate owns "arbitrary script execution" for this crate to depend on.
+Rust simply has no embedded JS engine, and embedding one (e.g. `boa`,
+`deno_core`) purely to run short id/description-mapping snippets would be a
+disproportionate addition to a systems-engineering domain crate, well
+outside this port's scope. `crate::scripts_and_3d_objects` ports the actual
+mapping logic every current call site's default script computes
+(`default_import_script_mapping`) and exposes `execute_import_script` taking
+a native Rust closure in place of an interpreted string — the idiomatic Rust
+equivalent of "caller-supplied mapping rule" without an interpreter. Every
+behavior this domain's tests exercise (the default mapping) is fully
+covered; only literally-interpreted, caller-authored-at-runtime JS text has
+no equivalent.

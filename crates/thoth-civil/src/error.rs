@@ -80,6 +80,64 @@ pub enum CivilError {
     /// impossible (e.g. a curve tangent longer than the tangent it sits on).
     #[error("impossible curve geometry: {reason}")]
     ImpossibleGeometry { reason: String },
+
+    /// A parcel id was looked up within a [`crate::site_and_parcels::SiteContainer`]
+    /// that has no parcel with that id.
+    #[error("parcel '{parcel_id}' not found")]
+    UnknownParcel { parcel_id: String },
+
+    /// A station range needs its start strictly before its end (view frame
+    /// groups, inserted view frames).
+    #[error(
+        "invalid station range: start station ({start}) must be less than end station ({end})"
+    )]
+    InvalidStationRange { start: f64, end: f64 },
+
+    /// A [`crate::view_frames_and_match_lines::ViewportDimensions`]'s width,
+    /// height, and scale factor must all be positive.
+    #[error("invalid viewport dimensions: width ({width_ft}), height ({height_ft}), and scale factor ({scale_factor}) must all be positive")]
+    InvalidViewportDimensions {
+        width_ft: f64,
+        height_ft: f64,
+        scale_factor: f64,
+    },
+
+    /// REQ-090: two feature-line vertices share an XY coordinate (within
+    /// tolerance) but disagree on elevation — the single-elevation topology
+    /// rule for a [`crate::feature_lines_and_grading::FeatureLine`] site.
+    #[error("single-elevation topology violation at ({x}, {y}): existing elevation {existing_z} conflicts with new elevation {new_z}")]
+    SingleElevationViolation {
+        x: f64,
+        y: f64,
+        existing_z: f64,
+        new_z: f64,
+    },
+
+    /// A [`crate::feature_lines_and_grading::FeatureLine`] needs more than 2
+    /// vertices to have one removed (it must stay a real line).
+    #[error("feature line must have more than 2 vertices to delete one, got {count}")]
+    DegenerateFeatureLine { count: usize },
+
+    /// A feature-line vertex index falls outside its point list.
+    #[error("vertex index {index} is out of bounds for a feature line with {count} vertices")]
+    VertexIndexOutOfBounds { index: usize, count: usize },
+
+    /// A workflow precondition wasn't met: a business-rule gate (not a
+    /// numeric or geometric one) blocked the requested operation — e.g.
+    /// generating section sheets without a section-type layout viewport, or
+    /// editing a locked static table.
+    #[error("prerequisite violation: {reason}")]
+    PrerequisiteViolation { reason: String },
+
+    /// REQ-161: a Cloud Model Builder area exceeds its maximum supported
+    /// footprint.
+    #[error("area ({area_sq_km} sq km) exceeds the maximum supported limit of {max_sq_km} sq km")]
+    AreaLimitExceeded { area_sq_km: f64, max_sq_km: f64 },
+
+    /// REQ-099/REQ-163: an aerial-imagery or raster tile level falls outside
+    /// the supported zoom range (1 to 19).
+    #[error("tile level {tile_level} is out of the supported range (1 to 19)")]
+    TileLevelOutOfRange { tile_level: i32 },
 }
 
 /// Convenience alias used throughout this crate.
