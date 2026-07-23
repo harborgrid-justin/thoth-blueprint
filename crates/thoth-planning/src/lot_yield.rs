@@ -313,7 +313,7 @@ mod tests {
     #[test]
     fn rejects_a_degenerate_boundary() {
         let result = optimize_lot_yield(
-            &[Point::ZERO, Point::new(1.0, 1.0)],
+            &vec![Point::ZERO, Point::new(1.0, 1.0)],
             &constraints(),
             2,
             2,

@@ -138,7 +138,7 @@ pub fn polygon_intersection_area(subject: &Polygon, clip_convex_poly: &Polygon) 
 /// easement encroachment, checked against the zone's FAR and coverage caps.
 pub fn check_building_envelope_fit(inputs: &EnvelopeFitInputs) -> EnvelopeFitReport {
     let envelope = buildable_envelope(inputs.lot);
-    let gross_buildable_area = envelope.as_ref().map(polygon_area).unwrap_or(0.0);
+    let gross_buildable_area = envelope.as_deref().map(polygon_area).unwrap_or(0.0);
 
     let mut findings = Vec::new();
 

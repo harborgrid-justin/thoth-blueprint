@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 use thoth_spatial::AreaUnit;
 
 use crate::elements::{OpenSpace, PlanElement, Site};
-use crate::metrics::{area_to_square_meters, site_area, square_meters_to};
+use crate::metrics::{area_to_square_meters, site_area};
 
 /// A jurisdiction's open-space/park dedication requirement. Any combination
 /// of the two ratio fields may be set; the effective requirement is the

@@ -236,7 +236,7 @@ mod tests {
     fn rejects_a_degenerate_boundary_and_bad_inputs() {
         assert_eq!(
             generate_road_network(
-                &[Point::ZERO, Point::new(1.0, 1.0)],
+                &vec![Point::ZERO, Point::new(1.0, 1.0)],
                 200.0,
                 None,
                 50.0,

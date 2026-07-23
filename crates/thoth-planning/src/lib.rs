@@ -36,4 +36,21 @@ pub mod renovation;
 pub mod rules;
 pub mod subdivision;
 
+// --- Theme 4 subdivision-design-automation additions -----------------------
+// See `GAP_ANALYSIS_STATUS.md` for the item-by-item mapping, algorithmic
+// notes, and known limitations for each of these.
+pub mod canopy;
+pub mod dedication;
+pub mod envelope_fit;
+pub mod geotech;
+pub mod grading_optimizer;
+pub mod impact_fees;
+pub mod lot_yield;
+pub mod open_space;
+pub mod phasing;
+pub mod plat;
+pub mod road_network;
+pub mod utility_clash;
+pub mod variance;
+
 pub use elements::{new_base, PlanElement, Site};

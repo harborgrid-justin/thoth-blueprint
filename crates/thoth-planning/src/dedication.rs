@@ -14,7 +14,7 @@
 //! sharp switchback — see the function's doc comment for the exact limit.
 
 use thiserror::Error;
-use thoth_spatial::{add, distance, normalize, scale, subtract, Point, Polygon};
+use thoth_spatial::{add, normalize, scale, subtract, Point, Polygon};
 
 use crate::elements::{new_base, Easement, EasementPurpose, RightOfWay};
 
