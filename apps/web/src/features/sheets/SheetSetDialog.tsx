@@ -29,6 +29,7 @@ import { ensureDrawingSet } from "./defaultSet";
 import { buildSheetPrimitives, sheetLayout } from "./builders";
 import { SvgSheet } from "./SvgSheet";
 import { container } from "@/lib/di";
+import { SHEETS_STYLES } from "./styles/sheetsDesignSystem";
 
 /**
  * The multi-sheet CAD drawing-set composer: a sheet navigator, a live vector
@@ -126,7 +127,7 @@ export function SheetSetDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-6xl bg-slate-950 border-slate-800 text-slate-100 animate-dialog-in">
+      <DialogContent className={SHEETS_STYLES.dialogContainer}>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Files className="h-5 w-5 text-primary" /> CAD Drawing Set Composer
@@ -141,7 +142,7 @@ export function SheetSetDialog() {
             <label className="flex items-center gap-1 text-muted-foreground">
               <Layers className="h-3.5 w-3.5" /> Size
               <select
-                className="rounded border border-border bg-background px-2.5 py-1 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                className={SHEETS_STYLES.select}
                 value={sizeOverride}
                 onChange={(e) =>
                   setSizeOverride(e.target.value as SheetSizeId | "")
@@ -158,7 +159,7 @@ export function SheetSetDialog() {
             <label className="flex items-center gap-1 text-muted-foreground">
               Orientation
               <select
-                className="rounded border border-border bg-background px-2.5 py-1 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                className={SHEETS_STYLES.select}
                 value={orientOverride}
                 onChange={(e) =>
                   setOrientOverride(e.target.value as Orientation | "")
@@ -191,7 +192,7 @@ export function SheetSetDialog() {
 
         <div className="flex gap-3">
           {/* Sheet navigator */}
-          <ScrollArea className="h-[62vh] w-52 shrink-0 rounded-md border border-border">
+          <ScrollArea className={SHEETS_STYLES.sidebar}>
             <ul className="p-1.5">
               {sheets.map((s) => {
                 const active = s.id === selected.id;
@@ -199,7 +200,7 @@ export function SheetSetDialog() {
                   <li key={s.id}>
                     <button
                       onClick={() => setSelectedId(s.id)}
-                      className={`w-full rounded px-2 py-1.5 text-left text-xs transition-colors ${active ? "bg-primary/15 text-primary font-medium" : "text-muted-foreground hover:bg-accent hover:text-foreground"}`}
+                      className={`w-full rounded px-2 py-1.5 text-left text-xs transition-colors ${active ? "bg-primary/15 font-medium text-primary" : "text-muted-foreground hover:bg-accent hover:text-foreground"}`}
                     >
                       <div className="font-mono font-semibold text-foreground">
                         {formatSheetNumber(s.number)}

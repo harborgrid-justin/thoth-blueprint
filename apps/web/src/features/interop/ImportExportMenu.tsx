@@ -244,10 +244,10 @@ export function ImportExportMenu() {
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={importDataShortcut}
-          className="text-primary font-medium"
+          className="font-medium text-primary"
         >
           <Upload className="text-primary" /> Import Data Shortcut{" "}
-          <span className="ml-auto text-[10px] text-muted-foreground font-normal">
+          <span className="ml-auto text-[10px] font-normal text-muted-foreground">
             json
           </span>
         </DropdownMenuItem>
@@ -262,10 +262,10 @@ export function ImportExportMenu() {
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={exportDataShortcut}
-          className="text-primary font-medium"
+          className="font-medium text-primary"
         >
           <Download className="text-primary" /> Export Data Shortcuts{" "}
-          <span className="ml-auto text-[10px] text-muted-foreground font-normal">
+          <span className="ml-auto text-[10px] font-normal text-muted-foreground">
             json
           </span>
         </DropdownMenuItem>

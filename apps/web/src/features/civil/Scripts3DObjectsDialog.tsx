@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CIVIL_STYLES } from './styles/civilDesignSystem';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { DialogShell } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScriptingAnd3DObjectEngine } from '@thoth/domain';
@@ -46,124 +46,125 @@ export const Scripts3DObjectsDialog: React.FC<{ isOpen: boolean; onClose: () => 
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-2xl bg-background border-border text-foreground p-6 animate-dialog-in">
-        <DialogHeader className={CIVIL_STYLES.sectionHeaderContainer}>
-          <DialogTitle className="flex items-center gap-2 text-emerald-400">
-            <div className={`${CIVIL_STYLES.titlePulseDot} bg-emerald-400`} />
-            Scripts, Rules & 3D Objects (REQ-170 to REQ-180)
-          </DialogTitle>
-        </DialogHeader>
-
-        {/* Form controls */}
-        <div className="flex flex-col gap-4 text-xs">
-          {/* JS Import Script & Dynamic 3D Scaling (REQ-170, REQ-171) */}
-          <div className="bg-background p-3 rounded-lg border border-border flex flex-col gap-2">
-            <span className="font-semibold text-emerald-300">JavaScript Import Script & Dynamic 3D Scaling (REQ-170, REQ-171)</span>
-            <div className="grid grid-cols-3 gap-2">
-              <div>
-                <label className="block text-muted-foreground">External ID:</label>
-                <Input
-                  type="text"
-                  value={externalId}
-                  onChange={(e) => setExternalId(e.target.value)}
-                  className="bg-card border-input text-foreground h-8 text-xs"
-                />
-              </div>
-              <div>
-                <label className="block text-muted-foreground">Raw Description:</label>
-                <Input
-                  type="text"
-                  value={rawDesc}
-                  onChange={(e) => setRawDesc(e.target.value)}
-                  className="bg-card border-input text-foreground h-8 text-xs"
-                />
-              </div>
-              <div>
-                <label className="block text-muted-foreground">Trunk Diameter (in):</label>
-                <Input
-                  type="number"
-                  value={trunkDiameter}
-                  onChange={(e) => setTrunkDiameter(Number(e.target.value))}
-                  className="bg-card border-input text-foreground h-8 text-xs"
-                />
-              </div>
-            </div>
-            <Button onClick={handleRunScript} size="sm" className="self-end bg-emerald-600 hover:bg-emerald-500 text-white font-medium shadow">
-              Run Import Script
-            </Button>
-
-            {scriptResult && (
-              <div className="bg-card p-2 rounded font-mono text-emerald-300">
-                Mapped ID: {scriptResult.mappedId} | Mapped Desc: {scriptResult.mappedDescription} | Dynamic 3D Scale: {scriptResult.dynamic3DScaleFactor}x
-              </div>
-            )}
-          </div>
-
-          {/* Block Extraction CSV Wizard (REQ-178) */}
-          <div className="bg-background p-3 rounded-lg border border-border flex flex-col gap-2">
-            <span className="font-semibold text-emerald-300">Data Extraction Wizard to CSV (REQ-178)</span>
-            <Button onClick={handleExtractCSV} variant="outline" size="sm" className="self-start bg-muted hover:bg-accent text-emerald-300 border-input font-medium">
-              Export Block Placement & Attributes to CSV
-            </Button>
-            {csvResult && (
-              <pre className="bg-card p-2 rounded font-mono text-[11px] text-cyan-300 overflow-x-auto">
-                {csvResult}
-              </pre>
-            )}
-          </div>
-
-          {/* 3D Model Placement ("Center 2D" & Interactive Placing) (REQ-179, REQ-180) */}
-          <div className="bg-background p-3 rounded-lg border border-border flex flex-col gap-2">
-            <span className="font-semibold text-emerald-300">3D Model Interactive Terrain Placement (REQ-179, REQ-180)</span>
-            <div className="grid grid-cols-3 gap-2">
-              <div>
-                <label className="block text-muted-foreground">Model File Name:</label>
-                <Input
-                  type="text"
-                  value={modelFileName}
-                  onChange={(e) => setModelFileName(e.target.value)}
-                  className="bg-card border-input text-foreground h-8 text-xs"
-                />
-              </div>
-              <div>
-                <label className="block text-muted-foreground">Click Terrain X:</label>
-                <Input
-                  type="number"
-                  value={clickX}
-                  onChange={(e) => setClickX(Number(e.target.value))}
-                  className="bg-card border-input text-foreground h-8 text-xs"
-                />
-              </div>
-              <div>
-                <label className="block text-muted-foreground">Click Terrain Y:</label>
-                <Input
-                  type="number"
-                  value={clickY}
-                  onChange={(e) => setClickY(Number(e.target.value))}
-                  className="bg-card border-input text-foreground h-8 text-xs"
-                />
-              </div>
-            </div>
-            <Button onClick={handleInteractivePlace} size="sm" className="self-end bg-emerald-600 hover:bg-emerald-500 text-white font-medium shadow">
-              Interactive Double-Click Place Model
-            </Button>
-
-            {placedModel && (
-              <div className="bg-card p-2 rounded font-mono text-emerald-300">
-                Placed Model: {placedModel.modelFileName} | Insertion Mode: {placedModel.insertionMode} (REQ-179) | Interactive Placed: {String(placedModel.isInteractivePlaced)} (REQ-180)
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="flex justify-end border-t border-border pt-3">
-          <Button onClick={onClose} variant="outline" size="sm" className="border-input text-foreground bg-muted hover:bg-accent">
+    <DialogShell
+      open={isOpen}
+      onOpenChange={(open) => !open && onClose()}
+      title="Scripts, Rules & 3D Objects (REQ-170 to REQ-180)"
+      icon={<div className={`${CIVIL_STYLES.titlePulseDot} bg-emerald-400`} />}
+      maxWidthClass="max-w-2xl"
+      footer={
+        <div className="flex w-full justify-end">
+          <Button onClick={onClose} variant="outline" size="sm" className={CIVIL_STYLES.btnOutline}>
             Close
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      }
+    >
+      <div className="flex flex-col gap-4 text-xs">
+        {/* JS Import Script & Dynamic 3D Scaling (REQ-170, REQ-171) */}
+        <div className={CIVIL_STYLES.panelDarkContainer}>
+          <span className="font-semibold text-emerald-300">JS Import Script Execution & Dynamic Scaling (REQ-170, REQ-171)</span>
+          <div className="grid grid-cols-3 gap-2">
+            <div>
+              <label className={CIVIL_STYLES.fieldLabel}>External Point ID:</label>
+              <Input
+                type="text"
+                value={externalId}
+                onChange={(e) => setExternalId(e.target.value)}
+                className={CIVIL_STYLES.fieldInput}
+              />
+            </div>
+            <div>
+              <label className={CIVIL_STYLES.fieldLabel}>Raw Description:</label>
+              <Input
+                type="text"
+                value={rawDesc}
+                onChange={(e) => setRawDesc(e.target.value)}
+                className={CIVIL_STYLES.fieldInput}
+              />
+            </div>
+            <div>
+              <label className={CIVIL_STYLES.fieldLabel}>Trunk Diameter (in):</label>
+              <Input
+                type="number"
+                value={trunkDiameter}
+                onChange={(e) => setTrunkDiameter(Number(e.target.value))}
+                className={CIVIL_STYLES.fieldInput}
+              />
+            </div>
+          </div>
+          <Button onClick={handleRunScript} size="sm" className={`${CIVIL_STYLES.btnEmerald} self-end`}>
+            Execute Script Logic & Calculate Scale
+          </Button>
+
+          {scriptResult && (
+            <div className="rounded bg-card p-2 font-mono text-emerald-300">
+              Matched Block: {scriptResult.blockName} | Scale Factor: {scriptResult.calculatedScaleFactor.toFixed(2)}x (REQ-171)
+            </div>
+          )}
+        </div>
+
+        {/* CSV Data Extraction (REQ-178) */}
+        <div className={CIVIL_STYLES.panelDarkContainer}>
+          <div className="flex items-center justify-between">
+            <span className="font-semibold text-emerald-300">CSV Data Extraction (REQ-178)</span>
+            <Button onClick={handleExtractCSV} size="sm" className={CIVIL_STYLES.btnOutline}>
+              Export Block Attributes to CSV
+            </Button>
+          </div>
+          {csvResult && (
+            <textarea
+              readOnly
+              value={csvResult}
+              rows={3}
+              className="w-full rounded border border-border bg-background p-2 font-mono text-[11px] text-muted-foreground"
+            />
+          )}
+        </div>
+
+        {/* 3D Model Placement (REQ-179, REQ-180) */}
+        <div className={CIVIL_STYLES.panelDarkContainer}>
+          <span className="font-semibold text-emerald-300">3D Revit / IFC Model Placement (REQ-179, REQ-180)</span>
+          <div className="grid grid-cols-3 gap-2">
+            <div>
+              <label className={CIVIL_STYLES.fieldLabel}>Model File Name:</label>
+              <Input
+                type="text"
+                value={modelFileName}
+                onChange={(e) => setModelFileName(e.target.value)}
+                className={CIVIL_STYLES.fieldInput}
+              />
+            </div>
+            <div>
+              <label className={CIVIL_STYLES.fieldLabel}>Click Terrain X:</label>
+              <Input
+                type="number"
+                value={clickX}
+                onChange={(e) => setClickX(Number(e.target.value))}
+                className={CIVIL_STYLES.fieldInput}
+              />
+            </div>
+            <div>
+              <label className={CIVIL_STYLES.fieldLabel}>Click Terrain Y:</label>
+              <Input
+                type="number"
+                value={clickY}
+                onChange={(e) => setClickY(Number(e.target.value))}
+                className={CIVIL_STYLES.fieldInput}
+              />
+            </div>
+          </div>
+          <Button onClick={handleInteractivePlace} size="sm" className={`${CIVIL_STYLES.btnEmerald} self-end`}>
+            Interactive Double-Click Place Model
+          </Button>
+
+          {placedModel && (
+            <div className="rounded bg-card p-2 font-mono text-emerald-300">
+              Placed Model: {placedModel.modelFileName} | Insertion Mode: {placedModel.insertionMode} (REQ-179) | Interactive Placed: {String(placedModel.isInteractivePlaced)} (REQ-180)
+            </div>
+          )}
+        </div>
+      </div>
+    </DialogShell>
   );
 };

@@ -32,7 +32,7 @@ export function AlignmentHandles({
           fill="hsl(var(--background))"
           stroke="#b91c1c"
           strokeWidth={1.8}
-          className="cursor-pointer hover:r-7"
+          className="hover:r-7 cursor-pointer"
         />
       ))}
     </g>

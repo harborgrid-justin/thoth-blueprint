@@ -55,12 +55,12 @@ export function useMetesAndBoundsState() {
   }
 
   function removeCourse(id: string) {
-    if (courses.length <= 3) return;
+    if (courses.length <= 3) {return;}
     setCourses((prev) => prev.filter((c) => c.id !== id));
   }
 
   function commitPlatToCanvas() {
-    if (!site) return;
+    if (!site) {return;}
 
     const parcel: Parcel = {
       id: `parcel_cogo_${Date.now()}`,

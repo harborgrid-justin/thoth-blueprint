@@ -35,6 +35,7 @@ import { usePlanningCanvasState } from "./hooks/usePlanningCanvasState";
 import { useCanvasInteractions } from "./hooks/useCanvasInteractions";
 import { useUiStore } from "@/store/uiStore";
 import { ElementContextMenu } from "./ElementContextMenu";
+import { CANVAS_STYLES } from "./styles/canvasDesignSystem";
 
 export function PlanningCanvas() {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -128,7 +129,7 @@ export function PlanningCanvas() {
     >
       <div
         ref={containerRef}
-        className={`relative h-full w-full overflow-hidden transition-colors ${
+        className={`${CANVAS_STYLES.gridOverlay} ${
           handDrawnMode ? "bg-[#faf8f5]" : "bg-[hsl(var(--canvas))]"
         } ${cursorClass}`}
         onPointerDown={onPointerDown}
@@ -463,12 +464,12 @@ export function PlanningCanvas() {
       <SurveyLegend site={site} />
 
       {(!site || site.elements.length === 0) && (
-        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center p-6 text-center select-none animate-overlay-in">
-          <div className="rounded-2xl border border-border/40 bg-background/85 p-6 shadow-2xl backdrop-blur-md max-w-sm flex flex-col items-center gap-3">
-            <div className="p-3 rounded-full bg-primary/10 text-primary">
+        <div className="pointer-events-none absolute inset-0 flex animate-overlay-in flex-col items-center justify-center p-6 text-center select-none">
+          <div className="flex max-w-sm flex-col items-center gap-3 rounded-2xl border border-border/40 bg-background/85 p-6 shadow-2xl backdrop-blur-md">
+            <div className="rounded-full bg-primary/10 p-3 text-primary">
               <Sparkles className="h-6 w-6 animate-pulse" />
             </div>
-            <h3 className="font-semibold text-sm text-foreground">Interactive Canvas Ready</h3>
+            <h3 className="text-sm font-semibold text-foreground">Interactive Canvas Ready</h3>
             <p className="text-xs text-muted-foreground">
               Select a drawing tool from the toolbar (Line, Parcel, Road, Building) or launch a Civil 3D Studio to begin drafting.
             </p>
@@ -505,7 +506,7 @@ function Grid({
   for (let x = startWorldX; x <= endWorldX; x += step) {
     const sx = x * viewport.zoom + viewport.offsetX;
     const major = Math.round(x / step) % 5 === 0;
-    if (!major && minorOpacity === 0) continue;
+    if (!major && minorOpacity === 0) {continue;}
     lines.push(
       <line
         key={`vx${idx++}`}
@@ -523,7 +524,7 @@ function Grid({
   for (let y = startWorldY; y <= endWorldY; y += step) {
     const sy = y * viewport.zoom + viewport.offsetY;
     const major = Math.round(y / step) % 5 === 0;
-    if (!major && minorOpacity === 0) continue;
+    if (!major && minorOpacity === 0) {continue;}
     lines.push(
       <line
         key={`hz${idx++}`}

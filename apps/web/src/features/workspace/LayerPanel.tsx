@@ -51,7 +51,7 @@ export function LayerPanel() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center justify-between px-3 pb-2 pt-1">
+      <div className="flex items-center justify-between px-3 pt-1 pb-2">
         <h3 className={WORKSPACE_STYLES.textSectionTitle}>
           Layers
         </h3>
@@ -72,23 +72,23 @@ export function LayerPanel() {
               key={layer.id}
               onClick={() => setActiveLayer(layer.id)}
               className={cn(
-                "group flex items-center gap-1.5 rounded px-1.5 py-0.5 text-xs font-mono transition-colors cursor-pointer",
-                active ? "bg-primary/10 text-primary font-semibold" : "hover:bg-accent/60 text-muted-foreground",
+                "group flex cursor-pointer items-center gap-1.5 rounded px-1.5 py-0.5 font-mono text-xs transition-colors",
+                active ? "bg-primary/10 font-semibold text-primary" : "text-muted-foreground hover:bg-accent/60",
               )}
             >
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button
-                    className="h-3 w-3 shrink-0 rounded-sm cursor-pointer border border-black/20"
+                    className="h-3 w-3 shrink-0 cursor-pointer rounded-sm border border-black/20"
                     style={{ backgroundColor: layer.color ?? "#64748b" }}
                     onClick={(e) => e.stopPropagation()}
                   />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-[148px] p-1 grid grid-cols-6 gap-0.5 bg-neutral-900 border-neutral-800">
+                <DropdownMenuContent align="start" className="grid w-[148px] grid-cols-6 gap-0.5 border-neutral-800 bg-neutral-900 p-1">
                   {ACI_COLORS.map(c => (
                     <DropdownMenuItem 
                       key={c}
-                      className="h-5 w-5 rounded-none p-0 cursor-pointer"
+                      className="h-5 w-5 cursor-pointer rounded-none p-0"
                       style={{ backgroundColor: c }}
                       onClick={(e) => {
                         e.stopPropagation();
@@ -102,7 +102,7 @@ export function LayerPanel() {
                 <Input
                   autoFocus
                   defaultValue={layer.name}
-                  className="h-6 flex-1 px-1 py-0 text-xs font-cad"
+                  className="h-6 flex-1 px-1 py-0 font-cad text-xs"
                   onBlur={(e) => {
                     updateLayer(layer.id, {
                       name: e.target.value || layer.name,
@@ -130,7 +130,7 @@ export function LayerPanel() {
                   {layer.name}
                 </span>
               )}
-              <span className="text-xs tabular-nums text-muted-foreground">
+              <span className="text-xs text-muted-foreground tabular-nums">
                 {counts.get(layer.id) ?? 0}
               </span>
               <div className="flex items-center opacity-0 transition-opacity group-hover:opacity-100">
@@ -197,7 +197,7 @@ export function LayerPanel() {
 
       <div className="my-2 border-t border-border" />
 
-      <div className="flex items-center justify-between px-3 pb-2 pt-1">
+      <div className="flex items-center justify-between px-3 pt-1 pb-2">
         <h3 className={WORKSPACE_STYLES.textSectionTitle}>
           COGO Point Groups
         </h3>
@@ -206,17 +206,17 @@ export function LayerPanel() {
         {evaluatedGroups.map((group) => (
           <div
             key={group.id}
-            className="flex items-center justify-between rounded-md px-2 py-1 text-sm hover:bg-accent transition-colors cursor-pointer"
+            className="flex cursor-pointer items-center justify-between rounded-md px-2 py-1 text-sm transition-colors hover:bg-accent"
           >
             <div className="flex items-center gap-1.5">
-              <span className="text-muted-foreground text-xs font-mono">
+              <span className="font-mono text-xs text-muted-foreground">
                 [{group.query}]
               </span>
-              <span className="font-medium text-foreground text-xs">
+              <span className="text-xs font-medium text-foreground">
                 {group.name}
               </span>
             </div>
-            <span className="text-xs font-semibold px-1.5 py-0.5 rounded-full bg-accent text-accent-foreground font-mono">
+            <span className="rounded-full bg-accent px-1.5 py-0.5 font-mono text-xs font-semibold text-accent-foreground">
               {group.matchedIds.length}
             </span>
           </div>

@@ -41,7 +41,7 @@ export function ElementContextMenu({
             <ContextMenuLabel>Selection ({selection.length} elements)</ContextMenuLabel>
             <ContextMenuSeparator />
             <ContextMenuItem
-              className="text-destructive focus:text-destructive cursor-pointer"
+              className="cursor-pointer text-destructive focus:text-destructive"
               onSelect={() => deleteSelection()}
             >
               Delete Selected
@@ -116,7 +116,7 @@ export function ElementContextMenu({
             </ContextMenuItem>
             <ContextMenuSeparator />
             <ContextMenuItem
-              className="text-destructive focus:text-destructive cursor-pointer"
+              className="cursor-pointer text-destructive focus:text-destructive"
               onSelect={() => deleteSelection()}
             >
               Delete

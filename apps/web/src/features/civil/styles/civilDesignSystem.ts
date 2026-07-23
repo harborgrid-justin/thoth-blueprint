@@ -65,6 +65,7 @@ export const CIVIL_STYLES = {
   btnEmerald: 'civil-btn civil-btn-emerald',
   btnPurple: 'civil-btn civil-btn-purple',
   btnAmber: 'civil-btn civil-btn-amber',
+  btnCyan: 'civil-btn civil-btn-cyan',
   btnOutline: 'civil-btn civil-btn-outline',
 } as const;
 

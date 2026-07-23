@@ -2,6 +2,19 @@
 
 @layer components {
   .terrain-panel {
-    @apply bg-background border border-border rounded-xl p-5 text-foreground;
+    @apply flex flex-col gap-4 bg-background border border-border rounded-xl p-4 text-foreground text-xs;
+  }
+
+  .terrain-section-title {
+    @apply text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1;
+  }
+
+  .terrain-stat-card {
+    @apply rounded-md border border-border bg-background/50 px-2.5 py-1.5;
+  }
+
+  .terrain-toggle-row {
+    @apply flex items-center justify-between text-sm text-foreground;
   }
 }
+

@@ -31,7 +31,7 @@ export function DataGrid<T>({
     () => {
       const initial: Record<string, number> = {};
       columns.forEach((c) => {
-        if (c.width) initial[c.id] = c.width;
+        if (c.width) {initial[c.id] = c.width;}
       });
       return initial;
     }
@@ -45,10 +45,10 @@ export function DataGrid<T>({
   };
 
   return (
-    <div className="flex flex-col border border-border bg-card rounded-md overflow-hidden text-xs">
+    <div className="flex flex-col overflow-hidden rounded-md border border-border bg-card text-xs">
       {(title || onExportCsv || onExportXlsx) && (
-        <div className="flex items-center justify-between p-1.5 px-2 bg-muted/30 border-b border-border">
-          <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px]">
+        <div className="flex items-center justify-between border-b border-border bg-muted/30 p-1.5 px-2">
+          <h4 className="text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
             {title}
           </h4>
           <div className="flex items-center gap-1">
@@ -56,7 +56,7 @@ export function DataGrid<T>({
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="h-5 w-5 hover:bg-background transition-colors"
+                className="h-5 w-5 transition-colors hover:bg-background"
                 onClick={onExportCsv}
                 title="Export CSV"
               >
@@ -67,7 +67,7 @@ export function DataGrid<T>({
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="h-5 w-5 text-emerald-500 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"
+                className="h-5 w-5 text-emerald-500 transition-colors hover:bg-emerald-500/10 hover:text-emerald-400"
                 onClick={onExportXlsx}
                 title="Export XLSX"
               >
@@ -78,8 +78,8 @@ export function DataGrid<T>({
         </div>
       )}
       
-      <div className="overflow-x-auto w-full relative">
-        <table className="w-full text-left border-collapse">
+      <div className="relative w-full overflow-x-auto">
+        <table className="w-full border-collapse text-left">
           <thead>
             <tr className="border-b border-border bg-background">
               {columns.map((col) => {
@@ -88,8 +88,8 @@ export function DataGrid<T>({
                   <th
                     key={col.id}
                     className={cn(
-                      "py-1.5 px-2 font-semibold text-muted-foreground uppercase text-[9px] relative group select-none whitespace-nowrap",
-                      col.pinned ? "sticky left-0 bg-background z-10 border-r border-border shadow-[1px_0_0_rgba(0,0,0,0.1)]" : "",
+                      "group relative px-2 py-1.5 text-[9px] font-semibold whitespace-nowrap text-muted-foreground uppercase select-none",
+                      col.pinned ? "sticky left-0 z-10 border-r border-border bg-background shadow-[1px_0_0_rgba(0,0,0,0.1)]" : "",
                       col.align === "right" ? "text-right" : col.align === "center" ? "text-center" : "text-left"
                     )}
                     style={{ width: w, minWidth: w, maxWidth: w }}
@@ -97,7 +97,7 @@ export function DataGrid<T>({
                     {col.header}
                     {/* Resizer Handle */}
                     <div
-                      className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-primary/50 active:bg-primary transition-colors"
+                      className="absolute top-0 right-0 bottom-0 w-1 cursor-col-resize transition-colors hover:bg-primary/50 active:bg-primary"
                       onMouseDown={(e) => {
                         e.preventDefault();
                         const startX = e.clientX;
@@ -124,7 +124,7 @@ export function DataGrid<T>({
               <tr
                 key={rIdx}
                 className={cn(
-                  "border-b border-border/40 hover:bg-muted/40 transition-colors",
+                  "border-b border-border/40 transition-colors hover:bg-muted/40",
                   rIdx % 2 === 1 ? "bg-black/5" : "bg-transparent"
                 )}
               >
@@ -132,7 +132,7 @@ export function DataGrid<T>({
                   <td
                     key={col.id}
                     className={cn(
-                      "py-1.5 px-2 truncate",
+                      "truncate px-2 py-1.5",
                       col.pinned ? "sticky left-0 z-10 border-r border-border/40 shadow-[1px_0_0_rgba(0,0,0,0.1)]" : "",
                       col.pinned ? (rIdx % 2 === 1 ? "bg-[#141517]" : "bg-card") : "", // approximate bg mapping for zebra in pinned mode
                       col.align === "right" ? "text-right" : col.align === "center" ? "text-center" : "text-left",
@@ -148,7 +148,7 @@ export function DataGrid<T>({
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="py-4 px-2 text-center text-muted-foreground/50 italic"
+                  className="px-2 py-4 text-center text-muted-foreground/50 italic"
                 >
                   No data available
                 </td>

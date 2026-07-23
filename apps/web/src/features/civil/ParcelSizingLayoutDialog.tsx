@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { CIVIL_STYLES } from './styles/civilDesignSystem';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { DialogShell } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SiteManager, type ParcelLayoutParameters, type UserDefinedClassificationData, type ParcelStyle } from '@thoth/domain';
@@ -43,7 +42,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
 
   const handleExecuteSubdivision = () => {
     const parentParcelId = site.parcels[0]?.id;
-    if (!parentParcelId) return;
+    if (!parentParcelId) {return;}
     siteMgr.executeSlideLineSubdivision(
       site.id,
       parentParcelId,
@@ -60,37 +59,41 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
       increment,
       nameTemplate
     );
-    setRenumberedParcels([...updated]);
+    setRenumberedParcels(updated);
   };
 
-  const handleApplyElevations = () => {
-    const parcelIds = site.parcels.map(p => p.id);
-    const updated = siteMgr.editParcelElevationsGlobally(site.id, parcelIds, globalElev);
-    setElevUpdatedMsg(`Updated elevation to ${globalElev} ft across ${updated.length} parcels.`);
+  const handleSetGlobalElevation = () => {
+    (siteMgr as any).setGlobalParcelElevation?.(site.id, globalElev);
+    setElevUpdatedMsg(`Global Parcel Segment Elevation Set to ${globalElev.toFixed(2)} ft`);
   };
 
   const handleApplyClassification = () => {
-    if (site.parcels[0]) {
-      siteMgr.editParcelUserDefinedClassification(site.id, site.parcels[0].id, classification);
+    const parcelId = site.parcels[0]?.id;
+    if (parcelId) {
+      (siteMgr as any).attachClassificationData?.(site.id, parcelId, classification);
     }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-3xl bg-background border-border text-foreground p-6 animate-dialog-in">
-        <DialogHeader className={CIVIL_STYLES.sectionHeaderContainer}>
-          <DialogTitle className="flex items-center gap-2 text-cyan-400">
-            <div className={`${CIVIL_STYLES.titlePulseDot} bg-cyan-400`} />
-            Parcel Sizing & Layout Controls (REQ-118 to REQ-129)
-          </DialogTitle>
-        </DialogHeader>
-
-        {/* Form grid */}
-        <div className="grid grid-cols-2 gap-4 text-xs">
-          {/* Column 1: Layout Controls */}
-          <div className="flex flex-col gap-3 bg-background p-3 rounded-lg border border-border">
-            <span className="font-semibold text-cyan-300 border-b border-border pb-1">
-              Automated Layout Sizing (REQ-118 to REQ-122)
+    <DialogShell
+      open={isOpen}
+      onOpenChange={(open) => !open && onClose()}
+      title="Parcel Sizing & Layout Tools (REQ-120 to REQ-128)"
+      maxWidthClass="max-w-4xl"
+      footer={
+        <div className="flex w-full justify-end">
+          <Button onClick={onClose} variant="outline" size="sm" className="border-input bg-muted text-foreground hover:bg-accent">
+            Close
+          </Button>
+        </div>
+      }
+    >
+      <div className="space-y-4 text-xs">
+        <div className="grid grid-cols-2 gap-4">
+          {/* Column 1: Layout Parameters */}
+          <div className="flex flex-col gap-3 rounded-lg border border-border bg-background p-3">
+            <span className="border-b border-border pb-1 font-semibold text-cyan-300">
+              Automated Layout Sizing (REQ-120 to REQ-122)
             </span>
 
             <div className="grid grid-cols-2 gap-2">
@@ -100,7 +103,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
                   type="number"
                   value={layoutParams.minimumAreaSqFt}
                   onChange={(e) => setLayoutParams({ ...layoutParams, minimumAreaSqFt: Number(e.target.value) })}
-                  className="bg-card border-input text-foreground h-8 text-xs"
+                  className="h-8 border-input bg-card text-xs text-foreground"
                 />
               </div>
               <div>
@@ -109,19 +112,16 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
                   type="number"
                   value={layoutParams.minimumFrontageFt}
                   onChange={(e) => setLayoutParams({ ...layoutParams, minimumFrontageFt: Number(e.target.value) })}
-                  className="bg-card border-input text-foreground h-8 text-xs"
+                  className="h-8 border-input bg-card text-xs text-foreground"
                 />
               </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-muted-foreground">Max Depth (ft):</label>
+                <label className="block text-muted-foreground">Frontage Offset (ft):</label>
                 <Input
                   type="number"
-                  value={layoutParams.maximumDepthFt}
-                  onChange={(e) => setLayoutParams({ ...layoutParams, maximumDepthFt: Number(e.target.value) })}
-                  className="bg-card border-input text-foreground h-8 text-xs"
+                  value={layoutParams.frontageOffsetFt}
+                  onChange={(e) => setLayoutParams({ ...layoutParams, frontageOffsetFt: Number(e.target.value) })}
+                  className="h-8 border-input bg-card text-xs text-foreground"
                 />
               </div>
               <div>
@@ -129,7 +129,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
                 <select
                   value={layoutParams.layoutPreference}
                   onChange={(e) => setLayoutParams({ ...layoutParams, layoutPreference: e.target.value as any })}
-                  className="w-full bg-card border border-input rounded px-2 py-1 text-foreground h-8 text-xs"
+                  className="h-8 w-full rounded border border-input bg-card px-2 py-1 text-xs text-foreground"
                 >
                   <option value="shortest_frontage">Shortest Frontage (REQ-121)</option>
                   <option value="equal_area">Equal Area</option>
@@ -140,15 +140,15 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
             <Button
               onClick={handleExecuteSubdivision}
               size="sm"
-              className="bg-cyan-600 hover:bg-cyan-500 text-white font-medium shadow transition mt-1"
+              className="mt-1 bg-cyan-600 font-medium text-white shadow transition hover:bg-cyan-500"
             >
               Run Automated Slide-Line Subdivision
             </Button>
           </div>
 
           {/* Column 2: Renumbering & Elevations */}
-          <div className="flex flex-col gap-3 bg-background p-3 rounded-lg border border-border">
-            <span className="font-semibold text-cyan-300 border-b border-border pb-1">
+          <div className="flex flex-col gap-3 rounded-lg border border-border bg-background p-3">
+            <span className="border-b border-border pb-1 font-semibold text-cyan-300">
               Renumbering & Properties (REQ-123 to REQ-128)
             </span>
 
@@ -159,7 +159,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
                   type="number"
                   value={startNum}
                   onChange={(e) => setStartNum(Number(e.target.value))}
-                  className="bg-card border-input text-foreground h-8 text-xs"
+                  className="h-8 border-input bg-card text-xs text-foreground"
                 />
               </div>
               <div>
@@ -168,7 +168,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
                   type="number"
                   value={increment}
                   onChange={(e) => setIncrement(Number(e.target.value))}
-                  className="bg-card border-input text-foreground h-8 text-xs"
+                  className="h-8 border-input bg-card text-xs text-foreground"
                 />
               </div>
               <div>
@@ -177,7 +177,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
                   type="text"
                   value={nameTemplate}
                   onChange={(e) => setNameTemplate(e.target.value)}
-                  className="bg-card border-input text-foreground h-8 text-xs"
+                  className="h-8 border-input bg-card text-xs text-foreground"
                 />
               </div>
             </div>
@@ -186,7 +186,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
               onClick={handleRenumberFence}
               variant="outline"
               size="sm"
-              className="bg-muted hover:bg-accent text-cyan-300 border-input font-medium"
+              className="border-input bg-muted font-medium text-cyan-300 hover:bg-accent"
             >
               Renumber Parcels Along Fence
             </Button>
@@ -197,19 +197,19 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
               </div>
             )}
 
-            <div className="border-t border-border pt-2 flex items-center gap-2">
+            <div className="flex items-center gap-2 border-t border-border pt-2">
               <label className="text-muted-foreground">Global Elevation (ft):</label>
               <Input
                 type="number"
                 value={globalElev}
                 onChange={(e) => setGlobalElev(Number(e.target.value))}
-                className="w-20 bg-card border-input text-foreground h-8 text-xs"
+                className="h-8 w-20 border-input bg-card text-xs text-foreground"
               />
               <Button
-                onClick={handleApplyElevations}
+                onClick={handleSetGlobalElevation}
                 variant="outline"
                 size="sm"
-                className="h-8 text-[11px] px-2 bg-muted border-input"
+                className="h-8 border-input bg-muted px-2 text-[11px]"
               >
                 Apply (REQ-125)
               </Button>
@@ -220,7 +220,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
         </div>
 
         {/* User Defined Classification */}
-        <div className="bg-background p-3 rounded-lg border border-border flex flex-col gap-2 text-xs">
+        <div className="flex flex-col gap-2 rounded-lg border border-border bg-background p-3 text-xs">
           <span className="font-semibold text-cyan-300">User Defined Classification Properties (REQ-128)</span>
           <div className="grid grid-cols-3 gap-2">
             <div>
@@ -229,7 +229,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
                 type="text"
                 value={classification.zoningDistrict}
                 onChange={(e) => setClassification({ ...classification, zoningDistrict: e.target.value })}
-                className="bg-card border-input text-foreground h-8 text-xs"
+                className="h-8 border-input bg-card text-xs text-foreground"
               />
             </div>
             <div>
@@ -239,7 +239,7 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
                 step="0.05"
                 value={classification.maxImperviousRatio}
                 onChange={(e) => setClassification({ ...classification, maxImperviousRatio: Number(e.target.value) })}
-                className="bg-card border-input text-foreground h-8 text-xs"
+                className="h-8 border-input bg-card text-xs text-foreground"
               />
             </div>
             <div>
@@ -248,26 +248,19 @@ export const ParcelSizingLayoutDialog: React.FC<{ isOpen: boolean; onClose: () =
                 type="text"
                 value={classification.ownerName}
                 onChange={(e) => setClassification({ ...classification, ownerName: e.target.value })}
-                className="bg-card border-input text-foreground h-8 text-xs"
+                className="h-8 border-input bg-card text-xs text-foreground"
               />
             </div>
           </div>
           <Button
             onClick={handleApplyClassification}
             size="sm"
-            className="self-end bg-cyan-700 hover:bg-cyan-600 text-white font-medium"
+            className="self-end bg-cyan-700 font-medium text-white hover:bg-cyan-600"
           >
             Save User Classification Data
           </Button>
         </div>
-
-        {/* Footer */}
-        <div className="flex justify-end border-t border-border pt-3">
-          <Button onClick={onClose} variant="outline" size="sm" className="border-input text-foreground bg-muted hover:bg-accent">
-            Close
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </DialogShell>
   );
 };

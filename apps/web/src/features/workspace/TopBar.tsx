@@ -146,7 +146,7 @@ export function TopBar({
       <div className="ml-auto flex items-center gap-1">
         {/* Renovation Mode Controls */}
         <div className="mr-2 flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900 px-2 py-0.5">
-          <label className="flex items-center gap-1.5 text-xs font-semibold cursor-pointer text-slate-200 select-none">
+          <label className="flex cursor-pointer items-center gap-1.5 text-xs font-semibold text-slate-200 select-none">
             <input
               type="checkbox"
               checked={renovationMode}
@@ -207,7 +207,7 @@ export function TopBar({
           <IconBtn label="Zoom out" onClick={() => zoomBy(1 / 1.2)}>
             <Minus className="h-4 w-4" />
           </IconBtn>
-          <span className="w-12 text-center text-xs tabular-nums text-muted-foreground">
+          <span className="w-12 text-center text-xs text-muted-foreground tabular-nums">
             {zoomPercentage(viewport.zoom)}%
           </span>
           <IconBtn label="Zoom in" onClick={() => zoomBy(1.2)}>
@@ -267,7 +267,7 @@ export function TopBar({
           variant="outline"
           size="sm"
           onClick={toggleWorkspaceLayout}
-          className="hidden xl:flex gap-1 text-xs border-cyan-500/40 text-cyan-400 hover:bg-cyan-950/40 font-semibold"
+          className="hidden gap-1 border-cyan-500/40 text-xs font-semibold text-cyan-400 hover:bg-cyan-950/40 xl:flex"
         >
           {workspaceLayout === "civil-studio" ? "Standard Layout" : "Civil 3D Ribbon"}
         </Button>
@@ -278,11 +278,11 @@ export function TopBar({
         {/* Civil 3D Studio Suite Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="hidden md:flex gap-1.5 text-cyan-400 hover:bg-cyan-950/30 transition-colors font-medium">
+            <Button variant="ghost" size="sm" className="hidden gap-1.5 font-medium text-cyan-400 transition-colors hover:bg-cyan-950/30 md:flex">
               <HardHat className="h-4 w-4 text-cyan-400" /> Civil Suite <ChevronDown className="h-3 w-3 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 bg-background/90 backdrop-blur-xl border-cyan-500/20">
+          <DropdownMenuContent align="end" className="w-56 border-cyan-500/20 bg-background/90 backdrop-blur-xl">
             <DropdownMenuItem onClick={() => setSubdivisionStudioOpen(true)}>
               <Grid3x3 className="mr-2 h-4 w-4 text-cyan-400" /> Subdivision Studio & Solvers
             </DropdownMenuItem>
@@ -322,11 +322,11 @@ export function TopBar({
         {/* Dropdowns for condensed layout */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="hidden md:flex gap-1.5 hover:bg-white/10 transition-colors">
+            <Button variant="ghost" size="sm" className="hidden gap-1.5 transition-colors hover:bg-white/10 md:flex">
               <HardHat className="h-4 w-4" /> Design <ChevronDown className="h-3 w-3 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-52 bg-background/80 backdrop-blur-xl border-white/10">
+          <DropdownMenuContent align="end" className="w-52 border-white/10 bg-background/80 backdrop-blur-xl">
             <DropdownMenuItem onClick={() => setCogoOpen(true)}>
               <Compass className="mr-2 h-4 w-4" /> COGO Builder
             </DropdownMenuItem>
@@ -353,11 +353,11 @@ export function TopBar({
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="hidden lg:flex gap-1.5 hover:bg-white/10 transition-colors">
+            <Button variant="ghost" size="sm" className="hidden gap-1.5 transition-colors hover:bg-white/10 lg:flex">
               <Search className="h-4 w-4" /> Analysis <ChevronDown className="h-3 w-3 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-52 bg-background/80 backdrop-blur-xl border-white/10">
+          <DropdownMenuContent align="end" className="w-52 border-white/10 bg-background/80 backdrop-blur-xl">
             <DropdownMenuItem onClick={() => setProfileOpen(true)}>
               <LayoutTemplate className="mr-2 h-4 w-4" /> Profile & Sections
             </DropdownMenuItem>
@@ -375,11 +375,11 @@ export function TopBar({
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="hidden md:flex gap-1.5 hover:bg-white/10 transition-colors">
+            <Button variant="ghost" size="sm" className="hidden gap-1.5 transition-colors hover:bg-white/10 md:flex">
               <ScrollText className="h-4 w-4" /> Docs <ChevronDown className="h-3 w-3 opacity-50" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 bg-background/80 backdrop-blur-xl border-white/10">
+          <DropdownMenuContent align="end" className="w-48 border-white/10 bg-background/80 backdrop-blur-xl">
             <DropdownMenuItem onClick={() => openPlat(null)}>
               <ScrollText className="mr-2 h-4 w-4" /> Plat Report
             </DropdownMenuItem>
@@ -395,9 +395,9 @@ export function TopBar({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button variant="ghost" size="sm" onClick={onOpenCheckpoints} className="hidden xl:flex hover:bg-white/10">
+        <Button variant="ghost" size="sm" onClick={onOpenCheckpoints} className="hidden hover:bg-white/10 xl:flex">
           <History className="h-4 w-4" />{" "}
-          <span className="hidden md:inline ml-1">Checkpoints</span>
+          <span className="ml-1 hidden md:inline">Checkpoints</span>
         </Button>
 
         <Button
@@ -509,7 +509,7 @@ function IconBtn({
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-all duration-200 hover:bg-white/10 hover:text-foreground hover:scale-110 active:scale-95"
+      className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-all duration-200 hover:scale-110 hover:bg-white/10 hover:text-foreground active:scale-95"
     >
       {children}
     </button>

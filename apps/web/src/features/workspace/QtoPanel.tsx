@@ -130,7 +130,7 @@ export function QtoPanel() {
           <div className={WORKSPACE_STYLES.cardSubtle}>
             <h4 className={WORKSPACE_STYLES.cardHeader + " flex items-center justify-between"}>
               <span>Average End Area Volumes</span>
-              <Badge className="bg-emerald-500/15 text-emerald-500 hover:bg-emerald-500/20 text-[9px] h-4">
+              <Badge className="h-4 bg-emerald-500/15 text-[9px] text-emerald-500 hover:bg-emerald-500/20">
                 TIN Ground
               </Badge>
             </h4>
@@ -161,7 +161,7 @@ export function QtoPanel() {
             <h4 className={WORKSPACE_STYLES.cardHeader}>
               Mass Haul Diagram Chart (Net Volume)
             </h4>
-            <div className="h-[90px] w-full bg-slate-950/60 rounded-md overflow-hidden relative">
+            <div className="relative h-[90px] w-full overflow-hidden rounded-md bg-slate-950/60">
               <svg
                 className="h-full w-full"
                 viewBox="0 0 300 80"
@@ -238,7 +238,7 @@ export function QtoPanel() {
               Assign Item to Selection
             </span>
             {selection.length > 0 ? (
-              <div className="flex gap-1.5 items-center">
+              <div className="flex items-center gap-1.5">
                 <select className={WORKSPACE_STYLES.select}>
                   {payItems.map((item) => (
                     <option key={item.id} value={item.id}>
@@ -274,7 +274,7 @@ export function QtoPanel() {
               return (
                 <table className={WORKSPACE_STYLES.subtable}>
                   <thead>
-                    <tr className="border-b border-slate-800 text-slate-400 text-[10px]">
+                    <tr className="border-b border-slate-800 text-[10px] text-slate-400">
                       <th className="py-1">Status</th>
                       <th className="py-1 text-center">Count</th>
                       <th className="py-1 text-right">Plan Area</th>
@@ -282,7 +282,7 @@ export function QtoPanel() {
                   </thead>
                   <tbody>
                     <tr className={WORKSPACE_STYLES.subtableRow}>
-                      <td className="py-1 font-medium text-slate-200 flex items-center gap-1.5">
+                      <td className="flex items-center gap-1.5 py-1 font-medium text-slate-200">
                         <span className="h-2 w-2 rounded-full bg-slate-400"></span>{" "}
                         Existing
                       </td>
@@ -294,7 +294,7 @@ export function QtoPanel() {
                       </td>
                     </tr>
                     <tr className={WORKSPACE_STYLES.subtableRow}>
-                      <td className="py-1 font-medium text-emerald-400 flex items-center gap-1.5">
+                      <td className="flex items-center gap-1.5 py-1 font-medium text-emerald-400">
                         <span className="h-2 w-2 rounded-full bg-emerald-500"></span>{" "}
                         New Construction
                       </td>
@@ -306,7 +306,7 @@ export function QtoPanel() {
                       </td>
                     </tr>
                     <tr className={WORKSPACE_STYLES.subtableRow}>
-                      <td className="py-1 font-medium text-rose-400 flex items-center gap-1.5">
+                      <td className="flex items-center gap-1.5 py-1 font-medium text-rose-400">
                         <span className="h-2 w-2 rounded-full bg-rose-500"></span>{" "}
                         Demolition
                       </td>
@@ -325,9 +325,9 @@ export function QtoPanel() {
 
           {/* Renovation Design Audit warnings (REQ-UNIMP-010) */}
           <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+            <h4 className="mb-1.5 flex items-center justify-between text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
               <span>Renovation Design Audit</span>
-              <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[9px] h-4">
+              <Badge className="h-4 border-amber-500/20 bg-amber-500/10 text-[9px] text-amber-500">
                 REQ-UNIMP-010
               </Badge>
             </h4>
@@ -342,11 +342,11 @@ export function QtoPanel() {
                 );
               }
               return (
-                <div className="flex flex-col gap-1.5 max-h-[160px] overflow-y-auto pr-1">
+                <div className="flex max-h-[160px] flex-col gap-1.5 overflow-y-auto pr-1">
                   {warnings.map((w, idx) => (
                     <div
                       key={idx}
-                      className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium"
+                      className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] font-medium text-rose-500"
                     >
                       {w}
                     </div>
@@ -362,9 +362,9 @@ export function QtoPanel() {
         <div className="flex flex-col gap-3">
           {/* Stairs Quantities (Takeoffs) (REQ-UNIMP-025) */}
           <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+            <h4 className="mb-1.5 flex items-center justify-between text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
               <span>Stairs Structural Takeoffs</span>
-              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] h-4">
+              <Badge className="h-4 border-primary/20 bg-primary/10 text-[9px] text-primary">
                 REQ-UNIMP-025
               </Badge>
             </h4>
@@ -374,7 +374,7 @@ export function QtoPanel() {
               ) as Stair[];
               if (stairs.length === 0) {
                 return (
-                  <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
+                  <div className="py-2 text-center text-[10px] text-muted-foreground/80">
                     No stairs elements drafted in the current site plan.
                   </div>
                 );
@@ -389,18 +389,18 @@ export function QtoPanel() {
                       <div
                         key={stair.id}
                         className={cn(
-                          "border-b border-border/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
+                          "cursor-pointer rounded border border-b border-border/40 p-1.5 pb-2 transition-colors duration-150 last:border-0 last:pb-0",
                           isHovered
-                            ? "bg-amber-500/10 border-amber-500/30"
+                            ? "border-amber-500/30 bg-amber-500/10"
                             : isSelected
-                              ? "bg-primary/10 border-primary/30"
+                              ? "border-primary/30 bg-primary/10"
                               : "border-transparent",
                         )}
                         onMouseEnter={() => hoverElement(stair.id)}
                         onMouseLeave={() => hoverElement(null)}
                         onClick={() => select(stair.id)}
                       >
-                        <div className="font-semibold text-slate-100 mb-1">
+                        <div className="mb-1 font-semibold text-slate-100">
                           {stair.name} ({stair.stairType})
                         </div>
                         <table className={WORKSPACE_STYLES.subtable}>
@@ -466,11 +466,11 @@ export function QtoPanel() {
                 );
               }
               return (
-                <div className="flex flex-col gap-1.5 max-h-[160px] overflow-y-auto pr-1">
+                <div className="flex max-h-[160px] flex-col gap-1.5 overflow-y-auto pr-1">
                   {warnings.map((w, idx) => (
                     <div
                       key={idx}
-                      className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium"
+                      className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] font-medium text-rose-500"
                     >
                       {w}
                     </div>
@@ -514,26 +514,26 @@ export function QtoPanel() {
                       <div
                         key={wall.id}
                         className={cn(
-                          "border-b border-slate-800/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
+                          "cursor-pointer rounded border border-b border-slate-800/40 p-1.5 pb-2 transition-colors duration-150 last:border-0 last:pb-0",
                           isHovered
-                            ? "bg-amber-500/10 border-amber-500/30"
+                            ? "border-amber-500/30 bg-amber-500/10"
                             : isSelected
-                              ? "bg-cyan-500/10 border-cyan-500/30"
+                              ? "border-cyan-500/30 bg-cyan-500/10"
                               : "border-transparent",
                         )}
                         onMouseEnter={() => hoverElement(wall.id)}
                         onMouseLeave={() => hoverElement(null)}
                         onClick={() => select(wall.id)}
                       >
-                        <div className="font-semibold text-slate-100 mb-1 flex justify-between">
+                        <div className="mb-1 flex justify-between font-semibold text-slate-100">
                           <span>{wall.name}</span>
-                          <span className="text-slate-400 text-[9px] font-mono">
+                          <span className="font-mono text-[9px] text-slate-400">
                             U-Factor: {geom.overallUFactor.toFixed(3)} W/m²K
                           </span>
                         </div>
                         <table className={WORKSPACE_STYLES.subtable + " mb-2"}>
                           <thead>
-                            <tr className="border-b border-slate-800 text-slate-400 text-[9px]">
+                            <tr className="border-b border-slate-800 text-[9px] text-slate-400">
                               <th className="py-0.5">Material</th>
                               <th className="py-0.5">Dimensions</th>
                               <th className="py-0.5 text-right">Count</th>
@@ -545,7 +545,7 @@ export function QtoPanel() {
                                 key={idx}
                                 className={WORKSPACE_STYLES.subtableRow}
                               >
-                                <td className="py-0.5 capitalize text-slate-200">
+                                <td className="py-0.5 text-slate-200 capitalize">
                                   {item.material}
                                 </td>
                                 <td className={WORKSPACE_STYLES.subtableTdLabel}>
@@ -559,7 +559,7 @@ export function QtoPanel() {
                             ))}
                           </tbody>
                         </table>
-                        <div className="flex justify-between items-center text-[9px] bg-muted/30 p-1 rounded border border-border/50">
+                        <div className="flex items-center justify-between rounded border border-border/50 bg-muted/30 p-1 text-[9px]">
                           <span className="text-muted-foreground">
                             Thermal Resistance:
                           </span>
@@ -577,9 +577,9 @@ export function QtoPanel() {
 
           {/* Curtain Wall Wind Load & Structural Audit */}
           <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+            <h4 className="mb-1.5 flex items-center justify-between text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
               <span>Wind Load &amp; Attachment Audit</span>
-              <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[9px] h-4">
+              <Badge className="h-4 border-amber-500/20 bg-amber-500/10 text-[9px] text-amber-500">
                 REQ-UNIMP-026
               </Badge>
             </h4>
@@ -593,11 +593,11 @@ export function QtoPanel() {
                 );
               }
               return (
-                <div className="flex flex-col gap-1.5 max-h-[140px] overflow-y-auto pr-1">
+                <div className="flex max-h-[140px] flex-col gap-1.5 overflow-y-auto pr-1">
                   {warnings.map((w, idx) => (
                     <div
                       key={idx}
-                      className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium"
+                      className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] font-medium text-rose-500"
                     >
                       {w}
                     </div>
@@ -614,9 +614,9 @@ export function QtoPanel() {
         <div className="flex flex-col gap-3">
           {/* Door & Window Schedules (REQ-UNIMP-050) */}
           <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+            <h4 className="mb-1.5 flex items-center justify-between text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
               <span>Door &amp; Window Unit Schedule</span>
-              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] h-4">
+              <Badge className="h-4 border-primary/20 bg-primary/10 text-[9px] text-primary">
                 REQ-UNIMP-050
               </Badge>
             </h4>
@@ -624,13 +624,13 @@ export function QtoPanel() {
               const schedule = compileUnitSchedule(site.elements);
               if (schedule.length === 0) {
                 return (
-                  <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
+                  <div className="py-2 text-center text-[10px] text-muted-foreground/80">
                     No door or window elements drafted in the current site plan.
                   </div>
                 );
               }
               return (
-                <div className="flex flex-col gap-3 max-h-[220px] overflow-y-auto pr-1">
+                <div className="flex max-h-[220px] flex-col gap-3 overflow-y-auto pr-1">
                   {schedule.map((item) => {
                     const isHovered = hoveredElementId === item.id;
                     const isSelected = selection.includes(item.id);
@@ -638,22 +638,22 @@ export function QtoPanel() {
                       <div
                         key={item.id}
                         className={cn(
-                          "border-b border-border/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
+                          "cursor-pointer rounded border border-b border-border/40 p-1.5 pb-2 transition-colors duration-150 last:border-0 last:pb-0",
                           isHovered
-                            ? "bg-amber-500/10 border-amber-500/30"
+                            ? "border-amber-500/30 bg-amber-500/10"
                             : isSelected
-                              ? "bg-primary/10 border-primary/30"
+                              ? "border-primary/30 bg-primary/10"
                               : "border-transparent",
                         )}
                         onMouseEnter={() => hoverElement(item.id)}
                         onMouseLeave={() => hoverElement(null)}
                         onClick={() => select(item.id)}
                       >
-                        <div className="font-semibold text-foreground mb-1 flex justify-between">
+                        <div className="mb-1 flex justify-between font-semibold text-foreground">
                           <span>
                             {item.name} ({item.kind})
                           </span>
-                          <span className="text-muted-foreground text-[9px] capitalize">
+                          <span className="text-[9px] text-muted-foreground capitalize">
                             {item.type}
                           </span>
                         </div>
@@ -697,9 +697,9 @@ export function QtoPanel() {
 
           {/* Natural Lighting & ADA Egress Code Compliance (REQ-UNIMP-049) */}
           <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+            <h4 className="mb-1.5 flex items-center justify-between text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
               <span>Glazing &amp; Egress Code Auditing</span>
-              <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[9px] h-4">
+              <Badge className="h-4 border-amber-500/20 bg-amber-500/10 text-[9px] text-amber-500">
                 REQ-UNIMP-049
               </Badge>
             </h4>
@@ -714,11 +714,11 @@ export function QtoPanel() {
                 );
               }
               return (
-                <div className="flex flex-col gap-1.5 max-h-[140px] overflow-y-auto pr-1">
+                <div className="flex max-h-[140px] flex-col gap-1.5 overflow-y-auto pr-1">
                   {warnings.map((w, idx) => (
                     <div
                       key={idx}
-                      className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium"
+                      className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] font-medium text-rose-500"
                     >
                       {w}
                     </div>
@@ -753,7 +753,7 @@ export function QtoPanel() {
                 );
               }
               return (
-                <div className="flex flex-col gap-3 max-h-[220px] overflow-y-auto pr-1">
+                <div className="flex max-h-[220px] flex-col gap-3 overflow-y-auto pr-1">
                   {roofs.map((roof) => {
                     const res = calculateRoofGeometry(roof);
                     const isHovered = hoveredElementId === roof.id;
@@ -762,20 +762,20 @@ export function QtoPanel() {
                       <div
                         key={roof.id}
                         className={cn(
-                          "border-b border-slate-800/40 pb-2 last:border-0 last:pb-0 p-1.5 rounded cursor-pointer transition-colors duration-150 border",
+                          "cursor-pointer rounded border border-b border-slate-800/40 p-1.5 pb-2 transition-colors duration-150 last:border-0 last:pb-0",
                           isHovered
-                            ? "bg-amber-500/10 border-amber-500/30"
+                            ? "border-amber-500/30 bg-amber-500/10"
                             : isSelected
-                              ? "bg-cyan-500/10 border-cyan-500/30"
+                              ? "border-cyan-500/30 bg-cyan-500/10"
                               : "border-transparent",
                         )}
                         onMouseEnter={() => hoverElement(roof.id)}
                         onMouseLeave={() => hoverElement(null)}
                         onClick={() => select(roof.id)}
                       >
-                        <div className="font-semibold text-slate-100 mb-1 flex justify-between">
+                        <div className="mb-1 flex justify-between font-semibold text-slate-100">
                           <span>{roof.name}</span>
-                          <span className="text-slate-400 text-[9px] capitalize font-mono">
+                          <span className="font-mono text-[9px] text-slate-400 capitalize">
                             {roof.roofType} Roof
                           </span>
                         </div>
@@ -843,9 +843,9 @@ export function QtoPanel() {
 
           {/* Roof Ventilation & Drainage Compliance */}
           <div className="rounded-md border border-border bg-card p-2">
-            <h4 className="font-semibold text-muted-foreground uppercase tracking-wide text-[10px] mb-1.5 flex items-center justify-between">
+            <h4 className="mb-1.5 flex items-center justify-between text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
               <span>Ventilation &amp; Slope Auditing</span>
-              <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[9px] h-4">
+              <Badge className="h-4 border-amber-500/20 bg-amber-500/10 text-[9px] text-amber-500">
                 IRC R806.1
               </Badge>
             </h4>
@@ -855,7 +855,7 @@ export function QtoPanel() {
 
               if (!hasRoofs) {
                 return (
-                  <div className="text-[10px] text-muted-foreground/80 py-2 text-center">
+                  <div className="py-2 text-center text-[10px] text-muted-foreground/80">
                     No roofs drafted to audit.
                   </div>
                 );
@@ -871,11 +871,11 @@ export function QtoPanel() {
               }
 
               return (
-                <div className="flex flex-col gap-1.5 max-h-[140px] overflow-y-auto pr-1">
+                <div className="flex max-h-[140px] flex-col gap-1.5 overflow-y-auto pr-1">
                   {warnings.map((w, idx) => (
                     <div
                       key={idx}
-                      className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] text-rose-500 font-medium"
+                      className="rounded border border-rose-500/20 bg-rose-500/5 p-2 text-[10px] font-medium text-rose-500"
                     >
                       {w}
                     </div>
@@ -901,7 +901,7 @@ function Badge({
   return (
     <span
       className={cn(
-        "px-1.5 py-0.5 rounded text-[10px] font-medium border",
+        "rounded border px-1.5 py-0.5 text-[10px] font-medium",
         className,
       )}
     >

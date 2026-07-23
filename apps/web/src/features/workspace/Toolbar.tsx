@@ -49,22 +49,22 @@ export function Toolbar() {
                       aria-pressed={active}
                       aria-label={tool.label}
                       className={cn(
-                        "flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-200 relative group",
+                        "group relative flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-200",
                         active
-                          ? "bg-gradient-to-br from-primary to-blue-600 text-white shadow-md shadow-primary/20 scale-105"
-                          : "text-muted-foreground hover:bg-black/10 dark:hover:bg-white/10 hover:text-foreground hover:scale-110 active:scale-95",
+                          ? "scale-105 bg-gradient-to-br from-primary to-blue-600 text-white shadow-md shadow-primary/20"
+                          : "text-muted-foreground hover:scale-110 hover:bg-black/10 hover:text-foreground active:scale-95 dark:hover:bg-white/10",
                       )}
                     >
                       <Icon className="h-[18px] w-[18px]" />
                       {['parcel', 'region', 'road'].includes(tool.id as string) && (
-                        <div className="absolute bottom-[2px] right-[2px] w-0 h-0 border-l-[3px] border-l-transparent border-b-[3px] border-b-current opacity-40 group-hover:opacity-100" />
+                        <div className="absolute right-[2px] bottom-[2px] h-0 w-0 border-b-[3px] border-l-[3px] border-b-current border-l-transparent opacity-40 group-hover:opacity-100" />
                       )}
                     </button>
                   </TooltipTrigger>
                 </DropdownMenuTrigger>
-                <TooltipContent side="right" className="p-0 border-none bg-transparent">
-                  <div className="flex flex-col bg-popover text-popover-foreground border border-border rounded-md shadow-md overflow-hidden max-w-xs">
-                    <div className="px-3 py-2 flex items-center justify-between border-b border-border/50 gap-3">
+                <TooltipContent side="right" className="border-none bg-transparent p-0">
+                  <div className="flex max-w-xs flex-col overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-md">
+                    <div className="flex items-center justify-between gap-3 border-b border-border/50 px-3 py-2">
                       <span className="font-semibold">{tool.label}</span>
                       {tool.shortcut && (
                         <kbd className="rounded border border-border bg-muted/60 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground shadow-xs">
@@ -74,7 +74,7 @@ export function Toolbar() {
                     </div>
                     {/* Rich Diagram for complex engineering tools */}
                     {['road', 'alignment', 'grade'].includes(tool.id as string) && (
-                      <div className="p-2 bg-muted/30 border-b border-border/50 flex justify-center">
+                      <div className="flex justify-center border-b border-border/50 bg-muted/30 p-2">
                         {tool.id === 'road' && (
                           <svg width="120" height="60" viewBox="0 0 120 60" className="opacity-80">
                             <path d="M10,30 Q60,0 110,30" fill="none" stroke="hsl(var(--primary))" strokeWidth="6" />
@@ -185,7 +185,7 @@ export function Toolbar() {
             onClick={undo}
             disabled={!canUndo}
             aria-label="Undo"
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-all duration-200 hover:bg-black/10 dark:hover:bg-white/10 hover:text-foreground hover:scale-110 active:scale-95 disabled:opacity-30 disabled:hover:scale-100 disabled:hover:bg-transparent"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-all duration-200 hover:scale-110 hover:bg-black/10 hover:text-foreground active:scale-95 disabled:opacity-30 disabled:hover:scale-100 disabled:hover:bg-transparent dark:hover:bg-white/10"
           >
             <Undo2 className="h-[18px] w-[18px]" />
           </button>
@@ -199,7 +199,7 @@ export function Toolbar() {
             onClick={redo}
             disabled={!canRedo}
             aria-label="Redo"
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-all duration-200 hover:bg-black/10 dark:hover:bg-white/10 hover:text-foreground hover:scale-110 active:scale-95 disabled:opacity-30 disabled:hover:scale-100 disabled:hover:bg-transparent"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-all duration-200 hover:scale-110 hover:bg-black/10 hover:text-foreground active:scale-95 disabled:opacity-30 disabled:hover:scale-100 disabled:hover:bg-transparent dark:hover:bg-white/10"
           >
             <Redo2 className="h-[18px] w-[18px]" />
           </button>

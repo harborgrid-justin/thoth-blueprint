@@ -1,7 +1,8 @@
 import * as React from "react";
 import _ from "lodash";
-import { HardHat, Compass, Link2, X, PenTool, LayoutTemplate, Network } from "lucide-react";
+import { HardHat, Compass, Link2, PenTool, LayoutTemplate, Network } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DialogShell } from "@/components/layout";
 import { useCorridorDesignerState } from "./hooks/useCorridorDesignerState";
 import { AssemblyBuilderPanel } from "./AssemblyBuilderPanel";
 import { SURVEY_STYLES } from "./styles/surveyDesignSystem";
@@ -23,7 +24,7 @@ export function CorridorDesignerDialog() {
 
   const [builderOpen, setBuilderOpen] = React.useState(false);
   
-  if (!site || !open) {
+  if (!site) {
     return null;
   }
 
@@ -34,33 +35,28 @@ export function CorridorDesignerDialog() {
         onClose={() => setBuilderOpen(false)}
         assembly={assembly}
       />
-      <div className="absolute top-20 right-8 z-40 flex flex-col w-[450px] rounded-xl border border-border shadow-2xl overflow-hidden bg-card/90 backdrop-blur-md text-foreground animate-dialog-in">
-        {/* Header */}
-        <div className={SURVEY_STYLES.dialogHeader + " px-4 py-3 bg-background/60"}>
-          <div className="flex items-center gap-2">
-            <HardHat className="w-4 h-4 text-amber-400" />
-            <h2 className={SURVEY_STYLES.dialogTitle}>
-              Corridor Engine
-            </h2>
-          </div>
-          <button
-            onClick={() => setOpen(false)}
-            className={SURVEY_STYLES.btnIcon}
+      <DialogShell
+        open={open}
+        onOpenChange={setOpen}
+        title="Corridor Engine"
+        description="Sweep subassemblies along horizontal alignment & vertical profile baseline"
+        icon={<HardHat className="h-4 w-4 text-amber-400" />}
+        maxWidthClass="max-w-md"
+        footer={
+          <Button
+            onClick={handleExtrude}
+            className={SURVEY_STYLES.btnPrimary + " w-full"}
           >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Content */}
-        <div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto custom-scrollbar">
-          
+            <HardHat className="mr-2 h-4 w-4" /> Model Corridor
+          </Button>
+        }
+      >
+        <div className="space-y-6 text-xs">
           {/* Base Geometry */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 border-b border-border pb-1">
-              <Compass className="w-3.5 h-3.5 text-muted-foreground" />
-              <span className={SURVEY_STYLES.label}>
-                Geometry References
-              </span>
+              <Compass className="h-3.5 w-3.5 text-muted-foreground" />
+              <span className={SURVEY_STYLES.label}>Base Geometry</span>
             </div>
 
             <div className="flex flex-col gap-1.5">
@@ -111,7 +107,7 @@ export function CorridorDesignerDialog() {
           {/* Intersections & Islands */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 border-b border-border pb-1">
-              <Network className="w-3.5 h-3.5 text-muted-foreground" />
+              <Network className="h-3.5 w-3.5 text-muted-foreground" />
               <span className={SURVEY_STYLES.label}>
                 Intersections & Islands
               </span>
@@ -124,7 +120,7 @@ export function CorridorDesignerDialog() {
           {/* Assembly */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 border-b border-border pb-1">
-              <Link2 className="w-3.5 h-3.5 text-muted-foreground" />
+              <Link2 className="h-3.5 w-3.5 text-muted-foreground" />
               <span className={SURVEY_STYLES.label}>
                 Assembly Template
               </span>
@@ -132,8 +128,8 @@ export function CorridorDesignerDialog() {
 
             <div className={SURVEY_STYLES.card + " flex items-center justify-between"}>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-muted rounded-lg">
-                  <LayoutTemplate className="w-4 h-4 text-amber-400" />
+                <div className="rounded-lg bg-muted p-2">
+                  <LayoutTemplate className="h-4 w-4 text-amber-400" />
                 </div>
                 <div>
                   <div className="text-sm font-medium text-foreground">{assembly.name}</div>
@@ -143,25 +139,15 @@ export function CorridorDesignerDialog() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-xs h-8 text-amber-400 hover:text-amber-300 hover:bg-amber-400/10"
+                className="h-8 text-xs text-amber-400 hover:bg-amber-400/10 hover:text-amber-300"
                 onClick={() => setBuilderOpen(true)}
               >
-                <PenTool className="w-3.5 h-3.5 mr-2" /> Edit
+                <PenTool className="mr-2 h-3.5 w-3.5" /> Edit
               </Button>
             </div>
           </div>
-          
-          {/* Generation */}
-          <div className="pt-4 border-t border-border flex justify-end">
-            <Button
-              onClick={handleExtrude}
-              className={SURVEY_STYLES.btnPrimary + " w-full"}
-            >
-              <HardHat className="w-4 h-4 mr-2" /> Model Corridor
-            </Button>
-          </div>
         </div>
-      </div>
+      </DialogShell>
     </>
   );
 }

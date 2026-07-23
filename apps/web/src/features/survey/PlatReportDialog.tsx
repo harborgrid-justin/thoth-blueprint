@@ -15,13 +15,7 @@ import { elementMeta } from "@/lib/elementMeta";
 import { formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { PlatDrawing } from "./PlatDrawing";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { DialogShell } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -56,42 +50,37 @@ export function PlatReportDialog() {
   }
 
   return (
-    <Dialog open={platOpen} onOpenChange={(o) => !o && closePlat()}>
-      <DialogContent className={SURVEY_STYLES.dialogContainer + " max-w-5xl"}>
-        <DialogHeader>
-          <DialogTitle className={SURVEY_STYLES.dialogTitle}>
-            <Ruler className="h-5 w-5 text-amber-400" /> Plat &amp; Survey Report
-          </DialogTitle>
-          <DialogDescription className={SURVEY_STYLES.textSubtitle}>
-            Metes-and-bounds courses, corner coordinates, closure, and the legal
-            description for each tract in {site.name}.
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className={SURVEY_STYLES.layoutSidebarSm}>
-          <TractList
-            elements={surveyable}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-          />
-          <ScrollArea className="max-h-[60vh] min-w-0 pr-3">
-            {selected ? (
-              <TractReport
-                element={selected}
-                spatial={site.spatial}
-                siteName={site.name}
-                plss={site.plss}
-              />
-            ) : (
-              <div className="py-16 text-center text-sm text-muted-foreground">
-                No surveyable tracts yet. Draw a parcel or lot to generate a
-                plat.
-              </div>
-            )}
-          </ScrollArea>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <DialogShell
+      open={platOpen}
+      onOpenChange={(o) => !o && closePlat()}
+      title="Plat & Survey Report"
+      description={`Metes-and-bounds courses, corner coordinates, closure, and the legal description for each tract in ${site.name}.`}
+      icon={<Ruler className="h-5 w-5 text-amber-400" />}
+      maxWidthClass="max-w-5xl"
+    >
+      <div className={SURVEY_STYLES.layoutSidebarSm}>
+        <TractList
+          elements={surveyable}
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+        />
+        <ScrollArea className="max-h-[60vh] min-w-0 pr-3">
+          {selected ? (
+            <TractReport
+              element={selected}
+              spatial={site.spatial}
+              siteName={site.name}
+              plss={site.plss}
+            />
+          ) : (
+            <div className="py-16 text-center text-sm text-muted-foreground">
+              No surveyable tracts yet. Draw a parcel or lot to generate a
+              plat.
+            </div>
+          )}
+        </ScrollArea>
+      </div>
+    </DialogShell>
   );
 }
 
@@ -117,7 +106,7 @@ function TractList({
       <div className="flex flex-col gap-3 pr-2">
         {_.map([...groups.entries()], ([kind, list]) => (
           <div key={kind}>
-            <div className="mb-1 px-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+            <div className="mb-1 px-1 text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
               {elementMeta(kind as SpatialElement["kind"]).label}
             </div>
             <div className="flex flex-col gap-0.5">
@@ -139,7 +128,7 @@ function TractList({
                   className={cn(
                     "truncate rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                     el.id === selectedId
-                      ? "bg-primary/15 text-primary font-medium"
+                      ? "bg-primary/15 font-medium text-primary"
                       : "text-muted-foreground hover:bg-accent hover:text-foreground",
                   )}
                 >
@@ -399,7 +388,7 @@ function TractReport({
       </Section>
 
       <Section title="Legal Description" action={<CopyButton text={legal} />}>
-        <pre className="whitespace-pre-wrap rounded-md border border-border bg-background/60 p-3 font-mono text-[11px] leading-relaxed text-foreground">
+        <pre className="rounded-md border border-border bg-background/60 p-3 font-mono text-[11px] leading-relaxed whitespace-pre-wrap text-foreground">
           {legal}
         </pre>
       </Section>
@@ -445,7 +434,7 @@ function Section({
   return (
     <div>
       <div className="mb-1.5 flex items-center justify-between">
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
           {title}
         </h4>
         {action}
@@ -458,10 +447,10 @@ function Section({
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-md border border-border bg-background/50 px-2.5 py-1.5">
-      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+      <div className="text-[10px] tracking-wide text-muted-foreground uppercase">
         {label}
       </div>
-      <div className="mt-0.5 text-sm font-semibold tabular-nums text-foreground">
+      <div className="mt-0.5 text-sm font-semibold text-foreground tabular-nums">
         {value}
       </div>
     </div>

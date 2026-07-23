@@ -7,14 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { DialogShell, GridLayout } from "@/components/layout";
 import { DASHBOARD_STYLES } from "./styles/dashboardDesignSystem";
 
 type Template = NonNullable<CreateProjectInput["template"]>;
@@ -101,16 +94,25 @@ export function CreateProjectDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>New project</DialogTitle>
-          <DialogDescription>
-            Create a server-backed planning workspace. You can change everything
-            later.
-          </DialogDescription>
-        </DialogHeader>
-
+    <DialogShell
+      open={open}
+      onOpenChange={onOpenChange}
+      title="New project"
+      description="Create a server-backed planning workspace. You can change everything later."
+      icon={<Building2 className="h-5 w-5 text-primary" />}
+      maxWidthClass="max-w-xl"
+      footer={
+        <div className="flex w-full justify-end gap-2">
+          <Button variant="ghost" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
+          <Button onClick={handleCreate} disabled={busy || !name.trim()}>
+            Create project
+          </Button>
+        </div>
+      }
+    >
+      <div className="space-y-4">
         <div className={DASHBOARD_STYLES.formGroup}>
           <Label>Project name</Label>
           <Input
@@ -134,7 +136,7 @@ export function CreateProjectDialog({
 
         <div className={DASHBOARD_STYLES.formGroup}>
           <Label>Starter template</Label>
-          <div className={DASHBOARD_STYLES.templateGrid}>
+          <GridLayout cols={2} className="gap-2">
             {TEMPLATES.map((t) => {
               const Icon = t.icon;
               const active = t.id === template;
@@ -165,18 +167,9 @@ export function CreateProjectDialog({
                 </button>
               );
             })}
-          </div>
+          </GridLayout>
         </div>
-
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button onClick={handleCreate} disabled={busy || !name.trim()}>
-            Create project
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </DialogShell>
   );
 }

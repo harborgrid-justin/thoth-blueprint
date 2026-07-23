@@ -4,4 +4,41 @@
   .sheets-composer {
     @apply flex flex-col w-full max-w-6xl h-[88vh] bg-background border border-border rounded-2xl shadow-2xl overflow-hidden text-foreground animate-dialog-in;
   }
+
+  .sheets-dialog-container {
+    @apply max-w-6xl bg-slate-950 border-slate-800 text-slate-100 animate-dialog-in p-6 rounded-xl border shadow-2xl;
+  }
+
+  .sheets-dialog-header {
+    @apply flex flex-col gap-1 pb-3 border-b border-slate-800 mb-4;
+  }
+
+  .sheets-card {
+    @apply bg-slate-900/60 border border-slate-800 rounded-lg p-3 text-xs text-slate-200;
+  }
+
+  .sheets-sidebar {
+    @apply h-[62vh] w-52 shrink-0 rounded-md border border-border bg-slate-950/40;
+  }
+
+  .sheets-select {
+    @apply rounded border border-border bg-background px-2.5 py-1 text-xs text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors;
+  }
+
+  .sheets-input {
+    @apply w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 text-xs focus:outline-none focus:border-primary;
+  }
+
+  .sheets-btn-primary {
+    @apply px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs rounded transition-colors shadow-sm;
+  }
+
+  .sheets-btn-emerald {
+    @apply px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs rounded transition-colors shadow-sm;
+  }
+
+  .sheets-btn-outline {
+    @apply px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded transition-colors;
+  }
 }
+

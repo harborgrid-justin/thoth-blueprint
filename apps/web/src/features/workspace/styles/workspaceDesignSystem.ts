@@ -1,3 +1,5 @@
+import { LAYOUT_STYLES } from '@/styles/layoutTokens';
+
 /**
  * Standardized Design System Style Tokens & Centralized Classnames for Workspace Suite.
  * Maps to styles defined in `features/workspace/styles/workspace.css`.
@@ -30,10 +32,10 @@ export const WORKSPACE_STYLES = {
   dropdownSeparator: 'workspace-dropdown-separator',
   tooltipContent: 'workspace-tooltip-content',
 
-  // Centralized Grid Layouts
-  grid2Col: 'workspace-grid-2col',
-  grid3Col: 'workspace-grid-3col',
-  grid4Col: 'workspace-grid-4col',
+  // Centralized Grid Layouts (composed from central LAYOUT_STYLES)
+  grid2Col: LAYOUT_STYLES.grid2Col,
+  grid3Col: LAYOUT_STYLES.grid3Col,
+  grid4Col: LAYOUT_STYLES.grid4Col,
   layoutSidebar: 'workspace-layout-sidebar',
   layoutSidebarLg: 'workspace-layout-sidebar-lg',
 

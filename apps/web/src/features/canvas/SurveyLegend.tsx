@@ -46,10 +46,10 @@ export function SurveyLegend({ site }: { site: Site }) {
   }
 
   return (
-    <div className="absolute left-4 top-4 z-10 flex max-h-[80vh] w-64 select-none flex-col overflow-y-auto rounded-xl border border-border/60 bg-card/85 p-3 shadow-xl backdrop-blur-md transition-all duration-200 hover:bg-card/95">
+    <div className="absolute top-4 left-4 z-10 flex max-h-[80vh] w-64 flex-col overflow-y-auto rounded-xl border border-border/60 bg-card/85 p-3 shadow-xl backdrop-blur-md transition-all duration-200 select-none hover:bg-card/95">
       {(frameworkRef || plugin) && (
         <div className="mb-2.5 border-b border-border/60 pb-2">
-          <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+          <div className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
             {plugin ? plugin.name : "Survey Framework"}
           </div>
           {frameworkRef && (
@@ -133,13 +133,13 @@ function Section({
   children: ReactNode;
 }) {
   return (
-    <div className="mt-2.5 first:mt-0 border-t border-border/40 pt-2.5 first:border-0 first:pt-0">
-      <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+    <div className="mt-2.5 border-t border-border/40 pt-2.5 first:mt-0 first:border-0 first:pt-0">
+      <div className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
         {title}
       </div>
       <ul className="mt-1.5 flex flex-col gap-1">{children}</ul>
       {note && (
-        <p className="mt-1.5 text-[10px] italic text-muted-foreground/80">
+        <p className="mt-1.5 text-[10px] text-muted-foreground/80 italic">
           {note}
         </p>
       )}

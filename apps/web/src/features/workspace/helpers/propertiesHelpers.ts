@@ -82,10 +82,10 @@ export function updateUnderlayDimension(
   let w = currBounds.maxX - currBounds.minX;
   let h = currBounds.maxY - currBounds.minY;
 
-  if (field === "width") w = val;
-  else if (field === "height") h = val;
-  else if (field === "centerX") cx = val;
-  else if (field === "centerY") cy = val;
+  if (field === "width") {w = val;}
+  else if (field === "height") {h = val;}
+  else if (field === "centerX") {cx = val;}
+  else if (field === "centerY") {cy = val;}
 
   return {
     minX: cx - w / 2,

@@ -13,14 +13,14 @@ export function useSubdivisionBuilderState() {
   const [angle, setAngle] = React.useState(90);
 
   const parcel = React.useMemo(() => {
-    if (!site || !targetId) return null;
+    if (!site || !targetId) {return null;}
     return site.elements.find(
       (e) => e.id === targetId && e.kind === "parcel",
     ) as Parcel | null;
   }, [site, targetId]);
 
   function commitSubdivision() {
-    if (!parcel || !site) return;
+    if (!parcel || !site) {return;}
 
     const frontage = findLongestFrontage(parcel.boundary);
 

@@ -141,7 +141,7 @@ export function formatTaxPercent(rate: number): string {
 }
 
 export function getStairsSafetyWarnings(site: any): string[] {
-  if (!site) return [];
+  if (!site) {return [];}
   const stairs = site.elements.filter((e: any) => e.kind === "stair") as Stair[];
   const warnings: string[] = [];
   stairs.forEach((stair) => {
@@ -152,7 +152,7 @@ export function getStairsSafetyWarnings(site: any): string[] {
 }
 
 export function getCurtainWallWarnings(site: any): string[] {
-  if (!site) return [];
+  if (!site) {return [];}
   const walls = site.elements.filter((e: any) => e.kind === "curtainwall") as CurtainWall[];
   const warnings: string[] = [];
   walls.forEach((wall) => {
@@ -163,7 +163,7 @@ export function getCurtainWallWarnings(site: any): string[] {
 }
 
 export function getDoorWindowCodeWarnings(site: any): string[] {
-  if (!site) return [];
+  if (!site) {return [];}
   const warnings: string[] = [];
   const doors = site.elements.filter((e: any) => e.kind === "door") as DoorElement[];
   const windows = site.elements.filter((e: any) => e.kind === "window") as WindowElement[];
@@ -182,7 +182,7 @@ export function getDoorWindowCodeWarnings(site: any): string[] {
 }
 
 export function getRoofWarnings(site: any): string[] {
-  if (!site) return [];
+  if (!site) {return [];}
   const warnings: string[] = [];
   const roofs = site.elements.filter((e: any) => e.kind === "roof") as RoofElement[];
 

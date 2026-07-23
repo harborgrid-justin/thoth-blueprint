@@ -156,10 +156,10 @@ export function MetricsPanel() {
                     style={{ backgroundColor: slice.color }}
                   />
                   <span className="flex-1 text-foreground">{slice.label}</span>
-                  <span className="tabular-nums text-muted-foreground">
+                  <span className="text-muted-foreground tabular-nums">
                     {formatArea(slice.area, areaUnit)}
                   </span>
-                  <span className="w-10 text-right tabular-nums text-muted-foreground">
+                  <span className="w-10 text-right text-muted-foreground tabular-nums">
                     {formatPercent(slice.share)}
                   </span>
                 </li>

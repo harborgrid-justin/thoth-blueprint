@@ -48,7 +48,7 @@ export function TerrainPanel() {
   if (!terrain?.hasTerrain || !terrain.existing) {
     return (
       <div className="flex flex-col gap-3 p-3">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
           Terrain
         </h3>
         <div className="rounded-md border border-dashed border-border p-4 text-xs leading-relaxed text-muted-foreground">
@@ -81,7 +81,7 @@ export function TerrainPanel() {
 
   return (
     <div className={TERRAIN_STYLES.panel}>
-      <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+      <h3 className={TERRAIN_STYLES.sectionTitle}>
         Terrain
       </h3>
 
@@ -106,7 +106,7 @@ export function TerrainPanel() {
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <Label>Contour interval</Label>
-          <span className="text-xs tabular-nums text-foreground">
+          <span className="text-xs text-foreground tabular-nums">
             {formatNumber(contourInterval, 1)} {unit}
           </span>
         </div>
@@ -198,7 +198,7 @@ function ToggleRow({
   onChange: () => void;
 }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className={TERRAIN_STYLES.toggleRow}>
       <Label className="text-sm text-foreground">{label}</Label>
       <Switch checked={checked} onCheckedChange={onChange} />
     </div>
@@ -215,8 +215,8 @@ function Stat({
   tone?: "cut" | "fill";
 }) {
   return (
-    <div className="rounded-md border border-border bg-background/50 px-2.5 py-1.5">
-      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+    <div className={TERRAIN_STYLES.statCard}>
+      <div className="text-[10px] tracking-wide text-muted-foreground uppercase">
         {label}
       </div>
       <div

@@ -69,7 +69,7 @@ export function useRoadDesignStudioState() {
   const resolvedAlign = useMemo(() => resolveAlignment(sampleAlignment), [sampleAlignment]);
 
   const alignmentChecks = useMemo(() => {
-    if (!resolvedAlign) return [];
+    if (!resolvedAlign) {return [];}
     return validateAlignmentDesignSpeed(sampleAlignment, resolvedAlign);
   }, [sampleAlignment, resolvedAlign]);
 
@@ -132,7 +132,7 @@ export function useRoadDesignStudioState() {
   }, [site, terrainSurface]);
 
   const corridorSections = useMemo(() => {
-    if (!resolvedAlign) return [];
+    if (!resolvedAlign) {return [];}
     return buildCorridorSections(
       { id: "c1", name: "Corridor-1", alignmentId: sampleAlignment.id, profileId: sampleProfile.id, assemblyId: sampleAssembly.id, frequency: sampleInterval },
       sampleAlignment,
@@ -177,12 +177,12 @@ export function useRoadDesignStudioState() {
   );
 
   const sampleLinesGroup: SampleLineGroup = useMemo(() => {
-    if (!resolvedAlign) return { id: "slg-1", name: "Sample Lines", alignmentId: sampleAlignment.id, sampleLines: [] };
+    if (!resolvedAlign) {return { id: "slg-1", name: "Sample Lines", alignmentId: sampleAlignment.id, sampleLines: [] };}
     return generateSampleLines(sampleAlignment, resolvedAlign, sampleInterval, swathWidth);
   }, [resolvedAlign, sampleAlignment, sampleInterval, swathWidth]);
 
   const earthworkQTO = useMemo(() => {
-    if (!resolvedAlign) return null;
+    if (!resolvedAlign) {return null;}
     return calculateEarthworkVolumes(sampleLinesGroup, sampleGrid, sampleGrid, resolvedAlign);
   }, [sampleLinesGroup, sampleGrid, resolvedAlign]);
 

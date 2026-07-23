@@ -37,15 +37,15 @@ export const TransparentCommandsBar: React.FC = () => {
   return (
     <div className={SURVEY_STYLES.toolbar}>
       {/* REQ-019: Dedicated Transparent Commands Toolbar */}
-      <div className="flex flex-col gap-2 w-full">
+      <div className="flex w-full flex-col gap-2">
         <div className="flex items-center justify-between border-b border-border pb-2">
-          <div className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-            <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-1.5 text-xs font-bold tracking-wider text-amber-400 uppercase">
+            <svg className="h-4 w-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
             Transparent Commands (REQ-019)
           </div>
-          <span className="text-[10px] font-mono text-muted-foreground">Sub-commands active</span>
+          <span className="font-mono text-[10px] text-muted-foreground">Sub-commands active</span>
         </div>
 
         {/* Buttons REQ-020, REQ-021, REQ-022 */}
@@ -109,7 +109,7 @@ export const TransparentCommandsBar: React.FC = () => {
 
         {/* Inputs if active */}
         {activeCmd === 'BD' && (
-          <div className="grid grid-cols-3 gap-2 bg-background p-2 border border-border rounded text-xs">
+          <div className="grid grid-cols-3 gap-2 rounded border border-border bg-background p-2 text-xs">
             <div>
               <label className={SURVEY_STYLES.label}>Quadrant (1=NE,2=SE,3=SW,4=NW)</label>
               <input
@@ -144,7 +144,7 @@ export const TransparentCommandsBar: React.FC = () => {
 
         {/* Output log */}
         {log.length > 0 && (
-          <div className="max-h-24 overflow-y-auto bg-background p-2 border border-border rounded font-mono text-[11px] text-muted-foreground">
+          <div className="max-h-24 overflow-y-auto rounded border border-border bg-background p-2 font-mono text-[11px] text-muted-foreground">
             {log.slice(0, 5).map((entry, idx) => (
               <div key={idx} className="border-b border-slate-900/50 py-0.5">{entry}</div>
             ))}

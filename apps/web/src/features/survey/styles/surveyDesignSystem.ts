@@ -1,3 +1,5 @@
+import { LAYOUT_STYLES } from '@/styles/layoutTokens';
+
 /**
  * Standardized Design System Style Tokens & Centralized Classnames for Survey Suite.
  * Maps to styles defined in `features/survey/styles/survey.css`.
@@ -14,10 +16,10 @@ export const SURVEY_STYLES = {
   tabBar: 'survey-tab-bar',
   sidebar: 'survey-sidebar',
 
-  // Centralized Grid Layouts (div)
-  grid2Col: 'survey-grid-2col',
-  grid3Col: 'survey-grid-3col',
-  grid4Col: 'survey-grid-4col',
+  // Centralized Grid Layouts (composed from central LAYOUT_STYLES)
+  grid2Col: LAYOUT_STYLES.grid2Col,
+  grid3Col: LAYOUT_STYLES.grid3Col,
+  grid4Col: LAYOUT_STYLES.grid4Col,
   layoutSidebar: 'survey-layout-sidebar',
   layoutSidebarSm: 'survey-layout-sidebar-sm',
   layoutSidebarLg: 'survey-layout-sidebar-lg',

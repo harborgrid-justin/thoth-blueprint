@@ -499,15 +499,15 @@ export function useCanvasInteractions({
       const newSelection: string[] = [];
 
       site?.elements.forEach((el) => {
-        if (!isSpatialElement(el) || el.layerId && site.layers?.find(l => l.id === el.layerId)?.locked) return;
+        if (!isSpatialElement(el) || el.layerId && site.layers?.find(l => l.id === el.layerId)?.locked) {return;}
         
         let fullyInside = true;
         let anyInside = false;
 
         for (const pt of el.boundary) {
           const inside = pt.x >= minX && pt.x <= maxX && pt.y >= minY && pt.y <= maxY;
-          if (!inside) fullyInside = false;
-          if (inside) anyInside = true;
+          if (!inside) {fullyInside = false;}
+          if (inside) {anyInside = true;}
         }
 
         if (isCrossing ? anyInside : fullyInside) {

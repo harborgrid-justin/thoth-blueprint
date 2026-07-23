@@ -37,7 +37,7 @@ export function AliasMappingDialog({
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search commands or aliases..."
               value={search}

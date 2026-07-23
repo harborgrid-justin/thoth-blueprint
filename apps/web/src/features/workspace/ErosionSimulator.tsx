@@ -52,7 +52,7 @@ export function ErosionSimulatorPanel() {
 
         {/* Timeline Slider */}
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-mono text-muted-foreground">
+          <span className="font-mono text-[10px] text-muted-foreground">
             T+{activeStep}s
           </span>
           <input
@@ -61,9 +61,9 @@ export function ErosionSimulatorPanel() {
             max={maxStep}
             value={activeStep}
             onChange={handleScrub}
-            className="flex-1 h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
+            className="h-1.5 flex-1 cursor-pointer appearance-none rounded-lg bg-secondary accent-primary"
           />
-          <span className="text-[10px] font-mono text-muted-foreground">
+          <span className="font-mono text-[10px] text-muted-foreground">
             T+{maxStep}s
           </span>
         </div>
@@ -146,7 +146,7 @@ export function ErosionSimulatorPanel() {
             <span className={WORKSPACE_STYLES.statLabel + " block"}>
               Cum. Soil Runoff Loss
             </span>
-            <span className="text-sm font-bold font-mono text-rose-400">
+            <span className="font-mono text-sm font-bold text-rose-400">
               {frame.totalSoilLostKg.toFixed(1)} kg
             </span>
           </div>
@@ -154,7 +154,7 @@ export function ErosionSimulatorPanel() {
             <span className={WORKSPACE_STYLES.statLabel + " block"}>
               Total Water Volume
             </span>
-            <span className="text-sm font-bold font-mono text-cyan-400">
+            <span className="font-mono text-sm font-bold text-cyan-400">
               {frame.totalWaterRunoffLiters.toFixed(0)} L
             </span>
           </div>
@@ -167,7 +167,7 @@ export function ErosionSimulatorPanel() {
           Mitigation Barriers Load
         </h4>
         {frame.barrierStats.length === 0 ? (
-          <div className="text-[10px] text-muted-foreground/80 py-1 text-center">
+          <div className="py-1 text-center text-[10px] text-muted-foreground/80">
             No active silt fences or erosion bales drafted in the current
             design.
           </div>
@@ -181,7 +181,7 @@ export function ErosionSimulatorPanel() {
                     {(stat.loadRatio * 100).toFixed(0)}% Cap
                   </span>
                 </div>
-                <div className="w-full bg-secondary h-1.5 rounded-full overflow-hidden">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
                   <div
                     className={cn(
                       "h-full rounded-full transition-all duration-150",
@@ -194,7 +194,7 @@ export function ErosionSimulatorPanel() {
                     style={{ width: `${stat.loadRatio * 100}%` }}
                   />
                 </div>
-                <span className="text-[9px] text-muted-foreground text-right font-mono">
+                <span className="text-right font-mono text-[9px] text-muted-foreground">
                   {stat.sedimentTrappedKg.toFixed(1)} kg trapped
                 </span>
               </div>
@@ -209,24 +209,24 @@ export function ErosionSimulatorPanel() {
           EPA Stormwater Compliance Audit
         </h4>
         {complies ? (
-          <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-2 flex items-start gap-2 text-emerald-500">
-            <ShieldCheck className="h-4 w-4 shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2 rounded border border-emerald-500/20 bg-emerald-500/5 p-2 text-emerald-500">
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" />
             <div>
-              <p className="font-semibold text-[10px]">BMP Standards Met</p>
-              <p className="text-[9px] text-emerald-500/80 mt-0.5">
+              <p className="text-[10px] font-semibold">BMP Standards Met</p>
+              <p className="mt-0.5 text-[9px] text-emerald-500/80">
                 Runoff sediment levels are inside limits. Silt barriers have
                 sufficient retention capacity.
               </p>
             </div>
           </div>
         ) : (
-          <div className="rounded border border-rose-500/20 bg-rose-500/5 p-2 flex items-start gap-2 text-rose-500">
-            <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2 rounded border border-rose-500/20 bg-rose-500/5 p-2 text-rose-500">
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
             <div>
-              <p className="font-semibold text-[10px]">
+              <p className="text-[10px] font-semibold">
                 Stormwater Runoff Warning
               </p>
-              <ul className="list-disc pl-3 text-[9px] text-rose-500/80 mt-0.5 space-y-0.5">
+              <ul className="mt-0.5 list-disc space-y-0.5 pl-3 text-[9px] text-rose-500/80">
                 {highSoilLoss && (
                   <li>
                     Cumulative soil loss exceeds limits (max 50kg per shower).

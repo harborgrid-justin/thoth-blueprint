@@ -1,6 +1,6 @@
 import React from 'react';
 import { CIVIL_STYLES } from './styles/civilDesignSystem';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { DialogShell } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { usePanoramaEditor } from './hooks/usePanoramaEditor';
@@ -18,15 +18,27 @@ export const PanoramaElevationEditorDialog: React.FC<{ isOpen: boolean; onClose:
   } = usePanoramaEditor();
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-4xl bg-background border-border text-foreground p-6 animate-dialog-in">
-        <DialogHeader className={CIVIL_STYLES.sectionHeaderContainer}>
-          <DialogTitle className="flex items-center gap-2 text-emerald-400">
-            <div className={`${CIVIL_STYLES.titlePulseDot} bg-emerald-400`} />
-            Panorama Elevation Editor (REQ-191, REQ-192, REQ-197)
-          </DialogTitle>
-        </DialogHeader>
-
+    <DialogShell
+      open={isOpen}
+      onOpenChange={(open) => !open && onClose()}
+      title="Panorama Elevation Editor (REQ-191, REQ-192, REQ-197)"
+      icon={<div className={`${CIVIL_STYLES.titlePulseDot} bg-emerald-400`} />}
+      maxWidthClass="max-w-4xl"
+      footer={
+        <div className="flex w-full items-center justify-between text-xs">
+          <span className="text-muted-foreground">Total Vertices: {featureLine.points.length}</span>
+          <Button
+            onClick={onClose}
+            variant="outline"
+            size="sm"
+            className="border-input bg-muted text-foreground hover:bg-accent"
+          >
+            Close Panorama
+          </Button>
+        </div>
+      }
+    >
+      <div className="space-y-4">
         {/* Toolbar Controls */}
         <div className={CIVIL_STYLES.toolbarRow}>
           <div className="flex items-center gap-3">
@@ -36,12 +48,12 @@ export const PanoramaElevationEditorDialog: React.FC<{ isOpen: boolean; onClose:
               step="0.1"
               value={targetGrade}
               onChange={(e) => setTargetGrade(Number(e.target.value))}
-              className="w-20 bg-card border-input text-foreground h-8 text-xs"
+              className="h-8 w-20 border-input bg-card text-xs text-foreground"
             />
             <Button
               onClick={handleApplySlope}
               size="sm"
-              className="bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs h-8"
+              className={CIVIL_STYLES.btnEmerald}
             >
               Set Grade/Slope (REQ-192)
             </Button>
@@ -53,7 +65,7 @@ export const PanoramaElevationEditorDialog: React.FC<{ isOpen: boolean; onClose:
               id="chk-rebuild"
               checked={autoRebuild}
               onChange={(e) => setAutoRebuild(e.target.checked)}
-              className="rounded bg-card border-input text-emerald-500 focus:ring-0"
+              className="rounded border-input bg-card text-emerald-500 focus:ring-0"
             />
             <label htmlFor="chk-rebuild" className="cursor-pointer text-xs text-muted-foreground">
               Rebuild Automatic Surface Updates (REQ-197)
@@ -62,35 +74,35 @@ export const PanoramaElevationEditorDialog: React.FC<{ isOpen: boolean; onClose:
         </div>
 
         {/* Panorama Table Grid */}
-        <div className="max-h-72 overflow-auto border border-border rounded-lg bg-background">
-          <table className="w-full text-left border-collapse text-xs">
-            <thead className="bg-muted text-emerald-400 sticky top-0 font-mono">
+        <div className={CIVIL_STYLES.tableContainer}>
+          <table className={CIVIL_STYLES.table}>
+            <thead>
               <tr>
-                <th className="px-3 py-2 border-b border-input">Vertex Index</th>
-                <th className="px-3 py-2 border-b border-input">Station (ft)</th>
-                <th className="px-3 py-2 border-b border-input">Elevation (ft)</th>
-                <th className="px-3 py-2 border-b border-input">Length (ft)</th>
-                <th className="px-3 py-2 border-b border-input">Grade Back (%)</th>
-                <th className="px-3 py-2 border-b border-input">Grade Ahead (%)</th>
-                <th className="px-3 py-2 border-b border-input text-right">Actions</th>
+                <th className={CIVIL_STYLES.tableHeaderRow}>Vertex Index</th>
+                <th className={CIVIL_STYLES.tableHeaderRow}>Station (ft)</th>
+                <th className={CIVIL_STYLES.tableHeaderRow}>Elevation (ft)</th>
+                <th className={CIVIL_STYLES.tableHeaderRow}>Length (ft)</th>
+                <th className={CIVIL_STYLES.tableHeaderRow}>Grade Back (%)</th>
+                <th className={CIVIL_STYLES.tableHeaderRow}>Grade Ahead (%)</th>
+                <th className={`${CIVIL_STYLES.tableHeaderRow} text-right`}>Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60 font-mono text-foreground">
               {rows.map((row, idx) => (
-                <tr key={idx} className="hover:bg-muted/40">
-                  <td className="px-3 py-2 font-bold text-cyan-300">P{idx + 1}</td>
-                  <td className="px-3 py-2">{row.station.toFixed(2)}</td>
-                  <td className="px-3 py-2 font-semibold text-emerald-300">{row.elevation.toFixed(2)}</td>
-                  <td className="px-3 py-2">{row.length.toFixed(2)}</td>
-                  <td className="px-3 py-2">{row.gradeBackPercent.toFixed(2)}%</td>
-                  <td className="px-3 py-2">{row.gradeAheadPercent.toFixed(2)}%</td>
-                  <td className="px-3 py-2 text-right">
+                <tr key={idx} className={CIVIL_STYLES.tableRow}>
+                  <td className={`${CIVIL_STYLES.tableCell} font-bold text-cyan-300`}>P{idx + 1}</td>
+                  <td className={CIVIL_STYLES.tableCell}>{row.station.toFixed(2)}</td>
+                  <td className={`${CIVIL_STYLES.tableCell} font-semibold text-emerald-300`}>{row.elevation.toFixed(2)}</td>
+                  <td className={CIVIL_STYLES.tableCell}>{row.length.toFixed(2)}</td>
+                  <td className={CIVIL_STYLES.tableCell}>{row.gradeBackPercent.toFixed(2)}%</td>
+                  <td className={CIVIL_STYLES.tableCell}>{row.gradeAheadPercent.toFixed(2)}%</td>
+                  <td className={`${CIVIL_STYLES.tableCell} text-right`}>
                     <Button
                       onClick={() => handleDeletePI(idx)}
                       disabled={rows.length <= 2}
                       variant="destructive"
                       size="sm"
-                      className="h-6 text-[11px] px-2 bg-rose-950/70 hover:bg-rose-800 text-rose-300 border border-rose-800"
+                      className="h-6 border border-rose-800 bg-rose-950/70 px-2 text-[11px] text-rose-300 hover:bg-rose-800"
                     >
                       Delete PI (REQ-189)
                     </Button>
@@ -100,20 +112,7 @@ export const PanoramaElevationEditorDialog: React.FC<{ isOpen: boolean; onClose:
             </tbody>
           </table>
         </div>
-
-        {/* Footer */}
-        <div className="flex justify-between items-center border-t border-border pt-3 text-xs">
-          <span className="text-muted-foreground">Total Vertices: {featureLine.points.length}</span>
-          <Button
-            onClick={onClose}
-            variant="outline"
-            size="sm"
-            className="border-input text-foreground bg-muted hover:bg-accent"
-          >
-            Close Panorama
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </DialogShell>
   );
 };

@@ -1,5 +1,4 @@
-import type { ElementKind } from "@thoth/domain";
-import type { NetworkKind, RoadClass } from "@thoth/domain";
+import type { ElementKind, NetworkKind, RoadClass  } from "@thoth/domain";
 import {
   Building2,
   Globe,

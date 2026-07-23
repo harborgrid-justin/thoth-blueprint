@@ -70,18 +70,18 @@ export const ProspectorTreePalette: React.FC = () => {
         <div
           onClick={() => isFolder && toggleNode(node.id)}
           style={getTreeIndentStyle(depth)}
-          className="flex items-center justify-between py-1.5 px-2 hover:bg-muted/60 rounded cursor-pointer transition text-xs select-none"
+          className="flex cursor-pointer items-center justify-between rounded px-2 py-1.5 text-xs transition select-none hover:bg-muted/60"
         >
           <div className="flex items-center gap-1.5 text-foreground">
             {isFolder ? (
-              <span className="text-muted-foreground font-mono text-[10px] w-3 text-center">
+              <span className="w-3 text-center font-mono text-[10px] text-muted-foreground">
                 {isExp ? '▼' : '►'}
               </span>
             ) : (
               <span className="w-3" />
             )}
 
-            <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-3.5 w-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 002 2z" />
             </svg>
 
@@ -105,16 +105,16 @@ export const ProspectorTreePalette: React.FC = () => {
   };
 
   return (
-    <div className="w-72 bg-card border-r border-border text-foreground flex flex-col h-full shadow-2xl">
-      <div className="p-3 bg-background border-b border-border flex justify-between items-center">
+    <div className="flex h-full w-72 flex-col border-r border-border bg-card text-foreground shadow-2xl">
+      <div className="flex items-center justify-between border-b border-border bg-background p-3">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
-          <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">Prospector Tree</span>
+          <div className="h-2.5 w-2.5 animate-pulse rounded-full bg-cyan-400" />
+          <span className="text-xs font-bold tracking-wider text-cyan-400 uppercase">Prospector Tree</span>
         </div>
-        <span className="text-[10px] font-mono text-muted-foreground">Civil 3D Suite</span>
+        <span className="font-mono text-[10px] text-muted-foreground">Civil 3D Suite</span>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-1.5 flex flex-col gap-0.5">
+      <div className="flex flex-1 flex-col gap-0.5 overflow-y-auto p-1.5">
         {prospectorData.map(node => renderNode(node, 0))}
       </div>
     </div>

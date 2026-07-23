@@ -47,7 +47,7 @@ function formatSegmentBearing(p1: Point, p2: Point): string {
   const dx = p2.x - p1.x;
   const dy = p2.y - p1.y;
   let angle = Math.atan2(dx, dy) * (180 / Math.PI);
-  if (angle < 0) angle += 360;
+  if (angle < 0) {angle += 360;}
 
   let ns: string;
   let ew: string;
@@ -83,13 +83,13 @@ export function PlatSheetDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-6xl bg-background border-border text-foreground animate-dialog-in">
+      <DialogContent className="max-w-6xl animate-dialog-in border-border bg-background text-foreground">
         <DialogHeader>
           <DialogTitle className={SURVEY_STYLES.dialogTitle + " justify-between"}>
             <div className="flex items-center gap-2">
               <LayoutTemplate className="h-5 w-5 text-amber-400" /> Plat Sheet Composer
             </div>
-            <div className="flex items-center rounded-md border border-border bg-card p-0.5 text-xs mr-6">
+            <div className="mr-6 flex items-center rounded-md border border-border bg-card p-0.5 text-xs">
               <button
                 type="button"
                 onClick={() => setSheetView("handdrawn")}
@@ -211,7 +211,7 @@ export function PlatSheetDialog() {
 
           {caps.certificates && plugin.certificates.length > 0 && (
             <div className="mt-4">
-              <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              <h4 className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
                 Certificates ({plugin.name})
               </h4>
               <div className="grid gap-3 sm:grid-cols-2">
@@ -220,7 +220,7 @@ export function PlatSheetDialog() {
                     key={c.id}
                     className="rounded-md border border-border bg-background/60 p-3"
                   >
-                    <div className="text-xs font-semibold uppercase tracking-wide text-foreground">
+                    <div className="text-xs font-semibold tracking-wide text-foreground uppercase">
                       {c.title}
                     </div>
                     <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
@@ -411,7 +411,7 @@ function PlanWindow({ site, plugin }: { site: Site; plugin: RegionPlugin }) {
             const dx = p2.x - p1.x;
             const dy = p2.y - p1.y;
             const len = Math.sqrt(dx * dx + dy * dy);
-            if (len < 1) return null;
+            if (len < 1) {return null;}
 
             const mx = (sp1.x + sp2.x) / 2;
             const my = (sp1.y + sp2.y) / 2;
@@ -761,7 +761,7 @@ function CapabilitiesRow({
 }) {
   return (
     <div className="mt-4">
-      <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+      <h4 className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
         Enabled capabilities
       </h4>
       <div className="flex flex-wrap gap-1.5">

@@ -14,14 +14,14 @@ export function AssemblyBuilderPanel({
   onClose,
   assembly,
 }: AssemblyBuilderPanelProps) {
-  if (!open) return null;
+  if (!open) {return null;}
 
   return (
-    <div className="absolute top-24 left-8 z-50 flex flex-col w-96 rounded-xl border border-border shadow-2xl overflow-hidden bg-card/90 backdrop-blur-md text-foreground">
+    <div className="absolute top-24 left-8 z-50 flex w-96 flex-col overflow-hidden rounded-xl border border-border bg-card/90 text-foreground shadow-2xl backdrop-blur-md">
       {/* Header */}
       <div className={SURVEY_STYLES.dialogHeader + " px-4 py-3 bg-background/60"}>
         <div className="flex items-center gap-2">
-          <Layers className="w-4 h-4 text-amber-400" />
+          <Layers className="h-4 w-4 text-amber-400" />
           <h2 className={SURVEY_STYLES.dialogTitle}>
             Assembly Builder
           </h2>
@@ -30,12 +30,12 @@ export function AssemblyBuilderPanel({
           onClick={onClose}
           className={SURVEY_STYLES.btnIcon}
         >
-          <X className="w-4 h-4" />
+          <X className="h-4 w-4" />
         </button>
       </div>
 
       {/* Content */}
-      <div className="p-4 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
+      <div className="custom-scrollbar max-h-[70vh] space-y-6 overflow-y-auto p-4">
         {/* Assembly Name */}
         <div>
           <label className={SURVEY_STYLES.label}>
@@ -54,7 +54,7 @@ export function AssemblyBuilderPanel({
             <span className={SURVEY_STYLES.label}>
               Left Side
             </span>
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-white hover:bg-muted">
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:bg-muted hover:text-white">
               <Plus className="h-3.5 w-3.5" />
             </Button>
           </div>
@@ -80,7 +80,7 @@ export function AssemblyBuilderPanel({
             <span className={SURVEY_STYLES.label}>
               Right Side
             </span>
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-white hover:bg-muted">
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:bg-muted hover:text-white">
               <Plus className="h-3.5 w-3.5" />
             </Button>
           </div>
@@ -99,14 +99,14 @@ function SubassemblyRow({ sub, index }: { sub: Subassembly; index: number }) {
   return (
     <div className={SURVEY_STYLES.cardSubtle + " flex items-center justify-between group cursor-pointer"}>
       <div className="flex items-center gap-3">
-        <span className="text-[10px] font-mono text-muted-foreground">{index}</span>
+        <span className="font-mono text-[10px] text-muted-foreground">{index}</span>
         <div>
           <p className="text-xs font-medium text-foreground">{sub.name}</p>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{sub.type}</p>
+          <p className="text-[10px] tracking-wider text-muted-foreground uppercase">{sub.type}</p>
         </div>
       </div>
-      <button className="text-slate-500 hover:text-amber-400 transition-colors opacity-0 group-hover:opacity-100">
-        <Settings2 className="w-4 h-4" />
+      <button className="text-slate-500 opacity-0 transition-colors group-hover:opacity-100 hover:text-amber-400">
+        <Settings2 className="h-4 w-4" />
       </button>
     </div>
   );

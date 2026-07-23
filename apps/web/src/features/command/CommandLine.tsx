@@ -30,7 +30,7 @@ export function CommandLine() {
 
   const handleCommand = (cmd: string) => {
     const trimmed = cmd.trim().toLowerCase();
-    if (!trimmed) return;
+    if (!trimmed) {return;}
     setInput("");
   };
 

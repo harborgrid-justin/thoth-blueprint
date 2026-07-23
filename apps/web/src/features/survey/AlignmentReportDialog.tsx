@@ -11,13 +11,7 @@ import {
   type SpatialContext,
 } from "@thoth/domain";
 import { cn } from "@/lib/utils";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { DialogShell } from "@/components/layout";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAlignmentReportState } from "./hooks/useAlignmentReportState";
 import { curveLabel } from "./helpers/alignmentReportHelpers";
@@ -44,54 +38,48 @@ export function AlignmentReportDialog() {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className={SURVEY_STYLES.dialogContainer + " max-w-4xl"}>
-        <DialogHeader>
-          <DialogTitle className={SURVEY_STYLES.dialogTitle}>
-            <Spline className="h-5 w-5 text-amber-400" /> Alignment &amp;
-            Stationing
-          </DialogTitle>
-          <DialogDescription className={SURVEY_STYLES.textSubtitle}>
-            Horizontal baselines with continuous stationing and curve data for{" "}
-            {site.name}.
-          </DialogDescription>
-        </DialogHeader>
-
-        {alignments.length === 0 ? (
-          <div className={SURVEY_STYLES.cardSubtle + " py-16 text-center text-sm text-muted-foreground"}>
-            No alignments yet. Draw one with the Alignment tool (I) — click each
-            PI, then Enter — to generate stationing and curve data.
+    <DialogShell
+      open={open}
+      onOpenChange={setOpen}
+      title="Alignment & Stationing"
+      description={`Horizontal baselines with continuous stationing and curve data for ${site.name}.`}
+      icon={<Spline className="h-5 w-5 text-amber-400" />}
+      maxWidthClass="max-w-4xl"
+    >
+      {alignments.length === 0 ? (
+        <div className={SURVEY_STYLES.cardSubtle + " py-16 text-center text-sm text-muted-foreground"}>
+          No alignments yet. Draw one with the Alignment tool (I) — click each
+          PI, then Enter — to generate stationing and curve data.
+        </div>
+      ) : (
+        <div className={SURVEY_STYLES.layoutSidebarSm}>
+          <div className="flex flex-col gap-0.5">
+            {_.map(alignments, (a) => (
+              <button
+                key={a.id}
+                type="button"
+                onClick={() => selectAlignment(a.id)}
+                onMouseEnter={() => hoverAlignment(a.id)}
+                onMouseLeave={() => hoverAlignment(null)}
+                className={cn(
+                  "truncate rounded-md px-2 py-1.5 text-left text-sm transition-colors",
+                  a.id === (selected?.id ?? "")
+                    ? "border border-amber-500/30 bg-amber-500/20 font-medium text-amber-300"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                )}
+              >
+                {a.name}
+              </button>
+            ))}
           </div>
-        ) : (
-          <div className={SURVEY_STYLES.layoutSidebarSm}>
-            <div className="flex flex-col gap-0.5">
-              {_.map(alignments, (a) => (
-                <button
-                  key={a.id}
-                  type="button"
-                  onClick={() => selectAlignment(a.id)}
-                  onMouseEnter={() => hoverAlignment(a.id)}
-                  onMouseLeave={() => hoverAlignment(null)}
-                  className={cn(
-                    "truncate rounded-md px-2 py-1.5 text-left text-sm transition-colors",
-                    a.id === (selected?.id ?? "")
-                      ? "bg-amber-500/20 text-amber-300 font-medium border border-amber-500/30"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                  )}
-                >
-                  {a.name}
-                </button>
-              ))}
-            </div>
-            <ScrollArea className="max-h-[60vh] min-w-0 pr-3">
-              {selected && (
-                <AlignmentReport alignment={selected} spatial={site.spatial} />
-              )}
-            </ScrollArea>
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
+          <ScrollArea className="max-h-[60vh] min-w-0 pr-3">
+            {selected && (
+              <AlignmentReport alignment={selected} spatial={site.spatial} />
+            )}
+          </ScrollArea>
+        </div>
+      )}
+    </DialogShell>
   );
 }
 

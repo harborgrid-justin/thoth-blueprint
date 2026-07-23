@@ -107,7 +107,7 @@ export function CheckpointsDialog({
                         {cp.note}
                       </div>
                     )}
-                    <div className="mt-0.5 text-[11px] font-mono text-muted-foreground">
+                    <div className="mt-0.5 font-mono text-[11px] text-muted-foreground">
                       {cp.authorName} · {formatCheckpointTime(cp.createdAt)}
                     </div>
                   </div>

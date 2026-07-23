@@ -185,6 +185,10 @@
     @apply bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white;
   }
 
+  .civil-btn-cyan {
+    @apply bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white;
+  }
+
   .civil-btn-outline {
     @apply bg-card border border-border text-foreground hover:bg-accent hover:text-accent-foreground;
   }

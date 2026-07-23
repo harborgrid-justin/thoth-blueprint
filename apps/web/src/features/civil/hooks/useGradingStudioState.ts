@@ -25,7 +25,7 @@ export function useGradingStudioState() {
 
   // Candidate regions/pads from site
   const candidateRegions = useMemo(() => {
-    if (!site) return [];
+    if (!site) {return [];}
     return site.elements.filter(
       (e): e is SpatialElement =>
         (e.kind === "region" || e.kind === "parcel" || e.kind === "lot" || e.kind === "grade") &&
@@ -36,13 +36,13 @@ export function useGradingStudioState() {
   }, [site]);
 
   const targetRegion = useMemo(() => {
-    if (!candidateRegions.length) return null;
+    if (!candidateRegions.length) {return null;}
     if (selectedRegionId) {
       return candidateRegions.find((r) => r.id === selectedRegionId) ?? candidateRegions[0];
     }
     if (selectedIds.length) {
       const match = candidateRegions.find((r) => selectedIds.includes(r.id));
-      if (match) return match;
+      if (match) {return match;}
     }
     return candidateRegions[0];
   }, [candidateRegions, selectedRegionId, selectedIds]);
@@ -106,7 +106,7 @@ export function useGradingStudioState() {
 
   // Commit grading pad element to canvas
   const commitGradingPad = useCallback(() => {
-    if (!targetRegion) return;
+    if (!targetRegion) {return;}
     useWorkspaceStore.getState().addElements([
       {
         id: `grading-pad-${Date.now()}`,

@@ -34,15 +34,15 @@ export function ScaleBar() {
   const label = `${nice.toLocaleString()} ${unitLabel(unit)}`;
 
   return (
-    <div className="pointer-events-none absolute bottom-4 right-4 z-10 flex select-none flex-col items-end gap-1 rounded-lg border border-border/60 bg-card/80 px-2.5 py-1.5 text-xs shadow-lg backdrop-blur-md transition-all duration-200">
-      <span className="font-mono text-[11px] font-medium tabular-nums text-muted-foreground">
+    <div className="pointer-events-none absolute right-4 bottom-4 z-10 flex flex-col items-end gap-1 rounded-lg border border-border/60 bg-card/80 px-2.5 py-1.5 text-xs shadow-lg backdrop-blur-md transition-all duration-200 select-none">
+      <span className="font-mono text-[11px] font-medium text-muted-foreground tabular-nums">
         {label}
       </span>
       <div
         className="relative h-2 border-x-2 border-b-2 border-foreground/80"
         style={{ width: `${widthPx}px` }}
       >
-        <div className="absolute left-1/2 top-0 h-2 w-0.5 -translate-x-1/2 bg-foreground/80" />
+        <div className="absolute top-0 left-1/2 h-2 w-0.5 -translate-x-1/2 bg-foreground/80" />
       </div>
     </div>
   );
@@ -54,7 +54,7 @@ export function ScaleBar() {
  */
 export function NorthArrow() {
   return (
-    <div className="pointer-events-auto absolute right-4 top-4 z-10 flex cursor-pointer select-none flex-col items-center justify-center gap-0.5 rounded-xl border border-border/60 bg-card/80 p-2 shadow-lg backdrop-blur-md transition-all duration-200 hover:scale-105 hover:bg-card/95 hover:shadow-xl">
+    <div className="pointer-events-auto absolute top-4 right-4 z-10 flex cursor-pointer flex-col items-center justify-center gap-0.5 rounded-xl border border-border/60 bg-card/80 p-2 shadow-lg backdrop-blur-md transition-all duration-200 select-none hover:scale-105 hover:bg-card/95 hover:shadow-xl">
       <div className="relative flex items-center justify-center">
         <Compass className="h-6 w-6 text-primary/80 transition-transform duration-300" />
         <svg
@@ -92,11 +92,11 @@ export function Legend() {
     LAND_USE_DEFINITIONS.find((d) => d.category === c)?.label ?? c;
 
   return (
-    <div className="absolute bottom-4 left-1/2 z-10 w-52 -translate-x-1/2 select-none rounded-xl border border-border/60 bg-card/85 p-2.5 shadow-xl backdrop-blur-md transition-all duration-200 hover:bg-card/95">
+    <div className="absolute bottom-4 left-1/2 z-10 w-52 -translate-x-1/2 rounded-xl border border-border/60 bg-card/85 p-2.5 shadow-xl backdrop-blur-md transition-all duration-200 select-none hover:bg-card/95">
       <button
         type="button"
         onClick={() => setCollapsed((c) => !c)}
-        className="flex w-full items-center justify-between rounded-lg px-2 py-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+        className="flex w-full items-center justify-between rounded-lg px-2 py-1 text-[11px] font-bold tracking-wider text-muted-foreground uppercase transition-colors hover:text-foreground"
       >
         <span>Land Use Legend</span>
         {collapsed ? (

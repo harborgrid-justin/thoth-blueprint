@@ -208,7 +208,7 @@ function ProjectCard({
         </div>
       </Link>
 
-      <div className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="absolute top-2 right-2 opacity-0 transition-opacity group-hover:opacity-100">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button

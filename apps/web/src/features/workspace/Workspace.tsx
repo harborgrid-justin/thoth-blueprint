@@ -296,8 +296,8 @@ export function Workspace() {
         </main>
 
         {/* Floating TopBar */}
-        <div className="absolute top-4 left-4 right-4 z-10 pointer-events-none">
-          <div className="pointer-events-auto glass-panel rounded-xl overflow-hidden shadow-sm">
+        <div className="pointer-events-none absolute top-4 right-4 left-4 z-10">
+          <div className="pointer-events-auto overflow-hidden rounded-xl glass-panel shadow-sm">
             <TopBar
               project={project}
               saving={saving}
@@ -308,8 +308,8 @@ export function Workspace() {
         </div>
 
         {/* Floating Toolbar */}
-        <div className="absolute top-20 left-4 bottom-4 z-10 pointer-events-none flex">
-          <div className="pointer-events-auto glass-panel rounded overflow-hidden shadow-lg p-1 flex">
+        <div className="pointer-events-none absolute top-20 bottom-4 left-4 z-10 flex">
+          <div className="pointer-events-auto flex overflow-hidden rounded glass-panel p-1 shadow-lg">
             <Toolbar />
           </div>
         </div>
@@ -319,27 +319,27 @@ export function Workspace() {
         <StatusBar />
 
         {/* Floating Sidebar (Properties / Layers / etc.) */}
-        <div className="absolute top-20 right-4 bottom-4 z-10 flex pointer-events-none">
+        <div className="pointer-events-none absolute top-20 right-4 bottom-4 z-10 flex">
           {/* Resize handle */}
           <div
-            className="w-3 shrink-0 cursor-col-resize pointer-events-auto flex items-center justify-center group"
+            className="group pointer-events-auto flex w-3 shrink-0 cursor-col-resize items-center justify-center"
             onPointerDown={onSidebarPointerDown}
             onPointerMove={onSidebarPointerMove}
             onPointerUp={onSidebarPointerUp}
           >
-            <div className="h-12 w-1 rounded-full bg-border/40 group-hover:bg-primary transition-colors duration-200" />
+            <div className="h-12 w-1 rounded-full bg-border/40 transition-colors duration-200 group-hover:bg-primary" />
           </div>
 
           <aside
             style={{ width: sidebarWidth }}
-            className="flex flex-col glass-panel rounded-xl pointer-events-auto ml-1 overflow-hidden shadow-2xl"
+            className="pointer-events-auto ml-1 flex flex-col overflow-hidden rounded-xl glass-panel shadow-2xl"
           >
             <Tabs
               value={tab}
               onValueChange={setTab}
               className="flex min-h-0 flex-1 flex-col"
             >
-              <TabsList className="m-2 grid grid-cols-7 bg-muted/50 rounded-lg">
+              <TabsList className="m-2 grid grid-cols-7 rounded-lg bg-muted/50">
                 <TabsTrigger value="inspect" title="Inspect" className="rounded-md">
                   <SlidersHorizontal className="h-4 w-4" />
                 </TabsTrigger>

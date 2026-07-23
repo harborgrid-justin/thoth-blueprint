@@ -96,7 +96,7 @@ export function useSubdivisionStudioState() {
 
   // Selectable candidate parcels from the site
   const candidateParcels = useMemo(() => {
-    if (!site) return [];
+    if (!site) {return [];}
     return site.elements.filter(
       (e): e is SpatialElement =>
         (e.kind === "parcel" || e.kind === "region" || e.kind === "lot") &&
@@ -108,13 +108,13 @@ export function useSubdivisionStudioState() {
 
   // Active parcel geometry
   const targetParcel = useMemo(() => {
-    if (!candidateParcels.length) return null;
+    if (!candidateParcels.length) {return null;}
     if (selectedParcelId) {
       return candidateParcels.find((p) => p.id === selectedParcelId) ?? candidateParcels[0];
     }
     if (selectedIds.length) {
       const match = candidateParcels.find((p) => selectedIds.includes(p.id));
-      if (match) return match;
+      if (match) {return match;}
     }
     return candidateParcels[0];
   }, [candidateParcels, selectedParcelId, selectedIds]);
@@ -210,7 +210,7 @@ export function useSubdivisionStudioState() {
 
   // Commit lots to canvas
   const commitToCanvas = useCallback(() => {
-    if (!subdivisionResult.lots.length) return;
+    if (!subdivisionResult.lots.length) {return;}
     const newElements = subdivisionResult.lots.map((lot, idx) => ({
       id: lot.id || `lot-${Date.now()}-${idx}`,
       kind: "lot" as const,

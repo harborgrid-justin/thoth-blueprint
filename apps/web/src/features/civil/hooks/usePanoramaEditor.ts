@@ -26,7 +26,7 @@ export function usePanoramaEditor() {
   };
 
   const handleDeletePI = (idx: number) => {
-    if (featureLine.points.length <= 2) return;
+    if (featureLine.points.length <= 2) {return;}
     const updated = engine.deletePI(featureLine, idx);
     setFeatureLine(updated);
     setRows(engine.generatePanoramaElevationEditor(updated));

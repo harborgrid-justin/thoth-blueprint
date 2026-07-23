@@ -38,7 +38,7 @@ export const SurveyCogoStudioDialog: React.FC<
     "traverse" | "closure" | "report"
   >("traverse");
 
-  if (!isOpen) return null;
+  if (!isOpen) {return null;}
 
   const handleCommit = () => {
     commitTraversePlat();
@@ -51,8 +51,8 @@ export const SurveyCogoStudioDialog: React.FC<
         {/* Header */}
         <div className={SURVEY_STYLES.dialogHeader}>
           <div className="flex items-center space-x-3">
-            <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
-              <Compass className="w-6 h-6" />
+            <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-2 text-amber-400">
+              <Compass className="h-6 w-6" />
             </div>
             <div>
               <h2 className={SURVEY_STYLES.dialogTitle}>
@@ -85,7 +85,7 @@ export const SurveyCogoStudioDialog: React.FC<
                 onClick={() => setActiveTab(tab.id as any)}
                 className={activeTab === tab.id ? SURVEY_STYLES.btnTabActive : SURVEY_STYLES.btnTab}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="h-4 w-4" />
                 {tab.label}
               </button>
             );
@@ -105,7 +105,7 @@ export const SurveyCogoStudioDialog: React.FC<
                     type="text"
                     value={newBearing}
                     onChange={(e) => setNewBearing(e.target.value)}
-                    className="mt-1 bg-background border-border text-xs font-mono text-amber-300"
+                    className="mt-1 border-border bg-background font-mono text-xs text-amber-300"
                   />
                 </div>
                 <div>
@@ -115,34 +115,34 @@ export const SurveyCogoStudioDialog: React.FC<
                     step="0.01"
                     value={newDistance}
                     onChange={(e) => setNewDistance(Number(e.target.value))}
-                    className="mt-1 bg-background border-border text-xs font-mono text-amber-300"
+                    className="mt-1 border-border bg-background font-mono text-xs text-amber-300"
                   />
                 </div>
-                <Button onClick={addLeg} className="w-full bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs py-2">
-                  <Plus className="w-4 h-4 mr-1" /> Add Leg to Traverse
+                <Button onClick={addLeg} className="w-full bg-amber-600 py-2 text-xs font-semibold text-white hover:bg-amber-500">
+                  <Plus className="mr-1 h-4 w-4" /> Add Leg to Traverse
                 </Button>
               </div>
 
               {/* Legs Table */}
-              <div className="col-span-2 bg-card/60 p-5 rounded-xl border border-border flex flex-col justify-between">
+              <div className="col-span-2 flex flex-col justify-between rounded-xl border border-border bg-card/60 p-5">
                 <div>
-                  <h3 className="text-sm font-semibold text-amber-400 mb-3">Traverse Call Table ({legs.length} Legs)</h3>
-                  <div className="max-h-56 overflow-y-auto space-y-2 custom-scrollbar">
+                  <h3 className="mb-3 text-sm font-semibold text-amber-400">Traverse Call Table ({legs.length} Legs)</h3>
+                  <div className="custom-scrollbar max-h-56 space-y-2 overflow-y-auto">
                     {legs.map((leg, idx) => (
                       <div
                         key={leg.id}
-                        className="flex justify-between items-center p-2.5 rounded bg-background border border-border text-xs font-mono"
+                        className="flex items-center justify-between rounded border border-border bg-background p-2.5 font-mono text-xs"
                       >
                         <div>
-                          <span className="text-amber-400 font-bold mr-3">Call {idx + 1}:</span>
-                          <span className="text-foreground mr-4">{leg.bearing}</span>
+                          <span className="mr-3 font-bold text-amber-400">Call {idx + 1}:</span>
+                          <span className="mr-4 text-foreground">{leg.bearing}</span>
                           <span className="text-emerald-400">{leg.distanceFt} ft</span>
                         </div>
                         <button
                           onClick={() => removeLeg(leg.id)}
-                          className="text-slate-500 hover:text-red-400 transition-colors"
+                          className="text-slate-500 transition-colors hover:text-red-400"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="h-4 w-4" />
                         </button>
                       </div>
                     ))}
@@ -151,27 +151,27 @@ export const SurveyCogoStudioDialog: React.FC<
 
                 <Button
                   onClick={handleCommit}
-                  className="mt-4 w-full bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-semibold py-2.5 rounded-xl shadow-lg"
+                  className="mt-4 w-full rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 py-2.5 font-semibold text-white shadow-lg hover:from-amber-500 hover:to-yellow-500"
                 >
-                  <CheckCircle2 className="w-4 h-4 mr-2" /> Commit Traverse Boundary to Canvas
+                  <CheckCircle2 className="mr-2 h-4 w-4" /> Commit Traverse Boundary to Canvas
                 </Button>
               </div>
             </div>
           )}
 
           {activeTab === "closure" && (
-            <div className="bg-card/60 p-5 rounded-xl border border-border space-y-4">
+            <div className="space-y-4 rounded-xl border border-border bg-card/60 p-5">
               <h3 className="text-sm font-semibold text-amber-300">Compass Rule Closure Analysis</h3>
               <div className="grid grid-cols-3 gap-4 font-mono text-xs">
-                <div className="p-3 bg-background rounded border border-border">
+                <div className="rounded border border-border bg-background p-3">
                   <span className="text-muted-foreground">Total Perimeter:</span>
                   <div className="text-lg font-bold text-foreground">{traverseResult.totalDist} ft</div>
                 </div>
-                <div className="p-3 bg-background rounded border border-border">
+                <div className="rounded border border-border bg-background p-3">
                   <span className="text-muted-foreground">Linear Error:</span>
                   <div className="text-lg font-bold text-amber-400">{traverseResult.closureErrorFt} ft</div>
                 </div>
-                <div className="p-3 bg-background rounded border border-border">
+                <div className="rounded border border-border bg-background p-3">
                   <span className="text-muted-foreground">Closure Precision Ratio:</span>
                   <div className="text-lg font-bold text-emerald-400">1 : {traverseResult.closureRatio.toLocaleString()}</div>
                 </div>
@@ -180,9 +180,9 @@ export const SurveyCogoStudioDialog: React.FC<
           )}
 
           {activeTab === "report" && (
-            <div className="bg-card/60 p-5 rounded-xl border border-border space-y-3 font-mono text-xs">
+            <div className="space-y-3 rounded-xl border border-border bg-card/60 p-5 font-mono text-xs">
               <h3 className="text-sm font-semibold text-amber-300">Generated Legal Description</h3>
-              <div className="p-4 bg-background rounded border border-border text-muted-foreground leading-relaxed max-h-48 overflow-y-auto">
+              <div className="max-h-48 overflow-y-auto rounded border border-border bg-background p-4 leading-relaxed text-muted-foreground">
                 BEGINNING at a point; thence {legs.map((l) => `${l.bearing} a distance of ${l.distanceFt} feet`).join("; thence ")}; to the POINT OF BEGINNING.
               </div>
             </div>
@@ -190,7 +190,7 @@ export const SurveyCogoStudioDialog: React.FC<
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-card text-xs text-muted-foreground">
+        <div className="flex items-center justify-between border-t border-border bg-card px-6 py-4 text-xs text-muted-foreground">
           <span>Survey Studio: ALTA / NSPS Boundary Standard</span>
           <div className="flex gap-3">
             <Button variant="outline" onClick={onClose} className="border-input text-muted-foreground">
@@ -198,9 +198,9 @@ export const SurveyCogoStudioDialog: React.FC<
             </Button>
             <Button
               onClick={handleCommit}
-              className="bg-amber-600 hover:bg-amber-500 text-white font-semibold"
+              className="bg-amber-600 font-semibold text-white hover:bg-amber-500"
             >
-              <CheckCircle2 className="w-4 h-4 mr-1.5" /> Create COGO Parcel
+              <CheckCircle2 className="mr-1.5 h-4 w-4" /> Create COGO Parcel
             </Button>
           </div>
         </div>

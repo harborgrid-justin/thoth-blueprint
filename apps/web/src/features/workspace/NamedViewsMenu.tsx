@@ -42,7 +42,7 @@ export function NamedViewsMenu() {
               <button
                 type="button"
                 onClick={(e) => handleDelete(e, view.name)}
-                className="opacity-0 group-hover:opacity-100 hover:text-rose-400 p-1 rounded transition-opacity"
+                className="rounded p-1 opacity-0 transition-opacity group-hover:opacity-100 hover:text-rose-400"
                 aria-label={`Delete ${view.name}`}
               >
                 <Trash2 className="h-3 w-3" />

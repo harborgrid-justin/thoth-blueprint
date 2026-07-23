@@ -13,7 +13,7 @@ export function CrosshairOverlay({
   viewport?: Viewport;
   snappedToVertex?: boolean;
 }) {
-  if (!cursorScreen) return null;
+  if (!cursorScreen) {return null;}
   return (
     <g className="pointer-events-none">
       <g className="opacity-50 mix-blend-difference" stroke="white" strokeWidth={0.5}>
@@ -78,7 +78,7 @@ export function DraftOverlay({
       {/* Polar Tracking Vector */}
       {draft.length > 0 && cursorScreen && (() => {
         const lastScreen = screenPts[screenPts.length - 2]; // the last clicked point
-        if (!lastScreen) return null;
+        if (!lastScreen) {return null;}
         
         const dx = Math.abs(cursorScreen.x - lastScreen.x);
         const dy = Math.abs(cursorScreen.y - lastScreen.y);
@@ -87,7 +87,7 @@ export function DraftOverlay({
         const isHorizontal = dy < 5;
         const isVertical = dx < 5;
         
-        if (!isHorizontal && !isVertical) return null;
+        if (!isHorizontal && !isVertical) {return null;}
         
         return (
           <line
@@ -222,22 +222,22 @@ export function CanvasHud({
 }) {
   const coordFormat = usePrefsStore((s) => s.coordFormat);
 
-  if (!cursorScreen) return null;
+  if (!cursorScreen) {return null;}
 
   return (
     <div
-      className="pointer-events-none absolute z-20 flex select-none flex-col gap-1.5 rounded-lg border border-border/40 bg-background/90 p-2 text-xs text-muted-foreground shadow-2xl backdrop-blur-md transition-opacity duration-150"
+      className="pointer-events-none absolute z-20 flex flex-col gap-1.5 rounded-lg border border-border/40 bg-background/90 p-2 text-xs text-muted-foreground shadow-2xl backdrop-blur-md transition-opacity duration-150 select-none"
       style={{
         left: cursorScreen.x + 20,
         top: cursorScreen.y + 20,
       }}
     >
       <div className="flex items-center gap-2">
-        <span className="rounded bg-primary/10 px-1.5 py-0.5 font-semibold text-primary text-[10px] uppercase tracking-wider">
+        <span className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-primary uppercase">
           {tool}
         </span>
         {cursor && (
-          <span className="font-cad tabular-nums text-foreground">
+          <span className="font-cad text-foreground tabular-nums">
             {formatCoord(cursor, coordFormat)}
           </span>
         )}
@@ -245,24 +245,24 @@ export function CanvasHud({
 
       <div className="flex items-center gap-2">
         {snappedToVertex && (
-          <span className="flex items-center gap-1 rounded bg-emerald-500/10 px-1.5 py-0.5 font-semibold text-emerald-600 dark:text-emerald-400 text-[10px] uppercase">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="flex items-center gap-1 rounded bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-600 uppercase dark:text-emerald-400">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
             Snapping
           </span>
         )}
         {elevation != null && (
-          <span className="font-cad tabular-nums text-amber-600 dark:text-amber-400">
+          <span className="font-cad text-amber-600 tabular-nums dark:text-amber-400">
             Z: {elevation.toFixed(1)} {units}
           </span>
         )}
       </div>
 
       {draft > 0 && (
-        <span className="mt-1 font-medium text-primary text-[10px]">
+        <span className="mt-1 text-[10px] font-medium text-primary">
           {draft} pts ·{" "}
-          <kbd className="rounded bg-muted px-1 py-0.5 text-foreground font-cad">Enter</kbd>{" "}
+          <kbd className="rounded bg-muted px-1 py-0.5 font-cad text-foreground">Enter</kbd>{" "}
           finish ·{" "}
-          <kbd className="rounded bg-muted px-1 py-0.5 text-foreground font-cad">Esc</kbd>{" "}
+          <kbd className="rounded bg-muted px-1 py-0.5 font-cad text-foreground">Esc</kbd>{" "}
           cancel
         </span>
       )}

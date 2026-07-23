@@ -10,6 +10,7 @@ import { buildScene, type SceneResult } from "./buildScene";
 import { ThothPhysicsEngine } from "./physics";
 import { Erosion3DVisualizer, type ErosionGridConfig } from "./erosion3d";
 import { buildTerrainModel } from "@/features/terrain/terrainModel";
+import { CANVAS3D_STYLES } from "./styles/canvas3dDesignSystem";
 
 // Sun placement (degrees) — a mid-morning light that reads well for massing.
 const SUN_ELEVATION = 34;
@@ -404,7 +405,7 @@ export function Scene3D() {
     }
   }, [selection, hoveredElementId]);
 
-  return <div ref={mountRef} className="h-full w-full" />;
+  return <div ref={mountRef} className={CANVAS3D_STYLES.container} />;
 }
 
 /** Build a THREE.Points cloud from colored points, mapped into scene space. */

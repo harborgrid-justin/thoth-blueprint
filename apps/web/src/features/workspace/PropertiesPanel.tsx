@@ -70,11 +70,11 @@ export function PropertiesPanel() {
                     key={align.id}
                     className="rounded border border-border bg-muted/10 p-2"
                   >
-                    <div className="flex justify-between items-center text-[11px] font-semibold">
+                    <div className="flex items-center justify-between text-[11px] font-semibold">
                       <span className="text-primary">{align.name}</span>
                       <span className="text-muted-foreground">{speed} MPH</span>
                     </div>
-                    <div className="text-[10px] text-muted-foreground mt-1 flex justify-between">
+                    <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
                       <span>Length: {resolved.length.toFixed(1)} ft</span>
                       <span>Curves: {resolved.curves.length}</span>
                     </div>
@@ -85,7 +85,7 @@ export function PropertiesPanel() {
                         {violations.map((v: any, idx: number) => (
                           <div
                             key={idx}
-                            className="text-[9px] text-rose-400 bg-rose-500/10 rounded px-1.5 py-0.5 border border-rose-500/15"
+                            className="rounded border border-rose-500/15 bg-rose-500/10 px-1.5 py-0.5 text-[9px] text-rose-400"
                           >
                             ⚠️ Min R: {v.requiredRadius} ft | Curve R:{" "}
                             {v.curveRadius.toFixed(1)} ft
@@ -93,7 +93,7 @@ export function PropertiesPanel() {
                         ))}
                       </div>
                     ) : (
-                      <div className="text-[9px] text-emerald-400 bg-emerald-500/10 rounded px-1.5 py-0.5 border border-emerald-500/15 mt-1.5">
+                      <div className="mt-1.5 rounded border border-emerald-500/15 bg-emerald-500/10 px-1.5 py-0.5 text-[9px] text-emerald-400">
                         ✅ Design standards fully satisfied.
                       </div>
                     )}
@@ -107,7 +107,7 @@ export function PropertiesPanel() {
         {/* Underlay Settings */}
         {underlay && (
           <div className="mt-2 border-t border-border/40 pt-3">
-            <div className="flex justify-between items-center mb-1.5">
+            <div className="mb-1.5 flex items-center justify-between">
                <h4 className={WORKSPACE_STYLES.cardHeader}>
                  Blueprint Underlay
                </h4>
@@ -174,9 +174,9 @@ export function PropertiesPanel() {
 function InspectorSection({ title, children, defaultOpen = true }: { title: string, children: React.ReactNode, defaultOpen?: boolean }) {
   return (
     <details className="group border-b border-border/40 last:border-0" open={defaultOpen}>
-      <summary className="flex cursor-pointer items-center justify-between px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground hover:bg-muted/30">
+      <summary className="flex cursor-pointer items-center justify-between px-3 py-2 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase hover:bg-muted/30">
         {title}
-        <span className="transition-transform group-open:rotate-180 opacity-50">▼</span>
+        <span className="opacity-50 transition-transform group-open:rotate-180">▼</span>
       </summary>
       <div className="flex flex-col gap-2 p-3 pt-1">
         {children}
@@ -196,8 +196,8 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
   const set = (patch: Partial<PlanElement>) => updateElement(element.id, patch);
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex flex-col border-b border-border/40 p-3 pb-2 gap-2">
+    <div className="flex h-full flex-col">
+      <div className="flex flex-col gap-2 border-b border-border/40 p-3 pb-2">
         <div className="flex items-center justify-between">
           <Badge variant="outline" className="capitalize">
             {meta.label}
@@ -209,7 +209,7 @@ function SingleElementInspector({ element }: { element: PlanElement }) {
             <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-foreground" title="Hide">
               <span className="text-[10px]">H</span>
             </Button>
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-rose-500 hover:text-rose-600 hover:bg-rose-500/10" onClick={deleteSelection} title="Delete">
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-rose-500 hover:bg-rose-500/10 hover:text-rose-600" onClick={deleteSelection} title="Delete">
               <Trash2 className="h-3 w-3" />
             </Button>
           </div>
@@ -347,7 +347,7 @@ function CurveControl({ element }: { element: PlanElement }) {
     <div className="flex flex-col gap-1.5 rounded-md border border-border px-3 py-2">
       <div className="flex items-center justify-between">
         <Label className="text-sm text-foreground">Curved edges</Label>
-        <span className="text-xs tabular-nums text-muted-foreground">
+        <span className="text-xs text-muted-foreground tabular-nums">
           {curveCount}
         </span>
       </div>
