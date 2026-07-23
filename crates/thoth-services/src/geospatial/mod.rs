@@ -10,8 +10,9 @@
 //!
 //! The HTTP transport in `services/geospatial/src/index.ts` (three Express
 //! routes: reproject/import/export) is not reproduced here — this crate is
-//! a native services library, not a web server; [`projections`] and
-//! [`interop`] are the route handlers' actual logic, callable directly.
+//! a native services library, not a web server; [`reproject_point`]/
+//! [`reproject_points`] and [`geojson_to_elements`]/[`elements_to_geojson`]
+//! are the route handlers' actual logic, callable directly.
 
 mod error;
 mod interop;

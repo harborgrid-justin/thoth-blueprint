@@ -40,7 +40,7 @@ pub enum ElementOp {
 
 /// A message broadcast to every participant in a project's collaboration
 /// room. This is the wire vocabulary a future websocket/SSE transport would
-/// serialize; the hub in [`super::hub`] is transport-agnostic.
+/// serialize; [`super::CollaborationHub`] itself is transport-agnostic.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "camelCase")]
 pub enum CollabEvent {
